@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   publish:
     docker:
-      - image: circleci/node:dubnium
+      - image: circleci/node:erbium
     steps:
       - run:
           name: Publish to Stoplight
