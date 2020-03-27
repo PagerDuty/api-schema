@@ -6,6 +6,15 @@ Currently we do not deprecate or remove any API functionality.
 
 ----
 
+### 2020-03-24
+ - Added `teams` to all `/business_services` endpoints.
+
+### 2020-03-23
+ - Clarified language on `GET /tags` query parameter to better explain how matching happens.
+
+### 2020-03-02
+ - Add new Business Services endpoints
+
 ### 2020-01-27
  - Clarified `POST /escalation_policies` description.
 
