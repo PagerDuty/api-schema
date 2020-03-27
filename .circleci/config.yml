@@ -3,13 +3,13 @@ version: 2.1
 jobs:
   publish:
     docker:
-      - image: circleci/<language>:<version TAG>
+      - image: circleci/node:erbium
     steps:
       - run:
           name: Publish to Stoplight
           command: |
-            npm i -g @stoplight/cli
-            stoplight publish \
+            npm install @stoplight/cli
+            node ./node_modules/@stoplight/cli/bin/stoplight.js publish \
             --token ${STOPLIGHT_TOKEN} \
             --project gh/pagerduty/api-schema \
             --url https://pagerduty.stoplight.io/api
