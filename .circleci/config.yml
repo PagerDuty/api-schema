@@ -8,7 +8,7 @@ jobs:
       - run:
           name: Publish to Stoplight
           command: |
-            npm i -g @stoplight/cli
+            sudo npm i -g @stoplight/cli
             stoplight publish \
             --token ${STOPLIGHT_TOKEN} \
             --project gh/pagerduty/api-schema \
