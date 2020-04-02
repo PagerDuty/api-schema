@@ -6,8 +6,7 @@
       "url": "http://www.pagerduty.com/support",
       "email": "support@pagerduty.com"
     },
-    "title": "PagerDuty API",
-    "description": "The PagerDuty API provides programmatic access to entities within a  PagerDuty account. It is designed around [RESTful principles](https://en.wikipedia.org/wiki/Representational_state_transfer) with a path structure based on resources and their relationships.\n\n\nAll requests and responses are serialized in [JSON](https://en.wikipedia.org/wiki/JSON), including error responses.\n\n\nSchema are designed to be reusable across requests and across endpoints.\n\n\nMore sophisticated API clients should treat PagerDuty resources as unique objects keyed by the `id` field that can be used in any API request involving resources of that type.\n\n\nEvery resource contains a `type` field that identifies the schema it uses.\n\n\n## Rate limiting\n\n\nEach account and authentication mechanism is limited to the number of API requests it can make every minute. API requests that exceed the API rate limit will return an [HTTP status code](error_codes.html#http_responses) of 429. Different requests may affect your rate limit differently, so clients should always be prepared to be rate limited and respond appropriately.\n\n\n## Read-Only API Keys\n\n\nAPI requests made with read-only keys attempting to access endpoints with methods other than `GET` will return an [HTTP status code](error_codes.html#http_responses) of 403.\n\n\n## Error Codes\n\n\nMost APIs will return an error code from an unsuccessful call. They are described [here](error_codes.html).\n",
+    "title": "PagerDuty REST API",
     "version": "2.0.0"
   },
   "security": [
@@ -22,51 +21,47 @@
     },
     {
       "name": "Abilities",
-      "description": "This describes your account's abilities by feature name, like `\"teams\"`.\nAn ability may be available to your account based on things like your pricing plan or account state.\n"
+      "description": "This describes your account's abilities by feature name. For example `\"teams\"`.\nAn ability may be available to your account based on things like your pricing plan or account state.\n"
     },
     {
       "name": "Add-ons",
-      "description": "Third-party developers can write their own add-ons to PagerDuty's UI, to add HTML to the product.\nGiven a configuration containing a `src` parameter, that URL will be embedded in an `iframe` on a page that's available to users from a drop-down menu.\n"
+      "description": "Developers can write their own functionality to insert into PagerDuty's UI.\n"
     },
     {
       "name": "Business Services",
-      "description": "Business services allow you to model capabilities that span multiple technical services and that may be owned by several different teams.  Mapping technical services to business services gives responders context on an incident’s impact to the business.\n[*Read more about business services in the PagerDuty Knowledge Base*](https://support.pagerduty.com/docs/business-services).\n"
-    },
-    {
-      "name": "Contextual Search",
-      "description": "API to manage, assign, and list Tags. A tag can be assigned to Escalation Policy, Team or User, and searches for those objects can be filtered to retrieve those with specific tags.\n"
+      "description": "Business services model capabilities that span multiple technical services and that may be owned by several different teams.\n"
     },
     {
       "name": "Escalation Policies",
-      "description": "Escalation policies make sure the right people are alerted at the right time.\n\n\nAn escalation policy determines what [user](#resource_Users) or [schedule](#resource_Schedules) will be [notified](#resource_Notifications) first, second, and so on when an [incident](#resource_Incidents) is triggered.\nEscalation policies are used by one or more [services](#resource_Services).\n\n\n#### Escalation Rules\n\n\nAn escalation policy is made up of multiple [escalation rules](#!/Escalation_Policies/get_escalation_policies_id_escalation_rules).\nEach escalation rule represents a level of [on-call](#resource_On-Calls) duty.\nIt specifies one or more [users](#resource_Users) or [schedules](#resource_Schedules) to be notified when an unacknowledged [incident](#resource_Incidents) reaches that [escalation rule](#!/Escalation_Policies/get_escalation_policies_id_escalation_rules).\n\n\nThe first [escalation rule](#!/Escalation_Policies/get_escalation_policies_id_escalation_rules) in the escalation policy is the [user](#resource_Users) that will be [notified](#resource_Notifications) first about the triggered [incident](#resource_Incidents).\n\n\nIf no [on-call](#resource_On-Calls) [user](#resource_Users) for a given [escalation rule](#!/Escalation_Policies/get_escalation_policies_id_escalation_rules) has not acknowledged an [incident](#resource_Incidents) before the [escalation rule](#!/Escalation_Policies/get_escalation_policies_id_escalation_rules)'s escalation delay has elapsed, the [incident](#resource_Incidents) escalates to the next [escalation rule](#!/Escalation_Policies/get_escalation_policies_id_escalation_rules).\n\n\n[*Read more about escalation policies in the PagerDuty Knowledge Base*](https://support.pagerduty.com/hc/en-us/articles/202828950-What-is-an-Escalation-Policy-).\n"
+      "description": "Escalation policies define which user should be alerted at which time.\n"
     },
     {
       "name": "Extension Schemas",
-      "description": "A PagerDuty extension vendor represents a specific type of outbound extension. Generic Webhook, Slack, Hipchat, etc are all examples of vendors\nthat can be integrated in PagerDuty by making an [Extension](#!/Extensions/get_extensions).\n\n\nExtension Schemas will contain template configuration information that is required to instantiate an instance of the Extension Schema (an Extension) properly.\nIf an extension vendor already has a preconfigured url, the extension will not have to configure one.\nIn addition, if the extension vendor has a config object, the extension will need to provide config values based on what the extension vendor indicates are required for the config.\n\n\nSome Extension Schemas that require OAuth Authorization to be setup, such as the Slack and HipChat extension, cannot be configured through the API.\n"
+      "description": "A PagerDuty extension vendor represents a specific type of outbound extension such as Generic Webhook, Slack, ServiceNow.\n"
     },
     {
       "name": "Extensions",
-      "description": "A PagerDuty Extension represents an instance of an [Extension Schema](#!/Extension_Vendors/get_extension_schemas) on a object that an Extension can be attached to, such as a Service.\n\n\nAn example of an Extension would be a Generic Webhook endpoint, a specific Slack or Hipchat channel, or a Status Page Webhook.\n"
+      "description": "Extensions are representations of Extension Schema objects that are attached to Services.\n"
     },
     {
       "name": "Incidents",
-      "description": "An incident is a normalized, de-duplicated event generated by a PagerDuty [integration](#!/Services/get_services_id_integrations_integration_id).\nIt can be thought of as a problem or an issue within your [service](#resource_Services) that needs to be addressed and resolved.\n\n\nIncidents can be `triggered`, `acknowledged`, or `resolved`, and are assigned to a user based on the [service](#resource_Services)'s [escalation policy](#resource_Escalation_Policies).\n\n\nA triggered incident prompts a [notification](#resource_Notifications) to be sent to the currently [on-call](#resource_On-Calls) [user(s)](#resource_Users) as defined in the escalation policy used by the [service](#resource_Services).\nIncidents are triggered through the [Events API](https://v2.developer.pagerduty.com/docs/events-api).\n\n\nUpdates to an incident generate [log entries](#resource_Log_Entries) that capture the changes to an incident over time, whether these changes were prompted by a [user](#resource_Users), an [integration](#resource_Integrations), or were performed automatically.\n\n\n[*Read more about incidents in the PagerDuty Knowledge Base*](https://support.pagerduty.com/hc/en-us/articles/202829250-What-Is-an-Incident-).\n"
+      "description": "An incident represents a problem or an issue that needs to be addressed and resolved. Incidents trigger on a service, which prompts notifications to go out to on-call responders per the service's escalation policy.\n"
     },
     {
       "name": "Log Entries",
-      "description": "PagerDuty keeps a log of all the events that happen to an [incident](#resource_Incidents).\nThese are exposed as log entries.\nLog entries give you more insight into how your [team](#resource_Teams) or organization is handling your [incidents](#resource_Incidents).\n\n\nLog entry data includes details about the event(s) that affected the [incident](#resource_Incidents) throughout its lifecycle, such as:\n- the data contained in events sent by the [integration](#!/Services/get_services_id_integrations_integration_id)\n- what [users](#resource_Users) were [notified](#resource_Notifications) and when\n- how they were [notified](#resource_Notifications)\n- what [user(s)](#resource_Users) acknowledged or resolved the [incident](#resource_Incidents)\n- any automatic actions that occurred to the [incident](#resource_Incidents)\n- other manual [user](#resource_Users) actions, such as a reassignment or a note\n\n\nLog entries cannot be created directly through the API; they are a result of other actions. The API provides read-only access to the log entries generated by PagerDuty.\n"
+      "description": "A log of all the events that happen to an Incident, and these are exposed as Log Entries.\n"
     },
     {
       "name": "Maintenance Windows",
-      "description": "A maintenance window is used to temporarily disable one or more [services](#resource_Services) for a set period of time.\nNo [incidents](#resource_Incidents) will be triggered and no [notifications](#resource_Notifications) will be received while a [service](#resource_Services) is disabled by a maintenance window.\n\n\nMaintenance windows are specified to start at a certain time and end after they have begun.\nOnce started, a maintenance window cannot be deleted; it can only be ended immediately to re-enable the [service](#resource_Services).\n\n\n[*Read more about maintenance windows in the PagerDuty Knowledge Base*](https://support.pagerduty.com/hc/en-us/articles/202830350-Putting-a-service-in-maintenance-mode).\n"
+      "description": "A Maintenance Window is used to temporarily disable one or more Services for a set period of time.\n"
     },
     {
       "name": "Notifications",
-      "description": "When an [incident](#resource_Incidents) is triggered or escalated, it creates a notification.\n\n\nNotifications are messages containing the details of the [incident](#resource_Incidents), and can be sent through SMS, email, phone calls, and push notifications.\n\n\nNotifications cannot be created directly through the API; they are a result of other actions.\nThe API provides read-only access to the notifications generated by PagerDuty.\n\n\n[*Read more about notifications in the PagerDuty Knowledge Base*](https://support.pagerduty.com/hc/en-us/articles/202828840-What-is-an-Alert-Notification-).\n"
+      "description": "A Notification is created when an Incident is triggered or escalated.\n"
     },
     {
       "name": "On-Calls",
-      "description": "An on-call represents a contiguous unit of time for which a [user](#resource_Users) will be on call for a given [escalation policy](#resource_Escalation_Policies) and [escalation rule](#!/Escalation_Policies/get_escalation_policies_id_escalation_rules).\nThis may be the result of that [user](#resource_Users) always being on call for the [escalation rule](#!/Escalation_Policies/get_escalation_policies_id_escalation_rules), or a block of time during which the computed result of a [schedule](#resource_Schedules) on that [escalation rule](#!/Escalation_Policies/get_escalation_policies_id_escalation_rules) puts the user on call.\n\n\nDuring an on-call, the [user](#resource_Users) is expected to bear responsibility for responding to any [notifications](#resource_Notifications) he or she receives and working to resolve the associated [incident(s)](#resource_Incidents).\n\n\nOn-calls cannot be created directly through the API; they are the computed result of how [escalation policies](#resource_Escalation_Policies) and [schedules](#resource_Schedules) are configured.\nThe API provides read-only access to the on-calls generated by PagerDuty.\n"
+      "description": "An on-call represents a contiguous unit of time for which a User will be on call for a given Escalation Policy and Escalation Rules\n"
     },
     {
       "name": "Priorities",
@@ -74,35 +69,31 @@
     },
     {
       "name": "Response Plays",
-      "description": "Response plays let you create packages of incident actions that can be applied at any time to an incident with just a single button click, or that can be immediately applied to all new incidents created on a service.\nThis enables you to take a complex activity, like assembling a response team of multiple on-calls and an incident commander, and make it available to anyone that needs to use it.\n"
+      "description": "Response Plays are a package of Incident Actions that can be applied during an Incident's life cycle.\n"
     },
     {
       "name": "Schedules",
-      "description": "An on-call schedule determines the time periods that users are [on call](#resource_On-Calls).\nOnly [on-call](#resource_On-Calls) [users](#resource_Users) are eligible to receive [notifications](#resource_Notifications) from [incidents](#resource_Incidents).\n\n\nThe details of the on-call schedule specify which single [user](#resource_Users) is [on call](#resource_On-Calls) for that schedule at any given point in time.\nAn on-call schedule consists of one or more [schedule layers](https://support.pagerduty.com/hc/en-us/articles/202830250-Scheduling-Layers) that rotate a group of [users](#resource_Users) through the same shift at a set interval.\n\n\nRestrictions on each schedule layer limit on-call responsibility for that layer to certain times of the day or week.\nThe period of time during which a [user](#resource_Users) is present on a schedule layer is called a schedule layer entry.\n\n\nThe ordered composition of schedule layers, combined with any schedule layer entries from the override layer, known as [overrides](#!/Schedules/get_schedules_id_overrides), results in the final schedule layer.\nThe final schedule layer represents the computed set of schedule layer entries that put [users](#resource_Users) [on call](#resource_On-Calls) for the schedule, and cannot be modified directly.\n\n\nSchedules are used by [escalation policies](#resource_Escalation_Policies) as an escalation target for a given [escalation rule](#!/Escalation_Policies/get_escalation_policies_id_escalation_rules).\n\n\n[*Read more about on-call schedules in the PagerDuty Knowledge Base*](https://support.pagerduty.com/hc/en-us/sections/200550790-On-Call-Schedules).\n"
+      "description": "A Schedule determines the time periods that users are On-Call.\n"
     },
     {
       "name": "Services",
-      "description": "A PagerDuty service represents something you monitor (like a web service, email service, or database service).\nIt is a container for related [incidents](#resource_Incidents) that associates them with [escalation policies](#resource_Escalation_Policies).\n\n\nA service is the focal point for [incident](#resource_Incidents) management; services specify the configuration for the behavior of [incidents](#resource_Incidents) triggered on them.\nThis behavior includes specifying urgency and performing automated actions based on time of day, [incident](#resource_Incidents) duration, and other factors.\n\n\n#### Integrations\n\n\nAn integration is an endpoint (like Nagios, email, or an API call) that generates events, which are normalized and de-duplicated by PagerDuty to create [incidents](#resource_Incidents).\nIntegrations feed events into services and provide event management functionality such as filtering and de-duplication.\n\n\n[*Read more about services in the PagerDuty Knowledge Base*](https://support.pagerduty.com/hc/en-us/sections/200550800-Services).\n"
+      "description": "A Service may represent an application, component, or team you wish to open incidents against.\n"
+    },
+    {
+      "name": "Tags",
+      "description": "A Tag is applied to EScalation Policies, Teams or Users and can be used to filter them.\n"
     },
     {
       "name": "Teams",
-      "description": "A team is a collection of [users](#resource_Users) and [escalation policies](#resource_Escalation_Policies) that represent a group of people within an organization.\n\n\nTeams can be used throughout the API and PagerDuty applications to filter information to only what is relevant for one or more teams.\n\n\nThe account must have the teams ability to use the following endpoints.\n\n\n[*Read more about teams in the PagerDuty Knowledge Base*](https://support.pagerduty.com/hc/en-us/articles/204072090-How-to-Create-Teams-in-PagerDuty-).\n"
+      "description": "A team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n"
     },
     {
       "name": "Users",
-      "description": "PagerDuty users are members of a PagerDuty account that have the ability to interact with [incidents](#resource_Incidents) and other data on the account.\n\n\nUsers are fundamental agents of different types of actions in PagerDuty. A user can, among other things:\n- acknowlege, reassign, snooze, escalate, and resolve [incidents](#resource_Incidents)\n- configure [services](#resource_Services), [escalation policies](#resource_Escalation_Policies), [integrations](#!/Services/get_services_id_integrations_integration_id), [on-call schedules](#resource_Schedules), [teams](#resource_Teams), and more\n- go [on call](#resource_On-Calls) for one or more [schedules](#resource_Schedules) or [escalation policies](#resource_Escalation_Policies)\n- receive [notifications](#resource_Notifications)\n\n\nDepending on a user's role, he or she may have access to different parts of the account's data.\n\n\n[*Read more about users in the PagerDuty Knowledge Base*](https://support.pagerduty.com/hc/en-us/sections/200550780-Users).\n"
+      "description": "Users are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n"
     },
     {
       "name": "Vendors",
-      "description": "A PagerDuty vendor represents a specific type of integration. AWS Cloudwatch, Splunk, Datadog, etc are all examples of vendors\nthat can be integrated in PagerDuty by making an [integration](#!/Services/get_services_id_integrations_integration_id).\n\n\nVendored integrations (when compared to generic email and API integrations) are automatically configured with the right API or email\nfiltering settings for inbound events from that vendor. Some vendors also have associated integration guides\non the PagerDuty support site.\n"
-    },
-    {
-      "name": "Webhooks V1",
-      "description": "*Upgrade to the new Webhooks V2 Payload*\n"
-    },
-    {
-      "name": "Webhooks V2",
-      "description": "Webhooks let you receive HTTP callbacks when interesting events happen within your PagerDuty account. Details surrounding the interesting event will be sent via HTTP POST to a URL that you specify.\n\nPagerDuty currently supports incident-based webhooks. After adding a webhook URL to a PagerDuty service, the triggering of new incidents on that service will cause outgoing webhook messages to be sent to that URL. In addition, certain interesting changes to an incident's state will cause other types of incident webhook messages to be sent. Generally, any change to the `status` or `assignees` of an incident will cause an outgoing message to be sent.\n\nSee our knowledge base article [Whitelisting IPs](https://support.pagerduty.com/docs/whitelisting-ips#section-webhooks) for information on obtaining the list of IPs webhooks may come from.\n"
+      "description": "A PagerDuty Vendor represents a specific type of integration. AWS Cloudwatch, Splunk, Datadog are all examples of vendors\n"
     }
   ],
   "servers": [
@@ -676,7 +667,7 @@
         "properties": {
           "name": {
             "type": "string",
-            "description": "The name of the add-on.",
+            "description": "The name of the Add-on.",
             "maxLength": 100
           },
           "src": {
@@ -835,7 +826,7 @@
             "properties": {
               "services": {
                 "type": "array",
-                "description": "The services this add-on is associated with.\nIf non-empty, the add-on will appear only on incidents for those services.\nIf empty, it will appear on incidents for all services.\n",
+                "description": "The services this Add-on is associated with.\nIf non-empty, the Add-on will appear only on incidents for those services.\nIf empty, it will appear on incidents for all services.\n",
                 "items": {
                   "$ref": "#/components/schemas/ServiceReference"
                 }
@@ -2673,7 +2664,7 @@
           },
           "addons": {
             "type": "array",
-            "description": "The array of add-ons associated with this service.",
+            "description": "The array of Add-ons associated with this service.",
             "readOnly": true,
             "items": {
               "$ref": "#/components/schemas/AddonReference"
@@ -4516,7 +4507,7 @@
           "Abilities"
         ],
         "operationId": "listAbilities",
-        "description": "List all of your account's abilities, by name.",
+        "description": "List all of your account's abilities, by name.\n\n\"Abilities\" describes your account's capabilities by feature name. For example `\"teams\"`.\n\nAn ability may be available to your account based on things like your pricing plan or account state.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#abilities)\n",
         "summary": "List abilities",
         "responses": {
           "200": {
@@ -4580,7 +4571,7 @@
           "Abilities"
         ],
         "operationId": "getAbility",
-        "description": "Test whether your account has a given ability.",
+        "description": "Test whether your account has a given ability.\n\n\"Abilities\" describes your account's capabilities by feature name. For example `\"teams\"`.\n\nAn ability may be available to your account based on things like your pricing plan or account state.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Abilities)\n",
         "summary": "Test an ability",
         "parameters": [
           {
@@ -4610,14 +4601,14 @@
       }
     },
     "/addons": {
-      "description": "List and add add-ons to your account.",
+      "description": "List and add Add-ons to your account.",
       "get": {
         "tags": [
           "Add-ons"
         ],
         "operationId": "listAddon",
-        "description": "List all of the add-ons installed on your account.",
-        "summary": "List installed add-ons",
+        "description": "List all of the Add-ons installed on your account.\n\nAddon's are pieces of functionality that developers can write to insert new functionality into PagerDuty's UI.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Add-ons)\n",
+        "summary": "List installed Add-ons",
         "parameters": [
           {
             "$ref": "#/components/parameters/include_addon"
@@ -4625,7 +4616,7 @@
           {
             "name": "service_ids[]",
             "in": "query",
-            "description": "Filters the results, showing only add-ons for the given services",
+            "description": "Filters the results, showing only Add-ons for the given services",
             "explode": true,
             "schema": {
               "type": "array",
@@ -4638,7 +4629,7 @@
           {
             "name": "filter",
             "in": "query",
-            "description": "Filters the results, showing only add-ons of the given type",
+            "description": "Filters the results, showing only Add-ons of the given type",
             "schema": {
               "type": "string",
               "enum": [
@@ -4650,7 +4641,7 @@
         ],
         "responses": {
           "200": {
-            "description": "A paginated array of installed add-ons.",
+            "description": "A paginated array of installed Add-ons.",
             "content": {
               "application/vnd.pagerduty+json;version=2": {
                 "schema": {
@@ -4718,8 +4709,8 @@
           "Add-ons"
         ],
         "operationId": "createAddon",
-        "description": "Install an add-on for your account.",
-        "summary": "Install an add-on",
+        "description": "Install an Add-on for your account.\n\nAddon's are pieces of functionality that developers can write to insert new functionality into PagerDuty's UI.\n\nGiven a configuration containing a `src` parameter, that URL will be embedded in an `iframe` on a page that's available to users from a drop-down menu.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Add-ons)\n",
+        "summary": "Install an Add-on",
         "requestBody": {
           "content": {
             "application/json": {
@@ -4736,11 +4727,11 @@
               }
             }
           },
-          "description": "The add-on to be installed."
+          "description": "The Add-on to be installed."
         },
         "responses": {
           "201": {
-            "description": "The add-on that was installed.",
+            "description": "The Add-on that was installed.",
             "content": {
               "application/vnd.pagerduty+json;version=2": {
                 "schema": {
@@ -4790,14 +4781,14 @@
       }
     },
     "/addons/{id}": {
-      "description": "Get an add-on.",
+      "description": "Perform actions on the specified Add-on.",
       "get": {
         "tags": [
           "Add-ons"
         ],
         "operationId": "getAddon",
-        "description": "Get details about an existing add-on.",
-        "summary": "Get an add-on",
+        "description": "Get details about an existing Add-on.\n\nAddon's are pieces of functionality that developers can write to insert new functionality into PagerDuty's UI.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Add-ons)\n",
+        "summary": "Get an Add-on",
         "parameters": [
           {
             "$ref": "#/components/parameters/id"
@@ -4805,7 +4796,7 @@
         ],
         "responses": {
           "200": {
-            "description": "The requested add-on.",
+            "description": "The requested Add-on.",
             "content": {
               "application/vnd.pagerduty+json;version=2": {
                 "schema": {
@@ -4867,8 +4858,8 @@
           "Add-ons"
         ],
         "operationId": "deleteAddon",
-        "description": "Remove an existing add-on.",
-        "summary": "Delete an add-on",
+        "description": "Remove an existing Add-on.\n\nAddon's are pieces of functionality that developers can write to insert new functionality into PagerDuty's UI.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Add-ons)\n",
+        "summary": "Delete an Add-on",
         "parameters": [
           {
             "$ref": "#/components/parameters/id"
@@ -4876,7 +4867,7 @@
         ],
         "responses": {
           "204": {
-            "description": "The add-on was deleted successfully."
+            "description": "The Add-on was deleted successfully."
           },
           "401": {
             "$ref": "#/components/responses/Unauthorized"
@@ -4897,8 +4888,8 @@
           "Add-ons"
         ],
         "operationId": "updateAddon",
-        "description": "Update an existing add-on.",
-        "summary": "Update an add-on",
+        "description": "Update an existing Add-on.\n\nAddon's are pieces of functionality that developers can write to insert new functionality into PagerDuty's UI.\n\nGiven a configuration containing a `src` parameter, that URL will be embedded in an `iframe` on a page that's available to users from a drop-down menu.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Add-ons)\n",
+        "summary": "Update an Add-on",
         "parameters": [
           {
             "$ref": "#/components/parameters/id"
@@ -4920,11 +4911,11 @@
               }
             }
           },
-          "description": "The add-on to be updated."
+          "description": "The Add-on to be updated."
         },
         "responses": {
           "200": {
-            "description": "The add-on that was updated.",
+            "description": "The Add-on that was updated.",
             "content": {
               "application/vnd.pagerduty+json;version=2": {
                 "schema": {
@@ -4989,7 +4980,7 @@
           "Business Services"
         ],
         "operationId": "listBusinessServices",
-        "description": "List existing business services.",
+        "description": "List existing business services.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Business_Services)\n",
         "summary": "List business services",
         "parameters": [
           {
@@ -5103,66 +5094,58 @@
           "Business Services"
         ],
         "operationId": "createBusinessService",
-        "description": "Create a new business service.",
+        "description": "Create a new business service.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Business_Services)\n",
         "summary": "Create a business service",
-        "parameters": [
-          {
-            "name": "business_service",
-            "in": "query",
-            "description": "The business service to be created",
-            "content": {
-              "application/vnd.pagerduty+json;version=2": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "type": "object",
-                      "properties": {
-                        "business_service": {
-                          "type": "object",
-                          "properties": {
-                            "name": {
-                              "type": "string",
-                              "description": "The name of the business service."
-                            },
-                            "description": {
-                              "type": "string",
-                              "description": "The description of the business service."
-                            },
-                            "point_of_contact": {
-                              "type": "string",
-                              "description": "The owner of the business service."
-                            },
-                            "team": {
-                              "type": "object",
-                              "title": "Team",
-                              "description": "Reference to the team that owns the business service.",
-                              "properties": {
-                                "id": {
-                                  "type": "string",
-                                  "description": "The team ID"
-                                }
-                              }
-                            }
-                          }
-                        }
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "business_service": {
+                    "type": "object",
+                    "description": "The business service to be created",
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "description": "The name of the business service."
                       },
-                      "example": {
-                        "business_service": {
-                          "name": "Self-serve mobile checkout",
-                          "description": "Checkout service for our mobile clients",
-                          "point_of_contact": "PagerDuty Admin",
-                          "team": {
-                            "id": "P3ZQXDF"
+                      "description": {
+                        "type": "string",
+                        "description": "The description of the business service."
+                      },
+                      "point_of_contact": {
+                        "type": "string",
+                        "description": "The owner of the business service."
+                      },
+                      "team": {
+                        "type": "object",
+                        "title": "Team",
+                        "description": "Reference to the team that owns the business service.",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "description": "The team ID"
                           }
                         }
                       }
                     }
-                  ]
+                  }
+                }
+              },
+              "example": {
+                "business_service": {
+                  "name": "Self-serve mobile checkout",
+                  "description": "Checkout service for our mobile clients",
+                  "point_of_contact": "PagerDuty Admin",
+                  "team": {
+                    "id": "P3ZQXDF"
+                  }
                 }
               }
             }
           }
-        ],
+        },
         "responses": {
           "200": {
             "description": "The business service that was created.",
@@ -5225,7 +5208,7 @@
           "Business Services"
         ],
         "operationId": "getBusinessService",
-        "description": "Get details about an existing business service.",
+        "description": "Get details about an existing business service.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Business_Services)\n",
         "summary": "Get a business service",
         "parameters": [
           {
@@ -5290,7 +5273,7 @@
         "tags": [
           "Business Services"
         ],
-        "description": "Delete an existing business service. Once the service is deleted, it will not be accessible from the web UI and new incidents won't be able to be created for this service.",
+        "description": "Delete an existing business service. \n\nOnce the service is deleted, it will not be accessible from the web UI and new incidents won't be able to be created for this service.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Business_Services)\n",
         "summary": "Delete a business service",
         "parameters": [
           {
@@ -5316,65 +5299,63 @@
         "tags": [
           "Business Services"
         ],
-        "description": "Update an existing business service. NOTE that this endpoint also accepts the PATCH verb.",
+        "description": "Update an existing business service. NOTE that this endpoint also accepts the PATCH verb.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Business_Services)\n",
         "summary": "Update a business service",
         "parameters": [
           {
             "$ref": "#/components/parameters/id"
-          },
-          {
-            "name": "business_service",
-            "in": "query",
-            "description": "The business service to be created",
-            "schema": {
-              "allOf": [
-                {
-                  "type": "object",
-                  "properties": {
-                    "business_service": {
-                      "type": "object",
-                      "properties": {
-                        "name": {
-                          "type": "string",
-                          "description": "The name of the business service."
-                        },
-                        "description": {
-                          "type": "string",
-                          "description": "The description of the business service."
-                        },
-                        "point_of_contact": {
-                          "type": "string",
-                          "description": "The owner of the business service."
-                        },
-                        "team": {
-                          "type": "object",
-                          "title": "Team",
-                          "description": "Reference to the team that owns the business service.",
-                          "properties": {
-                            "id": {
-                              "type": "string",
-                              "description": "The team ID"
-                            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "business_service": {
+                    "type": "object",
+                    "description": "The business service to be created",
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "description": "The name of the business service."
+                      },
+                      "description": {
+                        "type": "string",
+                        "description": "The description of the business service."
+                      },
+                      "point_of_contact": {
+                        "type": "string",
+                        "description": "The owner of the business service."
+                      },
+                      "team": {
+                        "type": "object",
+                        "title": "Team",
+                        "description": "Reference to the team that owns the business service.",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "description": "The team ID"
                           }
                         }
                       }
                     }
-                  },
-                  "example": {
-                    "business_service": {
-                      "name": "Self-serve mobile checkout",
-                      "description": "Checkout service for our mobile clients",
-                      "point_of_contact": "PagerDuty Admin",
-                      "team": {
-                        "id": "P3ZQXDF"
-                      }
+                  }
+                },
+                "example": {
+                  "business_service": {
+                    "name": "Self-serve mobile checkout",
+                    "description": "Checkout service for our mobile clients",
+                    "point_of_contact": "PagerDuty Admin",
+                    "team": {
+                      "id": "P3ZQXDF"
                     }
                   }
                 }
-              ]
+              }
             }
           }
-        ],
+        },
         "responses": {
           "200": {
             "description": "The business service that was updated.",
@@ -5434,7 +5415,7 @@
           "Escalation Policies"
         ],
         "operationId": "listEscalationPolicies",
-        "description": "List all of the existing escalation policies.",
+        "description": "List all of the existing escalation policies.\n\nEscalation policies define which user should be alerted at which time.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Escalation_Policies)\n",
         "summary": "List escalation policies",
         "parameters": [
           {
@@ -5579,7 +5560,7 @@
           "Escalation Policies"
         ],
         "operationId": "createEscalationPolicy",
-        "description": "Creates a new escalation policy. At least one escalation rule must be provided.",
+        "description": "Creates a new escalation policy. At least one escalation rule must be provided.\n\nEscalation policies define which user should be alerted at which time.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Escalation_Policies)\n",
         "summary": "Create an escalation policy",
         "parameters": [
           {
@@ -5706,7 +5687,7 @@
           "Escalation Policies"
         ],
         "operationId": "getEscalationPolicy",
-        "description": "Get information about an existing escalation policy and its rules.",
+        "description": "Get information about an existing escalation policy and its rules.\n\nEscalation policies define which user should be alerted at which time.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Escalation_Policies)\n",
         "summary": "Get an escalation policy",
         "parameters": [
           {
@@ -5810,7 +5791,7 @@
           "Escalation Policies"
         ],
         "operationId": "deleteEscalationPolicy",
-        "description": "Deletes an existing escalation policy and rules. The escalation policy must not be in use by any services.",
+        "description": "Deletes an existing escalation policy and rules. The escalation policy must not be in use by any services.\n\nEscalation policies define which user should be alerted at which time.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Escalation_Policies)\n",
         "summary": "Delete an escalation policy",
         "parameters": [
           {
@@ -5840,7 +5821,7 @@
           "Escalation Policies"
         ],
         "operationId": "updateEscalationPolicy",
-        "description": "Updates an existing escalation policy and rules.",
+        "description": "Updates an existing escalation policy and rules.\n\nEscalation policies define which user should be alerted at which time.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Escalation_Policies)\n",
         "summary": "Update an escalation policy",
         "parameters": [
           {
@@ -5968,7 +5949,7 @@
           "Extensions"
         ],
         "operationId": "listExtensions",
-        "description": "List existing extensions.",
+        "description": "List existing extensions.\n\nExtensions are representations of Extension Schema objects that are attached to Services.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Extensions)\n",
         "summary": "List extensions",
         "parameters": [
           {
@@ -6094,7 +6075,7 @@
           "Extensions"
         ],
         "operationId": "createExtension",
-        "description": "Create a new extension.",
+        "description": "Create a new Extension.\n\nExtensions are representations of Extension Schema objects that are attached to Services.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Extensions)\n",
         "summary": "Create an extension",
         "requestBody": {
           "content": {
@@ -6253,7 +6234,7 @@
           "Extensions"
         ],
         "operationId": "getExtension",
-        "description": "Get details about an existing extension.",
+        "description": "Get details about an existing extension.\n\nExtensions are representations of Extension Schema objects that are attached to Services.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Extensions)\n",
         "summary": "Get an extension",
         "parameters": [
           {
@@ -6346,7 +6327,7 @@
           "Extensions"
         ],
         "operationId": "deleteExtension",
-        "description": "Delete an existing extension. Once the extension is deleted, it will not be accessible from the web UI and new incidents won't be able to be created for this extension.",
+        "description": "Delete an existing extension. \n\nOnce the extension is deleted, it will not be accessible from the web UI and new incidents won't be able to be created for this extension.\n\nExtensions are representations of Extension Schema objects that are attached to Services.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Extensions)\n",
         "summary": "Delete an extension",
         "parameters": [
           {
@@ -6373,7 +6354,7 @@
           "Extensions"
         ],
         "operationId": "updateExtension",
-        "description": "Update an existing extension.",
+        "description": "Update an existing extension.\n\nExtensions are representations of Extension Schema objects that are attached to Services.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Extensions)\n",
         "summary": "Update an extension",
         "parameters": [
           {
@@ -6470,7 +6451,7 @@
           "Extension Schemas"
         ],
         "operationId": "listExtensionSchemas",
-        "description": "List all extension schemas.",
+        "description": "List all extension schemas.\n\nA PagerDuty extension vendor represents a specific type of outbound extension such as Generic Webhook, Slack, ServiceNow.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Extensions_Schemas)\n",
         "summary": "List extension schemas",
         "responses": {
           "200": {
@@ -6558,7 +6539,7 @@
           "Extension Schemas"
         ],
         "operationId": "getExtensionSchema",
-        "description": "Get details about one specific extension vendor.",
+        "description": "Get details about one specific extension vendor.\n\nA PagerDuty extension vendor represents a specific type of outbound extension such as Generic Webhook, Slack, ServiceNow.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Extensions_Schemas)\n",
         "summary": "Get an extension vendor",
         "parameters": [
           {
@@ -6642,7 +6623,7 @@
           "Incidents"
         ],
         "operationId": "listIncidents",
-        "description": "List existing incidents.",
+        "description": "List existing incidents.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Incidents)\n",
         "summary": "List incidents",
         "parameters": [
           {
@@ -6858,7 +6839,7 @@
           "Incidents"
         ],
         "operationId": "updateIncidents",
-        "description": "Acknowledge, resolve, escalate or reassign one or more incidents.",
+        "description": "Acknowledge, resolve, escalate or reassign one or more incidents.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Incidents)\n",
         "summary": "Manage incidents",
         "parameters": [
           {
@@ -7126,7 +7107,7 @@
           "Incidents"
         ],
         "operationId": "createIncident",
-        "description": "Create an incident synchronously without a corresponding event from a monitoring service.",
+        "description": "Create an incident synchronously without a corresponding event from a monitoring service.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Incidents)\n",
         "summary": "Create an Incident",
         "parameters": [
           {
@@ -7352,7 +7333,7 @@
           "Incidents"
         ],
         "operationId": "mergeIncidents",
-        "description": "Merge a list of source incidents into this incident.",
+        "description": "Merge a list of source incidents into this incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Incidents)\n",
         "summary": "Merge incidents",
         "parameters": [
           {
@@ -7454,7 +7435,7 @@
           "Incidents"
         ],
         "operationId": "getIncident",
-        "description": "Show detailed information about an incident. Accepts either an incident id, or an incident number.",
+        "description": "Show detailed information about an incident. Accepts either an incident id, or an incident number.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Incidents)\n",
         "summary": "Get an incident",
         "parameters": [
           {
@@ -7613,7 +7594,7 @@
           "Incidents"
         ],
         "operationId": "updateIncident",
-        "description": "Acknowledge, resolve, escalate or reassign an incident.",
+        "description": "Acknowledge, resolve, escalate or reassign an incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Incidents)\n",
         "summary": "Update an incident",
         "parameters": [
           {
@@ -7859,7 +7840,7 @@
           "Incidents"
         ],
         "operationId": "listIncidentAlerts",
-        "description": "List alerts for the specified incident.",
+        "description": "List alerts for the specified incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Incidents)\n",
         "summary": "List alerts for an incident",
         "parameters": [
           {
@@ -8030,7 +8011,7 @@
           "Incidents"
         ],
         "operationId": "updateIncidentAlerts",
-        "description": "Resolve multiple alerts or associate them with different incidents.",
+        "description": "Resolve multiple alerts or associate them with different incidents.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Incidents)\n",
         "summary": "Manage alerts",
         "parameters": [
           {
@@ -8177,7 +8158,7 @@
           "Incidents"
         ],
         "operationId": "getIncidentAlert",
-        "description": "Show detailed information about an alert. Accepts an alert id.",
+        "description": "Show detailed information about an alert. Accepts an alert id.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nWhen a service sends an event to PagerDuty, an alert and corresponding incident is triggered in PagerDuty.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Incidents)\n",
         "summary": "Get an alert",
         "parameters": [
           {
@@ -8275,7 +8256,7 @@
           "Incidents"
         ],
         "operationId": "updateIncidentAlert",
-        "description": "Resolve an alert or associate an alert with a new parent incident.",
+        "description": "Resolve an alert or associate an alert with a new parent incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nWhen a service sends an event to PagerDuty, an alert and corresponding incident is triggered in PagerDuty.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Incidents)\n",
         "summary": "Update an alert",
         "parameters": [
           {
@@ -8353,7 +8334,7 @@
           "Incidents"
         ],
         "operationId": "listIncidentLogEntries",
-        "description": "List log entries for the specified incident.",
+        "description": "List log entries for the specified incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nA Log Entry are a record of all events on your account.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Incidents)\n",
         "summary": "List log entries for an incident",
         "parameters": [
           {
@@ -8471,7 +8452,7 @@
           "Incidents"
         ],
         "operationId": "listIncidentNotes",
-        "description": "List existing notes for the specified incident.",
+        "description": "List existing notes for the specified incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Incidents)\n",
         "summary": "List notes for an incident",
         "parameters": [
           {
@@ -8544,7 +8525,7 @@
           "Incidents"
         ],
         "operationId": "createIncidentNote",
-        "description": "Create a new note for the specified incident.",
+        "description": "Create a new note for the specified incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Incidents)\n",
         "summary": "Create a note on an incident",
         "parameters": [
           {
@@ -8635,7 +8616,7 @@
           "Incidents"
         ],
         "operationId": "createIncidentStatusUpdate",
-        "description": "Create a new status update for the specified incident.",
+        "description": "Create a new status update for the specified incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Incidents)\n",
         "summary": "Create a status update on an incident",
         "parameters": [
           {
@@ -8730,7 +8711,7 @@
           "Incidents"
         ],
         "operationId": "createIncidentResponderRequest",
-        "description": "Send a new responder request for the specified incident.",
+        "description": "Send a new responder request for the specified incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Incidents)\n",
         "summary": "Create a responder request for an incident",
         "parameters": [
           {
@@ -8887,7 +8868,7 @@
           "Incidents"
         ],
         "operationId": "createIncidentSnooze",
-        "description": "Snooze an incident.",
+        "description": "Snooze an incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Incidents)\n",
         "summary": "Snooze an incident",
         "parameters": [
           {
@@ -9055,7 +9036,7 @@
           "Log Entries"
         ],
         "operationId": "listLogEntries",
-        "description": "List all of the incident log entries across the entire account.",
+        "description": "List all of the incident log entries across the entire account.\n\nA log of all the events that happen to an Incident, and these are exposed as Log Entries.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Log_Entries)\n",
         "summary": "List log entries",
         "parameters": [
           {
@@ -9176,7 +9157,7 @@
           "Log Entries"
         ],
         "operationId": "getLogEntry",
-        "description": "Get details for a specific incident log entry. This method provides additional information you can use to get at raw event data.",
+        "description": "Get details for a specific incident log entry. This method provides additional information you can use to get at raw event data.\n\nA log of all the events that happen to an Incident, and these are exposed as Log Entries.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Log_Entries)\n",
         "summary": "Get a log entry",
         "parameters": [
           {
@@ -9279,7 +9260,7 @@
           "Maintenance Windows"
         ],
         "operationId": "listMaintenanceWindows",
-        "description": "List existing maintenance windows, optionally filtered by service and/or team, or whether they are from the past, present or future.",
+        "description": "List existing maintenance windows, optionally filtered by service and/or team, or whether they are from the past, present or future.\n\nA Maintenance Window is used to temporarily disable one or more Services for a set period of time.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Maintenance_Windows)\n",
         "summary": "List maintenance windows",
         "parameters": [
           {
@@ -9412,7 +9393,7 @@
           "Maintenance Windows"
         ],
         "operationId": "createMaintenanceWindow",
-        "description": "Create a new maintenance window for the specified services. No new incidents will be created for a service that is in maintenance.",
+        "description": "Create a new maintenance window for the specified services. No new incidents will be created for a service that is in maintenance.\n\nA Maintenance Window is used to temporarily disable one or more Services for a set period of time.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Maintenance_Windows)\n",
         "summary": "Create a maintenance window",
         "parameters": [
           {
@@ -9522,7 +9503,7 @@
           "Maintenance Windows"
         ],
         "operationId": "getMaintenanceWindow",
-        "description": "Get an existing maintenance window.",
+        "description": "Get an existing maintenance window.\n\nA Maintenance Window is used to temporarily disable one or more Services for a set period of time.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Maintenance_Windows)\n",
         "summary": "Get a maintenance window",
         "parameters": [
           {
@@ -9614,7 +9595,7 @@
           "Maintenance Windows"
         ],
         "operationId": "deleteMaintenanceWindow",
-        "description": "Delete an existing maintenance window if it's in the future, or end it if it's currently on-going. If the maintenance window has already ended it cannot be deleted.",
+        "description": "Delete an existing maintenance window if it's in the future, or end it if it's currently on-going. If the maintenance window has already ended it cannot be deleted.\n\nA Maintenance Window is used to temporarily disable one or more Services for a set period of time.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Maintenance_Windows)\n",
         "summary": "Delete or end a maintenance window",
         "parameters": [
           {
@@ -9647,7 +9628,7 @@
           "Maintenance Windows"
         ],
         "operationId": "updateMaintenanceWindow",
-        "description": "Update an existing maintenance window.",
+        "description": "Update an existing maintenance window.\n\nA Maintenance Window is used to temporarily disable one or more Services for a set period of time.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Maintenance_Windows)\n",
         "summary": "Update a maintenance window",
         "parameters": [
           {
@@ -9760,7 +9741,7 @@
           "Notifications"
         ],
         "operationId": "listNotifications",
-        "description": "List notifications for a given time range, optionally filtered by type (sms_notification, email_notification, phone_notification, or push_notification).",
+        "description": "List notifications for a given time range, optionally filtered by type (sms_notification, email_notification, phone_notification, or push_notification).\n\nA Notification is created when an Incident is triggered or escalated.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Notifications)\n",
         "summary": "List notifications",
         "parameters": [
           {
@@ -9900,13 +9881,13 @@
       }
     },
     "/oncalls": {
-      "description": "List all of the on-call entries within a given time range for a given set of users, escalation policies, and/or schedules. Each on-call entry includes:\n\n\n- the date/time period for the on-call entry;\n- the escalation policy, rule, and level;\n- the schedule, if the rule targeted a schedule and not a user; and,\n- the user on call for the escalation policy rule during that time.\n",
+      "description": "List all of the on-call entries within a given time range for a given set of users, escalation policies, and/or schedules. Each on-call entry includes:\n\n- the date/time period for the on-call entry;\n- the escalation policy, rule, and level;\n- the schedule, if the rule targeted a schedule and not a user; and,\n- the user on call for the escalation policy rule during that time.\n",
       "get": {
         "tags": [
           "On-Calls"
         ],
         "operationId": "listOnCalls",
-        "description": "List the on-call entries during a given time range.",
+        "description": "List the on-call entries during a given time range.\n\nAn on-call represents a contiguous unit of time for which a User will be on call for a given Escalation Policy and Escalation Rules.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#On-Calls)\n",
         "summary": "List all of the on-calls",
         "parameters": [
           {
@@ -10086,7 +10067,7 @@
           "Priorities"
         ],
         "operationId": "listPriorities",
-        "description": "List existing priorities, in order (most to least severe).",
+        "description": "List existing priorities, in order (most to least severe).\n\nA priority is a label representing the importance and impact of an incident. This feature is only available on Standard and Enterprise plans.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Priorities)\n",
         "summary": "List priorities",
         "responses": {
           "200": {
@@ -10195,7 +10176,7 @@
           "Response Plays"
         ],
         "operationId": "runResponsePlay",
-        "description": "Run a specified response play on a given incident.",
+        "description": "Run a specified response play on a given incident.\n\nResponse Plays are a package of Incident Actions that can be applied during an Incident's life cycle.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Response_Plays)\n",
         "summary": "Run a response play",
         "parameters": [
           {
@@ -10275,7 +10256,7 @@
           "Schedules"
         ],
         "operationId": "listSchedules",
-        "description": "List the on-call schedules.",
+        "description": "List the on-call schedules.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Schedules)\n",
         "summary": "List schedules",
         "parameters": [
           {
@@ -10391,7 +10372,7 @@
           "Schedules"
         ],
         "operationId": "createSchedule",
-        "description": "Create a new on-call schedule.",
+        "description": "Create a new on-call schedule.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Schedules)\n",
         "summary": "Create a schedule",
         "parameters": [
           {
@@ -10685,7 +10666,7 @@
           "Schedules"
         ],
         "operationId": "deleteSchedule",
-        "description": "Delete an on-call schedule.",
+        "description": "Delete an on-call schedule.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Schedules)\n",
         "summary": "Delete a schedule",
         "parameters": [
           {
@@ -10718,7 +10699,7 @@
           "Schedules"
         ],
         "operationId": "updateSchedule",
-        "description": "Update an existing on-call schedule.",
+        "description": "Update an existing on-call schedule.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Schedules)\n",
         "summary": "Update a schedule",
         "parameters": [
           {
@@ -10862,7 +10843,7 @@
           "Schedules"
         ],
         "operationId": "createSchedulePreview",
-        "description": "Preview what an on-call schedule would look like without saving it.",
+        "description": "Preview what an on-call schedule would look like without saving it.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Schedules)\n",
         "summary": "Preview a schedule",
         "parameters": [
           {
@@ -10998,7 +10979,7 @@
           "Schedules"
         ],
         "operationId": "listScheduleOverrides",
-        "description": "List overrides for a given time range.",
+        "description": "List overrides for a given time range.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Schedules)\n",
         "summary": "List overrides",
         "parameters": [
           {
@@ -11107,7 +11088,7 @@
           "Schedules"
         ],
         "operationId": "createScheduleOverride",
-        "description": "Create an override for a specific user covering the specified time range. If you create an override on top of an existing one, the last created override will have priority.",
+        "description": "Create an override for a specific user covering the specified time range. If you create an override on top of an existing one, the last created override will have priority.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Schedules)\n",
         "summary": "Create an override",
         "parameters": [
           {
@@ -11197,7 +11178,7 @@
           "Schedules"
         ],
         "operationId": "deleteScheduleOverride",
-        "description": "Remove an override. You cannot remove a past override. If the override start time is before the current time, but the end time is after the current time, the override will be truncated to the current time. If the override is truncated, the status code will be 200 OK, as opposed to a 204 No Content for a successful delete.",
+        "description": "Remove an override. \n\nYou cannot remove a past override. \n\nIf the override start time is before the current time, but the end time is after the current time, the override will be truncated to the current time. \n\nIf the override is truncated, the status code will be 200 OK, as opposed to a 204 No Content for a successful delete.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Schedules)\n",
         "summary": "Delete an override",
         "parameters": [
           {
@@ -11236,7 +11217,7 @@
           "Schedules"
         ],
         "operationId": "listScheduleUsers",
-        "description": "List all of the users on call in a given schedule for a given time range.",
+        "description": "List all of the users on call in a given schedule for a given time range.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Schedules)\n",
         "summary": "List users on call.",
         "parameters": [
           {
@@ -11404,72 +11385,64 @@
         ],
         "operationId": "createServiceDependency",
         "summary": "Associate service dependencies",
-        "description": "Create new dependencies between two services.",
-        "parameters": [
-          {
-            "name": "relationships",
-            "in": "query",
-            "description": "Multiple relationships of service dependencies to be created.",
-            "content": {
-              "application/vnd.pagerduty+json;version=2": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "type": "object",
-                      "properties": {
-                        "relationships": {
-                          "type": "object",
-                          "properties": {
-                            "supporting_service": {
-                              "type": "object",
-                              "description": "The reference to the service that SUPPORTS the dependent service.",
-                              "properties": {
-                                "id": {
-                                  "type": "string"
-                                },
-                                "type": {
-                                  "type": "string"
-                                }
-                              }
-                            },
-                            "dependent_service": {
-                              "type": "object",
-                              "description": "The reference to the service that is DEPENDENT on the supporting service.",
-                              "properties": {
-                                "id": {
-                                  "type": "string"
-                                },
-                                "type": {
-                                  "type": "string"
-                                }
-                              }
-                            }
+        "description": "Create new dependencies between two services.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Business_Services)\n",
+        "requestBody": {
+          "content": {
+            "applicant/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "relationships": {
+                    "type": "object",
+                    "description": "Multiple relationships of service dependencies to be deleted.",
+                    "properties": {
+                      "supporting_service": {
+                        "type": "object",
+                        "description": "The reference to the service that SUPPORTS the dependent service.",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "type": {
+                            "type": "string"
                           }
                         }
                       },
-                      "example": {
-                        "relationships": [
-                          {
-                            "supporting_service": {
-                              "id": "P7AD56",
-                              "type": "business_service"
-                            },
-                            "dependent_service": {
-                              "id": "P99DJ6",
-                              "type": "service"
-                            }
+                      "dependent_service": {
+                        "type": "object",
+                        "description": "The reference to the service that is DEPENDENT on the supporting service.",
+                        "properties": {
+                          "id": {
+                            "type": "string"
                           },
-                          {
-                            "supporting_service": {
-                              "id": "DT93K1",
-                              "type": "business_service"
-                            },
-                            "dependent_service": {
-                              "id": "RS34D9",
-                              "type": "service"
-                            }
+                          "type": {
+                            "type": "string"
                           }
-                        ]
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "relationships": [
+                    {
+                      "supporting_service": {
+                        "id": "P7AD56",
+                        "type": "business_service"
+                      },
+                      "dependent_service": {
+                        "id": "P99DJ6",
+                        "type": "service"
+                      }
+                    },
+                    {
+                      "supporting_service": {
+                        "id": "DT93K1",
+                        "type": "business_service"
+                      },
+                      "dependent_service": {
+                        "id": "RS34D9",
+                        "type": "service"
                       }
                     }
                   ]
@@ -11477,7 +11450,7 @@
               }
             }
           }
-        ],
+        },
         "responses": {
           "204": {
             "description": "The services were successfully associated."
@@ -11505,76 +11478,72 @@
         ],
         "operationId": "deleteServiceDependency",
         "summary": "Disassociate service dependencies",
-        "description": "Disassociate dependencies between two services.",
-        "parameters": [
-          {
-            "name": "relationships",
-            "in": "query",
-            "description": "Multiple relationships of service dependencies to be deleted.",
-            "schema": {
-              "allOf": [
-                {
-                  "type": "object",
-                  "properties": {
-                    "relationships": {
-                      "type": "object",
-                      "properties": {
-                        "supporting_service": {
-                          "type": "object",
-                          "description": "The reference to the service that SUPPORTS the dependent service.",
-                          "properties": {
-                            "id": {
-                              "type": "string"
-                            },
-                            "type": {
-                              "type": "string"
-                            }
+        "description": "Disassociate dependencies between two services.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Business_Services)\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "relationships": {
+                    "type": "object",
+                    "description": "Multiple relationships of service dependencies to be deleted.",
+                    "properties": {
+                      "supporting_service": {
+                        "type": "object",
+                        "description": "The reference to the service that SUPPORTS the dependent service.",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "type": {
+                            "type": "string"
                           }
-                        },
-                        "dependent_service": {
-                          "type": "object",
-                          "description": "The reference to the service that is DEPENDENT on the supporting service.",
-                          "properties": {
-                            "id": {
-                              "type": "string"
-                            },
-                            "type": {
-                              "type": "string"
-                            }
+                        }
+                      },
+                      "dependent_service": {
+                        "type": "object",
+                        "description": "The reference to the service that is DEPENDENT on the supporting service.",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "type": {
+                            "type": "string"
                           }
                         }
                       }
                     }
-                  },
-                  "example": {
-                    "relationships": [
-                      {
-                        "supporting_service": {
-                          "id": "P7AD56",
-                          "type": "business_service"
-                        },
-                        "dependent_service": {
-                          "id": "P99DJ6",
-                          "type": "service"
-                        }
-                      },
-                      {
-                        "supporting_service": {
-                          "id": "DT93K1",
-                          "type": "business_service"
-                        },
-                        "dependent_service": {
-                          "id": "RS34D9",
-                          "type": "service"
-                        }
-                      }
-                    ]
                   }
+                },
+                "example": {
+                  "relationships": [
+                    {
+                      "supporting_service": {
+                        "id": "P7AD56",
+                        "type": "business_service"
+                      },
+                      "dependent_service": {
+                        "id": "P99DJ6",
+                        "type": "service"
+                      }
+                    },
+                    {
+                      "supporting_service": {
+                        "id": "DT93K1",
+                        "type": "business_service"
+                      },
+                      "dependent_service": {
+                        "id": "RS34D9",
+                        "type": "service"
+                      }
+                    }
+                  ]
                 }
-              ]
+              }
             }
           }
-        ],
+        },
         "responses": {
           "204": {
             "description": "The services were successfully disassociated."
@@ -11602,7 +11571,7 @@
         ],
         "operationId": "getBusinessServiceServiceDependencies",
         "summary": "Get business service dependencies",
-        "description": "Get all immediate dependencies of any business service.",
+        "description": "Get all immediate dependencies of any business service.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Business_Services)\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/id"
@@ -11700,7 +11669,7 @@
           "Services"
         ],
         "operationId": "listServices",
-        "description": "List existing services.",
+        "description": "List existing Services.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Services)\n",
         "summary": "List services",
         "parameters": [
           {
@@ -11870,7 +11839,7 @@
           "Services"
         ],
         "operationId": "createService",
-        "description": "Create a new service.",
+        "description": "Create a new service.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Services)\n",
         "summary": "Create a service",
         "requestBody": {
           "content": {
@@ -12011,7 +11980,7 @@
           "Services"
         ],
         "operationId": "getService",
-        "description": "Get details about an existing service.",
+        "description": "Get details about an existing service.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Services)\n",
         "summary": "Get a service",
         "parameters": [
           {
@@ -12153,7 +12122,7 @@
           "Services"
         ],
         "operationId": "deleteService",
-        "description": "Delete an existing service. Once the service is deleted, it will not be accessible from the web UI and new incidents won't be able to be created for this service.",
+        "description": "Delete an existing service. \n\nOnce the service is deleted, it will not be accessible from the web UI and new incidents won't be able to be created for this service.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Services)\n",
         "summary": "Delete a service",
         "parameters": [
           {
@@ -12176,7 +12145,7 @@
         "tags": [
           "Services"
         ],
-        "description": "Update an existing service.",
+        "description": "Update an existing service.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Services)\n",
         "summary": "Update a service",
         "parameters": [
           {
@@ -12326,7 +12295,7 @@
         ],
         "operationId": "createServiceIntegration",
         "summary": "Create a new integration",
-        "description": "Create a new integration belonging to a service.",
+        "description": "Create a new integration belonging to a Service.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Services)\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/id"
@@ -12417,7 +12386,7 @@
         ],
         "operationId": "updateServiceIntegration",
         "summary": "Update an existing integration",
-        "description": "Update an integration belonging to a service.",
+        "description": "Update an integration belonging to a Service.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Services)\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/id"
@@ -12511,7 +12480,7 @@
         ],
         "operationId": "getServiceIntegration",
         "summary": "View an integration",
-        "description": "Get details about an integration belonging to a service.",
+        "description": "Get details about an integration belonging to a service.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Services)\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/id"
@@ -12608,7 +12577,7 @@
           "Contextual Search"
         ],
         "operationId": "listTags",
-        "description": "List all of your account's tags.",
+        "description": "List all of your account's tags.\n\nA Tag is applied to EScalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Tags)\n",
         "summary": "List tags",
         "parameters": [
           {
@@ -12683,7 +12652,7 @@
           "Contextual Search"
         ],
         "operationId": "createTags",
-        "description": "Create a new tag.",
+        "description": "Create a Tag.\n\nA Tag is applied to EScalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Tags)\n",
         "summary": "Create a tag",
         "requestBody": {
           "content": {
@@ -12756,7 +12725,7 @@
           "Contextual Search"
         ],
         "operationId": "getTag",
-        "description": "Get details about an existing tag.",
+        "description": "Get details about an existing Tag.\n\nA Tag is applied to EScalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Tags)\n",
         "summary": "Get a tag",
         "parameters": [
           {
@@ -12815,7 +12784,7 @@
           "Contextual Search"
         ],
         "operationId": "deleteTag",
-        "description": "Remove an existing tag.",
+        "description": "Remove an existing Tag.\n\nA Tag is applied to EScalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Tags)\n",
         "summary": "Delete a tag",
         "parameters": [
           {
@@ -12844,7 +12813,7 @@
           "Contextual Search"
         ],
         "operationId": "getTagsByEntityType",
-        "description": "Get related Users, Teams or Escalation Policies for the tag.",
+        "description": "Get related Users, Teams or Escalation Policies for the Tag.\n\nA Tag is applied to EScalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Tags)\n",
         "summary": "Get connected entities",
         "parameters": [
           {
@@ -12930,7 +12899,7 @@
           "Contextual Search"
         ],
         "operationId": "getEntityTypeByIdTags",
-        "description": "Get related tags for Users, Teams or Escalation Policies.",
+        "description": "Get related tags for Users, Teams or Escalation Policies.\n\nA Tag is applied to EScalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Tags)\n",
         "summary": "Get tags for entities",
         "parameters": [
           {
@@ -13005,7 +12974,7 @@
           "Contextual Search"
         ],
         "operationId": "createEntityTypeByIdChangeTags",
-        "description": "Assign existing or new tags.",
+        "description": "Assign existing or new tags.\n\nA Tag is applied to EScalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Tags)\n",
         "summary": "Assign tags",
         "parameters": [
           {
@@ -13135,7 +13104,7 @@
           "Teams"
         ],
         "operationId": "createTeam",
-        "description": "Create a new team.",
+        "description": "Create a new Team.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Teams)\n",
         "summary": "Create a team",
         "requestBody": {
           "content": {
@@ -13214,7 +13183,7 @@
           "Teams"
         ],
         "operationId": "listTeams",
-        "description": "List teams of your PagerDuty account, optionally filtered by a search query.",
+        "description": "List teams of your PagerDuty account, optionally filtered by a search query.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Teams)\n",
         "summary": "List teams",
         "parameters": [
           {
@@ -13302,7 +13271,7 @@
           "Teams"
         ],
         "operationId": "getTeam",
-        "description": "Get details about an existing team.",
+        "description": "Get details about an existing team.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Teams)\n",
         "summary": "Get a team",
         "parameters": [
           {
@@ -13374,7 +13343,7 @@
           "Teams"
         ],
         "operationId": "deleteTeam",
-        "description": "Remove an existing team. \n\nSucceeds only if the team has no associated Escalation Policies, Services, Schedules and Subteams. \n\nAll associated unresovled incidents will be reassigned to another team (if specified) or will loose team association, thus becoming account-level (with visibility implications). \n\nNote that the incidents reassignment process is asynchronous and has no guarantee to complete before the API call return.\n",
+        "description": "Remove an existing team. \n\nSucceeds only if the team has no associated Escalation Policies, Services, Schedules and Subteams. \n\nAll associated unresovled incidents will be reassigned to another team (if specified) or will loose team association, thus becoming account-level (with visibility implications). \n\nNote that the incidents reassignment process is asynchronous and has no guarantee to complete before the API call return.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Teams)\n",
         "summary": "Delete a team",
         "parameters": [
           {
@@ -13413,7 +13382,7 @@
           "Teams"
         ],
         "operationId": "updateTeam",
-        "description": "Update an existing team.",
+        "description": "Update an existing team.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Teams)\n",
         "summary": "Update a team",
         "parameters": [
           {
@@ -13500,7 +13469,7 @@
           "Teams"
         ],
         "operationId": "listTeamUsers",
-        "description": "Get information about members on a team.",
+        "description": "Get information about members on a team.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Teams)\n",
         "summary": "Get information about members on a team",
         "parameters": [
           {
@@ -13591,7 +13560,7 @@
           "Teams"
         ],
         "operationId": "deleteTeamUser",
-        "description": "Remove a user from a team.",
+        "description": "Remove a user from a team.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Teams)\n",
         "summary": "Remove a user from a team",
         "parameters": [
           {
@@ -13630,7 +13599,7 @@
           "Teams"
         ],
         "operationId": "updateTeamUser",
-        "description": "Add a user to a team. Attempting to add a user with the `read_only_user` role will return a 400 error.",
+        "description": "Add a user to a team. Attempting to add a user with the `read_only_user` role will return a 400 error.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Teams)\n",
         "summary": "Add a user to a team",
         "parameters": [
           {
@@ -13696,7 +13665,7 @@
           "Teams"
         ],
         "operationId": "deleteTeamEscalationPolicy",
-        "description": "Remove an escalation policy from a team.",
+        "description": "Remove an escalation policy from a team.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Teams)\n",
         "summary": "Remove an escalation policy from a team",
         "parameters": [
           {
@@ -13735,7 +13704,7 @@
           "Teams"
         ],
         "operationId": "updateTeamEscalationPolicy",
-        "description": "Add an escalation policy to a team.",
+        "description": "Add an escalation policy to a team.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Teams)\n",
         "summary": "Add an escalation policy to a team",
         "parameters": [
           {
@@ -13777,7 +13746,7 @@
           "Users"
         ],
         "operationId": "listUsers",
-        "description": "List users of your PagerDuty account, optionally filtered by a search query.",
+        "description": "List users of your PagerDuty account, optionally filtered by a search query.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Users)\n",
         "summary": "List users",
         "parameters": [
           {
@@ -13952,7 +13921,7 @@
           "Users"
         ],
         "operationId": "createUser",
-        "description": "Create a new user. Note that you must also supply a `password` property to create a user--it will not be returned by any API.",
+        "description": "Create a new user. Note that you must also supply a `password` property to create a user--it will not be returned by any API.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Users)\n",
         "summary": "Create a user",
         "parameters": [
           {
@@ -14077,7 +14046,7 @@
           "Users"
         ],
         "operationId": "getUser",
-        "description": "Get details about an existing user.",
+        "description": "Get details about an existing user.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Users)\n",
         "summary": "Get a user",
         "parameters": [
           {
@@ -14184,7 +14153,7 @@
           "Users"
         ],
         "operationId": "deleteUser",
-        "description": "Remove an existing user.\n\nReturns 400 if the user has assigned incidents unless your [pricing plan](https://support.pagerduty.com/docs/offboarding) has the `offboarding` feature and the account is [configured](https://support.pagerduty.com/docs/offboarding#section-additional-configurations) appropriately.\n\nNote that the incidents reassignment process is asynchronous and has no guarantee to complete before the api call return.\n\n[*Learn more about `offboarding` feature*](https://support.pagerduty.com/docs/offboarding).\n",
+        "description": "Remove an existing user.\n\nReturns 400 if the user has assigned incidents unless your [pricing plan](https://support.pagerduty.com/docs/offboarding) has the `offboarding` feature and the account is [configured](https://support.pagerduty.com/docs/offboarding#section-additional-configurations) appropriately.\n\nNote that the incidents reassignment process is asynchronous and has no guarantee to complete before the api call return.\n\n[*Learn more about `offboarding` feature*](https://support.pagerduty.com/docs/offboarding).\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Users)\n",
         "summary": "Delete a user",
         "parameters": [
           {
@@ -14214,7 +14183,7 @@
           "Users"
         ],
         "operationId": "updateUser",
-        "description": "Update an existing user. Note that you may also supply a `password` property--it will not be returned by any API.",
+        "description": "Update an existing user. Note that you may also supply a `password` property--it will not be returned by any API.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Users)\n",
         "summary": "Update a user",
         "parameters": [
           {
@@ -14342,7 +14311,7 @@
           "Users"
         ],
         "operationId": "getCurrentUser",
-        "description": "Get details about the current user. This endpoint can only be used with a [user-level API key](https://support.pagerduty.com/docs/using-the-api#section-generating-a-personal-rest-api-key) or a key generated through an OAuth flow. This will not work if the request is made with an account-level access token.",
+        "description": "Get details about the current user. \n\nThis endpoint can only be used with a [user-level API key](https://support.pagerduty.com/docs/using-the-api#section-generating-a-personal-rest-api-key) or a key generated through an OAuth flow. This will not work if the request is made with an account-level access token.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Users)\n",
         "summary": "Get the current user",
         "parameters": [
           {
@@ -14440,7 +14409,7 @@
           "Users"
         ],
         "operationId": "getUserContactMethods",
-        "description": "List contact methods of your PagerDuty user.",
+        "description": "List contact methods of your PagerDuty user.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Users)\n",
         "summary": "List a user's contact methods",
         "parameters": [
           {
@@ -14507,7 +14476,7 @@
           "Users"
         ],
         "operationId": "createUserContactMethod",
-        "description": "Create a new contact method.",
+        "description": "Create a new contact method for the User.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Users)\n",
         "summary": "Create a user contact method",
         "parameters": [
           {
@@ -14590,7 +14559,7 @@
           "Users"
         ],
         "operationId": "getUserContactMethod",
-        "description": "Get details about a user's contact method.",
+        "description": "Get details about a User's contact method.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Users)\n",
         "summary": "Get a user's contact method",
         "parameters": [
           {
@@ -14658,7 +14627,7 @@
           "Users"
         ],
         "operationId": "deleteUserContactMethod",
-        "description": "Remove a user's contact method.",
+        "description": "Remove a user's contact method.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Users)\n",
         "summary": "Delete a user's contact method",
         "parameters": [
           {
@@ -14691,7 +14660,7 @@
           "Users"
         ],
         "operationId": "updateUserContactMethod",
-        "description": "Update a user's contact method.",
+        "description": "Update a User's contact method.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Users)\n",
         "summary": "Update a user's contact method",
         "parameters": [
           {
@@ -14780,7 +14749,7 @@
           "Users"
         ],
         "operationId": "getUserNotificationRules",
-        "description": "List notification rules of your PagerDuty user.",
+        "description": "List notification rules of your PagerDuty user.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Users)\n",
         "summary": "List a user's notification rules",
         "parameters": [
           {
@@ -14869,7 +14838,7 @@
           "Users"
         ],
         "operationId": "createUserNotificationRule",
-        "description": "Create a new notification rule.",
+        "description": "Create a new notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Users)\n",
         "summary": "Create a user notification rule",
         "parameters": [
           {
@@ -14961,7 +14930,7 @@
           "Users"
         ],
         "operationId": "getUserNotificationRule",
-        "description": "Get details about a user's notification rule.",
+        "description": "Get details about a user's notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Users)\n",
         "summary": "Get a user's notification rule",
         "parameters": [
           {
@@ -15051,7 +15020,7 @@
           "Users"
         ],
         "operationId": "deleteUserNotificationRule",
-        "description": "Remove a user's notification rule.",
+        "description": "Remove a user's notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Users)\n",
         "summary": "Delete a user's notification rule",
         "parameters": [
           {
@@ -15084,7 +15053,7 @@
           "Users"
         ],
         "operationId": "updateUserNotificationRule",
-        "description": "Update a user's notification rule.",
+        "description": "Update a user's notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Users)\n",
         "summary": "Update a user's notification rule",
         "parameters": [
           {
@@ -15182,7 +15151,7 @@
           "Users"
         ],
         "operationId": "getUserSessions",
-        "description": "List active sessions of a PagerDuty user.",
+        "description": "List active sessions of a PagerDuty user.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Users)\n",
         "summary": "List a user's active sessions",
         "parameters": [
           {
@@ -15250,7 +15219,7 @@
           "Users"
         ],
         "operationId": "deleteUserSessions",
-        "description": "Delete all user sessions.",
+        "description": "Delete all user sessions.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Users)\n",
         "summary": "Delete all user sessions",
         "parameters": [
           {
@@ -15283,7 +15252,7 @@
           "Users"
         ],
         "operationId": "getUserSession",
-        "description": "Get details about a user's session.",
+        "description": "Get details about a user's session.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Users)\n",
         "summary": "Get a user's session",
         "parameters": [
           {
@@ -15352,7 +15321,7 @@
           "Users"
         ],
         "operationId": "deleteUserSession",
-        "description": "Delete a user's session.",
+        "description": "Delete a user's session.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Users)\n",
         "summary": "Delete a user's session",
         "parameters": [
           {
@@ -15391,7 +15360,7 @@
           "Vendors"
         ],
         "operationId": "listVendors",
-        "description": "List all vendors.",
+        "description": "List all vendors.\n\nA PagerDuty Vendor represents a specific type of integration. AWS Cloudwatch, Splunk, Datadog are all examples of vendors\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Vendors)\n",
         "summary": "List vendors",
         "responses": {
           "200": {
@@ -15469,7 +15438,7 @@
           "Vendors"
         ],
         "operationId": "getVendor",
-        "description": "Get details about one specific vendor.",
+        "description": "Get details about one specific vendor.\n\nA PagerDuty Vendor represents a specific type of integration. AWS Cloudwatch, Splunk, Datadog are all examples of vendors\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#Vendors)\n",
         "summary": "Get a vendor",
         "parameters": [
           {
