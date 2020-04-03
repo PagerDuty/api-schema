@@ -46,7 +46,7 @@ If all [On-Call](#On-Calls) [User](#Users) for a given Escalation Rule have been
 [*Read more about Escalation Policies in the PagerDuty Knowledge Base*](https://support.pagerduty.com/hc/en-us/articles/202828950-What-is-an-Escalation-Policy-).
 
 
-## Extension
+## Extensions
 A PagerDuty Extension represents an instance of an [Extension Schema](#Extension-Schema) on a object that an Extension can be attached to, such as a Service.
 
 
@@ -96,8 +96,6 @@ Status Updates are a updates for stakeholders who are not responding to incident
 
 ### Snooze
 Snoozing an Incident will re-trigger it after a specified amount of time.
-
-### Log Entries
 
 
 ### Alerts
