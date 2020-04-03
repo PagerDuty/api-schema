@@ -80,7 +80,7 @@ Incidents can be `triggered`, `acknowledged`, or `resolved`, and are assigned to
 A triggered Incident prompts a [Notification](#Notifications) to be sent to the current [On-Call](#On-Calls) [User(s)](#Users) as defined in the [Escalation Poicy](#Escalation-Policy) used by the [Service](#Services).
 
 
-Incidents are triggered through the [Events API](https://v2.developer.pagerduty.com/docs/events-api) or are created by Integrations.
+Incidents are triggered through the [Events API](https://developer.pagerduty.com/docs/events-api) or are created by Integrations.
 
 
 [*Read more about Incidents in the PagerDuty Knowledge Base*](https://support.pagerduty.com/hc/en-us/articles/202829250-What-Is-an-Incident-).
