@@ -19,7 +19,7 @@ Business Services model capabilities that span multiple technical Services and t
 Mapping technical Services to business Services gives responders context on an Incident’s impact to the business. 
 
 
-[*Read more about business Services in the PagerDuty Knowledge Base*](https://support.pagerduty.com/docs/business-Services).
+[*Read more about business Services in the PagerDuty Knowledge Base*](https://support.pagerduty.com/docs/business-services).
 
 ## Escalation Policies
 
