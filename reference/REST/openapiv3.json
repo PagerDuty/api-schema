@@ -644,10 +644,10 @@
         "discriminator": {
           "propertyName": "type",
           "mapping": {
-            "full_page_addon_reference": "#/models/Reference.yaml",
-            "full_page_addon": "#/models/Addon.yaml",
-            "incident_show_addon_reference": "#/models/Reference.yaml",
-            "incident_show_addon": "#/models/Addon.yaml"
+            "full_page_addon_reference": "#/components/schemas/Reference.yaml",
+            "full_page_addon": "#/components/schemas/Addon.yaml",
+            "incident_show_addon_reference": "#/components/schemas/Reference.yaml",
+            "incident_show_addon": "#/components/schemas/Addon.yaml"
           }
         },
         "required": [
@@ -743,8 +743,8 @@
         "discriminator": {
           "propertyName": "type",
           "mapping": {
-            "business_service_reference": "#/models/Reference.yaml",
-            "business_service": "#/models/BusinessService.yaml"
+            "business_service_reference": "#/components/schemas/Reference.yaml",
+            "business_service": "#/components/schemas/BusinessService.yaml"
           }
         },
         "required": [
@@ -781,8 +781,8 @@
         "discriminator": {
           "propertyName": "type",
           "mapping": {
-            "tag_reference": "#/models/Reference.yaml",
-            "tag": "#/models/Tag.yaml"
+            "tag_reference": "#/components/schemas/Reference.yaml",
+            "tag": "#/components/schemas/Tag.yaml"
           }
         },
         "required": [
@@ -802,9 +802,9 @@
         "discriminator": {
           "propertyName": "type",
           "mapping": {
-            "user_reference": "#/models/Reference.yaml",
-            "team_reference": "#/models/Reference.yaml",
-            "escalation_policy_reference": "#/models/Reference.yaml"
+            "user_reference": "#/components/schemas/Reference.yaml",
+            "team_reference": "#/components/schemas/Reference.yaml",
+            "escalation_policy_reference": "#/components/schemas/Reference.yaml"
           }
         },
         "required": [
@@ -1225,30 +1225,30 @@
         "discriminator": {
           "propertyName": "type",
           "mapping": {
-            "acknowledge_log_entry": "#/models/AcknowledgeLogEntry.yaml",
-            "acknowledge_log_entry_reference": "#/models/Reference.yaml",
-            "annotate_log_entry": "#/models/LogEntry.yaml",
-            "annotate_log_entry_reference": "#/models/Reference.yaml",
-            "assign_log_entry": "#/models/AssignLogEntry.yaml",
-            "assign_log_entry_reference": "#/models/Reference.yaml",
-            "escalate_log_entry": "#/models/EscalateLogEntry.yaml",
-            "escalate_log_entry_reference": "#/models/Reference.yaml",
-            "exhaust_escalation_path_log_entry": "#/models/LogEntry.yaml",
-            "exhaust_escalation_path_log_entry_reference": "#/models/Reference.yaml",
-            "notify_log_entry": "#/models/NotifyLogEntry.yaml",
-            "notify_log_entry_reference": "#/models/Reference.yaml",
-            "reach_trigger_limit_log_entry": "#/models/LogEntry.yaml",
-            "reach_trigger_limit_log_entry_reference": "#/models/Reference.yaml",
-            "repeat_escalation_path_log_entry": "#/models/LogEntry.yaml",
-            "repeat_escalation_path_log_entry_reference": "#/models/Reference.yaml",
-            "resolve_log_entry": "#/models/LogEntry.yaml",
-            "resolve_log_entry_reference": "#/models/Reference.yaml",
-            "snooze_log_entry": "#/models/SnoozeLogEntry.yaml",
-            "snooze_log_entry_reference": "#/models/Reference.yaml",
-            "trigger_log_entry": "#/models/LogEntry.yaml",
-            "trigger_log_entry_reference": "#/models/Reference.yaml",
-            "unacknowledge_log_entry": "#/models/LogEntry.yaml",
-            "unacknowledge_log_entry_reference": "#/models/Reference.yaml"
+            "acknowledge_log_entry": "#/components/schemas/AcknowledgeLogEntry.yaml",
+            "acknowledge_log_entry_reference": "#/components/schemas/Reference.yaml",
+            "annotate_log_entry": "#/components/schemas/LogEntry.yaml",
+            "annotate_log_entry_reference": "#/components/schemas/Reference.yaml",
+            "assign_log_entry": "#/components/schemas/AssignLogEntry.yaml",
+            "assign_log_entry_reference": "#/components/schemas/Reference.yaml",
+            "escalate_log_entry": "#/components/schemas/EscalateLogEntry.yaml",
+            "escalate_log_entry_reference": "#/components/schemas/Reference.yaml",
+            "exhaust_escalation_path_log_entry": "#/components/schemas/LogEntry.yaml",
+            "exhaust_escalation_path_log_entry_reference": "#/components/schemas/Reference.yaml",
+            "notify_log_entry": "#/components/schemas/NotifyLogEntry.yaml",
+            "notify_log_entry_reference": "#/components/schemas/Reference.yaml",
+            "reach_trigger_limit_log_entry": "#/components/schemas/LogEntry.yaml",
+            "reach_trigger_limit_log_entry_reference": "#/components/schemas/Reference.yaml",
+            "repeat_escalation_path_log_entry": "#/components/schemas/LogEntry.yaml",
+            "repeat_escalation_path_log_entry_reference": "#/components/schemas/Reference.yaml",
+            "resolve_log_entry": "#/components/schemas/LogEntry.yaml",
+            "resolve_log_entry_reference": "#/components/schemas/Reference.yaml",
+            "snooze_log_entry": "#/components/schemas/SnoozeLogEntry.yaml",
+            "snooze_log_entry_reference": "#/components/schemas/Reference.yaml",
+            "trigger_log_entry": "#/components/schemas/LogEntry.yaml",
+            "trigger_log_entry_reference": "#/components/schemas/Reference.yaml",
+            "unacknowledge_log_entry": "#/components/schemas/LogEntry.yaml",
+            "unacknowledge_log_entry_reference": "#/components/schemas/Reference.yaml"
           }
         },
         "required": [
@@ -1416,14 +1416,14 @@
         "discriminator": {
           "propertyName": "type",
           "mapping": {
-            "email_contact_method_reference": "#/models/Reference.yaml",
-            "email_contact_method": "#/models/EmailContactMethod.yaml",
-            "phone_contact_method_reference": "#/models/Reference.yaml",
-            "phone_contact_method": "#/models/PhoneContactMethod.yaml",
-            "push_notification_contact_method_reference": "#/models/Reference.yaml",
-            "push_notification_contact_method": "#/models/PushContactMethod.yaml",
-            "sms_contact_method_reference": "#/models/Reference.yaml",
-            "sms_contact_method": "#/models/PhoneContactMethod.yaml"
+            "email_contact_method_reference": "#/components/schemas/Reference.yaml",
+            "email_contact_method": "#/components/schemas/EmailContactMethod.yaml",
+            "phone_contact_method_reference": "#/components/schemas/Reference.yaml",
+            "phone_contact_method": "#/components/schemas/PhoneContactMethod.yaml",
+            "push_notification_contact_method_reference": "#/components/schemas/Reference.yaml",
+            "push_notification_contact_method": "#/components/schemas/PushContactMethod.yaml",
+            "sms_contact_method_reference": "#/components/schemas/Reference.yaml",
+            "sms_contact_method": "#/components/schemas/PhoneContactMethod.yaml"
           }
         },
         "required": [
@@ -1655,8 +1655,8 @@
         "discriminator": {
           "propertyName": "type",
           "mapping": {
-            "user_reference": "#/models/Reference.yaml",
-            "user": "#/models/User.yaml"
+            "user_reference": "#/components/schemas/Reference.yaml",
+            "user": "#/components/schemas/User.yaml"
           }
         },
         "required": [
@@ -1822,8 +1822,8 @@
         "discriminator": {
           "propertyName": "type",
           "mapping": {
-            "team_reference": "#/models/Reference.yaml",
-            "team": "#/models/Team.yaml"
+            "team_reference": "#/components/schemas/Reference.yaml",
+            "team": "#/components/schemas/Team"
           }
         },
         "required": [
@@ -1869,8 +1869,8 @@
         "discriminator": {
           "propertyName": "type",
           "mapping": {
-            "incident_reference": "#/models/Reference.yaml",
-            "incident": "#/models/Incident.yaml"
+            "incident_reference": "#/components/schemas/Reference.yaml",
+            "incident": "#/components/schemas/Incident.yaml"
           }
         },
         "required": [
@@ -2004,8 +2004,8 @@
         "discriminator": {
           "propertyName": "type",
           "mapping": {
-            "escalation_policy_reference": "#/models/Reference.yaml",
-            "escalation_policy": "#/models/EscalationPolicy.yaml"
+            "escalation_policy_reference": "#/components/schemas/Reference.yaml",
+            "escalation_policy": "#/components/schemas/EscalationPolicy.yaml"
           }
         },
         "required": [
@@ -2168,8 +2168,8 @@
         "discriminator": {
           "propertyName": "type",
           "mapping": {
-            "extension_reference": "#/models/Reference.yaml",
-            "extension": "#/models/Extension.yaml"
+            "extension_reference": "#/components/schemas/Reference.yaml",
+            "extension": "#/components/schemas/Extension.yaml"
           }
         },
         "required": [
@@ -2563,8 +2563,8 @@
         "discriminator": {
           "propertyName": "type",
           "mapping": {
-            "service_reference": "#/models/Reference.yaml",
-            "service": "#/models/Service.yaml"
+            "service_reference": "#/components/schemas/Reference.yaml",
+            "service": "#/components/schemas/Service.yaml"
           }
         },
         "required": [
@@ -2746,8 +2746,8 @@
         "discriminator": {
           "propertyName": "type",
           "mapping": {
-            "priority_reference": "#/models/Reference.yaml",
-            "priority": "#/models/Priority.yaml"
+            "priority_reference": "#/components/schemas/Reference.yaml",
+            "priority": "#/components/schemas/Priority.yaml"
           }
         },
         "required": [
@@ -2844,8 +2844,8 @@
         "discriminator": {
           "propertyName": "type",
           "mapping": {
-            "maintenance_window_reference": "#/models/Reference.yaml",
-            "maintenance_window": "#/models/MaintenanceWindow.yaml"
+            "maintenance_window_reference": "#/components/schemas/Reference.yaml",
+            "maintenance_window": "#/components/schemas/MaintenanceWindow.yaml"
           }
         },
         "required": [
@@ -2922,8 +2922,8 @@
         "discriminator": {
           "propertyName": "type",
           "mapping": {
-            "schedule_reference": "#/models/Reference.yaml",
-            "schedule": "#/models/Schedule.yaml"
+            "schedule_reference": "#/components/schemas/Reference.yaml",
+            "schedule": "#/components/schemas/Schedule.yaml"
           }
         },
         "required": [
@@ -3383,8 +3383,8 @@
         "discriminator": {
           "propertyName": "type",
           "mapping": {
-            "vendor_reference": "#/models/Reference.yaml",
-            "vendor": "#/models/Vendor.yaml"
+            "vendor_reference": "#/components/schemas/Reference.yaml",
+            "vendor": "#/components/schemas/Vendor.yaml"
           }
         },
         "required": [
@@ -3452,8 +3452,8 @@
         "discriminator": {
           "propertyName": "type",
           "mapping": {
-            "extension_schema_reference": "#/models/Reference.yaml",
-            "extension_schema": "#/models/ExtensionSchema.yaml"
+            "extension_schema_reference": "#/components/schemas/Reference.yaml",
+            "extension_schema": "#/components/schemas/ExtensionSchema.yaml"
           }
         },
         "required": [
@@ -3675,8 +3675,8 @@
         "discriminator": {
           "propertyName": "type",
           "mapping": {
-            "alert_reference": "#/models/Reference.yaml",
-            "alert": "#/models/Alert.yaml"
+            "alert_reference": "#/components/schemas/Reference.yaml",
+            "alert": "#/components/schemas/Alert.yaml"
           }
         },
         "required": [
@@ -4206,8 +4206,8 @@
         "discriminator": {
           "propertyName": "type",
           "mapping": {
-            "webhook_reference": "#/models/Reference.yaml",
-            "webhook": "#/models/Webhook.yaml"
+            "webhook_reference": "#/components/schemas/Reference.yaml",
+            "webhook": "#/components/schemas/Webhook.yaml"
           }
         },
         "required": [
@@ -4227,7 +4227,7 @@
         "discriminator": {
           "propertyName": "type",
           "mapping": {
-            "outbound_integration_reference": "#/models/Reference.yaml"
+            "outbound_integration_reference": "#/components/schemas/Reference.yaml"
           }
         },
         "required": [
