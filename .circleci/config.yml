@@ -5,6 +5,7 @@ jobs:
     docker:
       - image: circleci/node:erbium
     steps:
+      - checkout
       - run:
           name: Publish to Stoplight
           command: |
@@ -17,7 +18,4 @@ workflows:
   version: 2
   build:
     jobs:
-      - publish:
-          filters:
-            branches:
-              only: master
+      - publish
