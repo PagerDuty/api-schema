@@ -5,6 +5,7 @@ jobs:
     docker:
       - image: circleci/node:erbium
     steps:
+      - checkout
       - run:
           name: Publish to Stoplight
           command: |
