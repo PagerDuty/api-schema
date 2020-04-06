@@ -4491,6 +4491,11 @@
         "operationId": "listAbilities",
         "description": "List all of your account's abilities, by name.\n\n\"Abilities\" describes your account's capabilities by feature name. For example `\"teams\"`.\n\nAn ability may be available to your account based on things like your pricing plan or account state.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#abilities)\n",
         "summary": "List abilities",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          }
+        ],
         "responses": {
           "200": {
             "description": "An array of ability names.",
@@ -4695,6 +4700,11 @@
         "operationId": "createAddon",
         "description": "Install an Add-on for your account.\n\nAddon's are pieces of functionality that developers can write to insert new functionality into PagerDuty's UI.\n\nGiven a configuration containing a `src` parameter, that URL will be embedded in an `iframe` on a page that's available to users from a drop-down menu.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#add-ons)\n",
         "summary": "Install an Add-on",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -5086,6 +5096,11 @@
         "operationId": "createBusinessService",
         "description": "Create a new business service.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#business-services)\n",
         "summary": "Create a business service",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -6084,6 +6099,11 @@
         "operationId": "createExtension",
         "description": "Create a new Extension.\n\nExtensions are representations of Extension Schema objects that are attached to Services.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#extensions)\n",
         "summary": "Create an extension",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -6463,6 +6483,11 @@
         "operationId": "listExtensionSchemas",
         "description": "List all extension schemas.\n\nA PagerDuty extension vendor represents a specific type of outbound extension such as Generic Webhook, Slack, ServiceNow.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#extension-schemas)\n",
         "summary": "List extension schemas",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          }
+        ],
         "responses": {
           "200": {
             "description": "A paginated array of extension schemas.",
@@ -10113,6 +10138,11 @@
         "operationId": "listPriorities",
         "description": "List existing priorities, in order (most to least severe).\n\nA priority is a label representing the importance and impact of an incident. This feature is only available on Standard and Enterprise plans.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#priorities)\n",
         "summary": "List priorities",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          }
+        ],
         "responses": {
           "200": {
             "description": "A paginated array of priorities.",
@@ -11443,6 +11473,11 @@
         "operationId": "createServiceDependency",
         "summary": "Associate service dependencies",
         "description": "Create new dependencies between two services.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#business-services)\n",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          }
+        ],
         "requestBody": {
           "content": {
             "applicant/json": {
@@ -11536,6 +11571,11 @@
         "operationId": "deleteServiceDependency",
         "summary": "Disassociate service dependencies",
         "description": "Disassociate dependencies between two services.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#business-services)\n",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -11902,6 +11942,11 @@
         "operationId": "createService",
         "description": "Create a new service.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#services)\n",
         "summary": "Create a service",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -12731,6 +12776,11 @@
         "operationId": "createTags",
         "description": "Create a Tag.\n\nA Tag is applied to EScalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#tags)\n",
         "summary": "Create a tag",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -13198,6 +13248,11 @@
         "operationId": "createTeam",
         "description": "Create a new Team.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#teams)\n",
         "summary": "Create a team",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -15505,6 +15560,11 @@
         "operationId": "listVendors",
         "description": "List all vendors.\n\nA PagerDuty Vendor represents a specific type of integration. AWS Cloudwatch, Splunk, Datadog are all examples of vendors\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#vendors)\n",
         "summary": "List vendors",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          }
+        ],
         "responses": {
           "200": {
             "description": "A paginated array of vendors.",
