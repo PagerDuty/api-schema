@@ -23,31 +23,31 @@ Mapping technical Services to business Services gives responders context on an I
 
 ## Escalation Policies
 
-An Escalation Policy determines what [User](#Users) or [Schedule](#Schedules) will be [Notified](#Notifications) and in what order. This will happen when an [Incident](#Incidents) is triggered.
+An Escalation Policy determines what [User](#users) or [Schedule](#schedules) will be [Notified](#notifications) and in what order. This will happen when an [Incident](#incidents) is triggered.
 
 
-Escalation policies can be used by one or more [Services](#Services).
+Escalation Policies can be used by one or more [Services](#services).
 
 
 #### Escalation Rules
 
-An Escalation Policy is made up of multiple Escalation Rules. Each Escalation Rule represents a level of [On-Call](#On-Calls) duty.
+An Escalation Policy is made up of multiple Escalation Rules. Each Escalation Rule represents a level of [On-Call](#on-calls) duty.
 
 
-It specifies one or more [Users](#Users) or [Schedules](#Schedules) to be notified when an unacknowledged [Incident](#Incidents) reaches that Escalation Rule.
+It specifies one or more [Users](#users) or [Schedules](#schedules) to be notified when an unacknowledged [Incident](#incidents) reaches that Escalation Rule.
 
 
-The first Escalation Rule in the Escalation Policy is the [User](#Users) that will be [notified](#Notifications) about the triggered [Incident](#Incidents).
+The first Escalation Rule in the Escalation Policy is the [User](#users) that will be [notified](#notifications) about the triggered [Incident](#incidents).
 
 
-If all [On-Call](#On-Calls) [User](#Users) for a given Escalation Rule have been acknowledged of an [Incident](#Incidents) and the Escalation Rule's escalation delay has elapsed, the [Incident](#Incidents) escalates to the next Escalation Rule.
+If all [On-Call](#on-calls) [User](#users) for a given Escalation Rule have been acknowledged of an [Incident](#incidents) and the Escalation Rule's escalation delay has elapsed, the [Incident](#incidents) escalates to the next Escalation Rule.
 
 
 [*Read more about Escalation Policies in the PagerDuty Knowledge Base*](https://support.pagerduty.com/hc/en-us/articles/202828950-What-is-an-escalation-policy-).
 
 
 ## Extensions
-A PagerDuty Extension represents an instance of an [Extension Schema](#Extension-Schema) on a object that an Extension can be attached to, such as a Service.
+A PagerDuty Extension represents an instance of an [Extension Schema](#extension-schema) on a object that an Extension can be attached to, such as a Service.
 
 
 An example of an Extension would be a Generic Webhook endpoint, or the Slack Extension.
@@ -71,13 +71,13 @@ Some Extension Schemas that require OAuth Authorization to be setup, such as the
 An Incident represents a problem or an issue that needs to be addressed and resolved.
 
 
-Incidents can be thought of as a problem or an issue within your [Service](#Services) that needs to be addressed and resolved, they are normalized and de-duplicated.
+Incidents can be thought of as a problem or an issue within your [Service](#services) that needs to be addressed and resolved, they are normalized and de-duplicated.
 
 
-Incidents can be `triggered`, `acknowledged`, or `resolved`, and are assigned to a [User](#User) based on the [Service](#Services)'s [Escalation Policy](#Escalation-Policies).
+Incidents can be `triggered`, `acknowledged`, or `resolved`, and are assigned to a [User](#user) based on the [Service](#services)'s [Escalation Policy](#escalation-policies).
 
 
-A triggered Incident prompts a [Notification](#Notifications) to be sent to the current [On-Call](#On-Calls) [User(s)](#Users) as defined in the [Escalation Poicy](#Escalation-Policy) used by the [Service](#Services).
+A triggered Incident prompts a [Notification](#notifications) to be sent to the current [On-Call](#on-calls) [User(s)](#users) as defined in the [Escalation Poicy](#escalation-policy) used by the [Service](#services).
 
 
 Incidents are triggered through the [Events API](https://developer.pagerduty.com/docs/events-api) or are created by Integrations.
@@ -86,7 +86,7 @@ Incidents are triggered through the [Events API](https://developer.pagerduty.com
 [*Read more about Incidents in the PagerDuty Knowledge Base*](https://support.pagerduty.com/hc/en-us/articles/202829250-What-Is-an-Incident-).
 
 ### Responder Requests
-Responder Requests are a request for a specific [User](#User) to respond to the Incident.
+Responder Requests are a request for a specific [User](#user) to respond to the Incident.
 
 ### Notes
 Notes are appended to Incidents to add context for responders.
@@ -99,45 +99,45 @@ Snoozing an Incident will re-trigger it after a specified amount of time.
 
 
 ### Alerts
-An Alert is sent to a [User](#User) to have them respond to an Incident. Alerts will follow a User's notification policies.
+An Alert is sent to a [User](#user) to have them respond to an Incident. Alerts will follow a User's notification policies.
 
 ## Log Entries
-Updates to an Incident generate [Log Entries](#Log_Entries) that capture the changes to an Incident over time, whether these changes were prompted by a [User](#Users), an [Integration](#Integrations), or were performed automatically.
+Updates to an Incident generate [Log Entries](#log_Entries) that capture the changes to an Incident over time, whether these changes were prompted by a [User](#users), an [Integration](#integrations), or were performed automatically.
 
 
-Log entries give you more insight into how your [team](#Teams) or organization is handling your [Incidents](#Incidents).
+Log entries give you more insight into how your [team](#teams) or organization is handling your [Incidents](#incidents).
 
 
-Log entry data includes details about the event(s) that affected the [Incident](#Incidents) throughout its lifecycle, such as:
+Log entry data includes details about the event(s) that affected the [Incident](#incidents) throughout its lifecycle, such as:
 
-- The data contained in events sent by the [Integration.](#Integrations)
-- Which [Users](#Users) were [notified](#Notifications) and at what time.
-- How a User was [notified](#Notifications)
-- What [User(s)](#Users) acknowledged or resolved the [Incident](#Incidents)
-- Any automatic actions that occurred to the [Incident](#Incidents)
-- Any other manual [User](#Users) actions, such as a reassignment or a note
+- The data contained in events sent by the [Integration.](#integrations)
+- Which [Users](#users) were [notified](#notifications) and at what time.
+- How a User was [notified](#notifications)
+- What [User(s)](#users) acknowledged or resolved the [Incident](#incidents)
+- Any automatic actions that occurred to the [Incident](#incidents)
+- Any other manual [User](#users) actions, such as a reassignment or a note
 
 
 Log entries cannot be created directly through the API; they are a result of other actions. The API provides read-only access to the Log Entries generated by PagerDuty.
 
 
 ## Maintenance Windows
-A Maintenance Window is used to temporarily disable one or more [Services](#Services) for a set period of time.
+A Maintenance Window is used to temporarily disable one or more [Services](#services) for a set period of time.
 
 
-No [Incidents](#Incidents) will be triggered and no [Notifications](#Notifications) will be received while a [Service](#Services) is disabled by a Maintenance Window.
+No [Incidents](#incidents) will be triggered and no [Notifications](#notifications) will be received while a [Service](#services) is disabled by a Maintenance Window.
 
 
-Maintenance windows are specified to start at a certain time and end after they have begun. Once started, a Maintenance Window cannot be deleted; it can only be ended immediately to re-enable the [Service](#Services).
+Maintenance windows are specified to start at a certain time and end after they have begun. Once started, a Maintenance Window cannot be deleted; it can only be ended immediately to re-enable the [Service](#services).
 
 
 [*Read more about Maintenance Windows in the PagerDuty Knowledge Base*](https://support.pagerduty.com/hc/en-us/articles/202830350-Putting-a-service-in-maintenance-mode).
 
 ## Notifications
-A Notification is created when an [Incident](#Incident) is triggered or escalated and an [Alert](#Alert) is sent to a [User.](#User)
+A Notification is created when an [Incident](#incident) is triggered or escalated and an [Alert](#alert) is sent to a [User.](#user)
 
 
-Notifications are messages containing the details of the [Incident](#Incidents), and can be through SMS, email, phone calls, and push notifications.
+Notifications are messages containing the details of the [Incident](#incidents), and can be through SMS, email, phone calls, and push notifications.
 
 
 Notifications cannot be created directly through the API; they are a result of other actions. The API provides read-only access to the Notifications generated by PagerDuty.
@@ -146,40 +146,40 @@ Notifications cannot be created directly through the API; they are a result of o
 [*Read more about Notifications in the PagerDuty Knowledge Base*](https://support.pagerduty.com/hc/en-us/articles/202828840-What-is-an-alert-notification-).
 
 ## On-Calls
-An On-Call represents a contiguous unit of time for which a [User](#Users) will be On-Call for a given [Escalation Policy](#Escalation-Policies) and [Escalation Rule](#Escalation-Rules).
+An On-Call represents a contiguous unit of time for which a [User](#users) will be On-Call for a given [Escalation Policy](#escalation-policies) and [Escalation Rule](#escalation-rules).
 
 
-This may be the result of that [User](#Users) always being On-Call for the [Escalation Rule](#Escalation-Policies), or a block of time during which the computed result of a [Schedule](#Schedules) on that [Escalation Rule](#Escalation-Policies) puts the User On-Call.
+This may be the result of that [User](#users) always being On-Call for the [Escalation Rule](#escalation-policies), or a block of time during which the computed result of a [Schedule](#schedules) on that [Escalation Rule](#escalation-policies) puts the User On-Call.
 
 
-During an On-Call, the [User](#Users) is expected to bear responsibility for responding to any [Notifications](#Notifications) they receives and working to resolve the associated [Incident(s)](#Incidents).
+During an On-Call, the [User](#users) is expected to bear responsibility for responding to any [Notifications](#notifications) they receives and working to resolve the associated [Incident(s)](#incidents).
 
 
-On-Calls cannot be created directly through the API; they are the computed result of how [Escalation Policies](#Escalation-Policies) and [Schedules](#Schedules) are configured. The API provides read-only access to the On-Calls generated by PagerDuty.
+On-Calls cannot be created directly through the API; they are the computed result of how [Escalation Policies](#escalation-policies) and [Schedules](#schedules) are configured. The API provides read-only access to the On-Calls generated by PagerDuty.
 
 ## Priorities
 A Priority is a label representing the importance and impact of an incident. This feature is only available on Standard and Enterprise plans.
 
 
 ## Response Plays
-Response Plays let you create packages of Incident Actions that can be applied to an [Incident.](#Incident)
+Response Plays let you create packages of Incident Actions that can be applied to an [Incident.](#incident)
 
 
 This enables you to take a complex activity, like assembling a response team of multiple On-Calls and an Incident commander, and make it available to anyone that needs to use it.
 
 ## Schedules
-A Schedule determines the time periods that [Users](#Users) are [On-Call.](#On-Calls)
+A Schedule determines the time periods that [Users](#users) are [On-Call.](#on-calls)
 
-Only [On-Call](#On-Calls) [Users](#Users) are eligible to receive [Notifications](#Notifications) from [Incidents](#Incidents).
-
-
-The details of the On-Call Schedule specify which single [User](#Users) is [On-Call](#On-Calls) for that Schedule at any given point in time.
+Only [On-Call](#on-calls) [Users](#users) are eligible to receive [Notifications](#notifications) from [Incidents](#incidents).
 
 
-An On-Call Schedule consists of one or more [Schedule Layers](https://support.pagerduty.com/hc/en-us/articles/202830250-Scheduling-Layers) that rotate a group of [Users](#Users) through the same shift at a set interval.
+The details of the On-Call Schedule specify which single [User](#users) is [On-Call](#on-calls) for that Schedule at any given point in time.
 
 
-Schedules are used by [Escalation Policies](#Escalation-Policies) as an escalation target for a given [Escalation Rule](#Escalation-Rules).
+An On-Call Schedule consists of one or more [Schedule Layers](https://support.pagerduty.com/hc/en-us/articles/202830250-Scheduling-Layers) that rotate a group of [Users](#users) through the same shift at a set interval.
+
+
+Schedules are used by [Escalation Policies](#escalation-policies) as an escalation target for a given [Escalation Rule](#escalation-rules).
 
 
 [*Read more about On-Call Schedules in the PagerDuty Knowledge Base*](https://support.pagerduty.com/hc/en-us/sections/200550790-On-Call-Schedules).
@@ -188,18 +188,18 @@ Schedules are used by [Escalation Policies](#Escalation-Policies) as an escalati
 A Service represents an entity you monitor (such as a web Service, email Service, or database Service.)
 
 
-It is a container for related [Incidents](#Incidents) that associates them with [Escalation Policies](#Escalation-Policies).
+It is a container for related [Incidents](#incidents) that associates them with [Escalation Policies](#escalation-policies).
 
 
-A Service is the focal point for [Incident](#Incidents) management; Services specify the configuration for the behavior of [Incidents](#Incidents) triggered on them.
+A Service is the focal point for [Incident](#incidents) management; Services specify the configuration for the behavior of [Incidents](#incidents) triggered on them.
 
 
-This behavior includes specifying urgency and performing automated actions based on time of day, [Incident](#Incidents) duration, and other factors.
+This behavior includes specifying urgency and performing automated actions based on time of day, [Incident](#incidents) duration, and other factors.
 
 [*Read more about Services in the PagerDuty Knowledge Base*](https://support.pagerduty.com/hc/en-us/sections/200550800-Services).
 
 #### Integrations
-An Integration is an endpoint (like Nagios, email, or an API call) that generates events, which are normalized and de-duplicated by PagerDuty to create [Incidents](#Incidents).
+An Integration is an endpoint (like Nagios, email, or an API call) that generates events, which are normalized and de-duplicated by PagerDuty to create [Incidents](#incidents).
 
 
 Integrations feed events into Services and provide event management functionality such as filtering and de-duplication.
@@ -208,7 +208,7 @@ Integrations feed events into Services and provide event management functionalit
 A Tag can be assigned to Escalation Policy, Team or User, and searches for those objects can be filtered to retrieve those with specific tags.
 
 ## Teams
-A Team is a collection of [Users](#Users) and [Escalation Policies](#Escalation-Policies) that represent a group of people
+A Team is a collection of [Users](#users) and [Escalation Policies](#escalation-policies) that represent a group of people
 within an organization.
 
 
@@ -221,15 +221,15 @@ The account must have the Teams ability to use the following endpoints.
 [*Read more about Teams in the PagerDuty Knowledge Base*](https://support.pagerduty.com/hc/en-us/articles/204072090-How-to-Create-Teams-in-PagerDuty-).
 
 ## Users
-Users are members of an Account that have the ability to interact with [Incidents](#Incidents) and other data on the account.
+Users are members of an Account that have the ability to interact with [Incidents](#incidents) and other data on the account.
 
 
 Users are fundamental agents of different types of actions in PagerDuty. A User can, among other things:
 
-- Acknowlege, reassign, snooze, escalate, and resolve [Incidents.](#Incidents)
-- Configure [Services](#Services), [Escalation Policies](#Escalation-Policies), [Integrations](#Integrations), [On-Call Schedules](#Schedules), [Teams](#Teams), and more.
-- Go [On-Call](#On-Calls) for one or more [Schedules](#Schedules) or [Escalation Policies.](#Escalation-Policies)
-- Get [Alerted](#Alerts) and receive [Notifications.](#Notifications)
+- Acknowlege, reassign, snooze, escalate, and resolve [Incidents.](#incidents)
+- Configure [Services](#services), [Escalation Policies](#escalation-policies), [Integrations](#integrations), [On-Call Schedules](#schedules), [Teams](#teams), and more.
+- Go [On-Call](#on-calls) for one or more [Schedules](#schedules) or [Escalation Policies.](#escalation-policies)
+- Get [Alerted](#alerts) and receive [Notifications.](#notifications)
 
 
 Depending on a User's role, they may have access to different parts of the account's data.
@@ -238,7 +238,7 @@ Depending on a User's role, they may have access to different parts of the accou
 [*Read more about Users in the PagerDuty Knowledge Base*](https://support.pagerduty.com/hc/en-us/sections/200550780-Users).
 
 ## Vendors
-A Vendor represents a specific type of [Integration](#Integration). AWS Cloudwatch, Skacj, Datadog, are all examples of Vendors that can be integrated into PagerDuty by making an [Integration](#!/Services/get_Services_id_Integrations_Integration_id).
+A Vendor represents a specific type of [Integration](#integration). AWS Cloudwatch, Skacj, Datadog, are all examples of Vendors that can be integrated into PagerDuty by making an [Integration](#!/Services/get_Services_id_Integrations_Integration_id).
 
 
 Vendor Integrations (when compared to generic email and API Integrations) are automatically configured with the right API or email filtering settings for inbound events from that Vendor. Some Vendors also have associated [Integration Guides](https://support.pagerduty.com/docs/aws-cloudwatch-integration-guide) on the PagerDuty support site.
