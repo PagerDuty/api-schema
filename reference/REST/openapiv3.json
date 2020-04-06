@@ -12648,7 +12648,7 @@
             "required": true,
             "schema": {
               "type": "string",
-              "default": "application/json"
+              "default": "application/vnd.pagerduty+json;version=2"
             }
           },
           {
