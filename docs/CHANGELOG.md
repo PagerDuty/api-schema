@@ -6,6 +6,9 @@ Currently we do not deprecate or remove any API functionality.
 
 ----
 
+### 2020-04-01
+ - Added `since` and `until` parameters to `GET /incidents/{id}/log_entries`.
+ 
 ### 2020-03-24
  - Added `teams` to all `/business_services` endpoints.
 
