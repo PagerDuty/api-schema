@@ -8368,6 +8368,12 @@
             "$ref": "#/components/parameters/time_zone"
           },
           {
+            "$ref": "#/components/parameters/since"
+          },
+          {
+            "$ref": "#/components/parameters/until"
+          },
+          {
             "$ref": "#/components/parameters/log_entry_is_overview"
           },
           {
