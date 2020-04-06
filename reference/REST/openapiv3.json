@@ -4482,22 +4482,6 @@
     }
   },
   "paths": {
-    "/api_reference": {
-      "description": "Introduction to the PagerDuty REST API Reference.",
-      "get": {
-        "tags": [
-          "API Reference"
-        ],
-        "operationId": "getAPIReference",
-        "summary": "REST API Reference",
-        "description": "REST API Reference.",
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        }
-      }
-    },
     "/abilities": {
       "description": "List your account's abilities.",
       "get": {
