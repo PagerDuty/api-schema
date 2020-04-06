@@ -533,9 +533,9 @@
       "ArgumentError": {
         "description": "Caller provided invalid arguments. Please review the response for error details. Retrying with the same arguments will *not* work.",
         "content": {
-          "application/vnd.pagerduty+json;version=2": {
+          "application/json": {
             "schema": {
-              "$ref": "#/components/responses/NotFound/content/application~1vnd.pagerduty%2Bjson%3Bversion%3D2/schema"
+              "$ref": "#/components/responses/NotFound/content/application~1json/schema"
             }
           }
         }
@@ -543,9 +543,9 @@
       "Forbidden": {
         "description": "Caller is not authorized to view the requested resource.\nWhile your authentication is valid, the authenticated user or token does not have permission to perform this action.\n",
         "content": {
-          "application/vnd.pagerduty+json;version=2": {
+          "application/json": {
             "schema": {
-              "$ref": "#/components/responses/NotFound/content/application~1vnd.pagerduty%2Bjson%3Bversion%3D2/schema"
+              "$ref": "#/components/responses/NotFound/content/application~1json/schema"
             }
           }
         }
@@ -553,9 +553,9 @@
       "InternalServerError": {
         "description": "Internal Server Error the PagerDuty server experienced an error.",
         "content": {
-          "application/vnd.pagerduty+json;version=2": {
+          "application/json": {
             "schema": {
-              "$ref": "#/components/responses/NotFound/content/application~1vnd.pagerduty%2Bjson%3Bversion%3D2/schema"
+              "$ref": "#/components/responses/NotFound/content/application~1json/schema"
             }
           }
         }
@@ -563,7 +563,7 @@
       "NotFound": {
         "description": "The requested resource was not found.",
         "content": {
-          "application/vnd.pagerduty+json;version=2": {
+          "application/json": {
             "schema": {
               "type": "object",
               "properties": {
@@ -602,9 +602,9 @@
       "TooManyRequests": {
         "description": "Too many requests have been made, the rate limit has been reached.",
         "content": {
-          "application/vnd.pagerduty+json;version=2": {
+          "application/json": {
             "schema": {
-              "$ref": "#/components/responses/NotFound/content/application~1vnd.pagerduty%2Bjson%3Bversion%3D2/schema"
+              "$ref": "#/components/responses/NotFound/content/application~1json/schema"
             }
           }
         }
@@ -612,9 +612,9 @@
       "PaymentRequired": {
         "description": "Account does not have the abilities to perform the action. Please review the response for the required abilities.\nYou can also use the [Abilities API](#resource_Abilities) to determine what features are available to your account.\n",
         "content": {
-          "application/vnd.pagerduty+json;version=2": {
+          "application/json": {
             "schema": {
-              "$ref": "#/components/responses/NotFound/content/application~1vnd.pagerduty%2Bjson%3Bversion%3D2/schema"
+              "$ref": "#/components/responses/NotFound/content/application~1json/schema"
             }
           }
         }
@@ -622,9 +622,9 @@
       "Unauthorized": {
         "description": "Caller did not supply credentials or did not provide the correct credentials.\nIf you are using an API key, it may be invalid or your Authorization header may be malformed.\n",
         "content": {
-          "application/vnd.pagerduty+json;version=2": {
+          "application/json": {
             "schema": {
-              "$ref": "#/components/responses/NotFound/content/application~1vnd.pagerduty%2Bjson%3Bversion%3D2/schema"
+              "$ref": "#/components/responses/NotFound/content/application~1json/schema"
             }
           }
         }
@@ -4495,7 +4495,7 @@
           "200": {
             "description": "An array of ability names.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "allOf": [
                     {
@@ -4516,9 +4516,7 @@
                       ]
                     }
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -4557,6 +4555,9 @@
         "summary": "Test an ability",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/id"
           }
         ],
@@ -4593,6 +4594,9 @@
         "summary": "List installed Add-ons",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/include_addon"
           },
           {
@@ -4625,7 +4629,7 @@
           "200": {
             "description": "A paginated array of installed Add-ons.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "allOf": [
                     {
@@ -4646,9 +4650,7 @@
                       ]
                     }
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -4715,7 +4717,7 @@
           "201": {
             "description": "The Add-on that was installed.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
@@ -4726,9 +4728,7 @@
                   "required": [
                     "addon"
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -4773,6 +4773,9 @@
         "summary": "Get an Add-on",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/id"
           }
         ],
@@ -4780,7 +4783,7 @@
           "200": {
             "description": "The requested Add-on.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
@@ -4791,9 +4794,7 @@
                   "required": [
                     "addon"
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -4844,6 +4845,9 @@
         "summary": "Delete an Add-on",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/id"
           }
         ],
@@ -4874,6 +4878,9 @@
         "summary": "Update an Add-on",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/id"
           }
         ],
@@ -4899,7 +4906,7 @@
           "200": {
             "description": "The Add-on that was updated.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
@@ -4910,9 +4917,7 @@
                   "required": [
                     "addon"
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -4965,6 +4970,9 @@
         "description": "List existing business services.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#business-services)\n",
         "summary": "List business services",
         "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
           {
             "name": "optional_total",
             "in": "query",
@@ -5194,6 +5202,9 @@
         "summary": "Get a business service",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/id"
           }
         ],
@@ -5259,6 +5270,9 @@
         "summary": "Delete a business service",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/id"
           }
         ],
@@ -5284,6 +5298,9 @@
         "description": "Update an existing business service. NOTE that this endpoint also accepts the PATCH verb.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#business-services)\n",
         "summary": "Update a business service",
         "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
           {
             "$ref": "#/components/parameters/id"
           }
@@ -5401,6 +5418,9 @@
         "summary": "List escalation policies",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "name": "query",
             "in": "query",
             "description": "Filters the results, showing only the escalation policies whose names contain the query.",
@@ -5435,7 +5455,7 @@
           "200": {
             "description": "A paginated array of escalation policy objects.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "allOf": [
                     {
@@ -5456,9 +5476,7 @@
                       ]
                     }
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -5546,6 +5564,9 @@
         "summary": "Create an escalation policy",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/optional_from_header"
           }
         ],
@@ -5571,7 +5592,7 @@
           "201": {
             "description": "The escalation policy that was created.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
@@ -5582,9 +5603,7 @@
                   "required": [
                     "escalation_policy"
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -5673,6 +5692,9 @@
         "summary": "Get an escalation policy",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/id"
           },
           {
@@ -5683,7 +5705,7 @@
           "200": {
             "description": "The escalation policy object.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
@@ -5694,9 +5716,7 @@
                   "required": [
                     "escalation_policy"
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -5777,6 +5797,9 @@
         "summary": "Delete an escalation policy",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/id"
           }
         ],
@@ -5807,6 +5830,9 @@
         "summary": "Update an escalation policy",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/id"
           }
         ],
@@ -5832,7 +5858,7 @@
           "200": {
             "description": "The escalation policy that was updated.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
@@ -5843,9 +5869,7 @@
                   "required": [
                     "escalation_policy"
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -5935,6 +5959,9 @@
         "summary": "List extensions",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "name": "extension_object_id",
             "description": "The id of the extension object you want to filter by.",
             "in": "query",
@@ -5980,7 +6007,7 @@
           "200": {
             "description": "A paginated array of extensions.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "allOf": [
                     {
@@ -6001,9 +6028,7 @@
                       ]
                     }
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -6081,7 +6106,7 @@
           "201": {
             "description": "The extension that was created",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
@@ -6092,9 +6117,7 @@
                   "required": [
                     "extension"
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -6220,6 +6243,9 @@
         "summary": "Get an extension",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/id"
           },
           {
@@ -6244,7 +6270,7 @@
           "200": {
             "description": "The extension that was requested.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
@@ -6255,9 +6281,7 @@
                   "required": [
                     "extension"
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -6313,6 +6337,9 @@
         "summary": "Delete an extension",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/id"
           }
         ],
@@ -6340,6 +6367,9 @@
         "summary": "Update an extension",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/id"
           }
         ],
@@ -6365,7 +6395,7 @@
           "200": {
             "description": "The extension that was updated.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
@@ -6376,9 +6406,7 @@
                   "required": [
                     "extension"
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -6439,7 +6467,7 @@
           "200": {
             "description": "A paginated array of extension schemas.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "allOf": [
                     {
@@ -6460,9 +6488,7 @@
                       ]
                     }
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -6525,6 +6551,9 @@
         "summary": "Get an extension vendor",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/id"
           }
         ],
@@ -6532,7 +6561,7 @@
           "200": {
             "description": "The extension vendor requested",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
@@ -6546,9 +6575,7 @@
                   "required": [
                     "extension_schema"
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -6608,6 +6635,9 @@
         "description": "List existing incidents.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#incidents)\n",
         "summary": "List incidents",
         "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
           {
             "$ref": "#/components/parameters/since"
           },
@@ -6697,7 +6727,7 @@
           "200": {
             "description": "A paginated array of incidents.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "allOf": [
                     {
@@ -6718,9 +6748,7 @@
                       ]
                     }
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -6824,6 +6852,9 @@
         "description": "Acknowledge, resolve, escalate or reassign one or more incidents.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#incidents)\n",
         "summary": "Manage incidents",
         "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
           {
             "$ref": "#/components/parameters/from_header"
           }
@@ -6944,7 +6975,7 @@
           "200": {
             "description": "All of the updates succeeded.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "allOf": [
                     {
@@ -6965,9 +6996,7 @@
                       ]
                     }
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -7093,6 +7122,9 @@
         "summary": "Create an Incident",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/from_header"
           }
         ],
@@ -7197,7 +7229,7 @@
           "201": {
             "description": "The incident object created.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
@@ -7208,9 +7240,7 @@
                   "required": [
                     "incident"
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -7319,6 +7349,9 @@
         "summary": "Merge incidents",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/id"
           },
           {
@@ -7362,7 +7395,7 @@
           "200": {
             "description": "The target incident, which now contains all the alerts from the source incident.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
@@ -7373,9 +7406,7 @@
                   "required": [
                     "incident"
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -7421,6 +7452,9 @@
         "summary": "Get an incident",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "name": "id",
             "in": "path",
             "description": "Either the id or number of the incident to retrieve.",
@@ -7434,7 +7468,7 @@
           "200": {
             "description": "The incident requested.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
@@ -7445,9 +7479,7 @@
                   "required": [
                     "incident"
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -7580,6 +7612,9 @@
         "summary": "Update an incident",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "name": "id",
             "in": "path",
             "description": "The id of the incident to update.",
@@ -7681,7 +7716,7 @@
           "200": {
             "description": "The incident was updated.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "allOf": [
                     {
@@ -7696,9 +7731,7 @@
                       ]
                     }
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -7826,6 +7859,9 @@
         "summary": "List alerts for an incident",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/id"
           },
           {
@@ -7894,7 +7930,7 @@
           "200": {
             "description": "A paginated array of the incident's alerts.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "allOf": [
                     {
@@ -7915,9 +7951,7 @@
                       ]
                     }
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -7997,6 +8031,9 @@
         "summary": "Manage alerts",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/id"
           },
           {
@@ -8045,7 +8082,7 @@
           "200": {
             "description": "All of the updates succeeded.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "allOf": [
                     {
@@ -8066,9 +8103,7 @@
                       ]
                     }
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -8144,6 +8179,9 @@
         "summary": "Get an alert",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/id"
           },
           {
@@ -8160,7 +8198,7 @@
           "200": {
             "description": "The alert requested.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
@@ -8171,9 +8209,7 @@
                   "required": [
                     "alert"
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -8242,6 +8278,9 @@
         "summary": "Update an alert",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/id"
           },
           {
@@ -8279,7 +8318,7 @@
           "200": {
             "description": "The alert that was updated.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
@@ -8320,6 +8359,9 @@
         "summary": "List log entries for an incident",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/id"
           },
           {
@@ -8336,7 +8378,7 @@
           "200": {
             "description": "A paginated array of the incident's log entries.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "allOf": [
                     {
@@ -8357,9 +8399,7 @@
                       ]
                     }
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -8438,6 +8478,9 @@
         "summary": "List notes for an incident",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/id"
           }
         ],
@@ -8445,7 +8488,7 @@
           "200": {
             "description": "An array of notes.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
@@ -8459,9 +8502,7 @@
                   "required": [
                     "notes"
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -8511,6 +8552,9 @@
         "summary": "Create a note on an incident",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/id"
           },
           {
@@ -8538,7 +8582,7 @@
           "200": {
             "description": "The new note.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
@@ -8549,9 +8593,7 @@
                   "required": [
                     "note"
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -8602,6 +8644,9 @@
         "summary": "Create a status update on an incident",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/id"
           },
           {
@@ -8633,7 +8678,7 @@
           "200": {
             "description": "The new status update for the specified incident.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
@@ -8644,9 +8689,7 @@
                   "required": [
                     "status_update"
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -8696,6 +8739,9 @@
         "description": "Send a new responder request for the specified incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#incidents)\n",
         "summary": "Create a responder request for an incident",
         "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
           {
             "$ref": "#/components/parameters/id"
           },
@@ -8749,7 +8795,7 @@
           "200": {
             "description": "The new responder request for the given incident.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
@@ -8760,9 +8806,7 @@
                   "required": [
                     "responder_request"
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -8854,6 +8898,9 @@
         "summary": "Snooze an incident",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/id"
           },
           {
@@ -8885,7 +8932,7 @@
           "201": {
             "description": "The incident that was successfully snoozed.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
@@ -8896,9 +8943,7 @@
                   "required": [
                     "incident"
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -9022,6 +9067,9 @@
         "summary": "List log entries",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/time_zone"
           },
           {
@@ -9041,7 +9089,7 @@
           "200": {
             "description": "A paginated array of log entries.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "allOf": [
                     {
@@ -9062,9 +9110,7 @@
                       ]
                     }
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -9143,6 +9189,9 @@
         "summary": "Get a log entry",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/time_zone"
           },
           {
@@ -9156,7 +9205,7 @@
           "200": {
             "description": "A single log entry.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
@@ -9167,9 +9216,7 @@
                   "required": [
                     "log_entry"
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -9246,6 +9293,9 @@
         "summary": "List maintenance windows",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/team_ids"
           },
           {
@@ -9282,7 +9332,7 @@
           "200": {
             "description": "A paginated array of maintenance windows.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "allOf": [
                     {
@@ -9303,9 +9353,7 @@
                       ]
                     }
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -9379,6 +9427,9 @@
         "summary": "Create a maintenance window",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/from_header"
           }
         ],
@@ -9404,7 +9455,7 @@
           "201": {
             "description": "The maintenance window that was created.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
@@ -9415,9 +9466,7 @@
                   "required": [
                     "maintenance_window"
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -9489,6 +9538,9 @@
         "summary": "Get a maintenance window",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/id"
           },
           {
@@ -9499,7 +9551,7 @@
           "200": {
             "description": "The maintenance window that was updated.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
@@ -9510,9 +9562,7 @@
                   "required": [
                     "maintenance_window"
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -9581,6 +9631,9 @@
         "summary": "Delete or end a maintenance window",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/id"
           }
         ],
@@ -9614,6 +9667,9 @@
         "summary": "Update a maintenance window",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/id"
           }
         ],
@@ -9639,7 +9695,7 @@
           "200": {
             "description": "The maintenance window that was updated.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
@@ -9650,9 +9706,7 @@
                   "required": [
                     "maintenance_window"
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -9727,6 +9781,9 @@
         "summary": "List notifications",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/time_zone"
           },
           {
@@ -9784,7 +9841,7 @@
           "200": {
             "description": "A paginated array of notifications.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "allOf": [
                     {
@@ -9805,9 +9862,7 @@
                       ]
                     }
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -9872,6 +9927,9 @@
         "description": "List the on-call entries during a given time range.\n\nAn on-call represents a contiguous unit of time for which a User will be on call for a given Escalation Policy and Escalation Rules.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#on-calls)\n",
         "summary": "List all of the on-calls",
         "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
           {
             "$ref": "#/components/parameters/time_zone"
           },
@@ -9963,7 +10021,7 @@
           "200": {
             "description": "A paginated array of on-call objects.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "allOf": [
                     {
@@ -9984,9 +10042,7 @@
                       ]
                     }
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -10055,7 +10111,7 @@
           "200": {
             "description": "A paginated array of priorities.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "allOf": [
                     {
@@ -10076,9 +10132,7 @@
                       ]
                     }
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -10162,6 +10216,9 @@
         "summary": "Run a response play",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/response_play_id"
           },
           {
@@ -10195,7 +10252,7 @@
           "200": {
             "description": "Informs the user if the response play has been run successfully.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
@@ -10206,9 +10263,7 @@
                   "required": [
                     "status"
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -10242,6 +10297,9 @@
         "summary": "List schedules",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "name": "query",
             "in": "query",
             "description": "Filters the result, showing only the schedules whose name matches the query.",
@@ -10254,7 +10312,7 @@
           "200": {
             "description": "A paginated array of schedule objects.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "allOf": [
                     {
@@ -10275,9 +10333,7 @@
                       ]
                     }
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -10358,6 +10414,9 @@
         "summary": "Create a schedule",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/schedule_overflow"
           }
         ],
@@ -10383,7 +10442,7 @@
           "201": {
             "description": "The schedule object created.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
@@ -10394,9 +10453,7 @@
                   "required": [
                     "schedule"
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -10496,6 +10553,9 @@
         "summary": "Get a schedule",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/time_zone"
           },
           {
@@ -10512,7 +10572,7 @@
           "200": {
             "description": "The schedule object.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
@@ -10523,9 +10583,7 @@
                   "required": [
                     "schedule"
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -10652,6 +10710,9 @@
         "summary": "Delete a schedule",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/id"
           }
         ],
@@ -10685,6 +10746,9 @@
         "summary": "Update a schedule",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/id"
           },
           {
@@ -10713,7 +10777,7 @@
           "200": {
             "description": "The updated schedule.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
@@ -10724,9 +10788,7 @@
                   "required": [
                     "schedule"
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -10829,6 +10891,9 @@
         "summary": "Preview a schedule",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/since"
           },
           {
@@ -10860,7 +10925,7 @@
           "200": {
             "description": "What the schedule will look like if posted.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
@@ -10871,9 +10936,7 @@
                   "required": [
                     "schedule"
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -10965,6 +11028,9 @@
         "summary": "List overrides",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/id"
           },
           {
@@ -11008,7 +11074,7 @@
           "200": {
             "description": "The collection of override objects returned by the query.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
@@ -11022,9 +11088,7 @@
                   "required": [
                     "overrides"
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -11074,6 +11138,9 @@
         "summary": "Create an override",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/id"
           }
         ],
@@ -11100,7 +11167,7 @@
           "201": {
             "description": "The override that was created.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
@@ -11111,9 +11178,7 @@
                   "required": [
                     "override"
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -11164,6 +11229,9 @@
         "summary": "Delete an override",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/id"
           },
           {
@@ -11203,6 +11271,9 @@
         "summary": "List users on call.",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/id"
           },
           {
@@ -11216,7 +11287,7 @@
           "200": {
             "description": "The users on the given schedule.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
@@ -11231,9 +11302,7 @@
                   "required": [
                     "users"
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -11556,6 +11625,9 @@
         "description": "Get all immediate dependencies of any business service.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#business-services)\n",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/id"
           }
         ],
@@ -11563,7 +11635,7 @@
           "200": {
             "description": "An array of service relationships.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "allOf": [
                     {
@@ -11655,6 +11727,9 @@
         "summary": "List services",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/team_ids"
           },
           {
@@ -11694,7 +11769,7 @@
           "200": {
             "description": "A paginated array of services.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "allOf": [
                     {
@@ -11715,9 +11790,7 @@
                       ]
                     }
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -11845,7 +11918,7 @@
           "201": {
             "description": "The service that was created",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
@@ -11856,9 +11929,7 @@
                   "required": [
                     "service"
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -11966,6 +12037,9 @@
         "summary": "Get a service",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/id"
           },
           {
@@ -11990,7 +12064,7 @@
           "200": {
             "description": "The service requested.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
@@ -12001,9 +12075,7 @@
                   "required": [
                     "service"
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -12108,6 +12180,9 @@
         "summary": "Delete a service",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/id"
           }
         ],
@@ -12130,6 +12205,9 @@
         "description": "Update an existing service.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#services)\n",
         "summary": "Update a service",
         "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
           {
             "$ref": "#/components/parameters/id"
           }
@@ -12157,7 +12235,7 @@
           "200": {
             "description": "The service that was updated.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
@@ -12168,9 +12246,7 @@
                   "required": [
                     "service"
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -12280,6 +12356,9 @@
         "description": "Create a new integration belonging to a Service.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#services)\n",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/id"
           }
         ],
@@ -12305,7 +12384,7 @@
           "201": {
             "description": "The integration that was created.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
@@ -12316,9 +12395,7 @@
                   "required": [
                     "integration"
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -12371,6 +12448,9 @@
         "description": "Update an integration belonging to a Service.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#services)\n",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/id"
           },
           {
@@ -12399,7 +12479,7 @@
           "200": {
             "description": "The integration that was updated.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
@@ -12410,9 +12490,7 @@
                   "required": [
                     "integration"
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -12465,6 +12543,9 @@
         "description": "Get details about an integration belonging to a service.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#services)\n",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/id"
           },
           {
@@ -12492,7 +12573,7 @@
           "200": {
             "description": "The integration that was requested.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
@@ -12503,9 +12584,7 @@
                   "required": [
                     "integration"
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -12562,6 +12641,16 @@
         "description": "List all of your account's tags.\n\nA Tag is applied to EScalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#tags)\n",
         "summary": "List tags",
         "parameters": [
+          {
+            "name": "Accept",
+            "description": "The `Accept` header is used as a versioning header.",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "application/json"
+            }
+          },
           {
             "name": "query",
             "in": "query",
@@ -12711,6 +12800,9 @@
         "summary": "Get a tag",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/id"
           }
         ],
@@ -12770,6 +12862,9 @@
         "summary": "Delete a tag",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/id"
           }
         ],
@@ -12798,6 +12893,9 @@
         "description": "Get related Users, Teams or Escalation Policies for the Tag.\n\nA Tag is applied to EScalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#tags)\n",
         "summary": "Get connected entities",
         "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
           {
             "$ref": "#/components/parameters/id"
           },
@@ -12885,6 +12983,9 @@
         "summary": "Get tags for entities",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/entity_type"
           },
           {
@@ -12959,6 +13060,9 @@
         "description": "Assign existing or new tags.\n\nA Tag is applied to EScalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#tags)\n",
         "summary": "Assign tags",
         "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
           {
             "$ref": "#/components/parameters/entity_type"
           },
@@ -13110,7 +13214,7 @@
           "201": {
             "description": "The team that was created.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
@@ -13121,9 +13225,7 @@
                   "required": [
                     "team"
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -13169,6 +13271,9 @@
         "summary": "List teams",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "name": "query",
             "in": "query",
             "description": "Filters the result, showing only the teams whose names or email addresses match the query.",
@@ -13181,7 +13286,7 @@
           "200": {
             "description": "A paginated array of teams.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "allOf": [
                     {
@@ -13202,9 +13307,7 @@
                       ]
                     }
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -13257,6 +13360,9 @@
         "summary": "Get a team",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/id"
           },
           {
@@ -13267,7 +13373,7 @@
           "200": {
             "description": "The team requested.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
@@ -13278,9 +13384,7 @@
                   "required": [
                     "team"
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -13329,6 +13433,9 @@
         "summary": "Delete a team",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "name": "reassignment_team",
             "in": "query",
             "description": "Team to reassign unresolved incident to. \nIf an unresolved incident exists on both the reassignment team and \nthe team being deleted, a duplicate will not be made. If not supplied, \nunresolved incidents will be made account-level.\n",
@@ -13368,6 +13475,9 @@
         "summary": "Update a team",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/id"
           }
         ],
@@ -13393,7 +13503,7 @@
           "200": {
             "description": "The team that was updated.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
@@ -13404,9 +13514,7 @@
                   "required": [
                     "team"
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -13455,6 +13563,9 @@
         "summary": "Get information about members on a team",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/id"
           },
           {
@@ -13465,7 +13576,7 @@
           "200": {
             "description": "A paginated array of users within the requested team.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "allOf": [
                     {
@@ -13486,9 +13597,7 @@
                       ]
                     }
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -13546,6 +13655,9 @@
         "summary": "Remove a user from a team",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/id"
           },
           {
@@ -13584,6 +13696,9 @@
         "description": "Add a user to a team. Attempting to add a user with the `read_only_user` role will return a 400 error.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#teams)\n",
         "summary": "Add a user to a team",
         "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
           {
             "$ref": "#/components/parameters/id"
           },
@@ -13651,6 +13766,9 @@
         "summary": "Remove an escalation policy from a team",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/id"
           },
           {
@@ -13689,6 +13807,9 @@
         "description": "Add an escalation policy to a team.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#teams)\n",
         "summary": "Add an escalation policy to a team",
         "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
           {
             "$ref": "#/components/parameters/id"
           },
@@ -13732,6 +13853,9 @@
         "summary": "List users",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "name": "query",
             "in": "query",
             "description": "Filters the result, showing only the users whose names or email addresses match the query.",
@@ -13750,7 +13874,7 @@
           "200": {
             "description": "A paginated array of users.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "allOf": [
                     {
@@ -13771,9 +13895,7 @@
                       ]
                     }
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -13907,6 +14029,9 @@
         "summary": "Create a user",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/from_header"
           }
         ],
@@ -13932,7 +14057,7 @@
           "201": {
             "description": "The user that was created.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
@@ -13943,9 +14068,7 @@
                   "required": [
                     "user"
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -14032,6 +14155,9 @@
         "summary": "Get a user",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/id"
           },
           {
@@ -14042,7 +14168,7 @@
           "200": {
             "description": "The user requested.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
@@ -14053,9 +14179,7 @@
                   "required": [
                     "user"
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -14139,6 +14263,9 @@
         "summary": "Delete a user",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/id"
           }
         ],
@@ -14169,6 +14296,9 @@
         "summary": "Update a user",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/id"
           }
         ],
@@ -14194,7 +14324,7 @@
           "200": {
             "description": "The user that was updated.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
@@ -14205,9 +14335,7 @@
                   "required": [
                     "user"
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -14297,6 +14425,9 @@
         "summary": "Get the current user",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/include_user"
           }
         ],
@@ -14304,7 +14435,7 @@
           "200": {
             "description": "The requesting user.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
@@ -14315,9 +14446,7 @@
                   "required": [
                     "user"
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -14395,6 +14524,9 @@
         "summary": "List a user's contact methods",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/id"
           }
         ],
@@ -14402,7 +14534,7 @@
           "200": {
             "description": "A list of contact methods.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
@@ -14416,9 +14548,7 @@
                   "required": [
                     "contact_methods"
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -14462,6 +14592,9 @@
         "summary": "Create a user contact method",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/id"
           }
         ],
@@ -14487,7 +14620,7 @@
           "201": {
             "description": "The contact method that was created.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
@@ -14498,9 +14631,7 @@
                   "required": [
                     "contact_method"
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -14545,6 +14676,9 @@
         "summary": "Get a user's contact method",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/id"
           },
           {
@@ -14555,7 +14689,7 @@
           "200": {
             "description": "The user's contact method requested.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
@@ -14566,9 +14700,7 @@
                   "required": [
                     "contact_method"
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -14613,6 +14745,9 @@
         "summary": "Delete a user's contact method",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/id"
           },
           {
@@ -14646,6 +14781,9 @@
         "summary": "Update a user's contact method",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/id"
           },
           {
@@ -14674,7 +14812,7 @@
           "200": {
             "description": "The user's contact method that was updated.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
@@ -14685,9 +14823,7 @@
                   "required": [
                     "contact_method"
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -14735,6 +14871,9 @@
         "summary": "List a user's notification rules",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/id"
           },
           {
@@ -14758,7 +14897,7 @@
           "200": {
             "description": "A list of notification rules.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
@@ -14772,9 +14911,7 @@
                   "required": [
                     "notification_rules"
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -14824,6 +14961,9 @@
         "summary": "Create a user notification rule",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/id"
           }
         ],
@@ -14849,7 +14989,7 @@
           "201": {
             "description": "The notification rule that was created.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
@@ -14860,9 +15000,7 @@
                   "required": [
                     "notification_rule"
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -14918,6 +15056,9 @@
         "summary": "Get a user's notification rule",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/id"
           },
           {
@@ -14944,7 +15085,7 @@
           "200": {
             "description": "The user's notification rule requested.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
@@ -14955,9 +15096,7 @@
                   "required": [
                     "notification_rule"
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -15010,6 +15149,9 @@
         "summary": "Delete a user's notification rule",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/id"
           },
           {
@@ -15043,6 +15185,9 @@
         "summary": "Update a user's notification rule",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/id"
           },
           {
@@ -15071,7 +15216,7 @@
           "200": {
             "description": "The user's notification rule that was updated.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
@@ -15082,9 +15227,7 @@
                   "required": [
                     "notification_rule"
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -15141,6 +15284,9 @@
         "summary": "List a user's active sessions",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/id"
           }
         ],
@@ -15148,7 +15294,7 @@
           "200": {
             "description": "A list of the user's active sessions.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
@@ -15162,9 +15308,7 @@
                   "required": [
                     "user_sessions"
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -15209,6 +15353,9 @@
         "summary": "Delete all user sessions",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/id"
           }
         ],
@@ -15242,6 +15389,9 @@
         "summary": "Get a user's session",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/id"
           },
           {
@@ -15255,7 +15405,7 @@
           "200": {
             "description": "The user's session requested.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
@@ -15266,9 +15416,7 @@
                   "required": [
                     "user_session"
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -15311,6 +15459,9 @@
         "summary": "Delete a user's session",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/id"
           },
           {
@@ -15352,7 +15503,7 @@
           "200": {
             "description": "A paginated array of vendors.",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "allOf": [
                     {
@@ -15373,9 +15524,7 @@
                       ]
                     }
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
@@ -15428,6 +15577,9 @@
         "summary": "Get a vendor",
         "parameters": [
           {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
             "$ref": "#/components/parameters/id"
           }
         ],
@@ -15435,7 +15587,7 @@
           "200": {
             "description": "The vendor requested",
             "content": {
-              "application/vnd.pagerduty+json;version=2": {
+              "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
@@ -15449,9 +15601,7 @@
                   "required": [
                     "vendor"
                   ]
-                }
-              },
-              "application/json": {
+                },
                 "examples": {
                   "response": {
                     "value": {
