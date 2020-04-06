@@ -4482,22 +4482,6 @@
     }
   },
   "paths": {
-    "/api_reference": {
-      "description": "Introduction to the PagerDuty REST API Reference.",
-      "get": {
-        "tags": [
-          "API Reference"
-        ],
-        "operationId": "getAPIReference",
-        "summary": "REST API Reference",
-        "description": "REST API Reference.",
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        }
-      }
-    },
     "/abilities": {
       "description": "List your account's abilities.",
       "get": {
@@ -12572,7 +12556,7 @@
     "/tags": {
       "get": {
         "tags": [
-          "Contextual Search"
+          "Tags"
         ],
         "operationId": "listTags",
         "description": "List all of your account's tags.\n\nA Tag is applied to EScalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#tags)\n",
@@ -12647,7 +12631,7 @@
       },
       "post": {
         "tags": [
-          "Contextual Search"
+          "Tags"
         ],
         "operationId": "createTags",
         "description": "Create a Tag.\n\nA Tag is applied to EScalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#tags)\n",
@@ -12720,7 +12704,7 @@
     "/tags/{id}": {
       "get": {
         "tags": [
-          "Contextual Search"
+          "Tags"
         ],
         "operationId": "getTag",
         "description": "Get details about an existing Tag.\n\nA Tag is applied to EScalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#tags)\n",
@@ -12779,7 +12763,7 @@
       },
       "delete": {
         "tags": [
-          "Contextual Search"
+          "Tags"
         ],
         "operationId": "deleteTag",
         "description": "Remove an existing Tag.\n\nA Tag is applied to EScalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#tags)\n",
@@ -12808,7 +12792,7 @@
     "/tags/{id}/{entity_type}": {
       "get": {
         "tags": [
-          "Contextual Search"
+          "Tags"
         ],
         "operationId": "getTagsByEntityType",
         "description": "Get related Users, Teams or Escalation Policies for the Tag.\n\nA Tag is applied to EScalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#tags)\n",
@@ -12894,7 +12878,7 @@
     "/{entity_type}/{id}/tags": {
       "get": {
         "tags": [
-          "Contextual Search"
+          "Tags"
         ],
         "operationId": "getEntityTypeByIdTags",
         "description": "Get related tags for Users, Teams or Escalation Policies.\n\nA Tag is applied to EScalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#tags)\n",
@@ -12969,7 +12953,7 @@
     "/{entity_type}/{id}/change_tags": {
       "post": {
         "tags": [
-          "Contextual Search"
+          "Tags"
         ],
         "operationId": "createEntityTypeByIdChangeTags",
         "description": "Assign existing or new tags.\n\nA Tag is applied to EScalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#tags)\n",
