@@ -6,6 +6,9 @@ Currently we do not deprecate or remove any API functionality.
 
 ----
 
+### 2020-04-06
+ - Added new Rulesets endpoints
+ 
 ### 2020-04-01
  - Added `since` and `until` parameters to `GET /incidents/{id}/log_entries`.
  
