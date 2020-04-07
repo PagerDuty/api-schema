@@ -72,6 +72,10 @@
       "description": "Response Plays are a package of Incident Actions that can be applied during an Incident's life cycle.\n"
     },
     {
+      "name": "Rulesets",
+      "description": "Rulesets allow you to route events to an endpoint and create collections of event rules, which define sets of actions to take based on event content.\n"
+    },
+    {
       "name": "Schedules",
       "description": "A Schedule determines the time periods that users are On-Call.\n"
     },
@@ -535,33 +539,13 @@
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/components/responses/NotFound/content/application~1json/schema"
+              "$ref": "#/components/responses/Conflict/content/application~1json/schema"
             }
           }
         }
       },
-      "Forbidden": {
-        "description": "Caller is not authorized to view the requested resource.\nWhile your authentication is valid, the authenticated user or token does not have permission to perform this action.\n",
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/responses/NotFound/content/application~1json/schema"
-            }
-          }
-        }
-      },
-      "InternalServerError": {
-        "description": "Internal Server Error the PagerDuty server experienced an error.",
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/responses/NotFound/content/application~1json/schema"
-            }
-          }
-        }
-      },
-      "NotFound": {
-        "description": "The requested resource was not found.",
+      "Conflict": {
+        "description": "The request conflicts with the current state of the server.",
         "content": {
           "application/json": {
             "schema": {
@@ -599,12 +583,52 @@
           }
         }
       },
+      "Forbidden": {
+        "description": "Caller is not authorized to view the requested resource.\nWhile your authentication is valid, the authenticated user or token does not have permission to perform this action.\n",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/responses/Conflict/content/application~1json/schema"
+            }
+          }
+        }
+      },
+      "InternalServerError": {
+        "description": "Internal Server Error the PagerDuty server experienced an error.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/responses/Conflict/content/application~1json/schema"
+            }
+          }
+        }
+      },
+      "NotAllowed": {
+        "description": "The request was received and recognized by the server, but its HTTP method was rejected for the requested resource.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/responses/Conflict/content/application~1json/schema"
+            }
+          }
+        }
+      },
+      "NotFound": {
+        "description": "The requested resource was not found.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/responses/Conflict/content/application~1json/schema"
+            }
+          }
+        }
+      },
       "TooManyRequests": {
         "description": "Too many requests have been made, the rate limit has been reached.",
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/components/responses/NotFound/content/application~1json/schema"
+              "$ref": "#/components/responses/Conflict/content/application~1json/schema"
             }
           }
         }
@@ -614,7 +638,7 @@
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/components/responses/NotFound/content/application~1json/schema"
+              "$ref": "#/components/responses/Conflict/content/application~1json/schema"
             }
           }
         }
@@ -624,7 +648,7 @@
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/components/responses/NotFound/content/application~1json/schema"
+              "$ref": "#/components/responses/Conflict/content/application~1json/schema"
             }
           }
         }
@@ -10125,6 +10149,1089 @@
           },
           "429": {
             "$ref": "#/components/responses/TooManyRequests"
+          }
+        }
+      }
+    },
+    "/rulesets": {
+      "description": "Create, list, update and delete rulesets.",
+      "get": {
+        "tags": [
+          "Rulesets"
+        ],
+        "operationId": "listRulesets",
+        "description": "List all rulesets.\n\nRulesets allow you to route events to an endpoint and create collections of event rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#rulesets)\n",
+        "summary": "List rulesets",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A paginated array of ruleset objects.",
+            "content": {
+              "applicant/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Pagination"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "rulesets": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/paths/~1rulesets/post/parameters/1/schema/properties/ruleset"
+                          }
+                        }
+                      },
+                      "required": [
+                        "rulesets"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Rulesets"
+        ],
+        "operationId": "createRuleset",
+        "description": "Create a new ruleset.\n\nRulesets allow you to route events to an endpoint and create collections of event rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#rulesets)\n",
+        "summary": "Create a ruleset",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "name": "ruleset",
+            "in": "query",
+            "description": "The ruleset to be created.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "ruleset": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "readOnly": true,
+                      "description": "ID of the ruleset."
+                    },
+                    "self": {
+                      "type": "string",
+                      "format": "url",
+                      "description": "the API show URL at which the object is accessible",
+                      "readOnly": true
+                    },
+                    "type": {
+                      "type": "string",
+                      "readOnly": true,
+                      "enum": [
+                        "global",
+                        "default_global"
+                      ]
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "Name of the ruleset."
+                    },
+                    "routing_keys": {
+                      "type": "array",
+                      "readOnly": true,
+                      "description": "Routing keys routed to this ruleset.",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "readOnly": true,
+                      "description": "The date the ruleset was created at."
+                    },
+                    "creator": {
+                      "type": "object",
+                      "readOnly": true,
+                      "description": "Reference to the user that has created the ruleset.",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "readOnly": true
+                        },
+                        "type": {
+                          "type": "string",
+                          "description": "A string that determines the schema of the object",
+                          "readOnly": true
+                        },
+                        "self": {
+                          "type": "string",
+                          "format": "url",
+                          "description": "The API show URL at which the object is accessible",
+                          "readOnly": true
+                        }
+                      }
+                    },
+                    "updated_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "readOnly": true,
+                      "description": "The date the ruleset was last updated."
+                    },
+                    "updater": {
+                      "type": "object",
+                      "readOnly": true,
+                      "description": "Reference to the user that has updated the ruleset last.",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "readOnly": true
+                        },
+                        "type": {
+                          "type": "string",
+                          "description": "A string that determines the schema of the object",
+                          "readOnly": true
+                        },
+                        "self": {
+                          "type": "string",
+                          "format": "url",
+                          "description": "The API show URL at which the object is accessible",
+                          "readOnly": true
+                        }
+                      }
+                    },
+                    "team": {
+                      "type": "object",
+                      "description": "Reference to the team that owns the ruleset. If none is specified, only admins have access.",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string",
+                          "description": "A string that determines the schema of the object",
+                          "readOnly": true
+                        },
+                        "self": {
+                          "type": "string",
+                          "format": "url",
+                          "description": "The API show URL at which the object is accessible",
+                          "readOnly": true
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "type"
+                      ]
+                    }
+                  },
+                  "example": {
+                    "id": "0e84de00-9511-4380-9f4f-a7b568bb49a0",
+                    "name": "MySQL Clusters",
+                    "type": "global",
+                    "routing_keys": [
+                      "R0212P1QXGEIQE2NMTQ7L7WXD00DWHIN"
+                    ],
+                    "self": "https://api.pagerduty.com/rulesets/0e84de00-9511-4380-9f4f-a7b568bb49a0",
+                    "created_at": "2019-12-24T21:18:52Z",
+                    "creator": {
+                      "type": "user_reference",
+                      "self": "https://api.pagerduty.com/users/PABO808",
+                      "id": "PABO808"
+                    },
+                    "updated_at": "2019-12-25T14:54:23Z",
+                    "updater": {
+                      "type": "user_reference",
+                      "self": "https://api.pagerduty.com/users/PABO808",
+                      "id": "PABO808"
+                    },
+                    "team": {
+                      "type": "team_reference",
+                      "self": "https://api.pagerduty.com/teams/P3ZQXDF",
+                      "id": "P3ZQXDF"
+                    }
+                  },
+                  "required": [
+                    "name"
+                  ]
+                }
+              },
+              "required": [
+                "ruleset"
+              ],
+              "example": {
+                "ruleset": {
+                  "name": "MySQL Clusters",
+                  "team": {
+                    "id": "PWL7QXS",
+                    "type": "team_reference"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "The ruleset that was created.",
+            "content": {
+              "applicant/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ruleset": {
+                      "$ref": "#/paths/~1rulesets/post/parameters/1/schema/properties/ruleset"
+                    }
+                  },
+                  "required": [
+                    "ruleset"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/rulesets/{id}": {
+      "description": "Manage rulesets.",
+      "get": {
+        "tags": [
+          "Rulesets"
+        ],
+        "operationId": "getRuleset",
+        "description": "Get a ruleset.\n\nRulesets allow you to route events to an endpoint and create collections of event rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#rulesets)\n",
+        "summary": "Get a ruleset",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The ruleset object.",
+            "content": {
+              "applicant/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ruleset": {
+                      "$ref": "#/paths/~1rulesets/post/parameters/1/schema/properties/ruleset"
+                    }
+                  },
+                  "required": [
+                    "ruleset"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Rulesets"
+        ],
+        "operationId": "updateRuleset",
+        "description": "Update a ruleset.\n\nRulesets allow you to route events to an endpoint and create collections of event rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#rulesets)\n",
+        "summary": "Update a ruleset",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "name": "ruleset",
+            "in": "query",
+            "description": "The ruleset update.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "ruleset": {
+                  "$ref": "#/paths/~1rulesets/post/parameters/1/schema/properties/ruleset"
+                }
+              },
+              "required": [
+                "ruleset"
+              ],
+              "example": {
+                "ruleset": {
+                  "name": "MySQL Clusters",
+                  "team": {
+                    "id": "PWL7QXS",
+                    "type": "team_reference"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The ruleset that was updated.",
+            "content": {
+              "applicant/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ruleset": {
+                      "$ref": "#/paths/~1rulesets/post/parameters/1/schema/properties/ruleset"
+                    }
+                  },
+                  "required": [
+                    "ruleset"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "405": {
+            "$ref": "#/components/responses/NotAllowed"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Rulesets"
+        ],
+        "operationId": "deleteRuleset",
+        "description": "Delete a ruleset.\n\nRulesets allow you to route events to an endpoint and create collections of event rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#rulesets)\n",
+        "summary": "Delete a ruleset",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The ruleset was deleted successfully."
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "405": {
+            "$ref": "#/components/responses/NotAllowed"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          }
+        }
+      }
+    },
+    "/rulesets/{id}/rules": {
+      "description": "Create, list, update and delete event rules.",
+      "get": {
+        "tags": [
+          "Rulesets"
+        ],
+        "operationId": "listRulesetEventRules",
+        "description": "List all event rules of a rulesets.\n\nRulesets allow you to route events to an endpoint and create collections of event rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#rulesets)\n",
+        "summary": "List event rules",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A paginated array of event rule objects.",
+            "content": {
+              "applicant/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Pagination"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "rules": {
+                          "type": "array",
+                          "description": "The paginated list of rules of the ruleset.",
+                          "items": {
+                            "$ref": "#/paths/~1rulesets~1%7Bid%7D~1rules/post/parameters/2/schema/properties/rule"
+                          }
+                        }
+                      },
+                      "required": [
+                        "rules"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Rulesets"
+        ],
+        "operationId": "createRulesetEventRule",
+        "description": "Create a new event rule.\n\nRulesets allow you to route events to an endpoint and create collections of event rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#rulesets)\n",
+        "summary": "Create an event rule",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "name": "rule",
+            "in": "query",
+            "description": "The event rule to be created.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "rule": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "readOnly": true,
+                      "description": "ID of the event rule."
+                    },
+                    "self": {
+                      "type": "string",
+                      "format": "url",
+                      "description": "the API show URL at which the object is accessible",
+                      "readOnly": true
+                    },
+                    "position": {
+                      "type": "integer",
+                      "description": "Position/index of the rule within the ruleset."
+                    },
+                    "disabled": {
+                      "type": "boolean",
+                      "description": "Indicates whether the rule is disabled and would therefore not be evaluated."
+                    },
+                    "catch_all": {
+                      "type": "boolean",
+                      "readOnly": true,
+                      "description": "Indicates whether the rule is the last rule of the ruleset that serves as a catch-all. It has limited functionality compared to other rules."
+                    },
+                    "conditions": {
+                      "type": "object",
+                      "description": "Conditions evaluated to check if an event matches this event rule. Is always empty for the catch all rule, though.",
+                      "properties": {
+                        "operator": {
+                          "type": "string",
+                          "description": "Operator to combine sub-conditions.",
+                          "enum": [
+                            "and",
+                            "or"
+                          ]
+                        },
+                        "subconditions": {
+                          "type": "array",
+                          "description": "Array of sub-conditions.",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "operator": {
+                                "type": "string",
+                                "description": "The type of operator to apply.",
+                                "enum": [
+                                  "exists",
+                                  "nexists",
+                                  "equals",
+                                  "nequals",
+                                  "contains",
+                                  "ncontains",
+                                  "matches",
+                                  "nmatches"
+                                ]
+                              },
+                              "parameters": {
+                                "type": "object",
+                                "properties": {
+                                  "path": {
+                                    "type": "string",
+                                    "description": "Path to a field in an event, in dot-notation."
+                                  },
+                                  "value": {
+                                    "type": "string",
+                                    "description": "Value to apply to the operator."
+                                  },
+                                  "options": {
+                                    "type": "object",
+                                    "description": "Options to configure the operator."
+                                  }
+                                },
+                                "required": [
+                                  "value",
+                                  "path"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "operator",
+                              "parameters"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "operator",
+                        "subconditions"
+                      ]
+                    },
+                    "time_frame": {
+                      "description": "Time-based conditions for limiting when the rule is active.",
+                      "type": "object",
+                      "properties": {
+                        "active_between": {
+                          "type": "object",
+                          "required": [
+                            "start_time",
+                            "end_time"
+                          ],
+                          "description": "A fixed window of time during which the rule is active.",
+                          "properties": {
+                            "start_time": {
+                              "type": "integer",
+                              "description": "The start time in milliseconds."
+                            },
+                            "end_time": {
+                              "type": "integer",
+                              "description": "End time in milliseconds."
+                            }
+                          }
+                        },
+                        "scheduled_weekly": {
+                          "type": "object",
+                          "required": [
+                            "start_time",
+                            "duration",
+                            "timezone",
+                            "weekdays"
+                          ],
+                          "description": "A reccuring window of time based on the day of the week, during which the rule is active.",
+                          "properties": {
+                            "start_time": {
+                              "type": "integer",
+                              "description": "The amount of milliseconds into the day at which the window starts."
+                            },
+                            "duration": {
+                              "type": "integer",
+                              "description": "The duration of the window in milliseconds."
+                            },
+                            "timezone": {
+                              "type": "string",
+                              "description": "The timezone."
+                            },
+                            "weekdays": {
+                              "type": "array",
+                              "description": "An array of day values. Ex [1, 3, 5] is Monday, Wednesday, Friday.",
+                              "items": {
+                                "type": "integer"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "actions": {
+                      "description": "When an event matches this rule, the actions that will be taken to change the resulting alert and incident.",
+                      "type": "object",
+                      "properties": {
+                        "annotate": {
+                          "description": "Set a note on the resulting incident.",
+                          "type": "object",
+                          "required": [
+                            "value"
+                          ],
+                          "properties": {
+                            "value": {
+                              "type": "string",
+                              "description": "The content of the note."
+                            }
+                          }
+                        },
+                        "event_action": {
+                          "description": "Set whether the resulting alert status is trigger or resolve.",
+                          "type": "object",
+                          "required": [
+                            "value"
+                          ],
+                          "properties": {
+                            "value": {
+                              "type": "string",
+                              "enum": [
+                                "trigger",
+                                "resolve"
+                              ]
+                            }
+                          }
+                        },
+                        "extractions": {
+                          "type": "array",
+                          "description": "Use regular expressions to extract values from event fields to set fields on the resulting alert.",
+                          "items": {
+                            "type": "object",
+                            "required": [
+                              "target",
+                              "source",
+                              "regex"
+                            ],
+                            "properties": {
+                              "target": {
+                                "type": "string",
+                                "description": "The alert field that will be set with the value from the regex.",
+                                "enum": [
+                                  "dedup_key",
+                                  "description"
+                                ]
+                              },
+                              "source": {
+                                "type": "string",
+                                "description": "The path to the event field where the regex will be applied to extract a value."
+                              },
+                              "regex": {
+                                "type": "string",
+                                "description": "A RE2 regular expression.  If it contains one or more capture groups, their values will be extracted and appended together.  If it contains no capture groups, the whole match is used."
+                              }
+                            }
+                          }
+                        },
+                        "priority": {
+                          "description": "Set the priority ID for the resulting incident. You can find the priority you want by calling the priorities endpoint.",
+                          "type": "object",
+                          "required": [
+                            "value"
+                          ],
+                          "properties": {
+                            "value": {
+                              "type": "string",
+                              "description": "The priority ID."
+                            }
+                          }
+                        },
+                        "route": {
+                          "description": "Set the service ID of the target service for the resulting alert. You can find the service you want to route to by calling the services endpoint.",
+                          "type": "object",
+                          "required": [
+                            "value"
+                          ],
+                          "properties": {
+                            "value": {
+                              "type": "string",
+                              "description": "The target service's ID."
+                            }
+                          }
+                        },
+                        "severity": {
+                          "description": "Set the severity of the resulting alert.",
+                          "type": "object",
+                          "required": [
+                            "value"
+                          ],
+                          "properties": {
+                            "value": {
+                              "type": "string",
+                              "enum": [
+                                "info",
+                                "warning",
+                                "error",
+                                "critical"
+                              ]
+                            }
+                          }
+                        },
+                        "suppress": {
+                          "description": "Set whether the resulting alert is suppressed.  Can optionally be used with a threshold where resulting alerts will be suppressed until the threshold is met in window of time.",
+                          "type": "object",
+                          "required": [
+                            "value"
+                          ],
+                          "properties": {
+                            "value": {
+                              "type": "boolean"
+                            },
+                            "threshold_value": {
+                              "type": "integer",
+                              "description": "The number of occurences needed during the window of time to trigger the theshold."
+                            },
+                            "threshold_time_unit": {
+                              "type": "string",
+                              "description": "The time unit for the window of time.",
+                              "enum": [
+                                "seconds",
+                                "minutes",
+                                "hours"
+                              ]
+                            },
+                            "threshold_time_amount": {
+                              "type": "integer",
+                              "description": "The amount of time units for the window of time."
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "example": {
+                    "id": "14e56445-ebab-4dd0-ba9d-fc28a41b7e7b",
+                    "position": 0,
+                    "disabled": false,
+                    "catch_all": false,
+                    "self": "https://api.pagerduty.com/rulesets/0e84de00-9511-4380-9f4f-a7b568bb49a0/rules/14e56445-ebab-4dd0-ba9d-fc28a41b7e7b",
+                    "conditions": {
+                      "operator": "and",
+                      "subconditions": [
+                        {
+                          "operator": "contains",
+                          "parameters": {
+                            "value": "mysql",
+                            "path": "details.host"
+                          }
+                        }
+                      ]
+                    },
+                    "time_frame": {
+                      "active_between": {
+                        "start_time": 1577880000000,
+                        "end_time": 1580558400000
+                      }
+                    },
+                    "actions": {
+                      "annotate": {
+                        "value": "This incident was created by a Global Event Rule"
+                      },
+                      "route": {
+                        "value": "PI2KBWI"
+                      },
+                      "priority": {
+                        "value": "PCMUB6F"
+                      },
+                      "severity": {
+                        "value": "warning"
+                      },
+                      "extractions": [
+                        {
+                          "target": "dedup_key",
+                          "source": "details.error_summary",
+                          "regex": "Host (.*) is experiencing errors"
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "actions"
+                  ]
+                }
+              },
+              "required": [
+                "rule"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "The event rule that was created.",
+            "content": {
+              "applicant/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "rule": {
+                      "$ref": "#/paths/~1rulesets~1%7Bid%7D~1rules/post/parameters/2/schema/properties/rule"
+                    }
+                  },
+                  "required": [
+                    "rule"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          }
+        }
+      }
+    },
+    "/rulesets/{id}/rules/{rule_id}": {
+      "description": "Manage event rules.",
+      "get": {
+        "tags": [
+          "Rulesets"
+        ],
+        "operationId": "getRulesetEventRule",
+        "description": "Get an event rule.\n\nRulesets allow you to route events to an endpoint and create collections of event rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#rulesets)\n",
+        "summary": "Get an event rule",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "name": "rule_id",
+            "in": "path",
+            "description": "The id of the event rule to retrieve.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The event rule object.",
+            "content": {
+              "applicant/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "rule": {
+                      "$ref": "#/paths/~1rulesets~1%7Bid%7D~1rules/post/parameters/2/schema/properties/rule"
+                    }
+                  },
+                  "required": [
+                    "rule"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Rulesets"
+        ],
+        "operationId": "updateRulesetEventRule",
+        "summary": "Update an event rule",
+        "description": "Update an event rule. Note that the endpoint supports partial updates, so any number of the writable fields can be provided.\n\nRulesets allow you to route events to an endpoint and create collections of event rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#rulesets)\n",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "name": "rule_id",
+            "in": "path",
+            "description": "The id of the event rule to retrieve.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "rule",
+            "in": "query",
+            "description": "The event rule update.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "rule": {
+                  "$ref": "#/paths/~1rulesets~1%7Bid%7D~1rules/post/parameters/2/schema/properties/rule"
+                }
+              },
+              "required": [
+                "rule"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The event rule that was updated.",
+            "content": {
+              "applicant/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "rule": {
+                      "$ref": "#/paths/~1rulesets~1%7Bid%7D~1rules/post/parameters/2/schema/properties/rule"
+                    }
+                  },
+                  "required": [
+                    "rule"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "405": {
+            "$ref": "#/components/responses/NotAllowed"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Rulesets"
+        ],
+        "operationId": "deleteRulesetEventRule",
+        "description": "Delete an event rule.\n\nRulesets allow you to route events to an endpoint and create collections of event rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#rulesets)\n",
+        "summary": "Delete an event rule",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "name": "rule_id",
+            "in": "path",
+            "description": "The id of the event rule to retrieve.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The event rule was deleted successfully."
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "405": {
+            "$ref": "#/components/responses/NotAllowed"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
           }
         }
       }

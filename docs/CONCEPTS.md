@@ -167,6 +167,11 @@ Response Plays let you create packages of Incident Actions that can be applied t
 
 This enables you to take a complex activity, like assembling a response team of multiple On-Calls and an Incident commander, and make it available to anyone that needs to use it.
 
+## Rulesets
+Rulesets allow you to route events to an endpoint and create collections of event rules, which define sets of actions to take based on event content.
+
+[*Read more about rulesets in the PagerDuty Knowledge Base*](https://support.pagerduty.com/docs/rulesets).
+
 ## Schedules
 A Schedule determines the time periods that [Users](#users) are [On-Call.](#on-calls)
 
