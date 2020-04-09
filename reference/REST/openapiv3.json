@@ -80,6 +80,10 @@
       "description": "A Schedule determines the time periods that users are On-Call.\n"
     },
     {
+      "name": "Service Dependencies",
+      "description": "Services are categorized into technical and business services. Dependencies can be created via any combination of these services.\n"
+    },
+    {
       "name": "Services",
       "description": "A Service may represent an application, component, or team you wish to open incidents against.\n"
     },
@@ -12575,7 +12579,7 @@
       "description": "Associate dependencies of services.",
       "post": {
         "tags": [
-          "Business Services"
+          "Service Dependencies"
         ],
         "operationId": "createServiceDependency",
         "summary": "Associate service dependencies",
@@ -12592,30 +12596,33 @@
                 "type": "object",
                 "properties": {
                   "relationships": {
-                    "type": "object",
-                    "description": "Multiple relationships of service dependencies to be deleted.",
-                    "properties": {
-                      "supporting_service": {
-                        "type": "object",
-                        "description": "The reference to the service that SUPPORTS the dependent service.",
-                        "properties": {
-                          "id": {
-                            "type": "string"
-                          },
-                          "type": {
-                            "type": "string"
+                    "type": "array",
+                    "description": "List of all service dependencies to be created.",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "supporting_service": {
+                          "type": "object",
+                          "description": "The reference to the service that supports the dependent service.",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "type": {
+                              "type": "string"
+                            }
                           }
-                        }
-                      },
-                      "dependent_service": {
-                        "type": "object",
-                        "description": "The reference to the service that is DEPENDENT on the supporting service.",
-                        "properties": {
-                          "id": {
-                            "type": "string"
-                          },
-                          "type": {
-                            "type": "string"
+                        },
+                        "dependent_service": {
+                          "type": "object",
+                          "description": "The reference to the service that is dependent on the supporting service.",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "type": {
+                              "type": "string"
+                            }
                           }
                         }
                       }
@@ -12627,11 +12634,11 @@
                     {
                       "supporting_service": {
                         "id": "P7AD56",
-                        "type": "business_service"
+                        "type": "service"
                       },
                       "dependent_service": {
                         "id": "P99DJ6",
-                        "type": "service"
+                        "type": "business_service"
                       }
                     },
                     {
@@ -12651,8 +12658,84 @@
           }
         },
         "responses": {
-          "204": {
-            "description": "The services were successfully associated."
+          "200": {
+            "description": "An array of service relationships that were successfully associated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "relationships": {
+                      "type": "array",
+                      "description": "List of all the technical service's dependencies",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "supporting_service": {
+                            "type": "object",
+                            "description": "The reference to the service that supports the technical service.",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "type": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "dependent_service": {
+                            "type": "object",
+                            "description": "The reference to the service that is dependent on the technical service.",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "type": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "id": {
+                            "type": "string"
+                          },
+                          "type": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "relationships": [
+                    {
+                      "supporting_service": {
+                        "id": "P7AD56",
+                        "type": "technical_service_reference"
+                      },
+                      "dependent_service": {
+                        "id": "P99DJ6",
+                        "type": "business_service_reference"
+                      },
+                      "id": "DQVP7E6G0E8AC3NR",
+                      "type": "service_dependency"
+                    },
+                    {
+                      "supporting_service": {
+                        "id": "DT93K1",
+                        "type": "business_service_reference"
+                      },
+                      "dependent_service": {
+                        "id": "RS34D9",
+                        "type": "technical_service_reference"
+                      },
+                      "id": "D3PG0QVACE87RNE6",
+                      "type": "service_dependency"
+                    }
+                  ]
+                }
+              }
+            }
           },
           "400": {
             "$ref": "#/components/responses/ArgumentError"
@@ -12673,7 +12756,7 @@
       "description": "Disassociate dependencies of services.",
       "post": {
         "tags": [
-          "Business Services"
+          "Service Dependencies"
         ],
         "operationId": "deleteServiceDependency",
         "summary": "Disassociate service dependencies",
@@ -12690,30 +12773,33 @@
                 "type": "object",
                 "properties": {
                   "relationships": {
-                    "type": "object",
-                    "description": "Multiple relationships of service dependencies to be deleted.",
-                    "properties": {
-                      "supporting_service": {
-                        "type": "object",
-                        "description": "The reference to the service that SUPPORTS the dependent service.",
-                        "properties": {
-                          "id": {
-                            "type": "string"
-                          },
-                          "type": {
-                            "type": "string"
+                    "type": "array",
+                    "description": "List of all service dependencies to be deleted.",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "supporting_service": {
+                          "type": "object",
+                          "description": "The reference to the service that supports the dependent service.",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "type": {
+                              "type": "string"
+                            }
                           }
-                        }
-                      },
-                      "dependent_service": {
-                        "type": "object",
-                        "description": "The reference to the service that is DEPENDENT on the supporting service.",
-                        "properties": {
-                          "id": {
-                            "type": "string"
-                          },
-                          "type": {
-                            "type": "string"
+                        },
+                        "dependent_service": {
+                          "type": "object",
+                          "description": "The reference to the service that is dependent on the supporting service.",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "type": {
+                              "type": "string"
+                            }
                           }
                         }
                       }
@@ -12725,11 +12811,11 @@
                     {
                       "supporting_service": {
                         "id": "P7AD56",
-                        "type": "business_service"
+                        "type": "service"
                       },
                       "dependent_service": {
                         "id": "P99DJ6",
-                        "type": "service"
+                        "type": "business_service"
                       }
                     },
                     {
@@ -12749,8 +12835,84 @@
           }
         },
         "responses": {
-          "204": {
-            "description": "The services were successfully disassociated."
+          "200": {
+            "description": "An array of service relationships that were successfully disassociated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "relationships": {
+                      "type": "array",
+                      "description": "List of all the technical service's dependencies",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "supporting_service": {
+                            "type": "object",
+                            "description": "The reference to the service that supports the technical service.",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "type": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "dependent_service": {
+                            "type": "object",
+                            "description": "The reference to the service that is dependent on the technical service.",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "type": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "id": {
+                            "type": "string"
+                          },
+                          "type": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "relationships": [
+                    {
+                      "supporting_service": {
+                        "id": "P7AD56",
+                        "type": "technical_service_reference"
+                      },
+                      "dependent_service": {
+                        "id": "P99DJ6",
+                        "type": "business_service_reference"
+                      },
+                      "id": "DQVP7E6G0E8AC3NR",
+                      "type": "service_dependency"
+                    },
+                    {
+                      "supporting_service": {
+                        "id": "DT93K1",
+                        "type": "business_service_reference"
+                      },
+                      "dependent_service": {
+                        "id": "RS34D9",
+                        "type": "technical_service_reference"
+                      },
+                      "id": "D3PG0QVACE87RNE6",
+                      "type": "service_dependency"
+                    }
+                  ]
+                }
+              }
+            }
           },
           "400": {
             "$ref": "#/components/responses/ArgumentError"
@@ -12771,7 +12933,7 @@
       "description": "Get the dependencies of a given business service.",
       "get": {
         "tags": [
-          "Business Services"
+          "Service Dependencies"
         ],
         "operationId": "getBusinessServiceServiceDependencies",
         "summary": "Get business service dependencies",
@@ -12790,64 +12952,186 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "allOf": [
-                    {
-                      "type": "object",
-                      "properties": {
-                        "relationships": {
-                          "type": "object",
-                          "properties": {
-                            "supporting_service": {
-                              "type": "object",
-                              "description": "The reference to the service that SUPPORTS the dependent service.",
-                              "properties": {
-                                "id": {
-                                  "type": "string"
-                                },
-                                "type": {
-                                  "type": "string"
-                                }
+                  "type": "object",
+                  "properties": {
+                    "relationships": {
+                      "type": "array",
+                      "description": "List of all the business service's dependencies.",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "supporting_service": {
+                            "type": "object",
+                            "description": "The reference to the service that supports the business service.",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "type": {
+                                "type": "string"
                               }
-                            },
-                            "dependent_service": {
-                              "type": "object",
-                              "description": "The reference to the service that is DEPENDENT on the supporting service.",
-                              "properties": {
-                                "id": {
-                                  "type": "string"
-                                },
-                                "type": {
-                                  "type": "string"
-                                }
-                              }
-                            }
-                          }
-                        }
-                      },
-                      "example": {
-                        "relationships": [
-                          {
-                            "supporting_service": {
-                              "id": "P7AD56",
-                              "type": "business_service"
-                            },
-                            "dependent_service": {
-                              "id": "P99DJ6",
-                              "type": "service"
                             }
                           },
-                          {
-                            "supporting_service": {
-                              "id": "P99DJ6",
-                              "type": "service"
-                            },
-                            "dependent_service": {
-                              "id": "RS34D9",
-                              "type": "service"
+                          "dependent_service": {
+                            "type": "object",
+                            "description": "The reference to the service that is dependent on the business service.",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "type": {
+                                "type": "string"
+                              }
                             }
+                          },
+                          "id": {
+                            "type": "string"
+                          },
+                          "type": {
+                            "type": "string"
                           }
-                        ]
+                        }
                       }
+                    }
+                  }
+                },
+                "example": {
+                  "relationships": [
+                    {
+                      "supporting_service": {
+                        "id": "P7AD56",
+                        "type": "technical_service_reference"
+                      },
+                      "dependent_service": {
+                        "id": "P99DJ6",
+                        "type": "business_service_reference"
+                      },
+                      "id": "DQVP7E6G0E8AC3NR",
+                      "type": "service_dependency"
+                    },
+                    {
+                      "supporting_service": {
+                        "id": "P99DJ6",
+                        "type": "business_service_reference"
+                      },
+                      "dependent_service": {
+                        "id": "RS34D9",
+                        "type": "business_service_reference"
+                      },
+                      "id": "D3PG0QVACE87RNE6",
+                      "type": "service_dependency"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/service_dependencies/technical_services/{id}": {
+      "description": "Get the dependencies of a given technical service.",
+      "get": {
+        "tags": [
+          "Service Dependencies"
+        ],
+        "operationId": "getTechnicalServiceServiceDependencies",
+        "summary": "Get technical service dependencies",
+        "description": "Get all immediate dependencies of any technical service.\nTechnical services are also known as `services`.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#services)\n",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of service relationships.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "relationships": {
+                      "type": "array",
+                      "description": "List of all the technical service's dependencies",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "supporting_service": {
+                            "type": "object",
+                            "description": "The reference to the service that supports the technical service.",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "type": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "dependent_service": {
+                            "type": "object",
+                            "description": "The reference to the service that is dependent on the technical service.",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "type": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "id": {
+                            "type": "string"
+                          },
+                          "type": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "relationships": [
+                    {
+                      "supporting_service": {
+                        "id": "P7AD56",
+                        "type": "technical_service_reference"
+                      },
+                      "dependent_service": {
+                        "id": "P99DJ6",
+                        "type": "business_service_reference"
+                      },
+                      "id": "DQVP7E6G0E8AC3NR",
+                      "type": "service_dependency"
+                    },
+                    {
+                      "supporting_service": {
+                        "id": "R87DK4",
+                        "type": "technical_service_reference"
+                      },
+                      "dependent_service": {
+                        "id": "P7AD56",
+                        "type": "technical_service_reference"
+                      },
+                      "id": "D3PG0QVACE87RNE6",
+                      "type": "service_dependency"
                     }
                   ]
                 }

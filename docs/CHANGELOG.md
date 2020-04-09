@@ -5,6 +5,12 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 Currently we do not deprecate or remove any API functionality.
 
 ----
+### 2020-04-09
+ - Added a `GET /service_dependencies/technical_services/{id}` endpoint.
+ - *BREAKING* `POST /service_dependencies/associate` was changed from 200 to 204 for successful changes.
+ - *BREAKING* `POST /service_dependencies/disassociate` was changed from 204 to 200 for successful changes.
+ - *Documentation Change* Fixed a mistake in the documentation. The `relationships` property in the request for `POST /service_dependencies/associate` and `POST /service_dependencies/disassociate` is an array and not an object.
+ - *Documentation Change* The `service_dependencies` endpoints can now be found at the top level instead of under the `Business Services` section.
 
 ### 2020-04-06
  - Added new Rulesets endpoints
