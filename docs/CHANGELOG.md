@@ -5,6 +5,10 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 Currently we do not deprecate or remove any API functionality.
 
 ----
+
+### 2020-04-13
+ - Modified response and request examples to match OpenAPI 3.0.1 schema
+
 ### 2020-04-09
  - Added a `GET /service_dependencies/technical_services/{id}` endpoint.
  - *BREAKING* `POST /service_dependencies/associate` was changed from 204 to 200 for successful changes.

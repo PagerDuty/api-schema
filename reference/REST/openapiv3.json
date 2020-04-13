@@ -4552,6 +4552,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Example Response",
                     "value": {
                       "abilities": [
                         "teams",
@@ -4686,6 +4687,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Example Response",
                     "value": {
                       "addons": [
                         {
@@ -4769,6 +4771,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "addon": {
                         "id": "PKX7619",
@@ -4835,6 +4838,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Example Response",
                     "value": {
                       "addon": {
                         "id": "PKX7F81",
@@ -4958,6 +4962,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "addon": {
                         "id": "PKX7F81",
@@ -5067,6 +5072,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "business_services": [
                         {
@@ -5166,13 +5172,16 @@
                   }
                 }
               },
-              "example": {
+              "examples": {
                 "business_service": {
-                  "name": "Self-serve mobile checkout",
-                  "description": "Checkout service for our mobile clients",
-                  "point_of_contact": "PagerDuty Admin",
-                  "team": {
-                    "id": "P3ZQXDF"
+                  "summary": "Request Example",
+                  "value": {
+                    "name": "Self-serve mobile checkout",
+                    "description": "Checkout service for our mobile clients",
+                    "point_of_contact": "PagerDuty Admin",
+                    "team": {
+                      "id": "P3ZQXDF"
+                    }
                   }
                 }
               }
@@ -5197,6 +5206,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "business_service": {
                         "id": "P1L1YEE",
@@ -5269,6 +5279,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "business_service": {
                         "id": "P1L1YEE",
@@ -5383,9 +5394,12 @@
                       }
                     }
                   }
-                },
-                "example": {
-                  "business_service": {
+                }
+              },
+              "examples": {
+                "business_service": {
+                  "summary": "Request Example",
+                  "value": {
                     "name": "Self-serve mobile checkout",
                     "description": "Checkout service for our mobile clients",
                     "point_of_contact": "PagerDuty Admin",
@@ -5416,6 +5430,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "business_service": {
                         "id": "P1L1YEE",
@@ -5522,6 +5537,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "escalation_policies": [
                         {
@@ -5649,6 +5665,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "escalation_policy": {
                         "id": "PT20YPA",
@@ -5762,6 +5779,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "escalation_policy": {
                         "id": "PT20YPA",
@@ -5915,6 +5933,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "escalation_policy": {
                         "id": "PT20YPA",
@@ -6074,6 +6093,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "extensions": [
                         {
@@ -6168,6 +6188,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "extension": {
                         "id": "PPGPXHO",
@@ -6332,6 +6353,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "extension": {
                         "id": "PPGPXHO",
@@ -6457,6 +6479,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "extension": {
                         "id": "PPGPXHO",
@@ -6544,6 +6567,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "extension_schemas": [
                         {
@@ -6631,6 +6655,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "extension_schema": {
                         "id": "PJFWPEP",
@@ -6804,6 +6829,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "incidents": [
                         {
@@ -6985,9 +7011,12 @@
                 },
                 "required": [
                   "incidents"
-                ],
-                "example": {
-                  "incidents": [
+                ]
+              },
+              "examples": {
+                "incidents": {
+                  "summary": "Request Example",
+                  "value": [
                     {
                       "id": "PT4KHLK",
                       "type": "incident_reference",
@@ -7052,6 +7081,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "incidents": [
                         {
@@ -7249,9 +7279,12 @@
                 },
                 "required": [
                   "incident"
-                ],
-                "example": {
-                  "incident": {
+                ]
+              },
+              "examples": {
+                "incident": {
+                  "summary": "Request Example",
+                  "value": {
                     "type": "incident",
                     "title": "The server is on fire.",
                     "service": {
@@ -7296,6 +7329,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "incident": {
                         "id": "PT4KHLK",
@@ -7427,9 +7461,12 @@
                 },
                 "required": [
                   "source_incidents"
-                ],
-                "example": {
-                  "source_incidents": [
+                ]
+              },
+              "example": {
+                "source_incidents": {
+                  "summary": "Request Example",
+                  "value": [
                     {
                       "id": "P8JOGX7",
                       "type": "incident_reference"
@@ -7462,6 +7499,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "incident": {
                         "id": "PT4KHLK",
@@ -7535,6 +7573,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "incident": {
                         "id": "PT4KHLK",
@@ -7754,9 +7793,12 @@
                 },
                 "required": [
                   "incident"
-                ],
-                "example": {
-                  "incident": {
+                ]
+              },
+              "examples": {
+                "incident": {
+                  "summary": "Request Example",
+                  "value": {
                     "type": "incident_reference",
                     "status": "acknowledged"
                   }
@@ -7787,6 +7829,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "incident": {
                         "id": "PT4KHLK",
@@ -8007,6 +8050,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "alerts": [
                         {
@@ -8109,9 +8153,12 @@
                 },
                 "required": [
                   "alerts"
-                ],
-                "example": {
-                  "alerts": [
+                ]
+              },
+              "examples": {
+                "alerts": {
+                  "summary": "Request Example",
+                  "value": [
                     {
                       "id": "PPVZH9X",
                       "type": "alert_reference",
@@ -8159,6 +8206,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "alerts": [
                         {
@@ -8265,6 +8313,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "alert": {
                         "id": "PT4KHLK",
@@ -8461,6 +8510,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "log_entries": [
                         {
@@ -8564,6 +8614,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "notes": [
                         {
@@ -8655,6 +8706,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "note": {
                         "id": "PWL7QXS",
@@ -8725,9 +8777,14 @@
                 },
                 "required": [
                   "message"
-                ],
-                "example": {
-                  "message": "The server fire is spreading."
+                ]
+              },
+              "examples": {
+                "status_updates": {
+                  "summary": "Request Example",
+                  "value": {
+                    "message": "The server fire is spreading."
+                  }
                 }
               }
             }
@@ -8751,6 +8808,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "status_update": {
                         "id": "PWL7QXS",
@@ -8833,18 +8891,23 @@
                   "requester_id",
                   "message",
                   "responder_request_targets"
-                ],
-                "example": {
-                  "requester_id": "PL1JMK5",
-                  "message": "Please help with issue - join bridge at +1(234)-567-8910",
-                  "responder_request_targets": [
-                    {
-                      "responder_request_target": {
-                        "id": "PJ25ZYX",
-                        "type": "user_reference"
+                ]
+              },
+              "examples": {
+                "responder_requests": {
+                  "summary": "Request Example",
+                  "value": {
+                    "requester_id": "PL1JMK5",
+                    "message": "Please help with issue - join bridge at +1(234)-567-8910",
+                    "responder_request_targets": [
+                      {
+                        "responder_request_target": {
+                          "id": "PJ25ZYX",
+                          "type": "user_reference"
+                        }
                       }
-                    }
-                  ]
+                    ]
+                  }
                 }
               }
             }
@@ -8868,6 +8931,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "responder_request": {
                         "incident": {
@@ -8979,9 +9043,14 @@
                 },
                 "required": [
                   "duration"
-                ],
-                "example": {
-                  "duration": 3600
+                ]
+              },
+              "examples": {
+                "duration": {
+                  "summary": "Request Example",
+                  "value": {
+                    "duration": 3600
+                  }
                 }
               }
             }
@@ -9005,6 +9074,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "incident": {
                         "id": "PT4KHLK",
@@ -9172,6 +9242,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "log_entries": [
                         {
@@ -9278,6 +9349,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "log_entry": {
                         "id": "Q02JTSNZWHSEKV",
@@ -9415,6 +9487,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "maintenance_windows": [
                         {
@@ -9528,6 +9601,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "maintenance_window": {
                         "id": "PW98YIO",
@@ -9624,6 +9698,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "maintenance_window": {
                         "id": "PW98YIO",
@@ -9768,6 +9843,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "maintenance_window": {
                         "id": "PW98YIO",
@@ -9924,6 +10000,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "notifications": [
                         {
@@ -10104,6 +10181,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "oncalls": [
                         {
@@ -11282,6 +11360,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "priorities": [
                         {
@@ -11384,9 +11463,12 @@
                 },
                 "required": [
                   "incident"
-                ],
-                "example": {
-                  "incident": {
+                ]
+              },
+              "examples": {
+                "incident": {
+                  "summary": "Request Example",
+                  "value": {
                     "id": "PWL7QXS",
                     "type": "incident_reference"
                   }
@@ -11413,6 +11495,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "status": "ok"
                     }
@@ -11483,6 +11566,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "schedules": [
                         {
@@ -11603,6 +11687,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "schedule": {
                         "id": "PI7DH85",
@@ -11733,6 +11818,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "schedule": {
                         "id": "PI7DH85",
@@ -11938,6 +12024,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "schedule": {
                         "id": "PI7DH85",
@@ -12086,6 +12173,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "schedule": {
                         "id": "PI7DH85",
@@ -12238,6 +12326,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "overrides": [
                         {
@@ -12328,6 +12417,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "override": {
                         "id": "PQ47DCP",
@@ -12452,6 +12542,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "users": [
                         {
@@ -12628,9 +12719,12 @@
                       }
                     }
                   }
-                },
-                "example": {
-                  "relationships": [
+                }
+              },
+              "examples": {
+                "relationships": {
+                  "summary": "Request Example",
+                  "value": [
                     {
                       "supporting_service": {
                         "id": "P7AD56",
@@ -12706,33 +12800,36 @@
                     }
                   }
                 },
-                "example": {
-                  "relationships": [
-                    {
-                      "supporting_service": {
-                        "id": "P7AD56",
-                        "type": "technical_service_reference"
+                "examples": {
+                  "relationships": {
+                    "summary": "Response Example",
+                    "value": [
+                      {
+                        "supporting_service": {
+                          "id": "P7AD56",
+                          "type": "technical_service_reference"
+                        },
+                        "dependent_service": {
+                          "id": "P99DJ6",
+                          "type": "business_service_reference"
+                        },
+                        "id": "DQVP7E6G0E8AC3NR",
+                        "type": "service_dependency"
                       },
-                      "dependent_service": {
-                        "id": "P99DJ6",
-                        "type": "business_service_reference"
-                      },
-                      "id": "DQVP7E6G0E8AC3NR",
-                      "type": "service_dependency"
-                    },
-                    {
-                      "supporting_service": {
-                        "id": "DT93K1",
-                        "type": "business_service_reference"
-                      },
-                      "dependent_service": {
-                        "id": "RS34D9",
-                        "type": "technical_service_reference"
-                      },
-                      "id": "D3PG0QVACE87RNE6",
-                      "type": "service_dependency"
-                    }
-                  ]
+                      {
+                        "supporting_service": {
+                          "id": "DT93K1",
+                          "type": "business_service_reference"
+                        },
+                        "dependent_service": {
+                          "id": "RS34D9",
+                          "type": "technical_service_reference"
+                        },
+                        "id": "D3PG0QVACE87RNE6",
+                        "type": "service_dependency"
+                      }
+                    ]
+                  }
                 }
               }
             }
@@ -12805,9 +12902,12 @@
                       }
                     }
                   }
-                },
-                "example": {
-                  "relationships": [
+                }
+              },
+              "examples": {
+                "relationships": {
+                  "summary": "Request Example",
+                  "value": [
                     {
                       "supporting_service": {
                         "id": "P7AD56",
@@ -12883,33 +12983,36 @@
                     }
                   }
                 },
-                "example": {
-                  "relationships": [
-                    {
-                      "supporting_service": {
-                        "id": "P7AD56",
-                        "type": "technical_service_reference"
+                "examples": {
+                  "relationships": {
+                    "summary": "Example Response",
+                    "value": [
+                      {
+                        "supporting_service": {
+                          "id": "P7AD56",
+                          "type": "technical_service_reference"
+                        },
+                        "dependent_service": {
+                          "id": "P99DJ6",
+                          "type": "business_service_reference"
+                        },
+                        "id": "DQVP7E6G0E8AC3NR",
+                        "type": "service_dependency"
                       },
-                      "dependent_service": {
-                        "id": "P99DJ6",
-                        "type": "business_service_reference"
-                      },
-                      "id": "DQVP7E6G0E8AC3NR",
-                      "type": "service_dependency"
-                    },
-                    {
-                      "supporting_service": {
-                        "id": "DT93K1",
-                        "type": "business_service_reference"
-                      },
-                      "dependent_service": {
-                        "id": "RS34D9",
-                        "type": "technical_service_reference"
-                      },
-                      "id": "D3PG0QVACE87RNE6",
-                      "type": "service_dependency"
-                    }
-                  ]
+                      {
+                        "supporting_service": {
+                          "id": "DT93K1",
+                          "type": "business_service_reference"
+                        },
+                        "dependent_service": {
+                          "id": "RS34D9",
+                          "type": "technical_service_reference"
+                        },
+                        "id": "D3PG0QVACE87RNE6",
+                        "type": "service_dependency"
+                      }
+                    ]
+                  }
                 }
               }
             }
@@ -12995,33 +13098,36 @@
                     }
                   }
                 },
-                "example": {
-                  "relationships": [
-                    {
-                      "supporting_service": {
-                        "id": "P7AD56",
-                        "type": "technical_service_reference"
+                "examples": {
+                  "relationships": {
+                    "summary": "Response Example",
+                    "value": [
+                      {
+                        "supporting_service": {
+                          "id": "P7AD56",
+                          "type": "technical_service_reference"
+                        },
+                        "dependent_service": {
+                          "id": "P99DJ6",
+                          "type": "business_service_reference"
+                        },
+                        "id": "DQVP7E6G0E8AC3NR",
+                        "type": "service_dependency"
                       },
-                      "dependent_service": {
-                        "id": "P99DJ6",
-                        "type": "business_service_reference"
-                      },
-                      "id": "DQVP7E6G0E8AC3NR",
-                      "type": "service_dependency"
-                    },
-                    {
-                      "supporting_service": {
-                        "id": "P99DJ6",
-                        "type": "business_service_reference"
-                      },
-                      "dependent_service": {
-                        "id": "RS34D9",
-                        "type": "business_service_reference"
-                      },
-                      "id": "D3PG0QVACE87RNE6",
-                      "type": "service_dependency"
-                    }
-                  ]
+                      {
+                        "supporting_service": {
+                          "id": "P99DJ6",
+                          "type": "business_service_reference"
+                        },
+                        "dependent_service": {
+                          "id": "RS34D9",
+                          "type": "business_service_reference"
+                        },
+                        "id": "D3PG0QVACE87RNE6",
+                        "type": "service_dependency"
+                      }
+                    ]
+                  }
                 }
               }
             }
@@ -13107,33 +13213,36 @@
                     }
                   }
                 },
-                "example": {
-                  "relationships": [
-                    {
-                      "supporting_service": {
-                        "id": "P7AD56",
-                        "type": "technical_service_reference"
+                "examples": {
+                  "relationships": {
+                    "summary": "Response Example",
+                    "value": [
+                      {
+                        "supporting_service": {
+                          "id": "P7AD56",
+                          "type": "technical_service_reference"
+                        },
+                        "dependent_service": {
+                          "id": "P99DJ6",
+                          "type": "business_service_reference"
+                        },
+                        "id": "DQVP7E6G0E8AC3NR",
+                        "type": "service_dependency"
                       },
-                      "dependent_service": {
-                        "id": "P99DJ6",
-                        "type": "business_service_reference"
-                      },
-                      "id": "DQVP7E6G0E8AC3NR",
-                      "type": "service_dependency"
-                    },
-                    {
-                      "supporting_service": {
-                        "id": "R87DK4",
-                        "type": "technical_service_reference"
-                      },
-                      "dependent_service": {
-                        "id": "P7AD56",
-                        "type": "technical_service_reference"
-                      },
-                      "id": "D3PG0QVACE87RNE6",
-                      "type": "service_dependency"
-                    }
-                  ]
+                      {
+                        "supporting_service": {
+                          "id": "R87DK4",
+                          "type": "technical_service_reference"
+                        },
+                        "dependent_service": {
+                          "id": "P7AD56",
+                          "type": "technical_service_reference"
+                        },
+                        "id": "D3PG0QVACE87RNE6",
+                        "type": "service_dependency"
+                      }
+                    ]
+                  }
                 }
               }
             }
@@ -13230,6 +13339,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "services": [
                         {
@@ -13374,6 +13484,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "service": {
                         "id": "PIJ90N7",
@@ -13520,6 +13631,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "service": {
                         "id": "PIJ90N7",
@@ -13691,6 +13803,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "service": {
                         "id": "PIJ90N7",
@@ -13840,6 +13953,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "integration": {
                         "id": "PE1U9CH",
@@ -13935,6 +14049,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "integration": {
                         "id": "PE1U9CH",
@@ -14029,6 +14144,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "integration": {
                         "id": "PE1U9CH",
@@ -14130,6 +14246,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "tags": {
                         "type": "tag",
@@ -14207,6 +14324,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "tag": {
                         "type": "tag",
@@ -14271,6 +14389,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "tag": {
                         "type": "tag",
@@ -14387,6 +14506,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "users": [
                         {
@@ -14467,6 +14587,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "tags": {
                         "type": "tag",
@@ -14552,17 +14673,7 @@
                       "required": [
                         "type"
                       ]
-                    },
-                    "example": [
-                      {
-                        "type": "tag",
-                        "label": "Batman"
-                      },
-                      {
-                        "type": "tag_reference",
-                        "id": "P5IYCNZ"
-                      }
-                    ]
+                    }
                   },
                   "remove": {
                     "type": "array",
@@ -14587,8 +14698,25 @@
                         "type",
                         "id"
                       ]
-                    },
-                    "example": [
+                    }
+                  }
+                }
+              },
+              "examples": {
+                "tags": {
+                  "summary": "Request Example",
+                  "value": {
+                    "add": [
+                      {
+                        "type": "tag",
+                        "label": "Batman"
+                      },
+                      {
+                        "type": "tag_reference",
+                        "id": "P5IYCNZ"
+                      }
+                    ],
+                    "remove": [
                       {
                         "type": "tag_reference",
                         "id": "POE7RY8"
@@ -14680,6 +14808,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "team": {
                         "id": "PQ9K7I8",
@@ -14762,6 +14891,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "teams": [
                         {
@@ -14839,6 +14969,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "team": {
                         "id": "PQ9K7I8",
@@ -14969,6 +15100,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "team": {
                         "id": "PQ9K7I8",
@@ -15052,6 +15184,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "members": [
                         {
@@ -15350,6 +15483,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "users": [
                         {
@@ -15523,6 +15657,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "user": {
                         "id": "PXPGF42",
@@ -15634,6 +15769,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "user": {
                         "id": "PXPGF42",
@@ -15790,6 +15926,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "user": {
                         "id": "PXPGF42",
@@ -15901,6 +16038,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "user": {
                         "id": "PXPGF42",
@@ -16003,6 +16141,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "contact_methods": [
                         {
@@ -16086,6 +16225,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "contact_method": {
                         "id": "PXPGF42",
@@ -16155,6 +16295,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "contact_method": {
                         "id": "PXPGF42",
@@ -16278,6 +16419,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "contact_method": {
                         "id": "PXPGF42",
@@ -16366,6 +16508,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "notification_rules": [
                         {
@@ -16455,6 +16598,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "notification_rule": {
                         "id": "PXPGF42",
@@ -16551,6 +16695,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "notification_rule": {
                         "id": "PXPGF42",
@@ -16682,6 +16827,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "notification_rule": {
                         "id": "PXPGF42",
@@ -16763,6 +16909,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "user_sessions": [
                         {
@@ -16871,6 +17018,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "user_session": {
                         "id": "PXPGF42",
@@ -16984,6 +17132,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "vendors": [
                         {
@@ -17061,6 +17210,7 @@
                 },
                 "examples": {
                   "response": {
+                    "summary": "Response Example",
                     "value": {
                       "vendor": {
                         "id": "PZQ6AUS",
