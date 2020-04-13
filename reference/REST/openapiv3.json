@@ -6839,7 +6839,7 @@
                           "self": "https://api.pagerduty.com/incidents/PT4KHLK",
                           "html_url": "https://subdomain.pagerduty.com/incidents/PT4KHLK",
                           "incident_number": 1234,
-                          "created_at": "2015-10-06T21:30:42.000Z",
+                          "created_at": "2015-10-06T21:30:42Z",
                           "status": "resolved",
                           "title": "The server is on fire.",
                           "incident_key": "baf7cf21b1da41b4b0221008339ff357",
@@ -6859,7 +6859,7 @@
                           "assigned_via": "escalation_policy",
                           "assignments": [],
                           "acknowledgements": [],
-                          "last_status_change_at": "2015-10-06T21:38:23.000Z",
+                          "last_status_change_at": "2015-10-06T21:38:23Z",
                           "last_status_change_by": {
                             "id": "PXPGF42",
                             "type": "user_reference",
@@ -7091,7 +7091,7 @@
                           "self": "https://api.pagerduty.com/incidents/PT4KHLK",
                           "html_url": "https://subdomain.pagerduty.com/incidents/PT4KHLK",
                           "incident_number": 1234,
-                          "created_at": "2015-10-06T21:30:42.000Z",
+                          "created_at": "2015-10-06T21:30:42Z",
                           "status": "resolved",
                           "title": "The server is on fire.",
                           "alert_counts": {
@@ -7102,11 +7102,11 @@
                           "pending_actions": [
                             {
                               "type": "unacknowledge",
-                              "at": "2015-11-10T01:02:52.000Z"
+                              "at": "2015-11-10T01:02:52Z"
                             },
                             {
                               "type": "resolve",
-                              "at": "2015-11-10T04:31:52.000Z"
+                              "at": "2015-11-10T04:31:52Z"
                             }
                           ],
                           "incident_key": "baf7cf21b1da41b4b0221008339ff357",
@@ -7120,7 +7120,7 @@
                           "assigned_via": "escalation_policy",
                           "assignments": [
                             {
-                              "at": "2015-11-10T00:31:52.000Z",
+                              "at": "2015-11-10T00:31:52Z",
                               "assignee": {
                                 "id": "PXPGF42",
                                 "type": "user_reference",
@@ -7132,7 +7132,7 @@
                           ],
                           "acknowledgements": [
                             {
-                              "at": "2015-11-10T00:32:52.000Z",
+                              "at": "2015-11-10T00:32:52Z",
                               "acknowledger": {
                                 "id": "PXPGF42",
                                 "type": "user_reference",
@@ -7142,7 +7142,7 @@
                               }
                             }
                           ],
-                          "last_status_change_at": "2015-10-06T21:38:23.000Z",
+                          "last_status_change_at": "2015-10-06T21:38:23Z",
                           "last_status_change_by": {
                             "id": "PXPGF42",
                             "type": "user_reference",
@@ -7339,7 +7339,7 @@
                         "self": "https://api.pagerduty.com/incidents/PT4KHLK",
                         "html_url": "https://subdomain.pagerduty.com/incidents/PT4KHLK",
                         "incident_number": 1234,
-                        "created_at": "2015-10-06T21:30:42.000Z",
+                        "created_at": "2015-10-06T21:30:42Z",
                         "status": "triggered",
                         "incident_key": "baf7cf21b1da41b4b0221008339ff357",
                         "service": {
@@ -7358,7 +7358,7 @@
                         "assigned_via": "escalation_policy",
                         "assignments": [
                           {
-                            "at": "2015-11-10T00:31:52.000Z",
+                            "at": "2015-11-10T00:31:52Z",
                             "assignee": {
                               "id": "PXPGF42",
                               "type": "user_reference",
@@ -7368,7 +7368,7 @@
                             }
                           }
                         ],
-                        "last_status_change_at": "2015-10-06T21:38:23.000Z",
+                        "last_status_change_at": "2015-10-06T21:38:23Z",
                         "last_status_change_by": {
                           "id": "PXPGF42",
                           "type": "user_reference",
@@ -7582,7 +7582,7 @@
                         "self": "https://api.pagerduty.com/incidents/PT4KHLK",
                         "html_url": "https://subdomain.pagerduty.com/incidents/PT4KHLK",
                         "incident_number": 1234,
-                        "created_at": "2015-10-06T21:30:42.000Z",
+                        "created_at": "2015-10-06T21:30:42Z",
                         "status": "acknowledged",
                         "title": "The server is on fire.",
                         "alert_counts": {
@@ -7593,11 +7593,11 @@
                         "pending_actions": [
                           {
                             "type": "unacknowledge",
-                            "at": "2015-11-10T01:02:52.000Z"
+                            "at": "2015-11-10T01:02:52Z"
                           },
                           {
                             "type": "resolve",
-                            "at": "2015-11-10T04:31:52.000Z"
+                            "at": "2015-11-10T04:31:52Z"
                           }
                         ],
                         "incident_key": "baf7cf21b1da41b4b0221008339ff357",
@@ -7617,7 +7617,7 @@
                         "assigned_via": "escalation_policy",
                         "assignments": [
                           {
-                            "at": "2015-11-10T00:31:52.000Z",
+                            "at": "2015-11-10T00:31:52Z",
                             "assignee": {
                               "id": "PXPGF42",
                               "type": "user_reference",
@@ -7629,7 +7629,7 @@
                         ],
                         "acknowledgements": [
                           {
-                            "at": "2015-11-10T00:32:52.000Z",
+                            "at": "2015-11-10T00:32:52Z",
                             "acknowledger": {
                               "id": "PXPGF42",
                               "type": "user_reference",
@@ -7639,7 +7639,7 @@
                             }
                           }
                         ],
-                        "last_status_change_at": "2015-10-06T21:38:23.000Z",
+                        "last_status_change_at": "2015-10-06T21:38:23Z",
                         "last_status_change_by": {
                           "id": "PXPGF42",
                           "type": "user_reference",
@@ -7838,17 +7838,17 @@
                         "self": "https://api.pagerduty.com/incidents/PT4KHLK",
                         "html_url": "https://subdomain.pagerduty.com/incidents/PT4KHLK",
                         "incident_number": 1234,
-                        "created_at": "2015-10-06T21:30:42.000Z",
+                        "created_at": "2015-10-06T21:30:42Z",
                         "status": "resolved",
                         "title": "The server is on fire.",
                         "pending_actions": [
                           {
                             "type": "unacknowledge",
-                            "at": "2015-11-10T01:02:52.000Z"
+                            "at": "2015-11-10T01:02:52Z"
                           },
                           {
                             "type": "resolve",
-                            "at": "2015-11-10T04:31:52.000Z"
+                            "at": "2015-11-10T04:31:52Z"
                           }
                         ],
                         "incident_key": "baf7cf21b1da41b4b0221008339ff357",
@@ -7868,7 +7868,7 @@
                         "assigned_via": "escalation_policy",
                         "assignments": [
                           {
-                            "at": "2015-11-10T00:31:52.000Z",
+                            "at": "2015-11-10T00:31:52Z",
                             "assignee": {
                               "id": "PXPGF42",
                               "type": "user_reference",
@@ -7880,7 +7880,7 @@
                         ],
                         "acknowledgements": [
                           {
-                            "at": "2015-11-10T00:32:52.000Z",
+                            "at": "2015-11-10T00:32:52Z",
                             "acknowledger": {
                               "id": "PXPGF42",
                               "type": "user_reference",
@@ -7890,7 +7890,7 @@
                             }
                           }
                         ],
-                        "last_status_change_at": "2015-10-06T21:38:23.000Z",
+                        "last_status_change_at": "2015-10-06T21:38:23Z",
                         "last_status_change_by": {
                           "id": "PXPGF42",
                           "type": "user_reference",
@@ -8059,7 +8059,7 @@
                           "summary": "The server is on fire.",
                           "self": "https://api.pagerduty.com/incidents/PT4KHLK/alerts/PXPGF42",
                           "html_url": "https://subdomain.pagerduty.com/alerts/PXPGF42",
-                          "created_at": "2015-10-06T21:30:42.000Z",
+                          "created_at": "2015-10-06T21:30:42Z",
                           "status": "resolved",
                           "alert_key": "baf7cf21b1da41b4b0221008339ff357",
                           "service": {
@@ -8215,7 +8215,7 @@
                           "summary": "The server is on fire.",
                           "self": "https://api.pagerduty.com/incidents/PT4KHLK/alerts/PXPGF42",
                           "html_url": "https://subdomain.pagerduty.com/alerts/PXPGF42",
-                          "created_at": "2015-10-06T21:30:42.000Z",
+                          "created_at": "2015-10-06T21:30:42Z",
                           "status": "resolved",
                           "alert_key": "baf7cf21b1da41b4b0221008339ff357",
                           "service": {
@@ -8321,7 +8321,7 @@
                         "summary": "The server is on fire.",
                         "self": "https://api.pagerduty.com/incident/PT4KHLX/alerts/PT4KHLK",
                         "html_url": "https://subdomain.pagerduty.com/alerts/PT4KHLK",
-                        "created_at": "2015-10-06T21:30:42.000Z",
+                        "created_at": "2015-10-06T21:30:42Z",
                         "status": "resolved",
                         "alert_key": "baf7cf21b1da41b4b0221008339ff357",
                         "service": {
@@ -8519,7 +8519,7 @@
                           "summary": "Triggered through the API",
                           "self": "https://api.pagerduty.com/log_entries/Q02JTSNZWHSEKV?incident_id=PT4KHLK",
                           "html_url": "https://subdomain.pagerduty.com/incidents/PT4KHLK/log_entries/Q02JTSNZWHSEKV",
-                          "created_at": "2015-11-07T00:14:20.000Z",
+                          "created_at": "2015-11-07T00:14:20Z",
                           "agent": {
                             "id": "PIJ90N7",
                             "type": "generic_email_reference",
@@ -8627,7 +8627,7 @@
                             "html_url": "https://subdomain.pagerduty.com/users/PXPGF42"
                           },
                           "content": "Firefighters are on the scene.",
-                          "created_at": "2013-03-06T20:28:51.000Z"
+                          "created_at": "2013-03-06T15:28:51-05:00"
                         }
                       ]
                     }
@@ -8718,7 +8718,7 @@
                           "html_url": "https://subdomain.pagerduty.com/users/PXPGF42"
                         },
                         "content": "Firefighters are on the scene.",
-                        "created_at": "2013-03-06T20:28:51.000Z"
+                        "created_at": "2013-03-06T15:28:51-05:00"
                       }
                     }
                   }
@@ -8820,7 +8820,7 @@
                           "self": "https://api.pagerduty.com/users/PXPGF42",
                           "html_url": "https://subdomain.pagerduty.com/users/PXPGF42"
                         },
-                        "created_at": "2013-03-06T20:28:51.000Z"
+                        "created_at": "2013-03-06T15:28:51-05:00"
                       }
                     }
                   }
@@ -8948,7 +8948,7 @@
                           "self": "https://api.pagerduty.com/users/P09TT3C",
                           "html_url": "https://subdomain.pagerduty.com/users/P09TT3C"
                         },
-                        "requested_at": "2018-08-16T21:55:17.000Z",
+                        "requested_at": "2018-08-16T14:55:17-07:00",
                         "message": "Please help with issue - join bridge at +1(234)-567-8910",
                         "responder_request_targets": {
                           "responder_request_target": {
@@ -8971,7 +8971,7 @@
                                 "self": "https://api.pagerduty.com/incidents/PXP12GZ",
                                 "html_url": "https://subdomain.pagerduty.com/incidents/PXP12GZ"
                               },
-                              "updated_at": "2018-08-09T21:40:48.000Z",
+                              "updated_at": "2018-08-09T14:40:48-07:00",
                               "message": "Please help with issue - join bridge at +1(234)-567-8910",
                               "requester": {
                                 "id": "P09TT3C",
@@ -8981,7 +8981,7 @@
                                 "html_url": "https://subdomain.pagerduty.com/users/P09TT3C",
                                 "avatar_url": "https://secure.gravatar.com/avatar/1c747247b75acc1f724e2784c838b3f8.png?d=mm&r=PG"
                               },
-                              "requested_at": "2018-08-09T21:40:49.000Z"
+                              "requested_at": "2018-08-09T21:40:49Z"
                             }
                           }
                         }
@@ -9083,16 +9083,16 @@
                         "self": "https://api.pagerduty.com/incidents/PT4KHLK",
                         "html_url": "https://subdomain.pagerduty.com/incidents/PT4KHLK",
                         "incident_number": 1234,
-                        "created_at": "2015-10-06T21:30:42.000Z",
+                        "created_at": "2015-10-06T21:30:42Z",
                         "status": "resolved",
                         "pending_actions": [
                           {
                             "type": "unacknowledge",
-                            "at": "2015-11-10T01:02:52.000Z"
+                            "at": "2015-11-10T01:02:52Z"
                           },
                           {
                             "type": "resolve",
-                            "at": "2015-11-10T04:31:52.000Z"
+                            "at": "2015-11-10T04:31:52Z"
                           }
                         ],
                         "incident_key": "baf7cf21b1da41b4b0221008339ff357",
@@ -9106,7 +9106,7 @@
                         "assigned_via": "escalation_policy",
                         "assignments": [
                           {
-                            "at": "2015-11-10T00:31:52.000Z",
+                            "at": "2015-11-10T00:31:52Z",
                             "assignee": {
                               "id": "PXPGF42",
                               "type": "user_reference",
@@ -9118,7 +9118,7 @@
                         ],
                         "acknowledgements": [
                           {
-                            "at": "2015-11-10T00:32:52.000Z",
+                            "at": "2015-11-10T00:32:52Z",
                             "acknowledger": {
                               "id": "PXPGF42",
                               "type": "user_reference",
@@ -9128,7 +9128,7 @@
                             }
                           }
                         ],
-                        "last_status_change_at": "2015-10-06T21:38:23.000Z",
+                        "last_status_change_at": "2015-10-06T21:38:23Z",
                         "last_status_change_by": {
                           "id": "PXPGF42",
                           "type": "user_reference",
@@ -9251,7 +9251,7 @@
                           "summary": "Triggered through the API",
                           "self": "https://api.pagerduty.com/log_entries/Q02JTSNZWHSEKV?incident_id=PT4KHLK",
                           "html_url": "https://subdomain.pagerduty.com/incidents/PT4KHLK/log_entries/Q02JTSNZWHSEKV",
-                          "created_at": "2015-11-07T00:14:20.000Z",
+                          "created_at": "2015-11-07T00:14:20Z",
                           "agent": {
                             "id": "PIJ90N7",
                             "type": "generic_email_reference",
@@ -9357,7 +9357,7 @@
                         "summary": "Triggered through the API",
                         "self": "https://api.pagerduty.com/log_entries/Q02JTSNZWHSEKV?incident_id=PT4KHLK",
                         "html_url": "https://subdomain.pagerduty.com/incidents/PT4KHLK/log_entries/Q02JTSNZWHSEKV",
-                        "created_at": "2015-11-07T00:14:20.000Z",
+                        "created_at": "2015-11-07T00:14:20Z",
                         "agent": {
                           "id": "PIJ90N7",
                           "type": "generic_email_reference",
@@ -9497,8 +9497,8 @@
                           "self": "https://api.pagerduty.com/maintenance_windows/PW98YIO",
                           "html_url": "https://subdomain.pagerduty.com/maintenance_windows#/show/PW98YIO",
                           "sequence_number": 1,
-                          "start_time": "2015-11-10T01:00:00.000Z",
-                          "end_time": "2015-11-10T03:00:00.000Z",
+                          "start_time": "2015-11-09T20:00:00-05:00",
+                          "end_time": "2015-11-09T22:00:00-05:00",
                           "description": "Immanentizing the eschaton",
                           "services": [
                             {
@@ -9610,8 +9610,8 @@
                         "self": "https://api.pagerduty.com/maintenance_windows/PW98YIO",
                         "html_url": "https://subdomain.pagerduty.com/maintenance_windows#/show/PW98YIO",
                         "sequence_number": 1,
-                        "start_time": "2015-11-10T01:00:00.000Z",
-                        "end_time": "2015-11-10T03:00:00.000Z",
+                        "start_time": "2015-11-09T20:00:00-05:00",
+                        "end_time": "2015-11-09T22:00:00-05:00",
                         "description": "Immanentizing the eschaton",
                         "services": [
                           {
@@ -9707,8 +9707,8 @@
                         "self": "https://api.pagerduty.com/maintenance_windows/PW98YIO",
                         "html_url": "https://subdomain.pagerduty.com/maintenance_windows#/show/PW98YIO",
                         "sequence_number": 1,
-                        "start_time": "2015-11-10T01:00:00.000Z",
-                        "end_time": "2015-11-10T03:00:00.000Z",
+                        "start_time": "2015-11-09T20:00:00-05:00",
+                        "end_time": "2015-11-09T22:00:00-05:00",
                         "description": "Immanentizing the eschaton",
                         "services": [
                           {
@@ -9852,8 +9852,8 @@
                         "self": "https://api.pagerduty.com/maintenance_windows/PW98YIO",
                         "html_url": "https://subdomain.pagerduty.com/maintenance_windows#/show/PW98YIO",
                         "sequence_number": 1,
-                        "start_time": "2015-11-10T01:00:00.000Z",
-                        "end_time": "2015-11-10T03:00:00.000Z",
+                        "start_time": "2015-11-09T20:00:00-05:00",
+                        "end_time": "2015-11-09T22:00:00-05:00",
                         "description": "Immanentizing the eschaton",
                         "services": [
                           {
@@ -10006,7 +10006,7 @@
                         {
                           "id": "PWL7QXS",
                           "type": "phone_notification",
-                          "started_at": "2013-03-06T20:28:51.000Z",
+                          "started_at": "2013-03-06T15:28:51-05:00",
                           "address": "+15555551234",
                           "user": {
                             "id": "PT23IWX",
@@ -10019,7 +10019,7 @@
                         {
                           "id": "PKN7NBH",
                           "type": "push_notification",
-                          "started_at": "2013-03-06T20:28:51.000Z",
+                          "started_at": "2013-03-06T15:28:51-05:00",
                           "user": {
                             "id": "PT23IWX",
                             "type": "user",
@@ -10207,8 +10207,8 @@
                             "html_url": "https://subdomain.pagerduty.com/escalation_policies/PT20YPA"
                           },
                           "escalation_level": 2,
-                          "start": "2015-03-06T20:28:51.000Z",
-                          "end": "2015-03-07T20:28:51.000Z"
+                          "start": "2015-03-06T15:28:51-05:00",
+                          "end": "2015-03-07T15:28:51-05:00"
                         }
                       ],
                       "limit": 25,
@@ -11721,8 +11721,8 @@
                             "name": "Layer 1",
                             "rendered_schedule_entries": [],
                             "id": "PG68P1M",
-                            "start": "2015-11-07T01:00:00.000Z",
-                            "rotation_virtual_start": "2015-11-07T01:00:00.000Z",
+                            "start": "2015-11-06T20:00:00-05:00",
+                            "rotation_virtual_start": "2015-11-06T20:00:00-05:00",
                             "rotation_turn_length_seconds": 86400,
                             "users": [
                               {
@@ -11852,8 +11852,8 @@
                             "name": "Layer 1",
                             "rendered_schedule_entries": [
                               {
-                                "start": "2015-11-09T13:00:00.000Z",
-                                "end": "2015-11-09T22:00:00.000Z",
+                                "start": "2015-11-09T08:00:00-05:00",
+                                "end": "2015-11-09T17:00:00-05:00",
                                 "user": {
                                   "id": "PXPGF42",
                                   "type": "user",
@@ -11865,8 +11865,8 @@
                             ],
                             "rendered_coverage_percentage": 37.5,
                             "id": "PG68P1M",
-                            "start": "2015-11-07T02:00:00.000Z",
-                            "rotation_virtual_start": "2015-11-07T01:00:00.000Z",
+                            "start": "2015-11-06T21:00:00-05:00",
+                            "rotation_virtual_start": "2015-11-06T20:00:00-05:00",
                             "rotation_turn_length_seconds": 86400,
                             "users": [
                               {
@@ -11897,8 +11897,8 @@
                           "name": "Final Schedule",
                           "rendered_schedule_entries": [
                             {
-                              "start": "2015-11-10T13:00:00.000Z",
-                              "end": "2015-11-10T22:00:00.000Z",
+                              "start": "2015-11-10T08:00:00-05:00",
+                              "end": "2015-11-10T17:00:00-05:00",
                               "user": {
                                 "id": "PXPGF42",
                                 "type": "user",
@@ -12058,8 +12058,8 @@
                             "name": "Layer 1",
                             "rendered_schedule_entries": [],
                             "id": "PG68P1M",
-                            "start": "2015-11-07T01:00:00.000Z",
-                            "rotation_virtual_start": "2015-11-07T01:00:00.000Z",
+                            "start": "2015-11-06T20:00:00-05:00",
+                            "rotation_virtual_start": "2015-11-06T20:00:00-05:00",
                             "rotation_turn_length_seconds": 86400,
                             "users": [
                               {
@@ -12199,8 +12199,8 @@
                             "name": "Layer 1",
                             "rendered_schedule_entries": [],
                             "id": "PG68P1M",
-                            "start": "2015-11-07T01:00:00.000Z",
-                            "rotation_virtual_start": "2015-11-07T01:00:00.000Z",
+                            "start": "2015-11-06T20:00:00-05:00",
+                            "rotation_virtual_start": "2015-11-06T20:00:00-05:00",
                             "rotation_turn_length_seconds": 86400,
                             "users": [
                               {
@@ -12331,8 +12331,8 @@
                       "overrides": [
                         {
                           "id": "PQ47DCP",
-                          "start": "2012-07-01T04:00:00.000Z",
-                          "end": "2012-07-02T04:00:00.000Z",
+                          "start": "2012-07-01T00:00:00-04:00",
+                          "end": "2012-07-02T00:00:00-04:00",
                           "user": {
                             "id": "PEYSGVF",
                             "type": "user_reference",
@@ -12421,8 +12421,8 @@
                     "value": {
                       "override": {
                         "id": "PQ47DCP",
-                        "start": "2012-07-01T04:00:00.000Z",
-                        "end": "2012-07-02T04:00:00.000Z",
+                        "start": "2012-07-01T00:00:00-04:00",
+                        "end": "2012-07-02T00:00:00-04:00",
                         "user": {
                           "id": "PEYSGVF",
                           "type": "user_reference",
@@ -13351,7 +13351,7 @@
                           "name": "My Application Service",
                           "auto_resolve_timeout": 14400,
                           "acknowledgement_timeout": 600,
-                          "created_at": "2015-11-06T16:12:51.000Z",
+                          "created_at": "2015-11-06T11:12:51-05:00",
                           "status": "active",
                           "alert_creation": "create_alerts_and_incidents",
                           "alert_grouping": "intelligent",
@@ -13395,7 +13395,7 @@
                             "type": "fixed_time_per_day",
                             "time_zone": "America/Lima",
                             "start_time": "09:00:00",
-                            "end_time": 61200,
+                            "end_time": "17:00:00",
                             "days_of_week": [
                               1,
                               2,
@@ -13495,7 +13495,7 @@
                         "name": "My Application Service",
                         "auto_resolve_timeout": 14400,
                         "acknowledgement_timeout": 600,
-                        "created_at": "2015-11-06T16:12:51.000Z",
+                        "created_at": "2015-11-06T11:12:51-05:00",
                         "status": "active",
                         "alert_creation": "create_alerts_and_incidents",
                         "integrations": [
@@ -13538,7 +13538,7 @@
                           "type": "fixed_time_per_day",
                           "time_zone": "America/Lima",
                           "start_time": "09:00:00",
-                          "end_time": 61200,
+                          "end_time": "17:00:00",
                           "days_of_week": [
                             1,
                             2,
@@ -13642,7 +13642,7 @@
                         "name": "My Application Service",
                         "auto_resolve_timeout": 14400,
                         "acknowledgement_timeout": 600,
-                        "created_at": "2015-11-06T16:12:51.000Z",
+                        "created_at": "2015-11-06T11:12:51-05:00",
                         "status": "active",
                         "alert_creation": "create_alerts_and_incidents",
                         "integrations": [
@@ -13685,7 +13685,7 @@
                           "type": "fixed_time_per_day",
                           "time_zone": "America/Lima",
                           "start_time": "09:00:00",
-                          "end_time": 61200,
+                          "end_time": "17:00:00",
                           "days_of_week": [
                             1,
                             2,
@@ -13814,7 +13814,7 @@
                         "name": "My Application Service",
                         "auto_resolve_timeout": 14400,
                         "acknowledgement_timeout": 600,
-                        "created_at": "2015-11-06T16:12:51.000Z",
+                        "created_at": "2015-11-06T11:12:51-05:00",
                         "status": "active",
                         "alert_creation": "create_alerts_and_incidents",
                         "alert_grouping": "time",
@@ -13859,7 +13859,7 @@
                           "type": "fixed_time_per_day",
                           "time_zone": "America/Lima",
                           "start_time": "09:00:00",
-                          "end_time": 61200,
+                          "end_time": "17:00:00",
                           "days_of_week": [
                             1,
                             2,
@@ -13969,7 +13969,7 @@
                           "self": "https://api.pagerduty.com/services/PQL78HM",
                           "html_url": "https://subdomain.pagerduty.com/services/PQL78HM"
                         },
-                        "created_at": "2015-10-14T20:33:02.000Z",
+                        "created_at": "2015-10-14T13:33:02-07:00",
                         "integration_email": "my-email-based-integration@subdomain.pagerduty.com"
                       }
                     }
@@ -14065,7 +14065,7 @@
                           "self": "https://api.pagerduty.com/services/PQL78HM",
                           "html_url": "https://subdomain.pagerduty.com/services/PQL78HM"
                         },
-                        "created_at": "2015-10-14T20:33:02.000Z",
+                        "created_at": "2015-10-14T13:33:02-07:00",
                         "integration_email": "my-email-based-integration@subdomain.pagerduty.com"
                       }
                     }
@@ -14160,7 +14160,7 @@
                           "self": "https://api.pagerduty.com/services/PQL78HM",
                           "html_url": "https://subdomain.pagerduty.com/services/PQL78HM"
                         },
-                        "created_at": "2015-10-14T20:33:02.000Z",
+                        "created_at": "2015-10-14T13:33:02-07:00",
                         "vendor": {
                           "id": "P8JX75F",
                           "type": "vendor_reference",
@@ -16523,7 +16523,7 @@
                             "summary": "Work",
                             "self": "https://api.pagerduty.com/users/PXPGF42/contact_methods/PXPGF42"
                           },
-                          "created_at": "2016-02-01T21:06:27.000Z",
+                          "created_at": "2016-02-01T16:06:27-05:00",
                           "urgency": "high"
                         }
                       ]
@@ -16614,7 +16614,7 @@
                             "self": "https://api.pagerduty.com/users/PXPGF42/contact_methods/PXPGF42"
                           }
                         ],
-                        "created_at": "2016-02-01T21:06:27.000Z",
+                        "created_at": "2016-02-01T16:06:27-05:00",
                         "urgency": "high"
                       }
                     }
@@ -16711,7 +16711,7 @@
                             "self": "https://api.pagerduty.com/users/PXPGF42/contact_methods/PXPGF42"
                           }
                         ],
-                        "created_at": "2016-02-01T21:06:27.000Z",
+                        "created_at": "2016-02-01T16:06:27-05:00",
                         "urgency": "high"
                       }
                     }
@@ -16841,7 +16841,7 @@
                           "summary": "Work",
                           "self": "https://api.pagerduty.com/users/PXPGF42/contact_methods/PXPGF42"
                         },
-                        "created_at": "2016-02-01T21:06:27.000Z",
+                        "created_at": "2016-02-01T16:06:27-05:00",
                         "urgency": "high"
                       }
                     }
@@ -16915,7 +16915,7 @@
                         {
                           "id": "PXPGF42",
                           "user_id": "PXPGF42",
-                          "created_at": "2018-10-06T21:30:42.000Z",
+                          "created_at": "2018-10-06T21:30:42Z",
                           "summary": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36",
                           "type": "browser"
                         }
@@ -17023,7 +17023,7 @@
                       "user_session": {
                         "id": "PXPGF42",
                         "user_id": "PXPGF42",
-                        "created_at": "2018-10-06T21:30:42.000Z",
+                        "created_at": "2018-10-06T21:30:42Z",
                         "summary": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36",
                         "type": "browser"
                       }
