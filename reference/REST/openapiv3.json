@@ -668,25 +668,21 @@
     },
     "schemas": {
       "AddonReference": {
-        "type": "object",
-        "discriminator": {
-          "propertyName": "type",
-          "mapping": {
-            "full_page_addon_reference": "#/components/schemas/Reference",
-            "full_page_addon": "#/components/schemas/Addon",
-            "incident_show_addon_reference": "#/components/schemas/Reference",
-            "incident_show_addon": "#/components/schemas/Addon"
-          }
-        },
-        "required": [
-          "type"
-        ],
-        "oneOf": [
+        "allOf": [
           {
             "$ref": "#/components/schemas/Reference"
           },
           {
-            "$ref": "#/components/schemas/Addon"
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "full_page_addon_reference",
+                  "incident_show_addon_reference"
+                ]
+              }
+            }
           }
         ]
       },
@@ -767,23 +763,20 @@
         }
       },
       "BusinessServiceReference": {
-        "type": "object",
-        "discriminator": {
-          "propertyName": "type",
-          "mapping": {
-            "business_service_reference": "#/components/schemas/Reference",
-            "business_service": "#/components/schemas/BusinessService"
-          }
-        },
-        "required": [
-          "type"
-        ],
-        "oneOf": [
+        "allOf": [
           {
             "$ref": "#/components/schemas/Reference"
           },
           {
-            "$ref": "#/components/schemas/BusinessService"
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "business_service_reference"
+                ]
+              }
+            }
           }
         ]
       },
@@ -805,42 +798,40 @@
         }
       },
       "TagReference": {
-        "type": "object",
-        "discriminator": {
-          "propertyName": "type",
-          "mapping": {
-            "tag_reference": "#/components/schemas/Reference",
-            "tag": "#/components/schemas/Tag"
-          }
-        },
-        "required": [
-          "type"
-        ],
-        "oneOf": [
+        "allOf": [
           {
             "$ref": "#/components/schemas/Reference"
           },
           {
-            "$ref": "#/components/schemas/Tag"
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "tag_reference"
+                ]
+              }
+            }
           }
         ]
       },
       "EntityReference": {
-        "type": "object",
-        "discriminator": {
-          "propertyName": "type",
-          "mapping": {
-            "user_reference": "#/components/schemas/Reference",
-            "team_reference": "#/components/schemas/Reference",
-            "escalation_policy_reference": "#/components/schemas/Reference"
-          }
-        },
-        "required": [
-          "type"
-        ],
-        "oneOf": [
+        "allOf": [
           {
             "$ref": "#/components/schemas/Reference"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "user_reference",
+                  "team_reference",
+                  "escalation_policy_reference"
+                ]
+              }
+            }
           }
         ]
       },
@@ -1249,57 +1240,31 @@
         ]
       },
       "LogEntryReference": {
-        "type": "object",
-        "discriminator": {
-          "propertyName": "type",
-          "mapping": {
-            "acknowledge_log_entry": "#/components/schemas/AcknowledgeLogEntry",
-            "acknowledge_log_entry_reference": "#/components/schemas/Reference",
-            "annotate_log_entry": "#/components/schemas/LogEntry",
-            "annotate_log_entry_reference": "#/components/schemas/Reference",
-            "assign_log_entry": "#/components/schemas/AssignLogEntry",
-            "assign_log_entry_reference": "#/components/schemas/Reference",
-            "escalate_log_entry": "#/components/schemas/EscalateLogEntry",
-            "escalate_log_entry_reference": "#/components/schemas/Reference",
-            "exhaust_escalation_path_log_entry": "#/components/schemas/LogEntry",
-            "exhaust_escalation_path_log_entry_reference": "#/components/schemas/Reference",
-            "notify_log_entry": "#/components/schemas/NotifyLogEntry",
-            "notify_log_entry_reference": "#/components/schemas/Reference",
-            "reach_trigger_limit_log_entry": "#/components/schemas/LogEntry",
-            "reach_trigger_limit_log_entry_reference": "#/components/schemas/Reference",
-            "repeat_escalation_path_log_entry": "#/components/schemas/LogEntry",
-            "repeat_escalation_path_log_entry_reference": "#/components/schemas/Reference",
-            "resolve_log_entry": "#/components/schemas/LogEntry",
-            "resolve_log_entry_reference": "#/components/schemas/Reference",
-            "snooze_log_entry": "#/components/schemas/SnoozeLogEntry",
-            "snooze_log_entry_reference": "#/components/schemas/Reference",
-            "trigger_log_entry": "#/components/schemas/LogEntry",
-            "trigger_log_entry_reference": "#/components/schemas/Reference",
-            "unacknowledge_log_entry": "#/components/schemas/LogEntry",
-            "unacknowledge_log_entry_reference": "#/components/schemas/Reference"
-          }
-        },
-        "required": [
-          "type"
-        ],
-        "oneOf": [
+        "allOf": [
           {
             "$ref": "#/components/schemas/Reference"
           },
           {
-            "$ref": "#/components/schemas/LogEntry"
-          },
-          {
-            "$ref": "#/components/schemas/AssignLogEntry"
-          },
-          {
-            "$ref": "#/components/schemas/EscalateLogEntry"
-          },
-          {
-            "$ref": "#/components/schemas/NotifyLogEntry"
-          },
-          {
-            "$ref": "#/components/schemas/SnoozeLogEntry"
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "acknowledge_log_entry_reference",
+                  "annotate_log_entry_reference",
+                  "assign_log_entry_reference",
+                  "escalate_log_entry_reference",
+                  "exhaust_escalation_path_log_entry_reference",
+                  "notify_log_entry_reference",
+                  "reach_trigger_limit_log_entry_reference",
+                  "repeat_escalation_path_log_entry_reference",
+                  "resolve_log_entry_reference",
+                  "snooze_log_entry_reference",
+                  "trigger_log_entry_reference",
+                  "unacknowledge_log_entry_reference"
+                ]
+              }
+            }
           }
         ]
       },
@@ -1392,8 +1357,6 @@
             "properties": {
               "type": {
                 "type": "string",
-                "description": "The type of notification rule.",
-                "readOnly": true,
                 "enum": [
                   "assignment_notification_rule"
                 ]
@@ -1440,35 +1403,23 @@
         }
       },
       "ContactMethodReference": {
-        "type": "object",
-        "discriminator": {
-          "propertyName": "type",
-          "mapping": {
-            "email_contact_method_reference": "#/components/schemas/Reference",
-            "email_contact_method": "#/components/schemas/EmailContactMethod",
-            "phone_contact_method_reference": "#/components/schemas/Reference",
-            "phone_contact_method": "#/components/schemas/PhoneContactMethod",
-            "push_notification_contact_method_reference": "#/components/schemas/Reference",
-            "push_notification_contact_method": "#/components/schemas/PushContactMethod",
-            "sms_contact_method_reference": "#/components/schemas/Reference",
-            "sms_contact_method": "#/components/schemas/PhoneContactMethod"
-          }
-        },
-        "required": [
-          "type"
-        ],
-        "oneOf": [
+        "allOf": [
           {
             "$ref": "#/components/schemas/Reference"
           },
           {
-            "$ref": "#/components/schemas/EmailContactMethod"
-          },
-          {
-            "$ref": "#/components/schemas/PushContactMethod"
-          },
-          {
-            "$ref": "#/components/schemas/PhoneContactMethod"
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "email_contact_method_reference",
+                  "phone_contact_method_reference",
+                  "push_notification_contact_method_reference",
+                  "sms_contact_method_reference"
+                ]
+              }
+            }
           }
         ]
       },
@@ -1677,23 +1628,20 @@
         }
       },
       "UserReference": {
-        "type": "object",
-        "discriminator": {
-          "propertyName": "type",
-          "mapping": {
-            "user_reference": "#/components/schemas/Reference",
-            "user": "#/components/schemas/User"
-          }
-        },
-        "required": [
-          "type"
-        ],
-        "oneOf": [
+        "allOf": [
           {
             "$ref": "#/components/schemas/Reference"
           },
           {
-            "$ref": "#/components/schemas/User"
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "user_reference"
+                ]
+              }
+            }
           }
         ]
       },
@@ -1844,23 +1792,20 @@
         }
       },
       "TeamReference": {
-        "type": "object",
-        "discriminator": {
-          "propertyName": "type",
-          "mapping": {
-            "team_reference": "#/components/schemas/Reference",
-            "team": "#/components/schemas/Team"
-          }
-        },
-        "required": [
-          "type"
-        ],
-        "oneOf": [
+        "allOf": [
           {
             "$ref": "#/components/schemas/Reference"
           },
           {
-            "$ref": "#/components/schemas/Team"
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "team_reference"
+                ]
+              }
+            }
           }
         ]
       },
@@ -1891,23 +1836,20 @@
         }
       },
       "IncidentReference": {
-        "type": "object",
-        "discriminator": {
-          "propertyName": "type",
-          "mapping": {
-            "incident_reference": "#/components/schemas/Reference",
-            "incident": "#/components/schemas/Incident"
-          }
-        },
-        "required": [
-          "type"
-        ],
-        "oneOf": [
+        "allOf": [
           {
             "$ref": "#/components/schemas/Reference"
           },
           {
-            "$ref": "#/components/schemas/Incident"
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "incident_reference"
+                ]
+              }
+            }
           }
         ]
       },
@@ -2026,23 +1968,20 @@
         }
       },
       "EscalationPolicyReference": {
-        "type": "object",
-        "discriminator": {
-          "propertyName": "type",
-          "mapping": {
-            "escalation_policy_reference": "#/components/schemas/Reference",
-            "escalation_policy": "#/components/schemas/EscalationPolicy"
-          }
-        },
-        "required": [
-          "type"
-        ],
-        "oneOf": [
+        "allOf": [
           {
             "$ref": "#/components/schemas/Reference"
           },
           {
-            "$ref": "#/components/schemas/EscalationPolicy"
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "escalation_policy_reference"
+                ]
+              }
+            }
           }
         ]
       },
@@ -2190,23 +2129,20 @@
         ]
       },
       "ExtensionReference": {
-        "type": "object",
-        "discriminator": {
-          "propertyName": "type",
-          "mapping": {
-            "extension_reference": "#/components/schemas/Reference",
-            "extension": "#/components/schemas/Extension"
-          }
-        },
-        "required": [
-          "type"
-        ],
-        "oneOf": [
+        "allOf": [
           {
             "$ref": "#/components/schemas/Reference"
           },
           {
-            "$ref": "#/components/schemas/Extension"
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "extension_reference"
+                ]
+              }
+            }
           }
         ]
       },
@@ -2285,7 +2221,6 @@
               "type": {
                 "type": "string",
                 "enum": [
-                  "generic_events_api_inbound_integration",
                   "generic_events_api_inbound_integration_reference"
                 ]
               }
@@ -2314,7 +2249,6 @@
               "type": {
                 "type": "string",
                 "enum": [
-                  "aws_cloudwatch_inbound_integration",
                   "aws_cloudwatch_inbound_integration_reference"
                 ]
               }
@@ -2343,7 +2277,6 @@
               "type": {
                 "type": "string",
                 "enum": [
-                  "event_transformer_api_inbound_integration",
                   "event_transformer_api_inbound_integration_reference"
                 ]
               }
@@ -2372,7 +2305,6 @@
               "type": {
                 "type": "string",
                 "enum": [
-                  "nagios_inbound_integration",
                   "nagios_inbound_integration_reference"
                 ]
               }
@@ -2401,7 +2333,6 @@
               "type": {
                 "type": "string",
                 "enum": [
-                  "generic_email_inbound_integration",
                   "generic_email_inbound_integration_reference"
                 ]
               }
@@ -2443,7 +2374,6 @@
               "type": {
                 "type": "string",
                 "enum": [
-                  "keynote_inbound_integration",
                   "keynote_inbound_integration_reference"
                 ]
               }
@@ -2472,7 +2402,6 @@
               "type": {
                 "type": "string",
                 "enum": [
-                  "pingdom_inbound_integration",
                   "pingdom_inbound_integration_reference"
                 ]
               }
@@ -2544,7 +2473,6 @@
               "type": {
                 "type": "string",
                 "enum": [
-                  "sql_monitor_inbound_integration",
                   "sql_monitor_inbound_integration_reference"
                 ]
               }
@@ -2585,23 +2513,20 @@
         ]
       },
       "ServiceReference": {
-        "type": "object",
-        "discriminator": {
-          "propertyName": "type",
-          "mapping": {
-            "service_reference": "#/components/schemas/Reference",
-            "service": "#/components/schemas/Service"
-          }
-        },
-        "required": [
-          "type"
-        ],
-        "oneOf": [
+        "allOf": [
           {
             "$ref": "#/components/schemas/Reference"
           },
           {
-            "$ref": "#/components/schemas/Service"
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "service_reference"
+                ]
+              }
+            }
           }
         ]
       },
@@ -2768,24 +2693,20 @@
         }
       },
       "PriorityReference": {
-        "type": "object",
-        "discriminator": {
-          "propertyName": "type",
-          "mapping": {
-            "priority_reference": "#/components/schemas/Reference",
-            "priority": "#/components/schemas/Priority"
-          }
-        },
-        "required": [
-          "type",
-          "id"
-        ],
-        "oneOf": [
+        "allOf": [
           {
             "$ref": "#/components/schemas/Reference"
           },
           {
-            "$ref": "#/components/schemas/Priority"
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "priority_reference"
+                ]
+              }
+            }
           }
         ]
       },
@@ -2841,23 +2762,14 @@
               "type": {
                 "type": "string",
                 "enum": [
-                  "aws_cloudwatch_inbound_integration",
                   "aws_cloudwatch_inbound_integration_reference",
-                  "cloudkick_inbound_integration",
                   "cloudkick_inbound_integration_reference",
-                  "event_transformer_api_inbound_integration",
                   "event_transformer_api_inbound_integration_reference",
-                  "generic_email_inbound_integration",
                   "generic_email_inbound_integration_reference",
-                  "generic_events_api_inbound_integration",
                   "generic_events_api_inbound_integration_reference",
-                  "keynote_inbound_integration",
                   "keynote_inbound_integration_reference",
-                  "nagios_inbound_integration",
                   "nagios_inbound_integration_reference",
-                  "pingdom_inbound_integration",
                   "pingdom_inbound_integration_reference",
-                  "sql_monitor_inbound_integration",
                   "sql_monitor_inbound_integration_reference"
                 ]
               }
@@ -2866,23 +2778,20 @@
         ]
       },
       "MaintenanceWindowReference": {
-        "type": "object",
-        "discriminator": {
-          "propertyName": "type",
-          "mapping": {
-            "maintenance_window_reference": "#/components/schemas/Reference",
-            "maintenance_window": "#/components/schemas/MaintenanceWindow"
-          }
-        },
-        "required": [
-          "type"
-        ],
-        "oneOf": [
+        "allOf": [
           {
             "$ref": "#/components/schemas/Reference"
           },
           {
-            "$ref": "#/components/schemas/MaintenanceWindow"
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "maintenance_window_reference"
+                ]
+              }
+            }
           }
         ]
       },
@@ -2944,23 +2853,20 @@
         }
       },
       "ScheduleReference": {
-        "type": "object",
-        "discriminator": {
-          "propertyName": "type",
-          "mapping": {
-            "schedule_reference": "#/components/schemas/Reference",
-            "schedule": "#/components/schemas/Schedule"
-          }
-        },
-        "required": [
-          "type"
-        ],
-        "oneOf": [
+        "allOf": [
           {
             "$ref": "#/components/schemas/Reference"
           },
           {
-            "$ref": "#/components/schemas/Schedule"
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "schedule_reference"
+                ]
+              }
+            }
           }
         ]
       },
@@ -3405,23 +3311,20 @@
         }
       },
       "VendorReference": {
-        "type": "object",
-        "discriminator": {
-          "propertyName": "type",
-          "mapping": {
-            "vendor_reference": "#/components/schemas/Reference",
-            "vendor": "#/components/schemas/Vendor"
-          }
-        },
-        "required": [
-          "type"
-        ],
-        "oneOf": [
+        "allOf": [
           {
             "$ref": "#/components/schemas/Reference"
           },
           {
-            "$ref": "#/components/schemas/Vendor"
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "vendor_reference"
+                ]
+              }
+            }
           }
         ]
       },
@@ -3474,23 +3377,20 @@
         }
       },
       "ExtensionSchemaReference": {
-        "type": "object",
-        "discriminator": {
-          "propertyName": "type",
-          "mapping": {
-            "extension_schema_reference": "#/components/schemas/Reference",
-            "extension_schema": "#/components/schemas/ExtensionSchema"
-          }
-        },
-        "required": [
-          "type"
-        ],
-        "oneOf": [
+        "allOf": [
           {
             "$ref": "#/components/schemas/Reference"
           },
           {
-            "$ref": "#/components/schemas/ExtensionSchema"
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "extension_schema_reference"
+                ]
+              }
+            }
           }
         ]
       },
@@ -3697,23 +3597,20 @@
         }
       },
       "AlertReference": {
-        "type": "object",
-        "discriminator": {
-          "propertyName": "type",
-          "mapping": {
-            "alert_reference": "#/components/schemas/Reference",
-            "alert": "#/components/schemas/Alert"
-          }
-        },
-        "required": [
-          "type"
-        ],
-        "oneOf": [
+        "allOf": [
           {
             "$ref": "#/components/schemas/Reference"
           },
           {
-            "$ref": "#/components/schemas/Alert"
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "alert_reference"
+                ]
+              }
+            }
           }
         ]
       },
@@ -4228,40 +4125,38 @@
         }
       },
       "WebhookReference": {
-        "type": "object",
-        "discriminator": {
-          "propertyName": "type",
-          "mapping": {
-            "webhook_reference": "#/components/schemas/Reference",
-            "webhook": "#/components/schemas/Webhook"
-          }
-        },
-        "required": [
-          "type"
-        ],
-        "oneOf": [
+        "allOf": [
           {
             "$ref": "#/components/schemas/Reference"
           },
           {
-            "$ref": "#/components/schemas/Webhook"
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "webhook_reference"
+                ]
+              }
+            }
           }
         ]
       },
       "OutboundIntegrationReference": {
-        "type": "object",
-        "discriminator": {
-          "propertyName": "type",
-          "mapping": {
-            "outbound_integration_reference": "#/components/schemas/Reference"
-          }
-        },
-        "required": [
-          "type"
-        ],
-        "oneOf": [
+        "allOf": [
           {
             "$ref": "#/components/schemas/Reference"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "outbound_integration_reference"
+                ]
+              }
+            }
           }
         ]
       },
@@ -4933,7 +4828,7 @@
                 "type": "object",
                 "properties": {
                   "addon": {
-                    "$ref": "#/components/schemas/AddonReference"
+                    "$ref": "#/components/schemas/Addon"
                   }
                 },
                 "required": [
@@ -5636,7 +5531,7 @@
                 "type": "object",
                 "properties": {
                   "escalation_policy": {
-                    "$ref": "#/components/schemas/EscalationPolicyReference"
+                    "$ref": "#/components/schemas/EscalationPolicy"
                   }
                 },
                 "required": [
@@ -5904,7 +5799,7 @@
                 "type": "object",
                 "properties": {
                   "escalation_policy": {
-                    "$ref": "#/components/schemas/EscalationPolicyReference"
+                    "$ref": "#/components/schemas/EscalationPolicy"
                   }
                 },
                 "required": [
@@ -6159,7 +6054,7 @@
                 "type": "object",
                 "properties": {
                   "extension": {
-                    "$ref": "#/components/schemas/ExtensionReference"
+                    "$ref": "#/components/schemas/Extension"
                   }
                 },
                 "required": [
@@ -6450,7 +6345,7 @@
                 "type": "object",
                 "properties": {
                   "extension": {
-                    "$ref": "#/components/schemas/ExtensionReference"
+                    "$ref": "#/components/schemas/Extension"
                   }
                 },
                 "required": [
@@ -8147,7 +8042,7 @@
                     "type": "array",
                     "description": "An array of alerts, including the parameters to update for each alert.",
                     "items": {
-                      "$ref": "#/components/schemas/AlertReference"
+                      "$ref": "#/components/schemas/Alert"
                     }
                   }
                 },
@@ -8405,7 +8300,7 @@
                 "type": "object",
                 "properties": {
                   "alert": {
-                    "$ref": "#/components/schemas/AlertReference"
+                    "$ref": "#/components/schemas/Alert"
                   }
                 },
                 "required": [
@@ -8425,7 +8320,7 @@
                   "type": "object",
                   "properties": {
                     "alert": {
-                      "$ref": "#/components/schemas/AlertReference"
+                      "$ref": "#/components/schemas/Alert"
                     }
                   },
                   "required": [
@@ -9230,7 +9125,7 @@
                         "log_entries": {
                           "type": "array",
                           "items": {
-                            "$ref": "#/components/schemas/LogEntryReference"
+                            "$ref": "#/components/schemas/LogEntry"
                           }
                         }
                       },
@@ -9572,7 +9467,7 @@
                 "type": "object",
                 "properties": {
                   "maintenance_window": {
-                    "$ref": "#/components/schemas/MaintenanceWindowReference"
+                    "$ref": "#/components/schemas/MaintenanceWindow"
                   }
                 },
                 "required": [
@@ -9814,7 +9709,7 @@
                 "type": "object",
                 "properties": {
                   "maintenance_window": {
-                    "$ref": "#/components/schemas/MaintenanceWindowReference"
+                    "$ref": "#/components/schemas/MaintenanceWindow"
                   }
                 },
                 "required": [
@@ -11658,7 +11553,7 @@
                 "type": "object",
                 "properties": {
                   "schedule": {
-                    "$ref": "#/components/schemas/ScheduleReference"
+                    "$ref": "#/components/schemas/Schedule"
                   }
                 },
                 "required": [
@@ -11995,7 +11890,7 @@
                 "type": "object",
                 "properties": {
                   "schedule": {
-                    "$ref": "#/components/schemas/ScheduleReference"
+                    "$ref": "#/components/schemas/Schedule"
                   }
                 },
                 "required": [
@@ -13455,7 +13350,7 @@
                 "type": "object",
                 "properties": {
                   "service": {
-                    "$ref": "#/components/schemas/ServiceReference"
+                    "$ref": "#/components/schemas/Service"
                   }
                 },
                 "required": [
@@ -13774,7 +13669,7 @@
                 "type": "object",
                 "properties": {
                   "service": {
-                    "$ref": "#/components/schemas/ServiceReference"
+                    "$ref": "#/components/schemas/Service"
                   }
                 },
                 "required": [
@@ -14799,7 +14694,7 @@
                   "type": "object",
                   "properties": {
                     "team": {
-                      "$ref": "#/components/schemas/TeamReference"
+                      "$ref": "#/components/schemas/Team"
                     }
                   },
                   "required": [
@@ -15071,7 +14966,7 @@
                 "type": "object",
                 "properties": {
                   "team": {
-                    "$ref": "#/components/schemas/TeamReference"
+                    "$ref": "#/components/schemas/Team"
                   }
                 },
                 "required": [
@@ -15628,7 +15523,7 @@
                 "type": "object",
                 "properties": {
                   "user": {
-                    "$ref": "#/components/schemas/UserReference"
+                    "$ref": "#/components/schemas/User"
                   }
                 },
                 "required": [
@@ -16131,13 +16026,10 @@
                     "contact_methods": {
                       "type": "array",
                       "items": {
-                        "$ref": "#/components/schemas/ContactMethodReference"
+                        "$ref": "#/components/schemas/ContactMethod"
                       }
                     }
-                  },
-                  "required": [
-                    "contact_methods"
-                  ]
+                  }
                 },
                 "examples": {
                   "response": {
@@ -16196,7 +16088,7 @@
                 "type": "object",
                 "properties": {
                   "contact_method": {
-                    "$ref": "#/components/schemas/ContactMethodReference"
+                    "$ref": "#/components/schemas/ContactMethod"
                   }
                 },
                 "required": [
@@ -16216,12 +16108,9 @@
                   "type": "object",
                   "properties": {
                     "contact_method": {
-                      "$ref": "#/components/schemas/ContactMethodReference"
+                      "$ref": "#/components/schemas/ContactMethod"
                     }
-                  },
-                  "required": [
-                    "contact_method"
-                  ]
+                  }
                 },
                 "examples": {
                   "response": {
@@ -16286,12 +16175,9 @@
                   "type": "object",
                   "properties": {
                     "contact_method": {
-                      "$ref": "#/components/schemas/ContactMethodReference"
+                      "$ref": "#/components/schemas/ContactMethod"
                     }
-                  },
-                  "required": [
-                    "contact_method"
-                  ]
+                  }
                 },
                 "examples": {
                   "response": {
@@ -16390,7 +16276,7 @@
                 "type": "object",
                 "properties": {
                   "contact_method": {
-                    "$ref": "#/components/schemas/ContactMethodReference"
+                    "$ref": "#/components/schemas/ContactMethod"
                   }
                 },
                 "required": [
@@ -16410,12 +16296,9 @@
                   "type": "object",
                   "properties": {
                     "contact_method": {
-                      "$ref": "#/components/schemas/ContactMethodReference"
+                      "$ref": "#/components/schemas/ContactMethod"
                     }
-                  },
-                  "required": [
-                    "contact_method"
-                  ]
+                  }
                 },
                 "examples": {
                   "response": {
@@ -16569,7 +16452,7 @@
                 "type": "object",
                 "properties": {
                   "notification_rule": {
-                    "$ref": "#/components/schemas/NotificationRuleReference"
+                    "$ref": "#/components/schemas/NotificationRule"
                   }
                 },
                 "required": [
@@ -16798,7 +16681,7 @@
                 "type": "object",
                 "properties": {
                   "notification_rule": {
-                    "$ref": "#/components/schemas/NotificationRuleReference"
+                    "$ref": "#/components/schemas/NotificationRule"
                   }
                 },
                 "required": [
