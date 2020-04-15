@@ -5,6 +5,8 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 Currently we do not deprecate or remove any API functionality.
 
 ----
+### 2020-04-15
+ - Updated all reference schemas to better match reality of API.
 
 ### 2020-04-13
  - Modified response and request examples to match OpenAPI 3.0.1 schema
