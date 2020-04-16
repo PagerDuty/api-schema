@@ -1,0 +1,326 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "PagerDuty V2 Events API",
+    "version": "2.0",
+    "contact": {
+      "name": "PagerDuty Support",
+      "url": "http://www.pagerduty.com/support",
+      "email": "support@pagerduty.com"
+    },
+    "description": "# PagerDuty Events API V2\n\nThe Events API V2 enables you to add PagerDuty's advanced event and incident management functionality to any system that can make an HTTP API call.\n\n## Description\n\nThe API is designed to allow you to easily integrate a monitoring system with PagerDuty. Monitoring systems generally send out events when problems are detected and when these problems have been resolved (fixed). Certain systems also understand the concept of acknowledgements: problems can be acknowledged by a person to signal that they are working on fixing the issue.\n\nThe Events API V2 is a highly reliable, highly available asynchronous API that ingests events from monitoring tools. Events sent via the API are routed to a PagerDuty service and processed. They may result in a new alert and/or incident being created, or an existing one being updated or resolved.\n\nPreviously, the Events API V2 was also used to integrate PagerDuty with ticketing systems and various other software tools. As of 2017, we now recommend using our new synchronous Incidents API to integrate ticketing systems or other systems of record.\n\nInterested in becoming a PagerDuty partner? Fill out [this form](https://pdconnect.wufoo.com/forms/become-a-pagerduty-partner/) for more information.\n\n\n## Getting Started\n\nThe Events API V2 can be used with any Events API V2 Integration in PagerDuty.\n\n## Making a Request\n\nTo make an API request, POST a JSON object of the desired event type to the following URL:\n\n* https://events.pagerduty.com/v2/enqueue\n\n## API Response Codes & Retry Logic\n\nIdeally, the API request will succeed and the PagerDuty server will indicate that it successfully received that event. In practice, the request may fail due to various reasons.\n\nThe following table shows the possible results of the API request and if you need to retry the API call for that result:\n\n\n| Result  | Description   | Retry? |\n| ------- | ------------- | ------ |\n| 202     | Accepted - The event has been accepted by PagerDuty. See below for details. | No |\n| 400     | Bad Request - Check that the JSON is valid. See below for details.    | No |\n| 429     | Too many API calls at a time.                             | Yes - retry after some time. |\n| 500 or other 5XX  | Internal Server Error - the PagerDuty server experienced an error while processing the event. | Yes - retry after some time. |\n| Networking Error  | Error while trying to communicate with PagerDuty servers.   | Yes - retry after some time. |\n\n\n## API Limits\n\nThere is a limit on the number of events that a service can accept at any given time. Depending on the behavior of the incoming traffic and how many incidents are being created at once, we dynamically adjust our throttle limits.\n\nIf each of the events your monitoring system is sending is important, be sure to retry on a 429 response code, preferably with a back off.\n"
+  },
+  "tags": [
+    {
+      "name": "Send Event",
+      "description": "Submit an event to PagerDuty."
+    }
+  ],
+  "paths": {
+    "/enqueue": {
+      "post": {
+        "tags": [
+          "Send Event"
+        ],
+        "summary": "Send an event to PagerDuty",
+        "operationId": "createV2Event",
+        "description": "Your monitoring tools should send PagerDuty a trigger event to report a new problem, or update an ongoing problem, depending on the event type.\n",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "description": "Trigger or update an alert.",
+                "properties": {
+                  "payload": {
+                    "$ref": "#/components/schemas/Payload"
+                  },
+                  "routing_key": {
+                    "type": "string",
+                    "description": "The GUID of one of your Events API V2 integrations. This is the \"Integration Key\" listed on the Events API V2 integration's detail page."
+                  },
+                  "event_action": {
+                    "description": "The type of event. Can be `trigger`, `acknowledge` or `resolve`.",
+                    "enum": [
+                      "trigger",
+                      "acknowledge",
+                      "resolve"
+                    ]
+                  },
+                  "dedup_key": {
+                    "type": "string",
+                    "description": "Identifies the alert to `trigger`, `acknowledge`, or `resolve`. Required unless the `event_type` is `trigger`."
+                  },
+                  "client": {
+                    "type": "string",
+                    "description": "The name of the monitoring client that is triggering this event. (This field is only used for `trigger` events.)"
+                  },
+                  "client_url": {
+                    "type": "string",
+                    "format": "url",
+                    "description": "The URL of the monitoring client that is triggering this event. (This field is only used for `trigger` events.)"
+                  },
+                  "links": {
+                    "$ref": "#/components/schemas/Links"
+                  },
+                  "images": {
+                    "$ref": "#/components/schemas/Images"
+                  }
+                },
+                "required": [
+                  "routing_key",
+                  "event_action",
+                  "event"
+                ]
+              },
+              "examples": {
+                "event": {
+                  "summary": "Example Event Body",
+                  "value": {
+                    "payload": {
+                      "summary": "DISK at 99% on machine prod-datapipe03.example.com",
+                      "timestamp": "2015-07-17T08:42:58.315+0000",
+                      "severity": "critical",
+                      "source": "prod-datapipe03.example.com",
+                      "component": "mysql",
+                      "group": "prod-datapipe",
+                      "class": "disk",
+                      "custom_details": {
+                        "free space": "1%",
+                        "ping time": "1500ms",
+                        "load avg": 0.75
+                      }
+                    },
+                    "routing_key": "e93facc04764012d7bfb002500d5d1a6",
+                    "dedup_key": "srv01/mysql",
+                    "event_action": "trigger",
+                    "client": "Sample Monitoring Service",
+                    "client_url": "https://monitoring.service.com",
+                    "links": [
+                      {
+                        "href": "http://pagerduty.example.com",
+                        "text": "An example link."
+                      }
+                    ],
+                    "images": [
+                      {
+                        "src": "https://chart.googleapis.com/chart?chs=600x400&chd=t:6,2,9,5,2,5,7,4,8,2,1&cht=lc&chds=a&chxt=y&chm=D,0033FF,0,0,5,1",
+                        "href": "https://google.com",
+                        "alt": "An example link with an image"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "$ref": "#/components/responses/Success"
+          },
+          "400": {
+            "description": "Bad Request - Check that the JSON is valid."
+          },
+          "429": {
+            "description": "Too many API calls at a time."
+          },
+          "5XX": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "https://events.pagerduty.com/v2"
+    }
+  ],
+  "components": {
+    "schemas": {
+      "Images": {
+        "type": "array",
+        "description": "Images to be displayed on the alert and/or corresponding incident.",
+        "items": {
+          "type": "object",
+          "description": "An image to be displayed on the incident or alert.",
+          "properties": {
+            "src": {
+              "type": "string",
+              "format": "url",
+              "description": "The source of the image being attached to the incident or alert. This image must be served via HTTPS."
+            },
+            "href": {
+              "type": "string",
+              "format": "url",
+              "description": "Optional link for the image."
+            },
+            "alt": {
+              "type": "string",
+              "description": "Optional alternative text for the image."
+            }
+          },
+          "required": [
+            "src"
+          ]
+        }
+      },
+      "Links": {
+        "type": "array",
+        "description": "Links to be shown on the alert and/or corresponding incident.",
+        "items": {
+          "type": "object",
+          "description": "A link to be attached to an incident or alert.",
+          "properties": {
+            "href": {
+              "type": "string",
+              "format": "url",
+              "description": "The link being attached to an incident or alert."
+            },
+            "text": {
+              "type": "string",
+              "description": "Optional information pertaining to this context link."
+            }
+          },
+          "required": [
+            "href"
+          ]
+        }
+      },
+      "Payload": {
+        "type": "object",
+        "description": "Fields adding additional context about the location, impact, and character of the PagerDuty event.",
+        "properties": {
+          "summary": {
+            "type": "string",
+            "description": "A brief text summary of the event, used to generate the summaries/titles of any associated alerts."
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The time at which the emitting tool detected or generated the event."
+          },
+          "severity": {
+            "description": "The perceived severity of the status the event is describing withrespect to the affected system.",
+            "enum": [
+              "critical",
+              "warning",
+              "error",
+              "info"
+            ]
+          },
+          "source": {
+            "type": "string",
+            "description": "The unique location of the affected system, preferably a hostname or FQDN."
+          },
+          "component": {
+            "type": "string",
+            "description": "Component of the source machine that is responsible for the event."
+          },
+          "group": {
+            "type": "string",
+            "description": "Logical grouping of components of a service."
+          },
+          "class": {
+            "type": "string",
+            "description": "The class/type of the event."
+          },
+          "custom_details": {
+            "type": "object",
+            "description": "Additional details about the event and affected system."
+          }
+        },
+        "required": [
+          "summary",
+          "severity",
+          "source"
+        ]
+      }
+    },
+    "responses": {
+      "Success": {
+        "description": "An alert has been created or updated.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "description": "Returns \"success\" if successful, or a short error message in case of a failure."
+                },
+                "dedup_key": {
+                  "type": "string",
+                  "description": "The key used to correlate triggers, acknowledges, and resolves for the same alert."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "A description of the problem, or \"Event processed\" if successful."
+                }
+              },
+              "required": [
+                "status"
+              ]
+            },
+            "examples": {
+              "default": {
+                "summary": "Example Success Response",
+                "value": {
+                  "status": "success",
+                  "message": "Event processed",
+                  "dedup_key": "srv01/HTTP"
+                }
+              }
+            }
+          }
+        }
+      },
+      "Error": {
+        "description": "An error occurred on a request.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "description": "A short name for the error."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "A description of the problem."
+                },
+                "errors": {
+                  "type": "array",
+                  "description": "An array of specific error messages.",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "required": [
+                "status",
+                "message"
+              ]
+            },
+            "examples": {
+              "response": {
+                "summary": "Example Error Response",
+                "value": {
+                  "status": "Unrecognized object",
+                  "message": "Event object format is unrecognized",
+                  "errors": [
+                    "JSON parse error"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+

@@ -8,6 +8,9 @@ Currently we do not deprecate or remove any API functionality.
 ### 2020-04-15
  - Updated all reference schemas to better match reality of API.
 
+### 2020-04-15
+ - Added Events V1 and Events V2 APIs.
+
 ### 2020-04-13
  - Modified response and request examples to match OpenAPI 3.0.1 schema
 
