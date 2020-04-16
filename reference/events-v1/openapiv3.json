@@ -1,0 +1,303 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "PagerDuty V1 Events API",
+    "version": "2010-04-15",
+    "contact": {
+      "name": "PagerDuty Support",
+      "url": "http://www.pagerduty.com/support",
+      "email": "support@pagerduty.com"
+    },
+    "description": "# PagerDuty Events API\n\nThe Events API is how you would add PagerDuty's advanced alerting functionality to any system that can make an HTTP API call. You can now add phone, SMS and email alerting to your monitoring tools, ticketing systems and custom software.\n\n\n## Description\n\nThe API was designed to allow you to easily integrate a monitoring system with a Service in PagerDuty. Monitoring systems generally send out events when problems are detected and when these problems have been resolved (fixed). Some more advanced systems also understand the concept of acknowledgements: problems can be acknowledged by an engineer to signal he or she is working on fixing the issue.\n\nSince monitoring systems emit events, the API is based around accepting events. Incoming events (sent via the API) are routed to a PagerDuty service and processed. They may result in a new incident being created, or an existing incident being acknowledged or resolved.\n\nThe same event-based API can also be used to integrate a PagerDuty service with ticketing systems and various other software tools.\n\nInterested in becoming a PagerDuty partner? Fill out [this form](https://pdconnect.wufoo.com/forms/become-a-pagerduty-partner/) for more information.\n\n\n## Getting Started\n\nThe Events API can be used with any \"Generic API\" service in PagerDuty. If you don't already have a \"Generic API\" service, you should create one:\n\n1. In your account, under the Services tab, click \"Add New Service\".\n2. Enter a name for the service and select an escalation policy. Then, select \"Generic API\" for the Service Type.\n3. Click the \"Add Service\" button.\n4. Once the service is created, you'll be taken to the service page. On this page, you'll see the \"Service key\", which is needed to access the API\n\n\n## Making a Request\n\nTo make an API request, POST a JSON object of the desired event type to the following URL:\n\n* https://events.pagerduty.com/generic/2010-04-15/create_event.json\n\n\n## Event Types\n\nThe `event_type` field specifies what action to take on an incident:\n\n\n| Event Type    | Description |\n| ------------- | ------------|\n| `trigger`     | Your monitoring tools should send PagerDuty a trigger event to report a new or ongoing problem. When PagerDuty receives a trigger event, it will either open a new incident, or add a new trigger log entry to an existing incident, depending on the provided incident_key. |\n| `acknowledge` | Acknowledge events cause the referenced incident to enter the acknowledged state. While an incident is acknowledged, it won't generate any additional notifications, even if it receives new trigger events. Your monitoring tools should send PagerDuty an acknowledge event when they know someone is presently working on the problem. |\n| `resolve`     | Resolve events cause the referenced incident to enter the resolved state. Once an incident is resolved, it won't generate any additional notifications. New trigger events with the same incident_key as a resolved incident won't re-open the incident. Instead, a new incident will be created. Your monitoring tools should send PagerDuty a resolve event when the problem that caused the initial trigger event has been fixed. |\n\n\n## API Response Codes & Retry Logic\n\nIdeally, the API request will succeed and the PagerDuty server will indicate that it successfully received that event. In practice, the request may fail due to various reasons.\n\nThe following table shows the possible results of the API request and if you need to retry the API call for that result:\n\n\n| Result  | Description   | Retry? |\n| ------- | ------------- | ------ |\n| 200     | OK - The event has been accepted by PagerDuty. See below for details. | No |\n| 400     | Bad Request - Check that the JSON is valid. See below for details.    | No |\n| 403     | Forbidden - Too many API calls at a time.                             | Yes - retry after some time. |\n| 500 or other 5XX  | Internal Server Error - the PagerDuty server experienced an error while processing the event. | Yes - retry after some time. |\n| Networking Error  | Error while trying to communicate with PagerDuty servers.   | Yes - retry after some time. |\n\n\n## API Limits\n\nThere is a limit on the number of events that a service can accept at any given time. Depending on the behavior of the incoming traffic and how many incidents are being created at once, we reduce our throttle dynamically.\n\nIf each of the events your monitoring system is sending is important, be sure to retry on a 403 response code, preferably with a back off.\n"
+  },
+  "tags": [
+    {
+      "name": "Send Event",
+      "description": "Submit an event to PagerDuty."
+    }
+  ],
+  "paths": {
+    "/create_event.json": {
+      "post": {
+        "tags": [
+          "Send Event"
+        ],
+        "summary": "Send an event to PagerDuty",
+        "operationId": "createV1Event",
+        "description": "Your monitoring tools should send PagerDuty a trigger event to report a new problem, or update an ongoing problem, depending on the event type.\n",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "description": "Trigger or update an incident.",
+                "properties": {
+                  "service_key": {
+                    "type": "string",
+                    "description": "The GUID of one of your \"Generic API\" services. This is the \"Integration Key\" listed on a Generic API's service detail page."
+                  },
+                  "event_type": {
+                    "type": "string",
+                    "description": "The type of event. Can be `trigger`, `acknowledge` or `resolve`.",
+                    "enum": [
+                      "trigger",
+                      "acknowledge",
+                      "resolve"
+                    ]
+                  },
+                  "incident_key": {
+                    "type": "string",
+                    "description": "Identifies the incident to `trigger`, `acknowledge`, or `resolve`. Required unless the `event_type` is `trigger`."
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Text that will appear in the incident's log associated with this event. Required for `trigger` events."
+                  },
+                  "details": {
+                    "type": "object",
+                    "description": "An arbitrary JSON object containing any data you'd like included in the incident log."
+                  },
+                  "client": {
+                    "type": "string",
+                    "description": "The name of the monitoring client that is triggering this event. (This field is only used for `trigger` events.)"
+                  },
+                  "client_url": {
+                    "type": "string",
+                    "format": "url",
+                    "description": "The URL of the monitoring client that is triggering this event. (This field is only used for `trigger` events.)"
+                  },
+                  "contexts": {
+                    "type": "array",
+                    "description": "Contexts to be included with the incident trigger such as links to graphs or images. (This field is only used for `trigger` events.)",
+                    "items": {
+                      "description": "A single context reference for a new incident.",
+                      "discriminator": {
+                        "propertyName": "type"
+                      },
+                      "required": [
+                        "type"
+                      ],
+                      "oneOf": [
+                        {
+                          "$ref": "#/components/schemas/LinkContext"
+                        },
+                        {
+                          "$ref": "#/components/schemas/ImageContext"
+                        }
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "service_key",
+                  "event_type"
+                ]
+              },
+              "examples": {
+                "default": {
+                  "summary": "Example Request Body",
+                  "value": {
+                    "service_key": "e93facc04764012d7bfb002500d5d1a6",
+                    "incident_key": "srv01/HTTP",
+                    "event_type": "trigger",
+                    "description": "FAILURE for production/HTTP on machine srv01.acme.com",
+                    "client": "Sample Monitoring Service",
+                    "client_url": "https://monitoring.service.com",
+                    "details": {
+                      "ping time": "1500ms",
+                      "load avg": 0.75
+                    },
+                    "contexts": [
+                      {
+                        "type": "link",
+                        "href": "http://acme.pagerduty.com"
+                      },
+                      {
+                        "type": "link",
+                        "href": "http://acme.pagerduty.com"
+                      },
+                      {
+                        "text": "View the incident on PagerDuty",
+                        "type": "image",
+                        "src": "https://chart.googleapis.com/chart?chs=600x400&chd=t:6,2,9,5,2,5,7,4,8,2,1&cht=lc&chds=a&chxt=y&chm=D,0033FF,0,0,5,1"
+                      },
+                      {
+                        "type": "image",
+                        "src": "https://chart.googleapis.com/chart?chs=600x400&chd=t:6,2,9,5,2,5,7,4,8,2,1&cht=lc&chds=a&chxt=y&chm=D,0033FF,0,0,5,1",
+                        "href": "https://google.com"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Success"
+          },
+          "400": {
+            "description": "Invalid event format (i.e. JSON parse error) or incorrect event structure"
+          },
+          "403": {
+            "description": "Rate limit reached (too many Events API requests)"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "https://events.pagerduty.com/generic/2010-04-15"
+    }
+  ],
+  "components": {
+    "schemas": {
+      "ImageContext": {
+        "type": "object",
+        "description": "Image context",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "The type of context being attached to the incident",
+            "enum": [
+              "image"
+            ]
+          },
+          "src": {
+            "type": "string",
+            "format": "url",
+            "description": "The source of the image being attached to the incident. This image must be served via HTTPS."
+          },
+          "href": {
+            "type": "string",
+            "format": "url",
+            "description": "Optional link for the image."
+          },
+          "alt": {
+            "type": "string",
+            "description": "Optional alternative text for the image."
+          }
+        },
+        "required": [
+          "type",
+          "src"
+        ]
+      },
+      "LinkContext": {
+        "type": "object",
+        "description": "Link context",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "The type of context being attached to the incident",
+            "enum": [
+              "link"
+            ]
+          },
+          "href": {
+            "type": "string",
+            "format": "url",
+            "description": "The link being attached to the incident."
+          },
+          "text": {
+            "type": "string",
+            "description": "Optional information pertaining to this context link."
+          }
+        },
+        "required": [
+          "type",
+          "href"
+        ]
+      }
+    },
+    "responses": {
+      "Success": {
+        "description": "The incident has been opened or updated.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status"
+              ],
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "description": "A short name for the error, or \"success\" if successful."
+                },
+                "incident_key": {
+                  "type": "string",
+                  "description": "The key of the incident that will be affected by the request, if successful."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "A description of the problem, or \"Event processed\" if successful."
+                }
+              }
+            },
+            "examples": {
+              "default": {
+                "summary": "Example Success Response",
+                "value": {
+                  "status": "success",
+                  "message": "Event processed",
+                  "incident_key": "srv01/HTTP"
+                }
+              }
+            }
+          }
+        }
+      },
+      "Error": {
+        "description": "An error occurred on a request.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "description": "A short name for the error."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "A description of the problem."
+                },
+                "errors": {
+                  "type": "array",
+                  "description": "An array of specific error messages.",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "required": [
+                "status",
+                "message"
+              ]
+            },
+            "examples": {
+              "default": {
+                "summary": "Example Error Response",
+                "value": {
+                  "status": "unrecognized object",
+                  "message": "Event object format is unrecognized",
+                  "errors": [
+                    "JSON parse error"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
