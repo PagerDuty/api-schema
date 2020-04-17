@@ -4643,6 +4643,18 @@
                 "required": [
                   "addon"
                 ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "addon": {
+                      "type": "full_page_addon",
+                      "name": "Internal Status Page",
+                      "src": "https://intranet.example.com/status"
+                    }
+                  }
+                }
               }
             }
           },
@@ -4834,6 +4846,18 @@
                 "required": [
                   "addon"
                 ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "addon": {
+                      "type": "full_page_addon",
+                      "name": "Internal Status Page",
+                      "src": "https://intranet.example.com/status"
+                    }
+                  }
+                }
               }
             }
           },
@@ -5537,6 +5561,43 @@
                 "required": [
                   "escalation_policy"
                 ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "escalation_policy": {
+                      "type": "escalation_policy",
+                      "name": "Engineering Escalation Policy",
+                      "escalation_rules": [
+                        {
+                          "escalation_delay_in_minutes": 30,
+                          "targets": [
+                            {
+                              "id": "PEYSGVF",
+                              "type": "user_reference"
+                            }
+                          ]
+                        }
+                      ],
+                      "services": [
+                        {
+                          "id": "PIJ90N7",
+                          "type": "service_reference"
+                        }
+                      ],
+                      "num_loops": 2,
+                      "on_call_handoff_notifications": "if_has_services",
+                      "teams": [
+                        {
+                          "id": "PQ9K7I8",
+                          "type": "team_reference"
+                        }
+                      ],
+                      "description": "Here is the ep for the engineering team."
+                    }
+                  }
+                }
               }
             }
           },
@@ -5805,6 +5866,43 @@
                 "required": [
                   "escalation_policy"
                 ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "escalation_policy": {
+                      "type": "escalation_policy",
+                      "name": "Engineering Escalation Policy",
+                      "escalation_rules": [
+                        {
+                          "escalation_delay_in_minutes": 30,
+                          "targets": [
+                            {
+                              "id": "PEYSGVF",
+                              "type": "user_reference"
+                            }
+                          ]
+                        }
+                      ],
+                      "services": [
+                        {
+                          "id": "PIJ90N7",
+                          "type": "service_reference"
+                        }
+                      ],
+                      "num_loops": 2,
+                      "on_call_handoff_notifications": "if_has_services",
+                      "teams": [
+                        {
+                          "id": "PQ9K7I8",
+                          "type": "team_reference"
+                        }
+                      ],
+                      "description": "Here is the ep for the engineering team."
+                    }
+                  }
+                }
               }
             }
           },
@@ -6060,6 +6158,38 @@
                 "required": [
                   "extension"
                 ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "extension": {
+                      "id": "PPGPXHO",
+                      "self": "https://api.pagerduty.com/extensions/PPGPXHO",
+                      "html_url": "null",
+                      "endpoint_url": "https://example.com/recieve_a_pagerduty_webhook",
+                      "name": "My Webhook",
+                      "summary": "My Webhook",
+                      "type": "extension",
+                      "extension_schema": {
+                        "id": "PJFWPEP",
+                        "type": "extension_schema_reference",
+                        "summary": "Generic Webhook",
+                        "self": "https://api.pagerduty.com/extension_schemas/PJFWPEP",
+                        "html_url": "null"
+                      },
+                      "extension_objects": [
+                        {
+                          "id": "PIJ90N7",
+                          "type": "service_reference",
+                          "summary": "My Application Service",
+                          "self": "https://api.pagerduty.com/services/PIJ90N7",
+                          "html_url": "https://subdomain.pagerduty.com/services/PIJ90N7"
+                        }
+                      ]
+                    }
+                  }
+                }
               }
             }
           },
@@ -6351,6 +6481,38 @@
                 "required": [
                   "extension"
                 ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "extension": {
+                      "id": "PPGPXHO",
+                      "self": "https://api.pagerduty.com/extensions/PPGPXHO",
+                      "html_url": "null",
+                      "endpoint_url": "https://example.com/recieve_a_pagerduty_webhook",
+                      "name": "My Webhook",
+                      "summary": "My Webhook",
+                      "type": "extension",
+                      "extension_schema": {
+                        "id": "PJFWPEP",
+                        "type": "extension_schema_reference",
+                        "summary": "Generic Webhook",
+                        "self": "https://api.pagerduty.com/extension_schemas/PJFWPEP",
+                        "html_url": "null"
+                      },
+                      "extension_objects": [
+                        {
+                          "id": "PIJ90N7",
+                          "type": "service_reference",
+                          "summary": "My Application Service",
+                          "self": "https://api.pagerduty.com/services/PIJ90N7",
+                          "html_url": "https://subdomain.pagerduty.com/services/PIJ90N7"
+                        }
+                      ]
+                    }
+                  }
+                }
               }
             }
           },
@@ -7358,7 +7520,7 @@
                   "source_incidents"
                 ]
               },
-              "example": {
+              "examples": {
                 "source_incidents": {
                   "summary": "Request Example",
                   "value": [
@@ -8306,6 +8468,33 @@
                 "required": [
                   "alert"
                 ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "alert": {
+                      "type": "alert",
+                      "status": "resolved",
+                      "incident": {
+                        "id": "PEYSGVF",
+                        "type": "incident_reference"
+                      },
+                      "body": {
+                        "type": "alert_body",
+                        "contexts": [
+                          {
+                            "type": "link"
+                          }
+                        ],
+                        "details": {
+                          "customKey": "Server is on fire!",
+                          "customKey2": "Other stuff!"
+                        }
+                      }
+                    }
+                  }
+                }
               }
             }
           },
@@ -8326,6 +8515,33 @@
                   "required": [
                     "alert"
                   ]
+                },
+                "examples": {
+                  "request": {
+                    "summary": "Request Example",
+                    "value": {
+                      "alert": {
+                        "type": "alert",
+                        "status": "resolved",
+                        "incident": {
+                          "id": "PEYSGVF",
+                          "type": "incident_reference"
+                        },
+                        "body": {
+                          "type": "alert_body",
+                          "contexts": [
+                            {
+                              "type": "link"
+                            }
+                          ],
+                          "details": {
+                            "customKey": "Server is on fire!",
+                            "customKey2": "Other stuff!"
+                          }
+                        }
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -8579,6 +8795,14 @@
                 "required": [
                   "note"
                 ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "content": "Firefighters are on the scene."
+                  }
+                }
               }
             }
           }
@@ -9473,6 +9697,25 @@
                 "required": [
                   "maintenance_window"
                 ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "maintenance_window": {
+                      "type": "maintenance_window",
+                      "start_time": "2015-11-09T20:00:00-05:00",
+                      "end_time": "2015-11-09T22:00:00-05:00",
+                      "description": "Immanentizing the eschaton",
+                      "services": [
+                        {
+                          "id": "PIJ90N7",
+                          "type": "service_reference"
+                        }
+                      ]
+                    }
+                  }
+                }
               }
             }
           },
@@ -9715,6 +9958,25 @@
                 "required": [
                   "maintenance_window"
                 ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "maintenance_window": {
+                      "type": "maintenance_window",
+                      "start_time": "2015-11-09T20:00:00-05:00",
+                      "end_time": "2015-11-09T22:00:00-05:00",
+                      "description": "Immanentizing the eschaton",
+                      "services": [
+                        {
+                          "id": "PIJ90N7",
+                          "type": "service_reference"
+                        }
+                      ]
+                    }
+                  }
+                }
               }
             }
           },
@@ -10148,7 +10410,7 @@
           "200": {
             "description": "A paginated array of ruleset objects.",
             "content": {
-              "applicant/json": {
+              "application/json": {
                 "schema": {
                   "allOf": [
                     {
@@ -10160,15 +10422,50 @@
                         "rulesets": {
                           "type": "array",
                           "items": {
-                            "$ref": "#/paths/~1rulesets/post/parameters/1/schema/properties/ruleset"
+                            "$ref": "#/paths/~1rulesets/post/requestBody/content/application~1json/schema/properties/ruleset"
                           }
                         }
-                      },
-                      "required": [
-                        "rulesets"
-                      ]
+                      }
                     }
                   ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "rulesets": [
+                        {
+                          "id": "0e84de00-9511-4380-9f4f-a7b568bb49a0",
+                          "name": "MySQL Clusters",
+                          "type": "global",
+                          "routing_keys": [
+                            "R0212P1QXGEIQE2NMTQ7L7WXD00DWHIN"
+                          ],
+                          "self": "https://api.pagerduty.com/rulesets/0e84de00-9511-4380-9f4f-a7b568bb49a0",
+                          "created_at": "2019-12-24T21:18:52Z",
+                          "creator": {
+                            "type": "user_reference",
+                            "self": "https://api.pagerduty.com/users/PABO808",
+                            "id": "PABO808"
+                          },
+                          "updated_at": "2019-12-25T14:54:23Z",
+                          "updater": {
+                            "type": "user_reference",
+                            "self": "https://api.pagerduty.com/users/PABO808",
+                            "id": "PABO808"
+                          },
+                          "team": {
+                            "type": "team_reference",
+                            "self": "https://api.pagerduty.com/teams/P3ZQXDF",
+                            "id": "P3ZQXDF"
+                          }
+                        }
+                      ],
+                      "limit": 25,
+                      "offset": 0,
+                      "more": false
+                    }
+                  }
                 }
               }
             }
@@ -10194,190 +10491,223 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
-          },
-          {
-            "name": "ruleset",
-            "in": "query",
-            "description": "The ruleset to be created.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "ruleset": {
-                  "type": "object",
-                  "properties": {
-                    "id": {
-                      "type": "string",
-                      "readOnly": true,
-                      "description": "ID of the ruleset."
-                    },
-                    "self": {
-                      "type": "string",
-                      "format": "url",
-                      "description": "the API show URL at which the object is accessible",
-                      "readOnly": true
-                    },
-                    "type": {
-                      "type": "string",
-                      "readOnly": true,
-                      "enum": [
-                        "global",
-                        "default_global"
-                      ]
-                    },
-                    "name": {
-                      "type": "string",
-                      "description": "Name of the ruleset."
-                    },
-                    "routing_keys": {
-                      "type": "array",
-                      "readOnly": true,
-                      "description": "Routing keys routed to this ruleset.",
-                      "items": {
-                        "type": "string"
-                      }
-                    },
-                    "created_at": {
-                      "type": "string",
-                      "format": "date-time",
-                      "readOnly": true,
-                      "description": "The date the ruleset was created at."
-                    },
-                    "creator": {
-                      "type": "object",
-                      "readOnly": true,
-                      "description": "Reference to the user that has created the ruleset.",
-                      "properties": {
-                        "id": {
-                          "type": "string",
-                          "readOnly": true
-                        },
-                        "type": {
-                          "type": "string",
-                          "description": "A string that determines the schema of the object",
-                          "readOnly": true
-                        },
-                        "self": {
-                          "type": "string",
-                          "format": "url",
-                          "description": "The API show URL at which the object is accessible",
-                          "readOnly": true
-                        }
-                      }
-                    },
-                    "updated_at": {
-                      "type": "string",
-                      "format": "date-time",
-                      "readOnly": true,
-                      "description": "The date the ruleset was last updated."
-                    },
-                    "updater": {
-                      "type": "object",
-                      "readOnly": true,
-                      "description": "Reference to the user that has updated the ruleset last.",
-                      "properties": {
-                        "id": {
-                          "type": "string",
-                          "readOnly": true
-                        },
-                        "type": {
-                          "type": "string",
-                          "description": "A string that determines the schema of the object",
-                          "readOnly": true
-                        },
-                        "self": {
-                          "type": "string",
-                          "format": "url",
-                          "description": "The API show URL at which the object is accessible",
-                          "readOnly": true
-                        }
-                      }
-                    },
-                    "team": {
-                      "type": "object",
-                      "description": "Reference to the team that owns the ruleset. If none is specified, only admins have access.",
-                      "properties": {
-                        "id": {
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ruleset": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "readOnly": true,
+                        "description": "ID of the ruleset."
+                      },
+                      "self": {
+                        "type": "string",
+                        "format": "url",
+                        "description": "the API show URL at which the object is accessible",
+                        "readOnly": true
+                      },
+                      "type": {
+                        "type": "string",
+                        "readOnly": true,
+                        "enum": [
+                          "global",
+                          "default_global"
+                        ]
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "Name of the ruleset."
+                      },
+                      "routing_keys": {
+                        "type": "array",
+                        "readOnly": true,
+                        "description": "Routing keys routed to this ruleset.",
+                        "items": {
                           "type": "string"
-                        },
-                        "type": {
-                          "type": "string",
-                          "description": "A string that determines the schema of the object",
-                          "readOnly": true
-                        },
-                        "self": {
-                          "type": "string",
-                          "format": "url",
-                          "description": "The API show URL at which the object is accessible",
-                          "readOnly": true
                         }
                       },
-                      "required": [
-                        "id",
-                        "type"
-                      ]
-                    }
-                  },
-                  "example": {
-                    "id": "0e84de00-9511-4380-9f4f-a7b568bb49a0",
-                    "name": "MySQL Clusters",
-                    "type": "global",
-                    "routing_keys": [
-                      "R0212P1QXGEIQE2NMTQ7L7WXD00DWHIN"
-                    ],
-                    "self": "https://api.pagerduty.com/rulesets/0e84de00-9511-4380-9f4f-a7b568bb49a0",
-                    "created_at": "2019-12-24T21:18:52Z",
-                    "creator": {
-                      "type": "user_reference",
-                      "self": "https://api.pagerduty.com/users/PABO808",
-                      "id": "PABO808"
+                      "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "readOnly": true,
+                        "description": "The date the ruleset was created at."
+                      },
+                      "creator": {
+                        "type": "object",
+                        "readOnly": true,
+                        "description": "Reference to the user that has created the ruleset.",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "readOnly": true
+                          },
+                          "type": {
+                            "type": "string",
+                            "description": "A string that determines the schema of the object",
+                            "readOnly": true
+                          },
+                          "self": {
+                            "type": "string",
+                            "format": "url",
+                            "description": "The API show URL at which the object is accessible",
+                            "readOnly": true
+                          }
+                        }
+                      },
+                      "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "readOnly": true,
+                        "description": "The date the ruleset was last updated."
+                      },
+                      "updater": {
+                        "type": "object",
+                        "readOnly": true,
+                        "description": "Reference to the user that has updated the ruleset last.",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "readOnly": true
+                          },
+                          "type": {
+                            "type": "string",
+                            "description": "A string that determines the schema of the object",
+                            "readOnly": true
+                          },
+                          "self": {
+                            "type": "string",
+                            "format": "url",
+                            "description": "The API show URL at which the object is accessible",
+                            "readOnly": true
+                          }
+                        }
+                      },
+                      "team": {
+                        "type": "object",
+                        "description": "Reference to the team that owns the ruleset. If none is specified, only admins have access.",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "type": {
+                            "type": "string",
+                            "description": "A string that determines the schema of the object",
+                            "readOnly": true
+                          },
+                          "self": {
+                            "type": "string",
+                            "format": "url",
+                            "description": "The API show URL at which the object is accessible",
+                            "readOnly": true
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "type"
+                        ]
+                      }
                     },
-                    "updated_at": "2019-12-25T14:54:23Z",
-                    "updater": {
-                      "type": "user_reference",
-                      "self": "https://api.pagerduty.com/users/PABO808",
-                      "id": "PABO808"
+                    "example": {
+                      "id": "0e84de00-9511-4380-9f4f-a7b568bb49a0",
+                      "name": "MySQL Clusters",
+                      "type": "global",
+                      "routing_keys": [
+                        "R0212P1QXGEIQE2NMTQ7L7WXD00DWHIN"
+                      ],
+                      "self": "https://api.pagerduty.com/rulesets/0e84de00-9511-4380-9f4f-a7b568bb49a0",
+                      "created_at": "2019-12-24T21:18:52Z",
+                      "creator": {
+                        "type": "user_reference",
+                        "self": "https://api.pagerduty.com/users/PABO808",
+                        "id": "PABO808"
+                      },
+                      "updated_at": "2019-12-25T14:54:23Z",
+                      "updater": {
+                        "type": "user_reference",
+                        "self": "https://api.pagerduty.com/users/PABO808",
+                        "id": "PABO808"
+                      },
+                      "team": {
+                        "type": "team_reference",
+                        "self": "https://api.pagerduty.com/teams/P3ZQXDF",
+                        "id": "P3ZQXDF"
+                      }
                     },
-                    "team": {
-                      "type": "team_reference",
-                      "self": "https://api.pagerduty.com/teams/P3ZQXDF",
-                      "id": "P3ZQXDF"
-                    }
-                  },
-                  "required": [
-                    "name"
-                  ]
+                    "required": [
+                      "name"
+                    ]
+                  }
                 }
               },
-              "required": [
-                "ruleset"
-              ],
-              "example": {
+              "examples": {
                 "ruleset": {
-                  "name": "MySQL Clusters",
-                  "team": {
-                    "id": "PWL7QXS",
-                    "type": "team_reference"
+                  "summary": "Request Example",
+                  "value": {
+                    "ruleset": {
+                      "name": "MySQL Clusters",
+                      "team": {
+                        "id": "PWL7QXS",
+                        "type": "team_reference"
+                      }
+                    }
                   }
                 }
               }
             }
           }
-        ],
+        },
         "responses": {
           "201": {
             "description": "The ruleset that was created.",
             "content": {
-              "applicant/json": {
+              "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
                     "ruleset": {
-                      "$ref": "#/paths/~1rulesets/post/parameters/1/schema/properties/ruleset"
+                      "$ref": "#/paths/~1rulesets/post/requestBody/content/application~1json/schema/properties/ruleset"
                     }
-                  },
-                  "required": [
-                    "ruleset"
-                  ]
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "rulesets": {
+                        "id": "0e84de00-9511-4380-9f4f-a7b568bb49a0",
+                        "name": "MySQL Clusters",
+                        "type": "global",
+                        "routing_keys": [
+                          "R0212P1QXGEIQE2NMTQ7L7WXD00DWHIN"
+                        ],
+                        "self": "https://api.pagerduty.com/rulesets/0e84de00-9511-4380-9f4f-a7b568bb49a0",
+                        "created_at": "2019-12-24T21:18:52Z",
+                        "creator": {
+                          "type": "user_reference",
+                          "self": "https://api.pagerduty.com/users/PABO808",
+                          "id": "PABO808"
+                        },
+                        "updated_at": "2019-12-25T14:54:23Z",
+                        "updater": {
+                          "type": "user_reference",
+                          "self": "https://api.pagerduty.com/users/PABO808",
+                          "id": "PABO808"
+                        },
+                        "team": {
+                          "type": "team_reference",
+                          "self": "https://api.pagerduty.com/teams/P3ZQXDF",
+                          "id": "P3ZQXDF"
+                        }
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -10418,17 +10748,47 @@
           "200": {
             "description": "The ruleset object.",
             "content": {
-              "applicant/json": {
+              "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
                     "ruleset": {
-                      "$ref": "#/paths/~1rulesets/post/parameters/1/schema/properties/ruleset"
+                      "$ref": "#/paths/~1rulesets/post/requestBody/content/application~1json/schema/properties/ruleset"
                     }
-                  },
-                  "required": [
-                    "ruleset"
-                  ]
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "ruleset": {
+                        "id": "0e84de00-9511-4380-9f4f-a7b568bb49a0",
+                        "name": "MySQL Clusters",
+                        "type": "global",
+                        "routing_keys": [
+                          "R0212P1QXGEIQE2NMTQ7L7WXD00DWHIN"
+                        ],
+                        "self": "https://api.pagerduty.com/rulesets/0e84de00-9511-4380-9f4f-a7b568bb49a0",
+                        "created_at": "2019-12-24T21:18:52Z",
+                        "creator": {
+                          "type": "user_reference",
+                          "self": "https://api.pagerduty.com/users/PABO808",
+                          "id": "PABO808"
+                        },
+                        "updated_at": "2019-12-25T14:54:23Z",
+                        "updater": {
+                          "type": "user_reference",
+                          "self": "https://api.pagerduty.com/users/PABO808",
+                          "id": "PABO808"
+                        },
+                        "team": {
+                          "type": "team_reference",
+                          "self": "https://api.pagerduty.com/teams/P3ZQXDF",
+                          "id": "P3ZQXDF"
+                        }
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -10460,48 +10820,86 @@
           },
           {
             "$ref": "#/components/parameters/id"
-          },
-          {
-            "name": "ruleset",
-            "in": "query",
-            "description": "The ruleset update.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "ruleset": {
-                  "$ref": "#/paths/~1rulesets/post/parameters/1/schema/properties/ruleset"
-                }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ruleset": {
+                    "$ref": "#/paths/~1rulesets/post/requestBody/content/application~1json/schema/properties/ruleset"
+                  }
+                },
+                "required": [
+                  "ruleset"
+                ]
               },
-              "required": [
-                "ruleset"
-              ],
-              "example": {
-                "ruleset": {
-                  "name": "MySQL Clusters",
-                  "team": {
-                    "id": "PWL7QXS",
-                    "type": "team_reference"
+              "examples": {
+                "Example: Change name": {
+                  "summary": "Request Example",
+                  "value": {
+                    "name": "MySQL Clusters"
+                  }
+                },
+                "Example: Change team": {
+                  "value": {
+                    "team": {
+                      "id": "PWL7QXS",
+                      "type": "team_reference"
+                    }
                   }
                 }
               }
             }
           }
-        ],
+        },
         "responses": {
           "200": {
             "description": "The ruleset that was updated.",
             "content": {
-              "applicant/json": {
+              "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
                     "ruleset": {
-                      "$ref": "#/paths/~1rulesets/post/parameters/1/schema/properties/ruleset"
+                      "$ref": "#/paths/~1rulesets/post/requestBody/content/application~1json/schema/properties/ruleset"
                     }
-                  },
-                  "required": [
-                    "ruleset"
-                  ]
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "rulesets": {
+                        "id": "0e84de00-9511-4380-9f4f-a7b568bb49a0",
+                        "name": "MySQL Clusters",
+                        "type": "global",
+                        "routing_keys": [
+                          "R0212P1QXGEIQE2NMTQ7L7WXD00DWHIN"
+                        ],
+                        "self": "https://api.pagerduty.com/rulesets/0e84de00-9511-4380-9f4f-a7b568bb49a0",
+                        "created_at": "2019-12-24T21:18:52Z",
+                        "creator": {
+                          "type": "user_reference",
+                          "self": "https://api.pagerduty.com/users/PABO808",
+                          "id": "PABO808"
+                        },
+                        "updated_at": "2019-12-25T14:54:23Z",
+                        "updater": {
+                          "type": "user_reference",
+                          "self": "https://api.pagerduty.com/users/PABO808",
+                          "id": "PABO808"
+                        },
+                        "team": {
+                          "type": "team_reference",
+                          "self": "https://api.pagerduty.com/teams/P3ZQXDF",
+                          "id": "P3ZQXDF"
+                        }
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -10587,7 +10985,7 @@
           "200": {
             "description": "A paginated array of event rule objects.",
             "content": {
-              "applicant/json": {
+              "application/json": {
                 "schema": {
                   "allOf": [
                     {
@@ -10600,15 +10998,88 @@
                           "type": "array",
                           "description": "The paginated list of rules of the ruleset.",
                           "items": {
-                            "$ref": "#/paths/~1rulesets~1%7Bid%7D~1rules/post/parameters/2/schema/properties/rule"
+                            "$ref": "#/paths/~1rulesets~1%7Bid%7D~1rules/post/requestBody/content/application~1json/schema/properties/rule"
                           }
                         }
-                      },
-                      "required": [
-                        "rules"
-                      ]
+                      }
                     }
                   ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "rules": [
+                        {
+                          "id": "14e56445-ebab-4dd0-ba9d-fc28a41b7e7b",
+                          "position": 0,
+                          "disabled": false,
+                          "catch_all": false,
+                          "self": "https://api.pagerduty.com/rulesets/0e84de00-9511-4380-9f4f-a7b568bb49a0/rules/14e56445-ebab-4dd0-ba9d-fc28a41b7e7b",
+                          "conditions": {
+                            "operator": "and",
+                            "subconditions": [
+                              {
+                                "operator": "contains",
+                                "parameters": {
+                                  "value": "mysql",
+                                  "path": "details.host"
+                                }
+                              }
+                            ]
+                          },
+                          "time_frame": {
+                            "active_between": {
+                              "start_time": 1577880000000,
+                              "end_time": 1580558400000
+                            }
+                          },
+                          "actions": {
+                            "annotate": {
+                              "value": "This incident was created by a Global Event Rule"
+                            },
+                            "route": {
+                              "value": "PI2KBWI"
+                            },
+                            "priority": {
+                              "value": "PCMUB6F"
+                            },
+                            "severity": {
+                              "value": "warning"
+                            },
+                            "extractions": [
+                              {
+                                "target": "dedup_key",
+                                "source": "details.error_summary",
+                                "regex": "Host (.*) is experiencing errors"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "id": "0d819a5a-b714-4bae-9333-dc73ea0daefb",
+                          "position": 1,
+                          "disabled": false,
+                          "catch_all": true,
+                          "self": "https://api.pagerduty.com/rulesets/0e84de00-9511-4380-9f4f-a7b568bb49a0/rules/0d819a5a-b714-4bae-9333-dc73ea0daefb",
+                          "actions": {
+                            "suppress": {
+                              "value": true
+                            },
+                            "severity": null,
+                            "route": null,
+                            "priority": null,
+                            "extractions": [],
+                            "event_action": null,
+                            "annotate": null
+                          }
+                        }
+                      ],
+                      "limit": 25,
+                      "offset": 0,
+                      "more": false
+                    }
+                  }
                 }
               }
             }
@@ -10637,373 +11108,476 @@
           },
           {
             "$ref": "#/components/parameters/id"
-          },
-          {
-            "name": "rule",
-            "in": "query",
-            "description": "The event rule to be created.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "rule": {
-                  "type": "object",
-                  "properties": {
-                    "id": {
-                      "type": "string",
-                      "readOnly": true,
-                      "description": "ID of the event rule."
-                    },
-                    "self": {
-                      "type": "string",
-                      "format": "url",
-                      "description": "the API show URL at which the object is accessible",
-                      "readOnly": true
-                    },
-                    "position": {
-                      "type": "integer",
-                      "description": "Position/index of the rule within the ruleset."
-                    },
-                    "disabled": {
-                      "type": "boolean",
-                      "description": "Indicates whether the rule is disabled and would therefore not be evaluated."
-                    },
-                    "catch_all": {
-                      "type": "boolean",
-                      "readOnly": true,
-                      "description": "Indicates whether the rule is the last rule of the ruleset that serves as a catch-all. It has limited functionality compared to other rules."
-                    },
-                    "conditions": {
-                      "type": "object",
-                      "description": "Conditions evaluated to check if an event matches this event rule. Is always empty for the catch all rule, though.",
-                      "properties": {
-                        "operator": {
-                          "type": "string",
-                          "description": "Operator to combine sub-conditions.",
-                          "enum": [
-                            "and",
-                            "or"
-                          ]
-                        },
-                        "subconditions": {
-                          "type": "array",
-                          "description": "Array of sub-conditions.",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "operator": {
-                                "type": "string",
-                                "description": "The type of operator to apply.",
-                                "enum": [
-                                  "exists",
-                                  "nexists",
-                                  "equals",
-                                  "nequals",
-                                  "contains",
-                                  "ncontains",
-                                  "matches",
-                                  "nmatches"
-                                ]
-                              },
-                              "parameters": {
-                                "type": "object",
-                                "properties": {
-                                  "path": {
-                                    "type": "string",
-                                    "description": "Path to a field in an event, in dot-notation."
-                                  },
-                                  "value": {
-                                    "type": "string",
-                                    "description": "Value to apply to the operator."
-                                  },
-                                  "options": {
-                                    "type": "object",
-                                    "description": "Options to configure the operator."
-                                  }
-                                },
-                                "required": [
-                                  "value",
-                                  "path"
-                                ]
-                              }
-                            },
-                            "required": [
-                              "operator",
-                              "parameters"
-                            ]
-                          }
-                        }
-                      },
-                      "required": [
-                        "operator",
-                        "subconditions"
-                      ]
-                    },
-                    "time_frame": {
-                      "description": "Time-based conditions for limiting when the rule is active.",
-                      "type": "object",
-                      "properties": {
-                        "active_between": {
-                          "type": "object",
-                          "required": [
-                            "start_time",
-                            "end_time"
-                          ],
-                          "description": "A fixed window of time during which the rule is active.",
-                          "properties": {
-                            "start_time": {
-                              "type": "integer",
-                              "description": "The start time in milliseconds."
-                            },
-                            "end_time": {
-                              "type": "integer",
-                              "description": "End time in milliseconds."
-                            }
-                          }
-                        },
-                        "scheduled_weekly": {
-                          "type": "object",
-                          "required": [
-                            "start_time",
-                            "duration",
-                            "timezone",
-                            "weekdays"
-                          ],
-                          "description": "A reccuring window of time based on the day of the week, during which the rule is active.",
-                          "properties": {
-                            "start_time": {
-                              "type": "integer",
-                              "description": "The amount of milliseconds into the day at which the window starts."
-                            },
-                            "duration": {
-                              "type": "integer",
-                              "description": "The duration of the window in milliseconds."
-                            },
-                            "timezone": {
-                              "type": "string",
-                              "description": "The timezone."
-                            },
-                            "weekdays": {
-                              "type": "array",
-                              "description": "An array of day values. Ex [1, 3, 5] is Monday, Wednesday, Friday.",
-                              "items": {
-                                "type": "integer"
-                              }
-                            }
-                          }
-                        }
-                      }
-                    },
-                    "actions": {
-                      "description": "When an event matches this rule, the actions that will be taken to change the resulting alert and incident.",
-                      "type": "object",
-                      "properties": {
-                        "annotate": {
-                          "description": "Set a note on the resulting incident.",
-                          "type": "object",
-                          "required": [
-                            "value"
-                          ],
-                          "properties": {
-                            "value": {
-                              "type": "string",
-                              "description": "The content of the note."
-                            }
-                          }
-                        },
-                        "event_action": {
-                          "description": "Set whether the resulting alert status is trigger or resolve.",
-                          "type": "object",
-                          "required": [
-                            "value"
-                          ],
-                          "properties": {
-                            "value": {
-                              "type": "string",
-                              "enum": [
-                                "trigger",
-                                "resolve"
-                              ]
-                            }
-                          }
-                        },
-                        "extractions": {
-                          "type": "array",
-                          "description": "Use regular expressions to extract values from event fields to set fields on the resulting alert.",
-                          "items": {
-                            "type": "object",
-                            "required": [
-                              "target",
-                              "source",
-                              "regex"
-                            ],
-                            "properties": {
-                              "target": {
-                                "type": "string",
-                                "description": "The alert field that will be set with the value from the regex.",
-                                "enum": [
-                                  "dedup_key",
-                                  "description"
-                                ]
-                              },
-                              "source": {
-                                "type": "string",
-                                "description": "The path to the event field where the regex will be applied to extract a value."
-                              },
-                              "regex": {
-                                "type": "string",
-                                "description": "A RE2 regular expression.  If it contains one or more capture groups, their values will be extracted and appended together.  If it contains no capture groups, the whole match is used."
-                              }
-                            }
-                          }
-                        },
-                        "priority": {
-                          "description": "Set the priority ID for the resulting incident. You can find the priority you want by calling the priorities endpoint.",
-                          "type": "object",
-                          "required": [
-                            "value"
-                          ],
-                          "properties": {
-                            "value": {
-                              "type": "string",
-                              "description": "The priority ID."
-                            }
-                          }
-                        },
-                        "route": {
-                          "description": "Set the service ID of the target service for the resulting alert. You can find the service you want to route to by calling the services endpoint.",
-                          "type": "object",
-                          "required": [
-                            "value"
-                          ],
-                          "properties": {
-                            "value": {
-                              "type": "string",
-                              "description": "The target service's ID."
-                            }
-                          }
-                        },
-                        "severity": {
-                          "description": "Set the severity of the resulting alert.",
-                          "type": "object",
-                          "required": [
-                            "value"
-                          ],
-                          "properties": {
-                            "value": {
-                              "type": "string",
-                              "enum": [
-                                "info",
-                                "warning",
-                                "error",
-                                "critical"
-                              ]
-                            }
-                          }
-                        },
-                        "suppress": {
-                          "description": "Set whether the resulting alert is suppressed.  Can optionally be used with a threshold where resulting alerts will be suppressed until the threshold is met in window of time.",
-                          "type": "object",
-                          "required": [
-                            "value"
-                          ],
-                          "properties": {
-                            "value": {
-                              "type": "boolean"
-                            },
-                            "threshold_value": {
-                              "type": "integer",
-                              "description": "The number of occurences needed during the window of time to trigger the theshold."
-                            },
-                            "threshold_time_unit": {
-                              "type": "string",
-                              "description": "The time unit for the window of time.",
-                              "enum": [
-                                "seconds",
-                                "minutes",
-                                "hours"
-                              ]
-                            },
-                            "threshold_time_amount": {
-                              "type": "integer",
-                              "description": "The amount of time units for the window of time."
-                            }
-                          }
-                        }
-                      }
-                    }
-                  },
-                  "example": {
-                    "id": "14e56445-ebab-4dd0-ba9d-fc28a41b7e7b",
-                    "position": 0,
-                    "disabled": false,
-                    "catch_all": false,
-                    "self": "https://api.pagerduty.com/rulesets/0e84de00-9511-4380-9f4f-a7b568bb49a0/rules/14e56445-ebab-4dd0-ba9d-fc28a41b7e7b",
-                    "conditions": {
-                      "operator": "and",
-                      "subconditions": [
-                        {
-                          "operator": "contains",
-                          "parameters": {
-                            "value": "mysql",
-                            "path": "details.host"
-                          }
-                        }
-                      ]
-                    },
-                    "time_frame": {
-                      "active_between": {
-                        "start_time": 1577880000000,
-                        "end_time": 1580558400000
-                      }
-                    },
-                    "actions": {
-                      "annotate": {
-                        "value": "This incident was created by a Global Event Rule"
-                      },
-                      "route": {
-                        "value": "PI2KBWI"
-                      },
-                      "priority": {
-                        "value": "PCMUB6F"
-                      },
-                      "severity": {
-                        "value": "warning"
-                      },
-                      "extractions": [
-                        {
-                          "target": "dedup_key",
-                          "source": "details.error_summary",
-                          "regex": "Host (.*) is experiencing errors"
-                        }
-                      ]
-                    }
-                  },
-                  "required": [
-                    "actions"
-                  ]
-                }
-              },
-              "required": [
-                "rule"
-              ]
-            }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "rule": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "readOnly": true,
+                        "description": "ID of the event rule."
+                      },
+                      "self": {
+                        "type": "string",
+                        "format": "url",
+                        "description": "the API show URL at which the object is accessible",
+                        "readOnly": true
+                      },
+                      "position": {
+                        "type": "integer",
+                        "description": "Position/index of the rule within the ruleset."
+                      },
+                      "disabled": {
+                        "type": "boolean",
+                        "description": "Indicates whether the rule is disabled and would therefore not be evaluated."
+                      },
+                      "catch_all": {
+                        "type": "boolean",
+                        "readOnly": true,
+                        "description": "Indicates whether the rule is the last rule of the ruleset that serves as a catch-all. It has limited functionality compared to other rules."
+                      },
+                      "conditions": {
+                        "type": "object",
+                        "description": "Conditions evaluated to check if an event matches this event rule. Is always empty for the catch all rule, though.",
+                        "properties": {
+                          "operator": {
+                            "type": "string",
+                            "description": "Operator to combine sub-conditions.",
+                            "enum": [
+                              "and",
+                              "or"
+                            ]
+                          },
+                          "subconditions": {
+                            "type": "array",
+                            "description": "Array of sub-conditions.",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "operator": {
+                                  "type": "string",
+                                  "description": "The type of operator to apply.",
+                                  "enum": [
+                                    "exists",
+                                    "nexists",
+                                    "equals",
+                                    "nequals",
+                                    "contains",
+                                    "ncontains",
+                                    "matches",
+                                    "nmatches"
+                                  ]
+                                },
+                                "parameters": {
+                                  "type": "object",
+                                  "properties": {
+                                    "path": {
+                                      "type": "string",
+                                      "description": "Path to a field in an event, in dot-notation."
+                                    },
+                                    "value": {
+                                      "type": "string",
+                                      "description": "Value to apply to the operator."
+                                    },
+                                    "options": {
+                                      "type": "object",
+                                      "description": "Options to configure the operator."
+                                    }
+                                  },
+                                  "required": [
+                                    "value",
+                                    "path"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "operator",
+                                "parameters"
+                              ]
+                            }
+                          }
+                        },
+                        "required": [
+                          "operator",
+                          "subconditions"
+                        ]
+                      },
+                      "time_frame": {
+                        "description": "Time-based conditions for limiting when the rule is active.",
+                        "type": "object",
+                        "properties": {
+                          "active_between": {
+                            "type": "object",
+                            "required": [
+                              "start_time",
+                              "end_time"
+                            ],
+                            "description": "A fixed window of time during which the rule is active.",
+                            "properties": {
+                              "start_time": {
+                                "type": "integer",
+                                "description": "The start time in milliseconds."
+                              },
+                              "end_time": {
+                                "type": "integer",
+                                "description": "End time in milliseconds."
+                              }
+                            }
+                          },
+                          "scheduled_weekly": {
+                            "type": "object",
+                            "required": [
+                              "start_time",
+                              "duration",
+                              "timezone",
+                              "weekdays"
+                            ],
+                            "description": "A reccuring window of time based on the day of the week, during which the rule is active.",
+                            "properties": {
+                              "start_time": {
+                                "type": "integer",
+                                "description": "The amount of milliseconds into the day at which the window starts."
+                              },
+                              "duration": {
+                                "type": "integer",
+                                "description": "The duration of the window in milliseconds."
+                              },
+                              "timezone": {
+                                "type": "string",
+                                "description": "The timezone."
+                              },
+                              "weekdays": {
+                                "type": "array",
+                                "description": "An array of day values. Ex [1, 3, 5] is Monday, Wednesday, Friday.",
+                                "items": {
+                                  "type": "integer"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "actions": {
+                        "description": "When an event matches this rule, the actions that will be taken to change the resulting alert and incident.",
+                        "type": "object",
+                        "properties": {
+                          "annotate": {
+                            "description": "Set a note on the resulting incident.",
+                            "type": "object",
+                            "required": [
+                              "value"
+                            ],
+                            "properties": {
+                              "value": {
+                                "type": "string",
+                                "description": "The content of the note."
+                              }
+                            }
+                          },
+                          "event_action": {
+                            "description": "Set whether the resulting alert status is trigger or resolve.",
+                            "type": "object",
+                            "required": [
+                              "value"
+                            ],
+                            "properties": {
+                              "value": {
+                                "type": "string",
+                                "enum": [
+                                  "trigger",
+                                  "resolve"
+                                ]
+                              }
+                            }
+                          },
+                          "extractions": {
+                            "type": "array",
+                            "description": "Use regular expressions to extract values from event fields to set fields on the resulting alert.",
+                            "items": {
+                              "type": "object",
+                              "required": [
+                                "target",
+                                "source",
+                                "regex"
+                              ],
+                              "properties": {
+                                "target": {
+                                  "type": "string",
+                                  "description": "The alert field that will be set with the value from the regex.",
+                                  "enum": [
+                                    "dedup_key",
+                                    "description"
+                                  ]
+                                },
+                                "source": {
+                                  "type": "string",
+                                  "description": "The path to the event field where the regex will be applied to extract a value."
+                                },
+                                "regex": {
+                                  "type": "string",
+                                  "description": "A RE2 regular expression.  If it contains one or more capture groups, their values will be extracted and appended together.  If it contains no capture groups, the whole match is used."
+                                }
+                              }
+                            }
+                          },
+                          "priority": {
+                            "description": "Set the priority ID for the resulting incident. You can find the priority you want by calling the priorities endpoint.",
+                            "type": "object",
+                            "required": [
+                              "value"
+                            ],
+                            "properties": {
+                              "value": {
+                                "type": "string",
+                                "description": "The priority ID."
+                              }
+                            }
+                          },
+                          "route": {
+                            "description": "Set the service ID of the target service for the resulting alert. You can find the service you want to route to by calling the services endpoint.",
+                            "type": "object",
+                            "required": [
+                              "value"
+                            ],
+                            "properties": {
+                              "value": {
+                                "type": "string",
+                                "description": "The target service's ID."
+                              }
+                            }
+                          },
+                          "severity": {
+                            "description": "Set the severity of the resulting alert.",
+                            "type": "object",
+                            "required": [
+                              "value"
+                            ],
+                            "properties": {
+                              "value": {
+                                "type": "string",
+                                "enum": [
+                                  "info",
+                                  "warning",
+                                  "error",
+                                  "critical"
+                                ]
+                              }
+                            }
+                          },
+                          "suppress": {
+                            "description": "Set whether the resulting alert is suppressed.  Can optionally be used with a threshold where resulting alerts will be suppressed until the threshold is met in window of time.",
+                            "type": "object",
+                            "required": [
+                              "value"
+                            ],
+                            "properties": {
+                              "value": {
+                                "type": "boolean"
+                              },
+                              "threshold_value": {
+                                "type": "integer",
+                                "description": "The number of occurences needed during the window of time to trigger the theshold."
+                              },
+                              "threshold_time_unit": {
+                                "type": "string",
+                                "description": "The time unit for the window of time.",
+                                "enum": [
+                                  "seconds",
+                                  "minutes",
+                                  "hours"
+                                ]
+                              },
+                              "threshold_time_amount": {
+                                "type": "integer",
+                                "description": "The amount of time units for the window of time."
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "example": {
+                      "id": "14e56445-ebab-4dd0-ba9d-fc28a41b7e7b",
+                      "position": 0,
+                      "disabled": false,
+                      "catch_all": false,
+                      "self": "https://api.pagerduty.com/rulesets/0e84de00-9511-4380-9f4f-a7b568bb49a0/rules/14e56445-ebab-4dd0-ba9d-fc28a41b7e7b",
+                      "conditions": {
+                        "operator": "and",
+                        "subconditions": [
+                          {
+                            "operator": "contains",
+                            "parameters": {
+                              "value": "mysql",
+                              "path": "details.host"
+                            }
+                          }
+                        ]
+                      },
+                      "time_frame": {
+                        "active_between": {
+                          "start_time": 1577880000000,
+                          "end_time": 1580558400000
+                        }
+                      },
+                      "actions": {
+                        "annotate": {
+                          "value": "This incident was created by a Global Event Rule"
+                        },
+                        "route": {
+                          "value": "PI2KBWI"
+                        },
+                        "priority": {
+                          "value": "PCMUB6F"
+                        },
+                        "severity": {
+                          "value": "warning"
+                        },
+                        "extractions": [
+                          {
+                            "target": "dedup_key",
+                            "source": "details.error_summary",
+                            "regex": "Host (.*) is experiencing errors"
+                          }
+                        ]
+                      }
+                    },
+                    "required": [
+                      "actions"
+                    ]
+                  }
+                },
+                "required": [
+                  "rule"
+                ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "rule": {
+                      "id": "14e56445-ebab-4dd0-ba9d-fc28a41b7e7b",
+                      "position": 0,
+                      "disabled": false,
+                      "catch_all": false,
+                      "conditions": {
+                        "operator": "and",
+                        "subconditions": [
+                          {
+                            "operator": "contains",
+                            "parameters": {
+                              "value": "mysql",
+                              "path": "details.host"
+                            }
+                          }
+                        ]
+                      },
+                      "time_frame": {
+                        "active_between": {
+                          "start_time": 1577880000000,
+                          "end_time": 1580558400000
+                        }
+                      },
+                      "actions": {
+                        "annotate": {
+                          "value": "This incident was created by a Global Event Rule"
+                        },
+                        "route": {
+                          "value": "PI2KBWI"
+                        },
+                        "priority": {
+                          "value": "PCMUB6F"
+                        },
+                        "severity": {
+                          "value": "warning"
+                        },
+                        "extractions": [
+                          {
+                            "target": "dedup_key",
+                            "source": "details.error_summary",
+                            "regex": "Host (.*) is experiencing errors"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         "responses": {
           "201": {
             "description": "The event rule that was created.",
             "content": {
-              "applicant/json": {
+              "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
                     "rule": {
-                      "$ref": "#/paths/~1rulesets~1%7Bid%7D~1rules/post/parameters/2/schema/properties/rule"
+                      "$ref": "#/paths/~1rulesets~1%7Bid%7D~1rules/post/requestBody/content/application~1json/schema/properties/rule"
                     }
-                  },
-                  "required": [
-                    "rule"
-                  ]
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "ruleset": {
+                        "id": "14e56445-ebab-4dd0-ba9d-fc28a41b7e7b",
+                        "position": 0,
+                        "disabled": false,
+                        "catch_all": false,
+                        "self": "https://api.pagerduty.com/rulesets/0e84de00-9511-4380-9f4f-a7b568bb49a0/rules/14e56445-ebab-4dd0-ba9d-fc28a41b7e7b",
+                        "conditions": {
+                          "operator": "and",
+                          "subconditions": [
+                            {
+                              "operator": "contains",
+                              "parameters": {
+                                "value": "mysql",
+                                "path": "details.host"
+                              }
+                            }
+                          ]
+                        },
+                        "time_frame": {
+                          "active_between": {
+                            "start_time": 1577880000000,
+                            "end_time": 1580558400000
+                          }
+                        },
+                        "actions": {
+                          "annotate": {
+                            "value": "This incident was created by a Global Event Rule"
+                          },
+                          "route": {
+                            "value": "PI2KBWI"
+                          },
+                          "priority": {
+                            "value": "PCMUB6F"
+                          },
+                          "severity": {
+                            "value": "warning"
+                          },
+                          "extractions": [
+                            {
+                              "target": "dedup_key",
+                              "source": "details.error_summary",
+                              "regex": "Host (.*) is experiencing errors"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -11056,17 +11630,67 @@
           "200": {
             "description": "The event rule object.",
             "content": {
-              "applicant/json": {
+              "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
                     "rule": {
-                      "$ref": "#/paths/~1rulesets~1%7Bid%7D~1rules/post/parameters/2/schema/properties/rule"
+                      "$ref": "#/paths/~1rulesets~1%7Bid%7D~1rules/post/requestBody/content/application~1json/schema/properties/rule"
                     }
-                  },
-                  "required": [
-                    "rule"
-                  ]
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "rule": {
+                        "id": "14e56445-ebab-4dd0-ba9d-fc28a41b7e7b",
+                        "position": 0,
+                        "disabled": false,
+                        "catch_all": false,
+                        "self": "https://api.pagerduty.com/rulesets/0e84de00-9511-4380-9f4f-a7b568bb49a0/rules/14e56445-ebab-4dd0-ba9d-fc28a41b7e7b",
+                        "conditions": {
+                          "operator": "and",
+                          "subconditions": [
+                            {
+                              "operator": "contains",
+                              "parameters": {
+                                "value": "mysql",
+                                "path": "details.host"
+                              }
+                            }
+                          ]
+                        },
+                        "time_frame": {
+                          "active_between": {
+                            "start_time": 1577880000000,
+                            "end_time": 1580558400000
+                          }
+                        },
+                        "actions": {
+                          "annotate": {
+                            "value": "This incident was created by a Global Event Rule"
+                          },
+                          "route": {
+                            "value": "PI2KBWI"
+                          },
+                          "priority": {
+                            "value": "PCMUB6F"
+                          },
+                          "severity": {
+                            "value": "warning"
+                          },
+                          "extractions": [
+                            {
+                              "target": "dedup_key",
+                              "source": "details.error_summary",
+                              "regex": "Host (.*) is experiencing errors"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -11098,48 +11722,116 @@
           },
           {
             "$ref": "#/components/parameters/id"
-          },
-          {
-            "name": "rule_id",
-            "in": "path",
-            "description": "The id of the event rule to retrieve.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "rule",
-            "in": "query",
-            "description": "The event rule update.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "rule": {
-                  "$ref": "#/paths/~1rulesets~1%7Bid%7D~1rules/post/parameters/2/schema/properties/rule"
-                }
-              },
-              "required": [
-                "rule"
-              ]
-            }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "rule": {
+                    "$ref": "#/paths/~1rulesets~1%7Bid%7D~1rules/post/requestBody/content/application~1json/schema/properties/rule"
+                  },
+                  "rule_id": {
+                    "description": "The id of the event rule to retrieve.",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "rule_id"
+                ]
+              },
+              "examples": {
+                "Example: Enable suppress action": {
+                  "summary": "Request Example",
+                  "value": {
+                    "rule": {
+                      "actions": {
+                        "suppress": {
+                          "value": true
+                        }
+                      }
+                    }
+                  }
+                },
+                "Example: Disable rule": {
+                  "value": {
+                    "rule": {
+                      "disabled": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "description": ""
+        },
         "responses": {
           "200": {
             "description": "The event rule that was updated.",
             "content": {
-              "applicant/json": {
+              "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
                     "rule": {
-                      "$ref": "#/paths/~1rulesets~1%7Bid%7D~1rules/post/parameters/2/schema/properties/rule"
+                      "$ref": "#/paths/~1rulesets~1%7Bid%7D~1rules/post/requestBody/content/application~1json/schema/properties/rule"
                     }
-                  },
-                  "required": [
-                    "rule"
-                  ]
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "rule": {
+                        "id": "14e56445-ebab-4dd0-ba9d-fc28a41b7e7b",
+                        "position": 0,
+                        "disabled": false,
+                        "catch_all": false,
+                        "self": "https://api.pagerduty.com/rulesets/0e84de00-9511-4380-9f4f-a7b568bb49a0/rules/14e56445-ebab-4dd0-ba9d-fc28a41b7e7b",
+                        "conditions": {
+                          "operator": "and",
+                          "subconditions": [
+                            {
+                              "operator": "contains",
+                              "parameters": {
+                                "value": "mysql",
+                                "path": "details.host"
+                              }
+                            }
+                          ]
+                        },
+                        "time_frame": {
+                          "active_between": {
+                            "start_time": 1577880000000,
+                            "end_time": 1580558400000
+                          }
+                        },
+                        "actions": {
+                          "annotate": {
+                            "value": "This incident was created by a Global Event Rule"
+                          },
+                          "route": {
+                            "value": "PI2KBWI"
+                          },
+                          "priority": {
+                            "value": "PCMUB6F"
+                          },
+                          "severity": {
+                            "value": "warning"
+                          },
+                          "extractions": [
+                            {
+                              "target": "dedup_key",
+                              "source": "details.error_summary",
+                              "regex": "Host (.*) is experiencing errors"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -11559,6 +12251,43 @@
                 "required": [
                   "schedule"
                 ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "schedule": {
+                      "name": "Daily Engineering Rotation",
+                      "type": "schedule",
+                      "time_zone": "America/New_York",
+                      "description": "Rotation schedule for engineering",
+                      "schedule_layers": [
+                        {
+                          "name": "Night Shift",
+                          "start": "2015-11-06T20:00:00-05:00",
+                          "end": "2016-11-06T20:00:00-05:00",
+                          "rotation_virtual_start": "2015-11-06T20:00:00-05:00",
+                          "rotation_turn_length_seconds": 86400,
+                          "users": [
+                            {
+                              "user": {
+                                "id": "PXPGF42",
+                                "type": "user"
+                              }
+                            }
+                          ],
+                          "restrictions": [
+                            {
+                              "type": "daily_restriction",
+                              "start_time_of_day": "08:00:00",
+                              "duration_seconds": 32400
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
               }
             }
           },
@@ -11896,6 +12625,43 @@
                 "required": [
                   "schedule"
                 ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "schedule": {
+                      "name": "Daily Engineering Rotation",
+                      "type": "schedule",
+                      "time_zone": "America/New_York",
+                      "description": "Rotation schedule for engineering",
+                      "schedule_layers": [
+                        {
+                          "name": "Night Shift",
+                          "start": "2015-11-06T20:00:00-05:00",
+                          "end": "2016-11-06T20:00:00-05:00",
+                          "rotation_virtual_start": "2015-11-06T20:00:00-05:00",
+                          "rotation_turn_length_seconds": 86400,
+                          "users": [
+                            {
+                              "user": {
+                                "id": "PXPGF42",
+                                "type": "user"
+                              }
+                            }
+                          ],
+                          "restrictions": [
+                            {
+                              "type": "daily_restriction",
+                              "start_time_of_day": "08:00:00",
+                              "duration_seconds": 32400
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
               }
             }
           },
@@ -12045,6 +12811,43 @@
                 "required": [
                   "schedule"
                 ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "schedule": {
+                      "name": "Daily Engineering Rotation",
+                      "type": "schedule",
+                      "time_zone": "America/New_York",
+                      "description": "Rotation schedule for engineering",
+                      "schedule_layers": [
+                        {
+                          "name": "Night Shift",
+                          "start": "2015-11-06T20:00:00-05:00",
+                          "end": "2016-11-06T20:00:00-05:00",
+                          "rotation_virtual_start": "2015-11-06T20:00:00-05:00",
+                          "rotation_turn_length_seconds": 86400,
+                          "users": [
+                            {
+                              "user": {
+                                "id": "PXPGF42",
+                                "type": "user"
+                              }
+                            }
+                          ],
+                          "restrictions": [
+                            {
+                              "type": "daily_restriction",
+                              "start_time_of_day": "08:00:00",
+                              "duration_seconds": 32400
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
               }
             }
           },
@@ -12288,6 +13091,21 @@
                 "required": [
                   "override"
                 ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "override": {
+                      "start": "2012-07-01T00:00:00-04:00",
+                      "end": "2012-07-02T00:00:00-04:00",
+                      "user": {
+                        "id": "PEYSGVF",
+                        "type": "user_reference"
+                      }
+                    }
+                  }
+                }
               }
             }
           },
@@ -12577,7 +13395,7 @@
         ],
         "requestBody": {
           "content": {
-            "applicant/json": {
+            "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
@@ -13356,6 +14174,62 @@
                 "required": [
                   "service"
                 ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "service": {
+                      "type": "service",
+                      "name": "My Web App",
+                      "description": "My cool web application that does things.",
+                      "auto_resolve_timeout": 14400,
+                      "acknowledgement_timeout": 600,
+                      "status": "active",
+                      "escalation_policy": {
+                        "id": "PWIP6CQ",
+                        "type": "escalation_policy_reference"
+                      },
+                      "incident_urgency_rule": {
+                        "type": "use_support_hours",
+                        "during_support_hours": {
+                          "type": "constant",
+                          "urgency": "high"
+                        },
+                        "outside_support_hours": {
+                          "type": "constant",
+                          "urgency": "low"
+                        }
+                      },
+                      "support_hours": {
+                        "type": "fixed_time_per_day",
+                        "time_zone": "America/Lima",
+                        "start_time": "09:00:00",
+                        "end_time": "17:00:00",
+                        "days_of_week": [
+                          1,
+                          2,
+                          3,
+                          4,
+                          5
+                        ]
+                      },
+                      "scheduled_actions": [
+                        {
+                          "type": "urgency_change",
+                          "at": {
+                            "type": "named_time",
+                            "name": "support_hours_start"
+                          },
+                          "to_urgency": "high"
+                        }
+                      ],
+                      "alert_creation": "create_alerts_and_incidents",
+                      "alert_grouping": "time",
+                      "alert_grouping_timeout": 2
+                    }
+                  }
+                }
               }
             }
           },
@@ -13675,6 +14549,62 @@
                 "required": [
                   "service"
                 ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "service": {
+                      "type": "service",
+                      "name": "My Web App",
+                      "description": "My cool web application that does things.",
+                      "auto_resolve_timeout": 14400,
+                      "acknowledgement_timeout": 600,
+                      "status": "active",
+                      "escalation_policy": {
+                        "id": "PWIP6CQ",
+                        "type": "escalation_policy_reference"
+                      },
+                      "incident_urgency_rule": {
+                        "type": "use_support_hours",
+                        "during_support_hours": {
+                          "type": "constant",
+                          "urgency": "high"
+                        },
+                        "outside_support_hours": {
+                          "type": "constant",
+                          "urgency": "low"
+                        }
+                      },
+                      "support_hours": {
+                        "type": "fixed_time_per_day",
+                        "time_zone": "America/Lima",
+                        "start_time": "09:00:00",
+                        "end_time": "17:00:00",
+                        "days_of_week": [
+                          1,
+                          2,
+                          3,
+                          4,
+                          5
+                        ]
+                      },
+                      "scheduled_actions": [
+                        {
+                          "type": "urgency_change",
+                          "at": {
+                            "type": "named_time",
+                            "name": "support_hours_start"
+                          },
+                          "to_urgency": "high"
+                        }
+                      ],
+                      "alert_creation": "create_alerts_and_incidents",
+                      "alert_grouping": "time",
+                      "alert_grouping_timeout": 2
+                    }
+                  }
+                }
               }
             }
           },
@@ -13825,6 +14755,29 @@
                 "required": [
                   "integration"
                 ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "integration": {
+                      "type": "generic_email_inbound_integration",
+                      "name": "Email",
+                      "service": {
+                        "id": "PQL78HM",
+                        "type": "service_reference",
+                        "summary": "My Email-Based Integration",
+                        "self": "https://api.pagerduty.com/services/PQL78HM",
+                        "html_url": "https://subdomain.pagerduty.com/services/PQL78HM"
+                      },
+                      "integration_email": "my-email-based-integration@subdomain.pagerduty.com",
+                      "vendor": {
+                        "type": "vendor_reference",
+                        "id": "PZD94QK"
+                      }
+                    }
+                  }
+                }
               }
             }
           },
@@ -13921,6 +14874,29 @@
                 "required": [
                   "integration"
                 ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "integration": {
+                      "type": "generic_email_inbound_integration",
+                      "name": "Email",
+                      "service": {
+                        "id": "PQL78HM",
+                        "type": "service_reference",
+                        "summary": "My Email-Based Integration",
+                        "self": "https://api.pagerduty.com/services/PQL78HM",
+                        "html_url": "https://subdomain.pagerduty.com/services/PQL78HM"
+                      },
+                      "integration_email": "my-email-based-integration@subdomain.pagerduty.com",
+                      "vendor": {
+                        "type": "vendor_reference",
+                        "id": "PZD94QK"
+                      }
+                    }
+                  }
+                }
               }
             }
           },
@@ -14197,6 +15173,17 @@
                 "required": [
                   "tag"
                 ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "tag": {
+                      "type": "tag",
+                      "label": "Batman"
+                    }
+                  }
+                }
               }
             }
           }
@@ -14634,6 +15621,33 @@
               "application/json": {
                 "schema": {
                   "type": "object"
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Request Example",
+                    "value": {
+                      "add": [
+                        {
+                          "type": "tag",
+                          "label": "Batman"
+                        },
+                        {
+                          "type": "tag_reference",
+                          "id": "P5IYCNZ"
+                        }
+                      ],
+                      "remove": [
+                        {
+                          "type": "tag_reference",
+                          "id": "POE7RY8"
+                        },
+                        {
+                          "type": "tag_reference",
+                          "id": "PG68P1M"
+                        }
+                      ]
+                    }
+                  }
                 }
               }
             }
@@ -14680,6 +15694,18 @@
                 "required": [
                   "team"
                 ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "team": {
+                      "type": "team",
+                      "name": "Engineering",
+                      "description": "The engineering team"
+                    }
+                  }
+                }
               }
             }
           },
@@ -14972,6 +15998,18 @@
                 "required": [
                   "team"
                 ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "team": {
+                      "type": "team",
+                      "name": "Engineering",
+                      "description": "The engineering team"
+                    }
+                  }
+                }
               }
             }
           },
@@ -15201,9 +16239,14 @@
                       "manager"
                     ]
                   }
-                },
-                "example": {
-                  "role": "observer"
+                }
+              },
+              "examples": {
+                "role": {
+                  "summary": "Request Example",
+                  "value": {
+                    "role": "observer"
+                  }
                 }
               }
             }
@@ -15529,6 +16572,24 @@
                 "required": [
                   "user"
                 ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "user": {
+                      "type": "user",
+                      "name": "Earline Greenholt",
+                      "email": "125.greenholt.earline@graham.name",
+                      "time_zone": "America/Lima",
+                      "color": "green",
+                      "role": "admin",
+                      "job_title": "Director of Engineering",
+                      "avatar_url": "https://secure.gravatar.com/avatar/1d1a39d4635208d5664082a6c654a73f.png?d=mm&r=PG",
+                      "description": "I'm the boss"
+                    }
+                  }
+                }
               }
             }
           },
@@ -15792,12 +16853,30 @@
                 "type": "object",
                 "properties": {
                   "user": {
-                    "$ref": "#/components/schemas/UserReference"
+                    "$ref": "#/components/schemas/User"
                   }
                 },
                 "required": [
                   "user"
                 ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "user": {
+                      "type": "user",
+                      "name": "Earline Greenholt",
+                      "email": "125.greenholt.earline@graham.name",
+                      "time_zone": "America/Lima",
+                      "color": "green",
+                      "role": "admin",
+                      "job_title": "Director of Engineering",
+                      "avatar_url": "https://secure.gravatar.com/avatar/1d1a39d4635208d5664082a6c654a73f.png?d=mm&r=PG",
+                      "description": "I'm the boss"
+                    }
+                  }
+                }
               }
             }
           },
@@ -16094,6 +17173,22 @@
                 "required": [
                   "contact_method"
                 ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "contact_method": {
+                      "id": "PXPGF42",
+                      "type": "contact_method",
+                      "summary": "Work",
+                      "self": "https://api.pagerduty.com/users/PXPGF42/contact_method/PXPGF42",
+                      "label": "Work",
+                      "address": "grady.haylie.126@hickle.net",
+                      "send_short_email": false
+                    }
+                  }
+                }
               }
             }
           },
@@ -16282,6 +17377,22 @@
                 "required": [
                   "contact_method"
                 ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "contact_method": {
+                      "id": "PXPGF42",
+                      "type": "contact_method",
+                      "summary": "Work",
+                      "self": "https://api.pagerduty.com/users/PXPGF42/contact_method/PXPGF42",
+                      "label": "Work",
+                      "address": "grady.haylie.126@hickle.net",
+                      "send_short_email": false
+                    }
+                  }
+                }
               }
             }
           },
@@ -16458,6 +17569,22 @@
                 "required": [
                   "notification_rule"
                 ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "notification_rule": {
+                      "type": "assignment_notification_rule",
+                      "start_delay_in_minutes": 0,
+                      "contact_method": {
+                        "id": "PXPGF42",
+                        "type": "email_contact_method"
+                      },
+                      "urgency": "high"
+                    }
+                  }
+                }
               }
             }
           },
@@ -16687,6 +17814,22 @@
                 "required": [
                   "notification_rule"
                 ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "notification_rule": {
+                      "type": "assignment_notification_rule",
+                      "start_delay_in_minutes": 0,
+                      "contact_method": {
+                        "id": "PXPGF42",
+                        "type": "email_contact_method"
+                      },
+                      "urgency": "high"
+                    }
+                  }
+                }
               }
             }
           },

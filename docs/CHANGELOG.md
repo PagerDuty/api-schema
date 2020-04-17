@@ -7,6 +7,7 @@ Currently we do not deprecate or remove any API functionality.
 ----
 ### 2020-04-15
  - Updated all reference schemas to better match reality of API.
+ - Added examples to all Request and Response body's that were missing them.
 
 ### 2020-04-15
  - Added Events V1 and Events V2 APIs.
