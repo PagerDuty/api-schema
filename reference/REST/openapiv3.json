@@ -5092,14 +5092,16 @@
                 }
               },
               "examples": {
-                "business_service": {
+                "request": {
                   "summary": "Request Example",
                   "value": {
-                    "name": "Self-serve mobile checkout",
-                    "description": "Checkout service for our mobile clients",
-                    "point_of_contact": "PagerDuty Admin",
-                    "team": {
-                      "id": "P3ZQXDF"
+                    "business_service": {
+                      "name": "Self-serve mobile checkout",
+                      "description": "Checkout service for our mobile clients",
+                      "point_of_contact": "PagerDuty Admin",
+                      "team": {
+                        "id": "P3ZQXDF"
+                      }
                     }
                   }
                 }
@@ -5316,14 +5318,16 @@
                 }
               },
               "examples": {
-                "business_service": {
+                "request": {
                   "summary": "Request Example",
                   "value": {
-                    "name": "Self-serve mobile checkout",
-                    "description": "Checkout service for our mobile clients",
-                    "point_of_contact": "PagerDuty Admin",
-                    "team": {
-                      "id": "P3ZQXDF"
+                    "business_service": {
+                      "name": "Self-serve mobile checkout",
+                      "description": "Checkout service for our mobile clients",
+                      "point_of_contact": "PagerDuty Admin",
+                      "team": {
+                        "id": "P3ZQXDF"
+                      }
                     }
                   }
                 }
@@ -7073,38 +7077,40 @@
               "examples": {
                 "incidents": {
                   "summary": "Request Example",
-                  "value": [
-                    {
-                      "id": "PT4KHLK",
-                      "type": "incident_reference",
-                      "status": "acknowledged"
-                    },
-                    {
-                      "id": "PQMF62U",
-                      "type": "incident_reference",
-                      "priority": {
-                        "id": "P53ZZH5",
-                        "type": "priority_reference"
-                      }
-                    },
-                    {
-                      "id": "PPVZH9X",
-                      "type": "incident_reference",
-                      "status": "resolved"
-                    },
-                    {
-                      "id": "P8JOGX7",
-                      "type": "incident_reference",
-                      "assignments": [
-                        {
-                          "assignee": {
-                            "id": "PXPGF42",
-                            "type": "user_reference"
-                          }
+                  "value": {
+                    "incidents": [
+                      {
+                        "id": "PT4KHLK",
+                        "type": "incident_reference",
+                        "status": "acknowledged"
+                      },
+                      {
+                        "id": "PQMF62U",
+                        "type": "incident_reference",
+                        "priority": {
+                          "id": "P53ZZH5",
+                          "type": "priority_reference"
                         }
-                      ]
-                    }
-                  ]
+                      },
+                      {
+                        "id": "PPVZH9X",
+                        "type": "incident_reference",
+                        "status": "resolved"
+                      },
+                      {
+                        "id": "P8JOGX7",
+                        "type": "incident_reference",
+                        "assignments": [
+                          {
+                            "assignee": {
+                              "id": "PXPGF42",
+                              "type": "user_reference"
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
                 }
               }
             }
@@ -7339,7 +7345,7 @@
                 ]
               },
               "examples": {
-                "incident": {
+                "request": {
                   "summary": "Request Example",
                   "value": {
                     "incident": {
@@ -7523,18 +7529,20 @@
                 ]
               },
               "examples": {
-                "source_incidents": {
+                "request": {
                   "summary": "Request Example",
-                  "value": [
-                    {
-                      "id": "P8JOGX7",
-                      "type": "incident_reference"
-                    },
-                    {
-                      "id": "PPVZH9X",
-                      "type": "incident_reference"
-                    }
-                  ]
+                  "value": {
+                    "source_incidents": [
+                      {
+                        "id": "P8JOGX7",
+                        "type": "incident_reference"
+                      },
+                      {
+                        "id": "PPVZH9X",
+                        "type": "incident_reference"
+                      }
+                    ]
+                  }
                 }
               }
             }
@@ -7855,11 +7863,13 @@
                 ]
               },
               "examples": {
-                "incident": {
+                "request": {
                   "summary": "Request Example",
                   "value": {
-                    "type": "incident_reference",
-                    "status": "acknowledged"
+                    "incident": {
+                      "type": "incident_reference",
+                      "status": "acknowledged"
+                    }
                   }
                 }
               }
@@ -8215,23 +8225,25 @@
                 ]
               },
               "examples": {
-                "alerts": {
+                "request": {
                   "summary": "Request Example",
-                  "value": [
-                    {
-                      "id": "PPVZH9X",
-                      "type": "alert_reference",
-                      "status": "resolved"
-                    },
-                    {
-                      "id": "P8JOGX7",
-                      "type": "alert_reference",
-                      "incident": {
+                  "value": {
+                    "alerts": [
+                      {
                         "id": "PPVZH9X",
-                        "type": "incident_reference"
+                        "type": "alert_reference",
+                        "status": "resolved"
+                      },
+                      {
+                        "id": "P8JOGX7",
+                        "type": "alert_reference",
+                        "incident": {
+                          "id": "PPVZH9X",
+                          "type": "incident_reference"
+                        }
                       }
-                    }
-                  ]
+                    ]
+                  }
                 }
               }
             }
@@ -8901,7 +8913,7 @@
                 ]
               },
               "examples": {
-                "status_updates": {
+                "request": {
                   "summary": "Request Example",
                   "value": {
                     "message": "The server fire is spreading."
@@ -9015,7 +9027,7 @@
                 ]
               },
               "examples": {
-                "responder_requests": {
+                "request": {
                   "summary": "Request Example",
                   "value": {
                     "requester_id": "PL1JMK5",
@@ -9167,7 +9179,7 @@
                 ]
               },
               "examples": {
-                "duration": {
+                "request": {
                   "summary": "Request Example",
                   "value": {
                     "duration": 3600
@@ -10649,7 +10661,7 @@
                 }
               },
               "examples": {
-                "ruleset": {
+                "request": {
                   "summary": "Request Example",
                   "value": {
                     "ruleset": {
@@ -10839,13 +10851,14 @@
                 ]
               },
               "examples": {
-                "Example: Change name": {
-                  "summary": "Request Example",
+                "change_name": {
+                  "summary": "Example: Change name",
                   "value": {
                     "name": "MySQL Clusters"
                   }
                 },
-                "Example: Change team": {
+                "change_team": {
+                  "summary": "Example: Change team",
                   "value": {
                     "team": {
                       "id": "PWL7QXS",
@@ -11745,8 +11758,8 @@
                 ]
               },
               "examples": {
-                "Example: Enable suppress action": {
-                  "summary": "Request Example",
+                "suppress_action": {
+                  "summary": "Example: Enable suppress action",
                   "value": {
                     "rule": {
                       "actions": {
@@ -11757,7 +11770,8 @@
                     }
                   }
                 },
-                "Example: Disable rule": {
+                "disable_rule": {
+                  "summary": "Example: Disable rule",
                   "value": {
                     "rule": {
                       "disabled": true
@@ -12055,11 +12069,13 @@
                 ]
               },
               "examples": {
-                "incident": {
+                "request": {
                   "summary": "Request Example",
                   "value": {
-                    "id": "PWL7QXS",
-                    "type": "incident_reference"
+                    "incident": {
+                      "id": "PWL7QXS",
+                      "type": "incident_reference"
+                    }
                   }
                 }
               }
@@ -13437,30 +13453,32 @@
                 }
               },
               "examples": {
-                "relationships": {
+                "request": {
                   "summary": "Request Example",
-                  "value": [
-                    {
-                      "supporting_service": {
-                        "id": "P7AD56",
-                        "type": "service"
+                  "value": {
+                    "relationships": [
+                      {
+                        "supporting_service": {
+                          "id": "P7AD56",
+                          "type": "service"
+                        },
+                        "dependent_service": {
+                          "id": "P99DJ6",
+                          "type": "business_service"
+                        }
                       },
-                      "dependent_service": {
-                        "id": "P99DJ6",
-                        "type": "business_service"
+                      {
+                        "supporting_service": {
+                          "id": "DT93K1",
+                          "type": "business_service"
+                        },
+                        "dependent_service": {
+                          "id": "RS34D9",
+                          "type": "service"
+                        }
                       }
-                    },
-                    {
-                      "supporting_service": {
-                        "id": "DT93K1",
-                        "type": "business_service"
-                      },
-                      "dependent_service": {
-                        "id": "RS34D9",
-                        "type": "service"
-                      }
-                    }
-                  ]
+                    ]
+                  }
                 }
               }
             }
@@ -13620,30 +13638,32 @@
                 }
               },
               "examples": {
-                "relationships": {
+                "request": {
                   "summary": "Request Example",
-                  "value": [
-                    {
-                      "supporting_service": {
-                        "id": "P7AD56",
-                        "type": "service"
+                  "value": {
+                    "relationships": [
+                      {
+                        "supporting_service": {
+                          "id": "P7AD56",
+                          "type": "service"
+                        },
+                        "dependent_service": {
+                          "id": "P99DJ6",
+                          "type": "business_service"
+                        }
                       },
-                      "dependent_service": {
-                        "id": "P99DJ6",
-                        "type": "business_service"
+                      {
+                        "supporting_service": {
+                          "id": "DT93K1",
+                          "type": "business_service"
+                        },
+                        "dependent_service": {
+                          "id": "RS34D9",
+                          "type": "service"
+                        }
                       }
-                    },
-                    {
-                      "supporting_service": {
-                        "id": "DT93K1",
-                        "type": "business_service"
-                      },
-                      "dependent_service": {
-                        "id": "RS34D9",
-                        "type": "service"
-                      }
-                    }
-                  ]
+                    ]
+                  }
                 }
               }
             }
