@@ -6,6 +6,7 @@ Currently we do not deprecate or remove any API functionality.
 
 ----
 ### 2020-04-21
+ - Fixed model `type` fields in schema definitions.
  - Fix issues with Request Examples
 
 ### 2020-04-15

@@ -689,6 +689,14 @@
       "Addon": {
         "type": "object",
         "properties": {
+          "type": {
+            "type": "string",
+            "description": "The type of Add-on.",
+            "enum": [
+              "full_page_addon",
+              "incident_show_addon"
+            ]
+          },
           "name": {
             "type": "string",
             "description": "The name of the Add-on.",
@@ -701,6 +709,7 @@
           }
         },
         "required": [
+          "type",
           "name",
           "src"
         ],
@@ -783,6 +792,14 @@
       "Tag": {
         "type": "object",
         "properties": {
+          "type": {
+            "type": "string",
+            "description": "The type of object being created.",
+            "default": "tag",
+            "enum": [
+              "tag"
+            ]
+          },
           "label": {
             "type": "string",
             "description": "The label of the tag.",
@@ -790,7 +807,8 @@
           }
         },
         "required": [
-          "label"
+          "label",
+          "type"
         ],
         "example": {
           "type": "tag",
@@ -1358,7 +1376,7 @@
               "type": {
                 "type": "string",
                 "enum": [
-                  "assignment_notification_rule"
+                  "assignment_notification_rule_reference"
                 ]
               }
             }
@@ -1369,6 +1387,14 @@
         "type": "object",
         "description": "A rule for contacting the user.",
         "properties": {
+          "type": {
+            "type": "string",
+            "description": "The type of object being created.",
+            "default": "assignment_notification_rule",
+            "enum": [
+              "assignment_notification_rule"
+            ]
+          },
           "start_delay_in_minutes": {
             "type": "integer",
             "description": "The delay before firing the rule, in minutes.",
@@ -1427,6 +1453,16 @@
         "type": "object",
         "description": "The method to contact a user.",
         "properties": {
+          "type": {
+            "type": "string",
+            "description": "The type of contact method being created.",
+            "enum": [
+              "email_contact_method",
+              "phone_contact_method",
+              "push_notification_contact_method",
+              "sms_contact_method"
+            ]
+          },
           "label": {
             "type": "string",
             "description": "The label (e.g., \"Work\", \"Mobile\", etc.)."
@@ -1700,6 +1736,14 @@
             "description": "The name of the user.",
             "maxLength": 100
           },
+          "type": {
+            "type": "string",
+            "description": "The type of object being created.",
+            "default": "user",
+            "enum": [
+              "user"
+            ]
+          },
           "email": {
             "type": "string",
             "format": "email",
@@ -1777,7 +1821,8 @@
         },
         "required": [
           "name",
-          "email"
+          "email",
+          "type"
         ],
         "example": {
           "type": "user",
@@ -1812,6 +1857,14 @@
       "Team": {
         "type": "object",
         "properties": {
+          "type": {
+            "type": "string",
+            "description": "The type of object being created.",
+            "default": "team",
+            "enum": [
+              "team"
+            ]
+          },
           "name": {
             "type": "string",
             "description": "The name of the team.",
@@ -1827,7 +1880,8 @@
           }
         },
         "required": [
-          "name"
+          "name",
+          "type"
         ],
         "example": {
           "type": "team",
@@ -1988,6 +2042,14 @@
       "EscalationPolicy": {
         "type": "object",
         "properties": {
+          "type": {
+            "type": "string",
+            "description": "The type of object being created.",
+            "default": "escalation_policy",
+            "enum": [
+              "escalation_policy"
+            ]
+          },
           "name": {
             "type": "string",
             "description": "The name of the escalation policy."
@@ -2033,6 +2095,7 @@
           }
         },
         "required": [
+          "type",
           "name",
           "escalation_rules"
         ],
@@ -2153,6 +2216,14 @@
             "type": "string",
             "description": "The name of the extension."
           },
+          "type": {
+            "type": "string",
+            "description": "The type of object being created.",
+            "default": "extension",
+            "enum": [
+              "extension"
+            ]
+          },
           "endpoint_url": {
             "type": "string",
             "format": "url",
@@ -2172,7 +2243,8 @@
         "required": [
           "extension_objects",
           "extension_schema",
-          "name"
+          "name",
+          "type"
         ],
         "example": {
           "id": "PPGPXHO",
@@ -2532,13 +2604,14 @@
       },
       "Service": {
         "type": "object",
-        "required": [
-          "type"
-        ],
         "properties": {
           "type": {
             "type": "string",
-            "description": "A string that determines the schema of the object."
+            "description": "The type of object being created.",
+            "default": "service",
+            "enum": [
+              "service"
+            ]
           },
           "name": {
             "type": "string",
@@ -2642,6 +2715,9 @@
             "description": "The duration in minutes within which to automatically group incoming alerts. This setting applies only when `alert_grouping` is set to `\"time\"`. To continue grouping alerts until the incident is resolved, set this value to `0`.\n"
           }
         },
+        "required": [
+          "type"
+        ],
         "example": {
           "type": "service",
           "name": "My Web App",
@@ -2798,6 +2874,14 @@
       "MaintenanceWindow": {
         "type": "object",
         "properties": {
+          "type": {
+            "type": "string",
+            "description": "The type of object being created.",
+            "default": "maintenance_window",
+            "enum": [
+              "maintenance_window"
+            ]
+          },
           "sequence_number": {
             "type": "integer",
             "readOnly": true,
@@ -2837,7 +2921,8 @@
         "required": [
           "start_time",
           "end_time",
-          "services"
+          "services",
+          "type"
         ],
         "example": {
           "type": "maintenance_window",
@@ -2873,6 +2958,14 @@
       "Schedule": {
         "type": "object",
         "properties": {
+          "type": {
+            "type": "string",
+            "description": "The type of object being created.",
+            "default": "schedule",
+            "enum": [
+              "schedule"
+            ]
+          },
           "schedule_layers": {
             "type": "array",
             "description": "A list of schedule layers.",
@@ -2918,7 +3011,8 @@
         },
         "required": [
           "schedule_layers",
-          "time_zone"
+          "time_zone",
+          "type"
         ],
         "example": {
           "name": "Daily Engineering Rotation",
@@ -3504,6 +3598,14 @@
             "readOnly": true,
             "description": "The date/time the alert was first triggered."
           },
+          "type": {
+            "type": "string",
+            "default": "alert",
+            "description": "The type of object being created.",
+            "enum": [
+              "alert"
+            ]
+          },
           "status": {
             "type": "string",
             "description": "The current status of the alert.",
@@ -3575,6 +3677,9 @@
             }
           }
         },
+        "required": [
+          "type"
+        ],
         "example": {
           "type": "alert",
           "status": "resolved",
@@ -17868,10 +17973,7 @@
                     "notification_rule": {
                       "$ref": "#/components/schemas/NotificationRule"
                     }
-                  },
-                  "required": [
-                    "notification_rule"
-                  ]
+                  }
                 },
                 "examples": {
                   "response": {
