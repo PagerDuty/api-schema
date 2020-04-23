@@ -1,6 +1,7 @@
 {
   "openapi": "3.0.2",
   "info": {
+    "description": "The PagerDuty REST API",
     "contact": {
       "name": "PagerDuty Support",
       "url": "http://www.pagerduty.com/support",
@@ -165,122 +166,122 @@
       "include_addon": {
         "name": "include[]",
         "in": "query",
-        "description": "Array of additional details to include.",
+        "description": "Array of additional Models to include in response.",
         "explode": true,
         "schema": {
           "type": "array",
           "items": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "services"
+            ]
           },
-          "uniqueItems": true,
-          "enum": [
-            "services"
-          ]
+          "uniqueItems": true
         }
       },
       "include_escalation_policy": {
         "name": "include[]",
         "in": "query",
-        "description": "Array of additional details to include.",
+        "description": "Array of additional Models to include in response.",
         "explode": true,
         "schema": {
           "type": "array",
           "items": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "services",
+              "teams",
+              "targets"
+            ]
           },
-          "uniqueItems": true,
-          "enum": [
-            "services",
-            "teams",
-            "targets"
-          ]
+          "uniqueItems": true
         }
       },
       "include_log_entry": {
         "name": "include[]",
         "in": "query",
-        "description": "Array of additional details to include.",
+        "description": "Array of additional Models to include in response.",
         "explode": true,
         "schema": {
           "type": "array",
           "items": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "incidents",
+              "services",
+              "channels",
+              "teams"
+            ]
           },
-          "uniqueItems": true,
-          "enum": [
-            "incidents",
-            "services",
-            "channels",
-            "teams"
-          ]
+          "uniqueItems": true
         }
       },
       "include_user": {
         "name": "include[]",
         "in": "query",
-        "description": "Array of additional details to include.",
+        "description": "Array of additional Models to include in response.",
         "explode": true,
         "schema": {
           "type": "array",
           "items": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "contact_methods",
+              "notification_rules",
+              "teams"
+            ]
           },
-          "uniqueItems": true,
-          "enum": [
-            "contact_methods",
-            "notification_rules",
-            "teams"
-          ]
+          "uniqueItems": true
         }
       },
       "include_maintenance_window": {
         "name": "include[]",
         "in": "query",
-        "description": "Array of additional details to include.",
+        "description": "Array of additional Models to include in response.",
         "explode": true,
         "schema": {
           "type": "array",
           "items": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "teams",
+              "services",
+              "users"
+            ]
           },
-          "uniqueItems": true,
-          "enum": [
-            "teams",
-            "services",
-            "users"
-          ]
+          "uniqueItems": true
         }
       },
       "include_teams": {
         "name": "include[]",
         "in": "query",
-        "description": "Array of additional details to include.",
+        "description": "Array of additional Models to include in response.",
         "explode": true,
         "schema": {
           "type": "array",
           "items": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "privileges"
+            ]
           },
-          "uniqueItems": true,
-          "enum": [
-            "privileges"
-          ]
+          "uniqueItems": true
         }
       },
       "include_teams_members": {
         "name": "include[]",
         "in": "query",
-        "description": "Array of additional details to include.",
+        "description": "Array of additional Models to include in response.",
         "explode": true,
         "schema": {
           "type": "array",
           "items": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "users"
+            ]
           },
-          "uniqueItems": true,
-          "enum": [
-            "users"
-          ]
+          "uniqueItems": true
         }
       },
       "sort_by_escalation_policy": {
@@ -454,13 +455,13 @@
         "schema": {
           "type": "array",
           "items": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "high",
+              "low"
+            ]
           },
-          "uniqueItems": true,
-          "enum": [
-            "high",
-            "low"
-          ]
+          "uniqueItems": true
         }
       },
       "from_header": {
@@ -1423,7 +1424,7 @@
           "start_delay_in_minutes": 0,
           "contact_method": {
             "id": "PXPGF42",
-            "type": "email_contact_method"
+            "type": "email_contact_method_reference"
           },
           "urgency": "high"
         }
@@ -1815,7 +1816,7 @@
             "type": "array",
             "description": "The list of notification rules for the user.",
             "items": {
-              "$ref": "#/components/schemas/NotificationRule"
+              "$ref": "#/components/schemas/NotificationRuleReference"
             }
           }
         },
@@ -2247,27 +2248,18 @@
           "type"
         ],
         "example": {
-          "id": "PPGPXHO",
-          "self": "https://api.pagerduty.com/extensions/PPGPXHO",
-          "html_url": "null",
           "endpoint_url": "https://example.com/recieve_a_pagerduty_webhook",
           "name": "My Webhook",
           "summary": "My Webhook",
           "type": "extension",
           "extension_schema": {
             "id": "PJFWPEP",
-            "type": "extension_schema_reference",
-            "summary": "Generic Webhook",
-            "self": "https://api.pagerduty.com/extension_schemas/PJFWPEP",
-            "html_url": "null"
+            "type": "extension_schema_reference"
           },
           "extension_objects": [
             {
               "id": "PIJ90N7",
-              "type": "service_reference",
-              "summary": "My Application Service",
-              "self": "https://api.pagerduty.com/services/PIJ90N7",
-              "html_url": "https://subdomain.pagerduty.com/services/PIJ90N7"
+              "type": "service_reference"
             }
           ]
         }
@@ -3030,7 +3022,7 @@
                 {
                   "user": {
                     "id": "PXPGF42",
-                    "type": "user"
+                    "type": "user_reference"
                   }
                 }
               ],
@@ -3570,7 +3562,7 @@
             "assign",
             "custom"
           ],
-          "url": ""
+          "url": "https://developer.pagerduty.com/my_webhook_endpoint"
         }
       },
       "ResolveReason": {
@@ -4026,6 +4018,7 @@
                 "incident_key": "baf7cf21b1da41b4b0221008339ff357",
                 "service": {
                   "id": "PIJ90N7",
+                  "type": "service_reference",
                   "summary": "My Application Service",
                   "self": "https://api.pagerduty.com/services/PIJ90N7",
                   "html_url": "https://subdomain.pagerduty.com/services/PIJ90N7",
@@ -4206,26 +4199,18 @@
           "id": "PPGPXHO",
           "type": "webhook",
           "summary": "webhook",
-          "self": "null",
-          "html_url": "null",
           "name": "My Webhook",
           "endpoint_url": "https://example.com",
           "webhook_object": {
             "id": "PNTDJ30",
-            "type": "service_reference",
-            "summary": "Cool Service",
-            "self": "null",
-            "html_url": "null"
+            "type": "service_reference"
           },
           "config": {
             "anykey": "anyvalue"
           },
           "outbound_integration": {
             "id": "PJFWPEP",
-            "type": "outbound_integration_reference",
-            "summary": "Generic Webhook V2",
-            "self": "null",
-            "html_url": "null"
+            "type": "outbound_integration_reference"
           }
         }
       },
@@ -5346,6 +5331,7 @@
         "tags": [
           "Business Services"
         ],
+        "operationId": "deleteBusinessService",
         "description": "Delete an existing business service. \n\nOnce the service is deleted, it will not be accessible from the web UI and new incidents won't be able to be created for this service.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#business-services)\n",
         "summary": "Delete a business service",
         "parameters": [
@@ -5375,6 +5361,7 @@
         "tags": [
           "Business Services"
         ],
+        "operationId": "updateBusinessService",
         "description": "Update an existing business service. NOTE that this endpoint also accepts the PATCH verb.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#business-services)\n",
         "summary": "Update a business service",
         "parameters": [
@@ -6157,13 +6144,13 @@
             "schema": {
               "type": "array",
               "items": {
-                "type": "string"
+                "type": "string",
+                "enum": [
+                  "extension_objects",
+                  "extension_schemas"
+                ]
               },
-              "uniqueItems": true,
-              "enum": [
-                "extension_objects",
-                "extension_schemas"
-              ]
+              "uniqueItems": true
             }
           }
         ],
@@ -6459,13 +6446,13 @@
             "schema": {
               "type": "array",
               "items": {
-                "type": "string"
+                "type": "string",
+                "enum": [
+                  "extension_schemas",
+                  "extension_objects"
+                ]
               },
-              "uniqueItems": true,
-              "enum": [
-                "extension_schemas",
-                "extension_objects"
-              ]
+              "uniqueItems": true
             }
           }
         ],
@@ -6899,14 +6886,14 @@
             "schema": {
               "type": "array",
               "items": {
-                "type": "string"
+                "type": "string",
+                "enum": [
+                  "triggered",
+                  "acknowledged",
+                  "resolved"
+                ]
               },
-              "uniqueItems": true,
-              "enum": [
-                "triggered",
-                "acknowledged",
-                "resolved"
-              ]
+              "uniqueItems": true
             }
           },
           {
@@ -6950,20 +6937,20 @@
             "schema": {
               "type": "array",
               "items": {
-                "type": "string"
+                "type": "string",
+                "enum": [
+                  "users",
+                  "services",
+                  "first_trigger_log_entries",
+                  "escalation_policies",
+                  "teams",
+                  "assignees",
+                  "acknowledgers",
+                  "priorities",
+                  "conference_bridge"
+                ]
               },
-              "uniqueItems": true,
-              "enum": [
-                "users",
-                "services",
-                "first_trigger_log_entries",
-                "escalation_policies",
-                "teams",
-                "assignees",
-                "acknowledgers",
-                "priorities",
-                "conference_bridge"
-              ]
+              "uniqueItems": true
             }
           }
         ],
@@ -8142,13 +8129,13 @@
             "schema": {
               "type": "array",
               "items": {
-                "type": "string"
+                "type": "string",
+                "enum": [
+                  "triggered",
+                  "resolved"
+                ]
               },
-              "uniqueItems": true,
-              "enum": [
-                "triggered",
-                "resolved"
-              ]
+              "uniqueItems": true
             }
           },
           {
@@ -10239,12 +10226,12 @@
             "schema": {
               "type": "array",
               "items": {
-                "type": "string"
+                "type": "string",
+                "enum": [
+                  "users"
+                ]
               },
-              "uniqueItems": true,
-              "enum": [
-                "users"
-              ]
+              "uniqueItems": true
             }
           }
         ],
@@ -10353,14 +10340,14 @@
             "schema": {
               "type": "array",
               "items": {
-                "type": "string"
+                "type": "string",
+                "enum": [
+                  "escalation_policies",
+                  "users",
+                  "schedules"
+                ]
               },
-              "uniqueItems": true,
-              "enum": [
-                "escalation_policies",
-                "users",
-                "schedules"
-              ]
+              "uniqueItems": true
             }
           },
           {
@@ -14140,14 +14127,14 @@
             "schema": {
               "type": "array",
               "items": {
-                "type": "string"
+                "type": "string",
+                "enum": [
+                  "escalation_policies",
+                  "teams",
+                  "integrations"
+                ]
               },
-              "uniqueItems": true,
-              "enum": [
-                "escalation_policies",
-                "teams",
-                "integrations"
-              ]
+              "uniqueItems": true
             }
           }
         ],
@@ -14499,13 +14486,13 @@
             "schema": {
               "type": "array",
               "items": {
-                "type": "string"
+                "type": "string",
+                "enum": [
+                  "escalation_policies",
+                  "teams"
+                ]
               },
-              "uniqueItems": true,
-              "enum": [
-                "escalation_policies",
-                "teams"
-              ]
+              "uniqueItems": true
             }
           }
         ],
@@ -15114,13 +15101,13 @@
             "schema": {
               "type": "array",
               "items": {
-                "type": "string"
+                "type": "string",
+                "enum": [
+                  "services",
+                  "vendors"
+                ]
               },
-              "uniqueItems": true,
-              "enum": [
-                "services",
-                "vendors"
-              ]
+              "uniqueItems": true
             }
           }
         ],
@@ -17599,12 +17586,12 @@
             "schema": {
               "type": "array",
               "items": {
-                "type": "string"
+                "type": "string",
+                "enum": [
+                  "contact_methods"
+                ]
               },
-              "uniqueItems": true,
-              "enum": [
-                "contact_methods"
-              ]
+              "uniqueItems": true
             }
           }
         ],
@@ -17805,12 +17792,12 @@
             "schema": {
               "type": "array",
               "items": {
-                "type": "string"
+                "type": "string",
+                "enum": [
+                  "contact_methods"
+                ]
               },
-              "uniqueItems": true,
-              "enum": [
-                "contact_methods"
-              ]
+              "uniqueItems": true
             }
           }
         ],
