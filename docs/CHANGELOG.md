@@ -6,6 +6,7 @@ Currently we do not deprecate or remove any API functionality.
 
 ----
 ### 2020-04-24
+ - Add `type` fields to `Log Entry` models.
  - Fixed issue with Postman build. New version available, and new ones will continue to be published with each new update here.
 
 ### 2020-04-21
