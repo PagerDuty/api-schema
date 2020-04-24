@@ -5,6 +5,10 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 Currently we do not deprecate or remove any API functionality.
 
 ----
+### 2020-04-24
+ - Add `type` fields to `Log Entry` models.
+ - Fixed issue with Postman build. New version available, and new ones will continue to be published with each new update here.
+
 ### 2020-04-21
  - Fixed model `type` fields in schema definitions.
  - Fix issues with Request Examples

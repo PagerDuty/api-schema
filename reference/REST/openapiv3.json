@@ -1130,6 +1130,12 @@
               },
               "user": {
                 "$ref": "#/components/schemas/UserReference"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "notify_log_entry"
+                ]
               }
             }
           }
@@ -1197,6 +1203,12 @@
                 "items": {
                   "$ref": "#/components/schemas/IncidentAction"
                 }
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "snooze_log_entry"
+                ]
               }
             }
           }
@@ -1238,6 +1250,12 @@
             "properties": {
               "assigned_user": {
                 "$ref": "#/components/schemas/UserReference"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "assign_log_entry"
+                ]
               }
             }
           }
@@ -1253,6 +1271,12 @@
             "properties": {
               "assigned_user": {
                 "$ref": "#/components/schemas/UserReference"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "escalate_log_entry"
+                ]
               }
             }
           }
@@ -1290,6 +1314,23 @@
       "LogEntry": {
         "type": "object",
         "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "acknowledge_log_entry",
+              "annotate_log_entry",
+              "assign_log_entry",
+              "escalate_log_entry",
+              "exhaust_escalation_path_log_entry",
+              "notify_log_entry",
+              "reach_trigger_limit_log_entry",
+              "repeat_escalation_path_log_entry",
+              "resolve_log_entry",
+              "snooze_log_entry",
+              "trigger_log_entry",
+              "unacknowledge_log_entry"
+            ]
+          },
           "created_at": {
             "type": "string",
             "format": "date-time",
