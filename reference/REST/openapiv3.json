@@ -2280,6 +2280,12 @@
           },
           "extension_schema": {
             "$ref": "#/components/schemas/ExtensionSchemaReference"
+          },
+          "temporarily_disabled": {
+            "type": "boolean",
+            "readOnly": true,
+            "description": "Whether or not this extension is temporarily disabled; for example, a webhook extension that is repeatedly rejected by the server.",
+            "default": false
           }
         },
         "required": [
@@ -6490,7 +6496,8 @@
                 "type": "string",
                 "enum": [
                   "extension_schemas",
-                  "extension_objects"
+                  "extension_objects",
+                  "temporarily_disabled"
                 ]
               },
               "uniqueItems": true
@@ -6538,7 +6545,8 @@
                             "self": "https://api.pagerduty.com/services/PIJ90N7",
                             "html_url": "https://subdomain.pagerduty.com/services/PIJ90N7"
                           }
-                        ]
+                        ],
+                        "temporarily_disabled": false
                       }
                     }
                   }
