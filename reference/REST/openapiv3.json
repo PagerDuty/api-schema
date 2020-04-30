@@ -973,7 +973,8 @@
       "Reference": {
         "type": "object",
         "required": [
-          "type"
+          "type",
+          "id"
         ],
         "properties": {
           "id": {
@@ -3045,6 +3046,14 @@
             "description": "An array of all of the users on the schedule.",
             "items": {
               "$ref": "#/components/schemas/UserReference"
+            }
+          },
+          "teams": {
+            "type": "array",
+            "readOnly": true,
+            "description": "An array of all of the teams on the schedule.",
+            "items": {
+              "$ref": "#/components/schemas/TeamReference"
             }
           }
         },
@@ -12499,6 +12508,7 @@
                             "html_url": "https://subdomain.pagerduty.com/users/PEYSGVF"
                           }
                         ],
+                        "teams": [],
                         "schedule_layers": [
                           {
                             "name": "Layer 1",
@@ -12628,6 +12638,15 @@
                             "summary": "Regina Phalange",
                             "self": "https://api.pagerduty.com/users/PXPGF42",
                             "html_url": "https://subdomain.pagerduty.com/users/PXPGF42"
+                          }
+                        ],
+                        "teams": [
+                          {
+                            "id": "PQ9K7I8",
+                            "type": "team_reference",
+                            "summary": "Engineering",
+                            "self": "https://api.pagerduty.com/teams/PQ9K7I8",
+                            "html_url": "https://subdomain.pagerduty.com/teams/PQ9K7I8"
                           }
                         ],
                         "schedule_layers": [
@@ -12873,6 +12892,15 @@
                             "html_url": "https://subdomain.pagerduty.com/users/PXPGF42"
                           }
                         ],
+                        "teams": [
+                          {
+                            "id": "PQ9K7I8",
+                            "type": "team_reference",
+                            "summary": "Engineering",
+                            "self": "https://api.pagerduty.com/teams/PQ9K7I8",
+                            "html_url": "https://subdomain.pagerduty.com/teams/PQ9K7I8"
+                          }
+                        ],
                         "schedule_layers": [
                           {
                             "name": "Layer 1",
@@ -13049,6 +13077,15 @@
                             "summary": "Regina Phalange",
                             "self": "https://api.pagerduty.com/users/PXPGF42",
                             "html_url": "https://subdomain.pagerduty.com/users/PXPGF42"
+                          }
+                        ],
+                        "teams": [
+                          {
+                            "id": "PQ9K7I8",
+                            "type": "team_reference",
+                            "summary": "Engineering",
+                            "self": "https://api.pagerduty.com/teams/PQ9K7I8",
+                            "html_url": "https://subdomain.pagerduty.com/teams/PQ9K7I8"
                           }
                         ],
                         "schedule_layers": [
