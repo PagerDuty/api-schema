@@ -5,6 +5,9 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 Currently we do not deprecate or remove any API functionality.
 
 ----
+### 2020-05-12
+ - Fix Schema of `/teams/{id}/members` endpoint to match reality of behaviour.
+
 ### 2020-04-30
  - Add `teams` field to `Schedule` model, which is supported for updates and included in responses.
  - Clarified Reference Model, `id` field is required.
