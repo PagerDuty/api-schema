@@ -16304,14 +16304,20 @@
                       "properties": {
                         "members": {
                           "type": "array",
+                          "uniqueItems": false,
                           "items": {
-                            "$ref": "#/components/schemas/UserReference"
+                            "type": "object",
+                            "properties": {
+                              "user": {
+                                "$ref": "#/components/schemas/UserReference"
+                              },
+                              "role": {
+                                "type": "string"
+                              }
+                            }
                           }
                         }
-                      },
-                      "required": [
-                        "members"
-                      ]
+                      }
                     }
                   ]
                 },
@@ -16321,18 +16327,14 @@
                     "value": {
                       "members": [
                         {
-                          "user": [
-                            {
-                              "id": "P0XJYI9",
-                              "type": "user_reference",
-                              "summary": "Jane Doe",
-                              "self": "https://api.pagerduty.com/users/P0XJYI9",
-                              "html_url": "https://subdomain.pagerduty.com/users/P0XJYI9"
-                            },
-                            {
-                              "role": "manager"
-                            }
-                          ]
+                          "user": {
+                            "id": "P0XJYI9",
+                            "type": "user_reference",
+                            "summary": "Jane Doe",
+                            "self": "https://api.pagerduty.com/users/P0XJYI9",
+                            "html_url": "https://subdomain.pagerduty.com/users/P0XJYI9"
+                          },
+                          "role": "manager"
                         }
                       ],
                       "limit": 100,
