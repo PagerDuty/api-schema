@@ -5,6 +5,10 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 Currently we do not deprecate or remove any API functionality.
 
 ----
+
+### 2020-05-19
+ - Added a `PUT log_entries/{id}/channel` endpoint to enable updates to log entry channel details.
+
 ### 2020-05-12
  - Fix Schema of `/teams/{id}/members` endpoint to match reality of behaviour.
 
