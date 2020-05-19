@@ -9696,6 +9696,96 @@
         }
       }
     },
+    "/log_entries/{id}/channel": {
+      "description": "Log entry channel information.",
+      "put": {
+        "tags": [
+          "Log Entries"
+        ],
+        "operationId": "updateLogEntryChannel",
+        "description": "Update an existing incident log entry channel.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#log-entries)\n",
+        "summary": "Update log entry channel information.",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/from_header"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "channel": {
+                    "type": "object",
+                    "description": "The parameters to update.",
+                    "properties": {
+                      "details": {
+                        "type": "string",
+                        "description": "New channel details"
+                      },
+                      "type": {
+                        "type": "string",
+                        "description": "Channel type. Cannot be changed and must match the present value.",
+                        "enum": [
+                          "web_trigger",
+                          "mobile"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "details"
+                    ]
+                  }
+                },
+                "required": [
+                  "channel"
+                ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "channel": {
+                      "type": "web_trigger",
+                      "details": "New channel details"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "description": "The log entry channel to be updated."
+        },
+        "responses": {
+          "202": {
+            "description": "The channel information modification was accepted."
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        }
+      }
+    },
     "/maintenance_windows": {
       "description": "List and create maintenance windows.",
       "get": {
