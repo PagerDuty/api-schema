@@ -18,6 +18,7 @@
   ],
   "paths": {
     "/enqueue": {
+      "x-pd-owner": "Pipeline",
       "post": {
         "tags": [
           "Send Event"
