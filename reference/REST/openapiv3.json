@@ -536,6 +536,15 @@
         "schema": {
           "type": "string"
         }
+      },
+      "total": {
+        "name": "total",
+        "in": "query",
+        "description": "By default the `total` field in pagination responses is set to `null` to provide the fastest possible response times. Set `total` to `true` for this field to be populated. \n\nSee our [Pagination Docs](https://developer.pagerduty.com/docs/rest-api-v2/pagination/) for more information.\n",
+        "required": false,
+        "schema": {
+          "type": "boolean"
+        }
       }
     },
     "responses": {
@@ -4669,6 +4678,9 @@
         "summary": "List installed Add-ons",
         "parameters": [
           {
+            "$ref": "#/components/parameters/total"
+          },
+          {
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
@@ -5547,6 +5559,9 @@
         "summary": "List escalation policies",
         "parameters": [
           {
+            "$ref": "#/components/parameters/total"
+          },
+          {
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
@@ -6166,6 +6181,9 @@
         "summary": "List extensions",
         "parameters": [
           {
+            "$ref": "#/components/parameters/total"
+          },
+          {
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
@@ -6747,6 +6765,9 @@
         "summary": "List extension schemas",
         "parameters": [
           {
+            "$ref": "#/components/parameters/total"
+          },
+          {
             "$ref": "#/paths/~1tags/get/parameters/0"
           }
         ],
@@ -6926,6 +6947,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/components/parameters/total"
           },
           {
             "$ref": "#/components/parameters/since"
@@ -7144,6 +7168,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/components/parameters/total"
           },
           {
             "$ref": "#/components/parameters/from_header"
@@ -8177,6 +8204,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/components/parameters/total"
+          },
+          {
             "$ref": "#/components/parameters/id"
           },
           {
@@ -8348,6 +8378,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/components/parameters/total"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -8737,6 +8770,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/components/parameters/total"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -9482,6 +9518,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/components/parameters/total"
+          },
+          {
             "$ref": "#/components/parameters/time_zone"
           },
           {
@@ -9798,6 +9837,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/components/parameters/total"
           },
           {
             "$ref": "#/components/parameters/team_ids"
@@ -10330,6 +10372,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/components/parameters/total"
+          },
+          {
             "$ref": "#/components/parameters/time_zone"
           },
           {
@@ -10479,6 +10524,9 @@
           },
           {
             "$ref": "#/components/parameters/time_zone"
+          },
+          {
+            "$ref": "#/components/parameters/total"
           },
           {
             "name": "include[]",
@@ -10658,6 +10706,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/components/parameters/total"
           }
         ],
         "responses": {
@@ -11231,6 +11282,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/components/parameters/total"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -12173,6 +12227,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/components/parameters/total"
           }
         ],
         "responses": {
@@ -12373,6 +12430,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/components/parameters/total"
           },
           {
             "name": "query",
@@ -14279,6 +14339,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/components/parameters/total"
+          },
+          {
             "$ref": "#/components/parameters/team_ids"
           },
           {
@@ -15371,6 +15434,9 @@
             }
           },
           {
+            "$ref": "#/components/parameters/total"
+          },
+          {
             "name": "query",
             "in": "query",
             "description": "Filters the result, showing only the tags whose labels match the query.",
@@ -15635,6 +15701,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/components/parameters/total"
+          },
+          {
             "$ref": "#/components/parameters/id"
           },
           {
@@ -15723,6 +15792,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/components/parameters/total"
           },
           {
             "$ref": "#/components/parameters/entity_type"
@@ -16066,6 +16138,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/components/parameters/total"
+          },
+          {
             "name": "query",
             "in": "query",
             "description": "Filters the result, showing only the teams whose names or email addresses match the query.",
@@ -16371,6 +16446,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/components/parameters/total"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -16680,6 +16758,9 @@
           },
           {
             "$ref": "#/components/parameters/team_ids"
+          },
+          {
+            "$ref": "#/components/parameters/total"
           },
           {
             "$ref": "#/components/parameters/include_user"
@@ -18417,6 +18498,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/components/parameters/total"
           }
         ],
         "responses": {

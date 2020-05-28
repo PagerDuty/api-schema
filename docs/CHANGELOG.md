@@ -6,6 +6,9 @@ Currently we do not deprecate or remove any API functionality.
 
 ----
 
+### 2020-05-27
+ - Documented `total` query parameter on paginated endpoints.
+
 ### 2020-05-19
  - Added a `PUT log_entries/{id}/channel` endpoint to enable updates to log entry channel details.
 
