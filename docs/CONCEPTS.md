@@ -167,6 +167,13 @@ Response Plays let you create packages of Incident Actions that can be applied t
 
 This enables you to take a complex activity, like assembling a response team of multiple On-Calls and an Incident commander, and make it available to anyone that needs to use it.
 
+The Incident Actions that a Response Play can consist of include:
+
+- Mobilize a Response (Notify responders other than the assignee to help resolve the Incident.)
+- Engage Stakeholders (Subscribe people who are not directly involved with resolving the Incident to receive Status Updates.)
+- Publish Status Updates (Send a prepared Status Update to all subscribers attached to the Incident, to keep them aware of the Incident’s progress.)
+- Add a Conference Bridge (View the Conference Bridge details on the Incident details page.)
+
 ## Rulesets
 Rulesets allow you to route events to an endpoint and create collections of event rules, which define sets of actions to take based on event content.
 

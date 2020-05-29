@@ -5,6 +5,9 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 Currently we do not deprecate or remove any API functionality.
 
 ----
+### 2020-05-29
+- Added `GET /response_plays`, `POST /response_plays`, `GET /response_plays/{id}`, `PUT /response_plays/{id}`, and `DELETE /response_plays/{id}` endpoints.
+- Updated Response Plays description in API CONCEPTS document.
 
 ### 2020-05-27
  - Documented `total` query parameter on paginated endpoints.

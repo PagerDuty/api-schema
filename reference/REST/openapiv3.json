@@ -4556,6 +4556,91 @@
             "readOnly": true
           }
         }
+      },
+      "ResponsePlay": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "The type of object being created.",
+            "default": "response_play",
+            "enum": [
+              "response_play"
+            ]
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the response play."
+          },
+          "description": {
+            "type": "string",
+            "description": "The description of the response play.",
+            "maxLength": 349
+          },
+          "team": {
+            "$ref": "#/components/schemas/TeamReference"
+          },
+          "subscribers": {
+            "type": "array",
+            "description": "An array containing the users and/or teams to be added as subscribers to any incident on which this response play is run.",
+            "items": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/UserReference"
+                },
+                {
+                  "$ref": "#/components/schemas/TeamReference"
+                }
+              ],
+              "discriminator": {
+                "propertyName": "type"
+              }
+            }
+          },
+          "subscribers_message": {
+            "type": "string",
+            "description": "The content of the notification that will be sent to all incident subscribers upon the running of this response play. Note that this includes any users who may have already been subscribed to the incident prior to the running of this response play. If empty, no notifications will be sent."
+          },
+          "responders": {
+            "type": "array",
+            "description": "An array containing the users and/or escalation policies to be requested as responders to any incident on which this response play is run.",
+            "items": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/UserReference"
+                },
+                {
+                  "$ref": "#/components/schemas/EscalationPolicy"
+                }
+              ],
+              "discriminator": {
+                "propertyName": "type"
+              }
+            }
+          },
+          "responders_message": {
+            "type": "string",
+            "description": "The message body of the notification that will be sent to this response play's set of responders. If empty, a default response request notification will be sent."
+          },
+          "runnability": {
+            "type": "string",
+            "description": "String representing how this response play is allowed to be run. Valid options are:\n  - `services`: This response play cannot be manually run by any users. It will run automatically for new incidents triggered on any services that are configured with this response play.\n  - `teams`: This response play can be run manually on an incident only by members of its configured team. This option can only be selected when the `team` property for this response play is not empty.\n  - `responders`: This response play can be run manually on an incident by any responders in this account.",
+            "enum": [
+              "services",
+              "teams",
+              "responders"
+            ],
+            "default": "services"
+          },
+          "conference_number": {
+            "type": "string",
+            "description": "The telephone number that will be set as the conference number for any incident on which this response play is run."
+          },
+          "conference_url": {
+            "type": "string",
+            "description": "The URL that will be set as the conference URL for any incident on which this response play is run."
+          }
+        }
       }
     }
   },
@@ -12327,6 +12412,450 @@
           },
           "429": {
             "$ref": "#/components/responses/TooManyRequests"
+          }
+        }
+      }
+    },
+    "/response_plays": {
+      "description": "List and create response plays.",
+      "get": {
+        "tags": [
+          "Response Plays"
+        ],
+        "operationId": "listResponsePlays",
+        "description": "List all of the existing Response Plays.\n\nResponse Plays allow you to create packages of Incident Actions that can be applied during an Incident's life cycle.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#response-plays)\n",
+        "summary": "List Response Plays",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Filters the result, showing only the Response Plays whose name matches the query.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "filter_for_manual_run",
+            "in": "query",
+            "description": "When this parameter is present, only those Response Plays that can be run manually will be returned.",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The array of Response Plays returned by the query.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "response_plays": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ResponsePlay"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "response_plays": [
+                        {
+                          "type": "response_play",
+                          "team": null,
+                          "summary": "An Existing Response Play For Responders",
+                          "self": "https://api.pagerduty.com/response_plays/15b4b27e-2448-adf9-c5a5-85382304ff37",
+                          "name": "An Existing Response Play For Responders",
+                          "id": "15b4b27e-2448-adf9-c5a5-85382304ff37",
+                          "html_url": null,
+                          "description": "A Response Play that adds responders."
+                        },
+                        {
+                          "type": "response_play",
+                          "team": null,
+                          "summary": "An Existing Response Play For Subscribers",
+                          "self": "https://api.pagerduty.com/response_plays/15b4b27e-2771-abe5-t6m9-81234304ff37",
+                          "name": "An Existing Response Play For Subscribers",
+                          "id": "15b4b27e-2771-abe5-t6m9-81234304ff37",
+                          "html_url": null,
+                          "description": "A Response Play that adds subscribers."
+                        }
+                      ],
+                      "limit": null,
+                      "offset": null,
+                      "total": 2,
+                      "more": false
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Response Plays"
+        ],
+        "operationId": "createResponsePlay",
+        "description": "Creates a new Response Plays.\n\nResponse Plays allow you to create packages of Incident Actions that can be applied during an Incident's life cycle.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#response-plays)\n",
+        "summary": "Create a Response Play",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "response_play": {
+                    "$ref": "#/components/schemas/ResponsePlay"
+                  }
+                },
+                "required": [
+                  "response_play"
+                ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "response_play": {
+                      "type": "response_play",
+                      "team": null,
+                      "name": "A New Response Play",
+                      "description": "A Response Play to add responders.",
+                      "subscribers": [],
+                      "subscribers_message": null,
+                      "responders": [
+                        {
+                          "type": "user_reference",
+                          "id": "PROW72A"
+                        },
+                        {
+                          "type": "escalation_policy_reference",
+                          "id": "P12TU3X"
+                        }
+                      ],
+                      "responders_message": null,
+                      "runnability": "services",
+                      "conference_number": null,
+                      "conference_url": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "description": "The Response Play to be created."
+        },
+        "responses": {
+          "201": {
+            "description": "The Response Play that was created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "response_play": {
+                      "$ref": "#/components/schemas/ResponsePlay"
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "response_play": {
+                        "type": "response_play",
+                        "team": null,
+                        "summary": "A New Response Play",
+                        "subscribers_message": "Please view the attached incident.",
+                        "subscribers": [
+                          {
+                            "type": "user_reference",
+                            "summary": null,
+                            "self": "https://api.pagerduty.com/users/PSEJLIN",
+                            "id": "PSEJLIN",
+                            "html_url": null
+                          },
+                          {
+                            "type": "team_reference",
+                            "summary": null,
+                            "self": "https://api.pagerduty.com/teams/P12TU3X",
+                            "id": "P12TU3X",
+                            "html_url": null
+                          }
+                        ],
+                        "self": "https://api.pagerduty.com/response_plays/15b4b27e-2448-adf9-c5a5-85382304ff37",
+                        "runnability": "services",
+                        "responders_message": "We need executive attention on this incident.",
+                        "responders": [
+                          {
+                            "type": "user_reference",
+                            "summary": null,
+                            "self": "https://api.pagerduty.com/users/PZOW51A",
+                            "id": "PZOW51A",
+                            "html_url": null
+                          }
+                        ],
+                        "name": "A New Response Play",
+                        "id": "15b4b27e-2448-adf9-c5a5-85382304ff37",
+                        "html_url": null,
+                        "description": "A Response Play that adds subscribers and responders",
+                        "conference_url": null,
+                        "conference_number": null
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/response_plays/{id}": {
+      "description": "Manage a Response Play.",
+      "get": {
+        "tags": [
+          "Response Plays"
+        ],
+        "operationId": "getResponsePlay",
+        "description": "Get details about an existing Response Play.\n\nResponse Plays allow you to create packages of Incident Actions that can be applied during an Incident's life cycle.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#response-plays)\n",
+        "summary": "Get a Response Play",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The Response Play requested.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "response_play": {
+                      "$ref": "#/components/schemas/ResponsePlay"
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "response_play": {
+                        "type": "response_play",
+                        "team": null,
+                        "summary": "Email Service Response Play",
+                        "subscribers_message": null,
+                        "subscribers": null,
+                        "self": "https://api.pagerduty.com/response_plays/15b4b27e-2448-adf9-c5a5-85382304ff37",
+                        "runnability": "services",
+                        "responders_message": null,
+                        "responders": [
+                          {
+                            "type": "escalation_policy_reference",
+                            "summary": null,
+                            "self": "https://api.pagerduty.com/escalation_policies/PZOW51A",
+                            "id": "PZOW51A",
+                            "html_url": null
+                          }
+                        ],
+                        "name": "Email Service Response Play",
+                        "id": "15b4b27e-2448-adf9-c5a5-85382304ff37",
+                        "html_url": null,
+                        "description": null,
+                        "conference_url": null,
+                        "conference_number": null
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Response Plays"
+        ],
+        "operationId": "updateResponsePlay",
+        "description": "Updates an existing Response Play.\n\nResponse Plays allow you to create packages of Incident Actions that can be applied during an Incident's life cycle.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#response-plays)\n",
+        "summary": "Update a Response Play",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "response_play": {
+                    "$ref": "#/components/schemas/ResponsePlay"
+                  }
+                },
+                "required": [
+                  "response_play"
+                ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "response_play": {
+                      "type": "response_play",
+                      "team": null,
+                      "summary": "Test Response Play",
+                      "subscribers_message": "Please view the attached incident.",
+                      "subscribers": [
+                        {
+                          "type": "user_reference",
+                          "id": "PFS9QZZ"
+                        }
+                      ],
+                      "self": "https://api.pagerduty.com/response_plays/153d9e1f-9008-ee4e-fa70-0d70cdf92f27",
+                      "runnability": "responders",
+                      "responders_message": null,
+                      "responders": [],
+                      "name": "Test Response Play",
+                      "id": "153d9e1f-9008-ee4e-fa70-0d70cdf92f27",
+                      "html_url": null,
+                      "description": "An updated description of this Response Play.",
+                      "conference_url": null,
+                      "conference_number": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "description": "The Response Play to be updated."
+        },
+        "responses": {
+          "200": {
+            "description": "The Response Play that was updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "response_play": {
+                      "$ref": "#/components/schemas/ResponsePlay"
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "response_play": {
+                        "type": "response_play",
+                        "team": null,
+                        "summary": "Test Response Play",
+                        "subscribers_message": "Please view the attached incident.",
+                        "subscribers": [
+                          {
+                            "type": "user_reference",
+                            "summary": null,
+                            "self": "https://api.pagerduty.com/users/PFS9QZZ",
+                            "id": "PFS9QZZ",
+                            "html_url": null
+                          }
+                        ],
+                        "self": "https://api.pagerduty.com/response_plays/153d9e1f-9008-ee4e-fa70-0d70cdf92f27",
+                        "runnability": "services",
+                        "responders_message": null,
+                        "responders": null,
+                        "name": "Test Response Play",
+                        "id": "153d9e1f-9008-ee4e-fa70-0d70cdf92f27",
+                        "html_url": null,
+                        "description": null,
+                        "conference_url": null,
+                        "conference_number": null
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Response Plays"
+        ],
+        "operationId": "deleteResponsePlay",
+        "description": "Delete an existing Response Play. Once the Response Play is deleted, the action cannot be undone.\n\nWARNING: When the Response Play is deleted, it is also removed from any Services that were using it.\n\nResponse Plays allow you to create packages of Incident Actions that can be applied to an Incident.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#response-plays)\n",
+        "summary": "Delete a Response Play",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The Response Play was deleted successfully."
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
           }
         }
       }
