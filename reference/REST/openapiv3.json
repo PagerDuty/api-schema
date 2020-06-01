@@ -11793,6 +11793,19 @@
                                 "description": "The amount of time units for the window of time."
                               }
                             }
+                          },
+                          "suspend": {
+                            "description": "[Early Access] Set the length of time to suspend the resulting alert before triggering.",
+                            "type": "object",
+                            "required": [
+                              "value"
+                            ],
+                            "properties": {
+                              "value": {
+                                "type": "integer",
+                                "description": "The amount of time to suspend the alert in seconds."
+                              }
+                            }
                           }
                         }
                       }
