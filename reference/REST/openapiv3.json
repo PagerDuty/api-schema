@@ -5175,9 +5175,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
-            "name": "optional_total",
+            "name": "total",
             "in": "query",
-            "description": "Optional total parameter to display the total number of results.",
+            "description": "An optional parameter to display the total number of results.",
             "schema": {
               "default": false,
               "type": "boolean"
