@@ -5,8 +5,12 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 Currently we do not deprecate or remove any API functionality.
 
 ----
+### 2020-06-05
+- Modified `optional_total` query param to `total` on the business service list endpoint.
+- `optional_total` field will continue to be supported.
+
 ### 2020-06-01
-- Added `suspend` event rule action to the API
+- Added `suspend` event rule action to the API.
 
 ### 2020-05-29
 - Added `GET /response_plays`, `POST /response_plays`, `GET /response_plays/{id}`, `PUT /response_plays/{id}`, and `DELETE /response_plays/{id}` endpoints.
