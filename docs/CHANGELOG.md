@@ -59,10 +59,10 @@ Currently we do not deprecate or remove any API functionality.
 
 ### 2020-04-06
  - Added new Rulesets endpoints
- 
+
 ### 2020-04-01
  - Added `since` and `until` parameters to `GET /incidents/{id}/log_entries`.
- 
+
 ### 2020-03-24
  - Added `teams` to all `/business_services` endpoints.
 
@@ -79,7 +79,7 @@ Currently we do not deprecate or remove any API functionality.
  - `GET /oncalls OnCalls[].end` will now correctly respond `null` only when the user does not go off call.
 
 ### 2020-01-10
- - Added `on_call_handoff_notifications` to `EscalationPolicy` model. 
+ - Added `on_call_handoff_notifications` to `EscalationPolicy` model.
    - The field allow users to set whether they would like on-call handoff notifications for escalation policies that have no attached services.
    - The field has been added to all `/escalation_policies` endpoints' request and response schema.
    - The field has two options `always` and `if_has_services`, and defaults to `if_has_services` on `PUT` and `POST`

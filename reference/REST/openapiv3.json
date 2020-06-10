@@ -5236,7 +5236,7 @@
                         {
                           "type": "business_service",
                           "self": "https://api.pagerduty.com/business_services/P3U7V58",
-                          "html_url": "https://subdomain.pagerduty.com/business_services/P3U7V58",
+                          "html_url": null,
                           "point_of_contact": "PagerDuty Admin",
                           "name": "stand-alone node",
                           "team": null,
@@ -5247,7 +5247,7 @@
                         {
                           "type": "business_service",
                           "self": "https://api.pagerduty.com/business_services/P1L1YEE",
-                          "html_url": "https://subdomain.pagerduty.com/business_services/P1L1YEE",
+                          "html_url": null,
                           "point_of_contact": "PagerDuty Admin",
                           "name": "Cross-tier business service",
                           "id": "P1L1YEE",
@@ -5372,7 +5372,7 @@
                         "id": "P1L1YEE",
                         "type": "business_service",
                         "self": "https://api.pagerduty.com/business_services/P1L1YEE",
-                        "html_url": "https://subdomain.pagerduty.com/business_services/P1L1YEE",
+                        "html_url": null,
                         "point_of_contact": "PagerDuty Admin",
                         "name": "Self-serve mobile checkout",
                         "description": "Checkout service for our mobile clients.",
@@ -5444,8 +5444,8 @@
                       "business_service": {
                         "id": "P1L1YEE",
                         "type": "business_service",
-                        "self": "https://api.pagerduty.com/busines_services/P1L1YEE",
-                        "html_url": "https://subdomain.pagerduty.com/business_services/P1L1YEE",
+                        "self": "https://api.pagerduty.com/business_services/P1L1YEE",
+                        "html_url": null,
                         "name": "Cross-tier business service",
                         "description": "Business service affected by multiple teams",
                         "point_of_contact": "PagerDuty Admin",
@@ -5599,8 +5599,8 @@
                       "business_service": {
                         "id": "P1L1YEE",
                         "type": "business_service",
-                        "self": "https://api.pagerduty.com/business_services",
-                        "html_url": "https://subdomain.pagerduty.com/business_services",
+                        "self": "https://api.pagerduty.com/business_services/P1L1YEE",
+                        "html_url": null,
                         "point_of_contact": "PagerDuty Admin",
                         "name": "Self-serve mobile checkout",
                         "description": "Checkout service for our mobile clients.",
