@@ -4641,6 +4641,254 @@
     }
   },
   "paths": {
+    "/{entity_type}/{id}/change_tags": {
+      "post": {
+        "tags": [
+          "Tags"
+        ],
+        "operationId": "createEntityTypeByIdChangeTags",
+        "description": "Assign existing or new tags.\n\nA Tag is applied to EScalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#tags)\n",
+        "summary": "Assign tags",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/components/parameters/entity_type"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "description": "Tags to add to or remove from the entity.",
+                "properties": {
+                  "add": {
+                    "type": "array",
+                    "description": "Array of tags and/or tag references to add to the entity.\nFor elements with type `tag_reference`, the tag with the corresponding `id` is added to the entity.\nFor elements with type `tag`, if there is an existing tag with the given\nlabel that tag is added to the entity. If there is no existing tag with that label and the user has permission\nto create tags, a new tag is created with that label and assigned to the entity.\n",
+                    "items": {
+                      "title": "Tags to add",
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "enum": [
+                            "tag",
+                            "tag_reference"
+                          ]
+                        },
+                        "label": {
+                          "type": "string",
+                          "description": "The label of the tag. Should be used when type is \"tag\".",
+                          "maxLength": 191
+                        },
+                        "id": {
+                          "type": "string",
+                          "description": "The id of the tag. Should be used when type is \"tag_reference\".",
+                          "readOnly": true
+                        }
+                      },
+                      "required": [
+                        "type"
+                      ]
+                    }
+                  },
+                  "remove": {
+                    "type": "array",
+                    "description": "Array of tag references to remove from the entity.",
+                    "items": {
+                      "title": "Tags to remove.",
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "enum": [
+                            "tag_reference"
+                          ]
+                        },
+                        "id": {
+                          "type": "string",
+                          "description": "The id of the tag",
+                          "readOnly": true
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "id"
+                      ]
+                    }
+                  }
+                }
+              },
+              "examples": {
+                "tags": {
+                  "summary": "Request Example",
+                  "value": {
+                    "add": [
+                      {
+                        "type": "tag",
+                        "label": "Batman"
+                      },
+                      {
+                        "type": "tag_reference",
+                        "id": "P5IYCNZ"
+                      }
+                    ],
+                    "remove": [
+                      {
+                        "type": "tag_reference",
+                        "id": "POE7RY8"
+                      },
+                      {
+                        "type": "tag_reference",
+                        "id": "PG68P1M"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The tags were added and/or removed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Request Example",
+                    "value": {
+                      "add": [
+                        {
+                          "type": "tag",
+                          "label": "Batman"
+                        },
+                        {
+                          "type": "tag_reference",
+                          "id": "P5IYCNZ"
+                        }
+                      ],
+                      "remove": [
+                        {
+                          "type": "tag_reference",
+                          "id": "POE7RY8"
+                        },
+                        {
+                          "type": "tag_reference",
+                          "id": "PG68P1M"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        }
+      }
+    },
+    "/{entity_type}/{id}/tags": {
+      "get": {
+        "tags": [
+          "Tags"
+        ],
+        "operationId": "getEntityTypeByIdTags",
+        "description": "Get related tags for Users, Teams or Escalation Policies.\n\nA Tag is applied to EScalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#tags)\n",
+        "summary": "Get tags for entities",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/components/parameters/total"
+          },
+          {
+            "$ref": "#/components/parameters/entity_type"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of tags.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Pagination"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "tags": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Tag"
+                          }
+                        }
+                      },
+                      "required": [
+                        "tags"
+                      ]
+                    }
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "tags": {
+                        "type": "tag",
+                        "summary": "Batman",
+                        "self": "https://api.pagerduty.com/tags/P5IYCNZ",
+                        "label": "Batman",
+                        "id": "P5IYCNZ",
+                        "html_url": "null"
+                      },
+                      "limit": 100,
+                      "offset": 0,
+                      "total": 1,
+                      "more": false
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        }
+      }
+    },
     "/abilities": {
       "description": "List your account's abilities.",
       "get": {
@@ -6251,6 +6499,187 @@
         }
       }
     },
+    "/extension_schemas": {
+      "description": "List extension schemas.",
+      "get": {
+        "tags": [
+          "Extension Schemas"
+        ],
+        "operationId": "listExtensionSchemas",
+        "description": "List all extension schemas.\n\nA PagerDuty extension vendor represents a specific type of outbound extension such as Generic Webhook, Slack, ServiceNow.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#extension-schemas)\n",
+        "summary": "List extension schemas",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/total"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A paginated array of extension schemas.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Pagination"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "extension_schemas": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/ExtensionSchema"
+                          }
+                        }
+                      },
+                      "required": [
+                        "extension_schemas"
+                      ]
+                    }
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "extension_schemas": [
+                        {
+                          "id": "PJFWPEP",
+                          "type": "extension_schema",
+                          "summary": "Generic Webhook",
+                          "self": "https://api.pagerduty.com/extension_schemas/PJFWPEP",
+                          "description": "Long description here",
+                          "guide_url": "https://developer.pagerduty.com",
+                          "icon_url": "https://extension.com/extension.png",
+                          "key": "generic_webhook",
+                          "label": "Generic Webhook",
+                          "logo_url": "https://extension.com/logo.png",
+                          "send_types": [
+                            "trigger",
+                            "acknowledge",
+                            "resolve",
+                            "delegate",
+                            "escalate",
+                            "unacknowledge",
+                            "assign"
+                          ],
+                          "url": ""
+                        }
+                      ],
+                      "limit": 25,
+                      "offset": 0,
+                      "more": false
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        }
+      }
+    },
+    "/extension_schemas/{id}": {
+      "description": "Get details about one specific extension vendor.",
+      "get": {
+        "tags": [
+          "Extension Schemas"
+        ],
+        "operationId": "getExtensionSchema",
+        "description": "Get details about one specific extension vendor.\n\nA PagerDuty extension vendor represents a specific type of outbound extension such as Generic Webhook, Slack, ServiceNow.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#extension-schemas)\n",
+        "summary": "Get an extension vendor",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The extension vendor requested",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "extension_schema": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ExtensionSchema"
+                      }
+                    }
+                  },
+                  "required": [
+                    "extension_schema"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "extension_schema": {
+                        "id": "PJFWPEP",
+                        "type": "extension_schema",
+                        "summary": "Generic Webhook",
+                        "self": "https://api.pagerduty.com/extension_schemas/PJFWPEP",
+                        "description": "Long description here",
+                        "guide_url": "https://developer.pagerduty.com",
+                        "icon_url": "https://extension.com/extension.png",
+                        "key": "generic_webhook",
+                        "label": "Generic Webhook",
+                        "logo_url": "https://extension.com/logo.png",
+                        "send_types": [
+                          "trigger",
+                          "acknowledge",
+                          "resolve",
+                          "delegate",
+                          "escalate",
+                          "unacknowledge",
+                          "assign"
+                        ],
+                        "url": ""
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        }
+      }
+    },
     "/extensions": {
       "description": "List and create extensions.",
       "get": {
@@ -6831,187 +7260,6 @@
           },
           "404": {
             "$ref": "#/components/responses/NotFound"
-          }
-        }
-      }
-    },
-    "/extension_schemas": {
-      "description": "List extension schemas.",
-      "get": {
-        "tags": [
-          "Extension Schemas"
-        ],
-        "operationId": "listExtensionSchemas",
-        "description": "List all extension schemas.\n\nA PagerDuty extension vendor represents a specific type of outbound extension such as Generic Webhook, Slack, ServiceNow.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#extension-schemas)\n",
-        "summary": "List extension schemas",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/total"
-          },
-          {
-            "$ref": "#/paths/~1tags/get/parameters/0"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "A paginated array of extension schemas.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/Pagination"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "extension_schemas": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/ExtensionSchema"
-                          }
-                        }
-                      },
-                      "required": [
-                        "extension_schemas"
-                      ]
-                    }
-                  ]
-                },
-                "examples": {
-                  "response": {
-                    "summary": "Response Example",
-                    "value": {
-                      "extension_schemas": [
-                        {
-                          "id": "PJFWPEP",
-                          "type": "extension_schema",
-                          "summary": "Generic Webhook",
-                          "self": "https://api.pagerduty.com/extension_schemas/PJFWPEP",
-                          "description": "Long description here",
-                          "guide_url": "https://developer.pagerduty.com",
-                          "icon_url": "https://extension.com/extension.png",
-                          "key": "generic_webhook",
-                          "label": "Generic Webhook",
-                          "logo_url": "https://extension.com/logo.png",
-                          "send_types": [
-                            "trigger",
-                            "acknowledge",
-                            "resolve",
-                            "delegate",
-                            "escalate",
-                            "unacknowledge",
-                            "assign"
-                          ],
-                          "url": ""
-                        }
-                      ],
-                      "limit": 25,
-                      "offset": 0,
-                      "more": false
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/ArgumentError"
-          },
-          "401": {
-            "$ref": "#/components/responses/Unauthorized"
-          },
-          "403": {
-            "$ref": "#/components/responses/Forbidden"
-          },
-          "429": {
-            "$ref": "#/components/responses/TooManyRequests"
-          }
-        }
-      }
-    },
-    "/extension_schemas/{id}": {
-      "description": "Get details about one specific extension vendor.",
-      "get": {
-        "tags": [
-          "Extension Schemas"
-        ],
-        "operationId": "getExtensionSchema",
-        "description": "Get details about one specific extension vendor.\n\nA PagerDuty extension vendor represents a specific type of outbound extension such as Generic Webhook, Slack, ServiceNow.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#extension-schemas)\n",
-        "summary": "Get an extension vendor",
-        "parameters": [
-          {
-            "$ref": "#/paths/~1tags/get/parameters/0"
-          },
-          {
-            "$ref": "#/components/parameters/id"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "The extension vendor requested",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "extension_schema": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/ExtensionSchema"
-                      }
-                    }
-                  },
-                  "required": [
-                    "extension_schema"
-                  ]
-                },
-                "examples": {
-                  "response": {
-                    "summary": "Response Example",
-                    "value": {
-                      "extension_schema": {
-                        "id": "PJFWPEP",
-                        "type": "extension_schema",
-                        "summary": "Generic Webhook",
-                        "self": "https://api.pagerduty.com/extension_schemas/PJFWPEP",
-                        "description": "Long description here",
-                        "guide_url": "https://developer.pagerduty.com",
-                        "icon_url": "https://extension.com/extension.png",
-                        "key": "generic_webhook",
-                        "label": "Generic Webhook",
-                        "logo_url": "https://extension.com/logo.png",
-                        "send_types": [
-                          "trigger",
-                          "acknowledge",
-                          "resolve",
-                          "delegate",
-                          "escalate",
-                          "unacknowledge",
-                          "assign"
-                        ],
-                        "url": ""
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/ArgumentError"
-          },
-          "401": {
-            "$ref": "#/components/responses/Unauthorized"
-          },
-          "403": {
-            "$ref": "#/components/responses/Forbidden"
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          },
-          "429": {
-            "$ref": "#/components/responses/TooManyRequests"
           }
         }
       }
@@ -7738,118 +7986,6 @@
           },
           "403": {
             "$ref": "#/components/responses/Forbidden"
-          },
-          "429": {
-            "$ref": "#/components/responses/TooManyRequests"
-          }
-        }
-      }
-    },
-    "/incidents/count": {
-      "description": "Get a count of incidents matching a set of criteria such as service, status, and time. Counts may be fetched per status."
-    },
-    "/incidents/{id}/merge": {
-      "description": "\"Merge\" an array of incidents into a target incident. After the merge is performed the target incident will contain the source incidents's alerts, and the source incidents will be resolved.",
-      "put": {
-        "tags": [
-          "Incidents"
-        ],
-        "operationId": "mergeIncidents",
-        "description": "Merge a list of source incidents into this incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#incidents)\n",
-        "summary": "Merge incidents",
-        "parameters": [
-          {
-            "$ref": "#/paths/~1tags/get/parameters/0"
-          },
-          {
-            "$ref": "#/components/parameters/id"
-          },
-          {
-            "$ref": "#/components/parameters/from_header"
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "source_incidents": {
-                    "type": "array",
-                    "description": "The source incidents that will be merged into the target incident and resolved.",
-                    "items": {
-                      "$ref": "#/components/schemas/IncidentReference"
-                    }
-                  }
-                },
-                "required": [
-                  "source_incidents"
-                ]
-              },
-              "examples": {
-                "request": {
-                  "summary": "Request Example",
-                  "value": {
-                    "source_incidents": [
-                      {
-                        "id": "P8JOGX7",
-                        "type": "incident_reference"
-                      },
-                      {
-                        "id": "PPVZH9X",
-                        "type": "incident_reference"
-                      }
-                    ]
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "The target incident, which now contains all the alerts from the source incident.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "incident": {
-                      "$ref": "#/components/schemas/IncidentReference"
-                    }
-                  },
-                  "required": [
-                    "incident"
-                  ]
-                },
-                "examples": {
-                  "response": {
-                    "summary": "Response Example",
-                    "value": {
-                      "incident": {
-                        "id": "PT4KHLK",
-                        "type": "incident",
-                        "summary": "[#1234] The server is on fire.",
-                        "self": "https://api.pagerduty.com/incidents/PT4KHLK",
-                        "html_url": "https://subdomain.pagerduty.com/incidents/PT4KHLK"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/ArgumentError"
-          },
-          "401": {
-            "$ref": "#/components/responses/Unauthorized"
-          },
-          "403": {
-            "$ref": "#/components/responses/Forbidden"
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
           },
           "429": {
             "$ref": "#/components/responses/TooManyRequests"
@@ -8968,6 +9104,115 @@
         }
       }
     },
+    "/incidents/{id}/merge": {
+      "description": "\"Merge\" an array of incidents into a target incident. After the merge is performed the target incident will contain the source incidents's alerts, and the source incidents will be resolved.",
+      "put": {
+        "tags": [
+          "Incidents"
+        ],
+        "operationId": "mergeIncidents",
+        "description": "Merge a list of source incidents into this incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#incidents)\n",
+        "summary": "Merge incidents",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/from_header"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "source_incidents": {
+                    "type": "array",
+                    "description": "The source incidents that will be merged into the target incident and resolved.",
+                    "items": {
+                      "$ref": "#/components/schemas/IncidentReference"
+                    }
+                  }
+                },
+                "required": [
+                  "source_incidents"
+                ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "source_incidents": [
+                      {
+                        "id": "P8JOGX7",
+                        "type": "incident_reference"
+                      },
+                      {
+                        "id": "PPVZH9X",
+                        "type": "incident_reference"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The target incident, which now contains all the alerts from the source incident.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "incident": {
+                      "$ref": "#/components/schemas/IncidentReference"
+                    }
+                  },
+                  "required": [
+                    "incident"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "incident": {
+                        "id": "PT4KHLK",
+                        "type": "incident",
+                        "summary": "[#1234] The server is on fire.",
+                        "self": "https://api.pagerduty.com/incidents/PT4KHLK",
+                        "html_url": "https://subdomain.pagerduty.com/incidents/PT4KHLK"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        }
+      }
+    },
     "/incidents/{id}/notes": {
       "description": "List and create incident notes.",
       "get": {
@@ -9118,108 +9363,6 @@
                           "html_url": "https://subdomain.pagerduty.com/users/PXPGF42"
                         },
                         "content": "Firefighters are on the scene.",
-                        "created_at": "2013-03-06T15:28:51-05:00"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/ArgumentError"
-          },
-          "401": {
-            "$ref": "#/components/responses/Unauthorized"
-          },
-          "403": {
-            "$ref": "#/components/responses/Forbidden"
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          },
-          "429": {
-            "$ref": "#/components/responses/TooManyRequests"
-          }
-        }
-      }
-    },
-    "/incidents/{id}/status_updates": {
-      "description": "Create incident status updates.",
-      "post": {
-        "tags": [
-          "Incidents"
-        ],
-        "operationId": "createIncidentStatusUpdate",
-        "description": "Create a new status update for the specified incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#incidents)\n",
-        "summary": "Create a status update on an incident",
-        "parameters": [
-          {
-            "$ref": "#/paths/~1tags/get/parameters/0"
-          },
-          {
-            "$ref": "#/components/parameters/id"
-          },
-          {
-            "$ref": "#/components/parameters/from_header"
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "message": {
-                    "type": "string",
-                    "description": "The message to be posted as a status update."
-                  }
-                },
-                "required": [
-                  "message"
-                ]
-              },
-              "examples": {
-                "request": {
-                  "summary": "Request Example",
-                  "value": {
-                    "message": "The server fire is spreading."
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "The new status update for the specified incident.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status_update": {
-                      "$ref": "#/components/schemas/StatusUpdate"
-                    }
-                  },
-                  "required": [
-                    "status_update"
-                  ]
-                },
-                "examples": {
-                  "response": {
-                    "summary": "Response Example",
-                    "value": {
-                      "status_update": {
-                        "id": "PWL7QXS",
-                        "message": "The server fire is spreading.",
-                        "sender": {
-                          "id": "PXPGF42",
-                          "type": "user_reference",
-                          "summary": "Earline Greenholt",
-                          "self": "https://api.pagerduty.com/users/PXPGF42",
-                          "html_url": "https://subdomain.pagerduty.com/users/PXPGF42"
-                        },
                         "created_at": "2013-03-06T15:28:51-05:00"
                       }
                     }
@@ -9584,6 +9727,111 @@
           }
         }
       }
+    },
+    "/incidents/{id}/status_updates": {
+      "description": "Create incident status updates.",
+      "post": {
+        "tags": [
+          "Incidents"
+        ],
+        "operationId": "createIncidentStatusUpdate",
+        "description": "Create a new status update for the specified incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#incidents)\n",
+        "summary": "Create a status update on an incident",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/from_header"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string",
+                    "description": "The message to be posted as a status update."
+                  }
+                },
+                "required": [
+                  "message"
+                ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "message": "The server fire is spreading."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The new status update for the specified incident.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status_update": {
+                      "$ref": "#/components/schemas/StatusUpdate"
+                    }
+                  },
+                  "required": [
+                    "status_update"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "status_update": {
+                        "id": "PWL7QXS",
+                        "message": "The server fire is spreading.",
+                        "sender": {
+                          "id": "PXPGF42",
+                          "type": "user_reference",
+                          "summary": "Earline Greenholt",
+                          "self": "https://api.pagerduty.com/users/PXPGF42",
+                          "html_url": "https://subdomain.pagerduty.com/users/PXPGF42"
+                        },
+                        "created_at": "2013-03-06T15:28:51-05:00"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        }
+      }
+    },
+    "/incidents/count": {
+      "description": "Get a count of incidents matching a set of criteria such as service, status, and time. Counts may be fetched per status."
     },
     "/log_entries": {
       "description": "List all of the log entries across your account. These can be filtered (for instance, by time or by team), and the results will be paginated.",
@@ -10765,6 +11013,653 @@
           },
           "401": {
             "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        }
+      }
+    },
+    "/priorities": {
+      "description": "List priorities.",
+      "get": {
+        "tags": [
+          "Priorities"
+        ],
+        "operationId": "listPriorities",
+        "description": "List existing priorities, in order (most to least severe).\n\nA priority is a label representing the importance and impact of an incident. This feature is only available on Standard and Enterprise plans.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#priorities)\n",
+        "summary": "List priorities",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/components/parameters/total"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A paginated array of priorities.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Pagination"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "priorities": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Priority"
+                          }
+                        }
+                      },
+                      "required": [
+                        "priorities"
+                      ]
+                    }
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "priorities": [
+                        {
+                          "id": "PSLWBL8",
+                          "type": "priority",
+                          "summary": "P1",
+                          "self": "https://api.pagerduty.com/priorities/PSLWBL8",
+                          "name": "P1",
+                          "description": "Critical issue that warrants public notification and liaison with executive teams"
+                        },
+                        {
+                          "id": "P53ZZH5",
+                          "type": "priority",
+                          "summary": "P2",
+                          "self": "https://api.pagerduty.com/priorities/P53ZZH5",
+                          "name": "P2",
+                          "description": "Critical system issue actively impacting many customers' ability to use the product"
+                        },
+                        {
+                          "id": "PGE9YCZ",
+                          "type": "priority",
+                          "summary": "P3",
+                          "self": "https://api.pagerduty.com/priorities/PGE9YCZ",
+                          "name": "P3",
+                          "description": "Stability or minor customer-impacting issues that require immediate attention from service owners"
+                        },
+                        {
+                          "id": "PVJPWYW",
+                          "type": "priority",
+                          "summary": "P4",
+                          "self": "https://api.pagerduty.com/priorities/PVJPWYW",
+                          "name": "P4",
+                          "description": "Minor issues requiring action, but not affecting customer ability to use the product"
+                        },
+                        {
+                          "id": "P81SUUT",
+                          "type": "priority",
+                          "summary": "P5",
+                          "self": "https://api.pagerduty.com/priorities/P81SUUT",
+                          "name": "P5",
+                          "description": "Cosmetic issues or bugs, not affecting customer ability to use the product"
+                        }
+                      ],
+                      "limit": 25,
+                      "offset": 0,
+                      "more": false
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        }
+      }
+    },
+    "/response_plays": {
+      "description": "List and create response plays.",
+      "get": {
+        "tags": [
+          "Response Plays"
+        ],
+        "operationId": "listResponsePlays",
+        "description": "List all of the existing Response Plays.\n\nResponse Plays allow you to create packages of Incident Actions that can be applied during an Incident's life cycle.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#response-plays)\n",
+        "summary": "List Response Plays",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Filters the result, showing only the Response Plays whose name matches the query.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "filter_for_manual_run",
+            "in": "query",
+            "description": "When this parameter is present, only those Response Plays that can be run manually will be returned.",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The array of Response Plays returned by the query.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "response_plays": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ResponsePlay"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "response_plays": [
+                        {
+                          "type": "response_play",
+                          "team": null,
+                          "summary": "An Existing Response Play For Responders",
+                          "self": "https://api.pagerduty.com/response_plays/15b4b27e-2448-adf9-c5a5-85382304ff37",
+                          "name": "An Existing Response Play For Responders",
+                          "id": "15b4b27e-2448-adf9-c5a5-85382304ff37",
+                          "html_url": null,
+                          "description": "A Response Play that adds responders."
+                        },
+                        {
+                          "type": "response_play",
+                          "team": null,
+                          "summary": "An Existing Response Play For Subscribers",
+                          "self": "https://api.pagerduty.com/response_plays/15b4b27e-2771-abe5-t6m9-81234304ff37",
+                          "name": "An Existing Response Play For Subscribers",
+                          "id": "15b4b27e-2771-abe5-t6m9-81234304ff37",
+                          "html_url": null,
+                          "description": "A Response Play that adds subscribers."
+                        }
+                      ],
+                      "limit": null,
+                      "offset": null,
+                      "total": 2,
+                      "more": false
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Response Plays"
+        ],
+        "operationId": "createResponsePlay",
+        "description": "Creates a new Response Plays.\n\nResponse Plays allow you to create packages of Incident Actions that can be applied during an Incident's life cycle.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#response-plays)\n",
+        "summary": "Create a Response Play",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "response_play": {
+                    "$ref": "#/components/schemas/ResponsePlay"
+                  }
+                },
+                "required": [
+                  "response_play"
+                ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "response_play": {
+                      "type": "response_play",
+                      "team": null,
+                      "name": "A New Response Play",
+                      "description": "A Response Play to add responders.",
+                      "subscribers": [],
+                      "subscribers_message": null,
+                      "responders": [
+                        {
+                          "type": "user_reference",
+                          "id": "PROW72A"
+                        },
+                        {
+                          "type": "escalation_policy_reference",
+                          "id": "P12TU3X"
+                        }
+                      ],
+                      "responders_message": null,
+                      "runnability": "services",
+                      "conference_number": null,
+                      "conference_url": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "description": "The Response Play to be created."
+        },
+        "responses": {
+          "201": {
+            "description": "The Response Play that was created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "response_play": {
+                      "$ref": "#/components/schemas/ResponsePlay"
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "response_play": {
+                        "type": "response_play",
+                        "team": null,
+                        "summary": "A New Response Play",
+                        "subscribers_message": "Please view the attached incident.",
+                        "subscribers": [
+                          {
+                            "type": "user_reference",
+                            "summary": null,
+                            "self": "https://api.pagerduty.com/users/PSEJLIN",
+                            "id": "PSEJLIN",
+                            "html_url": null
+                          },
+                          {
+                            "type": "team_reference",
+                            "summary": null,
+                            "self": "https://api.pagerduty.com/teams/P12TU3X",
+                            "id": "P12TU3X",
+                            "html_url": null
+                          }
+                        ],
+                        "self": "https://api.pagerduty.com/response_plays/15b4b27e-2448-adf9-c5a5-85382304ff37",
+                        "runnability": "services",
+                        "responders_message": "We need executive attention on this incident.",
+                        "responders": [
+                          {
+                            "type": "user_reference",
+                            "summary": null,
+                            "self": "https://api.pagerduty.com/users/PZOW51A",
+                            "id": "PZOW51A",
+                            "html_url": null
+                          }
+                        ],
+                        "name": "A New Response Play",
+                        "id": "15b4b27e-2448-adf9-c5a5-85382304ff37",
+                        "html_url": null,
+                        "description": "A Response Play that adds subscribers and responders",
+                        "conference_url": null,
+                        "conference_number": null
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/response_plays/{id}": {
+      "description": "Manage a Response Play.",
+      "get": {
+        "tags": [
+          "Response Plays"
+        ],
+        "operationId": "getResponsePlay",
+        "description": "Get details about an existing Response Play.\n\nResponse Plays allow you to create packages of Incident Actions that can be applied during an Incident's life cycle.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#response-plays)\n",
+        "summary": "Get a Response Play",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The Response Play requested.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "response_play": {
+                      "$ref": "#/components/schemas/ResponsePlay"
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "response_play": {
+                        "type": "response_play",
+                        "team": null,
+                        "summary": "Email Service Response Play",
+                        "subscribers_message": null,
+                        "subscribers": null,
+                        "self": "https://api.pagerduty.com/response_plays/15b4b27e-2448-adf9-c5a5-85382304ff37",
+                        "runnability": "services",
+                        "responders_message": null,
+                        "responders": [
+                          {
+                            "type": "escalation_policy_reference",
+                            "summary": null,
+                            "self": "https://api.pagerduty.com/escalation_policies/PZOW51A",
+                            "id": "PZOW51A",
+                            "html_url": null
+                          }
+                        ],
+                        "name": "Email Service Response Play",
+                        "id": "15b4b27e-2448-adf9-c5a5-85382304ff37",
+                        "html_url": null,
+                        "description": null,
+                        "conference_url": null,
+                        "conference_number": null
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Response Plays"
+        ],
+        "operationId": "updateResponsePlay",
+        "description": "Updates an existing Response Play.\n\nResponse Plays allow you to create packages of Incident Actions that can be applied during an Incident's life cycle.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#response-plays)\n",
+        "summary": "Update a Response Play",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "response_play": {
+                    "$ref": "#/components/schemas/ResponsePlay"
+                  }
+                },
+                "required": [
+                  "response_play"
+                ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "response_play": {
+                      "type": "response_play",
+                      "team": null,
+                      "summary": "Test Response Play",
+                      "subscribers_message": "Please view the attached incident.",
+                      "subscribers": [
+                        {
+                          "type": "user_reference",
+                          "id": "PFS9QZZ"
+                        }
+                      ],
+                      "self": "https://api.pagerduty.com/response_plays/153d9e1f-9008-ee4e-fa70-0d70cdf92f27",
+                      "runnability": "responders",
+                      "responders_message": null,
+                      "responders": [],
+                      "name": "Test Response Play",
+                      "id": "153d9e1f-9008-ee4e-fa70-0d70cdf92f27",
+                      "html_url": null,
+                      "description": "An updated description of this Response Play.",
+                      "conference_url": null,
+                      "conference_number": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "description": "The Response Play to be updated."
+        },
+        "responses": {
+          "200": {
+            "description": "The Response Play that was updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "response_play": {
+                      "$ref": "#/components/schemas/ResponsePlay"
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "response_play": {
+                        "type": "response_play",
+                        "team": null,
+                        "summary": "Test Response Play",
+                        "subscribers_message": "Please view the attached incident.",
+                        "subscribers": [
+                          {
+                            "type": "user_reference",
+                            "summary": null,
+                            "self": "https://api.pagerduty.com/users/PFS9QZZ",
+                            "id": "PFS9QZZ",
+                            "html_url": null
+                          }
+                        ],
+                        "self": "https://api.pagerduty.com/response_plays/153d9e1f-9008-ee4e-fa70-0d70cdf92f27",
+                        "runnability": "services",
+                        "responders_message": null,
+                        "responders": null,
+                        "name": "Test Response Play",
+                        "id": "153d9e1f-9008-ee4e-fa70-0d70cdf92f27",
+                        "html_url": null,
+                        "description": null,
+                        "conference_url": null,
+                        "conference_number": null
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Response Plays"
+        ],
+        "operationId": "deleteResponsePlay",
+        "description": "Delete an existing Response Play. Once the Response Play is deleted, the action cannot be undone.\n\nWARNING: When the Response Play is deleted, it is also removed from any Services that were using it.\n\nResponse Plays allow you to create packages of Incident Actions that can be applied to an Incident.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#response-plays)\n",
+        "summary": "Delete a Response Play",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The Response Play was deleted successfully."
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/response_plays/{response_play_id}/run": {
+      "description": "Run response plays.",
+      "post": {
+        "tags": [
+          "Response Plays"
+        ],
+        "operationId": "runResponsePlay",
+        "description": "Run a specified response play on a given incident.\n\nResponse Plays are a package of Incident Actions that can be applied during an Incident's life cycle.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#response-plays)\n",
+        "summary": "Run a response play",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/components/parameters/response_play_id"
+          },
+          {
+            "$ref": "#/components/parameters/from_header"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "incident": {
+                    "$ref": "#/components/schemas/IncidentReference"
+                  }
+                },
+                "required": [
+                  "incident"
+                ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "incident": {
+                      "id": "PWL7QXS",
+                      "type": "incident_reference"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Informs the user if the response play has been run successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "status"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "status": "ok"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
           },
           "403": {
             "$ref": "#/components/responses/Forbidden"
@@ -12309,653 +13204,6 @@
         }
       }
     },
-    "/priorities": {
-      "description": "List priorities.",
-      "get": {
-        "tags": [
-          "Priorities"
-        ],
-        "operationId": "listPriorities",
-        "description": "List existing priorities, in order (most to least severe).\n\nA priority is a label representing the importance and impact of an incident. This feature is only available on Standard and Enterprise plans.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#priorities)\n",
-        "summary": "List priorities",
-        "parameters": [
-          {
-            "$ref": "#/paths/~1tags/get/parameters/0"
-          },
-          {
-            "$ref": "#/components/parameters/total"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "A paginated array of priorities.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/Pagination"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "priorities": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/Priority"
-                          }
-                        }
-                      },
-                      "required": [
-                        "priorities"
-                      ]
-                    }
-                  ]
-                },
-                "examples": {
-                  "response": {
-                    "summary": "Response Example",
-                    "value": {
-                      "priorities": [
-                        {
-                          "id": "PSLWBL8",
-                          "type": "priority",
-                          "summary": "P1",
-                          "self": "https://api.pagerduty.com/priorities/PSLWBL8",
-                          "name": "P1",
-                          "description": "Critical issue that warrants public notification and liaison with executive teams"
-                        },
-                        {
-                          "id": "P53ZZH5",
-                          "type": "priority",
-                          "summary": "P2",
-                          "self": "https://api.pagerduty.com/priorities/P53ZZH5",
-                          "name": "P2",
-                          "description": "Critical system issue actively impacting many customers' ability to use the product"
-                        },
-                        {
-                          "id": "PGE9YCZ",
-                          "type": "priority",
-                          "summary": "P3",
-                          "self": "https://api.pagerduty.com/priorities/PGE9YCZ",
-                          "name": "P3",
-                          "description": "Stability or minor customer-impacting issues that require immediate attention from service owners"
-                        },
-                        {
-                          "id": "PVJPWYW",
-                          "type": "priority",
-                          "summary": "P4",
-                          "self": "https://api.pagerduty.com/priorities/PVJPWYW",
-                          "name": "P4",
-                          "description": "Minor issues requiring action, but not affecting customer ability to use the product"
-                        },
-                        {
-                          "id": "P81SUUT",
-                          "type": "priority",
-                          "summary": "P5",
-                          "self": "https://api.pagerduty.com/priorities/P81SUUT",
-                          "name": "P5",
-                          "description": "Cosmetic issues or bugs, not affecting customer ability to use the product"
-                        }
-                      ],
-                      "limit": 25,
-                      "offset": 0,
-                      "more": false
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/ArgumentError"
-          },
-          "401": {
-            "$ref": "#/components/responses/Unauthorized"
-          },
-          "402": {
-            "$ref": "#/components/responses/PaymentRequired"
-          },
-          "403": {
-            "$ref": "#/components/responses/Forbidden"
-          },
-          "429": {
-            "$ref": "#/components/responses/TooManyRequests"
-          }
-        }
-      }
-    },
-    "/response_plays": {
-      "description": "List and create response plays.",
-      "get": {
-        "tags": [
-          "Response Plays"
-        ],
-        "operationId": "listResponsePlays",
-        "description": "List all of the existing Response Plays.\n\nResponse Plays allow you to create packages of Incident Actions that can be applied during an Incident's life cycle.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#response-plays)\n",
-        "summary": "List Response Plays",
-        "parameters": [
-          {
-            "name": "query",
-            "in": "query",
-            "description": "Filters the result, showing only the Response Plays whose name matches the query.",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "filter_for_manual_run",
-            "in": "query",
-            "description": "When this parameter is present, only those Response Plays that can be run manually will be returned.",
-            "schema": {
-              "type": "boolean"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "The array of Response Plays returned by the query.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "response_plays": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/ResponsePlay"
-                      }
-                    }
-                  }
-                },
-                "examples": {
-                  "response": {
-                    "summary": "Response Example",
-                    "value": {
-                      "response_plays": [
-                        {
-                          "type": "response_play",
-                          "team": null,
-                          "summary": "An Existing Response Play For Responders",
-                          "self": "https://api.pagerduty.com/response_plays/15b4b27e-2448-adf9-c5a5-85382304ff37",
-                          "name": "An Existing Response Play For Responders",
-                          "id": "15b4b27e-2448-adf9-c5a5-85382304ff37",
-                          "html_url": null,
-                          "description": "A Response Play that adds responders."
-                        },
-                        {
-                          "type": "response_play",
-                          "team": null,
-                          "summary": "An Existing Response Play For Subscribers",
-                          "self": "https://api.pagerduty.com/response_plays/15b4b27e-2771-abe5-t6m9-81234304ff37",
-                          "name": "An Existing Response Play For Subscribers",
-                          "id": "15b4b27e-2771-abe5-t6m9-81234304ff37",
-                          "html_url": null,
-                          "description": "A Response Play that adds subscribers."
-                        }
-                      ],
-                      "limit": null,
-                      "offset": null,
-                      "total": 2,
-                      "more": false
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/ArgumentError"
-          },
-          "401": {
-            "$ref": "#/components/responses/Unauthorized"
-          },
-          "403": {
-            "$ref": "#/components/responses/Forbidden"
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Response Plays"
-        ],
-        "operationId": "createResponsePlay",
-        "description": "Creates a new Response Plays.\n\nResponse Plays allow you to create packages of Incident Actions that can be applied during an Incident's life cycle.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#response-plays)\n",
-        "summary": "Create a Response Play",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "response_play": {
-                    "$ref": "#/components/schemas/ResponsePlay"
-                  }
-                },
-                "required": [
-                  "response_play"
-                ]
-              },
-              "examples": {
-                "request": {
-                  "summary": "Request Example",
-                  "value": {
-                    "response_play": {
-                      "type": "response_play",
-                      "team": null,
-                      "name": "A New Response Play",
-                      "description": "A Response Play to add responders.",
-                      "subscribers": [],
-                      "subscribers_message": null,
-                      "responders": [
-                        {
-                          "type": "user_reference",
-                          "id": "PROW72A"
-                        },
-                        {
-                          "type": "escalation_policy_reference",
-                          "id": "P12TU3X"
-                        }
-                      ],
-                      "responders_message": null,
-                      "runnability": "services",
-                      "conference_number": null,
-                      "conference_url": null
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "description": "The Response Play to be created."
-        },
-        "responses": {
-          "201": {
-            "description": "The Response Play that was created.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "response_play": {
-                      "$ref": "#/components/schemas/ResponsePlay"
-                    }
-                  }
-                },
-                "examples": {
-                  "response": {
-                    "summary": "Response Example",
-                    "value": {
-                      "response_play": {
-                        "type": "response_play",
-                        "team": null,
-                        "summary": "A New Response Play",
-                        "subscribers_message": "Please view the attached incident.",
-                        "subscribers": [
-                          {
-                            "type": "user_reference",
-                            "summary": null,
-                            "self": "https://api.pagerduty.com/users/PSEJLIN",
-                            "id": "PSEJLIN",
-                            "html_url": null
-                          },
-                          {
-                            "type": "team_reference",
-                            "summary": null,
-                            "self": "https://api.pagerduty.com/teams/P12TU3X",
-                            "id": "P12TU3X",
-                            "html_url": null
-                          }
-                        ],
-                        "self": "https://api.pagerduty.com/response_plays/15b4b27e-2448-adf9-c5a5-85382304ff37",
-                        "runnability": "services",
-                        "responders_message": "We need executive attention on this incident.",
-                        "responders": [
-                          {
-                            "type": "user_reference",
-                            "summary": null,
-                            "self": "https://api.pagerduty.com/users/PZOW51A",
-                            "id": "PZOW51A",
-                            "html_url": null
-                          }
-                        ],
-                        "name": "A New Response Play",
-                        "id": "15b4b27e-2448-adf9-c5a5-85382304ff37",
-                        "html_url": null,
-                        "description": "A Response Play that adds subscribers and responders",
-                        "conference_url": null,
-                        "conference_number": null
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/ArgumentError"
-          },
-          "401": {
-            "$ref": "#/components/responses/Unauthorized"
-          },
-          "403": {
-            "$ref": "#/components/responses/Forbidden"
-          }
-        }
-      }
-    },
-    "/response_plays/{id}": {
-      "description": "Manage a Response Play.",
-      "get": {
-        "tags": [
-          "Response Plays"
-        ],
-        "operationId": "getResponsePlay",
-        "description": "Get details about an existing Response Play.\n\nResponse Plays allow you to create packages of Incident Actions that can be applied during an Incident's life cycle.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#response-plays)\n",
-        "summary": "Get a Response Play",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/id"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "The Response Play requested.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "response_play": {
-                      "$ref": "#/components/schemas/ResponsePlay"
-                    }
-                  }
-                },
-                "examples": {
-                  "response": {
-                    "summary": "Response Example",
-                    "value": {
-                      "response_play": {
-                        "type": "response_play",
-                        "team": null,
-                        "summary": "Email Service Response Play",
-                        "subscribers_message": null,
-                        "subscribers": null,
-                        "self": "https://api.pagerduty.com/response_plays/15b4b27e-2448-adf9-c5a5-85382304ff37",
-                        "runnability": "services",
-                        "responders_message": null,
-                        "responders": [
-                          {
-                            "type": "escalation_policy_reference",
-                            "summary": null,
-                            "self": "https://api.pagerduty.com/escalation_policies/PZOW51A",
-                            "id": "PZOW51A",
-                            "html_url": null
-                          }
-                        ],
-                        "name": "Email Service Response Play",
-                        "id": "15b4b27e-2448-adf9-c5a5-85382304ff37",
-                        "html_url": null,
-                        "description": null,
-                        "conference_url": null,
-                        "conference_number": null
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/ArgumentError"
-          },
-          "401": {
-            "$ref": "#/components/responses/Unauthorized"
-          },
-          "403": {
-            "$ref": "#/components/responses/Forbidden"
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Response Plays"
-        ],
-        "operationId": "updateResponsePlay",
-        "description": "Updates an existing Response Play.\n\nResponse Plays allow you to create packages of Incident Actions that can be applied during an Incident's life cycle.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#response-plays)\n",
-        "summary": "Update a Response Play",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/id"
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "response_play": {
-                    "$ref": "#/components/schemas/ResponsePlay"
-                  }
-                },
-                "required": [
-                  "response_play"
-                ]
-              },
-              "examples": {
-                "request": {
-                  "summary": "Request Example",
-                  "value": {
-                    "response_play": {
-                      "type": "response_play",
-                      "team": null,
-                      "summary": "Test Response Play",
-                      "subscribers_message": "Please view the attached incident.",
-                      "subscribers": [
-                        {
-                          "type": "user_reference",
-                          "id": "PFS9QZZ"
-                        }
-                      ],
-                      "self": "https://api.pagerduty.com/response_plays/153d9e1f-9008-ee4e-fa70-0d70cdf92f27",
-                      "runnability": "responders",
-                      "responders_message": null,
-                      "responders": [],
-                      "name": "Test Response Play",
-                      "id": "153d9e1f-9008-ee4e-fa70-0d70cdf92f27",
-                      "html_url": null,
-                      "description": "An updated description of this Response Play.",
-                      "conference_url": null,
-                      "conference_number": null
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "description": "The Response Play to be updated."
-        },
-        "responses": {
-          "200": {
-            "description": "The Response Play that was updated.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "response_play": {
-                      "$ref": "#/components/schemas/ResponsePlay"
-                    }
-                  }
-                },
-                "examples": {
-                  "response": {
-                    "summary": "Response Example",
-                    "value": {
-                      "response_play": {
-                        "type": "response_play",
-                        "team": null,
-                        "summary": "Test Response Play",
-                        "subscribers_message": "Please view the attached incident.",
-                        "subscribers": [
-                          {
-                            "type": "user_reference",
-                            "summary": null,
-                            "self": "https://api.pagerduty.com/users/PFS9QZZ",
-                            "id": "PFS9QZZ",
-                            "html_url": null
-                          }
-                        ],
-                        "self": "https://api.pagerduty.com/response_plays/153d9e1f-9008-ee4e-fa70-0d70cdf92f27",
-                        "runnability": "services",
-                        "responders_message": null,
-                        "responders": null,
-                        "name": "Test Response Play",
-                        "id": "153d9e1f-9008-ee4e-fa70-0d70cdf92f27",
-                        "html_url": null,
-                        "description": null,
-                        "conference_url": null,
-                        "conference_number": null
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "$ref": "#/components/responses/Unauthorized"
-          },
-          "402": {
-            "$ref": "#/components/responses/PaymentRequired"
-          },
-          "403": {
-            "$ref": "#/components/responses/Forbidden"
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Response Plays"
-        ],
-        "operationId": "deleteResponsePlay",
-        "description": "Delete an existing Response Play. Once the Response Play is deleted, the action cannot be undone.\n\nWARNING: When the Response Play is deleted, it is also removed from any Services that were using it.\n\nResponse Plays allow you to create packages of Incident Actions that can be applied to an Incident.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#response-plays)\n",
-        "summary": "Delete a Response Play",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/id"
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "The Response Play was deleted successfully."
-          },
-          "401": {
-            "$ref": "#/components/responses/Unauthorized"
-          },
-          "403": {
-            "$ref": "#/components/responses/Forbidden"
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          }
-        }
-      }
-    },
-    "/response_plays/{response_play_id}/run": {
-      "description": "Run response plays.",
-      "post": {
-        "tags": [
-          "Response Plays"
-        ],
-        "operationId": "runResponsePlay",
-        "description": "Run a specified response play on a given incident.\n\nResponse Plays are a package of Incident Actions that can be applied during an Incident's life cycle.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#response-plays)\n",
-        "summary": "Run a response play",
-        "parameters": [
-          {
-            "$ref": "#/paths/~1tags/get/parameters/0"
-          },
-          {
-            "$ref": "#/components/parameters/response_play_id"
-          },
-          {
-            "$ref": "#/components/parameters/from_header"
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "incident": {
-                    "$ref": "#/components/schemas/IncidentReference"
-                  }
-                },
-                "required": [
-                  "incident"
-                ]
-              },
-              "examples": {
-                "request": {
-                  "summary": "Request Example",
-                  "value": {
-                    "incident": {
-                      "id": "PWL7QXS",
-                      "type": "incident_reference"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Informs the user if the response play has been run successfully.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "status"
-                  ]
-                },
-                "examples": {
-                  "response": {
-                    "summary": "Response Example",
-                    "value": {
-                      "status": "ok"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/ArgumentError"
-          },
-          "403": {
-            "$ref": "#/components/responses/Forbidden"
-          },
-          "429": {
-            "$ref": "#/components/responses/TooManyRequests"
-          }
-        }
-      }
-    },
     "/schedules": {
       "description": "List and create on-call schedules.",
       "get": {
@@ -13650,190 +13898,6 @@
         }
       }
     },
-    "/schedules/preview": {
-      "description": "Preview what an on-call schedule would look like without saving it. This works the same as the update or create actions, except that the result is not persisted. Preview optionally takes two additional arguments, since and until, delimiting the span of the preview.",
-      "post": {
-        "tags": [
-          "Schedules"
-        ],
-        "operationId": "createSchedulePreview",
-        "description": "Preview what an on-call schedule would look like without saving it.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#schedules)\n",
-        "summary": "Preview a schedule",
-        "parameters": [
-          {
-            "$ref": "#/paths/~1tags/get/parameters/0"
-          },
-          {
-            "$ref": "#/components/parameters/since"
-          },
-          {
-            "$ref": "#/components/parameters/until"
-          },
-          {
-            "$ref": "#/components/parameters/schedule_overflow"
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "schedule": {
-                    "$ref": "#/components/schemas/Schedule"
-                  }
-                },
-                "required": [
-                  "schedule"
-                ]
-              },
-              "examples": {
-                "request": {
-                  "summary": "Request Example",
-                  "value": {
-                    "schedule": {
-                      "name": "Daily Engineering Rotation",
-                      "type": "schedule",
-                      "time_zone": "America/New_York",
-                      "description": "Rotation schedule for engineering",
-                      "schedule_layers": [
-                        {
-                          "name": "Night Shift",
-                          "start": "2015-11-06T20:00:00-05:00",
-                          "end": "2016-11-06T20:00:00-05:00",
-                          "rotation_virtual_start": "2015-11-06T20:00:00-05:00",
-                          "rotation_turn_length_seconds": 86400,
-                          "users": [
-                            {
-                              "user": {
-                                "id": "PXPGF42",
-                                "type": "user"
-                              }
-                            }
-                          ],
-                          "restrictions": [
-                            {
-                              "type": "daily_restriction",
-                              "start_time_of_day": "08:00:00",
-                              "duration_seconds": 32400
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "description": "The schedule to be previewed."
-        },
-        "responses": {
-          "200": {
-            "description": "What the schedule will look like if posted.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "schedule": {
-                      "$ref": "#/components/schemas/Schedule"
-                    }
-                  },
-                  "required": [
-                    "schedule"
-                  ]
-                },
-                "examples": {
-                  "response": {
-                    "summary": "Response Example",
-                    "value": {
-                      "schedule": {
-                        "id": "PI7DH85",
-                        "type": "schedule",
-                        "summary": "Daily Engineering Rotation",
-                        "self": "https://api.pagerduty.com/schedules/PI7DH85",
-                        "html_url": "https://subdomain.pagerduty.com/schedules/PI7DH85",
-                        "name": "Daily Engineering Rotation",
-                        "time_zone": "America/New_York",
-                        "description": "Rotation schedule for engineering",
-                        "escalation_policies": [],
-                        "users": [
-                          {
-                            "id": "PXPGF42",
-                            "type": "user",
-                            "summary": "Regina Phalange",
-                            "self": "https://api.pagerduty.com/users/PXPGF42",
-                            "html_url": "https://subdomain.pagerduty.com/users/PXPGF42"
-                          }
-                        ],
-                        "teams": [
-                          {
-                            "id": "PQ9K7I8",
-                            "type": "team_reference",
-                            "summary": "Engineering",
-                            "self": "https://api.pagerduty.com/teams/PQ9K7I8",
-                            "html_url": "https://subdomain.pagerduty.com/teams/PQ9K7I8"
-                          }
-                        ],
-                        "schedule_layers": [
-                          {
-                            "name": "Layer 1",
-                            "rendered_schedule_entries": [],
-                            "id": "PG68P1M",
-                            "start": "2015-11-06T20:00:00-05:00",
-                            "rotation_virtual_start": "2015-11-06T20:00:00-05:00",
-                            "rotation_turn_length_seconds": 86400,
-                            "users": [
-                              {
-                                "user": {
-                                  "id": "PXPGF42",
-                                  "type": "user",
-                                  "summary": "Regina Phalange",
-                                  "self": "https://api.pagerduty.com/users/PXPGF42",
-                                  "html_url": "https://subdomain.pagerduty.com/users/PXPGF42"
-                                }
-                              }
-                            ],
-                            "restrictions": [
-                              {
-                                "type": "daily",
-                                "start_time_of_day": "08:00:00",
-                                "duration_seconds": 32400
-                              }
-                            ]
-                          }
-                        ],
-                        "overrides_subschedule": {
-                          "name": "Overrides",
-                          "rendered_schedule_entries": []
-                        },
-                        "final_schedule": {
-                          "name": "Final Schedule",
-                          "rendered_schedule_entries": []
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/ArgumentError"
-          },
-          "401": {
-            "$ref": "#/components/responses/Unauthorized"
-          },
-          "403": {
-            "$ref": "#/components/responses/Forbidden"
-          },
-          "429": {
-            "$ref": "#/components/responses/TooManyRequests"
-          }
-        }
-      }
-    },
     "/schedules/{id}/overrides": {
       "description": "List and create schedule overrides.",
       "get": {
@@ -14263,6 +14327,190 @@
         }
       }
     },
+    "/schedules/preview": {
+      "description": "Preview what an on-call schedule would look like without saving it. This works the same as the update or create actions, except that the result is not persisted. Preview optionally takes two additional arguments, since and until, delimiting the span of the preview.",
+      "post": {
+        "tags": [
+          "Schedules"
+        ],
+        "operationId": "createSchedulePreview",
+        "description": "Preview what an on-call schedule would look like without saving it.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#schedules)\n",
+        "summary": "Preview a schedule",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/components/parameters/since"
+          },
+          {
+            "$ref": "#/components/parameters/until"
+          },
+          {
+            "$ref": "#/components/parameters/schedule_overflow"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "schedule": {
+                    "$ref": "#/components/schemas/Schedule"
+                  }
+                },
+                "required": [
+                  "schedule"
+                ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "schedule": {
+                      "name": "Daily Engineering Rotation",
+                      "type": "schedule",
+                      "time_zone": "America/New_York",
+                      "description": "Rotation schedule for engineering",
+                      "schedule_layers": [
+                        {
+                          "name": "Night Shift",
+                          "start": "2015-11-06T20:00:00-05:00",
+                          "end": "2016-11-06T20:00:00-05:00",
+                          "rotation_virtual_start": "2015-11-06T20:00:00-05:00",
+                          "rotation_turn_length_seconds": 86400,
+                          "users": [
+                            {
+                              "user": {
+                                "id": "PXPGF42",
+                                "type": "user"
+                              }
+                            }
+                          ],
+                          "restrictions": [
+                            {
+                              "type": "daily_restriction",
+                              "start_time_of_day": "08:00:00",
+                              "duration_seconds": 32400
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "description": "The schedule to be previewed."
+        },
+        "responses": {
+          "200": {
+            "description": "What the schedule will look like if posted.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "schedule": {
+                      "$ref": "#/components/schemas/Schedule"
+                    }
+                  },
+                  "required": [
+                    "schedule"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "schedule": {
+                        "id": "PI7DH85",
+                        "type": "schedule",
+                        "summary": "Daily Engineering Rotation",
+                        "self": "https://api.pagerduty.com/schedules/PI7DH85",
+                        "html_url": "https://subdomain.pagerduty.com/schedules/PI7DH85",
+                        "name": "Daily Engineering Rotation",
+                        "time_zone": "America/New_York",
+                        "description": "Rotation schedule for engineering",
+                        "escalation_policies": [],
+                        "users": [
+                          {
+                            "id": "PXPGF42",
+                            "type": "user",
+                            "summary": "Regina Phalange",
+                            "self": "https://api.pagerduty.com/users/PXPGF42",
+                            "html_url": "https://subdomain.pagerduty.com/users/PXPGF42"
+                          }
+                        ],
+                        "teams": [
+                          {
+                            "id": "PQ9K7I8",
+                            "type": "team_reference",
+                            "summary": "Engineering",
+                            "self": "https://api.pagerduty.com/teams/PQ9K7I8",
+                            "html_url": "https://subdomain.pagerduty.com/teams/PQ9K7I8"
+                          }
+                        ],
+                        "schedule_layers": [
+                          {
+                            "name": "Layer 1",
+                            "rendered_schedule_entries": [],
+                            "id": "PG68P1M",
+                            "start": "2015-11-06T20:00:00-05:00",
+                            "rotation_virtual_start": "2015-11-06T20:00:00-05:00",
+                            "rotation_turn_length_seconds": 86400,
+                            "users": [
+                              {
+                                "user": {
+                                  "id": "PXPGF42",
+                                  "type": "user",
+                                  "summary": "Regina Phalange",
+                                  "self": "https://api.pagerduty.com/users/PXPGF42",
+                                  "html_url": "https://subdomain.pagerduty.com/users/PXPGF42"
+                                }
+                              }
+                            ],
+                            "restrictions": [
+                              {
+                                "type": "daily",
+                                "start_time_of_day": "08:00:00",
+                                "duration_seconds": 32400
+                              }
+                            ]
+                          }
+                        ],
+                        "overrides_subschedule": {
+                          "name": "Overrides",
+                          "rendered_schedule_entries": []
+                        },
+                        "final_schedule": {
+                          "name": "Final Schedule",
+                          "rendered_schedule_entries": []
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        }
+      }
+    },
     "/service_dependencies/associate": {
       "description": "Associate dependencies of services.",
       "post": {
@@ -14448,6 +14696,121 @@
         }
       }
     },
+    "/service_dependencies/business_services/{id}": {
+      "description": "Get the dependencies of a given business service.",
+      "get": {
+        "tags": [
+          "Service Dependencies"
+        ],
+        "operationId": "getBusinessServiceServiceDependencies",
+        "summary": "Get business service dependencies",
+        "description": "Get all immediate dependencies of any business service.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#business-services)\n",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of service relationships.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "relationships": {
+                      "type": "array",
+                      "description": "List of all the business service's dependencies.",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "supporting_service": {
+                            "type": "object",
+                            "description": "The reference to the service that supports the business service.",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "type": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "dependent_service": {
+                            "type": "object",
+                            "description": "The reference to the service that is dependent on the business service.",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "type": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "id": {
+                            "type": "string"
+                          },
+                          "type": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "relationships": {
+                    "summary": "Response Example",
+                    "value": [
+                      {
+                        "supporting_service": {
+                          "id": "P7AD56",
+                          "type": "technical_service_reference"
+                        },
+                        "dependent_service": {
+                          "id": "P99DJ6",
+                          "type": "business_service_reference"
+                        },
+                        "id": "DQVP7E6G0E8AC3NR",
+                        "type": "service_dependency"
+                      },
+                      {
+                        "supporting_service": {
+                          "id": "P99DJ6",
+                          "type": "business_service_reference"
+                        },
+                        "dependent_service": {
+                          "id": "RS34D9",
+                          "type": "business_service_reference"
+                        },
+                        "id": "D3PG0QVACE87RNE6",
+                        "type": "service_dependency"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
     "/service_dependencies/disassociate": {
       "description": "Disassociate dependencies of services.",
       "post": {
@@ -14608,121 +14971,6 @@
                         "dependent_service": {
                           "id": "RS34D9",
                           "type": "technical_service_reference"
-                        },
-                        "id": "D3PG0QVACE87RNE6",
-                        "type": "service_dependency"
-                      }
-                    ]
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/ArgumentError"
-          },
-          "401": {
-            "$ref": "#/components/responses/Unauthorized"
-          },
-          "403": {
-            "$ref": "#/components/responses/Forbidden"
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          }
-        }
-      }
-    },
-    "/service_dependencies/business_services/{id}": {
-      "description": "Get the dependencies of a given business service.",
-      "get": {
-        "tags": [
-          "Service Dependencies"
-        ],
-        "operationId": "getBusinessServiceServiceDependencies",
-        "summary": "Get business service dependencies",
-        "description": "Get all immediate dependencies of any business service.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#business-services)\n",
-        "parameters": [
-          {
-            "$ref": "#/paths/~1tags/get/parameters/0"
-          },
-          {
-            "$ref": "#/components/parameters/id"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "An array of service relationships.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "relationships": {
-                      "type": "array",
-                      "description": "List of all the business service's dependencies.",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "supporting_service": {
-                            "type": "object",
-                            "description": "The reference to the service that supports the business service.",
-                            "properties": {
-                              "id": {
-                                "type": "string"
-                              },
-                              "type": {
-                                "type": "string"
-                              }
-                            }
-                          },
-                          "dependent_service": {
-                            "type": "object",
-                            "description": "The reference to the service that is dependent on the business service.",
-                            "properties": {
-                              "id": {
-                                "type": "string"
-                              },
-                              "type": {
-                                "type": "string"
-                              }
-                            }
-                          },
-                          "id": {
-                            "type": "string"
-                          },
-                          "type": {
-                            "type": "string"
-                          }
-                        }
-                      }
-                    }
-                  }
-                },
-                "examples": {
-                  "relationships": {
-                    "summary": "Response Example",
-                    "value": [
-                      {
-                        "supporting_service": {
-                          "id": "P7AD56",
-                          "type": "technical_service_reference"
-                        },
-                        "dependent_service": {
-                          "id": "P99DJ6",
-                          "type": "business_service_reference"
-                        },
-                        "id": "DQVP7E6G0E8AC3NR",
-                        "type": "service_dependency"
-                      },
-                      {
-                        "supporting_service": {
-                          "id": "P99DJ6",
-                          "type": "business_service_reference"
-                        },
-                        "dependent_service": {
-                          "id": "RS34D9",
-                          "type": "business_service_reference"
                         },
                         "id": "D3PG0QVACE87RNE6",
                         "type": "service_dependency"
@@ -16319,254 +16567,6 @@
         }
       }
     },
-    "/{entity_type}/{id}/tags": {
-      "get": {
-        "tags": [
-          "Tags"
-        ],
-        "operationId": "getEntityTypeByIdTags",
-        "description": "Get related tags for Users, Teams or Escalation Policies.\n\nA Tag is applied to EScalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#tags)\n",
-        "summary": "Get tags for entities",
-        "parameters": [
-          {
-            "$ref": "#/paths/~1tags/get/parameters/0"
-          },
-          {
-            "$ref": "#/components/parameters/total"
-          },
-          {
-            "$ref": "#/components/parameters/entity_type"
-          },
-          {
-            "$ref": "#/components/parameters/id"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "An array of tags.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/Pagination"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "tags": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/Tag"
-                          }
-                        }
-                      },
-                      "required": [
-                        "tags"
-                      ]
-                    }
-                  ]
-                },
-                "examples": {
-                  "response": {
-                    "summary": "Response Example",
-                    "value": {
-                      "tags": {
-                        "type": "tag",
-                        "summary": "Batman",
-                        "self": "https://api.pagerduty.com/tags/P5IYCNZ",
-                        "label": "Batman",
-                        "id": "P5IYCNZ",
-                        "html_url": "null"
-                      },
-                      "limit": 100,
-                      "offset": 0,
-                      "total": 1,
-                      "more": false
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "$ref": "#/components/responses/Unauthorized"
-          },
-          "403": {
-            "$ref": "#/components/responses/Forbidden"
-          },
-          "429": {
-            "$ref": "#/components/responses/TooManyRequests"
-          }
-        }
-      }
-    },
-    "/{entity_type}/{id}/change_tags": {
-      "post": {
-        "tags": [
-          "Tags"
-        ],
-        "operationId": "createEntityTypeByIdChangeTags",
-        "description": "Assign existing or new tags.\n\nA Tag is applied to EScalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#tags)\n",
-        "summary": "Assign tags",
-        "parameters": [
-          {
-            "$ref": "#/paths/~1tags/get/parameters/0"
-          },
-          {
-            "$ref": "#/components/parameters/entity_type"
-          },
-          {
-            "$ref": "#/components/parameters/id"
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "description": "Tags to add to or remove from the entity.",
-                "properties": {
-                  "add": {
-                    "type": "array",
-                    "description": "Array of tags and/or tag references to add to the entity.\nFor elements with type `tag_reference`, the tag with the corresponding `id` is added to the entity.\nFor elements with type `tag`, if there is an existing tag with the given\nlabel that tag is added to the entity. If there is no existing tag with that label and the user has permission\nto create tags, a new tag is created with that label and assigned to the entity.\n",
-                    "items": {
-                      "title": "Tags to add",
-                      "type": "object",
-                      "properties": {
-                        "type": {
-                          "type": "string",
-                          "enum": [
-                            "tag",
-                            "tag_reference"
-                          ]
-                        },
-                        "label": {
-                          "type": "string",
-                          "description": "The label of the tag. Should be used when type is \"tag\".",
-                          "maxLength": 191
-                        },
-                        "id": {
-                          "type": "string",
-                          "description": "The id of the tag. Should be used when type is \"tag_reference\".",
-                          "readOnly": true
-                        }
-                      },
-                      "required": [
-                        "type"
-                      ]
-                    }
-                  },
-                  "remove": {
-                    "type": "array",
-                    "description": "Array of tag references to remove from the entity.",
-                    "items": {
-                      "title": "Tags to remove.",
-                      "type": "object",
-                      "properties": {
-                        "type": {
-                          "type": "string",
-                          "enum": [
-                            "tag_reference"
-                          ]
-                        },
-                        "id": {
-                          "type": "string",
-                          "description": "The id of the tag",
-                          "readOnly": true
-                        }
-                      },
-                      "required": [
-                        "type",
-                        "id"
-                      ]
-                    }
-                  }
-                }
-              },
-              "examples": {
-                "tags": {
-                  "summary": "Request Example",
-                  "value": {
-                    "add": [
-                      {
-                        "type": "tag",
-                        "label": "Batman"
-                      },
-                      {
-                        "type": "tag_reference",
-                        "id": "P5IYCNZ"
-                      }
-                    ],
-                    "remove": [
-                      {
-                        "type": "tag_reference",
-                        "id": "POE7RY8"
-                      },
-                      {
-                        "type": "tag_reference",
-                        "id": "PG68P1M"
-                      }
-                    ]
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "The tags were added and/or removed.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object"
-                },
-                "examples": {
-                  "response": {
-                    "summary": "Request Example",
-                    "value": {
-                      "add": [
-                        {
-                          "type": "tag",
-                          "label": "Batman"
-                        },
-                        {
-                          "type": "tag_reference",
-                          "id": "P5IYCNZ"
-                        }
-                      ],
-                      "remove": [
-                        {
-                          "type": "tag_reference",
-                          "id": "POE7RY8"
-                        },
-                        {
-                          "type": "tag_reference",
-                          "id": "PG68P1M"
-                        }
-                      ]
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/ArgumentError"
-          },
-          "401": {
-            "$ref": "#/components/responses/Unauthorized"
-          },
-          "403": {
-            "$ref": "#/components/responses/Forbidden"
-          },
-          "429": {
-            "$ref": "#/components/responses/TooManyRequests"
-          }
-        }
-      }
-    },
     "/teams": {
       "description": "List or create teams.",
       "post": {
@@ -16972,6 +16972,93 @@
         }
       }
     },
+    "/teams/{id}/escalation_policies/{escalation_policy_id}": {
+      "description": "Manage an escalation policy for a team.",
+      "delete": {
+        "tags": [
+          "Teams"
+        ],
+        "operationId": "deleteTeamEscalationPolicy",
+        "description": "Remove an escalation policy from a team.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#teams)\n",
+        "summary": "Remove an escalation policy from a team",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/team_escalation_policy_id"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The escalation policy was removed from the team."
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Teams"
+        ],
+        "operationId": "updateTeamEscalationPolicy",
+        "description": "Add an escalation policy to a team.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#teams)\n",
+        "summary": "Add an escalation policy to a team",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/team_escalation_policy_id"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The escalation policy was added to the team."
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        }
+      }
+    },
     "/teams/{id}/members": {
       "description": "Retrieve information about members within a team.",
       "get": {
@@ -17164,93 +17251,6 @@
         "responses": {
           "204": {
             "description": "The user was added to the team."
-          },
-          "400": {
-            "$ref": "#/components/responses/ArgumentError"
-          },
-          "401": {
-            "$ref": "#/components/responses/Unauthorized"
-          },
-          "402": {
-            "$ref": "#/components/responses/PaymentRequired"
-          },
-          "403": {
-            "$ref": "#/components/responses/Forbidden"
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          },
-          "429": {
-            "$ref": "#/components/responses/TooManyRequests"
-          }
-        }
-      }
-    },
-    "/teams/{id}/escalation_policies/{escalation_policy_id}": {
-      "description": "Manage an escalation policy for a team.",
-      "delete": {
-        "tags": [
-          "Teams"
-        ],
-        "operationId": "deleteTeamEscalationPolicy",
-        "description": "Remove an escalation policy from a team.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#teams)\n",
-        "summary": "Remove an escalation policy from a team",
-        "parameters": [
-          {
-            "$ref": "#/paths/~1tags/get/parameters/0"
-          },
-          {
-            "$ref": "#/components/parameters/id"
-          },
-          {
-            "$ref": "#/components/parameters/team_escalation_policy_id"
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "The escalation policy was removed from the team."
-          },
-          "400": {
-            "$ref": "#/components/responses/ArgumentError"
-          },
-          "401": {
-            "$ref": "#/components/responses/Unauthorized"
-          },
-          "402": {
-            "$ref": "#/components/responses/PaymentRequired"
-          },
-          "403": {
-            "$ref": "#/components/responses/Forbidden"
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          },
-          "429": {
-            "$ref": "#/components/responses/TooManyRequests"
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Teams"
-        ],
-        "operationId": "updateTeamEscalationPolicy",
-        "description": "Add an escalation policy to a team.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#teams)\n",
-        "summary": "Add an escalation policy to a team",
-        "parameters": [
-          {
-            "$ref": "#/paths/~1tags/get/parameters/0"
-          },
-          {
-            "$ref": "#/components/parameters/id"
-          },
-          {
-            "$ref": "#/components/parameters/team_escalation_policy_id"
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "The escalation policy was added to the team."
           },
           "400": {
             "$ref": "#/components/responses/ArgumentError"
@@ -17881,106 +17881,6 @@
           },
           "404": {
             "$ref": "#/components/responses/NotFound"
-          },
-          "429": {
-            "$ref": "#/components/responses/TooManyRequests"
-          }
-        }
-      }
-    },
-    "/users/me": {
-      "description": "Get the current user.",
-      "get": {
-        "tags": [
-          "Users"
-        ],
-        "operationId": "getCurrentUser",
-        "description": "Get details about the current user. \n\nThis endpoint can only be used with a [user-level API key](https://support.pagerduty.com/docs/using-the-api#section-generating-a-personal-rest-api-key) or a key generated through an OAuth flow. This will not work if the request is made with an account-level access token.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#users)\n",
-        "summary": "Get the current user",
-        "parameters": [
-          {
-            "$ref": "#/paths/~1tags/get/parameters/0"
-          },
-          {
-            "$ref": "#/components/parameters/include_user"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "The requesting user.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "user": {
-                      "$ref": "#/components/schemas/User"
-                    }
-                  },
-                  "required": [
-                    "user"
-                  ]
-                },
-                "examples": {
-                  "response": {
-                    "summary": "Response Example",
-                    "value": {
-                      "user": {
-                        "id": "PXPGF42",
-                        "type": "user",
-                        "summary": "Earline Greenholt",
-                        "self": "https://api.pagerduty.com/users/PXPGF42",
-                        "html_url": "https://subdomain.pagerduty.com/users/PXPGF42",
-                        "name": "Earline Greenholt",
-                        "email": "125.greenholt.earline@graham.name",
-                        "time_zone": "America/Lima",
-                        "color": "green",
-                        "role": "admin",
-                        "avatar_url": "https://secure.gravatar.com/avatar/a8b714a39626f2444ee05990b078995f.png?d=mm&r=PG",
-                        "description": "I'm the boss",
-                        "invitation_sent": false,
-                        "contact_methods": [
-                          {
-                            "id": "PTDVERC",
-                            "type": "email_contact_method_reference",
-                            "summary": "Default",
-                            "self": "https://api.pagerduty.com/users/PXPGF42/contact_methods/PTDVERC"
-                          }
-                        ],
-                        "notification_rules": [
-                          {
-                            "id": "P8GRWKK",
-                            "start_delay_in_minutes": 0,
-                            "created_at": "2015-12-11T23:38:11.000Z",
-                            "contact_method": {
-                              "id": "PTDVERC",
-                              "type": "email_contact_method_reference",
-                              "summary": "Default",
-                              "self": "https://api.pagerduty.com/users/PXPGF42/contact_methods/PTDVERC"
-                            },
-                            "urgency": "low",
-                            "type": "assignment_notification_rule"
-                          }
-                        ],
-                        "job_title": "Director of Engineering",
-                        "teams": [
-                          {
-                            "id": "PQ9K7I8",
-                            "type": "team_reference",
-                            "summary": "Engineering",
-                            "self": "https://api.pagerduty.com/teams/PQ9K7I8",
-                            "html_url": "https://subdomain.pagerduty.com/teams/PQ9K7I8"
-                          }
-                        ]
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/ArgumentError"
           },
           "429": {
             "$ref": "#/components/responses/TooManyRequests"
@@ -19017,6 +18917,106 @@
           },
           "404": {
             "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        }
+      }
+    },
+    "/users/me": {
+      "description": "Get the current user.",
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "operationId": "getCurrentUser",
+        "description": "Get details about the current user. \n\nThis endpoint can only be used with a [user-level API key](https://support.pagerduty.com/docs/using-the-api#section-generating-a-personal-rest-api-key) or a key generated through an OAuth flow. This will not work if the request is made with an account-level access token.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#users)\n",
+        "summary": "Get the current user",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/components/parameters/include_user"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The requesting user.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "user": {
+                      "$ref": "#/components/schemas/User"
+                    }
+                  },
+                  "required": [
+                    "user"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "user": {
+                        "id": "PXPGF42",
+                        "type": "user",
+                        "summary": "Earline Greenholt",
+                        "self": "https://api.pagerduty.com/users/PXPGF42",
+                        "html_url": "https://subdomain.pagerduty.com/users/PXPGF42",
+                        "name": "Earline Greenholt",
+                        "email": "125.greenholt.earline@graham.name",
+                        "time_zone": "America/Lima",
+                        "color": "green",
+                        "role": "admin",
+                        "avatar_url": "https://secure.gravatar.com/avatar/a8b714a39626f2444ee05990b078995f.png?d=mm&r=PG",
+                        "description": "I'm the boss",
+                        "invitation_sent": false,
+                        "contact_methods": [
+                          {
+                            "id": "PTDVERC",
+                            "type": "email_contact_method_reference",
+                            "summary": "Default",
+                            "self": "https://api.pagerduty.com/users/PXPGF42/contact_methods/PTDVERC"
+                          }
+                        ],
+                        "notification_rules": [
+                          {
+                            "id": "P8GRWKK",
+                            "start_delay_in_minutes": 0,
+                            "created_at": "2015-12-11T23:38:11.000Z",
+                            "contact_method": {
+                              "id": "PTDVERC",
+                              "type": "email_contact_method_reference",
+                              "summary": "Default",
+                              "self": "https://api.pagerduty.com/users/PXPGF42/contact_methods/PTDVERC"
+                            },
+                            "urgency": "low",
+                            "type": "assignment_notification_rule"
+                          }
+                        ],
+                        "job_title": "Director of Engineering",
+                        "teams": [
+                          {
+                            "id": "PQ9K7I8",
+                            "type": "team_reference",
+                            "summary": "Engineering",
+                            "self": "https://api.pagerduty.com/teams/PQ9K7I8",
+                            "html_url": "https://subdomain.pagerduty.com/teams/PQ9K7I8"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
           },
           "429": {
             "$ref": "#/components/responses/TooManyRequests"
