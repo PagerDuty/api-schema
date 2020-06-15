@@ -25,6 +25,10 @@
       "description": "Developers can write their own functionality to insert into PagerDuty's UI.\n"
     },
     {
+      "name": "Analytics",
+      "description": "Provides enriched incident data.\n"
+    },
+    {
       "name": "Business Services",
       "description": "Business services model capabilities that span multiple technical services and that may be owned by several different teams.\n"
     },
@@ -5407,6 +5411,421 @@
             "$ref": "#/components/responses/TooManyRequests"
           }
         }
+      }
+    },
+    "/analytics/incidents": {
+      "post": {
+        "summary": "Get enriched incident data - multiple incidents",
+        "operationId": "getAnalyticsIncidents",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "first": {
+                      "type": "string",
+                      "description": "ID of the first incident in the response."
+                    },
+                    "last": {
+                      "type": "string",
+                      "description": "ID of the last incident in the response."
+                    },
+                    "limit": {
+                      "type": "integer",
+                      "description": "Number of results to include in the batch."
+                    },
+                    "more": {
+                      "type": "boolean",
+                      "description": "Indicates if there are more resources available than were returned."
+                    },
+                    "filters": {
+                      "type": "object"
+                    },
+                    "timezone": {
+                      "type": "string",
+                      "description": "The time zone that the results are in."
+                    },
+                    "data": {
+                      "$ref": "#/paths/~1analytics~1incidents~1%7Bid%7D/get/responses/200/content/application~1json/schema"
+                    }
+                  },
+                  "required": [
+                    "first",
+                    "last",
+                    "limit",
+                    "more",
+                    "timezone",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "Example Response": {
+                    "value": {
+                      "data": [
+                        {
+                          "assignment_count": 4,
+                          "business_hour_interruptions": 5,
+                          "created_at": "2020-05-31T10:05:00",
+                          "engaged_seconds": 3510,
+                          "engaged_user_count": 10,
+                          "escalation_count": 1,
+                          "id": "PYC0H08",
+                          "major": false,
+                          "off_hour_interruptions": 4,
+                          "priority": null,
+                          "resolved_at": "2020-05-31T10:15:00",
+                          "seconds_to_engage": 70,
+                          "seconds_to_first_ack": 5,
+                          "seconds_to_mobilize": 19,
+                          "seconds_to_resolve": 3305,
+                          "service_id": "PPSCXAN",
+                          "sleep_hour_interruptions": 3,
+                          "snoozed_seconds": 604,
+                          "team_id": null,
+                          "urgency": "low"
+                        },
+                        {
+                          "assignment_count": 1,
+                          "business_hour_interruptions": 2,
+                          "created_at": "2020-05-31T10:05:00",
+                          "engaged_seconds": 521,
+                          "engaged_user_count": 6,
+                          "escalation_count": 1,
+                          "id": "PCOOHCY",
+                          "major": false,
+                          "off_hour_interruptions": 3,
+                          "priority": "SEV-2",
+                          "resolved_at": "2020-05-31T10:15:00",
+                          "seconds_to_engage": 24,
+                          "seconds_to_first_ack": 48,
+                          "seconds_to_mobilize": 122,
+                          "seconds_to_resolve": 2029,
+                          "service_id": "PPSCXAN",
+                          "sleep_hour_interruptions": 1,
+                          "snoozed_seconds": 698,
+                          "team_id": null,
+                          "urgency": "low"
+                        }
+                      ],
+                      "ending_before": null,
+                      "filters": {},
+                      "first": "PYC0H08",
+                      "last": "PCOOHCY",
+                      "limit": 2,
+                      "more": true,
+                      "starting_after": null,
+                      "time_zone": "Etc/UTC"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "default": "analytics-v2",
+              "enum": [
+                "analytics-v2"
+              ]
+            },
+            "in": "header",
+            "description": "This header indicates that this API endpoint is __UNDER CONSTRUCTION__ and may change at any time.  You __MUST__ pass in this header and the above value.  Do not use this endpoint in production, as it may change!\n",
+            "name": "X-EARLY-ACCESS",
+            "required": true
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "filters": {
+                    "type": "object",
+                    "description": "Filters the result, only show incidents that match the conditions passed in the filter.",
+                    "properties": {
+                      "created_at_start": {
+                        "type": "string",
+                        "description": "Filters the result, showing only the incidents where the creation timestamp is greater than the filter value."
+                      },
+                      "created_at_end": {
+                        "type": "string",
+                        "description": "Filters the result, showing only the incidents where the creation timestamp is less than the filter value."
+                      },
+                      "urgency": {
+                        "type": "string",
+                        "description": "Filters the result, showing only the incidents where urgency matches the filter value."
+                      },
+                      "major": {
+                        "type": "boolean",
+                        "description": "A major incident is defined as any incident that requires a coordinated response, often across multiple teams. https://support.pagerduty.com/docs/operational-reviews#major-incidents"
+                      },
+                      "team_ids": {
+                        "type": "array",
+                        "description": "An array of team IDs. Only results related to these teams will be returned. Account must have the teams ability to use this parameter.",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "service_ids": {
+                        "type": "array",
+                        "description": "An array of service IDs. Only results related to these services will be returned.",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "priority": {
+                        "type": "string",
+                        "description": "User defined priority name"
+                      }
+                    }
+                  },
+                  "starting_after": {
+                    "type": "string",
+                    "description": "Specifies an incident by ID, the paginated results will begin with the incident directly after this one."
+                  },
+                  "ending_before": {
+                    "type": "string",
+                    "description": "Specifies an incident by ID, the paginated results will end with the incident directly before this one."
+                  },
+                  "limit": {
+                    "type": "integer",
+                    "description": "Number of results to include in each batch.\nLimits between 1 to 1000 are accepted.",
+                    "example": 20,
+                    "minimum": 0,
+                    "exclusiveMinimum": true,
+                    "maximum": 1000,
+                    "exclusiveMaximum": false
+                  },
+                  "time_zone": {
+                    "type": "string",
+                    "description": "The time zone to use for the results.",
+                    "example": "Etc/UTC"
+                  }
+                }
+              },
+              "examples": {
+                "Example Request": {
+                  "value": {
+                    "filters": {
+                      "created_at_start": "2020-01-01T00:00:00-05:00",
+                      "created_at_end": "2020-01-01T00:00:00-05:00",
+                      "urgency": "high",
+                      "major": true,
+                      "team_ids": [
+                        "PK38K1",
+                        "PNVU4U"
+                      ],
+                      "service_ids": [
+                        "PJ51L1",
+                        "PU2D9X"
+                      ],
+                      "priority": "SEV-1"
+                    },
+                    "starting_after": "P4UN5A",
+                    "limit": 20,
+                    "time_zone": "Etc/UTC"
+                  }
+                }
+              }
+            }
+          },
+          "description": "Parameters and filters to apply to the dataset."
+        },
+        "description": "Provides enriched incident data and metrics for multiple incidents.\n\nExample metrics include Seconds to Resolve, Seconds to Engage, Snoozed Seconds, Sleep Hour Interruptions. Some metric definitions can be found in our knowledge base: https://support.pagerduty.com/docs/pagerduty-analytics\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
+        "tags": [
+          "Analytics"
+        ]
+      },
+      "parameters": []
+    },
+    "/analytics/incidents/{id}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/id"
+        }
+      ],
+      "get": {
+        "summary": "Get enriched incident data",
+        "tags": [
+          "Analytics"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Analytics Raw Incident",
+                  "type": "object",
+                  "x-tags": [
+                    "Analytics"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "Incident Id"
+                    },
+                    "team_id": {
+                      "type": "string",
+                      "description": "ID of the team the incident was assigned to."
+                    },
+                    "service_id": {
+                      "type": "string",
+                      "description": "ID of the service that the incident triggered on."
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "description": "Timestamp of when the incident was created."
+                    },
+                    "resolved_at": {
+                      "type": "string",
+                      "description": "Timestamp of when the incident was resolved."
+                    },
+                    "urgency": {
+                      "type": "string",
+                      "description": "Notification level"
+                    },
+                    "major": {
+                      "type": "boolean",
+                      "description": "A major incident is defined as any incident that requires a coordinated response, often across multiple teams. \nhttps://support.pagerduty.com/docs/operational-reviews#major-incidents"
+                    },
+                    "priority_id": {
+                      "type": "string",
+                      "description": "ID of the incident's priority level."
+                    },
+                    "priority_name": {
+                      "type": "string",
+                      "description": "The user-provided short name of the priority."
+                    },
+                    "priority_order": {
+                      "type": "integer",
+                      "description": "The integer representation of the incident's priority level."
+                    },
+                    "seconds_to_resolve": {
+                      "type": "integer",
+                      "description": "Time from when incident started to be worked on until it was resolved."
+                    },
+                    "seconds_to_first_ack": {
+                      "type": "integer",
+                      "description": "Time between start of an incident, and the first responder to acknowledge."
+                    },
+                    "seconds_to_engage": {
+                      "type": "integer",
+                      "description": "Time between start of an incident, and the first responder to acknowledge, or to accept responder request."
+                    },
+                    "seconds_to_mobilize": {
+                      "type": "integer",
+                      "description": "Time between start of an incident, and the last additional responder to acknowledge."
+                    },
+                    "engaged_seconds": {
+                      "type": "integer",
+                      "description": "Total response duration of all responders, which may include times that the incident has been snoozed for. "
+                    },
+                    "engaged_user_count": {
+                      "type": "integer",
+                      "description": "Total number of users who engaged (acknowledged, accepted responer request) in the incident."
+                    },
+                    "escalation_count": {
+                      "type": "integer",
+                      "description": "Total count of instances where an incident is escalated between responders assigned to an escalation policy."
+                    },
+                    "assignment_count": {
+                      "type": "integer",
+                      "description": "Total count of instances where an additional responder, who was not on-call for the incident, is added."
+                    },
+                    "business_hour_interruptions": {
+                      "type": "integer",
+                      "description": "Total number of unique interruptions during business hour.\nBusiness hour: 8am-6pm Mon-Fri, based on the user’s time zone."
+                    },
+                    "sleep_hour_interruptions": {
+                      "type": "integer",
+                      "description": "Total number of unique interruptions during sleep hour.\nSleep hour: 10pm-8am every day, based on the user’s time zone."
+                    },
+                    "off_hour_interruptions": {
+                      "type": "integer",
+                      "description": "Total number of unique interruptions during off hour.\nOff hour: 6pm-10pm Mon-Fri and all day Sat-Sun, based on the user’s time zone."
+                    },
+                    "snoozed_seconds": {
+                      "type": "integer",
+                      "description": "Total seconds the incident has been snoozed for."
+                    }
+                  }
+                },
+                "examples": {
+                  "Example Response": {
+                    "value": {
+                      "time_zone": "Etc/UTC",
+                      "data": {
+                        "id": "PJASD3",
+                        "team_id": "PNVU4U",
+                        "service_id": "PAQTPI",
+                        "created_at": "2019-12-01T21:00:00Z",
+                        "resolved_at": "2019-12-01T21:01:00Z",
+                        "urgency": "high",
+                        "major": "true",
+                        "priority": 1,
+                        "seconds_to_resolve": 60,
+                        "seconds_to_first_ack": 15,
+                        "seconds_to_engage": 30,
+                        "seconds_to_mobilize": 15,
+                        "engaged_seconds": 75,
+                        "engaged_user_count": 2,
+                        "escalation_count": 0,
+                        "assignment_count": 0,
+                        "business_hour_interruptions": 0,
+                        "sleep_hour_interruptions": 0,
+                        "off_hour_interruptions": 2,
+                        "snoozed_seconds": 0
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        },
+        "operationId": "getAnalyticsIncidentsById",
+        "description": "Provides enriched incident data and metrics for a single incident.\n\nExample metrics include Seconds to Resolve, Seconds to Engage, Snoozed Seconds, Sleep Hour Interruptions. Some metric definitions can be found in our knowledge base: https://support.pagerduty.com/docs/pagerduty-analytics\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "default": "analytics-v2",
+              "enum": [
+                "analytics-v2"
+              ]
+            },
+            "in": "header",
+            "description": "This header indicates that this API endpoint is __UNDER CONSTRUCTION__ and may change at any time.  You __MUST__ pass in this header and the above value.  Do not use this endpoint in production, as it may change!\n",
+            "name": "X-EARLY-ACCESS",
+            "required": true
+          }
+        ]
       }
     },
     "/business_services": {
