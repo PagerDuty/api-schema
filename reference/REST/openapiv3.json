@@ -13439,6 +13439,15 @@
           },
           {
             "$ref": "#/components/parameters/id"
+          },
+          {
+            "name": "rule_id",
+            "in": "path",
+            "description": "The id of the event rule to update.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "requestBody": {
@@ -13451,7 +13460,7 @@
                     "$ref": "#/paths/~1rulesets~1%7Bid%7D~1rules/post/requestBody/content/application~1json/schema/properties/rule"
                   },
                   "rule_id": {
-                    "description": "The id of the event rule to retrieve.",
+                    "description": "The id of the event rule to update.",
                     "type": "string"
                   }
                 },
@@ -13591,7 +13600,7 @@
           {
             "name": "rule_id",
             "in": "path",
-            "description": "The id of the event rule to retrieve.",
+            "description": "The id of the event rule to delete.",
             "required": true,
             "schema": {
               "type": "string"
