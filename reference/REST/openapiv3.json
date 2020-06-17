@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.2",
   "info": {
-    "description": "The PagerDuty REST API",
+    "description": "This document describes the PagerDuty REST APIs. \n\nFor guides and examples please visit our [Documentation.](https://developer.pagerduty.com/docs/get-started/getting-started/)\n\nOur REST APIs are defined in OpenAPI v3.x. You can view the schema at [github.com/PagerDuty/api-schema](https://github.com/PagerDuty/api-schema).\n",
     "contact": {
       "name": "PagerDuty Support",
       "url": "http://www.pagerduty.com/support",
@@ -5111,9 +5111,9 @@
         }
       }
     },
-    "/analytics/incidents": {
+    "/analytics/raw/incidents": {
       "post": {
-        "summary": "Get enriched incident data - multiple incidents",
+        "summary": "Get enriched incidents data",
         "operationId": "getAnalyticsIncidents",
         "responses": {
           "200": {
@@ -5147,7 +5147,7 @@
                       "description": "The time zone that the results are in."
                     },
                     "data": {
-                      "$ref": "#/paths/~1analytics~1incidents~1%7Bid%7D/get/responses/200/content/application~1json/schema"
+                      "$ref": "#/paths/~1analytics~1raw~1incidents~1%7Bid%7D/get/responses/200/content/application~1json/schema"
                     }
                   },
                   "required": [
@@ -5352,7 +5352,7 @@
       },
       "parameters": []
     },
-    "/analytics/incidents/{id}": {
+    "/analytics/raw/incidents/{id}": {
       "parameters": [
         {
           "$ref": "#/components/parameters/id"
