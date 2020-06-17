@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.2",
   "info": {
-    "description": "The PagerDuty REST API",
+    "description": "This document describes the PagerDuty REST APIs. \n\nFor guides and examples please visit our [Documentation.](https://developer.pagerduty.com/docs/get-started/getting-started/)\n\nOur REST APIs are defined in OpenAPI v3.x. You can view the schema at [github.com/PagerDuty/api-schema](https://github.com/PagerDuty/api-schema).\n",
     "contact": {
       "name": "PagerDuty Support",
       "url": "http://www.pagerduty.com/support",
