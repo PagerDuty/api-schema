@@ -5,6 +5,9 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 Currently we do not deprecate or remove any API functionality.
 
 ----
+### 2020-06-17
+- Moved `POST analytics/incidents` and `GET analytics/incidents/{id}` to `POST analytics/raw/incidents` and `GET analytics/raw/incidents/{id}`
+
 ### 2020-06-15
 - Added `POST analytics/incidents` and `GET analytics/incidents/{id}` endpoints for Early Access.
 
