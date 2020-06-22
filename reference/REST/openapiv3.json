@@ -5535,6 +5535,7 @@
                       "data": [
                         {
                           "service_id": "PPSCXAN",
+                          "service_name": "Critical Prod Service 1",
                           "mean_seconds_to_first_ack": 63,
                           "mean_engaged_seconds": 366,
                           "mean_seconds_to_engage": 81,
@@ -5552,6 +5553,7 @@
                         },
                         {
                           "service_id": "PPSCXAN",
+                          "service_name": "Meme Fetcher Bot",
                           "mean_seconds_to_first_ack": 63,
                           "mean_engaged_seconds": 366,
                           "mean_seconds_to_engage": 81,
@@ -5781,6 +5783,7 @@
                       "data": [
                         {
                           "team_id": "PPSCXAN",
+                          "team_name": "Best Team A #1",
                           "mean_seconds_to_first_ack": 63,
                           "mean_engaged_seconds": 366,
                           "mean_seconds_to_engage": 81,
@@ -5798,6 +5801,7 @@
                         },
                         {
                           "team_id": "PPSCXAN",
+                          "team_name": "Best Team A #2",
                           "mean_seconds_to_first_ack": 63,
                           "mean_engaged_seconds": 366,
                           "mean_seconds_to_engage": 81,
