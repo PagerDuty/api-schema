@@ -8285,6 +8285,87 @@
         }
       }
     },
+    "/extensions/{id}/enable": {
+      "description": "Enable an extension.",
+      "post": {
+        "tags": [
+          "Extensions"
+        ],
+        "operationId": "enableExtension",
+        "description": "Enable an extension that is temporarily disabled. (This API does not require a request body.)\n\nExtensions are representations of Extension Schema objects that are attached to Services.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#extensions)\n",
+        "summary": "Enable an extension",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The extension that was successfully enabled.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "extension": {
+                      "$ref": "#/components/schemas/Extension"
+                    }
+                  },
+                  "required": [
+                    "extension"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "extension": {
+                        "id": "PPGPXHO",
+                        "self": "https://api.pagerduty.com/extensions/PPGPXHO",
+                        "endpoint_url": "https://example.com/recieve_a_pagerduty_webhook",
+                        "name": "My Webhook",
+                        "summary": "My Webhook",
+                        "type": "extension",
+                        "extension_schema": {
+                          "id": "PJFWPEP",
+                          "type": "extension_schema_reference",
+                          "summary": "Generic Webhook",
+                          "self": "https://api.pagerduty.com/extension_schemas/PJFWPEP"
+                        },
+                        "extension_objects": [
+                          {
+                            "id": "PIJ90N7",
+                            "type": "service_reference",
+                            "summary": "My Application Service",
+                            "self": "https://api.pagerduty.com/services/PIJ90N7",
+                            "html_url": "https://subdomain.pagerduty.com/services/PIJ90N7"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
     "/incidents": {
       "description": "List and update incidents.",
       "get": {
