@@ -5182,6 +5182,22 @@
                         "Analytics"
                       ],
                       "properties": {
+                        "service_id": {
+                          "type": "string",
+                          "description": "ID of the service.  Only included when aggregating by service."
+                        },
+                        "service_name": {
+                          "type": "string",
+                          "description": "Name of the service.  Only included when aggregating by service."
+                        },
+                        "team_id": {
+                          "type": "string",
+                          "description": "ID of the team.  Only included when aggregating by team."
+                        },
+                        "team_name": {
+                          "type": "string",
+                          "description": "Name of the team.  Only included when aggregating by team."
+                        },
                         "mean_seconds_to_resolve": {
                           "type": "integer",
                           "description": "Mean time from when an incident was triggered until it was resolved."

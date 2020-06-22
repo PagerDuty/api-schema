@@ -6,7 +6,7 @@ Currently we do not deprecate or remove any API functionality.
 
 ----
 ### 2020-06-18
-- Added `POST analytics/metrics/incidents/all`, `POST analytics/metrics/incidents/service` and `POST analytics/metrics/incidents/teams` endpoints for Early Access.
+- Added `POST analytics/metrics/incidents/all`, `POST analytics/metrics/incidents/services` and `POST analytics/metrics/incidents/teams` endpoints for Early Access.
 
 ### 2020-06-17
 - Moved `POST analytics/incidents` and `GET analytics/incidents/{id}` to `POST analytics/raw/incidents` and `GET analytics/raw/incidents/{id}`
