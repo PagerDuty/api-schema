@@ -5154,6 +5154,7 @@
                         "team_ids": {
                           "type": "array",
                           "description": "The team ids filter applied to the results.",
+                          "maxItems": 10,
                           "items": {
                             "type": "string"
                           }
@@ -5161,6 +5162,7 @@
                         "service_ids": {
                           "type": "array",
                           "description": "The service ids filter applied to the results.",
+                          "maxItems": 10,
                           "items": {
                             "type": "string"
                           }
@@ -5315,6 +5317,18 @@
           },
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "default": "application/json",
+              "enum": [
+                "application/json"
+              ]
+            },
+            "in": "header",
+            "name": "Content-Type",
+            "required": true
           }
         ],
         "requestBody": {
@@ -5476,26 +5490,28 @@
                         "team_ids": {
                           "type": "array",
                           "description": "An array of team IDs. Only incidents related to these teams will be included in the results. Account must have the teams ability to use this parameter.  Any teams that the requestor does not have access to will be omitted from the results.  If omitted, all teams the requestor has access to will be included in the results.",
-                          "items": {
-                            "type": "string"
-                          },
                           "example": [
                             "PSEJLIN",
                             "PSLWBL8",
                             "PT4KHLX"
-                          ]
+                          ],
+                          "maxItems": 10,
+                          "items": {
+                            "type": "string"
+                          }
                         },
                         "service_ids": {
                           "type": "array",
                           "description": "An array of service IDs. Only incidents related to these services will be included in the results. If omitted, all services the requestor has access to will be included in the results.",
-                          "items": {
-                            "type": "string"
-                          },
                           "example": [
                             "PSEJLIN",
                             "PSLWBL8",
                             "PT4KHLX"
-                          ]
+                          ],
+                          "maxItems": 10,
+                          "items": {
+                            "type": "string"
+                          }
                         },
                         "priority": {
                           "type": "string",
@@ -5605,6 +5621,18 @@
           },
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "default": "application/json",
+              "enum": [
+                "application/json"
+              ]
+            },
+            "in": "header",
+            "name": "Content-Type",
+            "required": true
           }
         ],
         "requestBody": {
@@ -5746,6 +5774,7 @@
                         "team_ids": {
                           "type": "array",
                           "description": "The team ids filter applied to the results;",
+                          "maxItems": 10,
                           "items": {
                             "type": "string"
                           }
@@ -5753,6 +5782,7 @@
                         "service_ids": {
                           "type": "array",
                           "description": "The service ids filter applied to the results.",
+                          "maxItems": 10,
                           "items": {
                             "type": "string"
                           }
@@ -5853,6 +5883,18 @@
           },
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "default": "application/json",
+              "enum": [
+                "application/json"
+              ]
+            },
+            "in": "header",
+            "name": "Content-Type",
+            "required": true
           }
         ],
         "requestBody": {
@@ -5892,26 +5934,28 @@
                       "team_ids": {
                         "type": "array",
                         "description": "An array of team IDs. Only incidents related to these teams will be included in the results. Account must have the teams ability to use this parameter.  Any teams that the requestor does not have access to will be omitted from the results.  If omitted, all teams the requestor has access to will be included in the results.",
-                        "items": {
-                          "type": "string"
-                        },
                         "example": [
                           "PSEJLIN",
                           "PSLWBL8",
                           "PT4KHLX"
-                        ]
+                        ],
+                        "maxItems": 10,
+                        "items": {
+                          "type": "string"
+                        }
                       },
                       "service_ids": {
                         "type": "array",
                         "description": "An array of service IDs. Only incidents related to these services will be included in the results. If omitted, all services the requestor has access to will be included in the results.",
-                        "items": {
-                          "type": "string"
-                        },
                         "example": [
                           "PSEJLIN",
                           "PSLWBL8",
                           "PT4KHLX"
-                        ]
+                        ],
+                        "maxItems": 10,
+                        "items": {
+                          "type": "string"
+                        }
                       },
                       "priority": {
                         "type": "string",
@@ -6025,14 +6069,16 @@
                         },
                         "team_ids": {
                           "type": "array",
-                          "description": "The team ids filter applied to the results;",
+                          "description": "The team ids filter applied to the results",
+                          "maxItems": 10,
                           "items": {
                             "type": "string"
                           }
                         },
                         "service_ids": {
                           "type": "array",
-                          "description": "The service ids filter applied to the results.",
+                          "description": "The service ids filter applied to the results,\nfor up to 10 service ids.",
+                          "maxItems": 10,
                           "items": {
                             "type": "string"
                           }
@@ -6149,6 +6195,18 @@
           },
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "default": "application/json",
+              "enum": [
+                "application/json"
+              ]
+            },
+            "in": "header",
+            "name": "Content-Type",
+            "required": true
           }
         ],
         "requestBody": {
