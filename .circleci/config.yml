@@ -9,7 +9,7 @@ jobs:
       - run:
           name: Publish to Stoplight
           command: |
-            npm install @stoplight/cli
+            npm install @stoplight/cli@3.0.4
             node ./node_modules/@stoplight/cli/bin/stoplight.js publish \
             --token ${STOPLIGHT_TOKEN} \
             --project gh/pagerduty/api-schema \
