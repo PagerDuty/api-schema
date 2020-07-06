@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.2",
   "info": {
-    "description": "This document describes the PagerDuty REST APIs. \n\nFor guides and examples please visit our [Documentation.](https://developer.pagerduty.com/docs/get-started/getting-started/)\n\nOur REST APIs are defined in OpenAPI v3.x. You can view the schema at [github.com/PagerDuty/api-schema](https://github.com/PagerDuty/api-schema).\n",
+    "description": "This document describes the PagerDuty REST APIs.\n\nFor guides and examples please visit our [Documentation.](https://developer.pagerduty.com/docs/get-started/getting-started/)\n\nOur REST APIs are defined in OpenAPI v3.x. You can view the schema at [github.com/PagerDuty/api-schema](https://github.com/PagerDuty/api-schema).\n",
     "contact": {
       "name": "PagerDuty Support",
       "url": "http://www.pagerduty.com/support",
@@ -502,6 +502,15 @@
           "type": "string"
         }
       },
+      "user_status_update_notification_rule_id": {
+        "name": "status_update_notification_rule_id",
+        "in": "path",
+        "description": "The status update notification rule ID on the user.",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
       "session_id": {
         "name": "session_id",
         "in": "path",
@@ -540,7 +549,7 @@
       "total": {
         "name": "total",
         "in": "query",
-        "description": "By default the `total` field in pagination responses is set to `null` to provide the fastest possible response times. Set `total` to `true` for this field to be populated. \n\nSee our [Pagination Docs](https://developer.pagerduty.com/docs/rest-api-v2/pagination/) for more information.\n",
+        "description": "By default the `total` field in pagination responses is set to `null` to provide the fastest possible response times. Set `total` to `true` for this field to be populated.\n\nSee our [Pagination Docs](https://developer.pagerduty.com/docs/rest-api-v2/pagination/) for more information.\n",
         "required": false,
         "schema": {
           "type": "boolean"
@@ -20080,6 +20089,513 @@
           },
           "401": {
             "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        }
+      }
+    },
+    "/users/{id}/status_update_notification_rules": {
+      "description": "List a user's status update notification rules.",
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "operationId": "getUserStatusUpdateNotificationRules",
+        "description": "List status update notification rules of your PagerDuty user.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\n<!-- theme: warning -->\n> ### Early Access\n\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#users)\n",
+        "summary": "List a user's status update notification rules",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "name": "X-EARLY-ACCESS",
+            "in": "header",
+            "description": "This header indicates that this API endpoint is __UNDER CONSTRUCTION__ and may change at any time. You __MUST__ pass in this header and the above value. Do not use this endpoint in production, as it may change!\n",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "status-update-notification-rules",
+              "enum": [
+                "status-update-notification-rules"
+              ]
+            }
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "name": "include[]",
+            "in": "query",
+            "description": "Array of additional details to include.",
+            "explode": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "contact_methods"
+                ]
+              },
+              "uniqueItems": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of status update notification rules.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status_update_notification_rules": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/paths/~1users~1%7Bid%7D~1status_update_notification_rules/post/requestBody/content/application~1json/schema/properties/status_update_notification_rule"
+                      }
+                    }
+                  },
+                  "required": [
+                    "status_update_notification_rules"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "status_update_notification_rules": [
+                        {
+                          "id": "PXPGF42",
+                          "type": "status_update_notification_rule",
+                          "summary": "contact method PXPGF42 used as status_update_notification_rule",
+                          "self": "https://api.pagerduty.com/users/PXPGF42/status_update_notification_rules/PPSCXAN",
+                          "contact_method": {
+                            "id": "PXPGF42",
+                            "type": "contact_method_reference",
+                            "summary": "Work",
+                            "self": "https://api.pagerduty.com/users/PXPGF42/contact_methods/PXPGF42"
+                          },
+                          "created_at": "2016-02-01T16:06:27-05:00"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "operationId": "createUserStatusUpdateNotificationRule",
+        "description": "Create a new status update notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\n<!-- theme: warning -->\n> ### Early Access\n\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#users)\n",
+        "summary": "Create a user status update notification rule",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "name": "X-EARLY-ACCESS",
+            "in": "header",
+            "description": "This header indicates that this API endpoint is __UNDER CONSTRUCTION__ and may change at any time. You __MUST__ pass in this header and the above value. Do not use this endpoint in production, as it may change!\n",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "status-update-notification-rules",
+              "enum": [
+                "status-update-notification-rules"
+              ]
+            }
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "status_update_notification_rule": {
+                    "type": "object",
+                    "description": "A rule for contacting the user for Incident Status Updates.",
+                    "properties": {
+                      "contact_method": {
+                        "$ref": "#/components/schemas/ContactMethodReference"
+                      }
+                    },
+                    "required": [
+                      "contact_method"
+                    ],
+                    "example": {
+                      "contact_method": {
+                        "id": "PXPGF42",
+                        "type": "email_contact_method_reference"
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "status_update_notification_rule"
+                ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "status_update_notification_rule": {
+                      "contact_method": {
+                        "id": "PXPGF42",
+                        "type": "email_contact_method"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "description": "The status update notification rule to be created."
+        },
+        "responses": {
+          "201": {
+            "description": "The status update notification rule that was created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status_update_notification_rule": {
+                      "$ref": "#/paths/~1users~1%7Bid%7D~1status_update_notification_rules/post/requestBody/content/application~1json/schema/properties/status_update_notification_rule"
+                    }
+                  },
+                  "required": [
+                    "status_update_notification_rule"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "status_update_notification_rule": {
+                        "id": "PXPGF42",
+                        "type": "status_update_notification_rule",
+                        "summary": "contact method PXPGF42 used as status_update_notification_rule",
+                        "self": "https://api.pagerduty.com/users/PXPGF42/status_update_notification_rules/PPSCXAN",
+                        "contact_method": {
+                          "id": "PXPGF42",
+                          "type": "contact_method_reference",
+                          "summary": "Work",
+                          "self": "https://api.pagerduty.com/users/PXPGF42/contact_methods/PXPGF42"
+                        },
+                        "created_at": "2016-02-01T16:06:27-05:00"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        }
+      }
+    },
+    "/users/{id}/status_update_notification_rules/{status_update_notification_rule_id}": {
+      "description": "Manage a user's status update notification rule.",
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "operationId": "getUserStatusUpdateNotificationRule",
+        "description": "Get details about a user's status update notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\n<!-- theme: warning -->\n> ### Early Access\n\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#users)\n",
+        "summary": "Get a user's status update notification rule",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "name": "X-EARLY-ACCESS",
+            "in": "header",
+            "description": "This header indicates that this API endpoint is __UNDER CONSTRUCTION__ and may change at any time. You __MUST__ pass in this header and the above value. Do not use this endpoint in production, as it may change!\n",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "status-update-notification-rules",
+              "enum": [
+                "status-update-notification-rules"
+              ]
+            }
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/user_status_update_notification_rule_id"
+          },
+          {
+            "name": "include[]",
+            "in": "query",
+            "description": "Array of additional details to include.",
+            "explode": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "contact_methods"
+                ]
+              },
+              "uniqueItems": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The user's status update notification rule requested.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "notification_rule": {
+                      "$ref": "#/paths/~1users~1%7Bid%7D~1status_update_notification_rules/post/requestBody/content/application~1json/schema/properties/status_update_notification_rule"
+                    }
+                  },
+                  "required": [
+                    "notification_rule"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "status_update_notification_rule": {
+                        "id": "PXPGF42",
+                        "type": "status_update_notification_rule",
+                        "summary": "contact method PXPGF42 used as status_update_notification_rule",
+                        "self": "https://api.pagerduty.com/users/PXPGF42/status_update_notification_rules/PPSCXAN",
+                        "contact_method": {
+                          "id": "PXPGF42",
+                          "type": "contact_method_reference",
+                          "summary": "Work",
+                          "self": "https://api.pagerduty.com/users/PXPGF42/contact_methods/PXPGF42"
+                        },
+                        "created_at": "2016-02-01T16:06:27-05:00"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Users"
+        ],
+        "operationId": "deleteUserStatusUpdateNotificationRule",
+        "description": "Remove a user's status update notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\n<!-- theme: warning -->\n> ### Early Access\n\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#users)\n",
+        "summary": "Delete a user's status update notification rule",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "name": "X-EARLY-ACCESS",
+            "in": "header",
+            "description": "This header indicates that this API endpoint is __UNDER CONSTRUCTION__ and may change at any time. You __MUST__ pass in this header and the above value. Do not use this endpoint in production, as it may change!\n",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "status-update-notification-rules",
+              "enum": [
+                "status-update-notification-rules"
+              ]
+            }
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/user_status_update_notification_rule_id"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The status update notification rule was deleted successfully."
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Users"
+        ],
+        "operationId": "updateUserStatusUpdateNotificationRule",
+        "description": "Update a user's status update notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\n<!-- theme: warning -->\n> ### Early Access\n\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#users)\n",
+        "summary": "Update a user's status update notification rule",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "name": "X-EARLY-ACCESS",
+            "in": "header",
+            "description": "This header indicates that this API endpoint is __UNDER CONSTRUCTION__ and may change at any time. You __MUST__ pass in this header and the above value. Do not use this endpoint in production, as it may change!\n",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "status-update-notification-rules",
+              "enum": [
+                "status-update-notification-rules"
+              ]
+            }
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/user_status_update_notification_rule_id"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "status_update_notification_rule": {
+                    "$ref": "#/paths/~1users~1%7Bid%7D~1status_update_notification_rules/post/requestBody/content/application~1json/schema/properties/status_update_notification_rule"
+                  }
+                },
+                "required": [
+                  "status_update_notification_rule"
+                ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "status_update_notification_rule": {
+                      "contact_method": {
+                        "id": "PXPGF42",
+                        "type": "email_contact_method"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "description": "The user's status update notification rule to be updated."
+        },
+        "responses": {
+          "200": {
+            "description": "The user's status update notification rule that was updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "notification_rule": {
+                      "$ref": "#/paths/~1users~1%7Bid%7D~1status_update_notification_rules/post/requestBody/content/application~1json/schema/properties/status_update_notification_rule"
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "status_update_notification_rule": {
+                        "id": "PXPGF42",
+                        "type": "status_update_notification_rule",
+                        "summary": "contact method PXPGF42 used as status_update_notification_rule",
+                        "self": "https://api.pagerduty.com/users/PXPGF42/status_update_notification_rules/PPSCXAN",
+                        "contact_method": {
+                          "id": "PXPGF42",
+                          "type": "contact_method_reference",
+                          "summary": "Work",
+                          "self": "https://api.pagerduty.com/users/PXPGF42/contact_methods/PXPGF42"
+                        },
+                        "created_at": "2016-02-01T16:06:27-05:00"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
           },
           "403": {
             "$ref": "#/components/responses/Forbidden"
