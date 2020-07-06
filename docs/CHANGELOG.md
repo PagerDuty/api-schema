@@ -7,6 +7,8 @@ Currently we do not deprecate or remove any API functionality.
 ----
 ### 2020-06-29
 - Updated required headers, and filters for `POST analytics/raw/incidents`, `POST analytics/metrics/incidents/all`, `POST analytics/metrics/incidents/services` and `POST analytics/metrics/incidents/teams`.
+- Added `GET`, `DELETE`, and `PUT /users/{user_id}/status_update_notification_rules/{status_update_notitication_rule_id}`
+- Added `GET`, `POST /users/{user_id}/status_update_notification_rules`
 
 ### 2020-06-22
 - Document `POST extensions/{id}/enable` for extensions that are temporarily disabled.
