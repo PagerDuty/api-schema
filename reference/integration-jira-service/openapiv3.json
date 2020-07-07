@@ -1,0 +1,4201 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "PagerDuty Jira Service Integration API",
+    "description": "API documentation for PagerDuty integration with a Jira Server.",
+    "contact": {
+      "name": "PagerDuty Support",
+      "url": "http://www.pagerduty.com/support",
+      "email": "support@pagerduty.com"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://app.pagerduty.com/integration-jira-service"
+    }
+  ],
+  "security": [
+    {
+      "BearerToken": [],
+      "JiraSignature": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "Rules",
+      "description": "Rules are used to configure bi-directional incident/issue synchronization."
+    }
+  ],
+  "components": {
+    "parameters": {
+      "total": {
+        "name": "total",
+        "in": "query",
+        "description": "Returns the total number of records matched by the query if enabled.",
+        "schema": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "limit": {
+        "name": "limit",
+        "in": "query",
+        "description": "Set the maximum number of results matched by the query.",
+        "schema": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100,
+          "default": 25
+        }
+      },
+      "offset": {
+        "name": "offset",
+        "in": "query",
+        "description": "The number of items to skip before starting to collect the result set.",
+        "schema": {
+          "type": "integer",
+          "minimum": 0,
+          "default": 0
+        }
+      },
+      "id": {
+        "name": "id",
+        "description": "The ID of the resource.",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    },
+    "responses": {
+      "ArgumentError": {
+        "description": "Caller provided invalid arguments. Please review the response for error details. Retrying with the same arguments will *not* work.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "examples": {
+              "InvalidInputProvided": {
+                "summary": "Invalid input provided",
+                "value": {
+                  "error": {
+                    "message": "Invalid Input Provided"
+                  }
+                }
+              },
+              "ValidationError": {
+                "summary": "Validation error",
+                "value": {
+                  "error": {
+                    "errors": [
+                      "Name can't be blank"
+                    ],
+                    "message": "Invalid Input Provided"
+                  }
+                }
+              },
+              "MalformedJson": {
+                "summary": "Malformed json",
+                "value": {
+                  "error": {
+                    "message": "Malformed json"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "Forbidden": {
+        "description": "Caller is not authorized to view the requested resource.\nWhile your authentication is valid, the authenticated user or token does not have permission to perform this action.\n",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "examples": {
+              "AuthorizationError": {
+                "summary": "Authorization Error",
+                "value": {
+                  "error": {
+                    "message": "Authorization error"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "NotFound": {
+        "description": "The requested resource was not found.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "examples": {
+              "NotFound": {
+                "summary": "Not Found",
+                "value": {
+                  "error": {
+                    "message": "Record not found"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "Rule": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "description": "A name of the rule",
+            "type": "string",
+            "maxLength": 128,
+            "example": "Sample Rule"
+          },
+          "enabled": {
+            "description": "Indicates if the rule is enabled",
+            "type": "boolean",
+            "default": false
+          },
+          "config": {
+            "description": "Contatins an object which describes a rule",
+            "type": "object",
+            "properties": {
+              "sync_comments": {
+                "type": "boolean",
+                "description": "Indicates if comments should be synchronized",
+                "default": false
+              },
+              "services": {
+                "description": "An array of the PagerDuty services",
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "$ref": "#/components/schemas/ServiceReference"
+                }
+              },
+              "projects": {
+                "description": "An array of Jira projects",
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "$ref": "#/components/schemas/Project"
+                }
+              },
+              "issue_types": {
+                "description": "An array of Jira issue types",
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "$ref": "#/components/schemas/IssueType"
+                }
+              },
+              "autocreate_issues": {
+                "description": "Indicates if automatic Jira issue creation is enabled",
+                "type": "boolean",
+                "default": false
+              },
+              "autocreate_issues_config": {
+                "description": "An array of rules that are applied when automatic Jira issue creation is enabled",
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/RuleAutocreateIssueConfigurationItem"
+                }
+              },
+              "autocreate_incidents": {
+                "description": "Indicates if automatic PagerDuty incident creation is enabled",
+                "type": "boolean",
+                "default": false
+              },
+              "autocreate_incidents_config": {
+                "description": "An array of rules that are applied when automatic PagerDuty incident creation is enabled",
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/RuleAutocreateIncidentConfigurationItem"
+                }
+              },
+              "react_on_incident_event": {
+                "description": "Indicates if reaction on PagerDuty incident updates is enabled",
+                "type": "boolean",
+                "default": false
+              },
+              "react_on_incident_event_config": {
+                "description": "An array of rules that are applied to the Jira issue when reaction on PagerDuty incident updates is enabled",
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/RuleReactOnIncidentEventConfigurationItem"
+                }
+              },
+              "react_on_issue_status_change": {
+                "description": "Indicates if reaction on Jira issue status change is enabled",
+                "type": "boolean",
+                "default": false
+              },
+              "react_on_issue_status_change_config": {
+                "description": "An array of rules that are applied to the PagerDuty incident when reaction on Jira issue status change is enabled",
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/RuleReactOnIssueStatusChangeConfigurationItem"
+                }
+              }
+            }
+          },
+          "created_at": {
+            "description": "The date/time rule was created",
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true,
+            "example": "2020-06-02T12:42:37Z"
+          }
+        },
+        "required": [
+          "name",
+          "enabled",
+          "config",
+          "created_at"
+        ]
+      },
+      "RuleAutocreateIncidentConfigurationItem": {
+        "description": "Configuration item of the rule for automatical PagerDuty incidents creation from the Jira issues",
+        "type": "object",
+        "required": [
+          "jql"
+        ],
+        "properties": {
+          "jql": {
+            "description": "Rule will be applied, when issue matches the JQL",
+            "type": "string"
+          },
+          "on_create": {
+            "description": "Apply the rule on issue creation",
+            "type": "boolean",
+            "default": false
+          },
+          "on_update": {
+            "description": "Apply the rule on issue update",
+            "type": "boolean",
+            "default": false
+          },
+          "actions": {
+            "$ref": "#/components/schemas/RuleActions"
+          },
+          "actions_params": {
+            "$ref": "#/components/schemas/RuleActionsParams"
+          },
+          "target_service": {
+            "description": "Service, where an incident should be created",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ServiceReference"
+              }
+            ]
+          }
+        }
+      },
+      "RuleAutocreateIssueConfigurationItem": {
+        "description": "Configuration item of the rule for automatical/manual Jira issues creation from PagerDuty incidents",
+        "type": "object",
+        "properties": {
+          "condition": {
+            "type": "object",
+            "properties": {
+              "pd_events": {
+                "$ref": "#/components/schemas/RuleConditionPdCreateIssueEvents"
+              },
+              "pd_priorities": {
+                "$ref": "#/components/schemas/RuleConditionPdPriorities"
+              },
+              "pd_urgency": {
+                "$ref": "#/components/schemas/RuleConfitionPdUrgency"
+              }
+            }
+          },
+          "actions": {
+            "$ref": "#/components/schemas/RuleActions"
+          },
+          "actions_params": {
+            "$ref": "#/components/schemas/RuleActionsParams"
+          },
+          "target_project": {
+            "description": "Project, where the issue should be created",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Project"
+              }
+            ]
+          },
+          "target_issue_type": {
+            "description": "Issue Type, which should set on the issue",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/IssueType"
+              }
+            ]
+          }
+        }
+      },
+      "RuleReactOnIncidentEventConfigurationItem": {
+        "description": "Configuration item of the rule for updating an issue that will only be applied when the incident is already linked and conditions are met",
+        "type": "object",
+        "properties": {
+          "condition": {
+            "type": "object",
+            "properties": {
+              "pd_events": {
+                "$ref": "#/components/schemas/RuleConditionPdUpdateIssueEvents"
+              },
+              "pd_priorities": {
+                "$ref": "#/components/schemas/RuleConditionPdPriorities"
+              },
+              "pd_urgency": {
+                "$ref": "#/components/schemas/RuleConfitionPdUrgency"
+              }
+            }
+          },
+          "actions": {
+            "$ref": "#/components/schemas/RuleActions"
+          },
+          "actions_params": {
+            "$ref": "#/components/schemas/RuleActionsParams"
+          },
+          "target_project": {
+            "description": "Project, where the issue should be created",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Project"
+              }
+            ]
+          },
+          "target_issue_type": {
+            "description": "Issue Type, which should set on the issue",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/IssueType"
+              }
+            ]
+          }
+        },
+        "title": "",
+        "x-examples": {
+          "example-1": {}
+        }
+      },
+      "RuleReactOnIssueStatusChangeConfigurationItem": {
+        "description": "Configuration item of the rule for updating an incident that will only be applied when there is a change in status",
+        "type": "object",
+        "properties": {
+          "jira_statuses": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/JiraStatus"
+            }
+          },
+          "actions": {
+            "$ref": "#/components/schemas/RuleActions"
+          },
+          "actions_params": {
+            "$ref": "#/components/schemas/RuleActionsParams"
+          }
+        }
+      },
+      "RuleConditionPdCreateIssueEvents": {
+        "description": "A list of PagerDuty incident actions which should be matched to create a Jira issue",
+        "type": "array",
+        "items": {
+          "type": "string",
+          "enum": [
+            "incident.trigger",
+            "incident.acknowledge",
+            "incident.unacknowledge",
+            "incident.resolve",
+            "incident.escalate",
+            "incident.assign",
+            "incident.delegate",
+            "incident.trigger_manually"
+          ]
+        },
+        "example": [
+          "incident.trigger",
+          "incident.acknowledge",
+          "incident.assign"
+        ]
+      },
+      "RuleConditionPdUpdateIssueEvents": {
+        "description": "A list of PagerDuty incident actions which should be matched to update a Jira issue",
+        "type": "array",
+        "items": {
+          "type": "string",
+          "enum": [
+            "incident.trigger",
+            "incident.acknowledge",
+            "incident.unacknowledge",
+            "incident.resolve",
+            "incident.escalate",
+            "incident.assign",
+            "incident.delegate"
+          ]
+        },
+        "example": [
+          "incident.acknowledge",
+          "incident.assign",
+          "incident.escalate"
+        ]
+      },
+      "RuleConditionPdPriorities": {
+        "description": "A list of PagerDuty priorities that should be matched to create/update a Jira issue",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/PriorityReference"
+        }
+      },
+      "RuleConfitionPdUrgency": {
+        "description": "A PagerDuty urgency that should be matched to create/update a Jira issue",
+        "type": "string",
+        "nullable": true,
+        "enum": [
+          "high",
+          "low"
+        ]
+      },
+      "RuleActions": {
+        "description": "Actions that applied when the rule will be executed",
+        "type": "array",
+        "items": {
+          "type": "object"
+        }
+      },
+      "RuleActionsParams": {
+        "description": "Configuration of actions that applied when the rule will be executed",
+        "type": "object"
+      },
+      "Project": {
+        "description": "Jira Project",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "key": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "icon": {
+            "type": "string",
+            "format": "url"
+          },
+          "html_url": {
+            "type": "string",
+            "format": "url"
+          }
+        },
+        "required": [
+          "id",
+          "key",
+          "label",
+          "icon",
+          "html_url"
+        ],
+        "example": {
+          "id": "10000",
+          "key": "PD",
+          "label": "PagerDuty",
+          "icon": "https://example.com/secure/projectavatar?avatarId=10324",
+          "html_url": "https://example.com/projects/PD"
+        }
+      },
+      "IssueType": {
+        "description": "Jira Issue Type",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "icon": {
+            "type": "string",
+            "format": "url"
+          }
+        },
+        "required": [
+          "id",
+          "label",
+          "icon"
+        ],
+        "example": {
+          "id": "10002",
+          "label": "Story",
+          "icon": "http://example.com/images/icons/issuetypes/story.svg"
+        }
+      },
+      "JiraStatus": {
+        "description": "Jira Status",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id"
+        ],
+        "example": {
+          "id": "10000",
+          "label": "To Do"
+        }
+      },
+      "PriorityReference": {
+        "description": "The reference to the PagerDuty priority",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Reference"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "priority_reference"
+                ]
+              }
+            }
+          }
+        ],
+        "example": {
+          "id": "PZQ39X0",
+          "type": "priority_reference"
+        }
+      },
+      "ServiceReference": {
+        "description": "The reference to the service",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Reference"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "service_reference"
+                ]
+              }
+            }
+          }
+        ],
+        "example": {
+          "id": "PIJ90N7",
+          "type": "service_reference"
+        }
+      },
+      "Reference": {
+        "type": "object",
+        "required": [
+          "type",
+          "id"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "string",
+            "description": "A short-form, server-generated string that provides succinct, important information about an object suitable for primary labeling of an entity in a client. In many cases, this will be identical to `name`, though it is not intended to be an identifier."
+          },
+          "type": {
+            "type": "string",
+            "description": "A string that determines the schema of the object. This must be the standard name for the entity, suffixed by `_reference` if the object is a reference."
+          },
+          "self": {
+            "type": "string",
+            "format": "url",
+            "description": "The API show URL at which the object is accessible"
+          },
+          "html_url": {
+            "type": "string",
+            "format": "url,",
+            "description": "A URL at which the entity is uniquely displayed in the Web app"
+          }
+        }
+      },
+      "Pagination": {
+        "type": "object",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "description": "Echoes offset pagination property.",
+            "readOnly": true,
+            "default": 0
+          },
+          "limit": {
+            "type": "integer",
+            "description": "Echoes limit pagination property.",
+            "readOnly": true,
+            "minimum": 0,
+            "maximum": 100,
+            "default": 25
+          },
+          "more": {
+            "type": "boolean",
+            "description": "Indicates if there are additional records to return.",
+            "readOnly": true,
+            "default": false
+          },
+          "total": {
+            "type": "integer",
+            "description": "The total number of records matching the given query.",
+            "nullable": true,
+            "readOnly": true,
+            "default": null
+          }
+        },
+        "required": [
+          "offset",
+          "limit",
+          "more",
+          "total"
+        ]
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string",
+                "readOnly": true,
+                "description": "Error message string.",
+                "example": "Invalid Input Provided"
+              },
+              "errors": {
+                "type": "array",
+                "readOnly": true,
+                "items": {
+                  "type": "string",
+                  "readOnly": true,
+                  "description": "Human-readable error details."
+                },
+                "example": [
+                  "Name can't be blank"
+                ]
+              }
+            },
+            "required": [
+              "message"
+            ]
+          }
+        },
+        "required": [
+          "error"
+        ]
+      }
+    },
+    "securitySchemes": {
+      "BearerToken": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "PagerDuty OAuth user Access Token"
+      },
+      "JiraSignature": {
+        "type": "apiKey",
+        "name": "x-pagerduty-jira-signature",
+        "in": "header",
+        "description": "Jira Authorization Signature"
+      }
+    }
+  },
+  "paths": {
+    "/rules": {
+      "get": {
+        "tags": [
+          "Rules"
+        ],
+        "summary": "List rules",
+        "description": "Returns a list of rules.",
+        "operationId": "getRules",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/total"
+          },
+          {
+            "$ref": "#/components/parameters/limit"
+          },
+          {
+            "$ref": "#/components/parameters/offset"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A paginated list of rules.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Pagination"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "rules": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Rule"
+                          }
+                        }
+                      },
+                      "required": [
+                        "rules"
+                      ]
+                    }
+                  ]
+                },
+                "examples": {
+                  "Response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "rules": [
+                        {
+                          "name": "Sample Rule",
+                          "enabled": true,
+                          "config": {
+                            "sync_comments": true,
+                            "services": [
+                              {
+                                "id": "PLW70S2",
+                                "type": "service_reference",
+                                "label": "Jira Integration",
+                                "html_url": "https://subdomain.pagerduty.com/service-directory/PLW70S2"
+                              },
+                              {
+                                "id": "PR5R1T1",
+                                "type": "service_reference",
+                                "label": "Jira Performance Tests",
+                                "html_url": "https://subdomain.pagerduty.com/service-directory/PR5R1T1"
+                              }
+                            ],
+                            "projects": [
+                              {
+                                "key": "PD",
+                                "id": "10000",
+                                "label": "PagerDuty",
+                                "html_url": "http://jira.example.com/projects/PD",
+                                "icon": "http://jira.example.com/secure/projectavatar?avatarId=10324"
+                              },
+                              {
+                                "key": "HD",
+                                "id": "10001",
+                                "label": "Helpdesk",
+                                "html_url": "http://jira.example.com/projects/HD",
+                                "icon": "http://jira.example.com/secure/projectavatar?avatarId=10324"
+                              }
+                            ],
+                            "issue_types": [
+                              {
+                                "id": "10002",
+                                "icon": "http://jira.example.com/images/icons/issuetypes/story.svg",
+                                "label": "Story"
+                              },
+                              {
+                                "id": "10003",
+                                "icon": "http://jira.example.com/secure/viewavatar?size=xsmall&avatarId=10318&avatarType=issuetype",
+                                "label": "Task"
+                              },
+                              {
+                                "id": "10004",
+                                "icon": "http://jira.example.com/secure/viewavatar?size=xsmall&avatarId=10303&avatarType=issuetype",
+                                "label": "Bug"
+                              }
+                            ],
+                            "autocreate_incidents": true,
+                            "autocreate_incidents_config": [
+                              {
+                                "jql": "issuetype=Bug",
+                                "on_create": true,
+                                "on_update": true,
+                                "target_service": null,
+                                "actions": [
+                                  {
+                                    "key": "jira_field_set_priority",
+                                    "label": "Set Priority",
+                                    "icon": "jira",
+                                    "isDisabled": false
+                                  },
+                                  {
+                                    "key": "jira_field_set_labels",
+                                    "label": "Set Labels",
+                                    "icon": "jira",
+                                    "isDisabled": false
+                                  },
+                                  {
+                                    "key": "pd_set_priority",
+                                    "label": "Set Incident Priority",
+                                    "icon": "pd",
+                                    "isDisabled": false
+                                  }
+                                ],
+                                "actions_params": {
+                                  "jira_field_set_priority": {
+                                    "label": "Highest",
+                                    "icon": "http://jira.example.com/images/icons/priorities/highest.svg",
+                                    "name": "Highest",
+                                    "id": "1"
+                                  },
+                                  "jira_field_set_labels": [
+                                    {
+                                      "label": "Service name",
+                                      "icon": "pd",
+                                      "key": "incident.service.summary"
+                                    }
+                                  ],
+                                  "pd_set_priority": {
+                                    "id": "PZQ39X0",
+                                    "type": "priority_reference",
+                                    "label": "P1",
+                                    "html_url": null,
+                                    "icon": "rect_color_ff4500"
+                                  }
+                                }
+                              },
+                              {
+                                "jql": "issuetype=Story",
+                                "on_create": true,
+                                "on_update": true,
+                                "target_service": {
+                                  "id": "PR5R1T1",
+                                  "type": "service_reference"
+                                },
+                                "actions": [
+                                  {
+                                    "key": "jira_field_set_labels",
+                                    "label": "Set Labels",
+                                    "icon": "jira",
+                                    "isDisabled": false
+                                  },
+                                  {
+                                    "key": "pd_set_priority",
+                                    "label": "Set Incident Priority",
+                                    "icon": "pd",
+                                    "isDisabled": false
+                                  }
+                                ],
+                                "actions_params": {
+                                  "jira_field_set_labels": [
+                                    {
+                                      "label": "LinkedToPagerduty",
+                                      "key": "LinkedToPagerduty",
+                                      "icon": "text"
+                                    }
+                                  ],
+                                  "pd_set_priority": {
+                                    "id": "PCNJ47O",
+                                    "type": "priority_reference",
+                                    "label": "P4",
+                                    "html_url": null,
+                                    "icon": "rect_color_76ec7f"
+                                  }
+                                }
+                              }
+                            ],
+                            "autocreate_issues": true,
+                            "autocreate_issues_config": [
+                              {
+                                "condition": {
+                                  "pd_events": [
+                                    "incident.trigger",
+                                    "incident.acknowledge",
+                                    "incident.unacknowledge",
+                                    "incident.resolve",
+                                    "incident.escalate",
+                                    "incident.assign",
+                                    "incident.delegate",
+                                    "incident.trigger_manually"
+                                  ],
+                                  "pd_urgency": null,
+                                  "pd_priorities": []
+                                },
+                                "target_project": null,
+                                "target_issue_type": null,
+                                "actions": [
+                                  {
+                                    "key": "jira_append_description",
+                                    "label": "Add description",
+                                    "icon": "jira",
+                                    "isDisabled": false
+                                  }
+                                ],
+                                "actions_params": {
+                                  "jira_append_description": [
+                                    {
+                                      "label": "Incident title",
+                                      "icon": "pd",
+                                      "key": "incident.title"
+                                    },
+                                    {
+                                      "label": "Incident number",
+                                      "icon": "pd",
+                                      "key": "incident.incident_number"
+                                    },
+                                    {
+                                      "label": "Incident ID",
+                                      "icon": "pd",
+                                      "key": "incident.id"
+                                    },
+                                    {
+                                      "label": "Description",
+                                      "icon": "pd",
+                                      "key": "log_entries.channel.details"
+                                    },
+                                    {
+                                      "label": "Status",
+                                      "icon": "pd",
+                                      "key": "incident.status"
+                                    },
+                                    {
+                                      "label": "Created At",
+                                      "icon": "pd",
+                                      "key": "incident.created_at"
+                                    },
+                                    {
+                                      "label": "Service name",
+                                      "icon": "pd",
+                                      "key": "incident.service.summary"
+                                    },
+                                    {
+                                      "label": "Escalation policy name",
+                                      "icon": "pd",
+                                      "key": "incident.escalation_policy.summary"
+                                    },
+                                    {
+                                      "label": "Impacted services",
+                                      "icon": "pd",
+                                      "key": "incident.impacted_services.name"
+                                    },
+                                    {
+                                      "label": "Incident URL",
+                                      "icon": "pd",
+                                      "key": "incident.html_url"
+                                    },
+                                    {
+                                      "label": "Acknowledgements",
+                                      "icon": "pd",
+                                      "key": "incident.acknowledgements.acknowledger.name"
+                                    },
+                                    {
+                                      "label": "Urgency",
+                                      "icon": "pd",
+                                      "key": "incident.urgency"
+                                    },
+                                    {
+                                      "label": "Incident assignee",
+                                      "icon": "pd",
+                                      "key": "incident.assignee"
+                                    },
+                                    {
+                                      "label": "Priority",
+                                      "icon": "pd",
+                                      "key": "incident.priority.summary"
+                                    },
+                                    {
+                                      "label": "Last changed by",
+                                      "icon": "pd",
+                                      "key": "incident.last_status_change_by.summary"
+                                    },
+                                    {
+                                      "label": "Last changed at",
+                                      "icon": "pd",
+                                      "key": "incident.last_status_change_at"
+                                    },
+                                    {
+                                      "label": "And my custom text",
+                                      "key": "And my custom text",
+                                      "icon": "text"
+                                    }
+                                  ]
+                                }
+                              },
+                              {
+                                "condition": {
+                                  "pd_events": [
+                                    "incident.trigger"
+                                  ],
+                                  "pd_urgency": "high",
+                                  "pd_priorities": [
+                                    {
+                                      "id": "PZQ39X0",
+                                      "type": "priority_reference",
+                                      "label": "P1",
+                                      "html_url": null,
+                                      "icon": "rect_color_ff4500"
+                                    },
+                                    {
+                                      "id": "POV67SK",
+                                      "type": "priority_reference",
+                                      "label": "P2",
+                                      "html_url": null,
+                                      "icon": "rect_color_f59331"
+                                    }
+                                  ]
+                                },
+                                "target_project": {
+                                  "key": "HD",
+                                  "id": "10001",
+                                  "label": "Helpdesk",
+                                  "html_url": "http://jira.example.com/projects/HD",
+                                  "icon": "http://jira.example.com/secure/projectavatar?avatarId=10324"
+                                },
+                                "target_issue_type": {
+                                  "id": "10004",
+                                  "icon": "http://jira.example.com/secure/viewavatar?size=xsmall&avatarId=10303&avatarType=issuetype",
+                                  "label": "Bug"
+                                },
+                                "actions": [
+                                  {
+                                    "key": "jira_field_set_priority",
+                                    "label": "Set Priority",
+                                    "icon": "jira",
+                                    "isDisabled": false
+                                  }
+                                ],
+                                "actions_params": {
+                                  "jira_field_set_priority": {
+                                    "label": "Highest",
+                                    "icon": "http://jira.example.com/images/icons/priorities/highest.svg",
+                                    "name": "Highest",
+                                    "id": "1"
+                                  }
+                                }
+                              },
+                              {
+                                "condition": {
+                                  "pd_events": [
+                                    "incident.trigger"
+                                  ],
+                                  "pd_urgency": "low",
+                                  "pd_priorities": [
+                                    {
+                                      "id": "P0A95OH",
+                                      "type": "priority_reference",
+                                      "label": "P3",
+                                      "html_url": null,
+                                      "icon": "rect_color_359d54"
+                                    },
+                                    {
+                                      "id": "PCNJ47O",
+                                      "type": "priority_reference",
+                                      "label": "P4",
+                                      "html_url": null,
+                                      "icon": "rect_color_76ec7f"
+                                    },
+                                    {
+                                      "id": "PRSM238",
+                                      "type": "priority_reference",
+                                      "label": "P5",
+                                      "html_url": null,
+                                      "icon": "rect_color_f4f4f4"
+                                    }
+                                  ]
+                                },
+                                "target_project": null,
+                                "target_issue_type": {
+                                  "id": "10004",
+                                  "icon": "http://jira.example.com/secure/viewavatar?size=xsmall&avatarId=10303&avatarType=issuetype",
+                                  "label": "Bug"
+                                },
+                                "actions": [
+                                  {
+                                    "key": "jira_field_set_priority",
+                                    "label": "Set Priority",
+                                    "icon": "jira",
+                                    "isDisabled": false
+                                  }
+                                ],
+                                "actions_params": {
+                                  "jira_field_set_priority": {
+                                    "label": "Low",
+                                    "icon": "http://jira.example.com/images/icons/priorities/low.svg",
+                                    "name": "Low",
+                                    "id": "4"
+                                  }
+                                }
+                              }
+                            ],
+                            "react_on_incident_event": true,
+                            "react_on_incident_event_config": [
+                              {
+                                "condition": {
+                                  "pd_events": [
+                                    "incident.acknowledge"
+                                  ],
+                                  "pd_urgency": null,
+                                  "pd_priorities": []
+                                },
+                                "actions": [
+                                  {
+                                    "key": "jira_change_status",
+                                    "label": "Change Jira issue status to",
+                                    "icon": "jira",
+                                    "isDisabled": false
+                                  }
+                                ],
+                                "actions_params": {
+                                  "jira_change_status": {
+                                    "id": "3",
+                                    "label": "In Progress"
+                                  }
+                                }
+                              },
+                              {
+                                "condition": {
+                                  "pd_events": [
+                                    "incident.unacknowledge"
+                                  ],
+                                  "pd_urgency": null,
+                                  "pd_priorities": []
+                                },
+                                "actions": [
+                                  {
+                                    "key": "jira_change_status",
+                                    "label": "Change Jira issue status to",
+                                    "icon": "jira",
+                                    "isDisabled": false
+                                  }
+                                ],
+                                "actions_params": {
+                                  "jira_change_status": {
+                                    "id": "10000",
+                                    "label": "To Do"
+                                  }
+                                }
+                              },
+                              {
+                                "condition": {
+                                  "pd_events": [
+                                    "incident.resolve"
+                                  ],
+                                  "pd_urgency": null,
+                                  "pd_priorities": []
+                                },
+                                "actions": [
+                                  {
+                                    "key": "jira_change_status",
+                                    "label": "Change Jira issue status to",
+                                    "icon": "jira",
+                                    "isDisabled": false
+                                  }
+                                ],
+                                "actions_params": {
+                                  "jira_change_status": {
+                                    "id": "10001",
+                                    "label": "Done"
+                                  }
+                                }
+                              },
+                              {
+                                "condition": {
+                                  "pd_events": [
+                                    "incident.assign"
+                                  ],
+                                  "pd_urgency": null,
+                                  "pd_priorities": []
+                                },
+                                "actions": [
+                                  {
+                                    "key": "jira_field_set_assignee",
+                                    "label": "Set Assignee",
+                                    "icon": "jira",
+                                    "isDisabled": false
+                                  }
+                                ],
+                                "actions_params": {
+                                  "jira_field_set_assignee": {
+                                    "label": "Incident assignee",
+                                    "icon": "pd",
+                                    "key": "incident.assignee"
+                                  }
+                                }
+                              }
+                            ],
+                            "react_on_issue_status_change": true,
+                            "react_on_issue_status_change_config": [
+                              {
+                                "jira_statuses": [
+                                  {
+                                    "id": "3",
+                                    "label": "In Progress"
+                                  }
+                                ],
+                                "actions": [
+                                  {
+                                    "key": "pd_acknowledge",
+                                    "label": "Acknowledge Incident",
+                                    "icon": "pd",
+                                    "isDisabled": false
+                                  }
+                                ]
+                              },
+                              {
+                                "jira_statuses": [
+                                  {
+                                    "id": "10001",
+                                    "label": "Done"
+                                  }
+                                ],
+                                "actions": [
+                                  {
+                                    "key": "pd_resolve",
+                                    "label": "Resolve Incident",
+                                    "icon": "pd",
+                                    "isDisabled": false
+                                  }
+                                ]
+                              },
+                              {
+                                "jira_statuses": [
+                                  {
+                                    "id": "10000",
+                                    "label": "To Do"
+                                  }
+                                ],
+                                "actions": [
+                                  {
+                                    "key": "pd_add_responders",
+                                    "label": "Add responders",
+                                    "icon": "pd",
+                                    "isDisabled": false
+                                  }
+                                ],
+                                "actions_params": {
+                                  "pd_add_responders": [
+                                    {
+                                      "id": "PDU13T4",
+                                      "type": "user_reference",
+                                      "email": "user1@example.com",
+                                      "label": "User 1",
+                                      "html_url": "https://subdomain.pagerduty.com/users/PDU13T4",
+                                      "icon": "https://secure.gravatar.com/avatar/0787c04e4eb52aa05d2c94bac8293c83.png?d=mm&r=PG"
+                                    },
+                                    {
+                                      "id": "PKH7YP2",
+                                      "type": "user_reference",
+                                      "email": "user2@example.com",
+                                      "label": "User 2",
+                                      "html_url": "https://subdomain.pagerduty.com/users/PKH7YP2",
+                                      "icon": "https://secure.gravatar.com/avatar/7358657a3a25a1ab291289aaf38afcba.png?d=mm&r=PG"
+                                    }
+                                  ]
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      ],
+                      "limit": 1,
+                      "offset": 0,
+                      "more": true,
+                      "total": 99
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Rules"
+        ],
+        "summary": "Create a rule",
+        "description": "Creates a rule.\n\n> ### Action required!\n>\n>  Make sure that all required PagerDuty and Jira webhooks are present. You can do this by clicking **Check webhooks** button on the *Rules* page of the PagerDuty Jira application\n",
+        "operationId": "createRule",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "rule": {
+                    "$ref": "#/components/schemas/Rule"
+                  }
+                },
+                "required": [
+                  "rule"
+                ]
+              },
+              "examples": {
+                "Request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "rule": {
+                      "name": "Sample Rule",
+                      "enabled": true,
+                      "config": {
+                        "sync_comments": true,
+                        "services": [
+                          {
+                            "id": "PLW70S2",
+                            "type": "service_reference",
+                            "label": "Jira Integration",
+                            "html_url": "https://subdomain.pagerduty.com/service-directory/PLW70S2"
+                          },
+                          {
+                            "id": "PR5R1T1",
+                            "type": "service_reference",
+                            "label": "Jira Performance Tests",
+                            "html_url": "https://subdomain.pagerduty.com/service-directory/PR5R1T1"
+                          }
+                        ],
+                        "projects": [
+                          {
+                            "key": "PD",
+                            "id": "10000",
+                            "label": "PagerDuty",
+                            "html_url": "http://jira.example.com/projects/PD",
+                            "icon": "http://jira.example.com/secure/projectavatar?avatarId=10324"
+                          },
+                          {
+                            "key": "HD",
+                            "id": "10001",
+                            "label": "Helpdesk",
+                            "html_url": "http://jira.example.com/projects/HD",
+                            "icon": "http://jira.example.com/secure/projectavatar?avatarId=10324"
+                          }
+                        ],
+                        "issue_types": [
+                          {
+                            "id": "10002",
+                            "icon": "http://jira.example.com/images/icons/issuetypes/story.svg",
+                            "label": "Story"
+                          },
+                          {
+                            "id": "10003",
+                            "icon": "http://jira.example.com/secure/viewavatar?size=xsmall&avatarId=10318&avatarType=issuetype",
+                            "label": "Task"
+                          },
+                          {
+                            "id": "10004",
+                            "icon": "http://jira.example.com/secure/viewavatar?size=xsmall&avatarId=10303&avatarType=issuetype",
+                            "label": "Bug"
+                          }
+                        ],
+                        "autocreate_incidents": true,
+                        "autocreate_incidents_config": [
+                          {
+                            "jql": "issuetype=Bug",
+                            "on_create": true,
+                            "on_update": true,
+                            "target_service": null,
+                            "actions": [
+                              {
+                                "key": "jira_field_set_priority",
+                                "label": "Set Priority",
+                                "icon": "jira",
+                                "isDisabled": false
+                              },
+                              {
+                                "key": "jira_field_set_labels",
+                                "label": "Set Labels",
+                                "icon": "jira",
+                                "isDisabled": false
+                              },
+                              {
+                                "key": "pd_set_priority",
+                                "label": "Set Incident Priority",
+                                "icon": "pd",
+                                "isDisabled": false
+                              }
+                            ],
+                            "actions_params": {
+                              "jira_field_set_priority": {
+                                "label": "Highest",
+                                "icon": "http://jira.example.com/images/icons/priorities/highest.svg",
+                                "name": "Highest",
+                                "id": "1"
+                              },
+                              "jira_field_set_labels": [
+                                {
+                                  "label": "Service name",
+                                  "icon": "pd",
+                                  "key": "incident.service.summary"
+                                }
+                              ],
+                              "pd_set_priority": {
+                                "id": "PZQ39X0",
+                                "type": "priority_reference",
+                                "label": "P1",
+                                "html_url": null,
+                                "icon": "rect_color_ff4500"
+                              }
+                            }
+                          },
+                          {
+                            "jql": "issuetype=Story",
+                            "on_create": true,
+                            "on_update": true,
+                            "target_service": {
+                              "id": "PR5R1T1",
+                              "type": "service_reference"
+                            },
+                            "actions": [
+                              {
+                                "key": "jira_field_set_labels",
+                                "label": "Set Labels",
+                                "icon": "jira",
+                                "isDisabled": false
+                              },
+                              {
+                                "key": "pd_set_priority",
+                                "label": "Set Incident Priority",
+                                "icon": "pd",
+                                "isDisabled": false
+                              }
+                            ],
+                            "actions_params": {
+                              "jira_field_set_labels": [
+                                {
+                                  "label": "LinkedToPagerduty",
+                                  "key": "LinkedToPagerduty",
+                                  "icon": "text"
+                                }
+                              ],
+                              "pd_set_priority": {
+                                "id": "PCNJ47O",
+                                "type": "priority_reference",
+                                "label": "P4",
+                                "html_url": null,
+                                "icon": "rect_color_76ec7f"
+                              }
+                            }
+                          }
+                        ],
+                        "autocreate_issues": true,
+                        "autocreate_issues_config": [
+                          {
+                            "condition": {
+                              "pd_events": [
+                                "incident.trigger",
+                                "incident.acknowledge",
+                                "incident.unacknowledge",
+                                "incident.resolve",
+                                "incident.escalate",
+                                "incident.assign",
+                                "incident.delegate",
+                                "incident.trigger_manually"
+                              ],
+                              "pd_urgency": null,
+                              "pd_priorities": []
+                            },
+                            "target_project": null,
+                            "target_issue_type": null,
+                            "actions": [
+                              {
+                                "key": "jira_append_description",
+                                "label": "Add description",
+                                "icon": "jira",
+                                "isDisabled": false
+                              }
+                            ],
+                            "actions_params": {
+                              "jira_append_description": [
+                                {
+                                  "label": "Incident title",
+                                  "icon": "pd",
+                                  "key": "incident.title"
+                                },
+                                {
+                                  "label": "Incident number",
+                                  "icon": "pd",
+                                  "key": "incident.incident_number"
+                                },
+                                {
+                                  "label": "Incident ID",
+                                  "icon": "pd",
+                                  "key": "incident.id"
+                                },
+                                {
+                                  "label": "Description",
+                                  "icon": "pd",
+                                  "key": "log_entries.channel.details"
+                                },
+                                {
+                                  "label": "Status",
+                                  "icon": "pd",
+                                  "key": "incident.status"
+                                },
+                                {
+                                  "label": "Created At",
+                                  "icon": "pd",
+                                  "key": "incident.created_at"
+                                },
+                                {
+                                  "label": "Service name",
+                                  "icon": "pd",
+                                  "key": "incident.service.summary"
+                                },
+                                {
+                                  "label": "Escalation policy name",
+                                  "icon": "pd",
+                                  "key": "incident.escalation_policy.summary"
+                                },
+                                {
+                                  "label": "Impacted services",
+                                  "icon": "pd",
+                                  "key": "incident.impacted_services.name"
+                                },
+                                {
+                                  "label": "Incident URL",
+                                  "icon": "pd",
+                                  "key": "incident.html_url"
+                                },
+                                {
+                                  "label": "Acknowledgements",
+                                  "icon": "pd",
+                                  "key": "incident.acknowledgements.acknowledger.name"
+                                },
+                                {
+                                  "label": "Urgency",
+                                  "icon": "pd",
+                                  "key": "incident.urgency"
+                                },
+                                {
+                                  "label": "Incident assignee",
+                                  "icon": "pd",
+                                  "key": "incident.assignee"
+                                },
+                                {
+                                  "label": "Priority",
+                                  "icon": "pd",
+                                  "key": "incident.priority.summary"
+                                },
+                                {
+                                  "label": "Last changed by",
+                                  "icon": "pd",
+                                  "key": "incident.last_status_change_by.summary"
+                                },
+                                {
+                                  "label": "Last changed at",
+                                  "icon": "pd",
+                                  "key": "incident.last_status_change_at"
+                                },
+                                {
+                                  "label": "And my custom text",
+                                  "key": "And my custom text",
+                                  "icon": "text"
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "condition": {
+                              "pd_events": [
+                                "incident.trigger"
+                              ],
+                              "pd_urgency": "high",
+                              "pd_priorities": [
+                                {
+                                  "id": "PZQ39X0",
+                                  "type": "priority_reference",
+                                  "label": "P1",
+                                  "html_url": null,
+                                  "icon": "rect_color_ff4500"
+                                },
+                                {
+                                  "id": "POV67SK",
+                                  "type": "priority_reference",
+                                  "label": "P2",
+                                  "html_url": null,
+                                  "icon": "rect_color_f59331"
+                                }
+                              ]
+                            },
+                            "target_project": {
+                              "key": "HD",
+                              "id": "10001",
+                              "label": "Helpdesk",
+                              "html_url": "http://jira.example.com/projects/HD",
+                              "icon": "http://jira.example.com/secure/projectavatar?avatarId=10324"
+                            },
+                            "target_issue_type": {
+                              "id": "10004",
+                              "icon": "http://jira.example.com/secure/viewavatar?size=xsmall&avatarId=10303&avatarType=issuetype",
+                              "label": "Bug"
+                            },
+                            "actions": [
+                              {
+                                "key": "jira_field_set_priority",
+                                "label": "Set Priority",
+                                "icon": "jira",
+                                "isDisabled": false
+                              }
+                            ],
+                            "actions_params": {
+                              "jira_field_set_priority": {
+                                "label": "Highest",
+                                "icon": "http://jira.example.com/images/icons/priorities/highest.svg",
+                                "name": "Highest",
+                                "id": "1"
+                              }
+                            }
+                          },
+                          {
+                            "condition": {
+                              "pd_events": [
+                                "incident.trigger"
+                              ],
+                              "pd_urgency": "low",
+                              "pd_priorities": [
+                                {
+                                  "id": "P0A95OH",
+                                  "type": "priority_reference",
+                                  "label": "P3",
+                                  "html_url": null,
+                                  "icon": "rect_color_359d54"
+                                },
+                                {
+                                  "id": "PCNJ47O",
+                                  "type": "priority_reference",
+                                  "label": "P4",
+                                  "html_url": null,
+                                  "icon": "rect_color_76ec7f"
+                                },
+                                {
+                                  "id": "PRSM238",
+                                  "type": "priority_reference",
+                                  "label": "P5",
+                                  "html_url": null,
+                                  "icon": "rect_color_f4f4f4"
+                                }
+                              ]
+                            },
+                            "target_project": null,
+                            "target_issue_type": {
+                              "id": "10004",
+                              "icon": "http://jira.example.com/secure/viewavatar?size=xsmall&avatarId=10303&avatarType=issuetype",
+                              "label": "Bug"
+                            },
+                            "actions": [
+                              {
+                                "key": "jira_field_set_priority",
+                                "label": "Set Priority",
+                                "icon": "jira",
+                                "isDisabled": false
+                              }
+                            ],
+                            "actions_params": {
+                              "jira_field_set_priority": {
+                                "label": "Low",
+                                "icon": "http://jira.example.com/images/icons/priorities/low.svg",
+                                "name": "Low",
+                                "id": "4"
+                              }
+                            }
+                          }
+                        ],
+                        "react_on_incident_event": true,
+                        "react_on_incident_event_config": [
+                          {
+                            "condition": {
+                              "pd_events": [
+                                "incident.acknowledge"
+                              ],
+                              "pd_urgency": null,
+                              "pd_priorities": []
+                            },
+                            "actions": [
+                              {
+                                "key": "jira_change_status",
+                                "label": "Change Jira issue status to",
+                                "icon": "jira",
+                                "isDisabled": false
+                              }
+                            ],
+                            "actions_params": {
+                              "jira_change_status": {
+                                "id": "3",
+                                "label": "In Progress"
+                              }
+                            }
+                          },
+                          {
+                            "condition": {
+                              "pd_events": [
+                                "incident.unacknowledge"
+                              ],
+                              "pd_urgency": null,
+                              "pd_priorities": []
+                            },
+                            "actions": [
+                              {
+                                "key": "jira_change_status",
+                                "label": "Change Jira issue status to",
+                                "icon": "jira",
+                                "isDisabled": false
+                              }
+                            ],
+                            "actions_params": {
+                              "jira_change_status": {
+                                "id": "10000",
+                                "label": "To Do"
+                              }
+                            }
+                          },
+                          {
+                            "condition": {
+                              "pd_events": [
+                                "incident.resolve"
+                              ],
+                              "pd_urgency": null,
+                              "pd_priorities": []
+                            },
+                            "actions": [
+                              {
+                                "key": "jira_change_status",
+                                "label": "Change Jira issue status to",
+                                "icon": "jira",
+                                "isDisabled": false
+                              }
+                            ],
+                            "actions_params": {
+                              "jira_change_status": {
+                                "id": "10001",
+                                "label": "Done"
+                              }
+                            }
+                          },
+                          {
+                            "condition": {
+                              "pd_events": [
+                                "incident.assign"
+                              ],
+                              "pd_urgency": null,
+                              "pd_priorities": []
+                            },
+                            "actions": [
+                              {
+                                "key": "jira_field_set_assignee",
+                                "label": "Set Assignee",
+                                "icon": "jira",
+                                "isDisabled": false
+                              }
+                            ],
+                            "actions_params": {
+                              "jira_field_set_assignee": {
+                                "label": "Incident assignee",
+                                "icon": "pd",
+                                "key": "incident.assignee"
+                              }
+                            }
+                          }
+                        ],
+                        "react_on_issue_status_change": true,
+                        "react_on_issue_status_change_config": [
+                          {
+                            "jira_statuses": [
+                              {
+                                "id": "3",
+                                "label": "In Progress"
+                              }
+                            ],
+                            "actions": [
+                              {
+                                "key": "pd_acknowledge",
+                                "label": "Acknowledge Incident",
+                                "icon": "pd",
+                                "isDisabled": false
+                              }
+                            ]
+                          },
+                          {
+                            "jira_statuses": [
+                              {
+                                "id": "10001",
+                                "label": "Done"
+                              }
+                            ],
+                            "actions": [
+                              {
+                                "key": "pd_resolve",
+                                "label": "Resolve Incident",
+                                "icon": "pd",
+                                "isDisabled": false
+                              }
+                            ]
+                          },
+                          {
+                            "jira_statuses": [
+                              {
+                                "id": "10000",
+                                "label": "To Do"
+                              }
+                            ],
+                            "actions": [
+                              {
+                                "key": "pd_add_responders",
+                                "label": "Add responders",
+                                "icon": "pd",
+                                "isDisabled": false
+                              }
+                            ],
+                            "actions_params": {
+                              "pd_add_responders": [
+                                {
+                                  "id": "PDU13T4",
+                                  "type": "user_reference",
+                                  "email": "user1@example.com",
+                                  "label": "User 1",
+                                  "html_url": "https://subdomain.pagerduty.com/users/PDU13T4",
+                                  "icon": "https://secure.gravatar.com/avatar/0787c04e4eb52aa05d2c94bac8293c83.png?d=mm&r=PG"
+                                },
+                                {
+                                  "id": "PKH7YP2",
+                                  "type": "user_reference",
+                                  "email": "user2@example.com",
+                                  "label": "User 2",
+                                  "html_url": "https://subdomain.pagerduty.com/users/PKH7YP2",
+                                  "icon": "https://secure.gravatar.com/avatar/7358657a3a25a1ab291289aaf38afcba.png?d=mm&r=PG"
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The rule that was created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "rule": {
+                      "$ref": "#/components/schemas/Rule"
+                    }
+                  },
+                  "required": [
+                    "rule"
+                  ]
+                },
+                "examples": {
+                  "Response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "rule": {
+                        "name": "Sample Rule",
+                        "enabled": true,
+                        "config": {
+                          "sync_comments": true,
+                          "services": [
+                            {
+                              "id": "PLW70S2",
+                              "type": "service_reference",
+                              "label": "Jira Integration",
+                              "html_url": "https://subdomain.pagerduty.com/service-directory/PLW70S2"
+                            },
+                            {
+                              "id": "PR5R1T1",
+                              "type": "service_reference",
+                              "label": "Jira Performance Tests",
+                              "html_url": "https://subdomain.pagerduty.com/service-directory/PR5R1T1"
+                            }
+                          ],
+                          "projects": [
+                            {
+                              "key": "PD",
+                              "id": "10000",
+                              "label": "PagerDuty",
+                              "html_url": "http://jira.example.com/projects/PD",
+                              "icon": "http://jira.example.com/secure/projectavatar?avatarId=10324"
+                            },
+                            {
+                              "key": "HD",
+                              "id": "10001",
+                              "label": "Helpdesk",
+                              "html_url": "http://jira.example.com/projects/HD",
+                              "icon": "http://jira.example.com/secure/projectavatar?avatarId=10324"
+                            }
+                          ],
+                          "issue_types": [
+                            {
+                              "id": "10002",
+                              "icon": "http://jira.example.com/images/icons/issuetypes/story.svg",
+                              "label": "Story"
+                            },
+                            {
+                              "id": "10003",
+                              "icon": "http://jira.example.com/secure/viewavatar?size=xsmall&avatarId=10318&avatarType=issuetype",
+                              "label": "Task"
+                            },
+                            {
+                              "id": "10004",
+                              "icon": "http://jira.example.com/secure/viewavatar?size=xsmall&avatarId=10303&avatarType=issuetype",
+                              "label": "Bug"
+                            }
+                          ],
+                          "autocreate_incidents": true,
+                          "autocreate_incidents_config": [
+                            {
+                              "jql": "issuetype=Bug",
+                              "on_create": true,
+                              "on_update": true,
+                              "target_service": null,
+                              "actions": [
+                                {
+                                  "key": "jira_field_set_priority",
+                                  "label": "Set Priority",
+                                  "icon": "jira",
+                                  "isDisabled": false
+                                },
+                                {
+                                  "key": "jira_field_set_labels",
+                                  "label": "Set Labels",
+                                  "icon": "jira",
+                                  "isDisabled": false
+                                },
+                                {
+                                  "key": "pd_set_priority",
+                                  "label": "Set Incident Priority",
+                                  "icon": "pd",
+                                  "isDisabled": false
+                                }
+                              ],
+                              "actions_params": {
+                                "jira_field_set_priority": {
+                                  "label": "Highest",
+                                  "icon": "http://jira.example.com/images/icons/priorities/highest.svg",
+                                  "name": "Highest",
+                                  "id": "1"
+                                },
+                                "jira_field_set_labels": [
+                                  {
+                                    "label": "Service name",
+                                    "icon": "pd",
+                                    "key": "incident.service.summary"
+                                  }
+                                ],
+                                "pd_set_priority": {
+                                  "id": "PZQ39X0",
+                                  "type": "priority_reference",
+                                  "label": "P1",
+                                  "html_url": null,
+                                  "icon": "rect_color_ff4500"
+                                }
+                              }
+                            },
+                            {
+                              "jql": "issuetype=Story",
+                              "on_create": true,
+                              "on_update": true,
+                              "target_service": {
+                                "id": "PR5R1T1",
+                                "type": "service_reference"
+                              },
+                              "actions": [
+                                {
+                                  "key": "jira_field_set_labels",
+                                  "label": "Set Labels",
+                                  "icon": "jira",
+                                  "isDisabled": false
+                                },
+                                {
+                                  "key": "pd_set_priority",
+                                  "label": "Set Incident Priority",
+                                  "icon": "pd",
+                                  "isDisabled": false
+                                }
+                              ],
+                              "actions_params": {
+                                "jira_field_set_labels": [
+                                  {
+                                    "label": "LinkedToPagerduty",
+                                    "key": "LinkedToPagerduty",
+                                    "icon": "text"
+                                  }
+                                ],
+                                "pd_set_priority": {
+                                  "id": "PCNJ47O",
+                                  "type": "priority_reference",
+                                  "label": "P4",
+                                  "html_url": null,
+                                  "icon": "rect_color_76ec7f"
+                                }
+                              }
+                            }
+                          ],
+                          "autocreate_issues": true,
+                          "autocreate_issues_config": [
+                            {
+                              "condition": {
+                                "pd_events": [
+                                  "incident.trigger",
+                                  "incident.acknowledge",
+                                  "incident.unacknowledge",
+                                  "incident.resolve",
+                                  "incident.escalate",
+                                  "incident.assign",
+                                  "incident.delegate",
+                                  "incident.trigger_manually"
+                                ],
+                                "pd_urgency": null,
+                                "pd_priorities": []
+                              },
+                              "target_project": null,
+                              "target_issue_type": null,
+                              "actions": [
+                                {
+                                  "key": "jira_append_description",
+                                  "label": "Add description",
+                                  "icon": "jira",
+                                  "isDisabled": false
+                                }
+                              ],
+                              "actions_params": {
+                                "jira_append_description": [
+                                  {
+                                    "label": "Incident title",
+                                    "icon": "pd",
+                                    "key": "incident.title"
+                                  },
+                                  {
+                                    "label": "Incident number",
+                                    "icon": "pd",
+                                    "key": "incident.incident_number"
+                                  },
+                                  {
+                                    "label": "Incident ID",
+                                    "icon": "pd",
+                                    "key": "incident.id"
+                                  },
+                                  {
+                                    "label": "Description",
+                                    "icon": "pd",
+                                    "key": "log_entries.channel.details"
+                                  },
+                                  {
+                                    "label": "Status",
+                                    "icon": "pd",
+                                    "key": "incident.status"
+                                  },
+                                  {
+                                    "label": "Created At",
+                                    "icon": "pd",
+                                    "key": "incident.created_at"
+                                  },
+                                  {
+                                    "label": "Service name",
+                                    "icon": "pd",
+                                    "key": "incident.service.summary"
+                                  },
+                                  {
+                                    "label": "Escalation policy name",
+                                    "icon": "pd",
+                                    "key": "incident.escalation_policy.summary"
+                                  },
+                                  {
+                                    "label": "Impacted services",
+                                    "icon": "pd",
+                                    "key": "incident.impacted_services.name"
+                                  },
+                                  {
+                                    "label": "Incident URL",
+                                    "icon": "pd",
+                                    "key": "incident.html_url"
+                                  },
+                                  {
+                                    "label": "Acknowledgements",
+                                    "icon": "pd",
+                                    "key": "incident.acknowledgements.acknowledger.name"
+                                  },
+                                  {
+                                    "label": "Urgency",
+                                    "icon": "pd",
+                                    "key": "incident.urgency"
+                                  },
+                                  {
+                                    "label": "Incident assignee",
+                                    "icon": "pd",
+                                    "key": "incident.assignee"
+                                  },
+                                  {
+                                    "label": "Priority",
+                                    "icon": "pd",
+                                    "key": "incident.priority.summary"
+                                  },
+                                  {
+                                    "label": "Last changed by",
+                                    "icon": "pd",
+                                    "key": "incident.last_status_change_by.summary"
+                                  },
+                                  {
+                                    "label": "Last changed at",
+                                    "icon": "pd",
+                                    "key": "incident.last_status_change_at"
+                                  },
+                                  {
+                                    "label": "And my custom text",
+                                    "key": "And my custom text",
+                                    "icon": "text"
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "condition": {
+                                "pd_events": [
+                                  "incident.trigger"
+                                ],
+                                "pd_urgency": "high",
+                                "pd_priorities": [
+                                  {
+                                    "id": "PZQ39X0",
+                                    "type": "priority_reference",
+                                    "label": "P1",
+                                    "html_url": null,
+                                    "icon": "rect_color_ff4500"
+                                  },
+                                  {
+                                    "id": "POV67SK",
+                                    "type": "priority_reference",
+                                    "label": "P2",
+                                    "html_url": null,
+                                    "icon": "rect_color_f59331"
+                                  }
+                                ]
+                              },
+                              "target_project": {
+                                "key": "HD",
+                                "id": "10001",
+                                "label": "Helpdesk",
+                                "html_url": "http://jira.example.com/projects/HD",
+                                "icon": "http://jira.example.com/secure/projectavatar?avatarId=10324"
+                              },
+                              "target_issue_type": {
+                                "id": "10004",
+                                "icon": "http://jira.example.com/secure/viewavatar?size=xsmall&avatarId=10303&avatarType=issuetype",
+                                "label": "Bug"
+                              },
+                              "actions": [
+                                {
+                                  "key": "jira_field_set_priority",
+                                  "label": "Set Priority",
+                                  "icon": "jira",
+                                  "isDisabled": false
+                                }
+                              ],
+                              "actions_params": {
+                                "jira_field_set_priority": {
+                                  "label": "Highest",
+                                  "icon": "http://jira.example.com/images/icons/priorities/highest.svg",
+                                  "name": "Highest",
+                                  "id": "1"
+                                }
+                              }
+                            },
+                            {
+                              "condition": {
+                                "pd_events": [
+                                  "incident.trigger"
+                                ],
+                                "pd_urgency": "low",
+                                "pd_priorities": [
+                                  {
+                                    "id": "P0A95OH",
+                                    "type": "priority_reference",
+                                    "label": "P3",
+                                    "html_url": null,
+                                    "icon": "rect_color_359d54"
+                                  },
+                                  {
+                                    "id": "PCNJ47O",
+                                    "type": "priority_reference",
+                                    "label": "P4",
+                                    "html_url": null,
+                                    "icon": "rect_color_76ec7f"
+                                  },
+                                  {
+                                    "id": "PRSM238",
+                                    "type": "priority_reference",
+                                    "label": "P5",
+                                    "html_url": null,
+                                    "icon": "rect_color_f4f4f4"
+                                  }
+                                ]
+                              },
+                              "target_project": null,
+                              "target_issue_type": {
+                                "id": "10004",
+                                "icon": "http://jira.example.com/secure/viewavatar?size=xsmall&avatarId=10303&avatarType=issuetype",
+                                "label": "Bug"
+                              },
+                              "actions": [
+                                {
+                                  "key": "jira_field_set_priority",
+                                  "label": "Set Priority",
+                                  "icon": "jira",
+                                  "isDisabled": false
+                                }
+                              ],
+                              "actions_params": {
+                                "jira_field_set_priority": {
+                                  "label": "Low",
+                                  "icon": "http://jira.example.com/images/icons/priorities/low.svg",
+                                  "name": "Low",
+                                  "id": "4"
+                                }
+                              }
+                            }
+                          ],
+                          "react_on_incident_event": true,
+                          "react_on_incident_event_config": [
+                            {
+                              "condition": {
+                                "pd_events": [
+                                  "incident.acknowledge"
+                                ],
+                                "pd_urgency": null,
+                                "pd_priorities": []
+                              },
+                              "actions": [
+                                {
+                                  "key": "jira_change_status",
+                                  "label": "Change Jira issue status to",
+                                  "icon": "jira",
+                                  "isDisabled": false
+                                }
+                              ],
+                              "actions_params": {
+                                "jira_change_status": {
+                                  "id": "3",
+                                  "label": "In Progress"
+                                }
+                              }
+                            },
+                            {
+                              "condition": {
+                                "pd_events": [
+                                  "incident.unacknowledge"
+                                ],
+                                "pd_urgency": null,
+                                "pd_priorities": []
+                              },
+                              "actions": [
+                                {
+                                  "key": "jira_change_status",
+                                  "label": "Change Jira issue status to",
+                                  "icon": "jira",
+                                  "isDisabled": false
+                                }
+                              ],
+                              "actions_params": {
+                                "jira_change_status": {
+                                  "id": "10000",
+                                  "label": "To Do"
+                                }
+                              }
+                            },
+                            {
+                              "condition": {
+                                "pd_events": [
+                                  "incident.resolve"
+                                ],
+                                "pd_urgency": null,
+                                "pd_priorities": []
+                              },
+                              "actions": [
+                                {
+                                  "key": "jira_change_status",
+                                  "label": "Change Jira issue status to",
+                                  "icon": "jira",
+                                  "isDisabled": false
+                                }
+                              ],
+                              "actions_params": {
+                                "jira_change_status": {
+                                  "id": "10001",
+                                  "label": "Done"
+                                }
+                              }
+                            },
+                            {
+                              "condition": {
+                                "pd_events": [
+                                  "incident.assign"
+                                ],
+                                "pd_urgency": null,
+                                "pd_priorities": []
+                              },
+                              "actions": [
+                                {
+                                  "key": "jira_field_set_assignee",
+                                  "label": "Set Assignee",
+                                  "icon": "jira",
+                                  "isDisabled": false
+                                }
+                              ],
+                              "actions_params": {
+                                "jira_field_set_assignee": {
+                                  "label": "Incident assignee",
+                                  "icon": "pd",
+                                  "key": "incident.assignee"
+                                }
+                              }
+                            }
+                          ],
+                          "react_on_issue_status_change": true,
+                          "react_on_issue_status_change_config": [
+                            {
+                              "jira_statuses": [
+                                {
+                                  "id": "3",
+                                  "label": "In Progress"
+                                }
+                              ],
+                              "actions": [
+                                {
+                                  "key": "pd_acknowledge",
+                                  "label": "Acknowledge Incident",
+                                  "icon": "pd",
+                                  "isDisabled": false
+                                }
+                              ]
+                            },
+                            {
+                              "jira_statuses": [
+                                {
+                                  "id": "10001",
+                                  "label": "Done"
+                                }
+                              ],
+                              "actions": [
+                                {
+                                  "key": "pd_resolve",
+                                  "label": "Resolve Incident",
+                                  "icon": "pd",
+                                  "isDisabled": false
+                                }
+                              ]
+                            },
+                            {
+                              "jira_statuses": [
+                                {
+                                  "id": "10000",
+                                  "label": "To Do"
+                                }
+                              ],
+                              "actions": [
+                                {
+                                  "key": "pd_add_responders",
+                                  "label": "Add responders",
+                                  "icon": "pd",
+                                  "isDisabled": false
+                                }
+                              ],
+                              "actions_params": {
+                                "pd_add_responders": [
+                                  {
+                                    "id": "PDU13T4",
+                                    "type": "user_reference",
+                                    "email": "user1@example.com",
+                                    "label": "User 1",
+                                    "html_url": "https://subdomain.pagerduty.com/users/PDU13T4",
+                                    "icon": "https://secure.gravatar.com/avatar/0787c04e4eb52aa05d2c94bac8293c83.png?d=mm&r=PG"
+                                  },
+                                  {
+                                    "id": "PKH7YP2",
+                                    "type": "user_reference",
+                                    "email": "user2@example.com",
+                                    "label": "User 2",
+                                    "html_url": "https://subdomain.pagerduty.com/users/PKH7YP2",
+                                    "icon": "https://secure.gravatar.com/avatar/7358657a3a25a1ab291289aaf38afcba.png?d=mm&r=PG"
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/rules/{id}": {
+      "get": {
+        "tags": [
+          "Rules"
+        ],
+        "summary": "Get a rule",
+        "description": "Get details about an existing rule.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "operationId": "getRule",
+        "responses": {
+          "200": {
+            "description": "The rule requested.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "rule": {
+                      "$ref": "#/components/schemas/Rule"
+                    }
+                  },
+                  "required": [
+                    "rule"
+                  ]
+                },
+                "examples": {
+                  "Response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "rule": {
+                        "name": "Sample Rule",
+                        "enabled": true,
+                        "config": {
+                          "sync_comments": true,
+                          "services": [
+                            {
+                              "id": "PLW70S2",
+                              "type": "service_reference",
+                              "label": "Jira Integration",
+                              "html_url": "https://subdomain.pagerduty.com/service-directory/PLW70S2"
+                            },
+                            {
+                              "id": "PR5R1T1",
+                              "type": "service_reference",
+                              "label": "Jira Performance Tests",
+                              "html_url": "https://subdomain.pagerduty.com/service-directory/PR5R1T1"
+                            }
+                          ],
+                          "projects": [
+                            {
+                              "key": "PD",
+                              "id": "10000",
+                              "label": "PagerDuty",
+                              "html_url": "http://jira.example.com/projects/PD",
+                              "icon": "http://jira.example.com/secure/projectavatar?avatarId=10324"
+                            },
+                            {
+                              "key": "HD",
+                              "id": "10001",
+                              "label": "Helpdesk",
+                              "html_url": "http://jira.example.com/projects/HD",
+                              "icon": "http://jira.example.com/secure/projectavatar?avatarId=10324"
+                            }
+                          ],
+                          "issue_types": [
+                            {
+                              "id": "10002",
+                              "icon": "http://jira.example.com/images/icons/issuetypes/story.svg",
+                              "label": "Story"
+                            },
+                            {
+                              "id": "10003",
+                              "icon": "http://jira.example.com/secure/viewavatar?size=xsmall&avatarId=10318&avatarType=issuetype",
+                              "label": "Task"
+                            },
+                            {
+                              "id": "10004",
+                              "icon": "http://jira.example.com/secure/viewavatar?size=xsmall&avatarId=10303&avatarType=issuetype",
+                              "label": "Bug"
+                            }
+                          ],
+                          "autocreate_incidents": true,
+                          "autocreate_incidents_config": [
+                            {
+                              "jql": "issuetype=Bug",
+                              "on_create": true,
+                              "on_update": true,
+                              "target_service": null,
+                              "actions": [
+                                {
+                                  "key": "jira_field_set_priority",
+                                  "label": "Set Priority",
+                                  "icon": "jira",
+                                  "isDisabled": false
+                                },
+                                {
+                                  "key": "jira_field_set_labels",
+                                  "label": "Set Labels",
+                                  "icon": "jira",
+                                  "isDisabled": false
+                                },
+                                {
+                                  "key": "pd_set_priority",
+                                  "label": "Set Incident Priority",
+                                  "icon": "pd",
+                                  "isDisabled": false
+                                }
+                              ],
+                              "actions_params": {
+                                "jira_field_set_priority": {
+                                  "label": "Highest",
+                                  "icon": "http://jira.example.com/images/icons/priorities/highest.svg",
+                                  "name": "Highest",
+                                  "id": "1"
+                                },
+                                "jira_field_set_labels": [
+                                  {
+                                    "label": "Service name",
+                                    "icon": "pd",
+                                    "key": "incident.service.summary"
+                                  }
+                                ],
+                                "pd_set_priority": {
+                                  "id": "PZQ39X0",
+                                  "type": "priority_reference",
+                                  "label": "P1",
+                                  "html_url": null,
+                                  "icon": "rect_color_ff4500"
+                                }
+                              }
+                            },
+                            {
+                              "jql": "issuetype=Story",
+                              "on_create": true,
+                              "on_update": true,
+                              "target_service": {
+                                "id": "PR5R1T1",
+                                "type": "service_reference"
+                              },
+                              "actions": [
+                                {
+                                  "key": "jira_field_set_labels",
+                                  "label": "Set Labels",
+                                  "icon": "jira",
+                                  "isDisabled": false
+                                },
+                                {
+                                  "key": "pd_set_priority",
+                                  "label": "Set Incident Priority",
+                                  "icon": "pd",
+                                  "isDisabled": false
+                                }
+                              ],
+                              "actions_params": {
+                                "jira_field_set_labels": [
+                                  {
+                                    "label": "LinkedToPagerduty",
+                                    "key": "LinkedToPagerduty",
+                                    "icon": "text"
+                                  }
+                                ],
+                                "pd_set_priority": {
+                                  "id": "PCNJ47O",
+                                  "type": "priority_reference",
+                                  "label": "P4",
+                                  "html_url": null,
+                                  "icon": "rect_color_76ec7f"
+                                }
+                              }
+                            }
+                          ],
+                          "autocreate_issues": true,
+                          "autocreate_issues_config": [
+                            {
+                              "condition": {
+                                "pd_events": [
+                                  "incident.trigger",
+                                  "incident.acknowledge",
+                                  "incident.unacknowledge",
+                                  "incident.resolve",
+                                  "incident.escalate",
+                                  "incident.assign",
+                                  "incident.delegate",
+                                  "incident.trigger_manually"
+                                ],
+                                "pd_urgency": null,
+                                "pd_priorities": []
+                              },
+                              "target_project": null,
+                              "target_issue_type": null,
+                              "actions": [
+                                {
+                                  "key": "jira_append_description",
+                                  "label": "Add description",
+                                  "icon": "jira",
+                                  "isDisabled": false
+                                }
+                              ],
+                              "actions_params": {
+                                "jira_append_description": [
+                                  {
+                                    "label": "Incident title",
+                                    "icon": "pd",
+                                    "key": "incident.title"
+                                  },
+                                  {
+                                    "label": "Incident number",
+                                    "icon": "pd",
+                                    "key": "incident.incident_number"
+                                  },
+                                  {
+                                    "label": "Incident ID",
+                                    "icon": "pd",
+                                    "key": "incident.id"
+                                  },
+                                  {
+                                    "label": "Description",
+                                    "icon": "pd",
+                                    "key": "log_entries.channel.details"
+                                  },
+                                  {
+                                    "label": "Status",
+                                    "icon": "pd",
+                                    "key": "incident.status"
+                                  },
+                                  {
+                                    "label": "Created At",
+                                    "icon": "pd",
+                                    "key": "incident.created_at"
+                                  },
+                                  {
+                                    "label": "Service name",
+                                    "icon": "pd",
+                                    "key": "incident.service.summary"
+                                  },
+                                  {
+                                    "label": "Escalation policy name",
+                                    "icon": "pd",
+                                    "key": "incident.escalation_policy.summary"
+                                  },
+                                  {
+                                    "label": "Impacted services",
+                                    "icon": "pd",
+                                    "key": "incident.impacted_services.name"
+                                  },
+                                  {
+                                    "label": "Incident URL",
+                                    "icon": "pd",
+                                    "key": "incident.html_url"
+                                  },
+                                  {
+                                    "label": "Acknowledgements",
+                                    "icon": "pd",
+                                    "key": "incident.acknowledgements.acknowledger.name"
+                                  },
+                                  {
+                                    "label": "Urgency",
+                                    "icon": "pd",
+                                    "key": "incident.urgency"
+                                  },
+                                  {
+                                    "label": "Incident assignee",
+                                    "icon": "pd",
+                                    "key": "incident.assignee"
+                                  },
+                                  {
+                                    "label": "Priority",
+                                    "icon": "pd",
+                                    "key": "incident.priority.summary"
+                                  },
+                                  {
+                                    "label": "Last changed by",
+                                    "icon": "pd",
+                                    "key": "incident.last_status_change_by.summary"
+                                  },
+                                  {
+                                    "label": "Last changed at",
+                                    "icon": "pd",
+                                    "key": "incident.last_status_change_at"
+                                  },
+                                  {
+                                    "label": "And my custom text",
+                                    "key": "And my custom text",
+                                    "icon": "text"
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "condition": {
+                                "pd_events": [
+                                  "incident.trigger"
+                                ],
+                                "pd_urgency": "high",
+                                "pd_priorities": [
+                                  {
+                                    "id": "PZQ39X0",
+                                    "type": "priority_reference",
+                                    "label": "P1",
+                                    "html_url": null,
+                                    "icon": "rect_color_ff4500"
+                                  },
+                                  {
+                                    "id": "POV67SK",
+                                    "type": "priority_reference",
+                                    "label": "P2",
+                                    "html_url": null,
+                                    "icon": "rect_color_f59331"
+                                  }
+                                ]
+                              },
+                              "target_project": {
+                                "key": "HD",
+                                "id": "10001",
+                                "label": "Helpdesk",
+                                "html_url": "http://jira.example.com/projects/HD",
+                                "icon": "http://jira.example.com/secure/projectavatar?avatarId=10324"
+                              },
+                              "target_issue_type": {
+                                "id": "10004",
+                                "icon": "http://jira.example.com/secure/viewavatar?size=xsmall&avatarId=10303&avatarType=issuetype",
+                                "label": "Bug"
+                              },
+                              "actions": [
+                                {
+                                  "key": "jira_field_set_priority",
+                                  "label": "Set Priority",
+                                  "icon": "jira",
+                                  "isDisabled": false
+                                }
+                              ],
+                              "actions_params": {
+                                "jira_field_set_priority": {
+                                  "label": "Highest",
+                                  "icon": "http://jira.example.com/images/icons/priorities/highest.svg",
+                                  "name": "Highest",
+                                  "id": "1"
+                                }
+                              }
+                            },
+                            {
+                              "condition": {
+                                "pd_events": [
+                                  "incident.trigger"
+                                ],
+                                "pd_urgency": "low",
+                                "pd_priorities": [
+                                  {
+                                    "id": "P0A95OH",
+                                    "type": "priority_reference",
+                                    "label": "P3",
+                                    "html_url": null,
+                                    "icon": "rect_color_359d54"
+                                  },
+                                  {
+                                    "id": "PCNJ47O",
+                                    "type": "priority_reference",
+                                    "label": "P4",
+                                    "html_url": null,
+                                    "icon": "rect_color_76ec7f"
+                                  },
+                                  {
+                                    "id": "PRSM238",
+                                    "type": "priority_reference",
+                                    "label": "P5",
+                                    "html_url": null,
+                                    "icon": "rect_color_f4f4f4"
+                                  }
+                                ]
+                              },
+                              "target_project": null,
+                              "target_issue_type": {
+                                "id": "10004",
+                                "icon": "http://jira.example.com/secure/viewavatar?size=xsmall&avatarId=10303&avatarType=issuetype",
+                                "label": "Bug"
+                              },
+                              "actions": [
+                                {
+                                  "key": "jira_field_set_priority",
+                                  "label": "Set Priority",
+                                  "icon": "jira",
+                                  "isDisabled": false
+                                }
+                              ],
+                              "actions_params": {
+                                "jira_field_set_priority": {
+                                  "label": "Low",
+                                  "icon": "http://jira.example.com/images/icons/priorities/low.svg",
+                                  "name": "Low",
+                                  "id": "4"
+                                }
+                              }
+                            }
+                          ],
+                          "react_on_incident_event": true,
+                          "react_on_incident_event_config": [
+                            {
+                              "condition": {
+                                "pd_events": [
+                                  "incident.acknowledge"
+                                ],
+                                "pd_urgency": null,
+                                "pd_priorities": []
+                              },
+                              "actions": [
+                                {
+                                  "key": "jira_change_status",
+                                  "label": "Change Jira issue status to",
+                                  "icon": "jira",
+                                  "isDisabled": false
+                                }
+                              ],
+                              "actions_params": {
+                                "jira_change_status": {
+                                  "id": "3",
+                                  "label": "In Progress"
+                                }
+                              }
+                            },
+                            {
+                              "condition": {
+                                "pd_events": [
+                                  "incident.unacknowledge"
+                                ],
+                                "pd_urgency": null,
+                                "pd_priorities": []
+                              },
+                              "actions": [
+                                {
+                                  "key": "jira_change_status",
+                                  "label": "Change Jira issue status to",
+                                  "icon": "jira",
+                                  "isDisabled": false
+                                }
+                              ],
+                              "actions_params": {
+                                "jira_change_status": {
+                                  "id": "10000",
+                                  "label": "To Do"
+                                }
+                              }
+                            },
+                            {
+                              "condition": {
+                                "pd_events": [
+                                  "incident.resolve"
+                                ],
+                                "pd_urgency": null,
+                                "pd_priorities": []
+                              },
+                              "actions": [
+                                {
+                                  "key": "jira_change_status",
+                                  "label": "Change Jira issue status to",
+                                  "icon": "jira",
+                                  "isDisabled": false
+                                }
+                              ],
+                              "actions_params": {
+                                "jira_change_status": {
+                                  "id": "10001",
+                                  "label": "Done"
+                                }
+                              }
+                            },
+                            {
+                              "condition": {
+                                "pd_events": [
+                                  "incident.assign"
+                                ],
+                                "pd_urgency": null,
+                                "pd_priorities": []
+                              },
+                              "actions": [
+                                {
+                                  "key": "jira_field_set_assignee",
+                                  "label": "Set Assignee",
+                                  "icon": "jira",
+                                  "isDisabled": false
+                                }
+                              ],
+                              "actions_params": {
+                                "jira_field_set_assignee": {
+                                  "label": "Incident assignee",
+                                  "icon": "pd",
+                                  "key": "incident.assignee"
+                                }
+                              }
+                            }
+                          ],
+                          "react_on_issue_status_change": true,
+                          "react_on_issue_status_change_config": [
+                            {
+                              "jira_statuses": [
+                                {
+                                  "id": "3",
+                                  "label": "In Progress"
+                                }
+                              ],
+                              "actions": [
+                                {
+                                  "key": "pd_acknowledge",
+                                  "label": "Acknowledge Incident",
+                                  "icon": "pd",
+                                  "isDisabled": false
+                                }
+                              ]
+                            },
+                            {
+                              "jira_statuses": [
+                                {
+                                  "id": "10001",
+                                  "label": "Done"
+                                }
+                              ],
+                              "actions": [
+                                {
+                                  "key": "pd_resolve",
+                                  "label": "Resolve Incident",
+                                  "icon": "pd",
+                                  "isDisabled": false
+                                }
+                              ]
+                            },
+                            {
+                              "jira_statuses": [
+                                {
+                                  "id": "10000",
+                                  "label": "To Do"
+                                }
+                              ],
+                              "actions": [
+                                {
+                                  "key": "pd_add_responders",
+                                  "label": "Add responders",
+                                  "icon": "pd",
+                                  "isDisabled": false
+                                }
+                              ],
+                              "actions_params": {
+                                "pd_add_responders": [
+                                  {
+                                    "id": "PDU13T4",
+                                    "type": "user_reference",
+                                    "email": "user1@example.com",
+                                    "label": "User 1",
+                                    "html_url": "https://subdomain.pagerduty.com/users/PDU13T4",
+                                    "icon": "https://secure.gravatar.com/avatar/0787c04e4eb52aa05d2c94bac8293c83.png?d=mm&r=PG"
+                                  },
+                                  {
+                                    "id": "PKH7YP2",
+                                    "type": "user_reference",
+                                    "email": "user2@example.com",
+                                    "label": "User 2",
+                                    "html_url": "https://subdomain.pagerduty.com/users/PKH7YP2",
+                                    "icon": "https://secure.gravatar.com/avatar/7358657a3a25a1ab291289aaf38afcba.png?d=mm&r=PG"
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Rules"
+        ],
+        "summary": "Update a rule",
+        "description": "Update an existing rule.\n\n> ### Action required!\n>\n>  Make sure that all required PagerDuty and Jira webhooks are present. You can do this by clicking **Check webhooks** button on the *Rules* page of the PagerDuty Jira application\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "operationId": "updateRule",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "rule": {
+                    "$ref": "#/components/schemas/Rule"
+                  }
+                },
+                "required": [
+                  "rule"
+                ]
+              },
+              "examples": {
+                "Request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "rule": {
+                      "name": "Sample Rule",
+                      "enabled": true,
+                      "config": {
+                        "sync_comments": true,
+                        "services": [
+                          {
+                            "id": "PLW70S2",
+                            "type": "service_reference",
+                            "label": "Jira Integration",
+                            "html_url": "https://subdomain.pagerduty.com/service-directory/PLW70S2"
+                          },
+                          {
+                            "id": "PR5R1T1",
+                            "type": "service_reference",
+                            "label": "Jira Performance Tests",
+                            "html_url": "https://subdomain.pagerduty.com/service-directory/PR5R1T1"
+                          }
+                        ],
+                        "projects": [
+                          {
+                            "key": "PD",
+                            "id": "10000",
+                            "label": "PagerDuty",
+                            "html_url": "http://jira.example.com/projects/PD",
+                            "icon": "http://jira.example.com/secure/projectavatar?avatarId=10324"
+                          },
+                          {
+                            "key": "HD",
+                            "id": "10001",
+                            "label": "Helpdesk",
+                            "html_url": "http://jira.example.com/projects/HD",
+                            "icon": "http://jira.example.com/secure/projectavatar?avatarId=10324"
+                          }
+                        ],
+                        "issue_types": [
+                          {
+                            "id": "10002",
+                            "icon": "http://jira.example.com/images/icons/issuetypes/story.svg",
+                            "label": "Story"
+                          },
+                          {
+                            "id": "10003",
+                            "icon": "http://jira.example.com/secure/viewavatar?size=xsmall&avatarId=10318&avatarType=issuetype",
+                            "label": "Task"
+                          },
+                          {
+                            "id": "10004",
+                            "icon": "http://jira.example.com/secure/viewavatar?size=xsmall&avatarId=10303&avatarType=issuetype",
+                            "label": "Bug"
+                          }
+                        ],
+                        "autocreate_incidents": true,
+                        "autocreate_incidents_config": [
+                          {
+                            "jql": "issuetype=Bug",
+                            "on_create": true,
+                            "on_update": true,
+                            "target_service": null,
+                            "actions": [
+                              {
+                                "key": "jira_field_set_priority",
+                                "label": "Set Priority",
+                                "icon": "jira",
+                                "isDisabled": false
+                              },
+                              {
+                                "key": "jira_field_set_labels",
+                                "label": "Set Labels",
+                                "icon": "jira",
+                                "isDisabled": false
+                              },
+                              {
+                                "key": "pd_set_priority",
+                                "label": "Set Incident Priority",
+                                "icon": "pd",
+                                "isDisabled": false
+                              }
+                            ],
+                            "actions_params": {
+                              "jira_field_set_priority": {
+                                "label": "Highest",
+                                "icon": "http://jira.example.com/images/icons/priorities/highest.svg",
+                                "name": "Highest",
+                                "id": "1"
+                              },
+                              "jira_field_set_labels": [
+                                {
+                                  "label": "Service name",
+                                  "icon": "pd",
+                                  "key": "incident.service.summary"
+                                }
+                              ],
+                              "pd_set_priority": {
+                                "id": "PZQ39X0",
+                                "type": "priority_reference",
+                                "label": "P1",
+                                "html_url": null,
+                                "icon": "rect_color_ff4500"
+                              }
+                            }
+                          },
+                          {
+                            "jql": "issuetype=Story",
+                            "on_create": true,
+                            "on_update": true,
+                            "target_service": {
+                              "id": "PR5R1T1",
+                              "type": "service_reference"
+                            },
+                            "actions": [
+                              {
+                                "key": "jira_field_set_labels",
+                                "label": "Set Labels",
+                                "icon": "jira",
+                                "isDisabled": false
+                              },
+                              {
+                                "key": "pd_set_priority",
+                                "label": "Set Incident Priority",
+                                "icon": "pd",
+                                "isDisabled": false
+                              }
+                            ],
+                            "actions_params": {
+                              "jira_field_set_labels": [
+                                {
+                                  "label": "LinkedToPagerduty",
+                                  "key": "LinkedToPagerduty",
+                                  "icon": "text"
+                                }
+                              ],
+                              "pd_set_priority": {
+                                "id": "PCNJ47O",
+                                "type": "priority_reference",
+                                "label": "P4",
+                                "html_url": null,
+                                "icon": "rect_color_76ec7f"
+                              }
+                            }
+                          }
+                        ],
+                        "autocreate_issues": true,
+                        "autocreate_issues_config": [
+                          {
+                            "condition": {
+                              "pd_events": [
+                                "incident.trigger",
+                                "incident.acknowledge",
+                                "incident.unacknowledge",
+                                "incident.resolve",
+                                "incident.escalate",
+                                "incident.assign",
+                                "incident.delegate",
+                                "incident.trigger_manually"
+                              ],
+                              "pd_urgency": null,
+                              "pd_priorities": []
+                            },
+                            "target_project": null,
+                            "target_issue_type": null,
+                            "actions": [
+                              {
+                                "key": "jira_append_description",
+                                "label": "Add description",
+                                "icon": "jira",
+                                "isDisabled": false
+                              }
+                            ],
+                            "actions_params": {
+                              "jira_append_description": [
+                                {
+                                  "label": "Incident title",
+                                  "icon": "pd",
+                                  "key": "incident.title"
+                                },
+                                {
+                                  "label": "Incident number",
+                                  "icon": "pd",
+                                  "key": "incident.incident_number"
+                                },
+                                {
+                                  "label": "Incident ID",
+                                  "icon": "pd",
+                                  "key": "incident.id"
+                                },
+                                {
+                                  "label": "Description",
+                                  "icon": "pd",
+                                  "key": "log_entries.channel.details"
+                                },
+                                {
+                                  "label": "Status",
+                                  "icon": "pd",
+                                  "key": "incident.status"
+                                },
+                                {
+                                  "label": "Created At",
+                                  "icon": "pd",
+                                  "key": "incident.created_at"
+                                },
+                                {
+                                  "label": "Service name",
+                                  "icon": "pd",
+                                  "key": "incident.service.summary"
+                                },
+                                {
+                                  "label": "Escalation policy name",
+                                  "icon": "pd",
+                                  "key": "incident.escalation_policy.summary"
+                                },
+                                {
+                                  "label": "Impacted services",
+                                  "icon": "pd",
+                                  "key": "incident.impacted_services.name"
+                                },
+                                {
+                                  "label": "Incident URL",
+                                  "icon": "pd",
+                                  "key": "incident.html_url"
+                                },
+                                {
+                                  "label": "Acknowledgements",
+                                  "icon": "pd",
+                                  "key": "incident.acknowledgements.acknowledger.name"
+                                },
+                                {
+                                  "label": "Urgency",
+                                  "icon": "pd",
+                                  "key": "incident.urgency"
+                                },
+                                {
+                                  "label": "Incident assignee",
+                                  "icon": "pd",
+                                  "key": "incident.assignee"
+                                },
+                                {
+                                  "label": "Priority",
+                                  "icon": "pd",
+                                  "key": "incident.priority.summary"
+                                },
+                                {
+                                  "label": "Last changed by",
+                                  "icon": "pd",
+                                  "key": "incident.last_status_change_by.summary"
+                                },
+                                {
+                                  "label": "Last changed at",
+                                  "icon": "pd",
+                                  "key": "incident.last_status_change_at"
+                                },
+                                {
+                                  "label": "And my custom text",
+                                  "key": "And my custom text",
+                                  "icon": "text"
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "condition": {
+                              "pd_events": [
+                                "incident.trigger"
+                              ],
+                              "pd_urgency": "high",
+                              "pd_priorities": [
+                                {
+                                  "id": "PZQ39X0",
+                                  "type": "priority_reference",
+                                  "label": "P1",
+                                  "html_url": null,
+                                  "icon": "rect_color_ff4500"
+                                },
+                                {
+                                  "id": "POV67SK",
+                                  "type": "priority_reference",
+                                  "label": "P2",
+                                  "html_url": null,
+                                  "icon": "rect_color_f59331"
+                                }
+                              ]
+                            },
+                            "target_project": {
+                              "key": "HD",
+                              "id": "10001",
+                              "label": "Helpdesk",
+                              "html_url": "http://jira.example.com/projects/HD",
+                              "icon": "http://jira.example.com/secure/projectavatar?avatarId=10324"
+                            },
+                            "target_issue_type": {
+                              "id": "10004",
+                              "icon": "http://jira.example.com/secure/viewavatar?size=xsmall&avatarId=10303&avatarType=issuetype",
+                              "label": "Bug"
+                            },
+                            "actions": [
+                              {
+                                "key": "jira_field_set_priority",
+                                "label": "Set Priority",
+                                "icon": "jira",
+                                "isDisabled": false
+                              }
+                            ],
+                            "actions_params": {
+                              "jira_field_set_priority": {
+                                "label": "Highest",
+                                "icon": "http://jira.example.com/images/icons/priorities/highest.svg",
+                                "name": "Highest",
+                                "id": "1"
+                              }
+                            }
+                          },
+                          {
+                            "condition": {
+                              "pd_events": [
+                                "incident.trigger"
+                              ],
+                              "pd_urgency": "low",
+                              "pd_priorities": [
+                                {
+                                  "id": "P0A95OH",
+                                  "type": "priority_reference",
+                                  "label": "P3",
+                                  "html_url": null,
+                                  "icon": "rect_color_359d54"
+                                },
+                                {
+                                  "id": "PCNJ47O",
+                                  "type": "priority_reference",
+                                  "label": "P4",
+                                  "html_url": null,
+                                  "icon": "rect_color_76ec7f"
+                                },
+                                {
+                                  "id": "PRSM238",
+                                  "type": "priority_reference",
+                                  "label": "P5",
+                                  "html_url": null,
+                                  "icon": "rect_color_f4f4f4"
+                                }
+                              ]
+                            },
+                            "target_project": null,
+                            "target_issue_type": {
+                              "id": "10004",
+                              "icon": "http://jira.example.com/secure/viewavatar?size=xsmall&avatarId=10303&avatarType=issuetype",
+                              "label": "Bug"
+                            },
+                            "actions": [
+                              {
+                                "key": "jira_field_set_priority",
+                                "label": "Set Priority",
+                                "icon": "jira",
+                                "isDisabled": false
+                              }
+                            ],
+                            "actions_params": {
+                              "jira_field_set_priority": {
+                                "label": "Low",
+                                "icon": "http://jira.example.com/images/icons/priorities/low.svg",
+                                "name": "Low",
+                                "id": "4"
+                              }
+                            }
+                          }
+                        ],
+                        "react_on_incident_event": true,
+                        "react_on_incident_event_config": [
+                          {
+                            "condition": {
+                              "pd_events": [
+                                "incident.acknowledge"
+                              ],
+                              "pd_urgency": null,
+                              "pd_priorities": []
+                            },
+                            "actions": [
+                              {
+                                "key": "jira_change_status",
+                                "label": "Change Jira issue status to",
+                                "icon": "jira",
+                                "isDisabled": false
+                              }
+                            ],
+                            "actions_params": {
+                              "jira_change_status": {
+                                "id": "3",
+                                "label": "In Progress"
+                              }
+                            }
+                          },
+                          {
+                            "condition": {
+                              "pd_events": [
+                                "incident.unacknowledge"
+                              ],
+                              "pd_urgency": null,
+                              "pd_priorities": []
+                            },
+                            "actions": [
+                              {
+                                "key": "jira_change_status",
+                                "label": "Change Jira issue status to",
+                                "icon": "jira",
+                                "isDisabled": false
+                              }
+                            ],
+                            "actions_params": {
+                              "jira_change_status": {
+                                "id": "10000",
+                                "label": "To Do"
+                              }
+                            }
+                          },
+                          {
+                            "condition": {
+                              "pd_events": [
+                                "incident.resolve"
+                              ],
+                              "pd_urgency": null,
+                              "pd_priorities": []
+                            },
+                            "actions": [
+                              {
+                                "key": "jira_change_status",
+                                "label": "Change Jira issue status to",
+                                "icon": "jira",
+                                "isDisabled": false
+                              }
+                            ],
+                            "actions_params": {
+                              "jira_change_status": {
+                                "id": "10001",
+                                "label": "Done"
+                              }
+                            }
+                          },
+                          {
+                            "condition": {
+                              "pd_events": [
+                                "incident.assign"
+                              ],
+                              "pd_urgency": null,
+                              "pd_priorities": []
+                            },
+                            "actions": [
+                              {
+                                "key": "jira_field_set_assignee",
+                                "label": "Set Assignee",
+                                "icon": "jira",
+                                "isDisabled": false
+                              }
+                            ],
+                            "actions_params": {
+                              "jira_field_set_assignee": {
+                                "label": "Incident assignee",
+                                "icon": "pd",
+                                "key": "incident.assignee"
+                              }
+                            }
+                          }
+                        ],
+                        "react_on_issue_status_change": true,
+                        "react_on_issue_status_change_config": [
+                          {
+                            "jira_statuses": [
+                              {
+                                "id": "3",
+                                "label": "In Progress"
+                              }
+                            ],
+                            "actions": [
+                              {
+                                "key": "pd_acknowledge",
+                                "label": "Acknowledge Incident",
+                                "icon": "pd",
+                                "isDisabled": false
+                              }
+                            ]
+                          },
+                          {
+                            "jira_statuses": [
+                              {
+                                "id": "10001",
+                                "label": "Done"
+                              }
+                            ],
+                            "actions": [
+                              {
+                                "key": "pd_resolve",
+                                "label": "Resolve Incident",
+                                "icon": "pd",
+                                "isDisabled": false
+                              }
+                            ]
+                          },
+                          {
+                            "jira_statuses": [
+                              {
+                                "id": "10000",
+                                "label": "To Do"
+                              }
+                            ],
+                            "actions": [
+                              {
+                                "key": "pd_add_responders",
+                                "label": "Add responders",
+                                "icon": "pd",
+                                "isDisabled": false
+                              }
+                            ],
+                            "actions_params": {
+                              "pd_add_responders": [
+                                {
+                                  "id": "PDU13T4",
+                                  "type": "user_reference",
+                                  "email": "user1@example.com",
+                                  "label": "User 1",
+                                  "html_url": "https://subdomain.pagerduty.com/users/PDU13T4",
+                                  "icon": "https://secure.gravatar.com/avatar/0787c04e4eb52aa05d2c94bac8293c83.png?d=mm&r=PG"
+                                },
+                                {
+                                  "id": "PKH7YP2",
+                                  "type": "user_reference",
+                                  "email": "user2@example.com",
+                                  "label": "User 2",
+                                  "html_url": "https://subdomain.pagerduty.com/users/PKH7YP2",
+                                  "icon": "https://secure.gravatar.com/avatar/7358657a3a25a1ab291289aaf38afcba.png?d=mm&r=PG"
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The rule that was updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "rule": {
+                      "$ref": "#/components/schemas/Rule"
+                    }
+                  },
+                  "required": [
+                    "rule"
+                  ]
+                },
+                "examples": {
+                  "Response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "rule": {
+                        "name": "Sample Rule",
+                        "enabled": true,
+                        "config": {
+                          "sync_comments": true,
+                          "services": [
+                            {
+                              "id": "PLW70S2",
+                              "type": "service_reference",
+                              "label": "Jira Integration",
+                              "html_url": "https://subdomain.pagerduty.com/service-directory/PLW70S2"
+                            },
+                            {
+                              "id": "PR5R1T1",
+                              "type": "service_reference",
+                              "label": "Jira Performance Tests",
+                              "html_url": "https://subdomain.pagerduty.com/service-directory/PR5R1T1"
+                            }
+                          ],
+                          "projects": [
+                            {
+                              "key": "PD",
+                              "id": "10000",
+                              "label": "PagerDuty",
+                              "html_url": "http://jira.example.com/projects/PD",
+                              "icon": "http://jira.example.com/secure/projectavatar?avatarId=10324"
+                            },
+                            {
+                              "key": "HD",
+                              "id": "10001",
+                              "label": "Helpdesk",
+                              "html_url": "http://jira.example.com/projects/HD",
+                              "icon": "http://jira.example.com/secure/projectavatar?avatarId=10324"
+                            }
+                          ],
+                          "issue_types": [
+                            {
+                              "id": "10002",
+                              "icon": "http://jira.example.com/images/icons/issuetypes/story.svg",
+                              "label": "Story"
+                            },
+                            {
+                              "id": "10003",
+                              "icon": "http://jira.example.com/secure/viewavatar?size=xsmall&avatarId=10318&avatarType=issuetype",
+                              "label": "Task"
+                            },
+                            {
+                              "id": "10004",
+                              "icon": "http://jira.example.com/secure/viewavatar?size=xsmall&avatarId=10303&avatarType=issuetype",
+                              "label": "Bug"
+                            }
+                          ],
+                          "autocreate_incidents": true,
+                          "autocreate_incidents_config": [
+                            {
+                              "jql": "issuetype=Bug",
+                              "on_create": true,
+                              "on_update": true,
+                              "target_service": null,
+                              "actions": [
+                                {
+                                  "key": "jira_field_set_priority",
+                                  "label": "Set Priority",
+                                  "icon": "jira",
+                                  "isDisabled": false
+                                },
+                                {
+                                  "key": "jira_field_set_labels",
+                                  "label": "Set Labels",
+                                  "icon": "jira",
+                                  "isDisabled": false
+                                },
+                                {
+                                  "key": "pd_set_priority",
+                                  "label": "Set Incident Priority",
+                                  "icon": "pd",
+                                  "isDisabled": false
+                                }
+                              ],
+                              "actions_params": {
+                                "jira_field_set_priority": {
+                                  "label": "Highest",
+                                  "icon": "http://jira.example.com/images/icons/priorities/highest.svg",
+                                  "name": "Highest",
+                                  "id": "1"
+                                },
+                                "jira_field_set_labels": [
+                                  {
+                                    "label": "Service name",
+                                    "icon": "pd",
+                                    "key": "incident.service.summary"
+                                  }
+                                ],
+                                "pd_set_priority": {
+                                  "id": "PZQ39X0",
+                                  "type": "priority_reference",
+                                  "label": "P1",
+                                  "html_url": null,
+                                  "icon": "rect_color_ff4500"
+                                }
+                              }
+                            },
+                            {
+                              "jql": "issuetype=Story",
+                              "on_create": true,
+                              "on_update": true,
+                              "target_service": {
+                                "id": "PR5R1T1",
+                                "type": "service_reference"
+                              },
+                              "actions": [
+                                {
+                                  "key": "jira_field_set_labels",
+                                  "label": "Set Labels",
+                                  "icon": "jira",
+                                  "isDisabled": false
+                                },
+                                {
+                                  "key": "pd_set_priority",
+                                  "label": "Set Incident Priority",
+                                  "icon": "pd",
+                                  "isDisabled": false
+                                }
+                              ],
+                              "actions_params": {
+                                "jira_field_set_labels": [
+                                  {
+                                    "label": "LinkedToPagerduty",
+                                    "key": "LinkedToPagerduty",
+                                    "icon": "text"
+                                  }
+                                ],
+                                "pd_set_priority": {
+                                  "id": "PCNJ47O",
+                                  "type": "priority_reference",
+                                  "label": "P4",
+                                  "html_url": null,
+                                  "icon": "rect_color_76ec7f"
+                                }
+                              }
+                            }
+                          ],
+                          "autocreate_issues": true,
+                          "autocreate_issues_config": [
+                            {
+                              "condition": {
+                                "pd_events": [
+                                  "incident.trigger",
+                                  "incident.acknowledge",
+                                  "incident.unacknowledge",
+                                  "incident.resolve",
+                                  "incident.escalate",
+                                  "incident.assign",
+                                  "incident.delegate",
+                                  "incident.trigger_manually"
+                                ],
+                                "pd_urgency": null,
+                                "pd_priorities": []
+                              },
+                              "target_project": null,
+                              "target_issue_type": null,
+                              "actions": [
+                                {
+                                  "key": "jira_append_description",
+                                  "label": "Add description",
+                                  "icon": "jira",
+                                  "isDisabled": false
+                                }
+                              ],
+                              "actions_params": {
+                                "jira_append_description": [
+                                  {
+                                    "label": "Incident title",
+                                    "icon": "pd",
+                                    "key": "incident.title"
+                                  },
+                                  {
+                                    "label": "Incident number",
+                                    "icon": "pd",
+                                    "key": "incident.incident_number"
+                                  },
+                                  {
+                                    "label": "Incident ID",
+                                    "icon": "pd",
+                                    "key": "incident.id"
+                                  },
+                                  {
+                                    "label": "Description",
+                                    "icon": "pd",
+                                    "key": "log_entries.channel.details"
+                                  },
+                                  {
+                                    "label": "Status",
+                                    "icon": "pd",
+                                    "key": "incident.status"
+                                  },
+                                  {
+                                    "label": "Created At",
+                                    "icon": "pd",
+                                    "key": "incident.created_at"
+                                  },
+                                  {
+                                    "label": "Service name",
+                                    "icon": "pd",
+                                    "key": "incident.service.summary"
+                                  },
+                                  {
+                                    "label": "Escalation policy name",
+                                    "icon": "pd",
+                                    "key": "incident.escalation_policy.summary"
+                                  },
+                                  {
+                                    "label": "Impacted services",
+                                    "icon": "pd",
+                                    "key": "incident.impacted_services.name"
+                                  },
+                                  {
+                                    "label": "Incident URL",
+                                    "icon": "pd",
+                                    "key": "incident.html_url"
+                                  },
+                                  {
+                                    "label": "Acknowledgements",
+                                    "icon": "pd",
+                                    "key": "incident.acknowledgements.acknowledger.name"
+                                  },
+                                  {
+                                    "label": "Urgency",
+                                    "icon": "pd",
+                                    "key": "incident.urgency"
+                                  },
+                                  {
+                                    "label": "Incident assignee",
+                                    "icon": "pd",
+                                    "key": "incident.assignee"
+                                  },
+                                  {
+                                    "label": "Priority",
+                                    "icon": "pd",
+                                    "key": "incident.priority.summary"
+                                  },
+                                  {
+                                    "label": "Last changed by",
+                                    "icon": "pd",
+                                    "key": "incident.last_status_change_by.summary"
+                                  },
+                                  {
+                                    "label": "Last changed at",
+                                    "icon": "pd",
+                                    "key": "incident.last_status_change_at"
+                                  },
+                                  {
+                                    "label": "And my custom text",
+                                    "key": "And my custom text",
+                                    "icon": "text"
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "condition": {
+                                "pd_events": [
+                                  "incident.trigger"
+                                ],
+                                "pd_urgency": "high",
+                                "pd_priorities": [
+                                  {
+                                    "id": "PZQ39X0",
+                                    "type": "priority_reference",
+                                    "label": "P1",
+                                    "html_url": null,
+                                    "icon": "rect_color_ff4500"
+                                  },
+                                  {
+                                    "id": "POV67SK",
+                                    "type": "priority_reference",
+                                    "label": "P2",
+                                    "html_url": null,
+                                    "icon": "rect_color_f59331"
+                                  }
+                                ]
+                              },
+                              "target_project": {
+                                "key": "HD",
+                                "id": "10001",
+                                "label": "Helpdesk",
+                                "html_url": "http://jira.example.com/projects/HD",
+                                "icon": "http://jira.example.com/secure/projectavatar?avatarId=10324"
+                              },
+                              "target_issue_type": {
+                                "id": "10004",
+                                "icon": "http://jira.example.com/secure/viewavatar?size=xsmall&avatarId=10303&avatarType=issuetype",
+                                "label": "Bug"
+                              },
+                              "actions": [
+                                {
+                                  "key": "jira_field_set_priority",
+                                  "label": "Set Priority",
+                                  "icon": "jira",
+                                  "isDisabled": false
+                                }
+                              ],
+                              "actions_params": {
+                                "jira_field_set_priority": {
+                                  "label": "Highest",
+                                  "icon": "http://jira.example.com/images/icons/priorities/highest.svg",
+                                  "name": "Highest",
+                                  "id": "1"
+                                }
+                              }
+                            },
+                            {
+                              "condition": {
+                                "pd_events": [
+                                  "incident.trigger"
+                                ],
+                                "pd_urgency": "low",
+                                "pd_priorities": [
+                                  {
+                                    "id": "P0A95OH",
+                                    "type": "priority_reference",
+                                    "label": "P3",
+                                    "html_url": null,
+                                    "icon": "rect_color_359d54"
+                                  },
+                                  {
+                                    "id": "PCNJ47O",
+                                    "type": "priority_reference",
+                                    "label": "P4",
+                                    "html_url": null,
+                                    "icon": "rect_color_76ec7f"
+                                  },
+                                  {
+                                    "id": "PRSM238",
+                                    "type": "priority_reference",
+                                    "label": "P5",
+                                    "html_url": null,
+                                    "icon": "rect_color_f4f4f4"
+                                  }
+                                ]
+                              },
+                              "target_project": null,
+                              "target_issue_type": {
+                                "id": "10004",
+                                "icon": "http://jira.example.com/secure/viewavatar?size=xsmall&avatarId=10303&avatarType=issuetype",
+                                "label": "Bug"
+                              },
+                              "actions": [
+                                {
+                                  "key": "jira_field_set_priority",
+                                  "label": "Set Priority",
+                                  "icon": "jira",
+                                  "isDisabled": false
+                                }
+                              ],
+                              "actions_params": {
+                                "jira_field_set_priority": {
+                                  "label": "Low",
+                                  "icon": "http://jira.example.com/images/icons/priorities/low.svg",
+                                  "name": "Low",
+                                  "id": "4"
+                                }
+                              }
+                            }
+                          ],
+                          "react_on_incident_event": true,
+                          "react_on_incident_event_config": [
+                            {
+                              "condition": {
+                                "pd_events": [
+                                  "incident.acknowledge"
+                                ],
+                                "pd_urgency": null,
+                                "pd_priorities": []
+                              },
+                              "actions": [
+                                {
+                                  "key": "jira_change_status",
+                                  "label": "Change Jira issue status to",
+                                  "icon": "jira",
+                                  "isDisabled": false
+                                }
+                              ],
+                              "actions_params": {
+                                "jira_change_status": {
+                                  "id": "3",
+                                  "label": "In Progress"
+                                }
+                              }
+                            },
+                            {
+                              "condition": {
+                                "pd_events": [
+                                  "incident.unacknowledge"
+                                ],
+                                "pd_urgency": null,
+                                "pd_priorities": []
+                              },
+                              "actions": [
+                                {
+                                  "key": "jira_change_status",
+                                  "label": "Change Jira issue status to",
+                                  "icon": "jira",
+                                  "isDisabled": false
+                                }
+                              ],
+                              "actions_params": {
+                                "jira_change_status": {
+                                  "id": "10000",
+                                  "label": "To Do"
+                                }
+                              }
+                            },
+                            {
+                              "condition": {
+                                "pd_events": [
+                                  "incident.resolve"
+                                ],
+                                "pd_urgency": null,
+                                "pd_priorities": []
+                              },
+                              "actions": [
+                                {
+                                  "key": "jira_change_status",
+                                  "label": "Change Jira issue status to",
+                                  "icon": "jira",
+                                  "isDisabled": false
+                                }
+                              ],
+                              "actions_params": {
+                                "jira_change_status": {
+                                  "id": "10001",
+                                  "label": "Done"
+                                }
+                              }
+                            },
+                            {
+                              "condition": {
+                                "pd_events": [
+                                  "incident.assign"
+                                ],
+                                "pd_urgency": null,
+                                "pd_priorities": []
+                              },
+                              "actions": [
+                                {
+                                  "key": "jira_field_set_assignee",
+                                  "label": "Set Assignee",
+                                  "icon": "jira",
+                                  "isDisabled": false
+                                }
+                              ],
+                              "actions_params": {
+                                "jira_field_set_assignee": {
+                                  "label": "Incident assignee",
+                                  "icon": "pd",
+                                  "key": "incident.assignee"
+                                }
+                              }
+                            }
+                          ],
+                          "react_on_issue_status_change": true,
+                          "react_on_issue_status_change_config": [
+                            {
+                              "jira_statuses": [
+                                {
+                                  "id": "3",
+                                  "label": "In Progress"
+                                }
+                              ],
+                              "actions": [
+                                {
+                                  "key": "pd_acknowledge",
+                                  "label": "Acknowledge Incident",
+                                  "icon": "pd",
+                                  "isDisabled": false
+                                }
+                              ]
+                            },
+                            {
+                              "jira_statuses": [
+                                {
+                                  "id": "10001",
+                                  "label": "Done"
+                                }
+                              ],
+                              "actions": [
+                                {
+                                  "key": "pd_resolve",
+                                  "label": "Resolve Incident",
+                                  "icon": "pd",
+                                  "isDisabled": false
+                                }
+                              ]
+                            },
+                            {
+                              "jira_statuses": [
+                                {
+                                  "id": "10000",
+                                  "label": "To Do"
+                                }
+                              ],
+                              "actions": [
+                                {
+                                  "key": "pd_add_responders",
+                                  "label": "Add responders",
+                                  "icon": "pd",
+                                  "isDisabled": false
+                                }
+                              ],
+                              "actions_params": {
+                                "pd_add_responders": [
+                                  {
+                                    "id": "PDU13T4",
+                                    "type": "user_reference",
+                                    "email": "user1@example.com",
+                                    "label": "User 1",
+                                    "html_url": "https://subdomain.pagerduty.com/users/PDU13T4",
+                                    "icon": "https://secure.gravatar.com/avatar/0787c04e4eb52aa05d2c94bac8293c83.png?d=mm&r=PG"
+                                  },
+                                  {
+                                    "id": "PKH7YP2",
+                                    "type": "user_reference",
+                                    "email": "user2@example.com",
+                                    "label": "User 2",
+                                    "html_url": "https://subdomain.pagerduty.com/users/PKH7YP2",
+                                    "icon": "https://secure.gravatar.com/avatar/7358657a3a25a1ab291289aaf38afcba.png?d=mm&r=PG"
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Rules"
+        ],
+        "summary": "Delete a rule",
+        "description": "Delete an existing rule.\n\n> ### Action required!\n>\n>  Make sure that all required PagerDuty and Jira webhooks are present. You can do this by clicking **Check webhooks** button on the *Rules* page of the PagerDuty Jira application\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "operationId": "deleteRule",
+        "responses": {
+          "204": {
+            "description": "The rule was deleted successfully."
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    }
+  }
+}

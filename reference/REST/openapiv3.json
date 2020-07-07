@@ -7,7 +7,7 @@
       "url": "http://www.pagerduty.com/support",
       "email": "support@pagerduty.com"
     },
-    "title": "PagerDuty REST API",
+    "title": "PagerDuty API",
     "version": "2.0.0"
   },
   "security": [
