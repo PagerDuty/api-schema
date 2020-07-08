@@ -2,7 +2,7 @@
   "openapi": "3.0.3",
   "info": {
     "title": "PagerDuty Jira Server Integration API",
-    "description": "This is API documentation for PagerDuty's integration with a Jira Server and is compatible with the Atlassian marketplace add-on verison 4.0.0+. Additional integration documentation can be found here: 'https://support.pagerduty.com/docs/jira-server'",
+    "description": "This is API documentation for PagerDuty's integration with a Jira Server and is compatible with the Atlassian marketplace add-on verison 4.0.0+. Additional integration documentation can be found here: https://support.pagerduty.com/docs/jira-server",
     "contact": {
       "name": "PagerDuty Support",
       "url": "http://www.pagerduty.com/support",
