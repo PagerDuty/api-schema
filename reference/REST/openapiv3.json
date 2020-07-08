@@ -8793,7 +8793,7 @@
           "Incidents"
         ],
         "operationId": "updateIncidents",
-        "description": "Acknowledge, resolve, escalate or reassign one or more incidents.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#incidents)\n",
+        "description": "Acknowledge, resolve, escalate or reassign one or more incidents.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nA maximum of 500 incidents may be updated at a time. If more than this number of incidents are given, the API will respond with status 413 (Request Entity Too Large).\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#incidents)\n",
         "summary": "Manage incidents",
         "parameters": [
           {
@@ -9060,6 +9060,16 @@
           },
           "403": {
             "$ref": "#/components/responses/Forbidden"
+          },
+          "413": {
+            "description": "Caller provided a request that is too large to process.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/responses/Conflict/content/application~1json/schema"
+                }
+              }
+            }
           },
           "429": {
             "$ref": "#/components/responses/TooManyRequests"
@@ -9891,7 +9901,7 @@
           "Incidents"
         ],
         "operationId": "updateIncidentAlerts",
-        "description": "Resolve multiple alerts or associate them with different incidents.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#incidents)\n",
+        "description": "Resolve multiple alerts or associate them with different incidents.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved. An alert represents a digital signal that was emitted to PagerDuty by the monitoring systems that detected or identified the issue.\n\nA maximum of 500 alerts may be updated at a time. If more than this number of alerts are given, the API will respond with status 413 (Request Entity Too Large).\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#incidents)\n",
         "summary": "Manage alerts",
         "parameters": [
           {
@@ -10034,6 +10044,9 @@
           },
           "403": {
             "$ref": "#/components/responses/Forbidden"
+          },
+          "413": {
+            "$ref": "#/paths/~1incidents/put/responses/413"
           },
           "429": {
             "$ref": "#/components/responses/TooManyRequests"
