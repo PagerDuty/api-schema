@@ -6,6 +6,9 @@ Currently we do not deprecate or remove any API functionality.
 
 ----
 ### 2020-07-08
+- Add limit to the number of incidents or alerts that can be updated in a single API call to multi-update (i.e. `PUT /incidents`) above which the client receives status 413.
+
+### 2020-07-08
 - Updated filters for all 5 `/analytics/metrics` and `/analytics/raw` endpoints. The `priority` filter is replaced by `priority_ids` and `priority_names` filters. Both of these new filters accept an array, to allow filtering by multiple priority IDs or names.
 
 ### 2020-07-01
