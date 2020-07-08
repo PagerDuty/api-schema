@@ -5176,9 +5176,21 @@
                             "type": "string"
                           }
                         },
-                        "priority": {
-                          "type": "string",
-                          "description": "The priority filter applied to the results."
+                        "priority_ids": {
+                          "type": "array",
+                          "description": "The priority_ids filter applied to the results.",
+                          "maxItems": 5,
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "priority_names": {
+                          "type": "array",
+                          "description": "The priority_names filter applied to the results.",
+                          "maxItems": 5,
+                          "items": {
+                            "type": "string"
+                          }
                         }
                       }
                     },
@@ -5398,10 +5410,29 @@
                           "PT4KHLX"
                         ]
                       },
-                      "priority": {
-                        "type": "string",
-                        "description": "Any incidents whose priority does not match the provided string will be omitted from the results",
-                        "example": "SEV-1"
+                      "priority_ids": {
+                        "type": "array",
+                        "description": "An array of priority IDs. Only incidents with these priorities will be included in the results. If omitted, all services the requestor has access to will be included in the results.",
+                        "items": {
+                          "type": "string"
+                        },
+                        "example": [
+                          "PZOZQXA",
+                          "POTCOTX",
+                          "P0YF9PU"
+                        ]
+                      },
+                      "priority_names": {
+                        "type": "array",
+                        "description": "An array of user-defined priority names. Only incidents with these priorities will be included in the results. If omitted, all services the requestor has access to will be included in the results.",
+                        "items": {
+                          "type": "string"
+                        },
+                        "example": [
+                          "SEV-1",
+                          "SEV-2",
+                          "SEV-3"
+                        ]
                       }
                     }
                   },
@@ -5438,7 +5469,10 @@
                         "PJ51L1",
                         "PU2D9X"
                       ],
-                      "priority": "SEV-1"
+                      "priority_names": [
+                        "SEV-1",
+                        "SEV-2"
+                      ]
                     },
                     "aggregate_unit": "day",
                     "time_zone": "Etc/UTC"
@@ -5449,7 +5483,7 @@
           },
           "description": "Parameters and filters to apply to the dataset."
         },
-        "description": "Provide aggregated enriched metrics for incidents.\n\nThe provided metrics are aggregated by day, week, month using the aggregate_unit parameter, or for the entire period if no aggregate_unit is provided.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
+        "description": "Provides aggregated enriched metrics for incidents.\n\nThe provided metrics are aggregated by day, week, month using the aggregate_unit parameter, or for the entire period if no aggregate_unit is provided.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n<!-- theme: info -->\n> A `team_ids` or `service_ids` filter is required for [user-level API keys](https://support.pagerduty.com/docs/using-the-api#section-generating-a-personal-rest-api-key) or keys generated through an OAuth flow. Account-level API keys do not have this requrirement.\n",
         "tags": [
           "Analytics"
         ]
@@ -5462,7 +5496,7 @@
         "operationId": "getAnalyticsMetricsIncidentsService",
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "OK\nCurrently the response only returns data for services that match the filters and have data.",
             "content": {
               "application/json": {
                 "schema": {
@@ -5522,10 +5556,31 @@
                             "type": "string"
                           }
                         },
-                        "priority": {
-                          "type": "string",
-                          "description": "Any incidents whose priority does not match the provided string will be omitted from the results",
-                          "example": "SEV-1"
+                        "priority_ids": {
+                          "type": "array",
+                          "description": "An array of priority IDs. Only incidents with these priorities will be included in the results. If omitted, all services the requestor has access to will be included in the results.",
+                          "example": [
+                            "PZOZQXA",
+                            "POTCOTX",
+                            "P0YF9PU"
+                          ],
+                          "maxItems": 5,
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "priority_names": {
+                          "type": "array",
+                          "description": "An array of user-defined priority names. Only incidents with these priorities will be included in the results. If omitted, all services the requestor has access to will be included in the results.",
+                          "example": [
+                            "SEV-1",
+                            "SEV-2",
+                            "SEV-3"
+                          ],
+                          "maxItems": 5,
+                          "items": {
+                            "type": "string"
+                          }
                         }
                       }
                     },
@@ -5688,9 +5743,19 @@
                           "type": "string"
                         }
                       },
-                      "priority": {
-                        "type": "string",
-                        "description": "User defined priority name"
+                      "priority_ids": {
+                        "type": "array",
+                        "description": "The priority_ids filter applied to the results.",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "priority_names": {
+                        "type": "array",
+                        "description": "The user-defined priority names filter applied to the results.",
+                        "items": {
+                          "type": "string"
+                        }
                       }
                     }
                   },
@@ -5722,7 +5787,10 @@
                         "PJ51L1",
                         "PU2D9X"
                       ],
-                      "priority": "SEV-1"
+                      "priority_ids": [
+                        "PZOZQXA",
+                        "POTCOTX"
+                      ]
                     },
                     "aggregate_unit": "week",
                     "time_zone": "Etc/UTC"
@@ -5733,7 +5801,7 @@
           },
           "description": "Parameters and filters to apply to the dataset."
         },
-        "description": "Provide aggregated metrics for incidents aggregated into units of time by service.\n\nExample metrics include Seconds to Resolve, Seconds to Engage, Snoozed Seconds, Sleep Hour Interruptions. Some metric definitions can be found in our knowledge base: https://support.pagerduty.com/docs/pagerduty-analytics\nData can be aggregated by day, week or month in addition to by service, or provided just as a collection of aggregates for each service in the dataset for the entire period.  If a unit is provided, each row in the returned dataset will include a 'range_start' timestamp.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
+        "description": "Provides aggregated metrics for incidents aggregated into units of time by service.\n\nExample metrics include Seconds to Resolve, Seconds to Engage, Snoozed Seconds, Sleep Hour Interruptions. Some metric definitions can be found in our knowledge base: https://support.pagerduty.com/docs/pagerduty-analytics\nData can be aggregated by day, week or month in addition to by service, or provided just as a collection of aggregates for each service in the dataset for the entire period.  If a unit is provided, each row in the returned dataset will include a 'range_start' timestamp.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n<!-- theme: info -->\n> A `team_ids` or `service_ids` filter is required for [user-level API keys](https://support.pagerduty.com/docs/using-the-api#section-generating-a-personal-rest-api-key) or keys generated through an OAuth flow. Account-level API keys do not have this requrirement.\n",
         "tags": [
           "Analytics"
         ]
@@ -5746,7 +5814,7 @@
         "operationId": "getAnalyticsMetricsIncidentsTeam",
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "OK\nCurrently the response only returns data for teams that match the filters and have data.",
             "content": {
               "application/json": {
                 "schema": {
@@ -5796,9 +5864,21 @@
                             "type": "string"
                           }
                         },
-                        "priority": {
-                          "type": "string",
-                          "description": "The priority filter applied to the results."
+                        "priority_ids": {
+                          "type": "array",
+                          "description": "The priority_ids filter applied to the results.",
+                          "maxItems": 5,
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "priority_names": {
+                          "type": "array",
+                          "description": "The priority_names filter applied to the results.",
+                          "maxItems": 5,
+                          "items": {
+                            "type": "string"
+                          }
                         }
                       }
                     },
@@ -5966,10 +6046,31 @@
                           "type": "string"
                         }
                       },
-                      "priority": {
-                        "type": "string",
-                        "description": "Any incidents whose priority does not match the provided string will be omitted from the results",
-                        "example": "SEV-1"
+                      "priority_ids": {
+                        "type": "array",
+                        "description": "An array of priority IDs. Only incidents with these priorities will be included in the results. If omitted, all teams the requestor has access to will be included in the results.",
+                        "example": [
+                          "PZOZQXA",
+                          "POTCOTX",
+                          "P0YF9PU"
+                        ],
+                        "maxItems": 5,
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "priority_names": {
+                        "type": "array",
+                        "description": "An array of user-defined priority names. Only incidents with these priorities will be included in the results. If omitted, all teams the requestor has access to will be included in the results.",
+                        "example": [
+                          "SEV-1",
+                          "SEV-2",
+                          "SEV-3"
+                        ],
+                        "maxItems": 5,
+                        "items": {
+                          "type": "string"
+                        }
                       }
                     }
                   },
@@ -6006,7 +6107,10 @@
                         "PJ51L1",
                         "PU2D9X"
                       ],
-                      "priority": "SEV-1"
+                      "priority_ids": [
+                        "PZOZQXA",
+                        "POTCOTX"
+                      ]
                     },
                     "aggregate_unit": "week",
                     "time_zone": "Etc/UTC"
@@ -6017,7 +6121,7 @@
           },
           "description": "Parameters and filters to apply to the dataset."
         },
-        "description": "Provides aggregated metrics for incidents aggregated into units of time by team.\n\nExample metrics include Seconds to Resolve, Seconds to Engage, Snoozed Seconds, Sleep Hour Interruptions. Some metric definitions can be found in our knowledge base: https://support.pagerduty.com/docs/pagerduty-analytics\nData can be aggregated by day, week or month in addition to by team, or provided just as a collection of aggregates for each team in the dataset for the entire period.  If a unit is provided, each row in the returned dataset will include a 'range_start' timestamp.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
+        "description": "Provides aggregated metrics for incidents aggregated into units of time by team.\n\nExample metrics include Seconds to Resolve, Seconds to Engage, Snoozed Seconds, Sleep Hour Interruptions. Some metric definitions can be found in our knowledge base: https://support.pagerduty.com/docs/pagerduty-analytics\nData can be aggregated by day, week or month in addition to by team, or provided just as a collection of aggregates for each team in the dataset for the entire period.  If a unit is provided, each row in the returned dataset will include a 'range_start' timestamp.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n<!-- theme: info -->\n> A `team_ids` or `service_ids` filter is required for [user-level API keys](https://support.pagerduty.com/docs/using-the-api#section-generating-a-personal-rest-api-key) or keys generated through an OAuth flow. Account-level API keys do not have this requrirement.\n",
         "tags": [
           "Analytics"
         ]
@@ -6092,9 +6196,21 @@
                             "type": "string"
                           }
                         },
-                        "priority": {
-                          "type": "string",
-                          "description": "The priority filter applied to the results."
+                        "priority_ids": {
+                          "type": "array",
+                          "description": "The priority_ids filter applied to the results.",
+                          "maxItems": 5,
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "priority_names": {
+                          "type": "array",
+                          "description": "The priority_names filter applied to the results.",
+                          "maxItems": 5,
+                          "items": {
+                            "type": "string"
+                          }
                         }
                       }
                     },
@@ -6132,7 +6248,8 @@
                           "id": "PYC0H08",
                           "major": false,
                           "off_hour_interruptions": 4,
-                          "priority": null,
+                          "priority_id": "null,",
+                          "priority_name": "null,",
                           "resolved_at": "2020-05-31T10:15:00",
                           "seconds_to_engage": 70,
                           "seconds_to_first_ack": 5,
@@ -6154,7 +6271,8 @@
                           "id": "PCOOHCY",
                           "major": false,
                           "off_hour_interruptions": 3,
-                          "priority": "SEV-2",
+                          "priority_id": "POTCOTX",
+                          "priority_name": "SEV-2",
                           "resolved_at": "2020-05-31T10:15:00",
                           "seconds_to_engage": 24,
                           "seconds_to_first_ack": 48,
@@ -6258,9 +6376,19 @@
                           "type": "string"
                         }
                       },
-                      "priority": {
-                        "type": "string",
-                        "description": "User defined priority name"
+                      "priority_ids": {
+                        "type": "array",
+                        "description": "The priority_ids filter applied to the results.",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "priority_names": {
+                        "type": "array",
+                        "description": "The priority_names filter applied to the results.",
+                        "items": {
+                          "type": "string"
+                        }
                       }
                     }
                   },
@@ -6304,7 +6432,10 @@
                         "PJ51L1",
                         "PU2D9X"
                       ],
-                      "priority": "SEV-1"
+                      "priority_names": [
+                        "SEV-1",
+                        "SEV-2"
+                      ]
                     },
                     "starting_after": "P4UN5A",
                     "limit": 20,
@@ -6316,7 +6447,7 @@
           },
           "description": "Parameters and filters to apply to the dataset."
         },
-        "description": "Provides enriched incident data and metrics for multiple incidents.\n\nExample metrics include Seconds to Resolve, Seconds to Engage, Snoozed Seconds, Sleep Hour Interruptions. Some metric definitions can be found in our knowledge base: https://support.pagerduty.com/docs/pagerduty-analytics\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
+        "description": "Provides enriched incident data and metrics for multiple incidents.\n\nExample metrics include Seconds to Resolve, Seconds to Engage, Snoozed Seconds, Sleep Hour Interruptions. Some metric definitions can be found in our knowledge base: https://support.pagerduty.com/docs/pagerduty-analytics\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n<!-- theme: info -->\n> A `team_ids` or `service_ids` filter is required for [user-level API keys](https://support.pagerduty.com/docs/using-the-api#section-generating-a-personal-rest-api-key) or keys generated through an OAuth flow. Account-level API keys do not have this requrirement.\n",
         "tags": [
           "Analytics"
         ]
@@ -6448,7 +6579,8 @@
                         "resolved_at": "2019-12-01T21:01:00Z",
                         "urgency": "high",
                         "major": "true",
-                        "priority": 1,
+                        "priority_id": "PZOZQXA",
+                        "priority_name": "SEV-1",
                         "seconds_to_resolve": 60,
                         "seconds_to_first_ack": 15,
                         "seconds_to_engage": 30,
