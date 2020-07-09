@@ -5122,7 +5122,7 @@
     },
     "/analytics/metrics/incidents/all": {
       "post": {
-        "summary": "Get aggregate incident metrics",
+        "summary": "Get aggregated incident data",
         "operationId": "getAnalyticsMetricsIncidentsAll",
         "responses": {
           "200": {
@@ -5393,9 +5393,9 @@
                           "type": "string"
                         },
                         "example": [
-                          "PSEJLIN",
-                          "PSLWBL8",
-                          "PT4KHLX"
+                          "P373JQQ",
+                          "PAECHJV",
+                          "P7SYGW6"
                         ]
                       },
                       "service_ids": {
@@ -5417,9 +5417,9 @@
                           "type": "string"
                         },
                         "example": [
-                          "PZOZQXA",
-                          "POTCOTX",
-                          "P0YF9PU"
+                          "PC8O0L3",
+                          "PX01HJD",
+                          "P5FK83M"
                         ]
                       },
                       "priority_names": {
@@ -5429,9 +5429,9 @@
                           "type": "string"
                         },
                         "example": [
-                          "SEV-1",
-                          "SEV-2",
-                          "SEV-3"
+                          "P1",
+                          "P2",
+                          "P3"
                         ]
                       }
                     }
@@ -5483,7 +5483,7 @@
           },
           "description": "Parameters and filters to apply to the dataset."
         },
-        "description": "Provides aggregated enriched metrics for incidents.\n\nThe provided metrics are aggregated by day, week, month using the aggregate_unit parameter, or for the entire period if no aggregate_unit is provided.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n<!-- theme: info -->\n> A `team_ids` or `service_ids` filter is required for [user-level API keys](https://support.pagerduty.com/docs/using-the-api#section-generating-a-personal-rest-api-key) or keys generated through an OAuth flow. Account-level API keys do not have this requrirement.\n",
+        "description": "Provides aggregated enriched metrics for incidents.\n\nThe provided metrics are aggregated by day, week, month using the aggregate_unit parameter, or for the entire period if no aggregate_unit is provided.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n<!-- theme: info -->\n> A `team_ids` or `service_ids` filter is required for [user-level API keys](https://support.pagerduty.com/docs/using-the-api#section-generating-a-personal-rest-api-key) or keys generated through an OAuth flow. Account-level API keys do not have this requirement.\n",
         "tags": [
           "Analytics"
         ]
@@ -5492,7 +5492,7 @@
     },
     "/analytics/metrics/incidents/services": {
       "post": {
-        "summary": "Get incident metrics aggregated by service",
+        "summary": "Get aggregated service data",
         "operationId": "getAnalyticsMetricsIncidentsService",
         "responses": {
           "200": {
@@ -5711,15 +5711,18 @@
                     "properties": {
                       "created_at_start": {
                         "type": "string",
-                        "description": "Filters the result, showing only the incidents where the creation timestamp is greater than the filter value."
+                        "description": "Filters the result, showing only the incidents where the creation timestamp is greater than the filter value.",
+                        "example": "2020-06-01T00:00:00+01:00"
                       },
                       "created_at_end": {
                         "type": "string",
-                        "description": "Filters the result, showing only the incidents where the creation timestamp is less than the filter value."
+                        "description": "Filters the result, showing only the incidents where the creation timestamp is less than the filter value.",
+                        "example": "2020-07-01T00:00:00+01:00"
                       },
                       "urgency": {
                         "type": "string",
                         "description": "Filters the result, showing only the incidents where urgency matches the filter value.",
+                        "example": "high",
                         "enum": [
                           "high",
                           "low"
@@ -5727,35 +5730,56 @@
                       },
                       "major": {
                         "type": "boolean",
-                        "description": "A major incident is defined as any incident that requires a coordinated response, often across multiple teams. https://support.pagerduty.com/docs/operational-reviews#major-incidents"
+                        "description": "A major incident is defined as any incident that requires a coordinated response, often across multiple teams. https://support.pagerduty.com/docs/operational-reviews#major-incidents",
+                        "example": true
                       },
                       "team_ids": {
                         "type": "array",
                         "description": "An array of team IDs. Only results related to these teams will be returned. Account must have the teams ability to use this parameter.",
                         "items": {
                           "type": "string"
-                        }
+                        },
+                        "example": [
+                          "P373JQQ",
+                          "PAECHJV",
+                          "P7SYGW6"
+                        ]
                       },
                       "service_ids": {
                         "type": "array",
                         "description": "An array of service IDs. Only results related to these services will be returned.",
                         "items": {
                           "type": "string"
-                        }
+                        },
+                        "example": [
+                          "PC8O0L3",
+                          "PX01HJD",
+                          "P5FK83M"
+                        ]
                       },
                       "priority_ids": {
                         "type": "array",
                         "description": "The priority_ids filter applied to the results.",
                         "items": {
                           "type": "string"
-                        }
+                        },
+                        "example": [
+                          "PITMC5Y",
+                          "PEHBBT8",
+                          "PB8QADI"
+                        ]
                       },
                       "priority_names": {
                         "type": "array",
                         "description": "The user-defined priority names filter applied to the results.",
                         "items": {
                           "type": "string"
-                        }
+                        },
+                        "example": [
+                          "P1",
+                          "P2",
+                          "P3"
+                        ]
                       }
                     }
                   },
@@ -5767,7 +5791,7 @@
                   "aggregate_unit": {
                     "type": "string",
                     "description": "The time unit to aggregate metrics by (day/week/month).  Used in conjunction with the service_id.",
-                    "example": "Etc/UTC"
+                    "example": "month"
                   }
                 }
               },
@@ -5801,7 +5825,7 @@
           },
           "description": "Parameters and filters to apply to the dataset."
         },
-        "description": "Provides aggregated metrics for incidents aggregated into units of time by service.\n\nExample metrics include Seconds to Resolve, Seconds to Engage, Snoozed Seconds, Sleep Hour Interruptions. Some metric definitions can be found in our knowledge base: https://support.pagerduty.com/docs/pagerduty-analytics\nData can be aggregated by day, week or month in addition to by service, or provided just as a collection of aggregates for each service in the dataset for the entire period.  If a unit is provided, each row in the returned dataset will include a 'range_start' timestamp.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n<!-- theme: info -->\n> A `team_ids` or `service_ids` filter is required for [user-level API keys](https://support.pagerduty.com/docs/using-the-api#section-generating-a-personal-rest-api-key) or keys generated through an OAuth flow. Account-level API keys do not have this requrirement.\n",
+        "description": "Provides aggregated metrics for incidents aggregated into units of time by service.\n\nExample metrics include Seconds to Resolve, Seconds to Engage, Snoozed Seconds, Sleep Hour Interruptions. Some metric definitions can be found in our knowledge base: https://support.pagerduty.com/docs/pagerduty-analytics\nData can be aggregated by day, week or month in addition to by service, or provided just as a collection of aggregates for each service in the dataset for the entire period.  If a unit is provided, each row in the returned dataset will include a 'range_start' timestamp.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n<!-- theme: info -->\n> A `team_ids` or `service_ids` filter is required for [user-level API keys](https://support.pagerduty.com/docs/using-the-api#section-generating-a-personal-rest-api-key) or keys generated through an OAuth flow. Account-level API keys do not have this requirement.\n",
         "tags": [
           "Analytics"
         ]
@@ -5810,7 +5834,7 @@
     },
     "/analytics/metrics/incidents/teams": {
       "post": {
-        "summary": "Get incident metrics aggregated by team",
+        "summary": "Get aggregated team data",
         "operationId": "getAnalyticsMetricsIncidentsTeam",
         "responses": {
           "200": {
@@ -6024,9 +6048,9 @@
                         "type": "array",
                         "description": "An array of team IDs. Only incidents related to these teams will be included in the results. Account must have the teams ability to use this parameter.  Any teams that the requestor does not have access to will be omitted from the results.  If omitted, all teams the requestor has access to will be included in the results.",
                         "example": [
-                          "PSEJLIN",
-                          "PSLWBL8",
-                          "PT4KHLX"
+                          "P373JQQ",
+                          "PAECHJV",
+                          "P7SYGW6"
                         ],
                         "maxItems": 10,
                         "items": {
@@ -6037,9 +6061,9 @@
                         "type": "array",
                         "description": "An array of service IDs. Only incidents related to these services will be included in the results. If omitted, all services the requestor has access to will be included in the results.",
                         "example": [
-                          "PSEJLIN",
-                          "PSLWBL8",
-                          "PT4KHLX"
+                          "PC8O0L3",
+                          "PX01HJD",
+                          "P5FK83M"
                         ],
                         "maxItems": 10,
                         "items": {
@@ -6050,9 +6074,9 @@
                         "type": "array",
                         "description": "An array of priority IDs. Only incidents with these priorities will be included in the results. If omitted, all teams the requestor has access to will be included in the results.",
                         "example": [
-                          "PZOZQXA",
-                          "POTCOTX",
-                          "P0YF9PU"
+                          "PITMC5Y",
+                          "PEHBBT8",
+                          "PB8QADI"
                         ],
                         "maxItems": 5,
                         "items": {
@@ -6063,9 +6087,9 @@
                         "type": "array",
                         "description": "An array of user-defined priority names. Only incidents with these priorities will be included in the results. If omitted, all teams the requestor has access to will be included in the results.",
                         "example": [
-                          "SEV-1",
-                          "SEV-2",
-                          "SEV-3"
+                          "P1",
+                          "P2",
+                          "P3"
                         ],
                         "maxItems": 5,
                         "items": {
@@ -6121,7 +6145,7 @@
           },
           "description": "Parameters and filters to apply to the dataset."
         },
-        "description": "Provides aggregated metrics for incidents aggregated into units of time by team.\n\nExample metrics include Seconds to Resolve, Seconds to Engage, Snoozed Seconds, Sleep Hour Interruptions. Some metric definitions can be found in our knowledge base: https://support.pagerduty.com/docs/pagerduty-analytics\nData can be aggregated by day, week or month in addition to by team, or provided just as a collection of aggregates for each team in the dataset for the entire period.  If a unit is provided, each row in the returned dataset will include a 'range_start' timestamp.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n<!-- theme: info -->\n> A `team_ids` or `service_ids` filter is required for [user-level API keys](https://support.pagerduty.com/docs/using-the-api#section-generating-a-personal-rest-api-key) or keys generated through an OAuth flow. Account-level API keys do not have this requrirement.\n",
+        "description": "Provides aggregated metrics for incidents aggregated into units of time by team.\n\nExample metrics include Seconds to Resolve, Seconds to Engage, Snoozed Seconds, Sleep Hour Interruptions. Some metric definitions can be found in our knowledge base: https://support.pagerduty.com/docs/pagerduty-analytics\nData can be aggregated by day, week or month in addition to by team, or provided just as a collection of aggregates for each team in the dataset for the entire period.  If a unit is provided, each row in the returned dataset will include a 'range_start' timestamp.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n<!-- theme: info -->\n> A `team_ids` or `service_ids` filter is required for [user-level API keys](https://support.pagerduty.com/docs/using-the-api#section-generating-a-personal-rest-api-key) or keys generated through an OAuth flow. Account-level API keys do not have this requirement.\n",
         "tags": [
           "Analytics"
         ]
@@ -6130,7 +6154,7 @@
     },
     "/analytics/raw/incidents": {
       "post": {
-        "summary": "Get enriched incident data - multiple incidents",
+        "summary": "Get raw data - multiple incidents",
         "operationId": "getAnalyticsIncidents",
         "responses": {
           "200": {
@@ -6348,47 +6372,71 @@
                     "properties": {
                       "created_at_start": {
                         "type": "string",
-                        "description": "Filters the result, showing only the incidents where the creation timestamp is greater than the filter value."
+                        "description": "Filters the result, showing only the incidents where the creation timestamp is greater than the filter value.",
+                        "example": "2020-05-01T00:00:00-04:00"
                       },
                       "created_at_end": {
                         "type": "string",
-                        "description": "Filters the result, showing only the incidents where the creation timestamp is less than the filter value."
+                        "description": "Filters the result, showing only the incidents where the creation timestamp is less than the filter value.",
+                        "example": "2020-06-01T00:00:00-04:00"
                       },
                       "urgency": {
                         "type": "string",
-                        "description": "Filters the result, showing only the incidents where urgency matches the filter value."
+                        "description": "Filters the result, showing only the incidents where urgency matches the filter value.",
+                        "example": "high"
                       },
                       "major": {
                         "type": "boolean",
-                        "description": "A major incident is defined as any incident that requires a coordinated response, often across multiple teams. https://support.pagerduty.com/docs/operational-reviews#major-incidents"
+                        "description": "A major incident is defined as any incident that requires a coordinated response, often across multiple teams. https://support.pagerduty.com/docs/operational-reviews#major-incidents",
+                        "example": true
                       },
                       "team_ids": {
                         "type": "array",
                         "description": "An array of team IDs. Only results related to these teams will be returned. Account must have the teams ability to use this parameter.",
                         "items": {
                           "type": "string"
-                        }
+                        },
+                        "example": [
+                          "P373JQQ",
+                          "PAECHJV",
+                          "P7SYGW6"
+                        ]
                       },
                       "service_ids": {
                         "type": "array",
                         "description": "An array of service IDs. Only results related to these services will be returned.",
                         "items": {
                           "type": "string"
-                        }
+                        },
+                        "example": [
+                          "PC8O0L3",
+                          "PX01HJD",
+                          "P5FK83M"
+                        ]
                       },
                       "priority_ids": {
                         "type": "array",
                         "description": "The priority_ids filter applied to the results.",
                         "items": {
                           "type": "string"
-                        }
+                        },
+                        "example": [
+                          "PITMC5Y",
+                          "PEHBBT8",
+                          "PB8QADI"
+                        ]
                       },
                       "priority_names": {
                         "type": "array",
                         "description": "The priority_names filter applied to the results.",
                         "items": {
                           "type": "string"
-                        }
+                        },
+                        "example": [
+                          "P1",
+                          "P2",
+                          "P3"
+                        ]
                       }
                     }
                   },
@@ -6447,7 +6495,7 @@
           },
           "description": "Parameters and filters to apply to the dataset."
         },
-        "description": "Provides enriched incident data and metrics for multiple incidents.\n\nExample metrics include Seconds to Resolve, Seconds to Engage, Snoozed Seconds, Sleep Hour Interruptions. Some metric definitions can be found in our knowledge base: https://support.pagerduty.com/docs/pagerduty-analytics\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n<!-- theme: info -->\n> A `team_ids` or `service_ids` filter is required for [user-level API keys](https://support.pagerduty.com/docs/using-the-api#section-generating-a-personal-rest-api-key) or keys generated through an OAuth flow. Account-level API keys do not have this requrirement.\n",
+        "description": "Provides enriched incident data and metrics for multiple incidents.\n\nExample metrics include Seconds to Resolve, Seconds to Engage, Snoozed Seconds, Sleep Hour Interruptions. Some metric definitions can be found in our knowledge base: https://support.pagerduty.com/docs/pagerduty-analytics\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n<!-- theme: info -->\n> A `team_ids` or `service_ids` filter is required for [user-level API keys](https://support.pagerduty.com/docs/using-the-api#section-generating-a-personal-rest-api-key) or keys generated through an OAuth flow. Account-level API keys do not have this requirement.\n",
         "tags": [
           "Analytics"
         ]
@@ -6461,7 +6509,7 @@
         }
       ],
       "get": {
-        "summary": "Get enriched incident data",
+        "summary": "Get raw data - single incident",
         "tags": [
           "Analytics"
         ],
