@@ -5,6 +5,10 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 Currently we do not deprecate or remove any API functionality.
 
 ----
+### 2020-07-24
+- Updated the request sample for `POST /extensions` and `PUT /extensions/{id}`.
+- Clarified Content-Type header for all endpoints.
+
 ### 2020-07-10
 - Updated filters for all 5 `/analytics/metrics` and `/analytics/raw` endpoints. The `business_service_ids` filter is added as a possible optional filter choice. This filter accepts an array, to allow filtering by multiple business service IDs.
 

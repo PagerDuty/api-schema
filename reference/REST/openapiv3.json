@@ -4365,6 +4365,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "$ref": "#/components/parameters/entity_type"
           },
           {
@@ -4531,6 +4534,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "$ref": "#/components/parameters/total"
           },
           {
@@ -4612,6 +4618,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
           }
         ],
         "responses": {
@@ -4682,6 +4691,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "$ref": "#/components/parameters/id"
           }
         ],
@@ -4722,6 +4734,9 @@
           },
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
           },
           {
             "$ref": "#/components/parameters/include_addon"
@@ -4826,6 +4841,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
           }
         ],
         "requestBody": {
@@ -4922,6 +4940,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "$ref": "#/components/parameters/id"
           }
         ],
@@ -4995,6 +5016,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "$ref": "#/components/parameters/id"
           }
         ],
@@ -5026,6 +5050,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -5345,6 +5372,9 @@
           },
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
           },
           {
             "schema": {
@@ -5722,6 +5752,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "schema": {
               "type": "string",
               "default": "application/json",
@@ -6054,6 +6087,9 @@
           },
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
           },
           {
             "schema": {
@@ -6429,6 +6465,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "schema": {
               "type": "string",
               "default": "application/json",
@@ -6759,6 +6798,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "schema": {
               "type": "string",
               "default": "analytics-v2",
@@ -6786,6 +6828,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
           },
           {
             "name": "total",
@@ -6904,6 +6949,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
           }
         ],
         "requestBody": {
@@ -7031,6 +7079,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "$ref": "#/components/parameters/id"
           }
         ],
@@ -7101,6 +7152,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "$ref": "#/components/parameters/id"
           }
         ],
@@ -7129,6 +7183,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -7257,6 +7314,9 @@
           },
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
           },
           {
             "name": "query",
@@ -7404,6 +7464,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
           },
           {
             "$ref": "#/components/parameters/optional_from_header"
@@ -7572,6 +7635,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "$ref": "#/components/parameters/id"
           },
           {
@@ -7678,6 +7744,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "$ref": "#/components/parameters/id"
           }
         ],
@@ -7709,6 +7778,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -7879,6 +7951,9 @@
           },
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
           }
         ],
         "responses": {
@@ -7973,6 +8048,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "$ref": "#/components/parameters/id"
           }
         ],
@@ -8060,6 +8138,9 @@
           },
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
           },
           {
             "name": "extension_object_id",
@@ -8188,6 +8269,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
           }
         ],
         "requestBody": {
@@ -8209,27 +8293,16 @@
                   "summary": "Request Example",
                   "value": {
                     "extension": {
-                      "id": "PPGPXHO",
-                      "self": "https://api.pagerduty.com/extensions/PPGPXHO",
-                      "html_url": "null",
                       "endpoint_url": "https://example.com/recieve_a_pagerduty_webhook",
                       "name": "My Webhook",
-                      "summary": "My Webhook",
-                      "type": "extension",
                       "extension_schema": {
                         "id": "PJFWPEP",
-                        "type": "extension_schema_reference",
-                        "summary": "Generic Webhook",
-                        "self": "https://api.pagerduty.com/extension_schemas/PJFWPEP",
-                        "html_url": "null"
+                        "type": "extension_schema_reference"
                       },
                       "extension_objects": [
                         {
                           "id": "PIJ90N7",
-                          "type": "service_reference",
-                          "summary": "My Application Service",
-                          "self": "https://api.pagerduty.com/services/PIJ90N7",
-                          "html_url": "https://subdomain.pagerduty.com/services/PIJ90N7"
+                          "type": "service_reference"
                         }
                       ]
                     }
@@ -8385,6 +8458,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "$ref": "#/components/parameters/id"
           },
           {
@@ -8482,6 +8558,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "$ref": "#/components/parameters/id"
           }
         ],
@@ -8512,6 +8591,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "$ref": "#/components/parameters/id"
           }
         ],
@@ -8534,27 +8616,16 @@
                   "summary": "Request Example",
                   "value": {
                     "extension": {
-                      "id": "PPGPXHO",
-                      "self": "https://api.pagerduty.com/extensions/PPGPXHO",
-                      "html_url": "null",
                       "endpoint_url": "https://example.com/recieve_a_pagerduty_webhook",
                       "name": "My Webhook",
-                      "summary": "My Webhook",
-                      "type": "extension",
                       "extension_schema": {
                         "id": "PJFWPEP",
-                        "type": "extension_schema_reference",
-                        "summary": "Generic Webhook",
-                        "self": "https://api.pagerduty.com/extension_schemas/PJFWPEP",
-                        "html_url": "null"
+                        "type": "extension_schema_reference"
                       },
                       "extension_objects": [
                         {
                           "id": "PIJ90N7",
-                          "type": "service_reference",
-                          "summary": "My Application Service",
-                          "self": "https://api.pagerduty.com/services/PIJ90N7",
-                          "html_url": "https://subdomain.pagerduty.com/services/PIJ90N7"
+                          "type": "service_reference"
                         }
                       ]
                     }
@@ -8643,6 +8714,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "$ref": "#/components/parameters/id"
           }
         ],
@@ -8722,6 +8796,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
           },
           {
             "$ref": "#/components/parameters/total"
@@ -8943,6 +9020,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
           },
           {
             "$ref": "#/components/parameters/total"
@@ -9233,6 +9313,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "$ref": "#/components/parameters/from_header"
           }
         ],
@@ -9463,6 +9546,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "name": "id",
             "in": "path",
             "description": "Either the id or number of the incident to retrieve.",
@@ -9622,6 +9708,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
           },
           {
             "name": "id",
@@ -9877,6 +9966,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "$ref": "#/components/parameters/total"
           },
           {
@@ -10053,6 +10145,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "$ref": "#/components/parameters/total"
           },
           {
@@ -10213,6 +10308,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "$ref": "#/components/parameters/id"
           },
           {
@@ -10311,6 +10409,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -10448,6 +10549,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "$ref": "#/components/parameters/total"
           },
           {
@@ -10577,6 +10681,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "$ref": "#/components/parameters/id"
           },
           {
@@ -10686,6 +10793,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "$ref": "#/components/parameters/id"
           }
         ],
@@ -10759,6 +10869,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -10860,6 +10973,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -11024,6 +11140,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -11201,6 +11320,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "$ref": "#/components/parameters/id"
           },
           {
@@ -11304,6 +11426,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
           },
           {
             "$ref": "#/components/parameters/total"
@@ -11432,6 +11557,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "$ref": "#/components/parameters/time_zone"
           },
           {
@@ -11537,6 +11665,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "$ref": "#/components/parameters/id"
           },
           {
@@ -11625,6 +11756,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
           },
           {
             "$ref": "#/components/parameters/total"
@@ -11765,6 +11899,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "$ref": "#/components/parameters/from_header"
           }
         ],
@@ -11896,6 +12033,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "$ref": "#/components/parameters/id"
           },
           {
@@ -11990,6 +12130,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "$ref": "#/components/parameters/id"
           }
         ],
@@ -12024,6 +12167,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -12158,6 +12304,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
           },
           {
             "$ref": "#/components/parameters/total"
@@ -12309,6 +12458,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
           },
           {
             "$ref": "#/components/parameters/time_zone"
@@ -12494,6 +12646,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
           },
           {
             "$ref": "#/components/parameters/total"
@@ -13056,6 +13211,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "$ref": "#/components/parameters/response_play_id"
           },
           {
@@ -13141,6 +13299,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
           },
           {
             "$ref": "#/components/parameters/total"
@@ -13231,6 +13392,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
           }
         ],
         "requestBody": {
@@ -13481,6 +13645,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "$ref": "#/components/parameters/id"
           }
         ],
@@ -13557,6 +13724,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -13677,6 +13847,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "$ref": "#/components/parameters/id"
           }
         ],
@@ -13717,6 +13890,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
           },
           {
             "$ref": "#/components/parameters/total"
@@ -13849,6 +14025,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -14371,6 +14550,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "$ref": "#/components/parameters/id"
           },
           {
@@ -14476,6 +14658,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -14635,6 +14820,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "$ref": "#/components/parameters/id"
           },
           {
@@ -14684,6 +14872,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
           },
           {
             "$ref": "#/components/parameters/total"
@@ -14805,6 +14996,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
           },
           {
             "$ref": "#/components/parameters/schedule_overflow"
@@ -14985,6 +15179,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "$ref": "#/components/parameters/time_zone"
           },
           {
@@ -15152,6 +15349,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "$ref": "#/components/parameters/id"
           }
         ],
@@ -15186,6 +15386,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -15380,6 +15583,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "$ref": "#/components/parameters/id"
           },
           {
@@ -15491,6 +15697,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "$ref": "#/components/parameters/id"
           }
         ],
@@ -15598,6 +15807,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "$ref": "#/components/parameters/id"
           },
           {
@@ -15638,6 +15850,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -15807,6 +16022,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
           },
           {
             "$ref": "#/components/parameters/since"
@@ -15991,6 +16209,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
           }
         ],
         "requestBody": {
@@ -16178,6 +16399,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "$ref": "#/components/parameters/id"
           }
         ],
@@ -16291,6 +16515,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
           }
         ],
         "requestBody": {
@@ -16478,6 +16705,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "$ref": "#/components/parameters/id"
           }
         ],
@@ -16591,6 +16821,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
           },
           {
             "$ref": "#/components/parameters/total"
@@ -16766,6 +16999,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
           }
         ],
         "requestBody": {
@@ -16969,6 +17205,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "$ref": "#/components/parameters/id"
           },
           {
@@ -17113,6 +17352,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "$ref": "#/components/parameters/id"
           }
         ],
@@ -17137,6 +17379,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -17346,6 +17591,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "$ref": "#/components/parameters/id"
           }
         ],
@@ -17460,6 +17708,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -17581,6 +17832,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "$ref": "#/components/parameters/id"
           },
           {
@@ -17688,6 +17942,15 @@
             }
           },
           {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "application/json"
+            }
+          },
+          {
             "$ref": "#/components/parameters/total"
           },
           {
@@ -17768,6 +18031,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
           }
         ],
         "requestBody": {
@@ -17860,6 +18126,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "$ref": "#/components/parameters/id"
           }
         ],
@@ -17923,6 +18192,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "$ref": "#/components/parameters/id"
           }
         ],
@@ -17953,6 +18225,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
           },
           {
             "$ref": "#/components/parameters/total"
@@ -18047,6 +18322,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
           }
         ],
         "requestBody": {
@@ -18144,6 +18422,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "$ref": "#/components/parameters/total"
           },
           {
@@ -18237,6 +18518,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "$ref": "#/components/parameters/id"
           },
           {
@@ -18311,6 +18595,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "name": "reassignment_team",
             "in": "query",
             "description": "Team to reassign unresolved incident to. \nIf an unresolved incident exists on both the reassignment team and \nthe team being deleted, a duplicate will not be made. If not supplied, \nunresolved incidents will be made account-level.\n",
@@ -18351,6 +18638,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -18454,6 +18744,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "$ref": "#/components/parameters/id"
           },
           {
@@ -18494,6 +18787,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -18539,6 +18835,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
           },
           {
             "$ref": "#/components/parameters/total"
@@ -18639,6 +18938,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "$ref": "#/components/parameters/id"
           },
           {
@@ -18679,6 +18981,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -18753,6 +19058,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
           },
           {
             "name": "query",
@@ -18935,6 +19243,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "$ref": "#/components/parameters/from_header"
           }
         ],
@@ -19080,6 +19391,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "$ref": "#/components/parameters/id"
           },
           {
@@ -19189,6 +19503,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "$ref": "#/components/parameters/id"
           }
         ],
@@ -19220,6 +19537,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -19370,6 +19690,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "$ref": "#/components/parameters/id"
           }
         ],
@@ -19434,6 +19757,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -19534,6 +19860,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "$ref": "#/components/parameters/id"
           },
           {
@@ -19601,6 +19930,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "$ref": "#/components/parameters/id"
           },
           {
@@ -19635,6 +19967,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -19741,6 +20076,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "$ref": "#/components/parameters/id"
           },
           {
@@ -19830,6 +20168,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -19944,6 +20285,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "$ref": "#/components/parameters/id"
           },
           {
@@ -20038,6 +20382,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "$ref": "#/components/parameters/id"
           },
           {
@@ -20072,6 +20419,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -20187,6 +20537,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "$ref": "#/components/parameters/id"
           }
         ],
@@ -20257,6 +20610,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "$ref": "#/components/parameters/id"
           }
         ],
@@ -20291,6 +20647,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -20364,6 +20723,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "$ref": "#/components/parameters/id"
           },
           {
@@ -20404,6 +20766,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
           },
           {
             "name": "X-EARLY-ACCESS",
@@ -20506,6 +20871,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
           },
           {
             "name": "X-EARLY-ACCESS",
@@ -20640,6 +21008,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "name": "X-EARLY-ACCESS",
             "in": "header",
             "description": "This header indicates that this API endpoint is __UNDER CONSTRUCTION__ and may change at any time. You __MUST__ pass in this header and the above value. Do not use this endpoint in production, as it may change!\n",
@@ -20743,6 +21114,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "name": "X-EARLY-ACCESS",
             "in": "header",
             "description": "This header indicates that this API endpoint is __UNDER CONSTRUCTION__ and may change at any time. You __MUST__ pass in this header and the above value. Do not use this endpoint in production, as it may change!\n",
@@ -20790,6 +21164,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
           },
           {
             "name": "X-EARLY-ACCESS",
@@ -20913,6 +21290,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "$ref": "#/components/parameters/include_user"
           }
         ],
@@ -21013,6 +21393,9 @@
             "$ref": "#/paths/~1tags/get/parameters/0"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
             "$ref": "#/components/parameters/total"
           }
         ],
@@ -21096,6 +21479,9 @@
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
           },
           {
             "$ref": "#/components/parameters/id"
