@@ -562,7 +562,7 @@
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/components/responses/Conflict/content/application~1json/schema"
+              "$ref": "#/paths/~1users~1%7Bid%7D~1notification_subscriptions/post/responses/422/content/application~1json/schema"
             }
           }
         }
@@ -572,36 +572,7 @@
         "content": {
           "application/json": {
             "schema": {
-              "type": "object",
-              "properties": {
-                "error": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer",
-                      "readOnly": true
-                    },
-                    "message": {
-                      "type": "string",
-                      "readOnly": true,
-                      "description": "Error message string"
-                    },
-                    "errors": {
-                      "type": "array",
-                      "readOnly": true,
-                      "items": {
-                        "type": "string",
-                        "readOnly": true,
-                        "description": "Human-readable error details"
-                      }
-                    }
-                  },
-                  "example": {
-                    "message": "Not Found",
-                    "code": 2100
-                  }
-                }
-              }
+              "$ref": "#/paths/~1users~1%7Bid%7D~1notification_subscriptions/post/responses/422/content/application~1json/schema"
             }
           }
         }
@@ -611,7 +582,7 @@
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/components/responses/Conflict/content/application~1json/schema"
+              "$ref": "#/paths/~1users~1%7Bid%7D~1notification_subscriptions/post/responses/422/content/application~1json/schema"
             }
           }
         }
@@ -621,7 +592,7 @@
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/components/responses/Conflict/content/application~1json/schema"
+              "$ref": "#/paths/~1users~1%7Bid%7D~1notification_subscriptions/post/responses/422/content/application~1json/schema"
             }
           }
         }
@@ -631,7 +602,7 @@
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/components/responses/Conflict/content/application~1json/schema"
+              "$ref": "#/paths/~1users~1%7Bid%7D~1notification_subscriptions/post/responses/422/content/application~1json/schema"
             }
           }
         }
@@ -641,7 +612,7 @@
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/components/responses/Conflict/content/application~1json/schema"
+              "$ref": "#/paths/~1users~1%7Bid%7D~1notification_subscriptions/post/responses/422/content/application~1json/schema"
             }
           }
         }
@@ -651,7 +622,7 @@
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/components/responses/Conflict/content/application~1json/schema"
+              "$ref": "#/paths/~1users~1%7Bid%7D~1notification_subscriptions/post/responses/422/content/application~1json/schema"
             }
           }
         }
@@ -661,7 +632,7 @@
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/components/responses/Conflict/content/application~1json/schema"
+              "$ref": "#/paths/~1users~1%7Bid%7D~1notification_subscriptions/post/responses/422/content/application~1json/schema"
             }
           }
         }
@@ -671,7 +642,7 @@
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/components/responses/Conflict/content/application~1json/schema"
+              "$ref": "#/paths/~1users~1%7Bid%7D~1notification_subscriptions/post/responses/422/content/application~1json/schema"
             }
           }
         }
@@ -9291,7 +9262,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/responses/Conflict/content/application~1json/schema"
+                  "$ref": "#/paths/~1users~1%7Bid%7D~1notification_subscriptions/post/responses/422/content/application~1json/schema"
                 }
               }
             }
@@ -11408,6 +11379,279 @@
           "429": {
             "$ref": "#/components/responses/TooManyRequests"
           }
+        }
+      }
+    },
+    "/incidents/{id}/status_updates/subscribers": {
+      "get": {
+        "summary": "List Incident Status Update Notification Subscribers",
+        "tags": [
+          "Incidents"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Pagination"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "subscribers": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/paths/~1incidents~1%7Bid%7D~1status_updates~1subscribers/post/requestBody/content/application~1json/schema"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                "examples": {
+                  "Response": {
+                    "value": {
+                      "limit": 100,
+                      "more": false,
+                      "offset": 0,
+                      "subscribers": [
+                        {
+                          "subscriber_id": "PD1234",
+                          "subscriber_type": "user"
+                        },
+                        {
+                          "subscriber_id": "PD1234",
+                          "subscriber_type": "team"
+                        }
+                      ],
+                      "total": 2
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "422": {
+            "description": "Unprocessable Entity. Some arguments failed validation checks.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/paths/~1users~1%7Bid%7D~1notification_subscriptions/post/responses/422/content/application~1json/schema"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        },
+        "operationId": "getIncidentStatusUpdateNotificationSubscribers",
+        "description": "Retrieve a list of Status Update Notification Subscribers.\n\n<!-- theme: warning -->\n> ### Early Access\n\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "default": "usms-early-access"
+            },
+            "in": "header",
+            "name": "X-EARLY-ACCESS",
+            "description": "This header indicates that this API endpoint is __UNDER CONSTRUCTION__ and may change at any time. You __MUST__ pass in this header with the value `usms-early-access`. Do not use this endpoint in production, as it may change!",
+            "required": true
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create Incident Status Update Notification Subscriber",
+        "operationId": "createIncidentStatusUpdateNotificationSubscriber",
+        "tags": [
+          "Incidents"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "subscription": {
+                      "$ref": "#/paths/~1users~1%7Bid%7D~1notification_subscriptions/post/responses/200/content/application~1json/schema/properties/subscription"
+                    }
+                  }
+                },
+                "examples": {
+                  "Response": {
+                    "value": {
+                      "subscription": {
+                        "account_id": "PD1234",
+                        "subscribable_id": "PD1234",
+                        "subscribable_type": "incident",
+                        "subscriber_id": "PD1234",
+                        "subscriber_type": "team"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "422": {
+            "description": "Unprocessable Entity. Some arguments failed validation checks.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/paths/~1users~1%7Bid%7D~1notification_subscriptions/post/responses/422/content/application~1json/schema"
+                }
+              }
+            }
+          }
+        },
+        "description": "Subscribe the given entity to Incident Status Update Notifications.\n\n<!-- theme: warning -->\n> ### Early Access\n\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "default": "usms-early-access"
+            },
+            "in": "header",
+            "name": "X-EARLY-ACCESS",
+            "description": "This header indicates that this API endpoint is __UNDER CONSTRUCTION__ and may change at any time. You __MUST__ pass in this header with the value `usms-early-access`. Do not use this endpoint in production, as it may change!",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "title": "NotificationSubscriber",
+                "description": "A reference of a subscriber entity.",
+                "type": "object",
+                "properties": {
+                  "subscriber_id": {
+                    "type": "string",
+                    "description": "The ID of the entity being subscribed"
+                  },
+                  "subscriber_type": {
+                    "type": "string",
+                    "description": "The type of the entity being subscribed",
+                    "enum": [
+                      "user",
+                      "team"
+                    ]
+                  }
+                },
+                "example": {
+                  "subscriber_id": "PD1234",
+                  "subscriber_type": "user"
+                }
+              },
+              "examples": {
+                "Request": {
+                  "value": {
+                    "subscriber_id": "PD1234",
+                    "subscriber_type": "team"
+                  }
+                }
+              }
+            }
+          },
+          "description": ""
+        }
+      }
+    },
+    "/incidents/{id}/status_updates/unsubscribe": {
+      "post": {
+        "summary": "Unsubscribe Incident Status Update Notification Subscriber",
+        "tags": [
+          "Incidents"
+        ],
+        "responses": {
+          "204": {
+            "description": "The matching Subscriber was successfully unsubscribed."
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        },
+        "operationId": "unsubscribeIncidentStatusUpdateNotificationSubscriber",
+        "description": "Unsubscribes the matching Subscriber from Incident Status Update Notifications.\n\n<!-- theme: warning -->\n> ### Early Access\n\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "default": "usms-early-access"
+            },
+            "in": "header",
+            "name": "X-EARLY-ACCESS",
+            "description": "This header indicates that this API endpoint is __UNDER CONSTRUCTION__ and may change at any time. You __MUST__ pass in this header with the value `usms-early-access`. Do not use this endpoint in production, as it may change!",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/paths/~1incidents~1%7Bid%7D~1status_updates~1subscribers/post/requestBody/content/application~1json/schema"
+              },
+              "examples": {
+                "Request": {
+                  "value": {
+                    "subscriber_id": "PD1234",
+                    "subscriber_type": "team"
+                  }
+                }
+              }
+            }
+          },
+          "description": ""
         }
       }
     },
@@ -20520,6 +20764,345 @@
           "429": {
             "$ref": "#/components/responses/TooManyRequests"
           }
+        }
+      }
+    },
+    "/users/{id}/notification_subscriptions": {
+      "description": "",
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "operationId": "getUserNotificationSubscriptions",
+        "description": "Retrieve a list of Notification Subscriptions the given user is subscribed to.\n\n<!-- theme: warning -->\n> ### Early Access\n\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
+        "summary": "List User Notification Subscriptions",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "name": "X-EARLY-ACCESS",
+            "in": "header",
+            "description": "This header indicates that this API endpoint is __UNDER CONSTRUCTION__ and may change at any time. You __MUST__ pass in this header with the value `usms-early-access`. Do not use this endpoint in production, as it may change!\n",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "usms-early-access"
+              ],
+              "default": "usms-early-access"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "subscriptions": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "subscription": {
+                            "$ref": "#/paths/~1users~1%7Bid%7D~1notification_subscriptions/post/responses/200/content/application~1json/schema/properties/subscription"
+                          }
+                        }
+                      }
+                    },
+                    "pagination": {
+                      "$ref": "#/components/schemas/Pagination"
+                    }
+                  }
+                },
+                "examples": {
+                  "Response": {
+                    "value": {
+                      "subscriptions": [
+                        {
+                          "subscription": {
+                            "subscriber_id": "PD1234",
+                            "subscriber_type": "user",
+                            "subscribable_id": "PD1234",
+                            "subscribable_type": "incident",
+                            "account_id": "PD1234"
+                          }
+                        },
+                        {
+                          "subscription": {
+                            "subscriber_id": "PD1234",
+                            "subscriber_type": "team",
+                            "subscribable_id": "PD1234",
+                            "subscribable_type": "incident",
+                            "account_id": "PD1234"
+                          }
+                        }
+                      ],
+                      "limit": 2,
+                      "offset": 0,
+                      "total": 1000,
+                      "more": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create New User Notification Subcription",
+        "operationId": "createUserNotificationSubscription",
+        "tags": [
+          "Users"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "subscription": {
+                      "title": "NotificationSubscription",
+                      "description": "An object describing the relationship of a NotificationSubscriber and a NotificationSubscribable.",
+                      "type": "object",
+                      "properties": {
+                        "subscriber_id": {
+                          "type": "string",
+                          "description": "The ID of the entity being subscribed"
+                        },
+                        "subscriber_type": {
+                          "type": "string",
+                          "description": "The type of the entity being subscribed",
+                          "enum": [
+                            "user",
+                            "team"
+                          ]
+                        },
+                        "subscribable_id": {
+                          "type": "string",
+                          "description": "The ID of the entity being subscribed to"
+                        },
+                        "subscribable_type": {
+                          "type": "string",
+                          "description": "The type of the entity being subscribed to",
+                          "enum": [
+                            "incident"
+                          ]
+                        },
+                        "account_id": {
+                          "type": "string",
+                          "description": "The ID of the account belonging to the subscriber entity"
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Response": {
+                    "value": {
+                      "subscription": {
+                        "account_id": "PD1234",
+                        "subscribable_id": "PD1234",
+                        "subscribable_type": "incident",
+                        "subscriber_id": "PD1234",
+                        "subscriber_type": "user"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "422": {
+            "description": "Unprocessable Entity. Some arguments failed validation checks.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "readOnly": true
+                        },
+                        "message": {
+                          "type": "string",
+                          "readOnly": true,
+                          "description": "Error message string"
+                        },
+                        "errors": {
+                          "type": "array",
+                          "readOnly": true,
+                          "items": {
+                            "type": "string",
+                            "readOnly": true,
+                            "description": "Human-readable error details"
+                          }
+                        }
+                      },
+                      "example": {
+                        "message": "Not Found",
+                        "code": 2100
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Create a new notification subscription for the given user.\n\n<!-- theme: warning -->\n> ### Early Access\n\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "default": "usms-early-acces"
+            },
+            "in": "header",
+            "name": "X-EARLY-ACCESS",
+            "description": "This header indicates that this API endpoint is __UNDER CONSTRUCTION__ and may change at any time. You __MUST__ pass in this header with the value `usms-early-access`. Do not use this endpoint in production, as it may change!\n",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "title": "NotificationSubscribable",
+                "description": "A reference of a subscribable entity.",
+                "type": "object",
+                "properties": {
+                  "subscribable_id": {
+                    "type": "string",
+                    "description": "The ID of the entity to subscribe to"
+                  },
+                  "subscribable_type": {
+                    "type": "string",
+                    "description": "The type of the entity being subscribed to",
+                    "enum": [
+                      "incident"
+                    ]
+                  }
+                },
+                "example": {
+                  "subscribable_id": "PD1234",
+                  "subscribable_type": "incident"
+                }
+              },
+              "examples": {
+                "Request": {
+                  "value": {
+                    "subscribable_type": "incident",
+                    "subscribable_id": "PD1234"
+                  }
+                }
+              }
+            }
+          },
+          "description": "The entity to subscribe to."
+        }
+      }
+    },
+    "/users/{id}/notification_subscriptions/unsubscribe": {
+      "post": {
+        "summary": "Unsubscribe User Notification Subscription",
+        "tags": [
+          "Users"
+        ],
+        "responses": {
+          "204": {
+            "description": "The Notification Subscription was deleted successfully."
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        },
+        "operationId": "unsubscribeUserNotificationSubscription",
+        "description": "Unsubscribe the given user from Notifications on the matching subscribable entity.\n\n<!-- theme: warning -->\n> ### Early Access\n\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "default": "usms-early-access"
+            },
+            "in": "header",
+            "name": "X-EARLY-ACCESS",
+            "description": "This header indicates that this API endpoint is __UNDER CONSTRUCTION__ and may change at any time. You __MUST__ pass in this header with the value `usms-early-access`. Do not use this endpoint in production, as it may change!"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/paths/~1users~1%7Bid%7D~1notification_subscriptions/post/requestBody/content/application~1json/schema"
+              },
+              "examples": {
+                "Request": {
+                  "value": {
+                    "subscribable_type": "incident",
+                    "subscribable_id": "PD1234"
+                  }
+                }
+              }
+            }
+          },
+          "description": ""
         }
       }
     },
