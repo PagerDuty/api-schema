@@ -5,6 +5,11 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 Currently we do not deprecate or remove any API functionality.
 
 ----
+
+### 2020-08-07
+- Updated models to include standard fields such as `id`, `type`, `summary`, `html_url`, and `self`.
+- Fixed inconsistencies with the `Reference` model.
+
 ### 2020-08-04
 - Added 6 new Early-Access endpoints around incident subscription management.
     - `GET /users/{id}/notification_subscriptions`

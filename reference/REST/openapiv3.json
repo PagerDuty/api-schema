@@ -677,89 +677,104 @@
         ]
       },
       "Addon": {
-        "type": "object",
-        "properties": {
-          "type": {
-            "type": "string",
-            "description": "The type of Add-on.",
-            "enum": [
-              "full_page_addon",
-              "incident_show_addon"
-            ]
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Tag/allOf/0"
           },
-          "name": {
-            "type": "string",
-            "description": "The name of the Add-on.",
-            "maxLength": 100
-          },
-          "src": {
-            "type": "string",
-            "format": "url",
-            "description": "The source URL to display in a frame in the PagerDuty UI. HTTPS is required."
-          }
-        },
-        "required": [
-          "type",
-          "name",
-          "src"
-        ],
-        "example": {
-          "type": "full_page_addon",
-          "name": "Internal Status Page",
-          "src": "https://intranet.example.com/status"
-        }
-      },
-      "BusinessService": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string",
-            "description": "The name of the business service."
-          },
-          "description": {
-            "type": "string",
-            "description": "The user-provided description of the business service."
-          },
-          "point_of_contact": {
-            "type": "string",
-            "description": "The point of contact assigned to this service."
-          },
-          "team": {
+          {
             "type": "object",
-            "title": "Team",
-            "description": "Reference to the team that owns the business service.",
             "properties": {
-              "id": {
-                "type": "string"
-              },
               "type": {
                 "type": "string",
-                "description": "A string that determines the schema of the object.",
-                "readOnly": true
+                "description": "The type of Add-on.",
+                "enum": [
+                  "full_page_addon",
+                  "incident_show_addon"
+                ]
               },
-              "self": {
+              "name": {
+                "type": "string",
+                "description": "The name of the Add-on.",
+                "maxLength": 100
+              },
+              "src": {
                 "type": "string",
                 "format": "url",
-                "description": "The API show URL at which the object is accessible.",
-                "readOnly": true
+                "description": "The source URL to display in a frame in the PagerDuty UI. HTTPS is required."
               }
             },
             "required": [
-              "id"
-            ]
+              "type",
+              "name",
+              "src"
+            ],
+            "example": {
+              "type": "full_page_addon",
+              "name": "Internal Status Page",
+              "src": "https://intranet.example.com/status"
+            }
           }
-        },
-        "example": {
-          "type": "business_service",
-          "name": "Self-serve mobile checkout",
-          "description": "Checkout service for our mobile clients",
-          "point_of_contact": "PagerDuty Admin",
-          "team": {
-            "type": "team_reference",
-            "self": "https://api.pagerduty.com/teams/P3ZQXDF",
-            "id": "P3ZQXDF"
+        ]
+      },
+      "BusinessService": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Tag/allOf/0"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "The name of the business service."
+              },
+              "description": {
+                "type": "string",
+                "description": "The user-provided description of the business service."
+              },
+              "point_of_contact": {
+                "type": "string",
+                "description": "The point of contact assigned to this service."
+              },
+              "team": {
+                "type": "object",
+                "title": "Team",
+                "description": "Reference to the team that owns the business service.",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string",
+                    "description": "A string that determines the schema of the object.",
+                    "readOnly": true
+                  },
+                  "self": {
+                    "type": "string",
+                    "format": "url",
+                    "description": "The API show URL at which the object is accessible.",
+                    "readOnly": true
+                  }
+                },
+                "required": [
+                  "id"
+                ]
+              }
+            },
+            "example": {
+              "id": "P3X2XX3",
+              "type": "business_service",
+              "name": "Self-serve mobile checkout",
+              "description": "Checkout service for our mobile clients",
+              "point_of_contact": "PagerDuty Admin",
+              "team": {
+                "type": "team_reference",
+                "self": "https://api.pagerduty.com/teams/P3ZQXDF",
+                "id": "P3ZQXDF"
+              }
+            }
           }
-        }
+        ]
       },
       "BusinessServiceReference": {
         "allOf": [
@@ -780,30 +795,63 @@
         ]
       },
       "Tag": {
-        "type": "object",
-        "properties": {
-          "type": {
-            "type": "string",
-            "description": "The type of object being created.",
-            "default": "tag",
-            "enum": [
-              "tag"
-            ]
+        "allOf": [
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "summary": {
+                "type": "string",
+                "nullable": true,
+                "description": "A short-form, server-generated string that provides succinct, important information about an object suitable for primary labeling of an entity in a client. In many cases, this will be identical to `name`, though it is not intended to be an identifier."
+              },
+              "type": {
+                "type": "string",
+                "description": "A string that determines the schema of the object. This must be the standard name for the entity, suffixed by `_reference` if the object is a reference."
+              },
+              "self": {
+                "type": "string",
+                "nullable": true,
+                "format": "url",
+                "description": "the API show URL at which the object is accessible"
+              },
+              "html_url": {
+                "type": "string",
+                "nullable": true,
+                "format": "url",
+                "description": "a URL at which the entity is uniquely displayed in the Web app"
+              }
+            }
           },
-          "label": {
-            "type": "string",
-            "description": "The label of the tag.",
-            "maxLength": 191
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "description": "The type of object being created.",
+                "default": "tag",
+                "enum": [
+                  "tag"
+                ]
+              },
+              "label": {
+                "type": "string",
+                "description": "The label of the tag.",
+                "maxLength": 191
+              }
+            },
+            "required": [
+              "label",
+              "type"
+            ],
+            "example": {
+              "type": "tag",
+              "label": "Batman"
+            }
           }
-        },
-        "required": [
-          "label",
-          "type"
-        ],
-        "example": {
-          "type": "tag",
-          "label": "Batman"
-        }
+        ]
       },
       "TagReference": {
         "allOf": [
@@ -960,34 +1008,18 @@
         }
       },
       "Reference": {
-        "type": "object",
-        "required": [
-          "type",
-          "id"
-        ],
-        "properties": {
-          "id": {
-            "type": "string"
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Tag/allOf/0"
           },
-          "summary": {
-            "type": "string",
-            "description": "A short-form, server-generated string that provides succinct, important information about an object suitable for primary labeling of an entity in a client. In many cases, this will be identical to `name`, though it is not intended to be an identifier."
-          },
-          "type": {
-            "type": "string",
-            "description": "A string that determines the schema of the object. This must be the standard name for the entity, suffixed by `_reference` if the object is a reference."
-          },
-          "self": {
-            "type": "string",
-            "format": "url",
-            "description": "the API show URL at which the object is accessible"
-          },
-          "html_url": {
-            "type": "string",
-            "format": "url",
-            "description": "a URL at which the entity is uniquely displayed in the Web app"
+          {
+            "type": "object",
+            "required": [
+              "type",
+              "id"
+            ]
           }
-        }
+        ]
       },
       "IncidentNote": {
         "type": "object",
@@ -1302,90 +1334,94 @@
         ]
       },
       "LogEntry": {
-        "type": "object",
-        "properties": {
-          "type": {
-            "type": "string",
-            "enum": [
-              "acknowledge_log_entry",
-              "annotate_log_entry",
-              "assign_log_entry",
-              "escalate_log_entry",
-              "exhaust_escalation_path_log_entry",
-              "notify_log_entry",
-              "reach_trigger_limit_log_entry",
-              "repeat_escalation_path_log_entry",
-              "resolve_log_entry",
-              "snooze_log_entry",
-              "trigger_log_entry",
-              "unacknowledge_log_entry"
-            ]
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Tag/allOf/0"
           },
-          "created_at": {
-            "type": "string",
-            "format": "date-time",
-            "readOnly": true,
-            "description": "Time at which the log entry was created."
-          },
-          "channel": {
-            "$ref": "#/components/schemas/Channel"
-          },
-          "agent": {
-            "$ref": "#/components/schemas/Agent"
-          },
-          "note": {
-            "type": "string",
-            "readOnly": true,
-            "description": "Optional field containing a note, if one was included with the log entry."
-          },
-          "contexts": {
-            "type": "array",
-            "readOnly": true,
-            "description": "Contexts to be included with the trigger such as links to graphs or images.",
-            "items": {
-              "$ref": "#/components/schemas/Context"
-            }
-          },
-          "service": {
-            "$ref": "#/components/schemas/ServiceReference"
-          },
-          "incident": {
-            "$ref": "#/components/schemas/IncidentReference"
-          },
-          "teams": {
-            "type": "array",
-            "readOnly": true,
-            "description": "Will consist of references unless included",
-            "items": {
-              "$ref": "#/components/schemas/TeamReference"
-            }
-          },
-          "event_details": {
+          {
             "type": "object",
-            "readOnly": true,
             "properties": {
-              "description": {
+              "type": {
                 "type": "string",
-                "description": "Additional details about the event."
+                "enum": [
+                  "acknowledge_log_entry",
+                  "annotate_log_entry",
+                  "assign_log_entry",
+                  "escalate_log_entry",
+                  "exhaust_escalation_path_log_entry",
+                  "notify_log_entry",
+                  "reach_trigger_limit_log_entry",
+                  "repeat_escalation_path_log_entry",
+                  "resolve_log_entry",
+                  "snooze_log_entry",
+                  "trigger_log_entry",
+                  "unacknowledge_log_entry"
+                ]
+              },
+              "created_at": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true,
+                "description": "Time at which the log entry was created."
+              },
+              "channel": {
+                "$ref": "#/components/schemas/Channel"
+              },
+              "agent": {
+                "$ref": "#/components/schemas/AgentReference"
+              },
+              "note": {
+                "type": "string",
+                "readOnly": true,
+                "description": "Optional field containing a note, if one was included with the log entry."
+              },
+              "contexts": {
+                "type": "array",
+                "readOnly": true,
+                "description": "Contexts to be included with the trigger such as links to graphs or images.",
+                "items": {
+                  "$ref": "#/components/schemas/Context"
+                }
+              },
+              "service": {
+                "$ref": "#/components/schemas/ServiceReference"
+              },
+              "incident": {
+                "$ref": "#/components/schemas/IncidentReference"
+              },
+              "teams": {
+                "type": "array",
+                "readOnly": true,
+                "description": "Will consist of references unless included",
+                "items": {
+                  "$ref": "#/components/schemas/TeamReference"
+                }
+              },
+              "event_details": {
+                "type": "object",
+                "readOnly": true,
+                "properties": {
+                  "description": {
+                    "type": "string",
+                    "description": "Additional details about the event."
+                  }
+                }
               }
             }
           }
-        }
+        ]
       },
-      "Agent": {
+      "AgentReference": {
         "allOf": [
           {
             "$ref": "#/components/schemas/Reference"
           },
           {
             "type": "object",
-            "description": "The agent (user, service or integration) that created or modified the ILE.",
+            "description": "The agent (user, service or integration) that created or modified the Incident Log Entry.",
             "properties": {
               "type": {
                 "enum": [
-                  "user",
-                  "service",
-                  "integration",
                   "user_reference",
                   "service_reference",
                   "integration_reference"
@@ -1416,49 +1452,56 @@
         ]
       },
       "NotificationRule": {
-        "type": "object",
-        "description": "A rule for contacting the user.",
-        "properties": {
-          "type": {
-            "type": "string",
-            "description": "The type of object being created.",
-            "default": "assignment_notification_rule",
-            "enum": [
-              "assignment_notification_rule"
-            ]
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Tag/allOf/0"
           },
-          "start_delay_in_minutes": {
-            "type": "integer",
-            "description": "The delay before firing the rule, in minutes.",
-            "minimum": 0
-          },
-          "contact_method": {
-            "$ref": "#/components/schemas/ContactMethodReference"
-          },
-          "urgency": {
-            "type": "string",
-            "enum": [
-              "high",
-              "low"
+          {
+            "type": "object",
+            "description": "A rule for contacting the user.",
+            "properties": {
+              "type": {
+                "type": "string",
+                "description": "The type of object being created.",
+                "default": "assignment_notification_rule",
+                "enum": [
+                  "assignment_notification_rule"
+                ]
+              },
+              "start_delay_in_minutes": {
+                "type": "integer",
+                "description": "The delay before firing the rule, in minutes.",
+                "minimum": 0
+              },
+              "contact_method": {
+                "$ref": "#/components/schemas/ContactMethodReference"
+              },
+              "urgency": {
+                "type": "string",
+                "enum": [
+                  "high",
+                  "low"
+                ],
+                "description": "Which incident urgency this rule is used for. Account must have the `urgencies` ability to have a low urgency notification rule."
+              }
+            },
+            "required": [
+              "start_delay_in_minutes",
+              "urgency",
+              "contact_method",
+              "type"
             ],
-            "description": "Which incident urgency this rule is used for. Account must have the `urgencies` ability to have a low urgency notification rule."
+            "example": {
+              "type": "assignment_notification_rule",
+              "start_delay_in_minutes": 0,
+              "contact_method": {
+                "id": "PXPGF42",
+                "type": "email_contact_method_reference"
+              },
+              "urgency": "high"
+            }
           }
-        },
-        "required": [
-          "start_delay_in_minutes",
-          "urgency",
-          "contact_method",
-          "type"
-        ],
-        "example": {
-          "type": "assignment_notification_rule",
-          "start_delay_in_minutes": 0,
-          "contact_method": {
-            "id": "PXPGF42",
-            "type": "email_contact_method_reference"
-          },
-          "urgency": "high"
-        }
+        ]
       },
       "ContactMethodReference": {
         "allOf": [
@@ -1482,35 +1525,42 @@
         ]
       },
       "ContactMethod": {
-        "type": "object",
-        "description": "The method to contact a user.",
-        "properties": {
-          "type": {
-            "type": "string",
-            "description": "The type of contact method being created.",
-            "enum": [
-              "email_contact_method",
-              "phone_contact_method",
-              "push_notification_contact_method",
-              "sms_contact_method"
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Tag/allOf/0"
+          },
+          {
+            "type": "object",
+            "description": "The method to contact a user.",
+            "properties": {
+              "type": {
+                "type": "string",
+                "description": "The type of contact method being created.",
+                "enum": [
+                  "email_contact_method",
+                  "phone_contact_method",
+                  "push_notification_contact_method",
+                  "sms_contact_method"
+                ]
+              },
+              "label": {
+                "type": "string",
+                "description": "The label (e.g., \"Work\", \"Mobile\", etc.)."
+              },
+              "address": {
+                "type": "string",
+                "description": "The \"address\" to deliver to: email, phone number, etc., depending on the type."
+              }
+            },
+            "discriminator": {
+              "propertyName": "type"
+            },
+            "required": [
+              "type",
+              "label",
+              "address"
             ]
-          },
-          "label": {
-            "type": "string",
-            "description": "The label (e.g., \"Work\", \"Mobile\", etc.)."
-          },
-          "address": {
-            "type": "string",
-            "description": "The \"address\" to deliver to: email, phone number, etc., depending on the type."
           }
-        },
-        "discriminator": {
-          "propertyName": "type"
-        },
-        "required": [
-          "type",
-          "label",
-          "address"
         ]
       },
       "EmailContactMethod": {
@@ -1761,112 +1811,119 @@
         }
       },
       "User": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string",
-            "description": "The name of the user.",
-            "maxLength": 100
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Tag/allOf/0"
           },
-          "type": {
-            "type": "string",
-            "description": "The type of object being created.",
-            "default": "user",
-            "enum": [
-              "user"
-            ]
-          },
-          "email": {
-            "type": "string",
-            "format": "email",
-            "description": "The user's email address.",
-            "minLength": 6,
-            "maxLength": 100
-          },
-          "time_zone": {
-            "type": "string",
-            "format": "tzinfo",
-            "description": "The preferred time zone name. If null, the account's time zone will be used."
-          },
-          "color": {
-            "type": "string",
-            "description": "The schedule color."
-          },
-          "role": {
-            "description": "The user role. Account must have the `read_only_users` ability to set a user as a `read_only_user` or a `read_only_limited_user`, and must have advanced permissions abilities to set a user as `observer` or `restricted_access`.",
-            "type": "string",
-            "enum": [
-              "admin",
-              "limited_user",
-              "observer",
-              "owner",
-              "read_only_user",
-              "restricted_access",
-              "read_only_limited_user",
-              "user"
-            ]
-          },
-          "avatar_url": {
-            "type": "string",
-            "format": "url",
-            "description": "The URL of the user's avatar.",
-            "readOnly": true
-          },
-          "description": {
-            "type": "string",
-            "description": "The user's bio."
-          },
-          "invitation_sent": {
-            "type": "boolean",
-            "readOnly": true,
-            "description": "If true, the user has an outstanding invitation."
-          },
-          "job_title": {
-            "type": "string",
-            "description": "The user's title.",
-            "maxLength": 100
-          },
-          "teams": {
-            "type": "array",
-            "readOnly": true,
-            "description": "The list of teams to which the user belongs. Account must have the `teams` ability to set this.",
-            "items": {
-              "$ref": "#/components/schemas/TeamReference"
-            }
-          },
-          "contact_methods": {
-            "type": "array",
-            "readOnly": true,
-            "description": "The list of contact methods for the user.",
-            "items": {
-              "$ref": "#/components/schemas/ContactMethodReference"
-            }
-          },
-          "notification_rules": {
-            "readOnly": true,
-            "type": "array",
-            "description": "The list of notification rules for the user.",
-            "items": {
-              "$ref": "#/components/schemas/NotificationRuleReference"
+          {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "The name of the user.",
+                "maxLength": 100
+              },
+              "type": {
+                "type": "string",
+                "description": "The type of object being created.",
+                "default": "user",
+                "enum": [
+                  "user"
+                ]
+              },
+              "email": {
+                "type": "string",
+                "format": "email",
+                "description": "The user's email address.",
+                "minLength": 6,
+                "maxLength": 100
+              },
+              "time_zone": {
+                "type": "string",
+                "format": "tzinfo",
+                "description": "The preferred time zone name. If null, the account's time zone will be used."
+              },
+              "color": {
+                "type": "string",
+                "description": "The schedule color."
+              },
+              "role": {
+                "description": "The user role. Account must have the `read_only_users` ability to set a user as a `read_only_user` or a `read_only_limited_user`, and must have advanced permissions abilities to set a user as `observer` or `restricted_access`.",
+                "type": "string",
+                "enum": [
+                  "admin",
+                  "limited_user",
+                  "observer",
+                  "owner",
+                  "read_only_user",
+                  "restricted_access",
+                  "read_only_limited_user",
+                  "user"
+                ]
+              },
+              "avatar_url": {
+                "type": "string",
+                "format": "url",
+                "description": "The URL of the user's avatar.",
+                "readOnly": true
+              },
+              "description": {
+                "type": "string",
+                "description": "The user's bio."
+              },
+              "invitation_sent": {
+                "type": "boolean",
+                "readOnly": true,
+                "description": "If true, the user has an outstanding invitation."
+              },
+              "job_title": {
+                "type": "string",
+                "description": "The user's title.",
+                "maxLength": 100
+              },
+              "teams": {
+                "type": "array",
+                "readOnly": true,
+                "description": "The list of teams to which the user belongs. Account must have the `teams` ability to set this.",
+                "items": {
+                  "$ref": "#/components/schemas/TeamReference"
+                }
+              },
+              "contact_methods": {
+                "type": "array",
+                "readOnly": true,
+                "description": "The list of contact methods for the user.",
+                "items": {
+                  "$ref": "#/components/schemas/ContactMethodReference"
+                }
+              },
+              "notification_rules": {
+                "readOnly": true,
+                "type": "array",
+                "description": "The list of notification rules for the user.",
+                "items": {
+                  "$ref": "#/components/schemas/NotificationRuleReference"
+                }
+              }
+            },
+            "required": [
+              "name",
+              "email",
+              "type"
+            ],
+            "example": {
+              "type": "user",
+              "name": "Earline Greenholt",
+              "email": "125.greenholt.earline@graham.name",
+              "time_zone": "America/Lima",
+              "color": "green",
+              "role": "admin",
+              "job_title": "Director of Engineering",
+              "avatar_url": "https://secure.gravatar.com/avatar/1d1a39d4635208d5664082a6c654a73f.png?d=mm&r=PG",
+              "description": "I'm the boss"
             }
           }
-        },
-        "required": [
-          "name",
-          "email",
-          "type"
-        ],
-        "example": {
-          "type": "user",
-          "name": "Earline Greenholt",
-          "email": "125.greenholt.earline@graham.name",
-          "time_zone": "America/Lima",
-          "color": "green",
-          "role": "admin",
-          "job_title": "Director of Engineering",
-          "avatar_url": "https://secure.gravatar.com/avatar/1d1a39d4635208d5664082a6c654a73f.png?d=mm&r=PG",
-          "description": "I'm the boss"
-        }
+        ]
       },
       "TeamReference": {
         "allOf": [
@@ -1887,39 +1944,46 @@
         ]
       },
       "Team": {
-        "type": "object",
-        "properties": {
-          "type": {
-            "type": "string",
-            "description": "The type of object being created.",
-            "default": "team",
-            "enum": [
-              "team"
-            ]
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Tag/allOf/0"
           },
-          "name": {
-            "type": "string",
-            "description": "The name of the team.",
-            "maxLength": 100
-          },
-          "description": {
-            "type": "string",
-            "description": "The description of the team.",
-            "maxLength": 1024
-          },
-          "parent": {
-            "$ref": "#/components/schemas/TeamReference"
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "description": "The type of object being created.",
+                "default": "team",
+                "enum": [
+                  "team"
+                ]
+              },
+              "name": {
+                "type": "string",
+                "description": "The name of the team.",
+                "maxLength": 100
+              },
+              "description": {
+                "type": "string",
+                "description": "The description of the team.",
+                "maxLength": 1024
+              },
+              "parent": {
+                "$ref": "#/components/schemas/TeamReference"
+              }
+            },
+            "required": [
+              "name",
+              "type"
+            ],
+            "example": {
+              "type": "team",
+              "name": "Engineering",
+              "description": "The engineering team"
+            }
           }
-        },
-        "required": [
-          "name",
-          "type"
-        ],
-        "example": {
-          "type": "team",
-          "name": "Engineering",
-          "description": "The engineering team"
-        }
+        ]
       },
       "IncidentReference": {
         "allOf": [
@@ -1940,118 +2004,125 @@
         ]
       },
       "Incident": {
-        "type": "object",
-        "properties": {
-          "incident_number": {
-            "type": "integer",
-            "readOnly": true,
-            "description": "The number of the incident. This is unique across your account."
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Tag/allOf/0"
           },
-          "created_at": {
-            "type": "string",
-            "format": "date-time",
-            "readOnly": true,
-            "description": "The date/time the incident was first triggered."
-          },
-          "status": {
-            "type": "string",
-            "description": "The current status of the incident.",
-            "enum": [
-              "triggered",
-              "acknowledged",
-              "resolved"
-            ]
-          },
-          "title": {
-            "type": "string",
-            "readOnly": false,
-            "description": "A succinct description of the nature, symptoms, cause, or effect of the incident."
-          },
-          "pending_actions": {
-            "type": "array",
-            "readOnly": true,
-            "description": "The list of pending_actions on the incident. A pending_action object contains a type of action which can be escalate, unacknowledge, resolve or urgency_change. A pending_action object contains at, the time at which the action will take place. An urgency_change pending_action will contain to, the urgency that the incident will change to.",
-            "items": {
-              "$ref": "#/components/schemas/IncidentAction"
+          {
+            "type": "object",
+            "properties": {
+              "incident_number": {
+                "type": "integer",
+                "readOnly": true,
+                "description": "The number of the incident. This is unique across your account."
+              },
+              "created_at": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true,
+                "description": "The date/time the incident was first triggered."
+              },
+              "status": {
+                "type": "string",
+                "description": "The current status of the incident.",
+                "enum": [
+                  "triggered",
+                  "acknowledged",
+                  "resolved"
+                ]
+              },
+              "title": {
+                "type": "string",
+                "readOnly": false,
+                "description": "A succinct description of the nature, symptoms, cause, or effect of the incident."
+              },
+              "pending_actions": {
+                "type": "array",
+                "readOnly": true,
+                "description": "The list of pending_actions on the incident. A pending_action object contains a type of action which can be escalate, unacknowledge, resolve or urgency_change. A pending_action object contains at, the time at which the action will take place. An urgency_change pending_action will contain to, the urgency that the incident will change to.",
+                "items": {
+                  "$ref": "#/components/schemas/IncidentAction"
+                }
+              },
+              "incident_key": {
+                "type": "string",
+                "readOnly": true,
+                "description": "The incident's de-duplication key."
+              },
+              "service": {
+                "$ref": "#/components/schemas/ServiceReference"
+              },
+              "assignments": {
+                "type": "array",
+                "description": "List of all assignments for this incident.",
+                "items": {
+                  "$ref": "#/components/schemas/Assignment"
+                }
+              },
+              "assigned_via": {
+                "type": "string",
+                "description": "How the current incident assignments were decided.  Note that `direct_assignment` incidents will not escalate up the attached `escalation_policy`",
+                "enum": [
+                  "escalation_policy",
+                  "direct_assignment"
+                ],
+                "readOnly": true
+              },
+              "acknowledgements": {
+                "type": "array",
+                "description": "List of all acknowledgements for this incident.",
+                "items": {
+                  "$ref": "#/components/schemas/Acknowledgement"
+                }
+              },
+              "last_status_change_at": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true,
+                "description": "The time at which the status of the incident last changed."
+              },
+              "last_status_change_by": {
+                "$ref": "#/components/schemas/AgentReference"
+              },
+              "first_trigger_log_entry": {
+                "$ref": "#/components/schemas/LogEntryReference"
+              },
+              "escalation_policy": {
+                "$ref": "#/components/schemas/EscalationPolicyReference"
+              },
+              "teams": {
+                "type": "array",
+                "description": "The teams involved in the incident’s lifecycle.",
+                "items": {
+                  "$ref": "#/components/schemas/TeamReference"
+                }
+              },
+              "priority": {
+                "$ref": "#/components/schemas/PriorityReference"
+              },
+              "urgency": {
+                "type": "string",
+                "enum": [
+                  "high",
+                  "low"
+                ],
+                "description": "The current urgency of the incident."
+              },
+              "resolve_reason": {
+                "$ref": "#/components/schemas/ResolveReason"
+              },
+              "alert_counts": {
+                "$ref": "#/components/schemas/AlertCount"
+              },
+              "conference_bridge": {
+                "$ref": "#/components/schemas/ConferenceBridge"
+              },
+              "body": {
+                "$ref": "#/components/schemas/IncidentBody"
+              }
             }
-          },
-          "incident_key": {
-            "type": "string",
-            "readOnly": true,
-            "description": "The incident's de-duplication key."
-          },
-          "service": {
-            "$ref": "#/components/schemas/ServiceReference"
-          },
-          "assignments": {
-            "type": "array",
-            "description": "List of all assignments for this incident.",
-            "items": {
-              "$ref": "#/components/schemas/Assignment"
-            }
-          },
-          "assigned_via": {
-            "type": "string",
-            "description": "How the current incident assignments were decided.  Note that `direct_assignment` incidents will not escalate up the attached `escalation_policy`",
-            "enum": [
-              "escalation_policy",
-              "direct_assignment"
-            ],
-            "readOnly": true
-          },
-          "acknowledgements": {
-            "type": "array",
-            "description": "List of all acknowledgements for this incident.",
-            "items": {
-              "$ref": "#/components/schemas/Acknowledgement"
-            }
-          },
-          "last_status_change_at": {
-            "type": "string",
-            "format": "date-time",
-            "readOnly": true,
-            "description": "The time at which the status of the incident last changed."
-          },
-          "last_status_change_by": {
-            "$ref": "#/components/schemas/Agent"
-          },
-          "first_trigger_log_entry": {
-            "$ref": "#/components/schemas/LogEntryReference"
-          },
-          "escalation_policy": {
-            "$ref": "#/components/schemas/EscalationPolicyReference"
-          },
-          "teams": {
-            "type": "array",
-            "description": "The teams involved in the incident’s lifecycle.",
-            "items": {
-              "$ref": "#/components/schemas/TeamReference"
-            }
-          },
-          "priority": {
-            "$ref": "#/components/schemas/PriorityReference"
-          },
-          "urgency": {
-            "type": "string",
-            "enum": [
-              "high",
-              "low"
-            ],
-            "description": "The current urgency of the incident."
-          },
-          "resolve_reason": {
-            "$ref": "#/components/schemas/ResolveReason"
-          },
-          "alert_counts": {
-            "$ref": "#/components/schemas/AlertCount"
-          },
-          "conference_bridge": {
-            "$ref": "#/components/schemas/ConferenceBridge"
-          },
-          "body": {
-            "$ref": "#/components/schemas/IncidentBody"
           }
-        }
+        ]
       },
       "EscalationPolicyReference": {
         "allOf": [
@@ -2072,95 +2143,103 @@
         ]
       },
       "EscalationPolicy": {
-        "type": "object",
-        "properties": {
-          "type": {
-            "type": "string",
-            "description": "The type of object being created.",
-            "default": "escalation_policy",
-            "enum": [
-              "escalation_policy"
-            ]
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Tag/allOf/0"
           },
-          "name": {
-            "type": "string",
-            "description": "The name of the escalation policy."
-          },
-          "description": {
-            "type": "string",
-            "description": "Escalation policy description."
-          },
-          "num_loops": {
-            "type": "integer",
-            "description": "The number of times the escalation policy will repeat after reaching the end of its escalation.",
-            "default": 0,
-            "minimum": 0
-          },
-          "on_call_handoff_notifications": {
-            "type": "string",
-            "description": "Determines how on call handoff notifications will be sent for users on the escalation policy. Defaults to \"if_has_services\".",
-            "enum": [
-              "if_has_services",
-              "always"
-            ]
-          },
-          "escalation_rules": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/EscalationRule"
-            }
-          },
-          "services": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ServiceReference"
-            },
-            "minLength": 0
-          },
-          "teams": {
-            "type": "array",
-            "description": "Teams associated with the policy. Account must have the `teams` ability to use this parameter.",
-            "items": {
-              "$ref": "#/components/schemas/TeamReference"
-            },
-            "minLength": 0
-          }
-        },
-        "required": [
-          "type",
-          "name",
-          "escalation_rules"
-        ],
-        "example": {
-          "type": "escalation_policy",
-          "name": "Engineering Escalation Policy",
-          "escalation_rules": [
-            {
-              "escalation_delay_in_minutes": 30,
-              "targets": [
-                {
-                  "id": "PEYSGVF",
-                  "type": "user_reference"
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "description": "The type of object being created.",
+                "default": "escalation_policy",
+                "enum": [
+                  "escalation_policy"
+                ]
+              },
+              "name": {
+                "type": "string",
+                "description": "The name of the escalation policy."
+              },
+              "description": {
+                "type": "string",
+                "description": "Escalation policy description."
+              },
+              "num_loops": {
+                "type": "integer",
+                "description": "The number of times the escalation policy will repeat after reaching the end of its escalation.",
+                "default": 0,
+                "minimum": 0
+              },
+              "on_call_handoff_notifications": {
+                "type": "string",
+                "description": "Determines how on call handoff notifications will be sent for users on the escalation policy. Defaults to \"if_has_services\".",
+                "enum": [
+                  "if_has_services",
+                  "always"
+                ]
+              },
+              "escalation_rules": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/EscalationRule"
                 }
-              ]
+              },
+              "services": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ServiceReference"
+                },
+                "minLength": 0
+              },
+              "teams": {
+                "type": "array",
+                "description": "Teams associated with the policy. Account must have the `teams` ability to use this parameter.",
+                "items": {
+                  "$ref": "#/components/schemas/TeamReference"
+                },
+                "minLength": 0
+              }
+            },
+            "required": [
+              "type",
+              "name",
+              "escalation_rules"
+            ],
+            "example": {
+              "id": "PQIL2IX",
+              "type": "escalation_policy",
+              "name": "Engineering Escalation Policy",
+              "escalation_rules": [
+                {
+                  "escalation_delay_in_minutes": 30,
+                  "targets": [
+                    {
+                      "id": "PEYSGVF",
+                      "type": "user_reference"
+                    }
+                  ]
+                }
+              ],
+              "services": [
+                {
+                  "id": "PIJ90N7",
+                  "type": "service_reference"
+                }
+              ],
+              "num_loops": 2,
+              "on_call_handoff_notifications": "if_has_services",
+              "teams": [
+                {
+                  "id": "PQ9K7I8",
+                  "type": "team_reference"
+                }
+              ],
+              "description": "Here is the ep for the engineering team."
             }
-          ],
-          "services": [
-            {
-              "id": "PIJ90N7",
-              "type": "service_reference"
-            }
-          ],
-          "num_loops": 2,
-          "on_call_handoff_notifications": "if_has_services",
-          "teams": [
-            {
-              "id": "PQ9K7I8",
-              "type": "team_reference"
-            }
-          ],
-          "description": "Here is the ep for the engineering team."
-        }
+          }
+        ]
       },
       "EscalationRule": {
         "type": "object",
@@ -2179,7 +2258,7 @@
             "maxItems": 10,
             "description": "The targets an incident should be assigned to upon reaching this rule.",
             "items": {
-              "$ref": "#/components/schemas/EscalationTarget"
+              "$ref": "#/components/schemas/EscalationTargetReference"
             }
           }
         },
@@ -2201,7 +2280,7 @@
           ]
         }
       },
-      "EscalationTarget": {
+      "EscalationTargetReference": {
         "allOf": [
           {
             "$ref": "#/components/schemas/Reference"
@@ -2242,93 +2321,69 @@
         ]
       },
       "Extension": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string",
-            "description": "The name of the extension."
-          },
-          "type": {
-            "type": "string",
-            "description": "The type of object being created.",
-            "default": "extension",
-            "enum": [
-              "extension"
-            ]
-          },
-          "endpoint_url": {
-            "type": "string",
-            "format": "url",
-            "description": "The url of the extension."
-          },
-          "extension_objects": {
-            "type": "array",
-            "description": "The objects for which the extension applies",
-            "items": {
-              "$ref": "#/components/schemas/ServiceReference"
-            }
-          },
-          "extension_schema": {
-            "$ref": "#/components/schemas/ExtensionSchemaReference"
-          },
-          "temporarily_disabled": {
-            "type": "boolean",
-            "readOnly": true,
-            "description": "Whether or not this extension is temporarily disabled; for example, a webhook extension that is repeatedly rejected by the server.",
-            "default": false
-          }
-        },
-        "required": [
-          "extension_objects",
-          "extension_schema",
-          "name",
-          "type"
-        ],
-        "example": {
-          "endpoint_url": "https://example.com/recieve_a_pagerduty_webhook",
-          "name": "My Webhook",
-          "summary": "My Webhook",
-          "type": "extension",
-          "extension_schema": {
-            "id": "PJFWPEP",
-            "type": "extension_schema_reference"
-          },
-          "extension_objects": [
-            {
-              "id": "PIJ90N7",
-              "type": "service_reference"
-            }
-          ]
-        }
-      },
-      "ApiBasedIntegration": {
         "allOf": [
           {
-            "$ref": "#/components/schemas/Integration"
+            "$ref": "#/components/schemas/Tag/allOf/0"
           },
           {
             "type": "object",
             "properties": {
-              "integration_key": {
+              "name": {
                 "type": "string",
-                "description": "This is the unique key used to route events to this integration when received via the PagerDuty Events API."
-              }
-            }
-          }
-        ]
-      },
-      "EmailBasedIntegration": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/Integration"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "integration_email": {
+                "description": "The name of the extension."
+              },
+              "type": {
                 "type": "string",
-                "description": "This is the unique fully-qualified email address used for routing emails to this integration for processing."
+                "description": "The type of object being created.",
+                "default": "extension",
+                "enum": [
+                  "extension"
+                ]
+              },
+              "endpoint_url": {
+                "type": "string",
+                "format": "url",
+                "description": "The url of the extension."
+              },
+              "extension_objects": {
+                "type": "array",
+                "description": "The objects for which the extension applies",
+                "items": {
+                  "$ref": "#/components/schemas/ServiceReference"
+                }
+              },
+              "extension_schema": {
+                "$ref": "#/components/schemas/ExtensionSchemaReference"
+              },
+              "temporarily_disabled": {
+                "type": "boolean",
+                "readOnly": true,
+                "description": "Whether or not this extension is temporarily disabled; for example, a webhook extension that is repeatedly rejected by the server.",
+                "default": false
               }
+            },
+            "required": [
+              "extension_objects",
+              "extension_schema",
+              "name",
+              "type"
+            ],
+            "example": {
+              "id": "PJU23I3",
+              "endpoint_url": "https://example.com/recieve_a_pagerduty_webhook",
+              "name": "My Webhook",
+              "summary": "My Webhook",
+              "type": "extension",
+              "extension_schema": {
+                "id": "PJFWPEP",
+                "type": "extension_schema_reference"
+              },
+              "extension_objects": [
+                {
+                  "id": "PIJ90N7",
+                  "type": "service_reference"
+                }
+              ]
             }
           }
         ]
@@ -2352,170 +2407,178 @@
         ]
       },
       "Service": {
-        "type": "object",
-        "properties": {
-          "type": {
-            "type": "string",
-            "description": "The type of object being created.",
-            "default": "service",
-            "enum": [
-              "service"
-            ]
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Tag/allOf/0"
           },
-          "name": {
-            "type": "string",
-            "description": "The name of the service."
-          },
-          "description": {
-            "type": "string",
-            "description": "The user-provided description of the service."
-          },
-          "auto_resolve_timeout": {
-            "type": "integer",
-            "description": "Time in seconds that an incident is automatically resolved if left open for that long. Value is `null` if the feature is disabled. Value must not be negative. Setting this field to `0`, `null` (or unset in POST request) will disable the feature.",
-            "default": 14400
-          },
-          "acknowledgement_timeout": {
-            "type": "integer",
-            "description": "Time in seconds that an incident changes to the Triggered State after being Acknowledged. Value is `null` if the feature is disabled. Value must not be negative. Setting this field to `0`, `null` (or unset in POST request) will disable the feature.",
-            "default": 1800
-          },
-          "created_at": {
-            "type": "string",
-            "format": "date-time",
-            "readOnly": true,
-            "description": "The date/time when this service was created"
-          },
-          "status": {
-            "type": "string",
-            "description": "The current state of the Service. Valid statuses are:\n\n\n- `active`: The service is enabled and has no open incidents.\n- `warning`: The service is enabled and has one or more acknowledged incidents.\n- `critical`: The service is enabled and has one or more triggered incidents.\n- `maintenance`: The service is under maintenance, no new incidents will be triggered during maintenance mode.\n- `disabled`: The service is disabled and will not have any new triggered incidents.\n",
-            "enum": [
-              "active",
-              "warning",
-              "critical",
-              "maintenance",
-              "disabled"
-            ]
-          },
-          "last_incident_timestamp": {
-            "type": "string",
-            "format": "date-time",
-            "readOnly": true,
-            "description": "The date/time when the most recent incident was created for this service."
-          },
-          "escalation_policy": {
-            "$ref": "#/components/schemas/EscalationPolicyReference"
-          },
-          "teams": {
-            "type": "array",
-            "readOnly": true,
-            "description": "The set of teams associated with this service.",
-            "items": {
-              "$ref": "#/components/schemas/TeamReference"
-            }
-          },
-          "integrations": {
-            "type": "array",
-            "readOnly": true,
-            "description": "An array containing Integration objects that belong to this service. If `integrations` is passed as an argument, these are full objects - otherwise, these are references.",
-            "items": {
-              "$ref": "#/components/schemas/IntegrationReference"
-            }
-          },
-          "incident_urgency_rule": {
-            "$ref": "#/components/schemas/IncidentUrgencyRule"
-          },
-          "support_hours": {
-            "$ref": "#/components/schemas/SupportHours"
-          },
-          "scheduled_actions": {
-            "type": "array",
-            "description": "An array containing scheduled actions for the service.",
-            "items": {
-              "$ref": "#/components/schemas/ScheduledAction"
-            }
-          },
-          "addons": {
-            "type": "array",
-            "description": "The array of Add-ons associated with this service.",
-            "readOnly": true,
-            "items": {
-              "$ref": "#/components/schemas/AddonReference"
-            }
-          },
-          "alert_creation": {
-            "type": "string",
-            "description": "Whether a service creates only incidents, or both alerts and incidents. A service must create alerts in order to enable incident merging.\n* \"create_incidents\" - The service will create one incident and zero alerts for each incoming event.\n* \"create_alerts_and_incidents\" - The service will create one incident and one associated alert for each incoming event.\n",
-            "enum": [
-              "create_incidents",
-              "create_alerts_and_incidents"
-            ]
-          },
-          "alert_grouping": {
-            "type": "string",
-            "description": "Defines how alerts on this service will be automatically grouped into incidents. Note that the alert grouping features are available only on certain plans. There are three available options:\n* null - No alert grouping on the service. Each alert will create a separate incident;\n* \"time\" - All alerts within a specified duration will be grouped into the same incident. This duration is set in the `alert_grouping_timeout` setting (described below). Available on Standard, Enterprise, and Event Intelligence plans;\n* \"intelligent\" - Alerts will be intelligently grouped based on a machine learning model that looks at the alert summary, timing, and the history of grouped alerts. Available on Enterprise and Event Intelligence plans\n",
-            "enum": [
-              "time",
-              "intelligent"
-            ]
-          },
-          "alert_grouping_timeout": {
-            "type": "integer",
-            "description": "The duration in minutes within which to automatically group incoming alerts. This setting applies only when `alert_grouping` is set to `\"time\"`. To continue grouping alerts until the incident is resolved, set this value to `0`.\n"
-          }
-        },
-        "required": [
-          "type"
-        ],
-        "example": {
-          "type": "service",
-          "name": "My Web App",
-          "description": "My cool web application that does things.",
-          "auto_resolve_timeout": 14400,
-          "acknowledgement_timeout": 600,
-          "status": "active",
-          "escalation_policy": {
-            "id": "PWIP6CQ",
-            "type": "escalation_policy_reference"
-          },
-          "incident_urgency_rule": {
-            "type": "use_support_hours",
-            "during_support_hours": {
-              "type": "constant",
-              "urgency": "high"
-            },
-            "outside_support_hours": {
-              "type": "constant",
-              "urgency": "low"
-            }
-          },
-          "support_hours": {
-            "type": "fixed_time_per_day",
-            "time_zone": "America/Lima",
-            "start_time": "09:00:00",
-            "end_time": 61200,
-            "days_of_week": [
-              1,
-              2,
-              3,
-              4,
-              5
-            ]
-          },
-          "scheduled_actions": [
-            {
-              "type": "urgency_change",
-              "at": {
-                "type": "named_time",
-                "name": "support_hours_start"
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "description": "The type of object being created.",
+                "default": "service",
+                "enum": [
+                  "service"
+                ]
               },
-              "to_urgency": "high"
+              "name": {
+                "type": "string",
+                "description": "The name of the service."
+              },
+              "description": {
+                "type": "string",
+                "description": "The user-provided description of the service."
+              },
+              "auto_resolve_timeout": {
+                "type": "integer",
+                "description": "Time in seconds that an incident is automatically resolved if left open for that long. Value is `null` if the feature is disabled. Value must not be negative. Setting this field to `0`, `null` (or unset in POST request) will disable the feature.",
+                "default": 14400
+              },
+              "acknowledgement_timeout": {
+                "type": "integer",
+                "description": "Time in seconds that an incident changes to the Triggered State after being Acknowledged. Value is `null` if the feature is disabled. Value must not be negative. Setting this field to `0`, `null` (or unset in POST request) will disable the feature.",
+                "default": 1800
+              },
+              "created_at": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true,
+                "description": "The date/time when this service was created"
+              },
+              "status": {
+                "type": "string",
+                "description": "The current state of the Service. Valid statuses are:\n\n\n- `active`: The service is enabled and has no open incidents.\n- `warning`: The service is enabled and has one or more acknowledged incidents.\n- `critical`: The service is enabled and has one or more triggered incidents.\n- `maintenance`: The service is under maintenance, no new incidents will be triggered during maintenance mode.\n- `disabled`: The service is disabled and will not have any new triggered incidents.\n",
+                "enum": [
+                  "active",
+                  "warning",
+                  "critical",
+                  "maintenance",
+                  "disabled"
+                ]
+              },
+              "last_incident_timestamp": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true,
+                "description": "The date/time when the most recent incident was created for this service."
+              },
+              "escalation_policy": {
+                "$ref": "#/components/schemas/EscalationPolicyReference"
+              },
+              "teams": {
+                "type": "array",
+                "readOnly": true,
+                "description": "The set of teams associated with this service.",
+                "items": {
+                  "$ref": "#/components/schemas/TeamReference"
+                }
+              },
+              "integrations": {
+                "type": "array",
+                "readOnly": true,
+                "description": "An array containing Integration objects that belong to this service. If `integrations` is passed as an argument, these are full objects - otherwise, these are references.",
+                "items": {
+                  "$ref": "#/components/schemas/IntegrationReference"
+                }
+              },
+              "incident_urgency_rule": {
+                "$ref": "#/components/schemas/IncidentUrgencyRule"
+              },
+              "support_hours": {
+                "$ref": "#/components/schemas/SupportHours"
+              },
+              "scheduled_actions": {
+                "type": "array",
+                "description": "An array containing scheduled actions for the service.",
+                "items": {
+                  "$ref": "#/components/schemas/ScheduledAction"
+                }
+              },
+              "addons": {
+                "type": "array",
+                "description": "The array of Add-ons associated with this service.",
+                "readOnly": true,
+                "items": {
+                  "$ref": "#/components/schemas/AddonReference"
+                }
+              },
+              "alert_creation": {
+                "type": "string",
+                "description": "Whether a service creates only incidents, or both alerts and incidents. A service must create alerts in order to enable incident merging.\n* \"create_incidents\" - The service will create one incident and zero alerts for each incoming event.\n* \"create_alerts_and_incidents\" - The service will create one incident and one associated alert for each incoming event.\n",
+                "enum": [
+                  "create_incidents",
+                  "create_alerts_and_incidents"
+                ]
+              },
+              "alert_grouping": {
+                "type": "string",
+                "description": "Defines how alerts on this service will be automatically grouped into incidents. Note that the alert grouping features are available only on certain plans. There are three available options:\n* null - No alert grouping on the service. Each alert will create a separate incident;\n* \"time\" - All alerts within a specified duration will be grouped into the same incident. This duration is set in the `alert_grouping_timeout` setting (described below). Available on Standard, Enterprise, and Event Intelligence plans;\n* \"intelligent\" - Alerts will be intelligently grouped based on a machine learning model that looks at the alert summary, timing, and the history of grouped alerts. Available on Enterprise and Event Intelligence plans\n",
+                "enum": [
+                  "time",
+                  "intelligent"
+                ]
+              },
+              "alert_grouping_timeout": {
+                "type": "integer",
+                "description": "The duration in minutes within which to automatically group incoming alerts. This setting applies only when `alert_grouping` is set to `\"time\"`. To continue grouping alerts until the incident is resolved, set this value to `0`.\n"
+              }
+            },
+            "required": [
+              "type"
+            ],
+            "example": {
+              "id": "PSI2I2O",
+              "type": "service",
+              "name": "My Web App",
+              "description": "My cool web application that does things.",
+              "auto_resolve_timeout": 14400,
+              "acknowledgement_timeout": 600,
+              "status": "active",
+              "escalation_policy": {
+                "id": "PWIP6CQ",
+                "type": "escalation_policy_reference"
+              },
+              "incident_urgency_rule": {
+                "type": "use_support_hours",
+                "during_support_hours": {
+                  "type": "constant",
+                  "urgency": "high"
+                },
+                "outside_support_hours": {
+                  "type": "constant",
+                  "urgency": "low"
+                }
+              },
+              "support_hours": {
+                "type": "fixed_time_per_day",
+                "time_zone": "America/Lima",
+                "start_time": "09:00:00",
+                "end_time": 61200,
+                "days_of_week": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5
+                ]
+              },
+              "scheduled_actions": [
+                {
+                  "type": "urgency_change",
+                  "at": {
+                    "type": "named_time",
+                    "name": "support_hours_start"
+                  },
+                  "to_urgency": "high"
+                }
+              ],
+              "alert_creation": "create_alerts_and_incidents",
+              "alert_grouping": "time",
+              "alert_grouping_timeout": 2
             }
-          ],
-          "alert_creation": "create_alerts_and_incidents",
-          "alert_grouping": "time",
-          "alert_grouping_timeout": 2
-        }
+          }
+        ]
       },
       "PriorityReference": {
         "allOf": [
@@ -2536,26 +2599,47 @@
         ]
       },
       "Priority": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string",
-            "description": "The user-provided short name of the priority."
-          },
-          "description": {
-            "type": "string",
-            "description": "The user-provided description of the priority."
-          }
-        }
-      },
-      "Integration": {
         "allOf": [
           {
-            "$ref": "#/components/schemas/IntegrationReference"
+            "$ref": "#/components/schemas/Tag/allOf/0"
           },
           {
             "type": "object",
             "properties": {
+              "name": {
+                "type": "string",
+                "description": "The user-provided short name of the priority."
+              },
+              "description": {
+                "type": "string",
+                "description": "The user-provided description of the priority."
+              }
+            }
+          }
+        ]
+      },
+      "Integration": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Tag/allOf/0"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "aws_cloudwatch_inbound_integration",
+                  "cloudkick_inbound_integration",
+                  "event_transformer_api_inbound_integration",
+                  "generic_email_inbound_integration",
+                  "generic_events_api_inbound_integration",
+                  "keynote_inbound_integration",
+                  "nagios_inbound_integration",
+                  "pingdom_inbound_integration",
+                  "sql_monitor_inbound_integration"
+                ]
+              },
               "name": {
                 "type": "string",
                 "description": "The name of this integration."
@@ -2621,70 +2705,78 @@
         ]
       },
       "MaintenanceWindow": {
-        "type": "object",
-        "properties": {
-          "type": {
-            "type": "string",
-            "description": "The type of object being created.",
-            "default": "maintenance_window",
-            "enum": [
-              "maintenance_window"
-            ]
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Tag/allOf/0"
           },
-          "sequence_number": {
-            "type": "integer",
-            "readOnly": true,
-            "description": "The order in which the maintenance window was created."
-          },
-          "start_time": {
-            "type": "string",
-            "format": "date-time",
-            "description": "This maintenance window's start time. This is when the services will stop creating incidents. If this date is in the past, it will be updated to be the current time."
-          },
-          "end_time": {
-            "type": "string",
-            "format": "date-time",
-            "description": "This maintenance window's end time. This is when the services will start creating incidents again. This date must be in the future and after the `start_time`."
-          },
-          "description": {
-            "type": "string",
-            "description": "A description for this maintenance window."
-          },
-          "created_by": {
-            "$ref": "#/components/schemas/UserReference"
-          },
-          "services": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ServiceReference"
-            }
-          },
-          "teams": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/TeamReference"
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "description": "The type of object being created.",
+                "default": "maintenance_window",
+                "enum": [
+                  "maintenance_window"
+                ]
+              },
+              "sequence_number": {
+                "type": "integer",
+                "readOnly": true,
+                "description": "The order in which the maintenance window was created."
+              },
+              "start_time": {
+                "type": "string",
+                "format": "date-time",
+                "description": "This maintenance window's start time. This is when the services will stop creating incidents. If this date is in the past, it will be updated to be the current time."
+              },
+              "end_time": {
+                "type": "string",
+                "format": "date-time",
+                "description": "This maintenance window's end time. This is when the services will start creating incidents again. This date must be in the future and after the `start_time`."
+              },
+              "description": {
+                "type": "string",
+                "description": "A description for this maintenance window."
+              },
+              "created_by": {
+                "$ref": "#/components/schemas/UserReference"
+              },
+              "services": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ServiceReference"
+                }
+              },
+              "teams": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/TeamReference"
+                },
+                "readOnly": true
+              }
             },
-            "readOnly": true
-          }
-        },
-        "required": [
-          "start_time",
-          "end_time",
-          "services",
-          "type"
-        ],
-        "example": {
-          "type": "maintenance_window",
-          "start_time": "2015-11-10T01:00:00.000Z",
-          "end_time": "2015-11-10T03:00:00.000Z",
-          "description": "Immanentizing the eschaton",
-          "services": [
-            {
-              "id": "PIJ90N7",
-              "type": "service_reference"
+            "required": [
+              "start_time",
+              "end_time",
+              "services",
+              "type"
+            ],
+            "example": {
+              "id": "PIJ89JD",
+              "type": "maintenance_window",
+              "start_time": "2015-11-10T01:00:00.000Z",
+              "end_time": "2015-11-10T03:00:00.000Z",
+              "description": "Immanentizing the eschaton",
+              "services": [
+                {
+                  "id": "PIJ90N7",
+                  "type": "service_reference"
+                }
+              ]
             }
-          ]
-        }
+          }
+        ]
       },
       "ScheduleReference": {
         "allOf": [
@@ -2705,102 +2797,109 @@
         ]
       },
       "Schedule": {
-        "type": "object",
-        "properties": {
-          "type": {
-            "type": "string",
-            "description": "The type of object being created.",
-            "default": "schedule",
-            "enum": [
-              "schedule"
-            ]
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Tag/allOf/0"
           },
-          "schedule_layers": {
-            "type": "array",
-            "description": "A list of schedule layers.",
-            "items": {
-              "$ref": "#/components/schemas/ScheduleLayer"
-            }
-          },
-          "time_zone": {
-            "type": "string",
-            "format": "activesupport-time-zone",
-            "description": "The time zone of the schedule."
-          },
-          "name": {
-            "type": "string",
-            "description": "The name of the schedule"
-          },
-          "description": {
-            "type": "string",
-            "description": "The description of the schedule"
-          },
-          "final_schedule": {
-            "$ref": "#/components/schemas/SubSchedule"
-          },
-          "overrides_subschedule": {
-            "$ref": "#/components/schemas/SubSchedule"
-          },
-          "escalation_policies": {
-            "type": "array",
-            "readOnly": true,
-            "description": "An array of all of the escalation policies that uses this schedule.",
-            "items": {
-              "$ref": "#/components/schemas/EscalationPolicyReference"
-            }
-          },
-          "users": {
-            "type": "array",
-            "readOnly": true,
-            "description": "An array of all of the users on the schedule.",
-            "items": {
-              "$ref": "#/components/schemas/UserReference"
-            }
-          },
-          "teams": {
-            "type": "array",
-            "readOnly": true,
-            "description": "An array of all of the teams on the schedule.",
-            "items": {
-              "$ref": "#/components/schemas/TeamReference"
-            }
-          }
-        },
-        "required": [
-          "schedule_layers",
-          "time_zone",
-          "type"
-        ],
-        "example": {
-          "name": "Daily Engineering Rotation",
-          "type": "schedule",
-          "time_zone": "America/New_York",
-          "description": "Rotation schedule for engineering",
-          "schedule_layers": [
-            {
-              "name": "Night Shift",
-              "start": "2015-11-07T01:00:00.000Z",
-              "end": "2016-11-07T01:00:00.000Z",
-              "rotation_virtual_start": "2015-11-07T01:00:00.000Z",
-              "rotation_turn_length_seconds": 86400,
-              "users": [
-                {
-                  "user": {
-                    "id": "PXPGF42",
-                    "type": "user_reference"
-                  }
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "description": "The type of object being created.",
+                "default": "schedule",
+                "enum": [
+                  "schedule"
+                ]
+              },
+              "schedule_layers": {
+                "type": "array",
+                "description": "A list of schedule layers.",
+                "items": {
+                  "$ref": "#/components/schemas/ScheduleLayer"
                 }
-              ],
-              "restrictions": [
+              },
+              "time_zone": {
+                "type": "string",
+                "format": "activesupport-time-zone",
+                "description": "The time zone of the schedule."
+              },
+              "name": {
+                "type": "string",
+                "description": "The name of the schedule"
+              },
+              "description": {
+                "type": "string",
+                "description": "The description of the schedule"
+              },
+              "final_schedule": {
+                "$ref": "#/components/schemas/SubSchedule"
+              },
+              "overrides_subschedule": {
+                "$ref": "#/components/schemas/SubSchedule"
+              },
+              "escalation_policies": {
+                "type": "array",
+                "readOnly": true,
+                "description": "An array of all of the escalation policies that uses this schedule.",
+                "items": {
+                  "$ref": "#/components/schemas/EscalationPolicyReference"
+                }
+              },
+              "users": {
+                "type": "array",
+                "readOnly": true,
+                "description": "An array of all of the users on the schedule.",
+                "items": {
+                  "$ref": "#/components/schemas/UserReference"
+                }
+              },
+              "teams": {
+                "type": "array",
+                "readOnly": true,
+                "description": "An array of all of the teams on the schedule.",
+                "items": {
+                  "$ref": "#/components/schemas/TeamReference"
+                }
+              }
+            },
+            "required": [
+              "schedule_layers",
+              "time_zone",
+              "type"
+            ],
+            "example": {
+              "name": "Daily Engineering Rotation",
+              "type": "schedule",
+              "time_zone": "America/New_York",
+              "description": "Rotation schedule for engineering",
+              "schedule_layers": [
                 {
-                  "type": "daily_restriction",
-                  "start_time_of_day": "08:00:00",
-                  "duration_seconds": 32400
+                  "name": "Night Shift",
+                  "start": "2015-11-07T01:00:00.000Z",
+                  "end": "2016-11-07T01:00:00.000Z",
+                  "rotation_virtual_start": "2015-11-07T01:00:00.000Z",
+                  "rotation_turn_length_seconds": 86400,
+                  "users": [
+                    {
+                      "user": {
+                        "id": "PXPGF42",
+                        "type": "user_reference"
+                      }
+                    }
+                  ],
+                  "restrictions": [
+                    {
+                      "type": "daily_restriction",
+                      "start_time_of_day": "08:00:00",
+                      "duration_seconds": 32400
+                    }
+                  ]
                 }
               ]
             }
-          ]
-        }
+          }
+        ]
       },
       "SubSchedule": {
         "type": "object",
@@ -2932,39 +3031,46 @@
         ]
       },
       "Override": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "readOnly": true
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Tag/allOf/0"
           },
-          "start": {
-            "description": "The start date and time for the override.",
-            "type": "string",
-            "format": "date-time"
-          },
-          "end": {
-            "description": "The end date and time for the override.",
-            "type": "string",
-            "format": "date-time"
-          },
-          "user": {
-            "$ref": "#/components/schemas/UserReference"
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "readOnly": true
+              },
+              "start": {
+                "description": "The start date and time for the override.",
+                "type": "string",
+                "format": "date-time"
+              },
+              "end": {
+                "description": "The end date and time for the override.",
+                "type": "string",
+                "format": "date-time"
+              },
+              "user": {
+                "$ref": "#/components/schemas/UserReference"
+              }
+            },
+            "required": [
+              "start",
+              "end",
+              "user"
+            ],
+            "example": {
+              "start": "2012-07-01T04:00:00.000Z",
+              "end": "2012-07-02T04:00:00.000Z",
+              "user": {
+                "id": "PEYSGVF",
+                "type": "user_reference"
+              }
+            }
           }
-        },
-        "required": [
-          "start",
-          "end",
-          "user"
-        ],
-        "example": {
-          "start": "2012-07-01T04:00:00.000Z",
-          "end": "2012-07-02T04:00:00.000Z",
-          "user": {
-            "id": "PEYSGVF",
-            "type": "user_reference"
-          }
-        }
+        ]
       },
       "Restriction": {
         "type": "object",
@@ -3074,7 +3180,7 @@
             "description": "Time at which the acknowledgement was created."
           },
           "acknowledger": {
-            "$ref": "#/components/schemas/Acknowledger"
+            "$ref": "#/components/schemas/AcknowledgerReference"
           }
         },
         "required": [
@@ -3082,7 +3188,7 @@
           "acknowledger"
         ]
       },
-      "Acknowledger": {
+      "AcknowledgerReference": {
         "allOf": [
           {
             "$ref": "#/components/schemas/Reference"
@@ -3093,8 +3199,6 @@
             "properties": {
               "type": {
                 "enum": [
-                  "user",
-                  "service",
                   "user_reference",
                   "service_reference"
                 ],
@@ -3180,52 +3284,59 @@
         ]
       },
       "Vendor": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string",
-            "readOnly": true,
-            "description": "The short name of the vendor"
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Tag/allOf/0"
           },
-          "website_url": {
-            "type": "string",
-            "format": "url",
-            "readOnly": true,
-            "description": "URL of the vendor's main website"
-          },
-          "logo_url": {
-            "type": "string",
-            "format": "url",
-            "readOnly": true,
-            "description": "URL of a logo identifying the vendor"
-          },
-          "thumbnail_url": {
-            "type": "string",
-            "format": "url",
-            "readOnly": true,
-            "description": "URL of a small thumbnail image identifying the vendor"
-          },
-          "description": {
-            "type": "string",
-            "readOnly": true,
-            "description": "A short description of this vendor, and common use-cases of integrations for this vendor."
-          },
-          "integration_guide_url": {
-            "type": "string",
-            "format": "url",
-            "readOnly": true,
-            "description": "URL of an integration guide for this vendor"
+          {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "readOnly": true,
+                "description": "The short name of the vendor"
+              },
+              "website_url": {
+                "type": "string",
+                "format": "url",
+                "readOnly": true,
+                "description": "URL of the vendor's main website"
+              },
+              "logo_url": {
+                "type": "string",
+                "format": "url",
+                "readOnly": true,
+                "description": "URL of a logo identifying the vendor"
+              },
+              "thumbnail_url": {
+                "type": "string",
+                "format": "url",
+                "readOnly": true,
+                "description": "URL of a small thumbnail image identifying the vendor"
+              },
+              "description": {
+                "type": "string",
+                "readOnly": true,
+                "description": "A short description of this vendor, and common use-cases of integrations for this vendor."
+              },
+              "integration_guide_url": {
+                "type": "string",
+                "format": "url",
+                "readOnly": true,
+                "description": "URL of an integration guide for this vendor"
+              }
+            },
+            "example": {
+              "type": "vendor",
+              "name": "Amazon CloudWatch",
+              "website_url": "https://aws.amazon.com/cloudwatch",
+              "logo_url": "https://s3.amazonaws.com/pdpartner/cloudwatch_large.png",
+              "thumbnail_url": "https://s3.amazonaws.com/pdpartner/cloudwatch_thumb.png",
+              "description": "Amazon Web Services CloudWatch provides monitoring for AWS cloud resources and customer-run applications. AWS can collect data, gain insight, and alert users to fix problems within applications and organizations. AWS CloudWatch gives system-wide visibility into resource utilization and notifications can be set for when any metrics cross a specified threshold.",
+              "integration_guide_url": "http://www.pagerduty.com/docs/guides/aws-cloudwatch-integration-guide/"
+            }
           }
-        },
-        "example": {
-          "type": "vendor",
-          "name": "Amazon CloudWatch",
-          "website_url": "https://aws.amazon.com/cloudwatch",
-          "logo_url": "https://s3.amazonaws.com/pdpartner/cloudwatch_large.png",
-          "thumbnail_url": "https://s3.amazonaws.com/pdpartner/cloudwatch_thumb.png",
-          "description": "Amazon Web Services CloudWatch provides monitoring for AWS cloud resources and customer-run applications. AWS can collect data, gain insight, and alert users to fix problems within applications and organizations. AWS CloudWatch gives system-wide visibility into resource utilization and notifications can be set for when any metrics cross a specified threshold.",
-          "integration_guide_url": "http://www.pagerduty.com/docs/guides/aws-cloudwatch-integration-guide/"
-        }
+        ]
       },
       "ExtensionSchemaReference": {
         "allOf": [
@@ -3347,116 +3458,123 @@
         }
       },
       "Alert": {
-        "type": "object",
-        "properties": {
-          "created_at": {
-            "type": "string",
-            "format": "date-time",
-            "readOnly": true,
-            "description": "The date/time the alert was first triggered."
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Tag/allOf/0"
           },
-          "type": {
-            "type": "string",
-            "default": "alert",
-            "description": "The type of object being created.",
-            "enum": [
-              "alert"
-            ]
-          },
-          "status": {
-            "type": "string",
-            "description": "The current status of the alert.",
-            "enum": [
-              "triggered",
-              "resolved"
-            ]
-          },
-          "alert_key": {
-            "type": "string",
-            "readOnly": true,
-            "description": "The alert's de-duplication key."
-          },
-          "service": {
-            "$ref": "#/components/schemas/ServiceReference"
-          },
-          "first_trigger_log_entry": {
-            "$ref": "#/components/schemas/LogEntryReference"
-          },
-          "incident": {
-            "$ref": "#/components/schemas/IncidentReference"
-          },
-          "suppressed": {
-            "type": "boolean",
-            "readOnly": true,
-            "description": "Whether or not an alert is suppressed. Suppressed alerts are not created with a parent incident.",
-            "default": false
-          },
-          "severity": {
-            "type": "string",
-            "readOnly": true,
-            "description": "The magnitude of the problem as reported by the monitoring tool.",
-            "enum": [
-              "info",
-              "warning",
-              "error",
-              "critical"
-            ]
-          },
-          "integration": {
-            "$ref": "#/components/schemas/Integration"
-          },
-          "body": {
+          {
             "type": "object",
-            "readOnly": true,
-            "description": "A JSON object containing data describing the alert.",
-            "title": "Body",
             "properties": {
+              "created_at": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true,
+                "description": "The date/time the alert was first triggered."
+              },
               "type": {
                 "type": "string",
-                "description": "The type of the body.",
+                "default": "alert",
+                "description": "The type of object being created.",
                 "enum": [
-                  "alert_body"
+                  "alert"
                 ]
               },
-              "contexts": {
-                "type": "array",
-                "readOnly": true,
-                "description": "Contexts to be included with the body such as links to graphs or images.",
-                "items": {
-                  "$ref": "#/components/schemas/Context"
-                }
+              "status": {
+                "type": "string",
+                "description": "The current status of the alert.",
+                "enum": [
+                  "triggered",
+                  "resolved"
+                ]
               },
-              "details": {
+              "alert_key": {
+                "type": "string",
+                "readOnly": true,
+                "description": "The alert's de-duplication key."
+              },
+              "service": {
+                "$ref": "#/components/schemas/ServiceReference"
+              },
+              "first_trigger_log_entry": {
+                "$ref": "#/components/schemas/LogEntryReference"
+              },
+              "incident": {
+                "$ref": "#/components/schemas/IncidentReference"
+              },
+              "suppressed": {
+                "type": "boolean",
+                "readOnly": true,
+                "description": "Whether or not an alert is suppressed. Suppressed alerts are not created with a parent incident.",
+                "default": false
+              },
+              "severity": {
+                "type": "string",
+                "readOnly": true,
+                "description": "The magnitude of the problem as reported by the monitoring tool.",
+                "enum": [
+                  "info",
+                  "warning",
+                  "error",
+                  "critical"
+                ]
+              },
+              "integration": {
+                "$ref": "#/components/schemas/Integration"
+              },
+              "body": {
                 "type": "object",
                 "readOnly": true,
-                "description": "An arbitrary JSON object containing any data explaining the nature of the alert."
+                "description": "A JSON object containing data describing the alert.",
+                "title": "Body",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "description": "The type of the body.",
+                    "enum": [
+                      "alert_body"
+                    ]
+                  },
+                  "contexts": {
+                    "type": "array",
+                    "readOnly": true,
+                    "description": "Contexts to be included with the body such as links to graphs or images.",
+                    "items": {
+                      "$ref": "#/components/schemas/Context"
+                    }
+                  },
+                  "details": {
+                    "type": "object",
+                    "readOnly": true,
+                    "description": "An arbitrary JSON object containing any data explaining the nature of the alert."
+                  }
+                }
               }
-            }
-          }
-        },
-        "required": [
-          "type"
-        ],
-        "example": {
-          "type": "alert",
-          "status": "resolved",
-          "incident": {
-            "id": "PEYSGVF",
-            "type": "incident_reference"
-          },
-          "body": {
-            "type": "alert_body",
-            "contexts": [
-              {
-                "type": "link"
-              }
+            },
+            "required": [
+              "type"
             ],
-            "details": {
-              "customKey": "Server is on fire!",
-              "customKey2": "Other stuff!"
+            "example": {
+              "type": "alert",
+              "status": "resolved",
+              "incident": {
+                "id": "PEYSGVF",
+                "type": "incident_reference"
+              },
+              "body": {
+                "type": "alert_body",
+                "contexts": [
+                  {
+                    "type": "link"
+                  }
+                ],
+                "details": {
+                  "customKey": "Server is on fire!",
+                  "customKey2": "Other stuff!"
+                }
+              }
             }
           }
-        }
+        ]
       },
       "AlertReference": {
         "allOf": [
@@ -3687,7 +3805,7 @@
                   "type": "resolve_log_entry",
                   "summary": "Resolved by Earline Greenholt",
                   "self": "https://api.pagerduty.com/log_entries/R0FFIOTKIU30MN7XWR99SI0",
-                  "html_url": "null",
+                  "html_url": null,
                   "created_at": "2017-09-22T18:37:29.000Z",
                   "agent": {
                     "id": "PLMUP47",
@@ -4236,89 +4354,96 @@
         }
       },
       "ResponsePlay": {
-        "type": "object",
-        "properties": {
-          "type": {
-            "type": "string",
-            "description": "The type of object being created.",
-            "default": "response_play",
-            "enum": [
-              "response_play"
-            ]
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Tag/allOf/0"
           },
-          "name": {
-            "type": "string",
-            "description": "The name of the response play."
-          },
-          "description": {
-            "type": "string",
-            "description": "The description of the response play.",
-            "maxLength": 349
-          },
-          "team": {
-            "$ref": "#/components/schemas/TeamReference"
-          },
-          "subscribers": {
-            "type": "array",
-            "description": "An array containing the users and/or teams to be added as subscribers to any incident on which this response play is run.",
-            "items": {
-              "anyOf": [
-                {
-                  "$ref": "#/components/schemas/UserReference"
-                },
-                {
-                  "$ref": "#/components/schemas/TeamReference"
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "description": "The type of object being created.",
+                "default": "response_play",
+                "enum": [
+                  "response_play"
+                ]
+              },
+              "name": {
+                "type": "string",
+                "description": "The name of the response play."
+              },
+              "description": {
+                "type": "string",
+                "description": "The description of the response play.",
+                "maxLength": 349
+              },
+              "team": {
+                "$ref": "#/components/schemas/TeamReference"
+              },
+              "subscribers": {
+                "type": "array",
+                "description": "An array containing the users and/or teams to be added as subscribers to any incident on which this response play is run.",
+                "items": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/UserReference"
+                    },
+                    {
+                      "$ref": "#/components/schemas/TeamReference"
+                    }
+                  ],
+                  "discriminator": {
+                    "propertyName": "type"
+                  }
                 }
-              ],
-              "discriminator": {
-                "propertyName": "type"
+              },
+              "subscribers_message": {
+                "type": "string",
+                "description": "The content of the notification that will be sent to all incident subscribers upon the running of this response play. Note that this includes any users who may have already been subscribed to the incident prior to the running of this response play. If empty, no notifications will be sent."
+              },
+              "responders": {
+                "type": "array",
+                "description": "An array containing the users and/or escalation policies to be requested as responders to any incident on which this response play is run.",
+                "items": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/UserReference"
+                    },
+                    {
+                      "$ref": "#/components/schemas/EscalationPolicy"
+                    }
+                  ],
+                  "discriminator": {
+                    "propertyName": "type"
+                  }
+                }
+              },
+              "responders_message": {
+                "type": "string",
+                "description": "The message body of the notification that will be sent to this response play's set of responders. If empty, a default response request notification will be sent."
+              },
+              "runnability": {
+                "type": "string",
+                "description": "String representing how this response play is allowed to be run. Valid options are:\n  - `services`: This response play cannot be manually run by any users. It will run automatically for new incidents triggered on any services that are configured with this response play.\n  - `teams`: This response play can be run manually on an incident only by members of its configured team. This option can only be selected when the `team` property for this response play is not empty.\n  - `responders`: This response play can be run manually on an incident by any responders in this account.",
+                "enum": [
+                  "services",
+                  "teams",
+                  "responders"
+                ],
+                "default": "services"
+              },
+              "conference_number": {
+                "type": "string",
+                "description": "The telephone number that will be set as the conference number for any incident on which this response play is run."
+              },
+              "conference_url": {
+                "type": "string",
+                "description": "The URL that will be set as the conference URL for any incident on which this response play is run."
               }
             }
-          },
-          "subscribers_message": {
-            "type": "string",
-            "description": "The content of the notification that will be sent to all incident subscribers upon the running of this response play. Note that this includes any users who may have already been subscribed to the incident prior to the running of this response play. If empty, no notifications will be sent."
-          },
-          "responders": {
-            "type": "array",
-            "description": "An array containing the users and/or escalation policies to be requested as responders to any incident on which this response play is run.",
-            "items": {
-              "anyOf": [
-                {
-                  "$ref": "#/components/schemas/UserReference"
-                },
-                {
-                  "$ref": "#/components/schemas/EscalationPolicy"
-                }
-              ],
-              "discriminator": {
-                "propertyName": "type"
-              }
-            }
-          },
-          "responders_message": {
-            "type": "string",
-            "description": "The message body of the notification that will be sent to this response play's set of responders. If empty, a default response request notification will be sent."
-          },
-          "runnability": {
-            "type": "string",
-            "description": "String representing how this response play is allowed to be run. Valid options are:\n  - `services`: This response play cannot be manually run by any users. It will run automatically for new incidents triggered on any services that are configured with this response play.\n  - `teams`: This response play can be run manually on an incident only by members of its configured team. This option can only be selected when the `team` property for this response play is not empty.\n  - `responders`: This response play can be run manually on an incident by any responders in this account.",
-            "enum": [
-              "services",
-              "teams",
-              "responders"
-            ],
-            "default": "services"
-          },
-          "conference_number": {
-            "type": "string",
-            "description": "The telephone number that will be set as the conference number for any incident on which this response play is run."
-          },
-          "conference_url": {
-            "type": "string",
-            "description": "The URL that will be set as the conference URL for any incident on which this response play is run."
           }
-        }
+        ]
       }
     }
   },
