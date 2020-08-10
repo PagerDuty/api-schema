@@ -10,6 +10,12 @@ Currently we do not deprecate or remove any API functionality.
 - Updated models to include standard fields such as `id`, `type`, `summary`, `html_url`, and `self`.
 - Fixed inconsistencies with the `Reference` model.
 
+### 2020-08-06
+- Added Early-Access endpoints for audit trail records
+   - `GET /audit/records`
+   - `GET /teams/{id}/audit/records`
+   - `GET /users/{id}/audit/records`
+
 ### 2020-08-04
 - Added 6 new Early-Access endpoints around incident subscription management.
     - `GET /users/{id}/notification_subscriptions`

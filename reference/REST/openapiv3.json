@@ -29,6 +29,10 @@
       "description": "Provides enriched incident data.\n"
     },
     {
+      "name": "Audit",
+      "description": "Provides audit record data.\n"
+    },
+    {
       "name": "Business Services",
       "description": "Business services model capabilities that span multiple technical services and that may be owned by several different teams.\n"
     },
@@ -654,6 +658,236 @@
         "name": "Authorization",
         "in": "header",
         "description": "The API Key with format `Token token=<API_KEY>`"
+      }
+    },
+    "examples": {
+      "AuditRecordResponseExample": {
+        "summary": "Response Example",
+        "value": {
+          "records": [
+            {
+              "id": "PDRECORDID1_TEAM_CREATED",
+              "self": "https://api.pagerduty.com/<...>/records/PDRECORDID1_TEAM_CREATED",
+              "execution_time": "2020-06-04T15:30:16Z",
+              "execution_context": {
+                "request_id": "111lDEOIH-534-4ljhLHJjh111",
+                "remote_address": "201.19.20.19"
+              },
+              "actors": [
+                {
+                  "id": "PDUSER",
+                  "summary": "John Snow",
+                  "type": "user_reference"
+                }
+              ],
+              "method": {
+                "type": "api_token",
+                "truncated_token": "3usr"
+              },
+              "resource": {
+                "id": "PXASDFE",
+                "type": "team_reference",
+                "summary": "my DevOps team"
+              },
+              "action": "create",
+              "details": {
+                "resource": {
+                  "id": "PXASDFE",
+                  "type": "team_reference",
+                  "summary": "my DevOps team"
+                },
+                "fields": [
+                  {
+                    "name": "teamName",
+                    "value": "DevOps team"
+                  }
+                ]
+              }
+            },
+            {
+              "id": "PDRECORDID2_USER_REMOVED_FROM_TEAM",
+              "self": "https://api.pagerduty.com/<...>/records/PDRECORDID2_USER_REMOVED_FROM_TEAM",
+              "execution_time": "2020-06-04T15:30:16Z",
+              "execution_context": {
+                "request_id": "222lDEOIH-534-4ljhLHJjh222",
+                "remote_address": "201.19.20.19"
+              },
+              "method": {
+                "type": "api_token",
+                "truncated_token": "2adm"
+              },
+              "resource": {
+                "id": "PRY9M8B",
+                "type": "team_reference",
+                "summary": "DevOps"
+              },
+              "action": "update",
+              "details": {
+                "resource": {
+                  "id": "PRY9M8B",
+                  "type": "team_reference",
+                  "summary": "DevOps"
+                },
+                "references": [
+                  {
+                    "name": "members",
+                    "removed": [
+                      {
+                        "id": "PRY9M8B",
+                        "type": "user_reference",
+                        "summary": "John Doe"
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "id": "PDRECORDID5_USERS_TEAM_ROLE_UPDATED",
+              "self": "https://api.pagerduty.com/<...>/records/PDRECORDID5_USERS_TEAM_ROLE_UPDATED",
+              "execution_time": "2020-06-04T15:30:16Z",
+              "execution_context": {
+                "request_id": "222lDEOIH-534-4ljhLHJjh222",
+                "remote_address": "201.19.20.19"
+              },
+              "method": {
+                "type": "api_token",
+                "truncated_token": "2adm"
+              },
+              "resource": {
+                "id": "PRY9M8B",
+                "type": "team_reference",
+                "summary": "DevOps"
+              },
+              "action": "update",
+              "details": {
+                "resource": {
+                  "id": "PDUSER",
+                  "type": "user_reference",
+                  "summary": "John Snow"
+                },
+                "fields": [
+                  {
+                    "name": "team_role",
+                    "before_value": "observer",
+                    "value": "manager"
+                  }
+                ]
+              }
+            },
+            {
+              "id": "PDRECORDID3_USERS_NAME_AND_EMAIL_UPDATED",
+              "self": "https://api.pagerduty.com/<...>/records/PDRECORDID3_USERS_NAME_AND_EMAIL_UPDATED",
+              "execution_time": "2020-06-04T15:30:16Z",
+              "execution_context": {
+                "request_id": "222lDEOIH-534-4ljhLHJjh222",
+                "remote_address": "201.19.20.19"
+              },
+              "actors": [
+                {
+                  "id": "PDUSER",
+                  "summary": "John Snow",
+                  "type": "user_reference"
+                }
+              ],
+              "method": {
+                "type": "identity_provider"
+              },
+              "resource": {
+                "id": "PDUSER",
+                "type": "user_reference",
+                "summary": "John Snow"
+              },
+              "action": "update",
+              "details": {
+                "resource": {
+                  "id": "PDUSER",
+                  "type": "user_reference",
+                  "summary": "John Snow"
+                },
+                "fields": [
+                  {
+                    "name": "name",
+                    "before_value": "Bob Doe",
+                    "value": "Jon Snow"
+                  },
+                  {
+                    "name": "email",
+                    "before_value": "bob.doe@domain.com",
+                    "value": "john.snow@domain.com"
+                  }
+                ]
+              }
+            },
+            {
+              "id": "PDRECORDID4_UPDATED_USERS_NOTIFICATION_RULE",
+              "self": "https://api.pagerduty.com/<...>/records/PDRECORDID4_UPDATED_USERS_NOTIFICATION_RULE",
+              "execution_time": "2020-06-04T15:30:16Z",
+              "execution_context": {
+                "request_id": "222lDEOIH-534-4ljhLHJjh222",
+                "remote_address": "201.19.20.19"
+              },
+              "actors": [
+                {
+                  "id": "PDUSER",
+                  "summary": "John Snow",
+                  "type": "user_reference"
+                }
+              ],
+              "method": {
+                "type": "api_token",
+                "truncated_token": "2adm"
+              },
+              "resource": {
+                "id": "PDUSER",
+                "type": "user_reference",
+                "summary": "John Snow"
+              },
+              "action": "update",
+              "details": {
+                "resource": {
+                  "id": "PXOGWUS",
+                  "type": "assignment_notification_rule_reference",
+                  "summary": "0 minutes: channel P1IAAPZ"
+                },
+                "fields": [
+                  {
+                    "name": "start_delay_in_minutes",
+                    "before_value": 0,
+                    "value": 2
+                  }
+                ],
+                "references": [
+                  {
+                    "name": "contact_method",
+                    "removed": [
+                      {
+                        "id": "POE6L88",
+                        "type": "push_notification_contact_method_reference",
+                        "summary": "Pixel 3"
+                      }
+                    ],
+                    "added": [
+                      {
+                        "id": "P4GTUMK",
+                        "type": "sms_contact_method_reference",
+                        "summary": "Mobile"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "response_metadata": {
+            "messages": [
+              "Message about the result"
+            ]
+          },
+          "pagination_token": "dXNlcjpVMEc5V0ZYTlo=",
+          "more": true,
+          "limit": 1
+        }
       }
     },
     "schemas": {
@@ -6910,6 +7144,388 @@
             "required": true
           }
         ]
+      }
+    },
+    "/audit/records": {
+      "description": "Retrieve audit records.",
+      "get": {
+        "summary": "Get Audit Records",
+        "tags": [
+          "Audit"
+        ],
+        "operationId": "listAuditRecords",
+        "description": "Get audit trail records matching provided criteria.\n\nEach audit trail `record` describes an `action` executed on a `resource` by `actors` using a `method`.\n\nThe returned records are sorted by the `execution_time` from newest to oldest.\n\nSee [`Cursor-based pagination`](https://developer.pagerduty.com/docs/rest-api-v2/pagination/) for instructions on how to paginate through the result set.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint's interface is under development and subject to change. Do not use it in production systems. \n> Your request must set an X-EARLY-ACCESS header with value `audit-early-access` to acknowledge this.\n>\n> Audit records for user and team resources started in August 2020 and records may be purged while the API is in early access.\n",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
+            "name": "since",
+            "in": "query",
+            "description": "The start of the date range over which you want to search. If not specified, defaults to `now() - 24 hours` (past 24 hours)",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "until",
+            "in": "query",
+            "description": "The end of the date range over which you want to search. If not specified, defaults to `now()`",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "audit-early-access"
+              ]
+            },
+            "in": "header",
+            "description": "This header indicates that this API endpoint is __UNDER CONSTRUCTION__ and may change at any time.  You __MUST__ pass in this header and the above value.  Do not use this endpoint in production, as it may change!\n",
+            "name": "X-EARLY-ACCESS",
+            "required": true
+          },
+          {
+            "name": "resource_types[]",
+            "in": "query",
+            "description": "Resource type filter",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "users",
+                  "teams",
+                  "schedules",
+                  "escalation_policies",
+                  "services"
+                ],
+                "example": "users"
+              }
+            }
+          },
+          {
+            "name": "actor_type",
+            "in": "query",
+            "description": "Actor type filter.",
+            "schema": {
+              "type": "string",
+              "example": "user_reference"
+            }
+          },
+          {
+            "name": "actor_id",
+            "in": "query",
+            "description": "Actor Id filter. Must be qualified by providing the `actor_type` param.",
+            "schema": {
+              "type": "string",
+              "example": "P123456"
+            }
+          },
+          {
+            "name": "method_type",
+            "in": "query",
+            "description": "Method type filter.",
+            "schema": {
+              "type": "string",
+              "description": "Describes the method used to perform the action:\n\n`browser` -- authenticated user session. Session value is not returned in the `truncated_token` field.\n\n`oauth` -- access token obtained via the OAuth flow. Truncated token value is returned in the `truncated_token` field.\n\n`api_token` -- Pagerduty API token. Truncated token value is returned in the `truncated_token` field.\n\n`identity_provider` -- action performed by an Identity provider on behalf of a user. No value is returned in the `truncated_token` field.\n\n`other` -- Method that does not fall in the predefined categories. Truncated token value MAY be returned in the `truncated_token` field.\n",
+              "enum": [
+                "browser",
+                "oauth",
+                "api_token",
+                "identity_provider",
+                "other"
+              ]
+            }
+          },
+          {
+            "name": "method_truncated_token",
+            "in": "query",
+            "description": "Method truncated_token filter. Must be qualified by providing the `method_type` param.",
+            "schema": {
+              "type": "string",
+              "example": "3xyz"
+            }
+          },
+          {
+            "name": "actions[]",
+            "in": "query",
+            "description": "Action filter",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Records matching the query criteria.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "records": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "readOnly": true,
+                            "description": "An Audit Trail record",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "self": {
+                                "type": "string",
+                                "nullable": true,
+                                "description": "Record URL."
+                              },
+                              "execution_time": {
+                                "type": "string",
+                                "format": "date-time",
+                                "description": "The date/time the action executed."
+                              },
+                              "execution_context": {
+                                "type": "object",
+                                "description": "Action execution context",
+                                "properties": {
+                                  "request_id": {
+                                    "type": "string",
+                                    "nullable": true,
+                                    "description": "Request Id"
+                                  },
+                                  "remote_address": {
+                                    "type": "string",
+                                    "nullable": true,
+                                    "description": "remote address"
+                                  }
+                                },
+                                "nullable": true
+                              },
+                              "actors": {
+                                "type": "array",
+                                "nullable": true,
+                                "items": {
+                                  "$ref": "#/components/schemas/Reference"
+                                }
+                              },
+                              "method": {
+                                "type": "object",
+                                "description": "The method information",
+                                "properties": {
+                                  "description": {
+                                    "type": "string",
+                                    "nullable": true
+                                  },
+                                  "truncated_token": {
+                                    "description": "Truncated token containing the last 4 chars of the token's actual value.",
+                                    "type": "string",
+                                    "nullable": true,
+                                    "example": "3xyz"
+                                  },
+                                  "type": {
+                                    "$ref": "#/paths/~1audit~1records/get/parameters/8/schema"
+                                  }
+                                },
+                                "required": [
+                                  "type"
+                                ]
+                              },
+                              "resource": {
+                                "$ref": "#/components/schemas/Reference"
+                              },
+                              "action": {
+                                "type": "string",
+                                "example": "create"
+                              },
+                              "details": {
+                                "type": "object",
+                                "nullable": true,
+                                "description": "Additional details to provide further information about the action or\nthe resource that has been audited.\n",
+                                "properties": {
+                                  "resource": {
+                                    "$ref": "#/components/schemas/Reference"
+                                  },
+                                  "fields": {
+                                    "description": "A set of fields that have been affected.\nThe fields that have not been affected MAY be returned.\n",
+                                    "type": "array",
+                                    "nullable": true,
+                                    "items": {
+                                      "type": "object",
+                                      "description": "Information about the affected field.\nWhen available, field's before and after values are returned:\n  \n#### Resource creation\n- `value` MAY be returned\n\n#### Resource update\n- `value` MAY be returned\n- `before_value` MAY be returned\n\n#### Resource deletion\n- `before_value` MAY be returned\n",
+                                      "properties": {
+                                        "name": {
+                                          "type": "string",
+                                          "description": "Name of the resource field",
+                                          "example": "name"
+                                        },
+                                        "description": {
+                                          "type": "string",
+                                          "nullable": true,
+                                          "description": "Human readable description of the resource field",
+                                          "example": "First and Last name"
+                                        },
+                                        "value": {
+                                          "type": "string",
+                                          "nullable": true,
+                                          "description": "new or updated value of the field",
+                                          "example": "Jonathan"
+                                        },
+                                        "before_value": {
+                                          "type": "string",
+                                          "nullable": true,
+                                          "description": "previous or deleted value of the field",
+                                          "example": "John"
+                                        }
+                                      },
+                                      "required": [
+                                        "name"
+                                      ]
+                                    }
+                                  },
+                                  "references": {
+                                    "description": "A set of references that have been affected.",
+                                    "type": "array",
+                                    "nullable": true,
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "name": {
+                                          "type": "string",
+                                          "description": "Name of the reference field",
+                                          "example": "team_members"
+                                        },
+                                        "description": {
+                                          "type": "string",
+                                          "nullable": true,
+                                          "description": "Human readable description of the references field",
+                                          "example": "First and Last name"
+                                        },
+                                        "added": {
+                                          "type": "array",
+                                          "nullable": true,
+                                          "items": {
+                                            "$ref": "#/components/schemas/Reference"
+                                          }
+                                        },
+                                        "removed": {
+                                          "type": "array",
+                                          "nullable": true,
+                                          "items": {
+                                            "$ref": "#/components/schemas/Reference"
+                                          }
+                                        }
+                                      },
+                                      "required": [
+                                        "name"
+                                      ]
+                                    }
+                                  }
+                                },
+                                "required": [
+                                  "resource"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "execution_time",
+                              "method",
+                              "resource",
+                              "action"
+                            ]
+                          }
+                        },
+                        "response_metadata": {
+                          "nullable": true,
+                          "anyOf": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "messages": {
+                                  "type": "array",
+                                  "nullable": true,
+                                  "items": {
+                                    "type": "string",
+                                    "example": "Message about the result"
+                                  }
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "records"
+                      ]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "limit": {
+                          "type": "integer",
+                          "description": "Echoes limit pagination property.",
+                          "readOnly": true
+                        },
+                        "more": {
+                          "type": "boolean",
+                          "description": "Indicates if there are additional records to return\nThe `more` field will always be true or false, indicating whether there are more resources matching the query than present\nin the response (because of the request's limit). If `true`, you may want to make subsequent requests with a subsequent\n`pagination_token` until `more` is `false` in order to retrieve all of the resources.\n",
+                          "readOnly": true
+                        },
+                        "pagination_token": {
+                          "type": "string",
+                          "description": "Pagination token for the subsequent results.\nSpecifying a `pagination_token` in the query sets the starting point for the result set, allowing you to fetch subsequent\nresources that are not in the initial set of results.\n",
+                          "example": "dXNlcjpVMEc5V0ZYTlo=",
+                          "readOnly": true,
+                          "nullable": true
+                        }
+                      },
+                      "required": [
+                        "limit",
+                        "more",
+                        "pagination_token"
+                      ]
+                    }
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "$ref": "#/components/examples/AuditRecordResponseExample"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
       }
     },
     "/business_services": {
@@ -19099,6 +19715,98 @@
         }
       }
     },
+    "/teams/{id}/audit/records": {
+      "description": "Retrieve audit records for a team.",
+      "get": {
+        "tags": [
+          "Teams"
+        ],
+        "operationId": "listTeamsAuditRecords",
+        "summary": "Get team's audit trail records",
+        "description": "Get team's audit trail records.\n\nThe returned records are sorted by the `execution_time` from newest to oldest.\n\nSee [`Cursor-based pagination`](https://developer.pagerduty.com/docs/rest-api-v2/pagination/) for instructions on how to paginate through the result set.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint's interface is under development and subject to change. Do not use it in production systems. \n> Your request must set an X-EARLY-ACCESS header with value `audit-early-access` to acknowledge this.\n>\n> Audit records for user and team resources started in August 2020 and records may be purged while the API is in early access.\n",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/paths/~1audit~1records/get/parameters/2"
+          },
+          {
+            "$ref": "#/paths/~1audit~1records/get/parameters/3"
+          },
+          {
+            "$ref": "#/paths/~1audit~1records/get/parameters/4"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Records matching the query criteria.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "records": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/paths/~1audit~1records/get/responses/200/content/application~1json/schema/allOf/0/properties/records/items"
+                          }
+                        },
+                        "response_metadata": {
+                          "nullable": true,
+                          "anyOf": [
+                            {
+                              "$ref": "#/paths/~1audit~1records/get/responses/200/content/application~1json/schema/allOf/0/properties/response_metadata/anyOf/0"
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "records"
+                      ]
+                    },
+                    {
+                      "$ref": "#/paths/~1audit~1records/get/responses/200/content/application~1json/schema/allOf/1"
+                    }
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "$ref": "#/components/examples/AuditRecordResponseExample"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
     "/teams/{id}/escalation_policies/{escalation_policy_id}": {
       "description": "Manage an escalation policy for a team.",
       "delete": {
@@ -20041,6 +20749,98 @@
           },
           "429": {
             "$ref": "#/components/responses/TooManyRequests"
+          }
+        }
+      }
+    },
+    "/users/{id}/audit/records": {
+      "description": "Retrieve audit records for a user.",
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "operationId": "listUsersAuditRecords",
+        "summary": "Get user's audit trail records",
+        "description": "Get user's audit trail records.\n\nThe returned records are sorted by the `execution_time` from newest to oldest.\n\nSee [`Cursor-based pagination`](https://developer.pagerduty.com/docs/rest-api-v2/pagination/) for instructions on how to paginate through the result set.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint's interface is under development and subject to change. Do not use it in production systems. \n> Your request must set an X-EARLY-ACCESS header with value `audit-early-access` to acknowledge this.\n>\n> Audit records for user and team resources started in August 2020 and records may be purged while the API is in early access.\n",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/paths/~1audit~1records/get/parameters/2"
+          },
+          {
+            "$ref": "#/paths/~1audit~1records/get/parameters/3"
+          },
+          {
+            "$ref": "#/paths/~1audit~1records/get/parameters/4"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Records matching the query criteria.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "records": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/paths/~1audit~1records/get/responses/200/content/application~1json/schema/allOf/0/properties/records/items"
+                          }
+                        },
+                        "response_metadata": {
+                          "nullable": true,
+                          "anyOf": [
+                            {
+                              "$ref": "#/paths/~1audit~1records/get/responses/200/content/application~1json/schema/allOf/0/properties/response_metadata/anyOf/0"
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "records"
+                      ]
+                    },
+                    {
+                      "$ref": "#/paths/~1audit~1records/get/responses/200/content/application~1json/schema/allOf/1"
+                    }
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "$ref": "#/components/examples/AuditRecordResponseExample"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           }
         }
       }
