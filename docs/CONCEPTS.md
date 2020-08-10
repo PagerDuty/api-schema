@@ -65,6 +65,9 @@ If an Extension Schema already has a preconfigured url, the Extension will not h
 In addition, if the Extension Schema has a config object, the Extension will need to provide config values based on what the Extension Schema indicates are required for the config.
 
 
+For `Generic V2 Webhooks` and `Custom Incident Actions`, there is an option to add custom headers. Customers can define pairs of header names and header values. These custom headers will be sent as HTTP headers in the request to the specified endpoint. This can be used to add an Authorization header to webhook sent from Pagerduty.
+
+
 Some Extension Schemas that require OAuth Authorization to be setup, such as the Slack Extension, cannot be configured through the API.
 
 ## Incidents
