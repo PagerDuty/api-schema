@@ -6,6 +6,10 @@ Currently we do not deprecate or remove any API functionality.
 
 ----
 
+### 2020-08-18
+- Added Early-Access endpoints for audit trail records
+   - `GET /schedules/{id}/audit/records`
+
 ### 2020-08-10
 - Added documentation on `config` and `headers` options for webhooks v2.
 - Added Request Examples with custom headers.

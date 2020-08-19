@@ -16614,6 +16614,98 @@
         }
       }
     },
+    "/schedules/{id}/audit/records": {
+      "description": "Retrieve audit records for a schedule.",
+      "get": {
+        "tags": [
+          "Schedules"
+        ],
+        "operationId": "listSchedulesAuditRecords",
+        "summary": "Get schedules's audit trail records",
+        "description": "Get schedules's audit trail records.\n\nThe returned records are sorted by the `execution_time` from newest to oldest.\n\nSee [`Cursor-based pagination`](https://developer.pagerduty.com/docs/rest-api-v2/pagination/) for instructions on how to paginate through the result set.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint's interface is under development and subject to change. Do not use it in production systems. \n> Your request must set an X-EARLY-ACCESS header with value `audit-early-access` to acknowledge this.\n>\n> Audit records for schedules resource started in August 2020 and records may be purged while the API is in early access.\n",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/paths/~1audit~1records/get/parameters/2"
+          },
+          {
+            "$ref": "#/paths/~1audit~1records/get/parameters/3"
+          },
+          {
+            "$ref": "#/paths/~1audit~1records/get/parameters/4"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Records matching the query criteria.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "records": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/paths/~1audit~1records/get/responses/200/content/application~1json/schema/allOf/0/properties/records/items"
+                          }
+                        },
+                        "response_metadata": {
+                          "nullable": true,
+                          "anyOf": [
+                            {
+                              "$ref": "#/paths/~1audit~1records/get/responses/200/content/application~1json/schema/allOf/0/properties/response_metadata/anyOf/0"
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "records"
+                      ]
+                    },
+                    {
+                      "$ref": "#/paths/~1audit~1records/get/responses/200/content/application~1json/schema/allOf/1"
+                    }
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "$ref": "#/components/examples/AuditRecordResponseExample"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
     "/schedules/{id}/overrides": {
       "description": "List and create schedule overrides.",
       "get": {
