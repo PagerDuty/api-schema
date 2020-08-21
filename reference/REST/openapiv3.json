@@ -1798,6 +1798,7 @@
         ]
       },
       "EmailContactMethod": {
+        "description": "The Email Contact Method of the User.",
         "allOf": [
           {
             "$ref": "#/components/schemas/ContactMethod"
@@ -1827,6 +1828,7 @@
         ]
       },
       "PhoneContactMethod": {
+        "description": "The Phone Contact Method of the User, used for Voice or SMS.",
         "allOf": [
           {
             "$ref": "#/components/schemas/ContactMethod"
@@ -1888,6 +1890,7 @@
         }
       },
       "PushContactMethod": {
+        "description": "The Push Contact Method of the User.",
         "allOf": [
           {
             "$ref": "#/components/schemas/ContactMethod"
@@ -2765,7 +2768,8 @@
               }
             },
             "required": [
-              "type"
+              "type",
+              "escalation_policy"
             ],
             "example": {
               "id": "PSI2I2O",
@@ -21028,7 +21032,17 @@
                     "contact_methods": {
                       "type": "array",
                       "items": {
-                        "$ref": "#/components/schemas/ContactMethod"
+                        "oneOf": [
+                          {
+                            "$ref": "#/components/schemas/PhoneContactMethod"
+                          },
+                          {
+                            "$ref": "#/components/schemas/PushContactMethod"
+                          },
+                          {
+                            "$ref": "#/components/schemas/EmailContactMethod"
+                          }
+                        ]
                       }
                     }
                   }
@@ -21093,7 +21107,17 @@
                 "type": "object",
                 "properties": {
                   "contact_method": {
-                    "$ref": "#/components/schemas/ContactMethod"
+                    "oneOf": [
+                      {
+                        "$ref": "#/components/schemas/PhoneContactMethod"
+                      },
+                      {
+                        "$ref": "#/components/schemas/PushContactMethod"
+                      },
+                      {
+                        "$ref": "#/components/schemas/EmailContactMethod"
+                      }
+                    ]
                   }
                 },
                 "required": [
@@ -21129,7 +21153,17 @@
                   "type": "object",
                   "properties": {
                     "contact_method": {
-                      "$ref": "#/components/schemas/ContactMethod"
+                      "oneOf": [
+                        {
+                          "$ref": "#/components/schemas/PhoneContactMethod"
+                        },
+                        {
+                          "$ref": "#/components/schemas/PushContactMethod"
+                        },
+                        {
+                          "$ref": "#/components/schemas/EmailContactMethod"
+                        }
+                      ]
                     }
                   }
                 },
@@ -21199,7 +21233,17 @@
                   "type": "object",
                   "properties": {
                     "contact_method": {
-                      "$ref": "#/components/schemas/ContactMethod"
+                      "oneOf": [
+                        {
+                          "$ref": "#/components/schemas/PhoneContactMethod"
+                        },
+                        {
+                          "$ref": "#/components/schemas/PushContactMethod"
+                        },
+                        {
+                          "$ref": "#/components/schemas/EmailContactMethod"
+                        }
+                      ]
                     }
                   }
                 },
@@ -21306,7 +21350,17 @@
                 "type": "object",
                 "properties": {
                   "contact_method": {
-                    "$ref": "#/components/schemas/ContactMethod"
+                    "oneOf": [
+                      {
+                        "$ref": "#/components/schemas/PhoneContactMethod"
+                      },
+                      {
+                        "$ref": "#/components/schemas/PushContactMethod"
+                      },
+                      {
+                        "$ref": "#/components/schemas/EmailContactMethod"
+                      }
+                    ]
                   }
                 },
                 "required": [
@@ -21342,7 +21396,17 @@
                   "type": "object",
                   "properties": {
                     "contact_method": {
-                      "$ref": "#/components/schemas/ContactMethod"
+                      "oneOf": [
+                        {
+                          "$ref": "#/components/schemas/PhoneContactMethod"
+                        },
+                        {
+                          "$ref": "#/components/schemas/PushContactMethod"
+                        },
+                        {
+                          "$ref": "#/components/schemas/EmailContactMethod"
+                        }
+                      ]
                     }
                   }
                 },
