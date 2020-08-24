@@ -7164,7 +7164,7 @@
           "Audit"
         ],
         "operationId": "listAuditRecords",
-        "description": "Get audit trail records matching provided criteria.\n\nEach audit trail `record` describes an `action` executed on a `resource` by `actors` using a `method`.\n\nThe returned records are sorted by the `execution_time` from newest to oldest.\n\nSee [`Cursor-based pagination`](https://developer.pagerduty.com/docs/rest-api-v2/pagination/) for instructions on how to paginate through the result set.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint's interface is under development and subject to change. Do not use it in production systems. \n> Your request must set an X-EARLY-ACCESS header with value `audit-early-access` to acknowledge this.\n>\n> Audit records for user and team resources started in August 2020 and records may be purged while the API is in early access.\n",
+        "description": "Get audit trail records matching provided criteria.\n\nEach audit trail `record` describes an `action` executed on a `resource` by `actors` using a `method`.\n\nThe returned records are sorted by the `execution_time` from newest to oldest.\n\nSee [`Cursor-based pagination`](https://developer.pagerduty.com/docs/rest-api-v2/pagination/) for instructions on how to paginate through the result set.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint's interface is under development and subject to change. Do not use it in production systems.\n> Your request must set an X-EARLY-ACCESS header with value `audit-early-access` to acknowledge this.\n>\n> Audit records for user and team resources started in August 2020 and records may be purged while the API is in early access.\n",
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
@@ -12189,7 +12189,7 @@
     },
     "/incidents/{id}/status_updates/subscribers": {
       "get": {
-        "summary": "List Incident Status Update Notification Subscribers",
+        "summary": "List notification subscribers",
         "tags": [
           "Incidents"
         ],
@@ -12262,8 +12262,8 @@
             "$ref": "#/components/responses/TooManyRequests"
           }
         },
-        "operationId": "getIncidentStatusUpdateNotificationSubscribers",
-        "description": "Retrieve a list of Status Update Notification Subscribers.\n\n<!-- theme: warning -->\n> ### Early Access\n\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
+        "operationId": "getIncidentNotificationSubscribers",
+        "description": "Retrieve a list of Notification Subscribers on the Incident.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n> Users must be added through `POST /incident/{id}/status_updates/subscribers` to be returned from this endpoint.",
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
@@ -12284,8 +12284,8 @@
         ]
       },
       "post": {
-        "summary": "Create Incident Status Update Notification Subscriber",
-        "operationId": "createIncidentStatusUpdateNotificationSubscriber",
+        "summary": "Add notification subscriber",
+        "operationId": "createIncidentNotificationSubscriber",
         "tags": [
           "Incidents"
         ],
@@ -12338,7 +12338,7 @@
             }
           }
         },
-        "description": "Subscribe the given entity to Incident Status Update Notifications.\n\n<!-- theme: warning -->\n> ### Early Access\n\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
+        "description": "Subscribe the given entity to Incident Status Update Notifications.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
@@ -12399,7 +12399,7 @@
     },
     "/incidents/{id}/status_updates/unsubscribe": {
       "post": {
-        "summary": "Unsubscribe Incident Status Update Notification Subscriber",
+        "summary": "Remove notification subscriber",
         "tags": [
           "Incidents"
         ],
@@ -12420,8 +12420,8 @@
             "$ref": "#/components/responses/NotFound"
           }
         },
-        "operationId": "unsubscribeIncidentStatusUpdateNotificationSubscriber",
-        "description": "Unsubscribes the matching Subscriber from Incident Status Update Notifications.\n\n<!-- theme: warning -->\n> ### Early Access\n\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
+        "operationId": "removeIncidentNotificationSubscriber",
+        "description": "Unsubscribes the matching Subscriber from Incident Status Update Notifications.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
@@ -16626,7 +16626,7 @@
         ],
         "operationId": "listSchedulesAuditRecords",
         "summary": "Get schedules's audit trail records",
-        "description": "Get schedules's audit trail records.\n\nThe returned records are sorted by the `execution_time` from newest to oldest.\n\nSee [`Cursor-based pagination`](https://developer.pagerduty.com/docs/rest-api-v2/pagination/) for instructions on how to paginate through the result set.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint's interface is under development and subject to change. Do not use it in production systems. \n> Your request must set an X-EARLY-ACCESS header with value `audit-early-access` to acknowledge this.\n>\n> Audit records for schedules resource started in August 2020 and records may be purged while the API is in early access.\n",
+        "description": "Get schedules's audit trail records.\n\nThe returned records are sorted by the `execution_time` from newest to oldest.\n\nSee [`Cursor-based pagination`](https://developer.pagerduty.com/docs/rest-api-v2/pagination/) for instructions on how to paginate through the result set.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint's interface is under development and subject to change. Do not use it in production systems.\n> Your request must set an X-EARLY-ACCESS header with value `audit-early-access` to acknowledge this.\n>\n> Audit records for schedules resource started in August 2020 and records may be purged while the API is in early access.\n",
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
@@ -19879,7 +19879,7 @@
         ],
         "operationId": "listTeamsAuditRecords",
         "summary": "Get team's audit trail records",
-        "description": "Get team's audit trail records.\n\nThe returned records are sorted by the `execution_time` from newest to oldest.\n\nSee [`Cursor-based pagination`](https://developer.pagerduty.com/docs/rest-api-v2/pagination/) for instructions on how to paginate through the result set.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint's interface is under development and subject to change. Do not use it in production systems. \n> Your request must set an X-EARLY-ACCESS header with value `audit-early-access` to acknowledge this.\n>\n> Audit records for user and team resources started in August 2020 and records may be purged while the API is in early access.\n",
+        "description": "Get team's audit trail records.\n\nThe returned records are sorted by the `execution_time` from newest to oldest.\n\nSee [`Cursor-based pagination`](https://developer.pagerduty.com/docs/rest-api-v2/pagination/) for instructions on how to paginate through the result set.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint's interface is under development and subject to change. Do not use it in production systems.\n> Your request must set an X-EARLY-ACCESS header with value `audit-early-access` to acknowledge this.\n>\n> Audit records for user and team resources started in August 2020 and records may be purged while the API is in early access.\n",
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
@@ -20917,7 +20917,7 @@
         ],
         "operationId": "listUsersAuditRecords",
         "summary": "Get user's audit trail records",
-        "description": "Get user's audit trail records.\n\nThe returned records are sorted by the `execution_time` from newest to oldest.\n\nSee [`Cursor-based pagination`](https://developer.pagerduty.com/docs/rest-api-v2/pagination/) for instructions on how to paginate through the result set.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint's interface is under development and subject to change. Do not use it in production systems. \n> Your request must set an X-EARLY-ACCESS header with value `audit-early-access` to acknowledge this.\n>\n> Audit records for user and team resources started in August 2020 and records may be purged while the API is in early access.\n",
+        "description": "Get user's audit trail records.\n\nThe returned records are sorted by the `execution_time` from newest to oldest.\n\nSee [`Cursor-based pagination`](https://developer.pagerduty.com/docs/rest-api-v2/pagination/) for instructions on how to paginate through the result set.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint's interface is under development and subject to change. Do not use it in production systems.\n> Your request must set an X-EARLY-ACCESS header with value `audit-early-access` to acknowledge this.\n>\n> Audit records for user and team resources started in August 2020 and records may be purged while the API is in early access.\n",
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
@@ -21909,14 +21909,13 @@
       }
     },
     "/users/{id}/notification_subscriptions": {
-      "description": "",
       "get": {
         "tags": [
           "Users"
         ],
         "operationId": "getUserNotificationSubscriptions",
-        "description": "Retrieve a list of Notification Subscriptions the given user is subscribed to.\n\n<!-- theme: warning -->\n> ### Early Access\n\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
-        "summary": "List User Notification Subscriptions",
+        "description": "Retrieve a list of Notification Subscriptions the given user has.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
+        "summary": "List notification subscriptions",
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
@@ -22013,7 +22012,7 @@
         }
       },
       "post": {
-        "summary": "Create New User Notification Subcription",
+        "summary": "Create notification subcription",
         "operationId": "createUserNotificationSubscription",
         "tags": [
           "Users"
@@ -22127,7 +22126,7 @@
             }
           }
         },
-        "description": "Create a new notification subscription for the given user.\n\n<!-- theme: warning -->\n> ### Early Access\n\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
+        "description": "Create a new Notification Subscription for the given user.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
@@ -22187,13 +22186,13 @@
     },
     "/users/{id}/notification_subscriptions/unsubscribe": {
       "post": {
-        "summary": "Unsubscribe User Notification Subscription",
+        "summary": "Remove notification subscription",
         "tags": [
           "Users"
         ],
         "responses": {
           "204": {
-            "description": "The Notification Subscription was deleted successfully."
+            "description": "The Notification Subscription was removed successfully."
           },
           "400": {
             "$ref": "#/components/responses/ArgumentError"
@@ -22209,7 +22208,7 @@
           }
         },
         "operationId": "unsubscribeUserNotificationSubscription",
-        "description": "Unsubscribe the given user from Notifications on the matching subscribable entity.\n\n<!-- theme: warning -->\n> ### Early Access\n\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
+        "description": "Unsubscribe the given User from Notifications on the matching subscribable entity.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
