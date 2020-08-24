@@ -8,6 +8,7 @@ Currently we do not deprecate or remove any API functionality.
 
 ### 2020-08-24
 - Clarified `contact_method` on various User Contact Method management endpoints.
+- Clarified Notification Subscription endpoints current under the Early Access.
 
 ### 2020-08-18
 - Added Early-Access endpoints for audit trail records
