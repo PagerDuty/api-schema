@@ -2881,7 +2881,8 @@
                   "keynote_inbound_integration",
                   "nagios_inbound_integration",
                   "pingdom_inbound_integration",
-                  "sql_monitor_inbound_integration"
+                  "sql_monitor_inbound_integration",
+                  "events_api_v2_inbound_integration"
                 ]
               },
               "name": {
@@ -18753,23 +18754,33 @@
                 ]
               },
               "examples": {
-                "request": {
-                  "summary": "Request Example",
+                "email_integration": {
+                  "summary": "Request Example for Email Integration",
                   "value": {
                     "integration": {
                       "type": "generic_email_inbound_integration",
                       "name": "Email",
                       "service": {
                         "id": "PQL78HM",
-                        "type": "service_reference",
-                        "summary": "My Email-Based Integration",
-                        "self": "https://api.pagerduty.com/services/PQL78HM",
-                        "html_url": "https://subdomain.pagerduty.com/services/PQL78HM"
+                        "type": "service_reference"
                       },
                       "integration_email": "my-email-based-integration@subdomain.pagerduty.com",
                       "vendor": {
                         "type": "vendor_reference",
                         "id": "PZD94QK"
+                      }
+                    }
+                  }
+                },
+                "events_v2_integration": {
+                  "summary": "Request Example for Events v2 Integration",
+                  "value": {
+                    "integration": {
+                      "type": "events_api_v2_inbound_integration",
+                      "name": "Events V2",
+                      "service": {
+                        "id": "PQL78HM",
+                        "type": "service_reference"
                       }
                     }
                   }
