@@ -6,6 +6,11 @@ Currently we do not deprecate or remove any API functionality.
 
 ----
 
+
+### 2020-08-27
+- Added Early-Access endpoint for audit trail records
+   - `GET /escalation_policies/{id}/audit/records`
+
 ### 2020-08-27
 - Documented [Events V2 integration](https://developer.pagerduty.com/docs/events-api-v2/overview/) type on `/services/{id}/integrations` endpoints.
     - Note: This existed previously and was missing from this documentation.
