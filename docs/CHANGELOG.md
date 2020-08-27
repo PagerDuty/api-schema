@@ -6,6 +6,10 @@ Currently we do not deprecate or remove any API functionality.
 
 ----
 
+### 2020-08-27
+- Documented [Events V2 integration](https://developer.pagerduty.com/docs/events-api-v2/overview/) type on `/services/{id}/integrations` endpoints.
+    - Note: This existed previously and was missing from this documentation.
+
 ### 2020-08-24
 - Clarified `contact_method` on various User Contact Method management endpoints.
 - Clarified Notification Subscription endpoints current under the Early Access.
