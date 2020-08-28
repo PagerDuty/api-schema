@@ -6,6 +6,9 @@ Currently we do not deprecate or remove any API functionality.
 
 ----
 
+### 2020-08-28
+- Added Early-Access endpoint for audit trail records
+   - `GET /services/{id}/audit/records`
 
 ### 2020-08-27
 - Added Early-Access endpoint for audit trail records
