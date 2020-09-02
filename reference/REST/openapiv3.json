@@ -7158,14 +7158,14 @@
       }
     },
     "/audit/records": {
-      "description": "Retrieve audit records.",
+      "description": "List audit records.",
       "get": {
-        "summary": "Get Audit Records",
+        "summary": "List audit records",
         "tags": [
           "Audit"
         ],
         "operationId": "listAuditRecords",
-        "description": "Get audit trail records matching provided criteria.\n\nEach audit trail `record` describes an `action` executed on a `resource` by `actors` using a `method`.\n\nThe returned records are sorted by the `execution_time` from newest to oldest.\n\nSee [`Cursor-based pagination`](https://developer.pagerduty.com/docs/rest-api-v2/pagination/) for instructions on how to paginate through the result set.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint's interface is under development and subject to change. Do not use it in production systems.\n> Your request must set an X-EARLY-ACCESS header with value `audit-early-access` to acknowledge this.\n>\n> Audit records for user and team resources started in August 2020 and records may be purged while the API is in early access.\n",
+        "description": "List audit trail records matching provided query params or default criteria.\n\nThe returned records are sorted by the `execution_time` from newest to oldest.\n\nSee [`Cursor-based pagination`](https://developer.pagerduty.com/docs/rest-api-v2/pagination/) for instructions on how to paginate through the result set.\n\nOnly admins, account owners, or global API tokens can access this endpoint.\n\nFor other role based access to audit records by resource ID, see the resource's API documentation. \n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#audit-record).\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint's interface is under development and subject to change. Do not use it in production systems.\n> Your request must set an X-EARLY-ACCESS header with value `audit-early-access` to acknowledge this.\n>\n> Audit records for user and team resources started in August 2020 and records may be purged while the API is in early access.\n",
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
@@ -8660,14 +8660,14 @@
       }
     },
     "/escalation_policies/{id}/audit/records": {
-      "description": "Retrieve audit records for an escalation policy.",
+      "description": "List audit records of changes made to the escalation policy.",
       "get": {
         "tags": [
           "Escalation Policies"
         ],
         "operationId": "listEscalationPolicyAuditRecords",
-        "summary": "Get an escalation policy's audit trail records",
-        "description": "Get an escalation policy's audit trail records.\n\nThe returned records are sorted by the `execution_time` from newest to oldest.\n\nSee [`Cursor-based pagination`](https://developer.pagerduty.com/docs/rest-api-v2/pagination/) for instructions on how to paginate through the result set.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint's interface is under development and subject to change. Do not use it in production systems.\n> Your request must set an X-EARLY-ACCESS header with value `audit-early-access` to acknowledge this.\n>\n> Audit records for escalation policies resource started in August 2020 and records may be purged while the API is in early access.\n",
+        "summary": "List audit records for an escalation policy",
+        "description": "The returned records are sorted by the `execution_time` from newest to oldest.\n\nSee [`Cursor-based pagination`](https://developer.pagerduty.com/docs/rest-api-v2/pagination/) for instructions on how to paginate through the result set.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#audit-record).\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint's interface is under development and subject to change. Do not use it in production systems.\n> Your request must set an X-EARLY-ACCESS header with value `audit-early-access` to acknowledge this.\n>\n> Audit records for escalation policies resource started in August 2020 and records may be purged while the API is in early access.\n",
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
@@ -16712,14 +16712,14 @@
       }
     },
     "/schedules/{id}/audit/records": {
-      "description": "Retrieve audit records for a schedule.",
+      "description": "List audit records of changes made to the schedule.",
       "get": {
         "tags": [
           "Schedules"
         ],
         "operationId": "listSchedulesAuditRecords",
-        "summary": "Get schedules's audit trail records",
-        "description": "Get schedules's audit trail records.\n\nThe returned records are sorted by the `execution_time` from newest to oldest.\n\nSee [`Cursor-based pagination`](https://developer.pagerduty.com/docs/rest-api-v2/pagination/) for instructions on how to paginate through the result set.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint's interface is under development and subject to change. Do not use it in production systems.\n> Your request must set an X-EARLY-ACCESS header with value `audit-early-access` to acknowledge this.\n>\n> Audit records for schedules resource started in August 2020 and records may be purged while the API is in early access.\n",
+        "summary": "List audit records for a schedule",
+        "description": "The returned records are sorted by the `execution_time` from newest to oldest.\n\nSee [`Cursor-based pagination`](https://developer.pagerduty.com/docs/rest-api-v2/pagination/) for instructions on how to paginate through the result set.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#audit-record).\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint's interface is under development and subject to change. Do not use it in production systems.\n> Your request must set an X-EARLY-ACCESS header with value `audit-early-access` to acknowledge this.\n>\n> Audit records for schedules resource started in August 2020 and records may be purged while the API is in early access.\n",
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
@@ -18818,8 +18818,8 @@
           "Services"
         ],
         "operationId": "listServiceAuditRecords",
-        "summary": "List a service's audit trail records",
-        "description": "List a service's audit trail records.\n\nThe returned records are sorted by the `execution_time` from newest to oldest.\n\nSee [`Cursor-based pagination`](https://developer.pagerduty.com/docs/rest-api-v2/pagination/) for instructions on how to paginate through the result set.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint's interface is under development and subject to change. Do not use it in production systems.\n> Your request must set an X-EARLY-ACCESS header with value `audit-early-access` to acknowledge this.\n>\n> Audit records for escalation policies resource started in August 2020 and records may be purged while the API is in early access.\n",
+        "summary": "List audit records for a service",
+        "description": "The returned records are sorted by the `execution_time` from newest to oldest.\n\nSee [`Cursor-based pagination`](https://developer.pagerduty.com/docs/rest-api-v2/pagination/) for instructions on how to paginate through the result set.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#audit-record).\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint's interface is under development and subject to change. Do not use it in production systems.\n> Your request must set an X-EARLY-ACCESS header with value `audit-early-access` to acknowledge this.\n>\n> Audit records for escalation policies resource started in August 2020 and records may be purged while the API is in early access.\n",
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
@@ -20067,14 +20067,14 @@
       }
     },
     "/teams/{id}/audit/records": {
-      "description": "Retrieve audit records for a team.",
+      "description": "List audit records of changes made to the team.",
       "get": {
         "tags": [
           "Teams"
         ],
         "operationId": "listTeamsAuditRecords",
-        "summary": "Get team's audit trail records",
-        "description": "Get team's audit trail records.\n\nThe returned records are sorted by the `execution_time` from newest to oldest.\n\nSee [`Cursor-based pagination`](https://developer.pagerduty.com/docs/rest-api-v2/pagination/) for instructions on how to paginate through the result set.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint's interface is under development and subject to change. Do not use it in production systems.\n> Your request must set an X-EARLY-ACCESS header with value `audit-early-access` to acknowledge this.\n>\n> Audit records for user and team resources started in August 2020 and records may be purged while the API is in early access.\n",
+        "summary": "List audit records for a team",
+        "description": "The returned records are sorted by the `execution_time` from newest to oldest.\n\nSee [`Cursor-based pagination`](https://developer.pagerduty.com/docs/rest-api-v2/pagination/) for instructions on how to paginate through the result set.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#audit-record).\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint's interface is under development and subject to change. Do not use it in production systems.\n> Your request must set an X-EARLY-ACCESS header with value `audit-early-access` to acknowledge this.\n>\n> Audit records for user and team resources started in August 2020 and records may be purged while the API is in early access.\n",
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
@@ -20252,14 +20252,14 @@
       }
     },
     "/teams/{id}/members": {
-      "description": "Retrieve information about members within a team.",
+      "description": "List information about members within a team.",
       "get": {
         "tags": [
           "Teams"
         ],
         "operationId": "listTeamUsers",
         "description": "Get information about members on a team.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#teams)\n",
-        "summary": "Get information about members on a team",
+        "summary": "List members of a team",
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
@@ -21105,14 +21105,14 @@
       }
     },
     "/users/{id}/audit/records": {
-      "description": "Retrieve audit records for a user.",
+      "description": "List audit records of changes made to the user.",
       "get": {
         "tags": [
           "Users"
         ],
         "operationId": "listUsersAuditRecords",
-        "summary": "Get user's audit trail records",
-        "description": "Get user's audit trail records.\n\nThe returned records are sorted by the `execution_time` from newest to oldest.\n\nSee [`Cursor-based pagination`](https://developer.pagerduty.com/docs/rest-api-v2/pagination/) for instructions on how to paginate through the result set.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint's interface is under development and subject to change. Do not use it in production systems.\n> Your request must set an X-EARLY-ACCESS header with value `audit-early-access` to acknowledge this.\n>\n> Audit records for user and team resources started in August 2020 and records may be purged while the API is in early access.\n",
+        "summary": "List audit records for a user",
+        "description": "The response will include audit records with changes that are made to the identified user not changes made by the identified user.\n\n\nThe returned records are sorted by the `execution_time` from newest to oldest.\n\nSee [`Cursor-based pagination`](https://developer.pagerduty.com/docs/rest-api-v2/pagination/) for instructions on how to paginate through the result set.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#audit-record).\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint's interface is under development and subject to change. Do not use it in production systems.\n> Your request must set an X-EARLY-ACCESS header with value `audit-early-access` to acknowledge this.\n>\n> Audit records for user and team resources started in August 2020 and records may be purged while the API is in early access.\n",
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"

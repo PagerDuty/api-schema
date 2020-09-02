@@ -6,6 +6,10 @@ Currently we do not deprecate or remove any API functionality.
 
 ----
 
+### 2020-09-02
+- Added Audit Record description in API CONCEPTS document.
+- Clarified in the descriptions of audit record endpoints that records are returned in lists.
+
 ### 2020-08-28
 - Added Early-Access endpoint for audit trail records
    - `GET /services/{id}/audit/records`
