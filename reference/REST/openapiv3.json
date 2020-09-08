@@ -899,6 +899,15 @@
           {
             "type": "object",
             "properties": {
+              "src": {
+                "type": "string",
+                "format": "url",
+                "description": "The URL source of the Addon"
+              },
+              "name": {
+                "type": "string",
+                "description": "The user entered name of the Addon."
+              },
               "type": {
                 "type": "string",
                 "enum": [
@@ -972,6 +981,7 @@
               },
               "team": {
                 "type": "object",
+                "nullable": true,
                 "title": "Team",
                 "description": "Reference to the team that owns the business service.",
                 "properties": {
@@ -2111,7 +2121,8 @@
               },
               "description": {
                 "type": "string",
-                "description": "The user's bio."
+                "description": "The user's bio.",
+                "nullable": true
               },
               "invitation_sent": {
                 "type": "boolean",
@@ -3400,6 +3411,7 @@
           "total": {
             "type": "integer",
             "description": "The total number of records matching the given query.",
+            "nullable": true,
             "readOnly": true
           }
         }
@@ -3661,7 +3673,6 @@
           },
           "url": {
             "type": "string",
-            "format": "url",
             "readOnly": true,
             "description": "The url that the webhook payload will be sent to for this Extension."
           }
@@ -3769,7 +3780,7 @@
                 ]
               },
               "integration": {
-                "$ref": "#/components/schemas/Integration"
+                "$ref": "#/components/schemas/IntegrationReference"
               },
               "body": {
                 "type": "object",
@@ -4625,14 +4636,24 @@
               },
               "description": {
                 "type": "string",
+                "nullable": true,
                 "description": "The description of the response play.",
                 "maxLength": 349
               },
               "team": {
-                "$ref": "#/components/schemas/TeamReference"
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/TeamReference"
+                  },
+                  {
+                    "type": "object",
+                    "nullable": true
+                  }
+                ]
               },
               "subscribers": {
                 "type": "array",
+                "nullable": true,
                 "description": "An array containing the users and/or teams to be added as subscribers to any incident on which this response play is run.",
                 "items": {
                   "anyOf": [
@@ -4650,6 +4671,7 @@
               },
               "subscribers_message": {
                 "type": "string",
+                "nullable": true,
                 "description": "The content of the notification that will be sent to all incident subscribers upon the running of this response play. Note that this includes any users who may have already been subscribed to the incident prior to the running of this response play. If empty, no notifications will be sent."
               },
               "responders": {
@@ -4661,7 +4683,7 @@
                       "$ref": "#/components/schemas/UserReference"
                     },
                     {
-                      "$ref": "#/components/schemas/EscalationPolicy"
+                      "$ref": "#/components/schemas/EscalationPolicyReference"
                     }
                   ],
                   "discriminator": {
@@ -4671,6 +4693,7 @@
               },
               "responders_message": {
                 "type": "string",
+                "nullable": true,
                 "description": "The message body of the notification that will be sent to this response play's set of responders. If empty, a default response request notification will be sent."
               },
               "runnability": {
@@ -4685,11 +4708,13 @@
               },
               "conference_number": {
                 "type": "string",
+                "nullable": true,
                 "description": "The telephone number that will be set as the conference number for any incident on which this response play is run."
               },
               "conference_url": {
                 "type": "string",
-                "description": "The URL that will be set as the conference URL for any incident on which this response play is run."
+                "description": "The URL that will be set as the conference URL for any incident on which this response play is run.",
+                "nullable": true
               }
             }
           }
@@ -4922,14 +4947,16 @@
                   "response": {
                     "summary": "Response Example",
                     "value": {
-                      "tags": {
-                        "type": "tag",
-                        "summary": "Batman",
-                        "self": "https://api.pagerduty.com/tags/P5IYCNZ",
-                        "label": "Batman",
-                        "id": "P5IYCNZ",
-                        "html_url": "null"
-                      },
+                      "tags": [
+                        {
+                          "type": "tag",
+                          "summary": "Batman",
+                          "self": "https://api.pagerduty.com/tags/P5IYCNZ",
+                          "label": "Batman",
+                          "id": "P5IYCNZ",
+                          "html_url": null
+                        }
+                      ],
                       "limit": 100,
                       "offset": 0,
                       "total": 1,
@@ -5146,17 +5173,18 @@
                       "addons": [
                         {
                           "id": "PKX7619",
-                          "type": "full_page_addon",
+                          "type": "full_page_addon_reference",
                           "summary": "Internal Status Page",
                           "self": "https://api.pagerduty.com/addons/PKX7619",
-                          "html_url": "https://subdomain.pagerduty.com/addons/PKX7619",
+                          "html_url": null,
                           "name": "Internal Status Page",
                           "src": "https://intranet.example.com/status"
                         }
                       ],
                       "limit": 25,
                       "offset": 0,
-                      "more": false
+                      "more": false,
+                      "total": null
                     }
                   }
                 }
@@ -5244,10 +5272,10 @@
                     "value": {
                       "addon": {
                         "id": "PKX7619",
-                        "type": "full_page_addon",
+                        "type": "full_page_addon_reference",
                         "summary": "Internal Status Page",
                         "self": "https://api.pagerduty.com/addons/PKX7619",
-                        "html_url": "https://subdomain.pagerduty.com/addons/PKX7619",
+                        "html_url": null,
                         "name": "Internal Status Page",
                         "src": "https://intranet.example.com/status"
                       }
@@ -5503,159 +5531,91 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "aggregate_unit": {
-                      "type": "string",
-                      "description": "The time unit that was used to aggregate the metrics."
-                    },
-                    "filters": {
+                  "allOf": [
+                    {
                       "type": "object",
-                      "description": "A collection of filters that were applied to the results.",
                       "properties": {
-                        "created_at_start": {
-                          "type": "string",
-                          "description": "The lower boundary (inclusive) for the created_at range filter applied to the results."
-                        },
-                        "created_at_end": {
-                          "type": "string",
-                          "description": "The upper boundary (exclusive) for the created_at range filter applied to the results."
-                        },
-                        "urgency": {
-                          "type": "string",
-                          "description": "The urgency filter applied to the results.",
-                          "enum": [
-                            "high",
-                            "low"
-                          ]
-                        },
-                        "major": {
-                          "type": "boolean",
-                          "description": "The major incident filter applied to the results."
-                        },
-                        "team_ids": {
+                        "data": {
                           "type": "array",
-                          "description": "The team ids filter applied to the results.",
-                          "maxItems": 10,
                           "items": {
-                            "type": "string"
-                          }
-                        },
-                        "service_ids": {
-                          "type": "array",
-                          "description": "The service ids filter applied to the results.",
-                          "maxItems": 10,
-                          "items": {
-                            "type": "string"
-                          }
-                        },
-                        "business_service_ids": {
-                          "type": "array",
-                          "description": "The business service ids filter applied to the results.",
-                          "items": {
-                            "type": "string"
-                          }
-                        },
-                        "priority_ids": {
-                          "type": "array",
-                          "description": "The priority_ids filter applied to the results.",
-                          "maxItems": 5,
-                          "items": {
-                            "type": "string"
-                          }
-                        },
-                        "priority_names": {
-                          "type": "array",
-                          "description": "The priority_names filter applied to the results.",
-                          "maxItems": 5,
-                          "items": {
-                            "type": "string"
+                            "title": "Analytics Incident Metrics",
+                            "type": "object",
+                            "x-tags": [
+                              "Analytics"
+                            ],
+                            "properties": {
+                              "service_id": {
+                                "type": "string",
+                                "description": "ID of the service.  Only included when aggregating by service."
+                              },
+                              "service_name": {
+                                "type": "string",
+                                "description": "Name of the service.  Only included when aggregating by service."
+                              },
+                              "team_id": {
+                                "type": "string",
+                                "description": "ID of the team.  Only included when aggregating by team."
+                              },
+                              "team_name": {
+                                "type": "string",
+                                "description": "Name of the team.  Only included when aggregating by team."
+                              },
+                              "mean_seconds_to_resolve": {
+                                "type": "integer",
+                                "description": "Mean time from when an incident was triggered until it was resolved."
+                              },
+                              "mean_seconds_to_first_ack": {
+                                "type": "integer",
+                                "description": "Mean time between the start of an incident, and the first responder to acknowledge."
+                              },
+                              "mean_seconds_to_engage": {
+                                "type": "integer",
+                                "description": "Mean time between the start of an incident, and the first responder to acknowledge, or to accept responder request."
+                              },
+                              "mean_seconds_to_mobilize": {
+                                "type": "integer",
+                                "description": "Mean time between the start of an incident, and the last additional responder to acknowledge.  For incidents with one or less engaged users, this value is null."
+                              },
+                              "mean_engaged_user_count": {
+                                "type": "integer",
+                                "description": "Mean number of users who engaged (acknowledged, accepted responder request) with an incident."
+                              },
+                              "total_escalation_count": {
+                                "type": "integer",
+                                "description": "Total count of instances where an incident is escalated between responders assigned to an escalation policy."
+                              },
+                              "total_assignment_count": {
+                                "type": "integer",
+                                "description": "Total count of instances where an additional responder, who was not on-call for an incident, is added."
+                              },
+                              "total_business_hour_interruptions": {
+                                "type": "integer",
+                                "description": "Total number of unique interruptions during business hours.\nBusiness hour: 8am-6pm Mon-Fri, based on the user’s time zone."
+                              },
+                              "total_sleep_hour_interruptions": {
+                                "type": "integer",
+                                "description": "Total number of unique interruptions during sleep hours.\nSleep hour: 10pm-8am every day, based on the user’s time zone."
+                              },
+                              "total_off_hour_interruptions": {
+                                "type": "integer",
+                                "description": "Total number of unique interruptions during off hours.\nOff hour: 6pm-10pm Mon-Fri and all day Sat-Sun, based on the user’s time zone."
+                              },
+                              "total_snoozed_seconds": {
+                                "type": "integer",
+                                "description": "Total number of seconds incidents were snoozed."
+                              },
+                              "total_engaged_seconds": {
+                                "type": "integer",
+                                "description": "Total engaged time across all responders for incidents.  Engaged time is measured from the time a user engages with an incident (by acknowledging or accepting a responder request) until the incident is resolved.  This may include periods in which the incidents was snoozed."
+                              }
+                            }
                           }
                         }
                       }
                     },
-                    "timezone": {
-                      "type": "string",
-                      "description": "The time zone that was used for grouping the results."
-                    },
-                    "data": {
-                      "title": "Analytics Incident Metrics",
-                      "type": "object",
-                      "x-tags": [
-                        "Analytics"
-                      ],
-                      "properties": {
-                        "service_id": {
-                          "type": "string",
-                          "description": "ID of the service.  Only included when aggregating by service."
-                        },
-                        "service_name": {
-                          "type": "string",
-                          "description": "Name of the service.  Only included when aggregating by service."
-                        },
-                        "team_id": {
-                          "type": "string",
-                          "description": "ID of the team.  Only included when aggregating by team."
-                        },
-                        "team_name": {
-                          "type": "string",
-                          "description": "Name of the team.  Only included when aggregating by team."
-                        },
-                        "mean_seconds_to_resolve": {
-                          "type": "integer",
-                          "description": "Mean time from when an incident was triggered until it was resolved."
-                        },
-                        "mean_seconds_to_first_ack": {
-                          "type": "integer",
-                          "description": "Mean time between the start of an incident, and the first responder to acknowledge."
-                        },
-                        "mean_seconds_to_engage": {
-                          "type": "integer",
-                          "description": "Mean time between the start of an incident, and the first responder to acknowledge, or to accept responder request."
-                        },
-                        "mean_seconds_to_mobilize": {
-                          "type": "integer",
-                          "description": "Mean time between the start of an incident, and the last additional responder to acknowledge.  For incidents with one or less engaged users, this value is null."
-                        },
-                        "mean_engaged_user_count": {
-                          "type": "integer",
-                          "description": "Mean number of users who engaged (acknowledged, accepted responder request) with an incident."
-                        },
-                        "total_escalation_count": {
-                          "type": "integer",
-                          "description": "Total count of instances where an incident is escalated between responders assigned to an escalation policy."
-                        },
-                        "total_assignment_count": {
-                          "type": "integer",
-                          "description": "Total count of instances where an additional responder, who was not on-call for an incident, is added."
-                        },
-                        "total_business_hour_interruptions": {
-                          "type": "integer",
-                          "description": "Total number of unique interruptions during business hours.\nBusiness hour: 8am-6pm Mon-Fri, based on the user’s time zone."
-                        },
-                        "total_sleep_hour_interruptions": {
-                          "type": "integer",
-                          "description": "Total number of unique interruptions during sleep hours.\nSleep hour: 10pm-8am every day, based on the user’s time zone."
-                        },
-                        "total_off_hour_interruptions": {
-                          "type": "integer",
-                          "description": "Total number of unique interruptions during off hours.\nOff hour: 6pm-10pm Mon-Fri and all day Sat-Sun, based on the user’s time zone."
-                        },
-                        "total_snoozed_seconds": {
-                          "type": "integer",
-                          "description": "Total number of seconds incidents were snoozed."
-                        },
-                        "total_engaged_seconds": {
-                          "type": "integer",
-                          "description": "Total engaged time across all responders for incidents.  Engaged time is measured from the time a user engages with an incident (by acknowledging or accepting a responder request) until the incident is resolved.  This may include periods in which the incidents was snoozed."
-                        }
-                      }
+                    {
+                      "$ref": "#/paths/~1analytics~1metrics~1incidents~1all/post/requestBody/content/application~1json/schema"
                     }
-                  },
-                  "required": [
-                    "aggregate_unit",
-                    "timezone",
-                    "data"
                   ]
                 },
                 "examples": {
@@ -5679,15 +5639,11 @@
                           "total_off_hour_interruptions": 20
                         }
                       ],
-                      "filters": [
-                        {
-                          "create_range_start": "2020-01-01T00:00:00Z"
-                        },
-                        {
-                          "create_range_end": "2020-02-01T00:00:00Z"
-                        }
-                      ],
-                      "aggregate_unit": null,
+                      "filters": {
+                        "create_range_start": "2020-01-01T00:00:00Z",
+                        "create_range_end": "2020-02-01T00:00:00Z"
+                      },
+                      "aggregate_unit": "day",
                       "time_zone": "Etc/UTC"
                     }
                   }
@@ -5721,18 +5677,6 @@
           },
           {
             "$ref": "#/paths/~1tags/get/parameters/1"
-          },
-          {
-            "schema": {
-              "type": "string",
-              "default": "application/json",
-              "enum": [
-                "application/json"
-              ]
-            },
-            "in": "header",
-            "name": "Content-Type",
-            "required": true
           }
         ],
         "requestBody": {
@@ -5839,6 +5783,7 @@
                   "aggregate_unit": {
                     "type": "string",
                     "description": "The time unit to aggregate metrics by.  If no value is provided, the metrics will be aggregated for the entire period.",
+                    "nullable": true,
                     "example": "day",
                     "enum": [
                       "day",
@@ -5899,125 +5844,21 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "filters": {
+                  "allOf": [
+                    {
                       "type": "object",
-                      "description": "Accepts a set of filters to apply to the Incidents before aggregating.  Any incidents that do not match the included filters will be omitted from the results",
                       "properties": {
-                        "created_at_start": {
-                          "type": "string",
-                          "description": "Accepts an ISO8601 DateTime string.  Any incidents with a created_at less than this value will be omitted from the results.  The maximum supported time range in conjunction with created_at_end is one year.",
-                          "example": "2020-01-01T00:00:00+05:00"
-                        },
-                        "created_at_end": {
-                          "type": "string",
-                          "description": "Accepts an ISO8601 DateTime string.  Any incidents with a created_at greater than or equal to this value will be omitted from the results.  The maximum supported time range in conjunction with created_at_start is one year.",
-                          "example": "2020-02-01T00:00:00Z"
-                        },
-                        "urgency": {
-                          "type": "string",
-                          "description": "Any incidents whose urgency does not match the provided string will be omitted from the results.",
-                          "example": "high",
-                          "enum": [
-                            "high",
-                            "low"
-                          ]
-                        },
-                        "major": {
-                          "type": "boolean",
-                          "description": "A boolean flag including whether results should contain only major incidents, or exclude major incidents. If no value is provided all incidents will be included. You can find more information on the major incident classification here: https://support.pagerduty.com/docs/operational-reviews#major-incidents",
-                          "example": true
-                        },
-                        "team_ids": {
+                        "data": {
                           "type": "array",
-                          "description": "An array of team IDs. Only incidents related to these teams will be included in the results. Account must have the teams ability to use this parameter.  Any teams that the requestor does not have access to will be omitted from the results.  If omitted, all teams the requestor has access to will be included in the results.",
-                          "example": [
-                            "PSEJLIN",
-                            "PSLWBL8",
-                            "PT4KHLX"
-                          ],
-                          "maxItems": 10,
                           "items": {
-                            "type": "string"
-                          }
-                        },
-                        "service_ids": {
-                          "type": "array",
-                          "description": "An array of service IDs. Only incidents related to these services will be included in the results. If omitted, all services the requestor has access to will be included in the results.",
-                          "example": [
-                            "PSEJLIN",
-                            "PSLWBL8",
-                            "PT4KHLX"
-                          ],
-                          "maxItems": 10,
-                          "items": {
-                            "type": "string"
-                          }
-                        },
-                        "business_service_ids": {
-                          "type": "array",
-                          "description": "An array of business service IDs. Only incidents related to these business services will be included in the results. If omitted, all services the requestor has access to will be included in the results.",
-                          "items": {
-                            "type": "string"
-                          },
-                          "example": [
-                            "P0200S2",
-                            "PEKZXUX",
-                            "PUEMDG6"
-                          ]
-                        },
-                        "priority_ids": {
-                          "type": "array",
-                          "description": "An array of priority IDs. Only incidents with these priorities will be included in the results. If omitted, all services the requestor has access to will be included in the results.",
-                          "example": [
-                            "PZOZQXA",
-                            "POTCOTX",
-                            "P0YF9PU"
-                          ],
-                          "maxItems": 5,
-                          "items": {
-                            "type": "string"
-                          }
-                        },
-                        "priority_names": {
-                          "type": "array",
-                          "description": "An array of user-defined priority names. Only incidents with these priorities will be included in the results. If omitted, all services the requestor has access to will be included in the results.",
-                          "example": [
-                            "SEV-1",
-                            "SEV-2",
-                            "SEV-3"
-                          ],
-                          "maxItems": 5,
-                          "items": {
-                            "type": "string"
+                            "$ref": "#/paths/~1analytics~1metrics~1incidents~1all/post/responses/200/content/application~1json/schema/allOf/0/properties/data/items"
                           }
                         }
                       }
                     },
-                    "timezone": {
-                      "type": "string",
-                      "description": "The time zone that was used for grouping the results.",
-                      "example": "America/Los_Angeles"
-                    },
-                    "aggregate_unit": {
-                      "type": "string",
-                      "description": "The time unit to aggregate metrics by.  If no value is provided, the metrics will be aggregated for the entire period.",
-                      "example": "day",
-                      "enum": [
-                        "day",
-                        "week",
-                        "month"
-                      ]
-                    },
-                    "data": {
-                      "$ref": "#/paths/~1analytics~1metrics~1incidents~1all/post/responses/200/content/application~1json/schema/properties/data"
+                    {
+                      "$ref": "#/paths/~1analytics~1metrics~1incidents~1all/post/requestBody/content/application~1json/schema"
                     }
-                  },
-                  "required": [
-                    "aggregate_unit",
-                    "timezone",
-                    "data"
                   ]
                 },
                 "examples": {
@@ -6065,7 +5906,7 @@
                         "created_at_start": "2020-06-17T17:27:27Z",
                         "created_at_end": "2020-06-16T17:27:27Z"
                       },
-                      "aggregate_unit": null,
+                      "aggregate_unit": "week",
                       "time_zone": "Etc/UTC"
                     }
                   }
@@ -6099,127 +5940,13 @@
           },
           {
             "$ref": "#/paths/~1tags/get/parameters/1"
-          },
-          {
-            "schema": {
-              "type": "string",
-              "default": "application/json",
-              "enum": [
-                "application/json"
-              ]
-            },
-            "in": "header",
-            "name": "Content-Type",
-            "required": true
           }
         ],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "filters": {
-                    "type": "object",
-                    "description": "Filters the result, only show incidents that match the conditions passed in the filter.",
-                    "properties": {
-                      "created_at_start": {
-                        "type": "string",
-                        "description": "Filters the result, showing only the incidents where the creation timestamp is greater than the filter value.",
-                        "example": "2020-06-01T00:00:00+01:00"
-                      },
-                      "created_at_end": {
-                        "type": "string",
-                        "description": "Filters the result, showing only the incidents where the creation timestamp is less than the filter value.",
-                        "example": "2020-07-01T00:00:00+01:00"
-                      },
-                      "urgency": {
-                        "type": "string",
-                        "description": "Filters the result, showing only the incidents where urgency matches the filter value.",
-                        "example": "high",
-                        "enum": [
-                          "high",
-                          "low"
-                        ]
-                      },
-                      "major": {
-                        "type": "boolean",
-                        "description": "A major incident is defined as any incident that requires a coordinated response, often across multiple teams. https://support.pagerduty.com/docs/operational-reviews#major-incidents",
-                        "example": true
-                      },
-                      "team_ids": {
-                        "type": "array",
-                        "description": "An array of team IDs. Only results related to these teams will be returned. Account must have the teams ability to use this parameter.",
-                        "items": {
-                          "type": "string"
-                        },
-                        "example": [
-                          "P373JQQ",
-                          "PAECHJV",
-                          "P7SYGW6"
-                        ]
-                      },
-                      "service_ids": {
-                        "type": "array",
-                        "description": "An array of service IDs. Only results related to these services will be returned.",
-                        "items": {
-                          "type": "string"
-                        },
-                        "example": [
-                          "PC8O0L3",
-                          "PX01HJD",
-                          "P5FK83M"
-                        ]
-                      },
-                      "business_service_ids": {
-                        "type": "array",
-                        "description": "An array of business service IDs. Only incidents related to these business services will be included in the results. If omitted, all services the requestor has access to will be included in the results.",
-                        "items": {
-                          "type": "string"
-                        },
-                        "example": [
-                          "P0200S2",
-                          "PEKZXUX",
-                          "PUEMDG6"
-                        ]
-                      },
-                      "priority_ids": {
-                        "type": "array",
-                        "description": "The priority_ids filter applied to the results.",
-                        "items": {
-                          "type": "string"
-                        },
-                        "example": [
-                          "PITMC5Y",
-                          "PEHBBT8",
-                          "PB8QADI"
-                        ]
-                      },
-                      "priority_names": {
-                        "type": "array",
-                        "description": "The user-defined priority names filter applied to the results.",
-                        "items": {
-                          "type": "string"
-                        },
-                        "example": [
-                          "P1",
-                          "P2",
-                          "P3"
-                        ]
-                      }
-                    }
-                  },
-                  "time_zone": {
-                    "type": "string",
-                    "description": "The time zone to use for the results and grouping.",
-                    "example": "Etc/UTC"
-                  },
-                  "aggregate_unit": {
-                    "type": "string",
-                    "description": "The time unit to aggregate metrics by (day/week/month).  Used in conjunction with the service_id.",
-                    "example": "month"
-                  }
-                }
+                "$ref": "#/paths/~1analytics~1metrics~1incidents~1all/post/requestBody/content/application~1json/schema"
               },
               "examples": {
                 "Example Request": {
@@ -6272,89 +5999,21 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "aggregate_unit": {
-                      "type": "string",
-                      "description": "The time unit to aggregate metrics by (day/week/month)"
-                    },
-                    "filters": {
+                  "allOf": [
+                    {
                       "type": "object",
-                      "description": "A collection of filters that were applied to the results.",
                       "properties": {
-                        "created_at_start": {
-                          "type": "string",
-                          "description": "The lower boundary for the created_at range filter applied to the results."
-                        },
-                        "created_at_end": {
-                          "type": "string",
-                          "description": "The upper boundary for the created_at range filter applied to the results."
-                        },
-                        "urgency": {
-                          "type": "string",
-                          "description": "The urgency filter applied to the results.",
-                          "enum": [
-                            "high",
-                            "low"
-                          ]
-                        },
-                        "major": {
-                          "type": "boolean",
-                          "description": "The major incident filter applied to the results."
-                        },
-                        "team_ids": {
+                        "data": {
                           "type": "array",
-                          "description": "The team ids filter applied to the results;",
-                          "maxItems": 10,
                           "items": {
-                            "type": "string"
-                          }
-                        },
-                        "service_ids": {
-                          "type": "array",
-                          "description": "The service ids filter applied to the results.",
-                          "maxItems": 10,
-                          "items": {
-                            "type": "string"
-                          }
-                        },
-                        "business_service_ids": {
-                          "type": "array",
-                          "description": "The business service ids filter applied to the results.",
-                          "items": {
-                            "type": "string"
-                          }
-                        },
-                        "priority_ids": {
-                          "type": "array",
-                          "description": "The priority_ids filter applied to the results.",
-                          "maxItems": 5,
-                          "items": {
-                            "type": "string"
-                          }
-                        },
-                        "priority_names": {
-                          "type": "array",
-                          "description": "The priority_names filter applied to the results.",
-                          "maxItems": 5,
-                          "items": {
-                            "type": "string"
+                            "$ref": "#/paths/~1analytics~1metrics~1incidents~1all/post/responses/200/content/application~1json/schema/allOf/0/properties/data/items"
                           }
                         }
                       }
                     },
-                    "timezone": {
-                      "type": "string",
-                      "description": "The time zone that was used for grouping the results."
-                    },
-                    "data": {
-                      "$ref": "#/paths/~1analytics~1metrics~1incidents~1all/post/responses/200/content/application~1json/schema/properties/data"
+                    {
+                      "$ref": "#/paths/~1analytics~1metrics~1incidents~1all/post/requestBody/content/application~1json/schema"
                     }
-                  },
-                  "required": [
-                    "aggregate_unit",
-                    "timezone",
-                    "data"
                   ]
                 },
                 "examples": {
@@ -6402,7 +6061,7 @@
                         "created_at_start": "2020-06-17T17:27:27Z",
                         "created_at_end": "2020-06-16T17:27:27Z"
                       },
-                      "aggregate_unit": null,
+                      "aggregate_unit": "day",
                       "time_zone": "Etc/UTC"
                     }
                   }
@@ -6436,136 +6095,13 @@
           },
           {
             "$ref": "#/paths/~1tags/get/parameters/1"
-          },
-          {
-            "schema": {
-              "type": "string",
-              "default": "application/json",
-              "enum": [
-                "application/json"
-              ]
-            },
-            "in": "header",
-            "name": "Content-Type",
-            "required": true
           }
         ],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "filters": {
-                    "type": "object",
-                    "description": "Accepts a set of filters to apply to the Incidents before aggregating.  Any incidents that do not match the included filters will be omitted from the results",
-                    "properties": {
-                      "created_at_start": {
-                        "type": "string",
-                        "description": "Accepts an ISO8601 DateTime string.  Any incidents with a created_at less than this value will be omitted from the results.  The maximum supported time range in conjunction with created_at_end is one year.",
-                        "example": "2020-01-01T00:00:00+05:00"
-                      },
-                      "created_at_end": {
-                        "type": "string",
-                        "description": "Accepts an ISO8601 DateTime string.  Any incidents with a created_at greater than or equal to this value will be omitted from the results.  The maximum supported time range in conjunction with created_at_start is one year.",
-                        "example": "2020-02-01T00:00:00Z"
-                      },
-                      "urgency": {
-                        "type": "string",
-                        "description": "Any incidents whose urgency does not match the provided string will be omitted from the results.",
-                        "example": "high",
-                        "enum": [
-                          "high",
-                          "low"
-                        ]
-                      },
-                      "major": {
-                        "type": "boolean",
-                        "description": "A boolean flag including whether results should contain only major incidents, or exclude major incidents. If no value is provided all incidents will be included. You can find more information on the major incident classification here: https://support.pagerduty.com/docs/operational-reviews#major-incidents",
-                        "example": true
-                      },
-                      "team_ids": {
-                        "type": "array",
-                        "description": "An array of team IDs. Only incidents related to these teams will be included in the results. Account must have the teams ability to use this parameter.  Any teams that the requestor does not have access to will be omitted from the results.  If omitted, all teams the requestor has access to will be included in the results.",
-                        "example": [
-                          "P373JQQ",
-                          "PAECHJV",
-                          "P7SYGW6"
-                        ],
-                        "maxItems": 10,
-                        "items": {
-                          "type": "string"
-                        }
-                      },
-                      "service_ids": {
-                        "type": "array",
-                        "description": "An array of service IDs. Only incidents related to these services will be included in the results. If omitted, all services the requestor has access to will be included in the results.",
-                        "example": [
-                          "PC8O0L3",
-                          "PX01HJD",
-                          "P5FK83M"
-                        ],
-                        "maxItems": 10,
-                        "items": {
-                          "type": "string"
-                        }
-                      },
-                      "business_service_ids": {
-                        "type": "array",
-                        "description": "An array of business service IDs. Only incidents related to these business services will be included in the results. If omitted, all services the requestor has access to will be included in the results.",
-                        "items": {
-                          "type": "string"
-                        },
-                        "example": [
-                          "P0200S2",
-                          "PEKZXUX",
-                          "PUEMDG6"
-                        ]
-                      },
-                      "priority_ids": {
-                        "type": "array",
-                        "description": "An array of priority IDs. Only incidents with these priorities will be included in the results. If omitted, all teams the requestor has access to will be included in the results.",
-                        "example": [
-                          "PITMC5Y",
-                          "PEHBBT8",
-                          "PB8QADI"
-                        ],
-                        "maxItems": 5,
-                        "items": {
-                          "type": "string"
-                        }
-                      },
-                      "priority_names": {
-                        "type": "array",
-                        "description": "An array of user-defined priority names. Only incidents with these priorities will be included in the results. If omitted, all teams the requestor has access to will be included in the results.",
-                        "example": [
-                          "P1",
-                          "P2",
-                          "P3"
-                        ],
-                        "maxItems": 5,
-                        "items": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  },
-                  "time_zone": {
-                    "type": "string",
-                    "description": "The time zone to use for the results and grouping.",
-                    "example": "Etc/UTC"
-                  },
-                  "aggregate_unit": {
-                    "type": "string",
-                    "description": "The time unit to aggregate metrics by.  If no value is provided, the metrics will be aggregated for the entire period.",
-                    "example": "day",
-                    "enum": [
-                      "day",
-                      "week",
-                      "month"
-                    ]
-                  }
-                }
+                "$ref": "#/paths/~1analytics~1metrics~1incidents~1all/post/requestBody/content/application~1json/schema"
               },
               "examples": {
                 "Example Request": {
@@ -6701,7 +6237,7 @@
                         }
                       }
                     },
-                    "timezone": {
+                    "time_zone": {
                       "type": "string",
                       "description": "The time zone that the results are in."
                     },
@@ -6717,7 +6253,7 @@
                     "last",
                     "limit",
                     "more",
-                    "timezone",
+                    "time_zone",
                     "data"
                   ]
                 },
@@ -6812,18 +6348,6 @@
           },
           {
             "$ref": "#/paths/~1tags/get/parameters/1"
-          },
-          {
-            "schema": {
-              "type": "string",
-              "default": "application/json",
-              "enum": [
-                "application/json"
-              ]
-            },
-            "in": "header",
-            "name": "Content-Type",
-            "required": true
           }
         ],
         "requestBody": {
@@ -7013,6 +6537,7 @@
                     },
                     "team_id": {
                       "type": "string",
+                      "nullable": true,
                       "description": "ID of the team the incident was assigned to."
                     },
                     "service_id": {
@@ -7170,7 +6695,7 @@
           "Audit"
         ],
         "operationId": "listAuditRecords",
-        "description": "List audit trail records matching provided query params or default criteria.\n\nThe returned records are sorted by the `execution_time` from newest to oldest.\n\nSee [`Cursor-based pagination`](https://developer.pagerduty.com/docs/rest-api-v2/pagination/) for instructions on how to paginate through the result set.\n\nOnly admins, account owners, or global API tokens can access this endpoint.\n\nFor other role based access to audit records by resource ID, see the resource's API documentation. \n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#audit-record).\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint's interface is under development and subject to change. Do not use it in production systems.\n> Your request must set an X-EARLY-ACCESS header with value `audit-early-access` to acknowledge this.\n>\n> Audit records for user and team resources started in August 2020 and records may be purged while the API is in early access.\n",
+        "description": "List audit trail records matching provided query params or default criteria.\n\nThe returned records are sorted by the `execution_time` from newest to oldest.\n\nSee [`Cursor-based pagination`](https://developer.pagerduty.com/docs/rest-api-v2/pagination/) for instructions on how to paginate through the result set.\n\nOnly admins, account owners, or global API tokens can access this endpoint.\n\nFor other role based access to audit records by resource ID, see the resource's API documentation.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#audit-record).\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint's interface is under development and subject to change. Do not use it in production systems.\n> Your request must set an X-EARLY-ACCESS header with value `audit-early-access` to acknowledge this.\n>\n> Audit records for user and team resources started in August 2020 and records may be purged while the API is in early access.\n",
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
@@ -8161,7 +7686,8 @@
                       ],
                       "limit": 25,
                       "offset": 0,
-                      "more": false
+                      "more": false,
+                      "total": null
                     }
                   }
                 }
@@ -8832,7 +8358,8 @@
                       ],
                       "limit": 25,
                       "offset": 0,
-                      "more": false
+                      "more": false,
+                      "total": null
                     }
                   }
                 }
@@ -8883,10 +8410,7 @@
                   "type": "object",
                   "properties": {
                     "extension_schema": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/ExtensionSchema"
-                      }
+                      "$ref": "#/components/schemas/ExtensionSchema"
                     }
                   },
                   "required": [
@@ -9061,7 +8585,8 @@
                       ],
                       "limit": 25,
                       "offset": 0,
-                      "more": false
+                      "more": false,
+                      "total": null
                     }
                   }
                 }
@@ -10952,7 +10477,7 @@
                           "alert_key": "baf7cf21b1da41b4b0221008339ff357",
                           "service": {
                             "id": "PIJ90N7",
-                            "type": "generic_email_reference",
+                            "type": "service_reference",
                             "summary": "My Mail Service",
                             "self": "https://api.pagerduty.com/services/PIJ90N7",
                             "html_url": "https://subdomain.pagerduty.com/services/PIJ90N7"
@@ -11056,12 +10581,12 @@
                     "alerts": [
                       {
                         "id": "PPVZH9X",
-                        "type": "alert_reference",
+                        "type": "alert",
                         "status": "resolved"
                       },
                       {
                         "id": "P8JOGX7",
-                        "type": "alert_reference",
+                        "type": "alert",
                         "incident": {
                           "id": "PPVZH9X",
                           "type": "incident_reference"
@@ -11116,7 +10641,7 @@
                           "alert_key": "baf7cf21b1da41b4b0221008339ff357",
                           "service": {
                             "id": "PIJ90N7",
-                            "type": "generic_email_reference",
+                            "type": "service_reference",
                             "summary": "My Mail Service",
                             "self": "https://api.pagerduty.com/services/PIJ90N7",
                             "html_url": "https://subdomain.pagerduty.com/services/PIJ90N7"
@@ -11228,7 +10753,7 @@
                         "alert_key": "baf7cf21b1da41b4b0221008339ff357",
                         "service": {
                           "id": "PIJ90N7",
-                          "type": "generic_email_reference",
+                          "type": "service_reference",
                           "summary": "My Mail Service",
                           "self": "https://api.pagerduty.com/services/PIJ90N7",
                           "html_url": "https://subdomain.pagerduty.com/services/PIJ90N7"
@@ -11624,7 +11149,7 @@
                     "value": {
                       "incident": {
                         "id": "PT4KHLK",
-                        "type": "incident",
+                        "type": "incident_reference",
                         "summary": "[#1234] The server is on fire.",
                         "self": "https://api.pagerduty.com/incidents/PT4KHLK",
                         "html_url": "https://subdomain.pagerduty.com/incidents/PT4KHLK"
@@ -11772,7 +11297,9 @@
                 "request": {
                   "summary": "Request Example",
                   "value": {
-                    "content": "Firefighters are on the scene."
+                    "note": {
+                      "content": "Firefighters are on the scene."
+                    }
                   }
                 }
               }
@@ -11942,41 +11469,43 @@
                         },
                         "requested_at": "2018-08-16T14:55:17-07:00",
                         "message": "Please help with issue - join bridge at +1(234)-567-8910",
-                        "responder_request_targets": {
-                          "responder_request_target": {
-                            "type": "user",
-                            "id": "PL7A2O4",
-                            "incidents_responders": {
-                              "state": "pending",
-                              "user": {
-                                "id": "PL7A2O4",
-                                "type": "user_reference",
-                                "summary": "Lee Turner",
-                                "self": "https://api.pagerduty.com/users/PL7A2O4",
-                                "html_url": "https://subdomain.pagerduty.com/users/PL7A2O4",
-                                "avatar_url": "https://secure.gravatar.com/avatar/51c673f51f6b483b24c889bbafbd2a67.png?d=mm&r=PG"
-                              },
-                              "incident": {
-                                "id": "PXP12GZ",
-                                "type": "incident_reference",
-                                "summary": "Ongoing Incident in Mailroom",
-                                "self": "https://api.pagerduty.com/incidents/PXP12GZ",
-                                "html_url": "https://subdomain.pagerduty.com/incidents/PXP12GZ"
-                              },
-                              "updated_at": "2018-08-09T14:40:48-07:00",
-                              "message": "Please help with issue - join bridge at +1(234)-567-8910",
-                              "requester": {
-                                "id": "P09TT3C",
-                                "type": "user_reference",
-                                "summary": "Jane Doe",
-                                "self": "https://api.pagerduty.com/users/P09TT3C",
-                                "html_url": "https://subdomain.pagerduty.com/users/P09TT3C",
-                                "avatar_url": "https://secure.gravatar.com/avatar/1c747247b75acc1f724e2784c838b3f8.png?d=mm&r=PG"
-                              },
-                              "requested_at": "2018-08-09T21:40:49Z"
+                        "responder_request_targets": [
+                          {
+                            "responder_request_target": {
+                              "type": "user",
+                              "id": "PL7A2O4",
+                              "incidents_responders": {
+                                "state": "pending",
+                                "user": {
+                                  "id": "PL7A2O4",
+                                  "type": "user_reference",
+                                  "summary": "Lee Turner",
+                                  "self": "https://api.pagerduty.com/users/PL7A2O4",
+                                  "html_url": "https://subdomain.pagerduty.com/users/PL7A2O4",
+                                  "avatar_url": "https://secure.gravatar.com/avatar/51c673f51f6b483b24c889bbafbd2a67.png?d=mm&r=PG"
+                                },
+                                "incident": {
+                                  "id": "PXP12GZ",
+                                  "type": "incident_reference",
+                                  "summary": "Ongoing Incident in Mailroom",
+                                  "self": "https://api.pagerduty.com/incidents/PXP12GZ",
+                                  "html_url": "https://subdomain.pagerduty.com/incidents/PXP12GZ"
+                                },
+                                "updated_at": "2018-08-09T14:40:48-07:00",
+                                "message": "Please help with issue - join bridge at +1(234)-567-8910",
+                                "requester": {
+                                  "id": "P09TT3C",
+                                  "type": "user_reference",
+                                  "summary": "Jane Doe",
+                                  "self": "https://api.pagerduty.com/users/P09TT3C",
+                                  "html_url": "https://subdomain.pagerduty.com/users/P09TT3C",
+                                  "avatar_url": "https://secure.gravatar.com/avatar/1c747247b75acc1f724e2784c838b3f8.png?d=mm&r=PG"
+                                },
+                                "requested_at": "2018-08-09T21:40:49Z"
+                              }
                             }
                           }
-                        }
+                        ]
                       }
                     }
                   }
@@ -12987,7 +12516,7 @@
                           "services": [
                             {
                               "id": "PIJ90N7",
-                              "type": "generic_email_reference",
+                              "type": "service_reference",
                               "summary": "My Mail Service",
                               "self": "https://api.pagerduty.com/services/PIJ90N7",
                               "html_url": "https://subdomain.pagerduty.com/services/PIJ90N7"
@@ -13013,7 +12542,8 @@
                       ],
                       "limit": 25,
                       "offset": 0,
-                      "more": false
+                      "more": false,
+                      "total": null
                     }
                   }
                 }
@@ -13122,7 +12652,7 @@
                         "services": [
                           {
                             "id": "PIJ90N7",
-                            "type": "generic_email_reference",
+                            "type": "service_reference",
                             "summary": "My Mail Service",
                             "self": "https://api.pagerduty.com/services/PIJ90N7",
                             "html_url": "https://subdomain.pagerduty.com/services/PIJ90N7"
@@ -13222,7 +12752,7 @@
                         "services": [
                           {
                             "id": "PIJ90N7",
-                            "type": "generic_email_reference",
+                            "type": "service_reference",
                             "summary": "My Mail Service",
                             "self": "https://api.pagerduty.com/services/PIJ90N7",
                             "html_url": "https://subdomain.pagerduty.com/services/PIJ90N7"
@@ -13392,7 +12922,7 @@
                         "services": [
                           {
                             "id": "PIJ90N7",
-                            "type": "generic_email_reference",
+                            "type": "service_reference",
                             "summary": "My Mail Service",
                             "self": "https://api.pagerduty.com/services/PIJ90N7",
                             "html_url": "https://subdomain.pagerduty.com/services/PIJ90N7"
@@ -13550,7 +13080,7 @@
                           "address": "+15555551234",
                           "user": {
                             "id": "PT23IWX",
-                            "type": "user",
+                            "type": "user_reference",
                             "summary": "Tim Wright",
                             "self": "https://api.pagerduty.com/users/PT23IWX",
                             "html_url": "https://subdomain.pagerduty.com/users/PT23IWX"
@@ -13562,7 +13092,7 @@
                           "started_at": "2013-03-06T15:28:51-05:00",
                           "user": {
                             "id": "PT23IWX",
-                            "type": "user",
+                            "type": "user_reference",
                             "summary": "Tim Wright",
                             "self": "https://api.pagerduty.com/users/PT23IWX",
                             "html_url": "https://subdomain.pagerduty.com/users/PT23IWX"
@@ -13571,7 +13101,8 @@
                       ],
                       "limit": 100,
                       "offset": 0,
-                      "more": false
+                      "more": false,
+                      "total": null
                     }
                   }
                 }
@@ -13759,7 +13290,8 @@
                       ],
                       "limit": 25,
                       "offset": 0,
-                      "more": false
+                      "more": false,
+                      "total": null
                     }
                   }
                 }
@@ -13875,7 +13407,8 @@
                       ],
                       "limit": 25,
                       "offset": 0,
-                      "more": false
+                      "more": false,
+                      "total": null
                     }
                   }
                 }
@@ -14288,7 +13821,7 @@
                         "self": "https://api.pagerduty.com/response_plays/153d9e1f-9008-ee4e-fa70-0d70cdf92f27",
                         "runnability": "services",
                         "responders_message": null,
-                        "responders": null,
+                        "responders": [],
                         "name": "Test Response Play",
                         "id": "153d9e1f-9008-ee4e-fa70-0d70cdf92f27",
                         "html_url": null,
@@ -14470,7 +14003,7 @@
                         "rulesets": {
                           "type": "array",
                           "items": {
-                            "$ref": "#/paths/~1rulesets/post/requestBody/content/application~1json/schema/properties/ruleset"
+                            "$ref": "#/paths/~1rulesets~1%7Bid%7D/put/requestBody/content/application~1json/schema/properties/ruleset"
                           }
                         }
                       }
@@ -14511,7 +14044,8 @@
                       ],
                       "limit": 25,
                       "offset": 0,
-                      "more": false
+                      "more": false,
+                      "total": null
                     }
                   }
                 }
@@ -14542,6 +14076,212 @@
           },
           {
             "$ref": "#/paths/~1tags/get/parameters/1"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ruleset": {
+                    "allOf": [
+                      {
+                        "$ref": "#/paths/~1rulesets~1%7Bid%7D/put/requestBody/content/application~1json/schema/properties/ruleset"
+                      },
+                      {
+                        "type": "object",
+                        "required": [
+                          "name"
+                        ]
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "ruleset"
+                ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "ruleset": {
+                      "name": "MySQL Clusters",
+                      "team": {
+                        "id": "PWL7QXS",
+                        "type": "team_reference"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The ruleset that was created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ruleset": {
+                      "$ref": "#/paths/~1rulesets~1%7Bid%7D/put/requestBody/content/application~1json/schema/properties/ruleset"
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "rulesets": {
+                        "id": "0e84de00-9511-4380-9f4f-a7b568bb49a0",
+                        "name": "MySQL Clusters",
+                        "type": "global",
+                        "routing_keys": [
+                          "R0212P1QXGEIQE2NMTQ7L7WXD00DWHIN"
+                        ],
+                        "self": "https://api.pagerduty.com/rulesets/0e84de00-9511-4380-9f4f-a7b568bb49a0",
+                        "created_at": "2019-12-24T21:18:52Z",
+                        "creator": {
+                          "type": "user_reference",
+                          "self": "https://api.pagerduty.com/users/PABO808",
+                          "id": "PABO808"
+                        },
+                        "updated_at": "2019-12-25T14:54:23Z",
+                        "updater": {
+                          "type": "user_reference",
+                          "self": "https://api.pagerduty.com/users/PABO808",
+                          "id": "PABO808"
+                        },
+                        "team": {
+                          "type": "team_reference",
+                          "self": "https://api.pagerduty.com/teams/P3ZQXDF",
+                          "id": "P3ZQXDF"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/rulesets/{id}": {
+      "description": "Manage rulesets.",
+      "get": {
+        "tags": [
+          "Rulesets"
+        ],
+        "operationId": "getRuleset",
+        "description": "Get a ruleset.\n\nRulesets allow you to route events to an endpoint and create collections of event rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#rulesets)\n",
+        "summary": "Get a ruleset",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The ruleset object.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ruleset": {
+                      "$ref": "#/paths/~1rulesets~1%7Bid%7D/put/requestBody/content/application~1json/schema/properties/ruleset"
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "ruleset": {
+                        "id": "0e84de00-9511-4380-9f4f-a7b568bb49a0",
+                        "name": "MySQL Clusters",
+                        "type": "global",
+                        "routing_keys": [
+                          "R0212P1QXGEIQE2NMTQ7L7WXD00DWHIN"
+                        ],
+                        "self": "https://api.pagerduty.com/rulesets/0e84de00-9511-4380-9f4f-a7b568bb49a0",
+                        "created_at": "2019-12-24T21:18:52Z",
+                        "creator": {
+                          "type": "user_reference",
+                          "self": "https://api.pagerduty.com/users/PABO808",
+                          "id": "PABO808"
+                        },
+                        "updated_at": "2019-12-25T14:54:23Z",
+                        "updater": {
+                          "type": "user_reference",
+                          "self": "https://api.pagerduty.com/users/PABO808",
+                          "id": "PABO808"
+                        },
+                        "team": {
+                          "type": "team_reference",
+                          "self": "https://api.pagerduty.com/teams/P3ZQXDF",
+                          "id": "P3ZQXDF"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Rulesets"
+        ],
+        "operationId": "updateRuleset",
+        "description": "Update a ruleset.\n\nRulesets allow you to route events to an endpoint and create collections of event rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#rulesets)\n",
+        "summary": "Update a ruleset",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1tags/get/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/1"
+          },
+          {
+            "$ref": "#/components/parameters/id"
           }
         ],
         "requestBody": {
@@ -14690,203 +14430,7 @@
                         "self": "https://api.pagerduty.com/teams/P3ZQXDF",
                         "id": "P3ZQXDF"
                       }
-                    },
-                    "required": [
-                      "name"
-                    ]
-                  }
-                }
-              },
-              "examples": {
-                "request": {
-                  "summary": "Request Example",
-                  "value": {
-                    "ruleset": {
-                      "name": "MySQL Clusters",
-                      "team": {
-                        "id": "PWL7QXS",
-                        "type": "team_reference"
-                      }
                     }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "The ruleset that was created.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "ruleset": {
-                      "$ref": "#/paths/~1rulesets/post/requestBody/content/application~1json/schema/properties/ruleset"
-                    }
-                  }
-                },
-                "examples": {
-                  "response": {
-                    "summary": "Response Example",
-                    "value": {
-                      "rulesets": {
-                        "id": "0e84de00-9511-4380-9f4f-a7b568bb49a0",
-                        "name": "MySQL Clusters",
-                        "type": "global",
-                        "routing_keys": [
-                          "R0212P1QXGEIQE2NMTQ7L7WXD00DWHIN"
-                        ],
-                        "self": "https://api.pagerduty.com/rulesets/0e84de00-9511-4380-9f4f-a7b568bb49a0",
-                        "created_at": "2019-12-24T21:18:52Z",
-                        "creator": {
-                          "type": "user_reference",
-                          "self": "https://api.pagerduty.com/users/PABO808",
-                          "id": "PABO808"
-                        },
-                        "updated_at": "2019-12-25T14:54:23Z",
-                        "updater": {
-                          "type": "user_reference",
-                          "self": "https://api.pagerduty.com/users/PABO808",
-                          "id": "PABO808"
-                        },
-                        "team": {
-                          "type": "team_reference",
-                          "self": "https://api.pagerduty.com/teams/P3ZQXDF",
-                          "id": "P3ZQXDF"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/ArgumentError"
-          },
-          "401": {
-            "$ref": "#/components/responses/Unauthorized"
-          },
-          "403": {
-            "$ref": "#/components/responses/Forbidden"
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          }
-        }
-      }
-    },
-    "/rulesets/{id}": {
-      "description": "Manage rulesets.",
-      "get": {
-        "tags": [
-          "Rulesets"
-        ],
-        "operationId": "getRuleset",
-        "description": "Get a ruleset.\n\nRulesets allow you to route events to an endpoint and create collections of event rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#rulesets)\n",
-        "summary": "Get a ruleset",
-        "parameters": [
-          {
-            "$ref": "#/paths/~1tags/get/parameters/0"
-          },
-          {
-            "$ref": "#/paths/~1tags/get/parameters/1"
-          },
-          {
-            "$ref": "#/components/parameters/id"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "The ruleset object.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "ruleset": {
-                      "$ref": "#/paths/~1rulesets/post/requestBody/content/application~1json/schema/properties/ruleset"
-                    }
-                  }
-                },
-                "examples": {
-                  "response": {
-                    "summary": "Response Example",
-                    "value": {
-                      "ruleset": {
-                        "id": "0e84de00-9511-4380-9f4f-a7b568bb49a0",
-                        "name": "MySQL Clusters",
-                        "type": "global",
-                        "routing_keys": [
-                          "R0212P1QXGEIQE2NMTQ7L7WXD00DWHIN"
-                        ],
-                        "self": "https://api.pagerduty.com/rulesets/0e84de00-9511-4380-9f4f-a7b568bb49a0",
-                        "created_at": "2019-12-24T21:18:52Z",
-                        "creator": {
-                          "type": "user_reference",
-                          "self": "https://api.pagerduty.com/users/PABO808",
-                          "id": "PABO808"
-                        },
-                        "updated_at": "2019-12-25T14:54:23Z",
-                        "updater": {
-                          "type": "user_reference",
-                          "self": "https://api.pagerduty.com/users/PABO808",
-                          "id": "PABO808"
-                        },
-                        "team": {
-                          "type": "team_reference",
-                          "self": "https://api.pagerduty.com/teams/P3ZQXDF",
-                          "id": "P3ZQXDF"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/ArgumentError"
-          },
-          "401": {
-            "$ref": "#/components/responses/Unauthorized"
-          },
-          "403": {
-            "$ref": "#/components/responses/Forbidden"
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Rulesets"
-        ],
-        "operationId": "updateRuleset",
-        "description": "Update a ruleset.\n\nRulesets allow you to route events to an endpoint and create collections of event rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#rulesets)\n",
-        "summary": "Update a ruleset",
-        "parameters": [
-          {
-            "$ref": "#/paths/~1tags/get/parameters/0"
-          },
-          {
-            "$ref": "#/paths/~1tags/get/parameters/1"
-          },
-          {
-            "$ref": "#/components/parameters/id"
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "ruleset": {
-                    "$ref": "#/paths/~1rulesets/post/requestBody/content/application~1json/schema/properties/ruleset"
                   }
                 },
                 "required": [
@@ -14897,15 +14441,19 @@
                 "change_name": {
                   "summary": "Example: Change name",
                   "value": {
-                    "name": "MySQL Clusters"
+                    "ruleset": {
+                      "name": "MySQL Clusters"
+                    }
                   }
                 },
                 "change_team": {
                   "summary": "Example: Change team",
                   "value": {
-                    "team": {
-                      "id": "PWL7QXS",
-                      "type": "team_reference"
+                    "ruleset": {
+                      "team": {
+                        "id": "PWL7QXS",
+                        "type": "team_reference"
+                      }
                     }
                   }
                 }
@@ -14922,7 +14470,7 @@
                   "type": "object",
                   "properties": {
                     "ruleset": {
-                      "$ref": "#/paths/~1rulesets/post/requestBody/content/application~1json/schema/properties/ruleset"
+                      "$ref": "#/paths/~1rulesets~1%7Bid%7D/put/requestBody/content/application~1json/schema/properties/ruleset"
                     }
                   }
                 },
@@ -15144,7 +14692,8 @@
                       ],
                       "limit": 25,
                       "offset": 0,
-                      "more": false
+                      "more": false,
+                      "total": null
                     }
                   }
                 }
@@ -15341,6 +14890,7 @@
                           "annotate": {
                             "description": "Set a note on the resulting incident.",
                             "type": "object",
+                            "nullable": true,
                             "required": [
                               "value"
                             ],
@@ -15357,6 +14907,7 @@
                             "required": [
                               "value"
                             ],
+                            "nullable": true,
                             "properties": {
                               "value": {
                                 "type": "string",
@@ -15403,6 +14954,7 @@
                             "required": [
                               "value"
                             ],
+                            "nullable": true,
                             "properties": {
                               "value": {
                                 "type": "string",
@@ -15416,6 +14968,7 @@
                             "required": [
                               "value"
                             ],
+                            "nullable": true,
                             "properties": {
                               "value": {
                                 "type": "string",
@@ -15429,6 +14982,7 @@
                             "required": [
                               "value"
                             ],
+                            "nullable": true,
                             "properties": {
                               "value": {
                                 "type": "string",
@@ -15476,6 +15030,7 @@
                             "required": [
                               "value"
                             ],
+                            "nullable": true,
                             "properties": {
                               "value": {
                                 "type": "integer",
@@ -15844,6 +15399,7 @@
                 "suppress_action": {
                   "summary": "Example: Enable suppress action",
                   "value": {
+                    "rule_id": "7123bdd1-74e8-4aa7-aa38-4a9ebe123456",
                     "rule": {
                       "actions": {
                         "suppress": {
@@ -15856,8 +15412,14 @@
                 "disable_rule": {
                   "summary": "Example: Disable rule",
                   "value": {
+                    "rule_id": "7123bdd1-74e8-4aa7-aa38-4a9ebe123456",
                     "rule": {
-                      "disabled": true
+                      "disabled": true,
+                      "actions": {
+                        "suppress": {
+                          "value": true
+                        }
+                      }
                     }
                   }
                 }
@@ -16087,7 +15649,7 @@
                           "users": [
                             {
                               "id": "PEYSGVF",
-                              "type": "user",
+                              "type": "user_reference",
                               "summary": "PagerDuty Admin",
                               "self": "https://api.pagerduty.com/users/PEYSGVF",
                               "html_url": "https://subdomain.pagerduty.com/users/PEYSGVF"
@@ -16095,15 +15657,27 @@
                           ],
                           "schedule_layers": [
                             {
+                              "name": "Night Shift",
+                              "start": "2015-11-07T01:00:00.000Z",
+                              "end": "2016-11-07T01:00:00.000Z",
+                              "rotation_virtual_start": "2015-11-07T01:00:00.000Z",
+                              "rotation_turn_length_seconds": 86400,
                               "users": [
                                 {
                                   "user": {
                                     "id": "PEYSGVF",
-                                    "type": "user",
+                                    "type": "user_reference",
                                     "summary": "PagerDuty Admin",
                                     "self": "https://api.pagerduty.com/users/PEYSGVF",
                                     "html_url": "https://subdomain.pagerduty.com/users/PEYSGVF"
                                   }
+                                }
+                              ],
+                              "restrictions": [
+                                {
+                                  "type": "daily_restriction",
+                                  "start_time_of_day": "08:00:00",
+                                  "duration_seconds": 32400
                                 }
                               ]
                             }
@@ -16112,7 +15686,8 @@
                       ],
                       "limit": 100,
                       "offset": 0,
-                      "more": false
+                      "more": false,
+                      "total": null
                     }
                   }
                 }
@@ -16185,7 +15760,7 @@
                             {
                               "user": {
                                 "id": "PXPGF42",
-                                "type": "user"
+                                "type": "user_reference"
                               }
                             }
                           ],
@@ -16247,7 +15822,7 @@
                         "users": [
                           {
                             "id": "PEYSGVF",
-                            "type": "user",
+                            "type": "user_reference",
                             "summary": "PagerDuty Admin",
                             "self": "https://api.pagerduty.com/users/PEYSGVF",
                             "html_url": "https://subdomain.pagerduty.com/users/PEYSGVF"
@@ -16266,7 +15841,7 @@
                               {
                                 "user": {
                                   "id": "PEYSGVF",
-                                  "type": "user",
+                                  "type": "user_reference",
                                   "summary": "PagerDuty Admin",
                                   "self": "https://api.pagerduty.com/users/PEYSGVF",
                                   "html_url": "https://subdomain.pagerduty.com/users/PEYSGVF"
@@ -16382,7 +15957,7 @@
                         "users": [
                           {
                             "id": "PXPGF42",
-                            "type": "user",
+                            "type": "user_reference",
                             "summary": "Regina Phalange",
                             "self": "https://api.pagerduty.com/users/PXPGF42",
                             "html_url": "https://subdomain.pagerduty.com/users/PXPGF42"
@@ -16406,7 +15981,7 @@
                                 "end": "2015-11-09T17:00:00-05:00",
                                 "user": {
                                   "id": "PXPGF42",
-                                  "type": "user",
+                                  "type": "user_reference",
                                   "summary": "Regina Phalange",
                                   "self": "https://api.pagerduty.com/users/PXPGF42",
                                   "html_url": "https://subdomain.pagerduty.com/users/PXPGF42"
@@ -16422,7 +15997,7 @@
                               {
                                 "user": {
                                   "id": "PXPGF42",
-                                  "type": "user",
+                                  "type": "user_reference",
                                   "summary": "Regina Phalange",
                                   "self": "https://api.pagerduty.com/users/PXPGF42",
                                   "html_url": "https://subdomain.pagerduty.com/users/PXPGF42"
@@ -16451,7 +16026,7 @@
                               "end": "2015-11-10T17:00:00-05:00",
                               "user": {
                                 "id": "PXPGF42",
-                                "type": "user",
+                                "type": "user_reference",
                                 "summary": "Regina Phalange",
                                 "self": "https://api.pagerduty.com/users/PXPGF42",
                                 "html_url": "https://subdomain.pagerduty.com/users/PXPGF42"
@@ -16578,7 +16153,7 @@
                             {
                               "user": {
                                 "id": "PXPGF42",
-                                "type": "user"
+                                "type": "user_reference"
                               }
                             }
                           ],
@@ -16640,7 +16215,7 @@
                         "users": [
                           {
                             "id": "PXPGF42",
-                            "type": "user",
+                            "type": "user_reference",
                             "summary": "Regina Phalange",
                             "self": "https://api.pagerduty.com/users/PXPGF42",
                             "html_url": "https://subdomain.pagerduty.com/users/PXPGF42"
@@ -16667,7 +16242,7 @@
                               {
                                 "user": {
                                   "id": "PXPGF42",
-                                  "type": "user",
+                                  "type": "user_reference",
                                   "summary": "Regina Phalange",
                                   "self": "https://api.pagerduty.com/users/PXPGF42",
                                   "html_url": "https://subdomain.pagerduty.com/users/PXPGF42"
@@ -16676,7 +16251,7 @@
                             ],
                             "restrictions": [
                               {
-                                "type": "daily",
+                                "type": "daily_restriction",
                                 "start_time_of_day": "08:00:00",
                                 "duration_seconds": 32400
                               }
@@ -17152,17 +16727,11 @@
                           ],
                           "notification_rules": [
                             {
-                              "id": "P6EJ1EE",
-                              "start_delay_in_minutes": 0,
-                              "created_at": "2015-12-11T23:38:11.000Z",
-                              "contact_method": {
-                                "id": "PVMGSML",
-                                "type": "email_contact_method_reference",
-                                "summary": "Work",
-                                "self": "https://api.pagerduty.com/users/PAM4FGS/contact_methods/PVMGSMLL"
-                              },
-                              "urgency": "high",
-                              "type": "assignment_notification_rule"
+                              "id": "P8GRWKZ",
+                              "type": "assignment_notification_rule_reference",
+                              "summary": "Default",
+                              "self": "https://api.pagerduty.com/users/PAM4FGS/notification_rules/P8GRWKZ",
+                              "html_url": null
                             }
                           ],
                           "job_title": "Senior Engineer",
@@ -17201,16 +16770,10 @@
                           "notification_rules": [
                             {
                               "id": "P8GRWKK",
-                              "start_delay_in_minutes": 0,
-                              "created_at": "2015-12-11T23:38:11.000Z",
-                              "contact_method": {
-                                "id": "PTDVERC",
-                                "type": "email_contact_method_reference",
-                                "summary": "Default",
-                                "self": "https://api.pagerduty.com/users/PXPGF42/contact_methods/PTDVERC"
-                              },
-                              "urgency": "low",
-                              "type": "assignment_notification_rule"
+                              "type": "assignment_notification_rule_reference",
+                              "summary": "Default",
+                              "self": "https://api.pagerduty.com/users/PXPGF42/notification_rules/P8GRWKK",
+                              "html_url": null
                             }
                           ],
                           "job_title": "Director of Engineering",
@@ -17309,7 +16872,7 @@
                             {
                               "user": {
                                 "id": "PXPGF42",
-                                "type": "user"
+                                "type": "user_reference"
                               }
                             }
                           ],
@@ -17363,7 +16926,7 @@
                         "users": [
                           {
                             "id": "PXPGF42",
-                            "type": "user",
+                            "type": "user_reference",
                             "summary": "Regina Phalange",
                             "self": "https://api.pagerduty.com/users/PXPGF42",
                             "html_url": "https://subdomain.pagerduty.com/users/PXPGF42"
@@ -17390,7 +16953,7 @@
                               {
                                 "user": {
                                   "id": "PXPGF42",
-                                  "type": "user",
+                                  "type": "user_reference",
                                   "summary": "Regina Phalange",
                                   "self": "https://api.pagerduty.com/users/PXPGF42",
                                   "html_url": "https://subdomain.pagerduty.com/users/PXPGF42"
@@ -17399,7 +16962,7 @@
                             ],
                             "restrictions": [
                               {
-                                "type": "daily",
+                                "type": "daily_restriction",
                                 "start_time_of_day": "08:00:00",
                                 "duration_seconds": 32400
                               }
@@ -17578,32 +17141,34 @@
                 "examples": {
                   "relationships": {
                     "summary": "Response Example",
-                    "value": [
-                      {
-                        "supporting_service": {
-                          "id": "P7AD56",
-                          "type": "technical_service_reference"
+                    "value": {
+                      "relationships": [
+                        {
+                          "supporting_service": {
+                            "id": "P7AD56",
+                            "type": "technical_service_reference"
+                          },
+                          "dependent_service": {
+                            "id": "P99DJ6",
+                            "type": "business_service_reference"
+                          },
+                          "id": "DQVP7E6G0E8AC3NR",
+                          "type": "service_dependency"
                         },
-                        "dependent_service": {
-                          "id": "P99DJ6",
-                          "type": "business_service_reference"
-                        },
-                        "id": "DQVP7E6G0E8AC3NR",
-                        "type": "service_dependency"
-                      },
-                      {
-                        "supporting_service": {
-                          "id": "DT93K1",
-                          "type": "business_service_reference"
-                        },
-                        "dependent_service": {
-                          "id": "RS34D9",
-                          "type": "technical_service_reference"
-                        },
-                        "id": "D3PG0QVACE87RNE6",
-                        "type": "service_dependency"
-                      }
-                    ]
+                        {
+                          "supporting_service": {
+                            "id": "DT93K1",
+                            "type": "business_service_reference"
+                          },
+                          "dependent_service": {
+                            "id": "RS34D9",
+                            "type": "technical_service_reference"
+                          },
+                          "id": "D3PG0QVACE87RNE6",
+                          "type": "service_dependency"
+                        }
+                      ]
+                    }
                   }
                 }
               }
@@ -17696,32 +17261,34 @@
                 "examples": {
                   "relationships": {
                     "summary": "Response Example",
-                    "value": [
-                      {
-                        "supporting_service": {
-                          "id": "P7AD56",
-                          "type": "technical_service_reference"
+                    "value": {
+                      "relationships": [
+                        {
+                          "supporting_service": {
+                            "id": "P7AD56",
+                            "type": "technical_service_reference"
+                          },
+                          "dependent_service": {
+                            "id": "P99DJ6",
+                            "type": "business_service_reference"
+                          },
+                          "id": "DQVP7E6G0E8AC3NR",
+                          "type": "service_dependency"
                         },
-                        "dependent_service": {
-                          "id": "P99DJ6",
-                          "type": "business_service_reference"
-                        },
-                        "id": "DQVP7E6G0E8AC3NR",
-                        "type": "service_dependency"
-                      },
-                      {
-                        "supporting_service": {
-                          "id": "P99DJ6",
-                          "type": "business_service_reference"
-                        },
-                        "dependent_service": {
-                          "id": "RS34D9",
-                          "type": "business_service_reference"
-                        },
-                        "id": "D3PG0QVACE87RNE6",
-                        "type": "service_dependency"
-                      }
-                    ]
+                        {
+                          "supporting_service": {
+                            "id": "P99DJ6",
+                            "type": "business_service_reference"
+                          },
+                          "dependent_service": {
+                            "id": "RS34D9",
+                            "type": "business_service_reference"
+                          },
+                          "id": "D3PG0QVACE87RNE6",
+                          "type": "service_dependency"
+                        }
+                      ]
+                    }
                   }
                 }
               }
@@ -17884,32 +17451,34 @@
                 "examples": {
                   "relationships": {
                     "summary": "Example Response",
-                    "value": [
-                      {
-                        "supporting_service": {
-                          "id": "P7AD56",
-                          "type": "technical_service_reference"
+                    "value": {
+                      "relationships": [
+                        {
+                          "supporting_service": {
+                            "id": "P7AD56",
+                            "type": "technical_service_reference"
+                          },
+                          "dependent_service": {
+                            "id": "P99DJ6",
+                            "type": "business_service_reference"
+                          },
+                          "id": "DQVP7E6G0E8AC3NR",
+                          "type": "service_dependency"
                         },
-                        "dependent_service": {
-                          "id": "P99DJ6",
-                          "type": "business_service_reference"
-                        },
-                        "id": "DQVP7E6G0E8AC3NR",
-                        "type": "service_dependency"
-                      },
-                      {
-                        "supporting_service": {
-                          "id": "DT93K1",
-                          "type": "business_service_reference"
-                        },
-                        "dependent_service": {
-                          "id": "RS34D9",
-                          "type": "technical_service_reference"
-                        },
-                        "id": "D3PG0QVACE87RNE6",
-                        "type": "service_dependency"
-                      }
-                    ]
+                        {
+                          "supporting_service": {
+                            "id": "DT93K1",
+                            "type": "business_service_reference"
+                          },
+                          "dependent_service": {
+                            "id": "RS34D9",
+                            "type": "technical_service_reference"
+                          },
+                          "id": "D3PG0QVACE87RNE6",
+                          "type": "service_dependency"
+                        }
+                      ]
+                    }
                   }
                 }
               }
@@ -18002,32 +17571,34 @@
                 "examples": {
                   "relationships": {
                     "summary": "Response Example",
-                    "value": [
-                      {
-                        "supporting_service": {
-                          "id": "P7AD56",
-                          "type": "technical_service_reference"
+                    "value": {
+                      "relationships": [
+                        {
+                          "supporting_service": {
+                            "id": "P7AD56",
+                            "type": "technical_service_reference"
+                          },
+                          "dependent_service": {
+                            "id": "P99DJ6",
+                            "type": "business_service_reference"
+                          },
+                          "id": "DQVP7E6G0E8AC3NR",
+                          "type": "service_dependency"
                         },
-                        "dependent_service": {
-                          "id": "P99DJ6",
-                          "type": "business_service_reference"
-                        },
-                        "id": "DQVP7E6G0E8AC3NR",
-                        "type": "service_dependency"
-                      },
-                      {
-                        "supporting_service": {
-                          "id": "R87DK4",
-                          "type": "technical_service_reference"
-                        },
-                        "dependent_service": {
-                          "id": "P7AD56",
-                          "type": "technical_service_reference"
-                        },
-                        "id": "D3PG0QVACE87RNE6",
-                        "type": "service_dependency"
-                      }
-                    ]
+                        {
+                          "supporting_service": {
+                            "id": "R87DK4",
+                            "type": "technical_service_reference"
+                          },
+                          "dependent_service": {
+                            "id": "P7AD56",
+                            "type": "technical_service_reference"
+                          },
+                          "id": "D3PG0QVACE87RNE6",
+                          "type": "service_dependency"
+                        }
+                      ]
+                    }
                   }
                 }
               }
@@ -18210,7 +17781,8 @@
                       ],
                       "limit": 25,
                       "offset": 0,
-                      "more": false
+                      "more": false,
+                      "total": null
                     }
                   }
                 }
@@ -19288,7 +18860,10 @@
             "required": true,
             "schema": {
               "type": "string",
-              "default": "application/json"
+              "default": "application/json",
+              "enum": [
+                "application/json"
+              ]
             }
           },
           {
@@ -19333,14 +18908,16 @@
                   "response": {
                     "summary": "Response Example",
                     "value": {
-                      "tags": {
-                        "type": "tag",
-                        "summary": "Batman",
-                        "self": "https://api.pagerduty.com/tags/P5IYCNZ",
-                        "label": "Batman",
-                        "id": "P5IYCNZ",
-                        "html_url": "null"
-                      },
+                      "tags": [
+                        {
+                          "type": "tag",
+                          "summary": "Batman",
+                          "self": "https://api.pagerduty.com/tags/P5IYCNZ",
+                          "label": "Batman",
+                          "id": "P5IYCNZ",
+                          "html_url": null
+                        }
+                      ],
                       "limit": 100,
                       "offset": 0,
                       "total": 1,
@@ -19431,7 +19008,7 @@
                         "self": "https://api.pagerduty.com/tags/P5IYCNZ",
                         "label": "Batman",
                         "id": "P5IYCNZ",
-                        "html_url": "null"
+                        "html_url": null
                       }
                     }
                   }
@@ -19499,7 +19076,7 @@
                         "self": "https://api.pagerduty.com/tags/P5IYCNZ",
                         "label": "Batman",
                         "id": "P5IYCNZ",
-                        "html_url": "null"
+                        "html_url": null
                       }
                     }
                   }
@@ -19820,7 +19397,8 @@
                       ],
                       "limit": 100,
                       "offset": 0,
-                      "more": false
+                      "more": false,
+                      "total": null
                     }
                   }
                 }
@@ -20332,7 +19910,8 @@
                       ],
                       "limit": 100,
                       "offset": 0,
-                      "more": false
+                      "more": false,
+                      "total": null
                     }
                   }
                 }
@@ -20569,16 +20148,10 @@
                           "notification_rules": [
                             {
                               "id": "P8GRWKK",
-                              "start_delay_in_minutes": 0,
-                              "created_at": "2015-12-11T23:38:11.000Z",
-                              "contact_method": {
-                                "id": "PTDVERC",
-                                "type": "email_contact_method_reference",
-                                "summary": "Default",
-                                "self": "https://api.pagerduty.com/users/PXPGF42/contact_methods/PTDVERC"
-                              },
-                              "urgency": "low",
-                              "type": "assignment_notification_rule"
+                              "type": "assignment_notification_rule_reference",
+                              "summary": "Default",
+                              "self": "https://api.pagerduty.com/users/PXPGF42/notification_rules/P8GRWKK",
+                              "html_url": null
                             }
                           ],
                           "job_title": "Director of Engineering",
@@ -20616,17 +20189,11 @@
                           ],
                           "notification_rules": [
                             {
-                              "id": "P6EJ1EE",
-                              "start_delay_in_minutes": 0,
-                              "created_at": "2015-12-11T23:38:11.000Z",
-                              "contact_method": {
-                                "id": "PVMGSML",
-                                "type": "email_contact_method_reference",
-                                "summary": "Work",
-                                "self": "https://api.pagerduty.com/users/PAM4FGS/contact_methods/PVMGSMLL"
-                              },
-                              "urgency": "high",
-                              "type": "assignment_notification_rule"
+                              "id": "P8GRWKK",
+                              "type": "assignment_notification_rule_reference",
+                              "summary": "Default",
+                              "self": "https://api.pagerduty.com/users/PXPGF42/notification_rules/P8GRWKK",
+                              "html_url": null
                             }
                           ],
                           "job_title": "Senior Engineer",
@@ -20643,7 +20210,8 @@
                       ],
                       "limit": 25,
                       "offset": 0,
-                      "more": false
+                      "more": false,
+                      "total": null
                     }
                   }
                 }
@@ -20763,16 +20331,10 @@
                         "notification_rules": [
                           {
                             "id": "P8GRWKK",
-                            "start_delay_in_minutes": 0,
-                            "created_at": "2015-12-11T23:38:11.000Z",
-                            "contact_method": {
-                              "id": "PTDVERC",
-                              "type": "email_contact_method_reference",
-                              "summary": "Default",
-                              "self": "https://api.pagerduty.com/users/PXPGF42/contact_methods/PTDVERC"
-                            },
-                            "urgency": "low",
-                            "type": "assignment_notification_rule"
+                            "type": "assignment_notification_rule_reference",
+                            "summary": "Default",
+                            "self": "https://api.pagerduty.com/users/PXPGF42/notification_rules/P8GRWKK",
+                            "html_url": null
                           }
                         ],
                         "job_title": "Director of Engineering",
@@ -20878,16 +20440,10 @@
                         "notification_rules": [
                           {
                             "id": "P8GRWKK",
-                            "start_delay_in_minutes": 0,
-                            "created_at": "2015-12-11T23:38:11.000Z",
-                            "contact_method": {
-                              "id": "PTDVERC",
-                              "type": "email_contact_method_reference",
-                              "summary": "Default",
-                              "self": "https://api.pagerduty.com/users/PXPGF42/contact_methods/PTDVERC"
-                            },
-                            "urgency": "low",
-                            "type": "assignment_notification_rule"
+                            "type": "assignment_notification_rule_reference",
+                            "summary": "Default",
+                            "self": "https://api.pagerduty.com/users/PXPGF42/notification_rules/P8GRWKK",
+                            "html_url": null
                           }
                         ],
                         "job_title": "Director of Engineering",
@@ -21059,16 +20615,10 @@
                         "notification_rules": [
                           {
                             "id": "P8GRWKK",
-                            "start_delay_in_minutes": 0,
-                            "created_at": "2015-12-11T23:38:11.000Z",
-                            "contact_method": {
-                              "id": "PTDVERC",
-                              "type": "email_contact_method_reference",
-                              "summary": "Default",
-                              "self": "https://api.pagerduty.com/users/PXPGF42/contact_methods/PTDVERC"
-                            },
-                            "urgency": "low",
-                            "type": "assignment_notification_rule"
+                            "type": "assignment_notification_rule_reference",
+                            "summary": "Default",
+                            "self": "https://api.pagerduty.com/users/PXPGF42/notification_rules/P8GRWKK",
+                            "html_url": null
                           }
                         ],
                         "job_title": "Director of Engineering",
@@ -21254,7 +20804,7 @@
                       "contact_methods": [
                         {
                           "id": "PXPGF42",
-                          "type": "contact_method",
+                          "type": "email_contact_method",
                           "summary": "Work",
                           "self": "https://api.pagerduty.com/users/PXPGF42/contact_method/PXPGF42",
                           "label": "Work",
@@ -21330,7 +20880,7 @@
                   "value": {
                     "contact_method": {
                       "id": "PXPGF42",
-                      "type": "contact_method",
+                      "type": "email_contact_method",
                       "summary": "Work",
                       "self": "https://api.pagerduty.com/users/PXPGF42/contact_method/PXPGF42",
                       "label": "Work",
@@ -21373,7 +20923,7 @@
                     "value": {
                       "contact_method": {
                         "id": "PXPGF42",
-                        "type": "contact_method",
+                        "type": "email_contact_method",
                         "summary": "Work",
                         "self": "https://api.pagerduty.com/users/PXPGF42/contact_method/PXPGF42",
                         "label": "Work",
@@ -21453,7 +21003,7 @@
                     "value": {
                       "contact_method": {
                         "id": "PXPGF42",
-                        "type": "contact_method",
+                        "type": "email_contact_method",
                         "summary": "Work",
                         "self": "https://api.pagerduty.com/users/PXPGF42/contact_method/PXPGF42",
                         "label": "Work",
@@ -21573,7 +21123,7 @@
                   "value": {
                     "contact_method": {
                       "id": "PXPGF42",
-                      "type": "contact_method",
+                      "type": "email_contact_method",
                       "summary": "Work",
                       "self": "https://api.pagerduty.com/users/PXPGF42/contact_method/PXPGF42",
                       "label": "Work",
@@ -21616,7 +21166,7 @@
                     "value": {
                       "contact_method": {
                         "id": "PXPGF42",
-                        "type": "contact_method",
+                        "type": "email_contact_method",
                         "summary": "Work",
                         "self": "https://api.pagerduty.com/users/PXPGF42/contact_method/PXPGF42",
                         "label": "Work",
@@ -21715,9 +21265,10 @@
                           "start_delay_in_minutes": 0,
                           "contact_method": {
                             "id": "PXPGF42",
-                            "type": "contact_method_reference",
+                            "type": "email_contact_method_reference",
                             "summary": "Work",
-                            "self": "https://api.pagerduty.com/users/PXPGF42/contact_methods/PXPGF42"
+                            "self": "https://api.pagerduty.com/users/PXPGF42/contact_methods/PXPGF42",
+                            "html_url": null
                           },
                           "created_at": "2016-02-01T16:06:27-05:00",
                           "urgency": "high"
@@ -21784,7 +21335,7 @@
                       "start_delay_in_minutes": 0,
                       "contact_method": {
                         "id": "PXPGF42",
-                        "type": "email_contact_method"
+                        "type": "email_contact_method_reference"
                       },
                       "urgency": "high"
                     }
@@ -21821,14 +21372,13 @@
                         "summary": "Work",
                         "self": "https://api.pagerduty.com/users/PXPGF42/notification_rules/PPSCXAN",
                         "start_delay_in_minutes": 0,
-                        "contact_method": [
-                          {
-                            "id": "PXPGF42",
-                            "type": "contact_method_reference",
-                            "summary": "Work",
-                            "self": "https://api.pagerduty.com/users/PXPGF42/contact_methods/PXPGF42"
-                          }
-                        ],
+                        "contact_method": {
+                          "id": "PXPGF42",
+                          "type": "email_contact_method_reference",
+                          "summary": "Work",
+                          "self": "https://api.pagerduty.com/users/PXPGF42/contact_methods/PXPGF42",
+                          "html_url": null
+                        },
                         "created_at": "2016-02-01T16:06:27-05:00",
                         "urgency": "high"
                       }
@@ -21921,14 +21471,12 @@
                         "summary": "Work",
                         "self": "https://api.pagerduty.com/users/PXPGF42/notification_rules/PPSCXAN",
                         "start_delay_in_minutes": 0,
-                        "contact_method": [
-                          {
-                            "id": "PXPGF42",
-                            "type": "contact_method_reference",
-                            "summary": "Work",
-                            "self": "https://api.pagerduty.com/users/PXPGF42/contact_methods/PXPGF42"
-                          }
-                        ],
+                        "contact_method": {
+                          "id": "PXPGF42",
+                          "type": "email_contact_method_reference",
+                          "summary": "Work",
+                          "self": "https://api.pagerduty.com/users/PXPGF42/contact_methods/PXPGF42"
+                        },
                         "created_at": "2016-02-01T16:06:27-05:00",
                         "urgency": "high"
                       }
@@ -22038,7 +21586,7 @@
                       "start_delay_in_minutes": 0,
                       "contact_method": {
                         "id": "PXPGF42",
-                        "type": "email_contact_method"
+                        "type": "email_contact_method_reference"
                       },
                       "urgency": "high"
                     }
@@ -22074,7 +21622,7 @@
                         "start_delay_in_minutes": 0,
                         "contact_method": {
                           "id": "PXPGF42",
-                          "type": "contact_method_reference",
+                          "type": "email_contact_method_reference",
                           "summary": "Work",
                           "self": "https://api.pagerduty.com/users/PXPGF42/contact_methods/PXPGF42"
                         },
@@ -22757,9 +22305,10 @@
                           "self": "https://api.pagerduty.com/users/PXPGF42/status_update_notification_rules/PPSCXAN",
                           "contact_method": {
                             "id": "PXPGF42",
-                            "type": "contact_method_reference",
+                            "type": "email_contact_method_reference",
                             "summary": "Work",
-                            "self": "https://api.pagerduty.com/users/PXPGF42/contact_methods/PXPGF42"
+                            "self": "https://api.pagerduty.com/users/PXPGF42/contact_methods/PXPGF42",
+                            "html_url": null
                           },
                           "created_at": "2016-02-01T16:06:27-05:00"
                         }
@@ -22850,7 +22399,7 @@
                     "status_update_notification_rule": {
                       "contact_method": {
                         "id": "PXPGF42",
-                        "type": "email_contact_method"
+                        "type": "email_contact_method_reference"
                       }
                     }
                   }
@@ -22887,9 +22436,10 @@
                         "self": "https://api.pagerduty.com/users/PXPGF42/status_update_notification_rules/PPSCXAN",
                         "contact_method": {
                           "id": "PXPGF42",
-                          "type": "contact_method_reference",
+                          "type": "email_contact_method_reference",
                           "summary": "Work",
-                          "self": "https://api.pagerduty.com/users/PXPGF42/contact_methods/PXPGF42"
+                          "self": "https://api.pagerduty.com/users/PXPGF42/contact_methods/PXPGF42",
+                          "html_url": null
                         },
                         "created_at": "2016-02-01T16:06:27-05:00"
                       }
@@ -22989,16 +22539,17 @@
                   "response": {
                     "summary": "Response Example",
                     "value": {
-                      "status_update_notification_rule": {
+                      "notification_rule": {
                         "id": "PXPGF42",
                         "type": "status_update_notification_rule",
                         "summary": "contact method PXPGF42 used as status_update_notification_rule",
                         "self": "https://api.pagerduty.com/users/PXPGF42/status_update_notification_rules/PPSCXAN",
                         "contact_method": {
-                          "id": "PXPGF42",
-                          "type": "contact_method_reference",
-                          "summary": "Work",
-                          "self": "https://api.pagerduty.com/users/PXPGF42/contact_methods/PXPGF42"
+                          "id": "PTDVERC",
+                          "type": "email_contact_method_reference",
+                          "summary": "Default",
+                          "self": "https://api.pagerduty.com/users/PXPGF42/contact_methods/PTDVERC",
+                          "html_url": null
                         },
                         "created_at": "2016-02-01T16:06:27-05:00"
                       }
@@ -23132,7 +22683,7 @@
                     "status_update_notification_rule": {
                       "contact_method": {
                         "id": "PXPGF42",
-                        "type": "email_contact_method"
+                        "type": "email_contact_method_reference"
                       }
                     }
                   }
@@ -23166,9 +22717,10 @@
                         "self": "https://api.pagerduty.com/users/PXPGF42/status_update_notification_rules/PPSCXAN",
                         "contact_method": {
                           "id": "PXPGF42",
-                          "type": "contact_method_reference",
+                          "type": "email_contact_method_reference",
                           "summary": "Work",
-                          "self": "https://api.pagerduty.com/users/PXPGF42/contact_methods/PXPGF42"
+                          "self": "https://api.pagerduty.com/users/PXPGF42/contact_methods/PXPGF42",
+                          "html_url": null
                         },
                         "created_at": "2016-02-01T16:06:27-05:00"
                       }
@@ -23251,32 +22803,27 @@
                         "color": "green",
                         "role": "admin",
                         "avatar_url": "https://secure.gravatar.com/avatar/a8b714a39626f2444ee05990b078995f.png?d=mm&r=PG",
-                        "description": "I'm the boss",
+                        "description": null,
                         "invitation_sent": false,
+                        "job_title": "Director of Engineering",
                         "contact_methods": [
                           {
                             "id": "PTDVERC",
                             "type": "email_contact_method_reference",
                             "summary": "Default",
-                            "self": "https://api.pagerduty.com/users/PXPGF42/contact_methods/PTDVERC"
+                            "self": "https://api.pagerduty.com/users/PXPGF42/contact_methods/PTDVERC",
+                            "html_url": null
                           }
                         ],
                         "notification_rules": [
                           {
                             "id": "P8GRWKK",
-                            "start_delay_in_minutes": 0,
-                            "created_at": "2015-12-11T23:38:11.000Z",
-                            "contact_method": {
-                              "id": "PTDVERC",
-                              "type": "email_contact_method_reference",
-                              "summary": "Default",
-                              "self": "https://api.pagerduty.com/users/PXPGF42/contact_methods/PTDVERC"
-                            },
-                            "urgency": "low",
-                            "type": "assignment_notification_rule"
+                            "type": "assignment_notification_rule_reference",
+                            "summary": "Default",
+                            "self": "https://api.pagerduty.com/users/PXPGF42/notification_rules/PTDVERC",
+                            "html_url": null
                           }
                         ],
-                        "job_title": "Director of Engineering",
                         "teams": [
                           {
                             "id": "PQ9K7I8",
@@ -23368,7 +22915,8 @@
                       ],
                       "limit": 25,
                       "offset": 0,
-                      "more": false
+                      "more": false,
+                      "total": null
                     }
                   }
                 }
@@ -23433,18 +22981,20 @@
                   "response": {
                     "summary": "Response Example",
                     "value": {
-                      "vendor": {
-                        "id": "PZQ6AUS",
-                        "type": "vendor",
-                        "summary": "Amazon CloudWatch",
-                        "self": "https://api.pagerduty.com/vendors/PZQ6AUS",
-                        "name": "Amazon CloudWatch",
-                        "website_url": "https://aws.amazon.com/cloudwatch",
-                        "logo_url": "https://s3.amazonaws.com/pdpartner/cloudwatch_large.png",
-                        "thumbnail_url": "https://s3.amazonaws.com/pdpartner/cloudwatch_thumb.png",
-                        "description": "Amazon Web Services CloudWatch provides monitoring for AWS cloud resources and customer-run applications. AWS can collect data, gain insight, and alert users to fix problems within applications and organizations. AWS CloudWatch gives system-wide visibility into resource utilization and notifications can be set for when any metrics cross a specified threshold.",
-                        "integration_guide_url": "http://www.pagerduty.com/docs/guides/aws-cloudwatch-integration-guide/"
-                      }
+                      "vendor": [
+                        {
+                          "id": "PZQ6AUS",
+                          "type": "vendor",
+                          "summary": "Amazon CloudWatch",
+                          "self": "https://api.pagerduty.com/vendors/PZQ6AUS",
+                          "name": "Amazon CloudWatch",
+                          "website_url": "https://aws.amazon.com/cloudwatch",
+                          "logo_url": "https://s3.amazonaws.com/pdpartner/cloudwatch_large.png",
+                          "thumbnail_url": "https://s3.amazonaws.com/pdpartner/cloudwatch_thumb.png",
+                          "description": "Amazon Web Services CloudWatch provides monitoring for AWS cloud resources and customer-run applications. AWS can collect data, gain insight, and alert users to fix problems within applications and organizations. AWS CloudWatch gives system-wide visibility into resource utilization and notifications can be set for when any metrics cross a specified threshold.",
+                          "integration_guide_url": "http://www.pagerduty.com/docs/guides/aws-cloudwatch-integration-guide/"
+                        }
+                      ]
                     }
                   }
                 }

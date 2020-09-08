@@ -70,8 +70,7 @@
                 },
                 "required": [
                   "routing_key",
-                  "event_action",
-                  "event"
+                  "event_action"
                 ]
               },
               "examples": {
