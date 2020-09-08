@@ -291,12 +291,7 @@
             "$ref": "#/components/schemas/RuleActionsParams"
           },
           "target_service": {
-            "description": "Service, where an incident should be created",
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/ServiceReference"
-              }
-            ]
+            "$ref": "#/components/schemas/ServiceReference"
           }
         }
       },
@@ -314,7 +309,7 @@
                 "$ref": "#/components/schemas/RuleConditionPdPriorities"
               },
               "pd_urgency": {
-                "$ref": "#/components/schemas/RuleConfitionPdUrgency"
+                "$ref": "#/components/schemas/RuleConditionPdUrgency"
               }
             }
           },
@@ -325,20 +320,10 @@
             "$ref": "#/components/schemas/RuleActionsParams"
           },
           "target_project": {
-            "description": "Project, where the issue should be created",
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Project"
-              }
-            ]
+            "$ref": "#/components/schemas/Project"
           },
           "target_issue_type": {
-            "description": "Issue Type, which should set on the issue",
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/IssueType"
-              }
-            ]
+            "$ref": "#/components/schemas/IssueType"
           }
         }
       },
@@ -356,7 +341,7 @@
                 "$ref": "#/components/schemas/RuleConditionPdPriorities"
               },
               "pd_urgency": {
-                "$ref": "#/components/schemas/RuleConfitionPdUrgency"
+                "$ref": "#/components/schemas/RuleConditionPdUrgency"
               }
             }
           },
@@ -367,12 +352,7 @@
             "$ref": "#/components/schemas/RuleActionsParams"
           },
           "target_project": {
-            "description": "Project, where the issue should be created",
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Project"
-              }
-            ]
+            "$ref": "#/components/schemas/Project"
           },
           "target_issue_type": {
             "description": "Issue Type, which should set on the issue",
@@ -456,7 +436,7 @@
           "$ref": "#/components/schemas/PriorityReference"
         }
       },
-      "RuleConfitionPdUrgency": {
+      "RuleConditionPdUrgency": {
         "description": "A PagerDuty urgency that should be matched to create/update a Jira issue",
         "type": "string",
         "nullable": true,
@@ -478,6 +458,7 @@
       },
       "Project": {
         "description": "Jira Project",
+        "nullable": true,
         "type": "object",
         "properties": {
           "id": {
@@ -515,6 +496,7 @@
       },
       "IssueType": {
         "description": "Jira Issue Type",
+        "nullable": true,
         "type": "object",
         "properties": {
           "id": {
@@ -629,7 +611,8 @@
           },
           "html_url": {
             "type": "string",
-            "format": "url,",
+            "format": "url",
+            "nullable": true,
             "description": "A URL at which the entity is uniquely displayed in the Web app"
           }
         }
@@ -775,6 +758,7 @@
                         {
                           "name": "Sample Rule",
                           "enabled": true,
+                          "created_at": "2020-06-02T12:42:37Z",
                           "config": {
                             "sync_comments": true,
                             "services": [
@@ -830,7 +814,10 @@
                                 "jql": "issuetype=Bug",
                                 "on_create": true,
                                 "on_update": true,
-                                "target_service": null,
+                                "target_service": {
+                                  "id": "PR5R1T1",
+                                  "type": "service_reference"
+                                },
                                 "actions": [
                                   {
                                     "key": "jira_field_set_priority",
@@ -928,7 +915,7 @@
                                     "incident.delegate",
                                     "incident.trigger_manually"
                                   ],
-                                  "pd_urgency": null,
+                                  "pd_urgency": "high",
                                   "pd_priorities": []
                                 },
                                 "target_project": null,
@@ -1144,7 +1131,7 @@
                                   "pd_events": [
                                     "incident.acknowledge"
                                   ],
-                                  "pd_urgency": null,
+                                  "pd_urgency": "high",
                                   "pd_priorities": []
                                 },
                                 "actions": [
@@ -1167,7 +1154,7 @@
                                   "pd_events": [
                                     "incident.unacknowledge"
                                   ],
-                                  "pd_urgency": null,
+                                  "pd_urgency": "high",
                                   "pd_priorities": []
                                 },
                                 "actions": [
@@ -1190,7 +1177,7 @@
                                   "pd_events": [
                                     "incident.resolve"
                                   ],
-                                  "pd_urgency": null,
+                                  "pd_urgency": "high",
                                   "pd_priorities": []
                                 },
                                 "actions": [
@@ -1213,7 +1200,7 @@
                                   "pd_events": [
                                     "incident.assign"
                                   ],
-                                  "pd_urgency": null,
+                                  "pd_urgency": "high",
                                   "pd_priorities": []
                                 },
                                 "actions": [
@@ -1349,6 +1336,7 @@
                   "value": {
                     "rule": {
                       "name": "Sample Rule",
+                      "created_at": "2020-06-02T12:42:37Z",
                       "enabled": true,
                       "config": {
                         "sync_comments": true,
@@ -1405,7 +1393,10 @@
                             "jql": "issuetype=Bug",
                             "on_create": true,
                             "on_update": true,
-                            "target_service": null,
+                            "target_service": {
+                              "id": "PR5R1T1",
+                              "type": "service_reference"
+                            },
                             "actions": [
                               {
                                 "key": "jira_field_set_priority",
@@ -1503,7 +1494,7 @@
                                 "incident.delegate",
                                 "incident.trigger_manually"
                               ],
-                              "pd_urgency": null,
+                              "pd_urgency": "high",
                               "pd_priorities": []
                             },
                             "target_project": null,
@@ -1719,7 +1710,7 @@
                               "pd_events": [
                                 "incident.acknowledge"
                               ],
-                              "pd_urgency": null,
+                              "pd_urgency": "high",
                               "pd_priorities": []
                             },
                             "actions": [
@@ -1742,7 +1733,7 @@
                               "pd_events": [
                                 "incident.unacknowledge"
                               ],
-                              "pd_urgency": null,
+                              "pd_urgency": "high",
                               "pd_priorities": []
                             },
                             "actions": [
@@ -1765,7 +1756,7 @@
                               "pd_events": [
                                 "incident.resolve"
                               ],
-                              "pd_urgency": null,
+                              "pd_urgency": "high",
                               "pd_priorities": []
                             },
                             "actions": [
@@ -1788,7 +1779,7 @@
                               "pd_events": [
                                 "incident.assign"
                               ],
-                              "pd_urgency": null,
+                              "pd_urgency": "high",
                               "pd_priorities": []
                             },
                             "actions": [
@@ -1909,6 +1900,7 @@
                     "value": {
                       "rule": {
                         "name": "Sample Rule",
+                        "created_at": "2020-06-02T12:42:37Z",
                         "enabled": true,
                         "config": {
                           "sync_comments": true,
@@ -1965,7 +1957,10 @@
                               "jql": "issuetype=Bug",
                               "on_create": true,
                               "on_update": true,
-                              "target_service": null,
+                              "target_service": {
+                                "id": "PR5R1T1",
+                                "type": "service_reference"
+                              },
                               "actions": [
                                 {
                                   "key": "jira_field_set_priority",
@@ -2063,7 +2058,7 @@
                                   "incident.delegate",
                                   "incident.trigger_manually"
                                 ],
-                                "pd_urgency": null,
+                                "pd_urgency": "high",
                                 "pd_priorities": []
                               },
                               "target_project": null,
@@ -2279,7 +2274,7 @@
                                 "pd_events": [
                                   "incident.acknowledge"
                                 ],
-                                "pd_urgency": null,
+                                "pd_urgency": "high",
                                 "pd_priorities": []
                               },
                               "actions": [
@@ -2302,7 +2297,7 @@
                                 "pd_events": [
                                   "incident.unacknowledge"
                                 ],
-                                "pd_urgency": null,
+                                "pd_urgency": "high",
                                 "pd_priorities": []
                               },
                               "actions": [
@@ -2325,7 +2320,7 @@
                                 "pd_events": [
                                   "incident.resolve"
                                 ],
-                                "pd_urgency": null,
+                                "pd_urgency": "high",
                                 "pd_priorities": []
                               },
                               "actions": [
@@ -2348,7 +2343,7 @@
                                 "pd_events": [
                                   "incident.assign"
                                 ],
-                                "pd_urgency": null,
+                                "pd_urgency": "high",
                                 "pd_priorities": []
                               },
                               "actions": [
@@ -2491,6 +2486,7 @@
                     "value": {
                       "rule": {
                         "name": "Sample Rule",
+                        "created_at": "2020-06-02T12:42:37Z",
                         "enabled": true,
                         "config": {
                           "sync_comments": true,
@@ -2547,7 +2543,10 @@
                               "jql": "issuetype=Bug",
                               "on_create": true,
                               "on_update": true,
-                              "target_service": null,
+                              "target_service": {
+                                "id": "PR5R1T1",
+                                "type": "service_reference"
+                              },
                               "actions": [
                                 {
                                   "key": "jira_field_set_priority",
@@ -2645,7 +2644,7 @@
                                   "incident.delegate",
                                   "incident.trigger_manually"
                                 ],
-                                "pd_urgency": null,
+                                "pd_urgency": "high",
                                 "pd_priorities": []
                               },
                               "target_project": null,
@@ -2861,7 +2860,7 @@
                                 "pd_events": [
                                   "incident.acknowledge"
                                 ],
-                                "pd_urgency": null,
+                                "pd_urgency": "high",
                                 "pd_priorities": []
                               },
                               "actions": [
@@ -2884,7 +2883,7 @@
                                 "pd_events": [
                                   "incident.unacknowledge"
                                 ],
-                                "pd_urgency": null,
+                                "pd_urgency": "high",
                                 "pd_priorities": []
                               },
                               "actions": [
@@ -2907,7 +2906,7 @@
                                 "pd_events": [
                                   "incident.resolve"
                                 ],
-                                "pd_urgency": null,
+                                "pd_urgency": "high",
                                 "pd_priorities": []
                               },
                               "actions": [
@@ -2930,7 +2929,7 @@
                                 "pd_events": [
                                   "incident.assign"
                                 ],
-                                "pd_urgency": null,
+                                "pd_urgency": "high",
                                 "pd_priorities": []
                               },
                               "actions": [
@@ -3069,6 +3068,7 @@
                   "value": {
                     "rule": {
                       "name": "Sample Rule",
+                      "created_at": "2020-06-02T12:42:37Z",
                       "enabled": true,
                       "config": {
                         "sync_comments": true,
@@ -3125,7 +3125,10 @@
                             "jql": "issuetype=Bug",
                             "on_create": true,
                             "on_update": true,
-                            "target_service": null,
+                            "target_service": {
+                              "id": "PR5R1T1",
+                              "type": "service_reference"
+                            },
                             "actions": [
                               {
                                 "key": "jira_field_set_priority",
@@ -3223,7 +3226,7 @@
                                 "incident.delegate",
                                 "incident.trigger_manually"
                               ],
-                              "pd_urgency": null,
+                              "pd_urgency": "high",
                               "pd_priorities": []
                             },
                             "target_project": null,
@@ -3439,7 +3442,7 @@
                               "pd_events": [
                                 "incident.acknowledge"
                               ],
-                              "pd_urgency": null,
+                              "pd_urgency": "high",
                               "pd_priorities": []
                             },
                             "actions": [
@@ -3462,7 +3465,7 @@
                               "pd_events": [
                                 "incident.unacknowledge"
                               ],
-                              "pd_urgency": null,
+                              "pd_urgency": "high",
                               "pd_priorities": []
                             },
                             "actions": [
@@ -3485,7 +3488,7 @@
                               "pd_events": [
                                 "incident.resolve"
                               ],
-                              "pd_urgency": null,
+                              "pd_urgency": "high",
                               "pd_priorities": []
                             },
                             "actions": [
@@ -3508,7 +3511,7 @@
                               "pd_events": [
                                 "incident.assign"
                               ],
-                              "pd_urgency": null,
+                              "pd_urgency": "high",
                               "pd_priorities": []
                             },
                             "actions": [
@@ -3629,6 +3632,7 @@
                     "value": {
                       "rule": {
                         "name": "Sample Rule",
+                        "created_at": "2020-06-02T12:42:37Z",
                         "enabled": true,
                         "config": {
                           "sync_comments": true,
@@ -3685,7 +3689,10 @@
                               "jql": "issuetype=Bug",
                               "on_create": true,
                               "on_update": true,
-                              "target_service": null,
+                              "target_service": {
+                                "id": "PR5R1T1",
+                                "type": "service_reference"
+                              },
                               "actions": [
                                 {
                                   "key": "jira_field_set_priority",
@@ -3783,7 +3790,7 @@
                                   "incident.delegate",
                                   "incident.trigger_manually"
                                 ],
-                                "pd_urgency": null,
+                                "pd_urgency": "high",
                                 "pd_priorities": []
                               },
                               "target_project": null,
@@ -3999,7 +4006,7 @@
                                 "pd_events": [
                                   "incident.acknowledge"
                                 ],
-                                "pd_urgency": null,
+                                "pd_urgency": "high",
                                 "pd_priorities": []
                               },
                               "actions": [
@@ -4022,7 +4029,7 @@
                                 "pd_events": [
                                   "incident.unacknowledge"
                                 ],
-                                "pd_urgency": null,
+                                "pd_urgency": "high",
                                 "pd_priorities": []
                               },
                               "actions": [
@@ -4045,7 +4052,7 @@
                                 "pd_events": [
                                   "incident.resolve"
                                 ],
-                                "pd_urgency": null,
+                                "pd_urgency": "high",
                                 "pd_priorities": []
                               },
                               "actions": [
@@ -4068,7 +4075,7 @@
                                 "pd_events": [
                                   "incident.assign"
                                 ],
-                                "pd_urgency": null,
+                                "pd_urgency": "high",
                                 "pd_priorities": []
                               },
                               "actions": [
