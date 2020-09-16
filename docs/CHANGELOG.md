@@ -6,6 +6,9 @@ Currently we do not deprecate or remove any API functionality.
 
 ----
 
+### 2020-09-15
+- Clarified `status` on `POST /services` endpoint.
+
 ### 2020-09-08
 - Fixed a lot of example requests and responses.
 

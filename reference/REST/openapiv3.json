@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.2",
   "info": {
-    "description": "This document describes the PagerDuty REST APIs.\n\nFor guides and examples please visit our [Documentation.](https://developer.pagerduty.com/docs/get-started/getting-started/)\n\nOur REST APIs are defined in OpenAPI v3.x. You can view the schema at [github.com/PagerDuty/api-schema](https://github.com/PagerDuty/api-schema).\n",
+    "description": "This document describes the PagerDuty REST APIs.\n\nFor guides and examples please visit our [Documentation.](https://developer.pagerduty.com/docs/get-started/getting-started/)\n\nOur REST APIs are defined in OpenAPI v3.x. You can view the schema at [github.com/PagerDuty/api-schema](https://github.com/PagerDuty/api-schema).\n\nNote that properties in some schemas have fields not shown by default such as `readOnly`, `format`, and `default`. Hover your cursor over the right column that looks like `optional+1` to see the full list of fields.\n",
     "contact": {
       "name": "PagerDuty Support",
       "url": "http://www.pagerduty.com/support",
@@ -2707,14 +2707,15 @@
               },
               "status": {
                 "type": "string",
-                "description": "The current state of the Service. Valid statuses are:\n\n\n- `active`: The service is enabled and has no open incidents.\n- `warning`: The service is enabled and has one or more acknowledged incidents.\n- `critical`: The service is enabled and has one or more triggered incidents.\n- `maintenance`: The service is under maintenance, no new incidents will be triggered during maintenance mode.\n- `disabled`: The service is disabled and will not have any new triggered incidents.\n",
+                "description": "The current state of the Service. Valid statuses are:\n\n\n- `active`: The service is enabled and has no open incidents. This is the only status a service can be created with.\n- `warning`: The service is enabled and has one or more acknowledged incidents.\n- `critical`: The service is enabled and has one or more triggered incidents.\n- `maintenance`: The service is under maintenance, no new incidents will be triggered during maintenance mode.\n- `disabled`: The service is disabled and will not have any new triggered incidents.\n",
                 "enum": [
                   "active",
                   "warning",
                   "critical",
                   "maintenance",
                   "disabled"
-                ]
+                ],
+                "default": "active"
               },
               "last_incident_timestamp": {
                 "type": "string",
@@ -17808,7 +17809,7 @@
           "Services"
         ],
         "operationId": "createService",
-        "description": "Create a new service.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#services)\n",
+        "description": "Create a new service.\n\nIf `status` is included in the request, it must have a value of `active` when creating a new service. If a different status is required, make a second request to update the service.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#services)\n",
         "summary": "Create a service",
         "parameters": [
           {
