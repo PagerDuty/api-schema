@@ -6,6 +6,16 @@ Currently we do not deprecate or remove any API functionality.
 
 ----
 
+### 2020-09-16
+- Added Early-Access endpoints for Service-level Event Rules
+   - `GET /services/{id}/rules`
+   - `POST /services/{id}/rules`
+   - `GET /services/{id}/rules/{rule_id}`
+   - `PUT /services/{id}/rules/{rule_id}`
+   - `DELETE /services/{id}/rules/{rule_id}`
+- Added Early-Access `variables` field to Event Rule model.
+- Added Early-Access `template` style extraction action to Event Rule model.
+
 ### 2020-09-15
 - Clarified `status` on `POST /services` endpoint.
 
