@@ -18908,7 +18908,16 @@
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/paths/~1audit~1records/get/parameters/4"
+            "name": "X-EARLY-ACCESS",
+            "in": "header",
+            "description": "This header indicates that this API endpoint is __UNDER CONSTRUCTION__ and may change at any time. You __MUST__ pass in this header and corresponding value. Do not use this endpoint in production, as it may change!\n",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "service-rules-early-access"
+              ]
+            }
           }
         ],
         "responses": {
@@ -19033,7 +19042,16 @@
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/paths/~1audit~1records/get/parameters/4"
+            "name": "X-EARLY-ACCESS",
+            "in": "header",
+            "description": "This header indicates that this API endpoint is __UNDER CONSTRUCTION__ and may change at any time. You __MUST__ pass in this header and corresponding value. Do not use this endpoint in production, as it may change!\n",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "service-rules-early-access"
+              ]
+            }
           }
         ],
         "requestBody": {
@@ -19220,7 +19238,16 @@
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/paths/~1audit~1records/get/parameters/4"
+            "name": "X-EARLY-ACCESS",
+            "in": "header",
+            "description": "This header indicates that this API endpoint is __UNDER CONSTRUCTION__ and may change at any time. You __MUST__ pass in this header and corresponding value. Do not use this endpoint in production, as it may change!\n",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "service-rules-early-access"
+              ]
+            }
           },
           {
             "name": "rule_id",
@@ -19329,7 +19356,16 @@
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/paths/~1audit~1records/get/parameters/4"
+            "name": "X-EARLY-ACCESS",
+            "in": "header",
+            "description": "This header indicates that this API endpoint is __UNDER CONSTRUCTION__ and may change at any time. You __MUST__ pass in this header and corresponding value. Do not use this endpoint in production, as it may change!\n",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "service-rules-early-access"
+              ]
+            }
           },
           {
             "name": "rule_id",
@@ -19489,7 +19525,16 @@
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/paths/~1audit~1records/get/parameters/4"
+            "name": "X-EARLY-ACCESS",
+            "in": "header",
+            "description": "This header indicates that this API endpoint is __UNDER CONSTRUCTION__ and may change at any time. You __MUST__ pass in this header and corresponding value. Do not use this endpoint in production, as it may change!\n",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "service-rules-early-access"
+              ]
+            }
           },
           {
             "name": "rule_id",
