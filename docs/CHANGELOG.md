@@ -11,6 +11,9 @@ Currently we do not deprecate or remove any API functionality.
 - Updated response examples and some definitions in `/analytics` Early Access Endpoints.
 
 ### 2020-09-16
+- Add [Change Events](https://pagerduty.atlassian.net/wiki/spaces/BIV/pages/1420919384/Change+Events+API+Endpoint) to Events API V2
+
+### 2020-09-16
 - Added Early-Access endpoints for Service-level Event Rules
    - `GET /services/{id}/rules`
    - `POST /services/{id}/rules`
@@ -22,7 +25,6 @@ Currently we do not deprecate or remove any API functionality.
 
 ### 2020-09-15
 - Clarified `status` on `POST /services` endpoint.
-
 ### 2020-09-08
 - Fixed a lot of example requests and responses.
 

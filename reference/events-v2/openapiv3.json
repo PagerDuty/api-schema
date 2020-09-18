@@ -17,6 +17,101 @@
     }
   ],
   "paths": {
+    "/change/enqueue": {
+      "post": {
+        "summary": "Send change events to the PagerDuty Events API",
+        "tags": [
+          "Send Change Event"
+        ],
+        "operationId": "createChangeEvent",
+        "description": "Change Events API enables you to send informational events about recent changes such as code deploys and system config changes from any system that can make an outbound HTTP connection. \nThese events do not create incidents and do not send notifications; they are shown in context with incidents on the same PagerDuty service.\n",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "description": "Create a new change event.",
+                "properties": {
+                  "payload": {
+                    "$ref": "#/components/schemas/ChangeEventPayload"
+                  },
+                  "routing_key": {
+                    "type": "string",
+                    "description": "The GUID of one of your Events API V2 integrations. This is the \"Integration Key\" listed on the Events API V2 integration's detail page."
+                  },
+                  "links": {
+                    "$ref": "#/components/schemas/Links"
+                  }
+                },
+                "required": [
+                  "payload",
+                  "routing_key"
+                ]
+              },
+              "examples": {
+                "build-change-event": {
+                  "summary": "Build example Change Event Body",
+                  "value": {
+                    "routing_key": "737ea619db564d41bd9824063e1f6b08",
+                    "payload": {
+                      "summary": "Build Success: Increase snapshot create timeout to 30 seconds",
+                      "timestamp": "2015-07-17T08:42:58.315+0000",
+                      "source": "prod-build-agent-i-0b148d1040d565540",
+                      "custom_details": {
+                        "build_state": "passed",
+                        "build_number": "220",
+                        "run_time": "1236s"
+                      }
+                    },
+                    "links": [
+                      {
+                        "href": "https://buildpipeline.com/pagerduty/deployment/builds/220",
+                        "text": "View in Build Pipeline"
+                      }
+                    ]
+                  }
+                },
+                "git-change-event": {
+                  "summary": "Commited example Change Event Body",
+                  "value": {
+                    "routing_key": "737ea619db564d41bd9824063e1f8au1",
+                    "payload": {
+                      "summary": "Merge Pull Request",
+                      "timestamp": "2015-07-17T08:42:58.315+0000",
+                      "source": "git",
+                      "custom_details": {
+                        "author": "Pagerduty"
+                      }
+                    },
+                    "links": [
+                      {
+                        "href": "https://buildpipeline.com/pagerduty/deployment/builds/220",
+                        "text": "View in Build Pipeline"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "$ref": "#/components/responses/Success"
+          },
+          "400": {
+            "description": "#/components/responses/ArgumentError"
+          },
+          "429": {
+            "description": "#/components/responses/TooManyRequests"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    },
     "/enqueue": {
       "post": {
         "tags": [
@@ -120,10 +215,10 @@
             "$ref": "#/components/responses/Success"
           },
           "400": {
-            "description": "Bad Request - Check that the JSON is valid."
+            "description": "#/components/responses/ArgumentError"
           },
           "429": {
-            "description": "Too many API calls at a time."
+            "description": "#/components/responses/TooManyRequests"
           },
           "5XX": {
             "$ref": "#/components/responses/Error"
@@ -235,6 +330,33 @@
           "summary",
           "severity",
           "source"
+        ]
+      },
+      "ChangeEventPayload": {
+        "type": "object",
+        "description": "Fields adding additional context about the location, impact, and character of the PagerDuty event.",
+        "properties": {
+          "summary": {
+            "type": "string",
+            "description": "A brief text summary of the event, used to generate the summaries/titles of any associated alerts."
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The time at which the emitting tool detected or generated the event."
+          },
+          "source": {
+            "type": "string",
+            "description": "The unique location of the affected system, preferably a hostname or FQDN."
+          },
+          "custom_details": {
+            "type": "object",
+            "description": "Additional details about the event and affected system."
+          }
+        },
+        "required": [
+          "summary",
+          "timestamp"
         ]
       }
     },
