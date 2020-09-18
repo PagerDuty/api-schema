@@ -5619,7 +5619,7 @@
                               },
                               "user_defined_effort_seconds": {
                                 "type": "integer",
-                                "description": "The total response effort in seconds, \n[as defined by the user](https://support.pagerduty.com/docs/editing-incidents#edit-incident-duration--response-effort)."
+                                "description": "The total response effort in seconds, \n[as defined by the user](https://support.pagerduty.com/docs/editing-incidents#edit-incident-duration)."
                               }
                             }
                           }
@@ -5724,7 +5724,7 @@
                       },
                       "major": {
                         "type": "boolean",
-                        "description": "A boolean flag including whether results should contain only major incidents, or exclude major incidents. If no value is provided all incidents will be included. You can find more information on the major incident classification here: https://support.pagerduty.com/docs/operational-reviews#major-incidents",
+                        "description": "A boolean flag including whether results should contain *only* [major incidents](https://support.pagerduty.com/docs/operational-reviews#major-incidents), or exclude major incidents. If no value is provided all incidents will be included.",
                         "example": true
                       },
                       "team_ids": {
@@ -6216,7 +6216,7 @@
                         },
                         "major": {
                           "type": "boolean",
-                          "description": "The major incident filter applied to the results."
+                          "description": "The [major incident](https://support.pagerduty.com/docs/operational-reviews#major-incidents) filter applied to the results."
                         },
                         "team_ids": {
                           "type": "array",
