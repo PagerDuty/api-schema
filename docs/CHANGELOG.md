@@ -52,6 +52,9 @@ Currently we do not deprecate or remove any API functionality.
 - Added Early-Access endpoints for audit trail records
    - `GET /schedules/{id}/audit/records`
 
+### 2020-08-12
+- Added `conference_type` param to `ResponsePlay` model 
+
 ### 2020-08-10
 - Added documentation on `config` and `headers` options for webhooks v2.
 - Added Request Examples with custom headers.

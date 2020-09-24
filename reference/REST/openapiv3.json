@@ -4716,6 +4716,16 @@
                 "type": "string",
                 "description": "The URL that will be set as the conference URL for any incident on which this response play is run.",
                 "nullable": true
+              },
+              "conference_type": {
+                "type": "string",
+                "description": "This field has three possible values and indicates how the response play was created.\n  - `none` : The response play had no conference_number or conference_url set at time of creation.\n  - `manual` : The response play had one or both of conference_number and conference_url set at time of creation.\n  - `zoom` : Customers with the Zoom-Integration Entitelment can use this value to dynamicly configure conference number and url for zoom",
+                "enum": [
+                  "none",
+                  "manual",
+                  "zoom"
+                ],
+                "default": "none"
               }
             }
           }
@@ -13588,30 +13598,42 @@
                 ]
               },
               "examples": {
-                "request": {
-                  "summary": "Request Example",
+                "Example1": {
+                  "summary": "Create a Response Play which adds a Escalation Policy and User to an incident when the response play is run",
                   "value": {
                     "response_play": {
                       "type": "response_play",
                       "team": null,
-                      "name": "A New Response Play",
-                      "description": "A Response Play to add responders.",
+                      "name": "Standard NOC-EP",
+                      "description": "A Response Play to add NOC EP on Run",
                       "subscribers": [],
                       "subscribers_message": null,
                       "responders": [
                         {
                           "type": "user_reference",
-                          "id": "PROW72A"
+                          "id": "PROW72A",
+                          "summary": "our team stakeholder"
                         },
                         {
                           "type": "escalation_policy_reference",
-                          "id": "P12TU3X"
+                          "id": "P12TU3X",
+                          "summary": "Network Center Escalation Policy"
                         }
                       ],
-                      "responders_message": null,
+                      "responders_message": "NOC-EP",
+                      "runnability": "services"
+                    }
+                  }
+                },
+                "Example2": {
+                  "summary": "Add a static conference url to an incident when the response play is run",
+                  "value": {
+                    "response_play": {
+                      "type": "response_play",
+                      "name": "Basic Fixed URL",
+                      "description": "preset conference url",
                       "runnability": "services",
-                      "conference_number": null,
-                      "conference_url": null
+                      "conference_url": "https://my.conference.com/our_team/123"
                     }
                   }
                 }
