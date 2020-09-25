@@ -7077,7 +7077,7 @@
                         "pagination_token": {
                           "type": "string",
                           "description": "Pagination token for the subsequent results.\nSpecifying a `pagination_token` in the query sets the starting point for the result set, allowing you to fetch subsequent\nresources that are not in the initial set of results.\n",
-                          "example": "dXNlcjpVMEc5V0ZYTlo=",
+                          "example": "dXN5cjpXMEc5z0ZY5lo=",
                           "readOnly": true,
                           "nullable": true
                         }
