@@ -5,6 +5,15 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 Currently we do not deprecate or remove any API functionality.
 
 ----
+### 2020-09-28
+- *BREAKING* Temporarily removing early-Access endpoints around incident subscription management.
+   - `GET /users/{id}/notification_subscriptions`
+   - `POST /users/{id}/notification_subscriptions`
+   - `POST /users/{id}/notification_subscriptions/unsubscribe`
+   - `GET /incidents/{id}/status_updates/subscribers`
+   - `POST /incidents/{id}/status_updates/subscribers`
+   - `POST /incidents/{id}/status_updates/unsubscribe`
+
 ### 2020-09-17
 - *BREAKING* Changed `total_assignment_count` metric to `mean_assignment_count` in `/analytics` Early Access endpoints.
 - Added `up_time_pct` and `user_defined_effort_seconds` metrics to `/analytics` Early Access endpoints.
