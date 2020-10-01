@@ -566,7 +566,7 @@
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/paths/~1users~1%7Bid%7D~1notification_subscriptions/post/responses/422/content/application~1json/schema"
+              "$ref": "#/components/responses/Conflict/content/application~1json/schema"
             }
           }
         }
@@ -576,7 +576,36 @@
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/paths/~1users~1%7Bid%7D~1notification_subscriptions/post/responses/422/content/application~1json/schema"
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "readOnly": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "readOnly": true,
+                      "description": "Error message string"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "readOnly": true,
+                      "items": {
+                        "type": "string",
+                        "readOnly": true,
+                        "description": "Human-readable error details"
+                      }
+                    }
+                  },
+                  "example": {
+                    "message": "Not Found",
+                    "code": 2100
+                  }
+                }
+              }
             }
           }
         }
@@ -586,7 +615,7 @@
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/paths/~1users~1%7Bid%7D~1notification_subscriptions/post/responses/422/content/application~1json/schema"
+              "$ref": "#/components/responses/Conflict/content/application~1json/schema"
             }
           }
         }
@@ -596,7 +625,7 @@
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/paths/~1users~1%7Bid%7D~1notification_subscriptions/post/responses/422/content/application~1json/schema"
+              "$ref": "#/components/responses/Conflict/content/application~1json/schema"
             }
           }
         }
@@ -606,7 +635,7 @@
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/paths/~1users~1%7Bid%7D~1notification_subscriptions/post/responses/422/content/application~1json/schema"
+              "$ref": "#/components/responses/Conflict/content/application~1json/schema"
             }
           }
         }
@@ -616,7 +645,7 @@
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/paths/~1users~1%7Bid%7D~1notification_subscriptions/post/responses/422/content/application~1json/schema"
+              "$ref": "#/components/responses/Conflict/content/application~1json/schema"
             }
           }
         }
@@ -626,7 +655,7 @@
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/paths/~1users~1%7Bid%7D~1notification_subscriptions/post/responses/422/content/application~1json/schema"
+              "$ref": "#/components/responses/Conflict/content/application~1json/schema"
             }
           }
         }
@@ -636,7 +665,7 @@
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/paths/~1users~1%7Bid%7D~1notification_subscriptions/post/responses/422/content/application~1json/schema"
+              "$ref": "#/components/responses/Conflict/content/application~1json/schema"
             }
           }
         }
@@ -646,7 +675,7 @@
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/paths/~1users~1%7Bid%7D~1notification_subscriptions/post/responses/422/content/application~1json/schema"
+              "$ref": "#/components/responses/Conflict/content/application~1json/schema"
             }
           }
         }
@@ -9743,7 +9772,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/paths/~1users~1%7Bid%7D~1notification_subscriptions/post/responses/422/content/application~1json/schema"
+                  "$ref": "#/components/responses/Conflict/content/application~1json/schema"
                 }
               }
             }
