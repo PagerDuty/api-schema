@@ -6865,26 +6865,19 @@
                       "properties": {
                         "limit": {
                           "type": "integer",
-                          "description": "Echoes limit pagination property.",
+                          "description": "The minimum of the `limit` parameter used in the request or the maximum request size of the API.",
                           "readOnly": true
                         },
-                        "more": {
-                          "type": "boolean",
-                          "description": "Indicates if there are additional records to return\nThe `more` field will always be true or false, indicating whether there are more resources matching the query than present\nin the response (because of the request's limit). If `true`, you may want to make subsequent requests with a subsequent\n`pagination_token` until `more` is `false` in order to retrieve all of the resources.\n",
-                          "readOnly": true
-                        },
-                        "pagination_token": {
+                        "next_cursor": {
                           "type": "string",
-                          "description": "Pagination token for the subsequent results.\nSpecifying a `pagination_token` in the query sets the starting point for the result set, allowing you to fetch subsequent\nresources that are not in the initial set of results.\n",
-                          "example": "dXN5cjpXMEc5z0ZY5lo=",
-                          "readOnly": true,
-                          "nullable": true
+                          "description": "An opaque string than will deliver the next set of results when provided as the `cursor` parameter in a subsequent request.  A `null` value for this field indicates that there are no additional results.\n",
+                          "example": "dXNlcjaVMzc5V0ZYTlo=",
+                          "nullable": true,
+                          "readOnly": true
                         }
                       },
                       "required": [
-                        "limit",
-                        "more",
-                        "pagination_token"
+                        "limit"
                       ]
                     }
                   ]
