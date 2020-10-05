@@ -689,236 +689,6 @@
         "description": "The API Key with format `Token token=<API_KEY>`"
       }
     },
-    "examples": {
-      "AuditRecordResponseExample": {
-        "summary": "Response Example",
-        "value": {
-          "records": [
-            {
-              "id": "PDRECORDID1_TEAM_CREATED",
-              "self": "https://api.pagerduty.com/<...>/records/PDRECORDID1_TEAM_CREATED",
-              "execution_time": "2020-06-04T15:30:16Z",
-              "execution_context": {
-                "request_id": "111lDEOIH-534-4ljhLHJjh111",
-                "remote_address": "201.19.20.19"
-              },
-              "actors": [
-                {
-                  "id": "PDUSER",
-                  "summary": "John Snow",
-                  "type": "user_reference"
-                }
-              ],
-              "method": {
-                "type": "api_token",
-                "truncated_token": "3usr"
-              },
-              "resource": {
-                "id": "PXASDFE",
-                "type": "team_reference",
-                "summary": "my DevOps team"
-              },
-              "action": "create",
-              "details": {
-                "resource": {
-                  "id": "PXASDFE",
-                  "type": "team_reference",
-                  "summary": "my DevOps team"
-                },
-                "fields": [
-                  {
-                    "name": "teamName",
-                    "value": "DevOps team"
-                  }
-                ]
-              }
-            },
-            {
-              "id": "PDRECORDID2_USER_REMOVED_FROM_TEAM",
-              "self": "https://api.pagerduty.com/<...>/records/PDRECORDID2_USER_REMOVED_FROM_TEAM",
-              "execution_time": "2020-06-04T15:30:16Z",
-              "execution_context": {
-                "request_id": "222lDEOIH-534-4ljhLHJjh222",
-                "remote_address": "201.19.20.19"
-              },
-              "method": {
-                "type": "api_token",
-                "truncated_token": "2adm"
-              },
-              "resource": {
-                "id": "PRY9M8B",
-                "type": "team_reference",
-                "summary": "DevOps"
-              },
-              "action": "update",
-              "details": {
-                "resource": {
-                  "id": "PRY9M8B",
-                  "type": "team_reference",
-                  "summary": "DevOps"
-                },
-                "references": [
-                  {
-                    "name": "members",
-                    "removed": [
-                      {
-                        "id": "PRY9M8B",
-                        "type": "user_reference",
-                        "summary": "John Doe"
-                      }
-                    ]
-                  }
-                ]
-              }
-            },
-            {
-              "id": "PDRECORDID5_USERS_TEAM_ROLE_UPDATED",
-              "self": "https://api.pagerduty.com/<...>/records/PDRECORDID5_USERS_TEAM_ROLE_UPDATED",
-              "execution_time": "2020-06-04T15:30:16Z",
-              "execution_context": {
-                "request_id": "222lDEOIH-534-4ljhLHJjh222",
-                "remote_address": "201.19.20.19"
-              },
-              "method": {
-                "type": "api_token",
-                "truncated_token": "2adm"
-              },
-              "resource": {
-                "id": "PRY9M8B",
-                "type": "team_reference",
-                "summary": "DevOps"
-              },
-              "action": "update",
-              "details": {
-                "resource": {
-                  "id": "PDUSER",
-                  "type": "user_reference",
-                  "summary": "John Snow"
-                },
-                "fields": [
-                  {
-                    "name": "team_role",
-                    "before_value": "observer",
-                    "value": "manager"
-                  }
-                ]
-              }
-            },
-            {
-              "id": "PDRECORDID3_USERS_NAME_AND_EMAIL_UPDATED",
-              "self": "https://api.pagerduty.com/<...>/records/PDRECORDID3_USERS_NAME_AND_EMAIL_UPDATED",
-              "execution_time": "2020-06-04T15:30:16Z",
-              "execution_context": {
-                "request_id": "222lDEOIH-534-4ljhLHJjh222",
-                "remote_address": "201.19.20.19"
-              },
-              "actors": [
-                {
-                  "id": "PDUSER",
-                  "summary": "John Snow",
-                  "type": "user_reference"
-                }
-              ],
-              "method": {
-                "type": "identity_provider"
-              },
-              "resource": {
-                "id": "PDUSER",
-                "type": "user_reference",
-                "summary": "John Snow"
-              },
-              "action": "update",
-              "details": {
-                "resource": {
-                  "id": "PDUSER",
-                  "type": "user_reference",
-                  "summary": "John Snow"
-                },
-                "fields": [
-                  {
-                    "name": "name",
-                    "before_value": "Bob Doe",
-                    "value": "Jon Snow"
-                  },
-                  {
-                    "name": "email",
-                    "before_value": "bob.doe@domain.com",
-                    "value": "john.snow@domain.com"
-                  }
-                ]
-              }
-            },
-            {
-              "id": "PDRECORDID4_UPDATED_USERS_NOTIFICATION_RULE",
-              "self": "https://api.pagerduty.com/<...>/records/PDRECORDID4_UPDATED_USERS_NOTIFICATION_RULE",
-              "execution_time": "2020-06-04T15:30:16Z",
-              "execution_context": {
-                "request_id": "222lDEOIH-534-4ljhLHJjh222",
-                "remote_address": "201.19.20.19"
-              },
-              "actors": [
-                {
-                  "id": "PDUSER",
-                  "summary": "John Snow",
-                  "type": "user_reference"
-                }
-              ],
-              "method": {
-                "type": "api_token",
-                "truncated_token": "2adm"
-              },
-              "resource": {
-                "id": "PDUSER",
-                "type": "user_reference",
-                "summary": "John Snow"
-              },
-              "action": "update",
-              "details": {
-                "resource": {
-                  "id": "PXOGWUS",
-                  "type": "assignment_notification_rule_reference",
-                  "summary": "0 minutes: channel P1IAAPZ"
-                },
-                "fields": [
-                  {
-                    "name": "start_delay_in_minutes",
-                    "before_value": 0,
-                    "value": 2
-                  }
-                ],
-                "references": [
-                  {
-                    "name": "contact_method",
-                    "removed": [
-                      {
-                        "id": "POE6L88",
-                        "type": "push_notification_contact_method_reference",
-                        "summary": "Pixel 3"
-                      }
-                    ],
-                    "added": [
-                      {
-                        "id": "P4GTUMK",
-                        "type": "sms_contact_method_reference",
-                        "summary": "Mobile"
-                      }
-                    ]
-                  }
-                ]
-              }
-            }
-          ],
-          "response_metadata": {
-            "messages": [
-              "Message about the result"
-            ]
-          },
-          "pagination_token": "dXNlcjpVMEc5V0ZYTlo=",
-          "more": true,
-          "limit": 1
-        }
-      }
-    },
     "schemas": {
       "AddonReference": {
         "allOf": [
@@ -2844,7 +2614,7 @@
                 "type": "fixed_time_per_day",
                 "time_zone": "America/Lima",
                 "start_time": "09:00:00",
-                "end_time": 61200,
+                "end_time": "17:00:00",
                 "days_of_week": [
                   1,
                   2,
@@ -4243,7 +4013,7 @@
                     "type": "fixed_time_per_day",
                     "time_zone": "America/Lima",
                     "start_time": "09:00:00",
-                    "end_time": 61200,
+                    "end_time": "17:00:00",
                     "days_of_week": [
                       1,
                       2,
@@ -7121,7 +6891,232 @@
                 },
                 "examples": {
                   "response": {
-                    "$ref": "#/components/examples/AuditRecordResponseExample"
+                    "summary": "Response Example",
+                    "value": {
+                      "records": [
+                        {
+                          "id": "PDRECORDID1_TEAM_CREATED",
+                          "self": "https://api.pagerduty.com/<...>/records/PDRECORDID1_TEAM_CREATED",
+                          "execution_time": "2020-06-04T15:30:16Z",
+                          "execution_context": {
+                            "request_id": "111lDEOIH-534-4ljhLHJjh111",
+                            "remote_address": "201.19.20.19"
+                          },
+                          "actors": [
+                            {
+                              "id": "PDUSER",
+                              "summary": "John Snow",
+                              "type": "user_reference"
+                            }
+                          ],
+                          "method": {
+                            "type": "api_token",
+                            "truncated_token": "3usr"
+                          },
+                          "resource": {
+                            "id": "PXASDFE",
+                            "type": "team_reference",
+                            "summary": "my DevOps team"
+                          },
+                          "action": "create",
+                          "details": {
+                            "resource": {
+                              "id": "PXASDFE",
+                              "type": "team_reference",
+                              "summary": "my DevOps team"
+                            },
+                            "fields": [
+                              {
+                                "name": "teamName",
+                                "value": "DevOps team"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "id": "PDRECORDID2_USER_REMOVED_FROM_TEAM",
+                          "self": "https://api.pagerduty.com/<...>/records/PDRECORDID2_USER_REMOVED_FROM_TEAM",
+                          "execution_time": "2020-06-04T15:30:16Z",
+                          "execution_context": {
+                            "request_id": "222lDEOIH-534-4ljhLHJjh222",
+                            "remote_address": "201.19.20.19"
+                          },
+                          "method": {
+                            "type": "api_token",
+                            "truncated_token": "2adm"
+                          },
+                          "resource": {
+                            "id": "PRY9M8B",
+                            "type": "team_reference",
+                            "summary": "DevOps"
+                          },
+                          "action": "update",
+                          "details": {
+                            "resource": {
+                              "id": "PRY9M8B",
+                              "type": "team_reference",
+                              "summary": "DevOps"
+                            },
+                            "references": [
+                              {
+                                "name": "members",
+                                "removed": [
+                                  {
+                                    "id": "PRY9M8B",
+                                    "type": "user_reference",
+                                    "summary": "John Doe"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "id": "PDRECORDID5_USERS_TEAM_ROLE_UPDATED",
+                          "self": "https://api.pagerduty.com/<...>/records/PDRECORDID5_USERS_TEAM_ROLE_UPDATED",
+                          "execution_time": "2020-06-04T15:30:16Z",
+                          "execution_context": {
+                            "request_id": "222lDEOIH-534-4ljhLHJjh222",
+                            "remote_address": "201.19.20.19"
+                          },
+                          "method": {
+                            "type": "api_token",
+                            "truncated_token": "2adm"
+                          },
+                          "resource": {
+                            "id": "PRY9M8B",
+                            "type": "team_reference",
+                            "summary": "DevOps"
+                          },
+                          "action": "update",
+                          "details": {
+                            "resource": {
+                              "id": "PDUSER",
+                              "type": "user_reference",
+                              "summary": "John Snow"
+                            },
+                            "fields": [
+                              {
+                                "name": "team_role",
+                                "before_value": "observer",
+                                "value": "manager"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "id": "PDRECORDID3_USERS_NAME_AND_EMAIL_UPDATED",
+                          "self": "https://api.pagerduty.com/<...>/records/PDRECORDID3_USERS_NAME_AND_EMAIL_UPDATED",
+                          "execution_time": "2020-06-04T15:30:16Z",
+                          "execution_context": {
+                            "request_id": "222lDEOIH-534-4ljhLHJjh222",
+                            "remote_address": "201.19.20.19"
+                          },
+                          "actors": [
+                            {
+                              "id": "PDUSER",
+                              "summary": "John Snow",
+                              "type": "user_reference"
+                            }
+                          ],
+                          "method": {
+                            "type": "identity_provider"
+                          },
+                          "resource": {
+                            "id": "PDUSER",
+                            "type": "user_reference",
+                            "summary": "John Snow"
+                          },
+                          "action": "update",
+                          "details": {
+                            "resource": {
+                              "id": "PDUSER",
+                              "type": "user_reference",
+                              "summary": "John Snow"
+                            },
+                            "fields": [
+                              {
+                                "name": "name",
+                                "before_value": "Bob Doe",
+                                "value": "Jon Snow"
+                              },
+                              {
+                                "name": "email",
+                                "before_value": "bob.doe@domain.com",
+                                "value": "john.snow@domain.com"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "id": "PDRECORDID4_UPDATED_USERS_NOTIFICATION_RULE",
+                          "self": "https://api.pagerduty.com/<...>/records/PDRECORDID4_UPDATED_USERS_NOTIFICATION_RULE",
+                          "execution_time": "2020-06-04T15:30:16Z",
+                          "execution_context": {
+                            "request_id": "222lDEOIH-534-4ljhLHJjh222",
+                            "remote_address": "201.19.20.19"
+                          },
+                          "actors": [
+                            {
+                              "id": "PDUSER",
+                              "summary": "John Snow",
+                              "type": "user_reference"
+                            }
+                          ],
+                          "method": {
+                            "type": "api_token",
+                            "truncated_token": "2adm"
+                          },
+                          "resource": {
+                            "id": "PDUSER",
+                            "type": "user_reference",
+                            "summary": "John Snow"
+                          },
+                          "action": "update",
+                          "details": {
+                            "resource": {
+                              "id": "PXOGWUS",
+                              "type": "assignment_notification_rule_reference",
+                              "summary": "0 minutes: channel P1IAAPZ"
+                            },
+                            "fields": [
+                              {
+                                "name": "start_delay_in_minutes",
+                                "before_value": "0",
+                                "value": "2"
+                              }
+                            ],
+                            "references": [
+                              {
+                                "name": "contact_method",
+                                "removed": [
+                                  {
+                                    "id": "POE6L88",
+                                    "type": "push_notification_contact_method_reference",
+                                    "summary": "Pixel 3"
+                                  }
+                                ],
+                                "added": [
+                                  {
+                                    "id": "P4GTUMK",
+                                    "type": "sms_contact_method_reference",
+                                    "summary": "Mobile"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        }
+                      ],
+                      "response_metadata": {
+                        "messages": [
+                          "Message about the result"
+                        ]
+                      },
+                      "pagination_token": "dXNlcjpVMEc5V0ZYTlo=",
+                      "more": true,
+                      "limit": 1
+                    }
                   }
                 }
               }
@@ -7748,7 +7743,7 @@
                           "services": [
                             {
                               "id": "PIJ90N7",
-                              "type": "generic_email_reference",
+                              "type": "service_reference",
                               "summary": "My Mail Service",
                               "self": "https://api.pagerduty.com/services/PIJ90N7",
                               "html_url": "https://subdomain.pagerduty.com/services/PIJ90N7"
@@ -7916,7 +7911,7 @@
                         "services": [
                           {
                             "id": "PIJ90N7",
-                            "type": "generic_email_reference",
+                            "type": "service_reference",
                             "summary": "My Mail Service",
                             "self": "https://api.pagerduty.com/services/PIJ90N7",
                             "html_url": "https://subdomain.pagerduty.com/services/PIJ90N7"
@@ -8033,7 +8028,7 @@
                         "services": [
                           {
                             "id": "PIJ90N7",
-                            "type": "generic_email_reference",
+                            "type": "service_reference",
                             "summary": "My Mail Service",
                             "self": "https://api.pagerduty.com/services/PIJ90N7",
                             "html_url": "https://subdomain.pagerduty.com/services/PIJ90N7"
@@ -8230,7 +8225,7 @@
                         "services": [
                           {
                             "id": "PIJ90N7",
-                            "type": "generic_email_reference",
+                            "type": "service_reference",
                             "summary": "My Mail Service",
                             "self": "https://api.pagerduty.com/services/PIJ90N7",
                             "html_url": "https://subdomain.pagerduty.com/services/PIJ90N7"
@@ -8337,7 +8332,7 @@
                 },
                 "examples": {
                   "response": {
-                    "$ref": "#/components/examples/AuditRecordResponseExample"
+                    "$ref": "#/paths/~1audit~1records/get/responses/200/content/application~1json/examples/response"
                   }
                 }
               }
@@ -9413,7 +9408,7 @@
                           "incident_key": "baf7cf21b1da41b4b0221008339ff357",
                           "service": {
                             "id": "PIJ90N7",
-                            "type": "generic_email",
+                            "type": "service_reference",
                             "summary": "My Mail Service",
                             "self": "https://api.pagerduty.com/services/PIJ90N7",
                             "html_url": "https://subdomain.pagerduty.com/services/PIJ90N7"
@@ -9688,7 +9683,7 @@
                           "incident_key": "baf7cf21b1da41b4b0221008339ff357",
                           "service": {
                             "id": "PIJ90N7",
-                            "type": "generic_email",
+                            "type": "service_reference",
                             "summary": "My Mail Service",
                             "self": "https://api.pagerduty.com/services/PIJ90N7",
                             "html_url": "https://subdomain.pagerduty.com/services/PIJ90N7"
@@ -9935,7 +9930,7 @@
                         "incident_key": "baf7cf21b1da41b4b0221008339ff357",
                         "service": {
                           "id": "PWIXJZS",
-                          "type": "generic_email",
+                          "type": "service_reference",
                           "summary": "My Mail Service",
                           "self": "https://api.pagerduty.com/services/PWIXJZS",
                           "html_url": "https://subdomain.pagerduty.com/services/PWIXJZS"
@@ -10087,7 +10082,7 @@
                         "incident_key": "baf7cf21b1da41b4b0221008339ff357",
                         "service": {
                           "id": "PIJ90N7",
-                          "type": "generic_email_reference",
+                          "type": "service_reference",
                           "summary": "My Mail Service",
                           "self": "https://api.pagerduty.com/services/PIJ90N7",
                           "html_url": "https://subdomain.pagerduty.com/services/PIJ90N7"
@@ -10343,7 +10338,7 @@
                         "incident_key": "baf7cf21b1da41b4b0221008339ff357",
                         "service": {
                           "id": "PIJ90N7",
-                          "type": "generic_email_reference",
+                          "type": "service_reference",
                           "summary": "My Mail Service",
                           "self": "https://api.pagerduty.com/services/PIJ90N7",
                           "html_url": "https://subdomain.pagerduty.com/services/PIJ90N7"
@@ -11094,7 +11089,7 @@
                           "created_at": "2015-11-07T00:14:20Z",
                           "agent": {
                             "id": "PIJ90N7",
-                            "type": "generic_email_reference",
+                            "type": "service_reference",
                             "summary": "My Mail Service",
                             "self": "https://api.pagerduty.com/services/PIJ90N7",
                             "html_url": "https://subdomain.pagerduty.com/services/PIJ90N7"
@@ -11704,7 +11699,7 @@
                         "incident_key": "baf7cf21b1da41b4b0221008339ff357",
                         "service": {
                           "id": "PIJ90N7",
-                          "type": "generic_email",
+                          "type": "service_reference",
                           "summary": "My Mail Service",
                           "self": "https://api.pagerduty.com/services/PIJ90N7",
                           "html_url": "https://subdomain.pagerduty.com/services/PIJ90N7"
@@ -11974,7 +11969,7 @@
                           "created_at": "2015-11-07T00:14:20Z",
                           "agent": {
                             "id": "PIJ90N7",
-                            "type": "generic_email_reference",
+                            "type": "service_reference",
                             "summary": "My Mail Service",
                             "self": "https://api.pagerduty.com/services/PIJ90N7",
                             "html_url": "https://subdomain.pagerduty.com/services/PIJ90N7"
@@ -12083,7 +12078,7 @@
                         "created_at": "2015-11-07T00:14:20Z",
                         "agent": {
                           "id": "PIJ90N7",
-                          "type": "generic_email_reference",
+                          "type": "service_reference",
                           "summary": "My Mail Service",
                           "self": "https://api.pagerduty.com/services/PIJ90N7",
                           "html_url": "https://subdomain.pagerduty.com/services/PIJ90N7"
@@ -14758,164 +14753,7 @@
                             "description": "When an event matches this rule, the actions that will be taken to change the resulting alert and incident.",
                             "allOf": [
                               {
-                                "type": "object",
-                                "properties": {
-                                  "annotate": {
-                                    "description": "Set a note on the resulting incident.",
-                                    "type": "object",
-                                    "nullable": true,
-                                    "required": [
-                                      "value"
-                                    ],
-                                    "properties": {
-                                      "value": {
-                                        "type": "string",
-                                        "description": "The content of the note."
-                                      }
-                                    }
-                                  },
-                                  "event_action": {
-                                    "description": "Set whether the resulting alert status is trigger or resolve.",
-                                    "type": "object",
-                                    "required": [
-                                      "value"
-                                    ],
-                                    "nullable": true,
-                                    "properties": {
-                                      "value": {
-                                        "type": "string",
-                                        "enum": [
-                                          "trigger",
-                                          "resolve"
-                                        ]
-                                      }
-                                    }
-                                  },
-                                  "extractions": {
-                                    "type": "array",
-                                    "description": "Dynamically extract values to set and modify new and existing PD-CEF fields.",
-                                    "items": {
-                                      "oneOf": [
-                                        {
-                                          "type": "object",
-                                          "required": [
-                                            "target",
-                                            "source",
-                                            "regex"
-                                          ],
-                                          "properties": {
-                                            "target": {
-                                              "type": "string",
-                                              "description": "The PD-CEF field that will be set with the value from the regex."
-                                            },
-                                            "source": {
-                                              "type": "string",
-                                              "description": "The path to the event field where the regex will be applied to extract a value."
-                                            },
-                                            "regex": {
-                                              "type": "string",
-                                              "description": "A RE2 regular expression.  If it contains one or more capture groups, their values will be extracted and appended together.  If it contains no capture groups, the whole match is used."
-                                            }
-                                          }
-                                        },
-                                        {
-                                          "type": "object",
-                                          "required": [
-                                            "target",
-                                            "template"
-                                          ],
-                                          "properties": {
-                                            "target": {
-                                              "type": "string",
-                                              "description": "The PD-CEF field that will be set with the value from the regex."
-                                            },
-                                            "template": {
-                                              "type": "string",
-                                              "description": "A value that will be used to populate the target PD-CEF field.  You can include variables extracted from the payload by using string interpolation.",
-                                              "example": "Error number {{count}} on host {{host}}"
-                                            }
-                                          }
-                                        }
-                                      ]
-                                    }
-                                  },
-                                  "priority": {
-                                    "description": "Set the priority ID for the resulting incident. You can find the priority you want by calling the priorities endpoint.",
-                                    "type": "object",
-                                    "required": [
-                                      "value"
-                                    ],
-                                    "nullable": true,
-                                    "properties": {
-                                      "value": {
-                                        "type": "string",
-                                        "description": "The priority ID."
-                                      }
-                                    }
-                                  },
-                                  "severity": {
-                                    "description": "Set the severity of the resulting alert.",
-                                    "type": "object",
-                                    "required": [
-                                      "value"
-                                    ],
-                                    "nullable": true,
-                                    "properties": {
-                                      "value": {
-                                        "type": "string",
-                                        "enum": [
-                                          "info",
-                                          "warning",
-                                          "error",
-                                          "critical"
-                                        ]
-                                      }
-                                    }
-                                  },
-                                  "suppress": {
-                                    "description": "Set whether the resulting alert is suppressed. Can optionally be used with a threshold where resulting alerts will be suppressed until the threshold is met in a window of time.",
-                                    "type": "object",
-                                    "required": [
-                                      "value"
-                                    ],
-                                    "properties": {
-                                      "value": {
-                                        "type": "boolean"
-                                      },
-                                      "threshold_value": {
-                                        "type": "integer",
-                                        "description": "The number of occurences needed during the window of time to trigger the theshold."
-                                      },
-                                      "threshold_time_unit": {
-                                        "type": "string",
-                                        "description": "The time unit for the window of time.",
-                                        "enum": [
-                                          "seconds",
-                                          "minutes",
-                                          "hours"
-                                        ]
-                                      },
-                                      "threshold_time_amount": {
-                                        "type": "integer",
-                                        "description": "The amount of time units for the window of time."
-                                      }
-                                    }
-                                  },
-                                  "suspend": {
-                                    "description": "[Early Access] Set the length of time to suspend the resulting alert before triggering.",
-                                    "type": "object",
-                                    "required": [
-                                      "value"
-                                    ],
-                                    "nullable": true,
-                                    "properties": {
-                                      "value": {
-                                        "type": "integer",
-                                        "description": "The amount of time to suspend the alert in seconds."
-                                      }
-                                    }
-                                  }
-                                }
+                                "$ref": "#/paths/~1services~1%7Bid%7D~1rules/post/requestBody/content/application~1json/schema/properties/rule/allOf/1/properties/actions"
                               },
                               {
                                 "type": "object",
@@ -16224,7 +16062,7 @@
                 },
                 "examples": {
                   "response": {
-                    "$ref": "#/components/examples/AuditRecordResponseExample"
+                    "$ref": "#/paths/~1audit~1records/get/responses/200/content/application~1json/examples/response"
                   }
                 }
               }
@@ -18321,7 +18159,7 @@
                 },
                 "examples": {
                   "response": {
-                    "$ref": "#/components/examples/AuditRecordResponseExample"
+                    "$ref": "#/paths/~1audit~1records/get/responses/200/content/application~1json/examples/response"
                   }
                 }
               }
@@ -18890,8 +18728,165 @@
                             "description": "Position/index of the Event Rule on the Service.  Starting from position 0 (the first rule), rules are evaluated one-by-one until a matching Event Rule is found or the end of the list is reached."
                           },
                           "actions": {
-                            "$ref": "#/paths/~1rulesets~1%7Bid%7D~1rules/get/responses/200/content/application~1json/schema/allOf/1/properties/rules/items/allOf/1/properties/actions/allOf/0",
-                            "description": "When an event matches this Event Rule, the actions that will be taken to change the resulting Alert and Incident."
+                            "type": "object",
+                            "description": "When an event matches this Event Rule, the actions that will be taken to change the resulting Alert and Incident.",
+                            "properties": {
+                              "annotate": {
+                                "description": "Set a note on the resulting incident.",
+                                "type": "object",
+                                "nullable": true,
+                                "required": [
+                                  "value"
+                                ],
+                                "properties": {
+                                  "value": {
+                                    "type": "string",
+                                    "description": "The content of the note."
+                                  }
+                                }
+                              },
+                              "event_action": {
+                                "description": "Set whether the resulting alert status is trigger or resolve.",
+                                "type": "object",
+                                "required": [
+                                  "value"
+                                ],
+                                "nullable": true,
+                                "properties": {
+                                  "value": {
+                                    "type": "string",
+                                    "enum": [
+                                      "trigger",
+                                      "resolve"
+                                    ]
+                                  }
+                                }
+                              },
+                              "extractions": {
+                                "type": "array",
+                                "description": "Dynamically extract values to set and modify new and existing PD-CEF fields.",
+                                "items": {
+                                  "oneOf": [
+                                    {
+                                      "type": "object",
+                                      "required": [
+                                        "target",
+                                        "source",
+                                        "regex"
+                                      ],
+                                      "properties": {
+                                        "target": {
+                                          "type": "string",
+                                          "description": "The PD-CEF field that will be set with the value from the regex."
+                                        },
+                                        "source": {
+                                          "type": "string",
+                                          "description": "The path to the event field where the regex will be applied to extract a value."
+                                        },
+                                        "regex": {
+                                          "type": "string",
+                                          "description": "A RE2 regular expression.  If it contains one or more capture groups, their values will be extracted and appended together.  If it contains no capture groups, the whole match is used."
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "type": "object",
+                                      "required": [
+                                        "target",
+                                        "template"
+                                      ],
+                                      "properties": {
+                                        "target": {
+                                          "type": "string",
+                                          "description": "The PD-CEF field that will be set with the value from the regex."
+                                        },
+                                        "template": {
+                                          "type": "string",
+                                          "description": "A value that will be used to populate the target PD-CEF field.  You can include variables extracted from the payload by using string interpolation.",
+                                          "example": "Error number {{count}} on host {{host}}"
+                                        }
+                                      }
+                                    }
+                                  ]
+                                }
+                              },
+                              "priority": {
+                                "description": "Set the priority ID for the resulting incident. You can find the priority you want by calling the priorities endpoint.",
+                                "type": "object",
+                                "required": [
+                                  "value"
+                                ],
+                                "nullable": true,
+                                "properties": {
+                                  "value": {
+                                    "type": "string",
+                                    "description": "The priority ID."
+                                  }
+                                }
+                              },
+                              "severity": {
+                                "description": "Set the severity of the resulting alert.",
+                                "type": "object",
+                                "required": [
+                                  "value"
+                                ],
+                                "nullable": true,
+                                "properties": {
+                                  "value": {
+                                    "type": "string",
+                                    "enum": [
+                                      "info",
+                                      "warning",
+                                      "error",
+                                      "critical"
+                                    ]
+                                  }
+                                }
+                              },
+                              "suppress": {
+                                "description": "Set whether the resulting alert is suppressed. Can optionally be used with a threshold where resulting alerts will be suppressed until the threshold is met in a window of time.",
+                                "type": "object",
+                                "required": [
+                                  "value"
+                                ],
+                                "properties": {
+                                  "value": {
+                                    "type": "boolean"
+                                  },
+                                  "threshold_value": {
+                                    "type": "integer",
+                                    "description": "The number of occurences needed during the window of time to trigger the theshold."
+                                  },
+                                  "threshold_time_unit": {
+                                    "type": "string",
+                                    "description": "The time unit for the window of time.",
+                                    "enum": [
+                                      "seconds",
+                                      "minutes",
+                                      "hours"
+                                    ]
+                                  },
+                                  "threshold_time_amount": {
+                                    "type": "integer",
+                                    "description": "The amount of time units for the window of time."
+                                  }
+                                }
+                              },
+                              "suspend": {
+                                "description": "[Early Access] Set the length of time to suspend the resulting alert before triggering.",
+                                "type": "object",
+                                "required": [
+                                  "value"
+                                ],
+                                "nullable": true,
+                                "properties": {
+                                  "value": {
+                                    "type": "integer",
+                                    "description": "The amount of time to suspend the alert in seconds."
+                                  }
+                                }
+                              }
+                            }
                           }
                         }
                       }
@@ -20267,7 +20262,7 @@
                 },
                 "examples": {
                   "response": {
-                    "$ref": "#/components/examples/AuditRecordResponseExample"
+                    "$ref": "#/paths/~1audit~1records/get/responses/200/content/application~1json/examples/response"
                   }
                 }
               }
@@ -21277,7 +21272,7 @@
                 },
                 "examples": {
                   "response": {
-                    "$ref": "#/components/examples/AuditRecordResponseExample"
+                    "$ref": "#/paths/~1audit~1records/get/responses/200/content/application~1json/examples/response"
                   }
                 }
               }
