@@ -14413,7 +14413,7 @@
           "Rulesets"
         ],
         "operationId": "listRulesetEventRules",
-        "description": "List all Event Rules on a Ruleset.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#rulesets)\n",
+        "description": "List all Event Rules on a Ruleset.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#rulesets)\n\nNote: Create and Update on rules will accept 'description' or 'summary' interchangeably as an extraction action target. Get and List on rules will always return 'summary' as the target. If you are expecting 'description' please change your automation code to expect 'summary' instead.\n",
         "summary": "List Event Rules",
         "parameters": [
           {
@@ -14549,7 +14549,7 @@
           "Rulesets"
         ],
         "operationId": "createRulesetEventRule",
-        "description": "Create a new Event Rule.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#rulesets)\n",
+        "description": "Create a new Event Rule.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#rulesets)\n\nNote: Create and Update on rules will accept 'description' or 'summary' interchangeably as an extraction action target. Get and List on rules will always return 'summary' as the target. If you are expecting 'description' please change your automation code to expect 'summary' instead.\n",
         "summary": "Create an Event Rule",
         "parameters": [
           {
@@ -14951,7 +14951,7 @@
           "Rulesets"
         ],
         "operationId": "getRulesetEventRule",
-        "description": "Get an Event Rule.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#rulesets)\n",
+        "description": "Get an Event Rule.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#rulesets)\n\nNote: Create and Update on rules will accept 'description' or 'summary' interchangeably as an extraction action target. Get and List on rules will always return 'summary' as the target. If you are expecting 'description' please change your automation code to expect 'summary' instead.\n",
         "summary": "Get an Event Rule",
         "parameters": [
           {
@@ -15079,7 +15079,7 @@
         ],
         "operationId": "updateRulesetEventRule",
         "summary": "Update an Event Rule",
-        "description": "Update an Event Rule. Note that the endpoint supports partial updates, so any number of the writable fields can be provided.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#rulesets)\n",
+        "description": "Update an Event Rule. Note that the endpoint supports partial updates, so any number of the writable fields can be provided.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#rulesets)\n\nNote: Create and Update on rules will accept 'description' or 'summary' interchangeably as an extraction action target. Get and List on rules will always return 'summary' as the target. If you are expecting 'description' please change your automation code to expect 'summary' instead.\n",
         "parameters": [
           {
             "$ref": "#/paths/~1tags/get/parameters/0"
