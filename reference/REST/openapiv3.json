@@ -6553,6 +6553,24 @@
             "$ref": "#/paths/~1tags/get/parameters/1"
           },
           {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "description": "The minimum of the `limit` parameter used in the request or the maximum request size of the API.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "description": "Optional parameter used to request the \"next\" set of results from an API.  The value provided here is most commonly obtained from the `next_cursor` field of the previous request.  When no value is provided, the request starts at the beginning of the result set.\n",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "since",
             "in": "query",
             "description": "The start of the date range over which you want to search. If not specified, defaults to `now() - 24 hours` (past 24 hours)",
@@ -6725,7 +6743,7 @@
                                     "example": "3xyz"
                                   },
                                   "type": {
-                                    "$ref": "#/paths/~1audit~1records/get/parameters/8/schema"
+                                    "$ref": "#/paths/~1audit~1records/get/parameters/10/schema"
                                   }
                                 },
                                 "required": [
@@ -8287,6 +8305,12 @@
           },
           {
             "$ref": "#/paths/~1audit~1records/get/parameters/4"
+          },
+          {
+            "$ref": "#/paths/~1audit~1records/get/parameters/5"
+          },
+          {
+            "$ref": "#/paths/~1audit~1records/get/parameters/6"
           }
         ],
         "responses": {
@@ -16017,6 +16041,12 @@
           },
           {
             "$ref": "#/paths/~1audit~1records/get/parameters/4"
+          },
+          {
+            "$ref": "#/paths/~1audit~1records/get/parameters/5"
+          },
+          {
+            "$ref": "#/paths/~1audit~1records/get/parameters/6"
           }
         ],
         "responses": {
@@ -18114,6 +18144,12 @@
           },
           {
             "$ref": "#/paths/~1audit~1records/get/parameters/4"
+          },
+          {
+            "$ref": "#/paths/~1audit~1records/get/parameters/5"
+          },
+          {
+            "$ref": "#/paths/~1audit~1records/get/parameters/6"
           }
         ],
         "responses": {
@@ -20217,6 +20253,12 @@
           },
           {
             "$ref": "#/paths/~1audit~1records/get/parameters/4"
+          },
+          {
+            "$ref": "#/paths/~1audit~1records/get/parameters/5"
+          },
+          {
+            "$ref": "#/paths/~1audit~1records/get/parameters/6"
           }
         ],
         "responses": {
@@ -21220,13 +21262,13 @@
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/paths/~1audit~1records/get/parameters/2"
-          },
-          {
-            "$ref": "#/paths/~1audit~1records/get/parameters/3"
-          },
-          {
             "$ref": "#/paths/~1audit~1records/get/parameters/4"
+          },
+          {
+            "$ref": "#/paths/~1audit~1records/get/parameters/5"
+          },
+          {
+            "$ref": "#/paths/~1audit~1records/get/parameters/6"
           }
         ],
         "responses": {
