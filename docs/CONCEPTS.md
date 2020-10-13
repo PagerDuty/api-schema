@@ -232,6 +232,15 @@ An Integration is an endpoint (like Nagios, email, or an API call) that generate
 
 Integrations feed events into Services and provide event management functionality such as filtering and de-duplication.
 
+## Subscriptions
+Subscriptions are used to manage the next generation of PagerDuty webhooks: [V3 Webhooks](https://developer.pagerduty.com/docs/webhooks/v3-overview).
+
+A Subscription indicates an interest in a set of [outbound events](https://developer.pagerduty.com/docs/webhooks/v3-overview/#event-types) occurring on the PagerDuty platform.  Each Subscription specifies a filter to only match events that occur under the scope of that filter.
+
+Each Subscription is associated with a delivery method that specifies how the subscribed events should be delivered.  At this time, the only supported type of delivery method is HTTP which delivers the events as an HTTP POST (webhook).
+
+[*Read more about Subscriptions in the Webhooks v3 Developer Documentation*](https://developer.pagerduty.com/docs/webhooks/v3-overview/)
+
 ## Tags
 A Tag can be assigned to Escalation Policy, Team or User, and searches for those objects can be filtered to retrieve those with specific tags.
 

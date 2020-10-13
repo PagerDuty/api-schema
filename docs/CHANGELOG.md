@@ -7,6 +7,7 @@ Currently we do not deprecate or remove any API functionality.
 ----
 ### 2020-10-13
 - Clarified the process of getting authorization headers for IntegrationJiraService API
+- Added Early-Access endpoints for the Subscriptions API used to manage V3 webhooks.
 
 ### 2020-10-05
 - *BREAKING* Updated pagination for Early-Access Audit records endpoints.

@@ -93,6 +93,10 @@
       "description": "A Service may represent an application, component, or team you wish to open incidents against.\n"
     },
     {
+      "name": "Subscriptions",
+      "description": "A subscription indicates an interest in a set of events occurring on the PagerDuty platform and \nspecifies a destination for said events to be delivered.  Subscriptions power the next generation\nof PagerDuty webhooks.\n"
+    },
+    {
       "name": "Tags",
       "description": "A Tag is applied to EScalation Policies, Teams or Users and can be used to filter them.\n"
     },
@@ -117,6 +121,28 @@
   ],
   "components": {
     "parameters": {
+      "Accept": {
+        "name": "Accept",
+        "description": "The `Accept` header is used as a versioning header.",
+        "in": "header",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "default": "application/vnd.pagerduty+json;version=2"
+        }
+      },
+      "Content-Type": {
+        "name": "Content-Type",
+        "in": "header",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "default": "application/json",
+          "enum": [
+            "application/json"
+          ]
+        }
+      },
       "id": {
         "name": "id",
         "description": "The ID of the resource.",
@@ -126,436 +152,31 @@
           "type": "string"
         }
       },
-      "entity_type": {
-        "name": "entity_type",
-        "in": "path",
-        "description": "Type of entity related with the tag",
-        "required": true,
-        "schema": {
-          "type": "string",
-          "enum": [
-            "users",
-            "teams",
-            "escalation_policies"
-          ]
-        }
-      },
-      "team_user_id": {
-        "name": "user_id",
-        "in": "path",
-        "description": "The user ID on the team.",
-        "required": true,
-        "schema": {
-          "type": "string"
-        }
-      },
-      "team_escalation_policy_id": {
-        "name": "escalation_policy_id",
-        "in": "path",
-        "description": "The escalation policy ID on the team.",
-        "required": true,
-        "schema": {
-          "type": "string"
-        }
-      },
-      "escalation_policy_escalation_rule_id": {
-        "name": "escalation_rule_id",
-        "in": "path",
-        "description": "The escalation rule ID on the escalation policy.",
-        "required": true,
-        "schema": {
-          "type": "string"
-        }
-      },
-      "include_addon": {
-        "name": "include[]",
+      "limit": {
+        "name": "limit",
         "in": "query",
-        "description": "Array of additional Models to include in response.",
-        "explode": true,
-        "schema": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "services"
-            ]
-          },
-          "uniqueItems": true
-        }
-      },
-      "include_escalation_policy": {
-        "name": "include[]",
-        "in": "query",
-        "description": "Array of additional Models to include in response.",
-        "explode": true,
-        "schema": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "services",
-              "teams",
-              "targets"
-            ]
-          },
-          "uniqueItems": true
-        }
-      },
-      "include_log_entry": {
-        "name": "include[]",
-        "in": "query",
-        "description": "Array of additional Models to include in response.",
-        "explode": true,
-        "schema": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "incidents",
-              "services",
-              "channels",
-              "teams"
-            ]
-          },
-          "uniqueItems": true
-        }
-      },
-      "include_user": {
-        "name": "include[]",
-        "in": "query",
-        "description": "Array of additional Models to include in response.",
-        "explode": true,
-        "schema": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "contact_methods",
-              "notification_rules",
-              "teams"
-            ]
-          },
-          "uniqueItems": true
-        }
-      },
-      "include_maintenance_window": {
-        "name": "include[]",
-        "in": "query",
-        "description": "Array of additional Models to include in response.",
-        "explode": true,
-        "schema": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "teams",
-              "services",
-              "users"
-            ]
-          },
-          "uniqueItems": true
-        }
-      },
-      "include_teams": {
-        "name": "include[]",
-        "in": "query",
-        "description": "Array of additional Models to include in response.",
-        "explode": true,
-        "schema": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "privileges"
-            ]
-          },
-          "uniqueItems": true
-        }
-      },
-      "include_teams_members": {
-        "name": "include[]",
-        "in": "query",
-        "description": "Array of additional Models to include in response.",
-        "explode": true,
-        "schema": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "users"
-            ]
-          },
-          "uniqueItems": true
-        }
-      },
-      "sort_by_escalation_policy": {
-        "name": "sort_by",
-        "in": "query",
-        "description": "Used to specify the field you wish to sort the results on.",
-        "schema": {
-          "type": "string",
-          "enum": [
-            "name",
-            "name:asc",
-            "name:desc"
-          ],
-          "default": "name"
-        }
-      },
-      "sort_by_service": {
-        "name": "sort_by",
-        "in": "query",
-        "description": "Used to specify the field you wish to sort the results on.",
-        "schema": {
-          "type": "string",
-          "enum": [
-            "name",
-            "name:asc",
-            "name:desc"
-          ],
-          "default": "name"
-        }
-      },
-      "schedule_overflow": {
-        "name": "overflow",
-        "in": "query",
-        "description": "Any on-call schedule entries that pass the date range bounds will be truncated at the bounds, unless the parameter `overflow=true` is passed. This parameter defaults to false.\nFor instance, if your schedule is a rotation that changes daily at midnight UTC, and your date range is from `2011-06-01T10:00:00Z` to `2011-06-01T14:00:00Z`:\n\n\n- If you don't pass the `overflow=true` parameter, you will get one schedule entry returned with a start of `2011-06-01T10:00:00Z` and end of `2011-06-01T14:00:00Z`.\n- If you do pass the `overflow=true` parameter, you will get one schedule entry returned with a start of `2011-06-01T00:00:00Z` and end of `2011-06-02T00:00:00Z`.\n",
-        "schema": {
-          "type": "boolean",
-          "default": false
-        }
-      },
-      "schedule_override_id": {
-        "name": "override_id",
-        "in": "path",
-        "description": "The override ID on the schedule.",
-        "required": true,
-        "schema": {
-          "type": "string"
-        }
-      },
-      "team_ids": {
-        "name": "team_ids[]",
-        "in": "query",
-        "description": "An array of team IDs. Only results related to these teams will be returned. Account must have the `teams` ability to use this parameter.",
-        "explode": true,
-        "schema": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "uniqueItems": true
-        }
-      },
-      "time_zone": {
-        "name": "time_zone",
-        "in": "query",
-        "description": "Time zone in which dates in the result will be rendered.",
-        "schema": {
-          "type": "string",
-          "format": "tzinfo",
-          "default": "UTC"
-        }
-      },
-      "services": {
-        "name": "service_ids[]",
-        "in": "query",
-        "description": "An array of service IDs. Only results related to these services will be returned.",
-        "explode": true,
-        "schema": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        }
-      },
-      "integration_id": {
-        "name": "integration_id",
-        "in": "path",
-        "description": "The integration ID on the service.",
-        "required": true,
-        "schema": {
-          "type": "string"
-        }
-      },
-      "log_entry_is_overview": {
-        "name": "is_overview",
-        "in": "query",
-        "description": "If `true`, will return a subset of log entries that show only the most important changes to the incident.",
         "required": false,
+        "description": "The number of results per page.",
         "schema": {
-          "type": "boolean",
-          "default": false
+          "type": "integer"
         }
       },
-      "since": {
-        "name": "since",
+      "offset": {
+        "name": "offset",
         "in": "query",
-        "description": "The start of the date range over which you want to search.",
-        "schema": {
-          "type": "string",
-          "format": "date-time"
-        }
-      },
-      "until": {
-        "name": "until",
-        "in": "query",
-        "description": "The end of the date range over which you want to search.",
-        "schema": {
-          "type": "string",
-          "format": "date-time"
-        }
-      },
-      "date_range": {
-        "name": "date_range",
-        "in": "query",
-        "description": "When set to all, the since and until parameters and defaults are ignored.",
-        "schema": {
-          "type": "string",
-          "enum": [
-            "all"
-          ]
-        }
-      },
-      "incident_key": {
-        "name": "incident_key",
-        "in": "query",
-        "description": "Incident de-duplication key. Incidents with child alerts do not have an incident key; querying by incident key will return incidents whose alerts have alert_key matching the given incident key.",
-        "schema": {
-          "type": "string"
-        }
-      },
-      "incident_services": {
-        "name": "service_ids[]",
-        "in": "query",
-        "description": "Returns only the incidents associated with the passed service(s). This expects one or more service IDs.",
-        "explode": true,
-        "schema": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "uniqueItems": true
-        }
-      },
-      "incident_assigned_to_user": {
-        "name": "user_ids[]",
-        "in": "query",
-        "description": "Returns only the incidents currently assigned to the passed user(s). This expects one or more user IDs. Note: When using the assigned_to_user filter, you will only receive incidents with statuses of triggered or acknowledged. This is because resolved incidents are not assigned to any user.",
-        "explode": true,
-        "schema": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "uniqueItems": true
-        }
-      },
-      "incident_urgencies": {
-        "name": "urgencies[]",
-        "in": "query",
-        "description": "Array of the urgencies of the incidents to be returned. Defaults to all urgencies. Account must have the `urgencies` ability to do this.",
-        "explode": true,
-        "schema": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "high",
-              "low"
-            ]
-          },
-          "uniqueItems": true
-        }
-      },
-      "from_header": {
-        "name": "From",
-        "in": "header",
-        "description": "The email address of a valid user associated with the account making the request.",
-        "required": true,
-        "schema": {
-          "type": "string",
-          "format": "email"
-        }
-      },
-      "optional_from_header": {
-        "name": "From",
-        "in": "header",
-        "description": "The email address of a valid user associated with the account making the request. This is optional, and is only used for change tracking.",
         "required": false,
+        "description": "Offset to start pagination search results.",
         "schema": {
-          "type": "string",
-          "format": "email"
-        }
-      },
-      "user_contact_method_id": {
-        "name": "contact_method_id",
-        "in": "path",
-        "description": "The contact method ID on the user.",
-        "required": true,
-        "schema": {
-          "type": "string"
-        }
-      },
-      "user_notification_rule_id": {
-        "name": "notification_rule_id",
-        "in": "path",
-        "description": "The notification rule ID on the user.",
-        "required": true,
-        "schema": {
-          "type": "string"
-        }
-      },
-      "user_status_update_notification_rule_id": {
-        "name": "status_update_notification_rule_id",
-        "in": "path",
-        "description": "The status update notification rule ID on the user.",
-        "required": true,
-        "schema": {
-          "type": "string"
-        }
-      },
-      "session_id": {
-        "name": "session_id",
-        "in": "path",
-        "description": "The session ID for the user.",
-        "required": true,
-        "schema": {
-          "type": "string"
-        }
-      },
-      "type": {
-        "name": "type",
-        "in": "path",
-        "description": "The session type for the user session ID.",
-        "required": true,
-        "schema": {
-          "type": "string"
-        }
-      },
-      "alert_key": {
-        "name": "alert_key",
-        "in": "query",
-        "description": "Alert de-duplication key.",
-        "schema": {
-          "type": "string"
-        }
-      },
-      "response_play_id": {
-        "name": "response_play_id",
-        "in": "path",
-        "description": "The response play ID of the response play associated with the request.",
-        "required": true,
-        "schema": {
-          "type": "string"
+          "type": "integer"
         }
       },
       "total": {
         "name": "total",
         "in": "query",
-        "description": "By default the `total` field in pagination responses is set to `null` to provide the fastest possible response times. Set `total` to `true` for this field to be populated.\n\nSee our [Pagination Docs](https://developer.pagerduty.com/docs/rest-api-v2/pagination/) for more information.\n",
         "required": false,
+        "description": "Indicates whether the request should display the total number of results.",
         "schema": {
+          "default": false,
           "type": "boolean"
         }
       }
@@ -4543,13 +4164,13 @@
         "summary": "Assign tags",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "$ref": "#/components/parameters/entity_type"
+            "$ref": "#/paths/~1%7Bentity_type%7D~1%7Bid%7D~1tags/get/parameters/3"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -4712,16 +4333,27 @@
         "summary": "Get tags for entities",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "$ref": "#/components/parameters/total"
+            "$ref": "#/paths/~1tags/get/parameters/2"
           },
           {
-            "$ref": "#/components/parameters/entity_type"
+            "name": "entity_type",
+            "in": "path",
+            "description": "Type of entity related with the tag",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "users",
+                "teams",
+                "escalation_policies"
+              ]
+            }
           },
           {
             "$ref": "#/components/parameters/id"
@@ -4800,10 +4432,10 @@
         "summary": "List abilities",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           }
         ],
         "responses": {
@@ -4871,10 +4503,10 @@
         "summary": "Test an ability",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -4913,16 +4545,29 @@
         "summary": "List installed Add-ons",
         "parameters": [
           {
-            "$ref": "#/components/parameters/total"
+            "$ref": "#/paths/~1tags/get/parameters/2"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "$ref": "#/components/parameters/include_addon"
+            "name": "include[]",
+            "in": "query",
+            "description": "Array of additional Models to include in response.",
+            "explode": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "services"
+                ]
+              },
+              "uniqueItems": true
+            }
           },
           {
             "name": "service_ids[]",
@@ -5024,10 +4669,10 @@
         "summary": "Install an Add-on",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           }
         ],
         "requestBody": {
@@ -5121,10 +4766,10 @@
         "summary": "Get an Add-on",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -5197,10 +4842,10 @@
         "summary": "Delete an Add-on",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -5233,10 +4878,10 @@
         "summary": "Update an Add-on",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -5496,10 +5141,10 @@
             "required": true
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           }
         ],
         "requestBody": {
@@ -5765,10 +5410,10 @@
             "required": true
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           }
         ],
         "requestBody": {
@@ -5922,10 +5567,10 @@
             "required": true
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           }
         ],
         "requestBody": {
@@ -6186,10 +5831,10 @@
             "required": true
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           }
         ],
         "requestBody": {
@@ -6515,10 +6160,10 @@
         "description": "Provides enriched incident data and metrics for a single incident.\n\nExample metrics include Seconds to Resolve, Seconds to Engage, Snoozed Seconds, and Sleep Hour Interruptions. Some metric definitions can be found in our [Knowledge Base](https://support.pagerduty.com/docs/pagerduty-analytics).\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "schema": {
@@ -6547,10 +6192,10 @@
         "description": "List audit trail records matching provided query params or default criteria.\n\nThe returned records are sorted by the `execution_time` from newest to oldest.\n\nSee [`Cursor-based pagination`](https://developer.pagerduty.com/docs/rest-api-v2/pagination/) for instructions on how to paginate through the result set.\n\nOnly admins, account owners, or global API tokens on PagerDuty account [pricing plans](https://www.pagerduty.com/pricing) with the \"Audit Trail\" feature can access this endpoint.\n\nFor other role based access to audit records by resource ID, see the resource's API documentation.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#audit-record).\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint's interface is under development and subject to change. Do not use it in production systems.\n> Your request must set an X-EARLY-ACCESS header with value `audit-early-access` to acknowledge this.\n>\n> Audit records for user and team resources started in August 2020 and records may be purged while the API is in early access.\n",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "name": "limit",
@@ -7168,10 +6813,10 @@
         "summary": "List business services",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "name": "total",
@@ -7289,10 +6934,10 @@
         "summary": "Create a business service",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           }
         ],
         "requestBody": {
@@ -7417,10 +7062,10 @@
         "summary": "Get a business service",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -7490,10 +7135,10 @@
         "summary": "Delete a business service",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -7523,10 +7168,10 @@
         "summary": "Update a business service",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -7651,13 +7296,13 @@
         "summary": "List escalation policies",
         "parameters": [
           {
-            "$ref": "#/components/parameters/total"
+            "$ref": "#/paths/~1tags/get/parameters/2"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "name": "query",
@@ -7681,13 +7326,39 @@
             }
           },
           {
-            "$ref": "#/components/parameters/team_ids"
+            "$ref": "#/paths/~1users/get/parameters/3"
           },
           {
-            "$ref": "#/components/parameters/include_escalation_policy"
+            "name": "include[]",
+            "in": "query",
+            "description": "Array of additional Models to include in response.",
+            "explode": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "services",
+                  "teams",
+                  "targets"
+                ]
+              },
+              "uniqueItems": true
+            }
           },
           {
-            "$ref": "#/components/parameters/sort_by_escalation_policy"
+            "name": "sort_by",
+            "in": "query",
+            "description": "Used to specify the field you wish to sort the results on.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "name",
+                "name:asc",
+                "name:desc"
+              ],
+              "default": "name"
+            }
           }
         ],
         "responses": {
@@ -7805,13 +7476,20 @@
         "summary": "Create an escalation policy",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "$ref": "#/components/parameters/optional_from_header"
+            "name": "From",
+            "in": "header",
+            "description": "The email address of a valid user associated with the account making the request. This is optional, and is only used for change tracking.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "email"
+            }
           }
         ],
         "requestBody": {
@@ -7974,16 +7652,16 @@
         "summary": "Get an escalation policy",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/components/parameters/include_escalation_policy"
+            "$ref": "#/paths/~1escalation_policies/get/parameters/6"
           }
         ],
         "responses": {
@@ -8083,10 +7761,10 @@
         "summary": "Delete an escalation policy",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -8119,10 +7797,10 @@
         "summary": "Update an escalation policy",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -8289,10 +7967,10 @@
         "description": "The returned records are sorted by the `execution_time` from newest to oldest.\n\nSee [`Cursor-based pagination`](https://developer.pagerduty.com/docs/rest-api-v2/pagination/) for instructions on how to paginate through the result set.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#audit-record).\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint's interface is under development and subject to change. Do not use it in production systems.\n> Your request must set an X-EARLY-ACCESS header with value `audit-early-access` to acknowledge this.\n>\n> Audit records for escalation policies resource started in August 2020 and records may be purged while the API is in early access.\n",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -8387,13 +8065,13 @@
         "summary": "List extension schemas",
         "parameters": [
           {
-            "$ref": "#/components/parameters/total"
+            "$ref": "#/paths/~1tags/get/parameters/2"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           }
         ],
         "responses": {
@@ -8486,10 +8164,10 @@
         "summary": "Get an extension vendor",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -8572,13 +8250,13 @@
         "summary": "List extensions",
         "parameters": [
           {
-            "$ref": "#/components/parameters/total"
+            "$ref": "#/paths/~1tags/get/parameters/2"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "name": "extension_object_id",
@@ -8707,10 +8385,10 @@
         "summary": "Create an extension",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           }
         ],
         "requestBody": {
@@ -8921,10 +8599,10 @@
         "summary": "Get an extension",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -9021,10 +8699,10 @@
         "summary": "Delete an extension",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -9054,10 +8732,10 @@
         "summary": "Update an extension",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -9204,10 +8882,10 @@
         "summary": "Enable an extension",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -9288,22 +8966,42 @@
         "summary": "List incidents",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "$ref": "#/components/parameters/total"
+            "$ref": "#/paths/~1tags/get/parameters/2"
           },
           {
-            "$ref": "#/components/parameters/since"
+            "name": "since",
+            "in": "query",
+            "description": "The start of the date range over which you want to search.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
           },
           {
-            "$ref": "#/components/parameters/until"
+            "name": "until",
+            "in": "query",
+            "description": "The end of the date range over which you want to search.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
           },
           {
-            "$ref": "#/components/parameters/date_range"
+            "name": "date_range",
+            "in": "query",
+            "description": "When set to all, the since and until parameters and defaults are ignored.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "all"
+              ]
+            }
           },
           {
             "name": "statuses[]",
@@ -9324,22 +9022,61 @@
             }
           },
           {
-            "$ref": "#/components/parameters/incident_key"
+            "name": "incident_key",
+            "in": "query",
+            "description": "Incident de-duplication key. Incidents with child alerts do not have an incident key; querying by incident key will return incidents whose alerts have alert_key matching the given incident key.",
+            "schema": {
+              "type": "string"
+            }
           },
           {
-            "$ref": "#/components/parameters/incident_services"
+            "name": "service_ids[]",
+            "in": "query",
+            "description": "Returns only the incidents associated with the passed service(s). This expects one or more service IDs.",
+            "explode": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "uniqueItems": true
+            }
           },
           {
-            "$ref": "#/components/parameters/team_ids"
+            "$ref": "#/paths/~1users/get/parameters/3"
           },
           {
-            "$ref": "#/components/parameters/incident_assigned_to_user"
+            "name": "user_ids[]",
+            "in": "query",
+            "description": "Returns only the incidents currently assigned to the passed user(s). This expects one or more user IDs. Note: When using the assigned_to_user filter, you will only receive incidents with statuses of triggered or acknowledged. This is because resolved incidents are not assigned to any user.",
+            "explode": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "uniqueItems": true
+            }
           },
           {
-            "$ref": "#/components/parameters/incident_urgencies"
+            "name": "urgencies[]",
+            "in": "query",
+            "description": "Array of the urgencies of the incidents to be returned. Defaults to all urgencies. Account must have the `urgencies` ability to do this.",
+            "explode": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "high",
+                  "low"
+                ]
+              },
+              "uniqueItems": true
+            }
           },
           {
-            "$ref": "#/components/parameters/time_zone"
+            "$ref": "#/paths/~1oncalls/get/parameters/2"
           },
           {
             "name": "sort_by",
@@ -9512,16 +9249,16 @@
         "summary": "Manage incidents",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "$ref": "#/components/parameters/total"
+            "$ref": "#/paths/~1tags/get/parameters/2"
           },
           {
-            "$ref": "#/components/parameters/from_header"
+            "$ref": "#/paths/~1users/post/parameters/2"
           }
         ],
         "requestBody": {
@@ -9803,13 +9540,13 @@
         "summary": "Create an Incident",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "$ref": "#/components/parameters/from_header"
+            "$ref": "#/paths/~1users/post/parameters/2"
           }
         ],
         "requestBody": {
@@ -10036,10 +9773,10 @@
         "summary": "Get an incident",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "name": "id",
@@ -10200,10 +9937,10 @@
         "summary": "Update an incident",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "name": "id",
@@ -10215,7 +9952,7 @@
             }
           },
           {
-            "$ref": "#/components/parameters/from_header"
+            "$ref": "#/paths/~1users/post/parameters/2"
           }
         ],
         "requestBody": {
@@ -10456,13 +10193,13 @@
         "summary": "List alerts for an incident",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "$ref": "#/components/parameters/total"
+            "$ref": "#/paths/~1tags/get/parameters/2"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -10485,7 +10222,12 @@
             }
           },
           {
-            "$ref": "#/components/parameters/alert_key"
+            "name": "alert_key",
+            "in": "query",
+            "description": "Alert de-duplication key.",
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "sort_by",
@@ -10635,19 +10377,19 @@
         "summary": "Manage alerts",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "$ref": "#/components/parameters/total"
+            "$ref": "#/paths/~1tags/get/parameters/2"
           },
           {
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/components/parameters/from_header"
+            "$ref": "#/paths/~1users/post/parameters/2"
           }
         ],
         "requestBody": {
@@ -10798,10 +10540,10 @@
         "summary": "Get an alert",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -10901,10 +10643,10 @@
         "summary": "Update an alert",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -10919,7 +10661,7 @@
             }
           },
           {
-            "$ref": "#/components/parameters/from_header"
+            "$ref": "#/paths/~1users/post/parameters/2"
           }
         ],
         "requestBody": {
@@ -11039,31 +10781,31 @@
         "summary": "List log entries for an incident",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "$ref": "#/components/parameters/total"
+            "$ref": "#/paths/~1tags/get/parameters/2"
           },
           {
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/components/parameters/time_zone"
+            "$ref": "#/paths/~1oncalls/get/parameters/2"
           },
           {
-            "$ref": "#/components/parameters/since"
+            "$ref": "#/paths/~1incidents/get/parameters/3"
           },
           {
-            "$ref": "#/components/parameters/until"
+            "$ref": "#/paths/~1incidents/get/parameters/4"
           },
           {
-            "$ref": "#/components/parameters/log_entry_is_overview"
+            "$ref": "#/paths/~1log_entries/get/parameters/6"
           },
           {
-            "$ref": "#/components/parameters/include_log_entry"
+            "$ref": "#/paths/~1log_entries/get/parameters/7"
           }
         ],
         "responses": {
@@ -11171,16 +10913,16 @@
         "summary": "Merge incidents",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/components/parameters/from_header"
+            "$ref": "#/paths/~1users/post/parameters/2"
           }
         ],
         "requestBody": {
@@ -11283,10 +11025,10 @@
         "summary": "List notes for an incident",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -11361,16 +11103,16 @@
         "summary": "Create a note on an incident",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/components/parameters/from_header"
+            "$ref": "#/paths/~1users/post/parameters/2"
           }
         ],
         "requestBody": {
@@ -11467,16 +11209,16 @@
         "summary": "Create a responder request for an incident",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/components/parameters/from_header"
+            "$ref": "#/paths/~1users/post/parameters/2"
           }
         ],
         "requestBody": {
@@ -11636,16 +11378,16 @@
         "summary": "Snooze an incident",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/components/parameters/from_header"
+            "$ref": "#/paths/~1users/post/parameters/2"
           }
         ],
         "requestBody": {
@@ -11814,16 +11556,16 @@
         "summary": "Create a status update on an incident",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/components/parameters/from_header"
+            "$ref": "#/paths/~1users/post/parameters/2"
           }
         ],
         "requestBody": {
@@ -11922,28 +11664,51 @@
         "summary": "List log entries",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "$ref": "#/components/parameters/total"
+            "$ref": "#/paths/~1tags/get/parameters/2"
           },
           {
-            "$ref": "#/components/parameters/time_zone"
+            "$ref": "#/paths/~1oncalls/get/parameters/2"
           },
           {
-            "$ref": "#/components/parameters/since"
+            "$ref": "#/paths/~1incidents/get/parameters/3"
           },
           {
-            "$ref": "#/components/parameters/until"
+            "$ref": "#/paths/~1incidents/get/parameters/4"
           },
           {
-            "$ref": "#/components/parameters/log_entry_is_overview"
+            "name": "is_overview",
+            "in": "query",
+            "description": "If `true`, will return a subset of log entries that show only the most important changes to the incident.",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
           },
           {
-            "$ref": "#/components/parameters/include_log_entry"
+            "name": "include[]",
+            "in": "query",
+            "description": "Array of additional Models to include in response.",
+            "explode": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "incidents",
+                  "services",
+                  "channels",
+                  "teams"
+                ]
+              },
+              "uniqueItems": true
+            }
           }
         ],
         "responses": {
@@ -12051,19 +11816,19 @@
         "summary": "Get a log entry",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "$ref": "#/components/parameters/time_zone"
+            "$ref": "#/paths/~1oncalls/get/parameters/2"
           },
           {
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/components/parameters/include_log_entry"
+            "$ref": "#/paths/~1log_entries/get/parameters/7"
           }
         ],
         "responses": {
@@ -12159,16 +11924,16 @@
         "summary": "Update log entry channel information.",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/components/parameters/from_header"
+            "$ref": "#/paths/~1users/post/parameters/2"
           }
         ],
         "requestBody": {
@@ -12252,22 +12017,46 @@
         "summary": "List maintenance windows",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "$ref": "#/components/parameters/total"
+            "$ref": "#/paths/~1tags/get/parameters/2"
           },
           {
-            "$ref": "#/components/parameters/team_ids"
+            "$ref": "#/paths/~1users/get/parameters/3"
           },
           {
-            "$ref": "#/components/parameters/services"
+            "name": "service_ids[]",
+            "in": "query",
+            "description": "An array of service IDs. Only results related to these services will be returned.",
+            "explode": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
           },
           {
-            "$ref": "#/components/parameters/include_maintenance_window"
+            "name": "include[]",
+            "in": "query",
+            "description": "Array of additional Models to include in response.",
+            "explode": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "teams",
+                  "services",
+                  "users"
+                ]
+              },
+              "uniqueItems": true
+            }
           },
           {
             "name": "filter",
@@ -12394,13 +12183,13 @@
         "summary": "Create a maintenance window",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "$ref": "#/components/parameters/from_header"
+            "$ref": "#/paths/~1users/post/parameters/2"
           }
         ],
         "requestBody": {
@@ -12528,16 +12317,16 @@
         "summary": "Get a maintenance window",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/components/parameters/include_maintenance_window"
+            "$ref": "#/paths/~1maintenance_windows/get/parameters/5"
           }
         ],
         "responses": {
@@ -12625,10 +12414,10 @@
         "summary": "Delete or end a maintenance window",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -12664,10 +12453,10 @@
         "summary": "Update a maintenance window",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -12801,16 +12590,16 @@
         "summary": "List notifications",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "$ref": "#/components/parameters/total"
+            "$ref": "#/paths/~1tags/get/parameters/2"
           },
           {
-            "$ref": "#/components/parameters/time_zone"
+            "$ref": "#/paths/~1oncalls/get/parameters/2"
           },
           {
             "name": "since",
@@ -12956,16 +12745,23 @@
         "summary": "List all of the on-calls",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "$ref": "#/components/parameters/time_zone"
+            "name": "time_zone",
+            "in": "query",
+            "description": "Time zone in which dates in the result will be rendered.",
+            "schema": {
+              "type": "string",
+              "format": "tzinfo",
+              "default": "UTC"
+            }
           },
           {
-            "$ref": "#/components/parameters/total"
+            "$ref": "#/paths/~1tags/get/parameters/2"
           },
           {
             "name": "include[]",
@@ -13145,13 +12941,13 @@
         "summary": "List priorities",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "$ref": "#/components/parameters/total"
+            "$ref": "#/paths/~1tags/get/parameters/2"
           }
         ],
         "responses": {
@@ -13721,16 +13517,22 @@
         "summary": "Run a response play",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "$ref": "#/components/parameters/response_play_id"
+            "name": "response_play_id",
+            "in": "path",
+            "description": "The response play ID of the response play associated with the request.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
           },
           {
-            "$ref": "#/components/parameters/from_header"
+            "$ref": "#/paths/~1users/post/parameters/2"
           }
         ],
         "requestBody": {
@@ -13811,13 +13613,13 @@
         "summary": "List Rulesets",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "$ref": "#/components/parameters/total"
+            "$ref": "#/paths/~1tags/get/parameters/2"
           }
         ],
         "responses": {
@@ -13905,10 +13707,10 @@
         "summary": "Create a Ruleset",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           }
         ],
         "requestBody": {
@@ -14027,10 +13829,10 @@
         "summary": "Get a Ruleset",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -14108,10 +13910,10 @@
         "summary": "Update a Ruleset",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -14372,10 +14174,10 @@
         "summary": "Delete a Ruleset",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -14417,13 +14219,13 @@
         "summary": "List Event Rules",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "$ref": "#/components/parameters/total"
+            "$ref": "#/paths/~1tags/get/parameters/2"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -14553,10 +14355,10 @@
         "summary": "Create an Event Rule",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -14955,10 +14757,10 @@
         "summary": "Get an Event Rule",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -15082,10 +14884,10 @@
         "description": "Update an Event Rule. Note that the endpoint supports partial updates, so any number of the writable fields can be provided.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#rulesets)\n\nNote: Create and Update on rules will accept 'description' or 'summary' interchangeably as an extraction action target. Get and List on rules will always return 'summary' as the target. If you are expecting 'description' please change your automation code to expect 'summary' instead.\n",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -15249,10 +15051,10 @@
         "summary": "Delete an Event Rule",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -15303,13 +15105,13 @@
         "summary": "List schedules",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "$ref": "#/components/parameters/total"
+            "$ref": "#/paths/~1tags/get/parameters/2"
           },
           {
             "name": "query",
@@ -15440,13 +15242,19 @@
         "summary": "Create a schedule",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "$ref": "#/components/parameters/schedule_overflow"
+            "name": "overflow",
+            "in": "query",
+            "description": "Any on-call schedule entries that pass the date range bounds will be truncated at the bounds, unless the parameter `overflow=true` is passed. This parameter defaults to false.\nFor instance, if your schedule is a rotation that changes daily at midnight UTC, and your date range is from `2011-06-01T10:00:00Z` to `2011-06-01T14:00:00Z`:\n\n\n- If you don't pass the `overflow=true` parameter, you will get one schedule entry returned with a start of `2011-06-01T10:00:00Z` and end of `2011-06-01T14:00:00Z`.\n- If you do pass the `overflow=true` parameter, you will get one schedule entry returned with a start of `2011-06-01T00:00:00Z` and end of `2011-06-02T00:00:00Z`.\n",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
           }
         ],
         "requestBody": {
@@ -15621,19 +15429,19 @@
         "summary": "Get a schedule",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "$ref": "#/components/parameters/time_zone"
+            "$ref": "#/paths/~1oncalls/get/parameters/2"
           },
           {
-            "$ref": "#/components/parameters/since"
+            "$ref": "#/paths/~1incidents/get/parameters/3"
           },
           {
-            "$ref": "#/components/parameters/until"
+            "$ref": "#/paths/~1incidents/get/parameters/4"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -15791,10 +15599,10 @@
         "summary": "Delete a schedule",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -15830,16 +15638,16 @@
         "summary": "Update a schedule",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/components/parameters/schedule_overflow"
+            "$ref": "#/paths/~1schedules/post/parameters/2"
           }
         ],
         "requestBody": {
@@ -16025,10 +15833,10 @@
         "description": "The returned records are sorted by the `execution_time` from newest to oldest.\n\nSee [`Cursor-based pagination`](https://developer.pagerduty.com/docs/rest-api-v2/pagination/) for instructions on how to paginate through the result set.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#audit-record).\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint's interface is under development and subject to change. Do not use it in production systems.\n> Your request must set an X-EARLY-ACCESS header with value `audit-early-access` to acknowledge this.\n>\n> Audit records for schedules resource started in August 2020 and records may be purged while the API is in early access.\n",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -16123,10 +15931,10 @@
         "summary": "List overrides",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -16237,10 +16045,10 @@
         "summary": "Create an override",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -16347,16 +16155,22 @@
         "summary": "Delete an override",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/components/parameters/schedule_override_id"
+            "name": "override_id",
+            "in": "path",
+            "description": "The override ID on the schedule.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -16392,19 +16206,19 @@
         "summary": "List users on call.",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/components/parameters/since"
+            "$ref": "#/paths/~1incidents/get/parameters/3"
           },
           {
-            "$ref": "#/components/parameters/until"
+            "$ref": "#/paths/~1incidents/get/parameters/4"
           }
         ],
         "responses": {
@@ -16552,19 +16366,19 @@
         "summary": "Preview a schedule",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "$ref": "#/components/parameters/since"
+            "$ref": "#/paths/~1incidents/get/parameters/3"
           },
           {
-            "$ref": "#/components/parameters/until"
+            "$ref": "#/paths/~1incidents/get/parameters/4"
           },
           {
-            "$ref": "#/components/parameters/schedule_overflow"
+            "$ref": "#/paths/~1schedules/post/parameters/2"
           }
         ],
         "requestBody": {
@@ -16739,10 +16553,10 @@
         "description": "Create new dependencies between two services.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#business-services)\n",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           }
         ],
         "requestBody": {
@@ -16929,10 +16743,10 @@
         "description": "Get all immediate dependencies of any business service.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#business-services)\n",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -17049,10 +16863,10 @@
         "description": "Disassociate dependencies between two services.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#business-services)\n",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           }
         ],
         "requestBody": {
@@ -17239,10 +17053,10 @@
         "description": "Get all immediate dependencies of any technical service.\nTechnical services are also known as `services`.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#services)\n",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -17359,22 +17173,33 @@
         "summary": "List services",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "$ref": "#/components/parameters/total"
+            "$ref": "#/paths/~1tags/get/parameters/2"
           },
           {
-            "$ref": "#/components/parameters/team_ids"
+            "$ref": "#/paths/~1users/get/parameters/3"
           },
           {
-            "$ref": "#/components/parameters/time_zone"
+            "$ref": "#/paths/~1oncalls/get/parameters/2"
           },
           {
-            "$ref": "#/components/parameters/sort_by_service"
+            "name": "sort_by",
+            "in": "query",
+            "description": "Used to specify the field you wish to sort the results on.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "name",
+                "name:asc",
+                "name:desc"
+              ],
+              "default": "name"
+            }
           },
           {
             "name": "query",
@@ -17538,10 +17363,10 @@
         "summary": "Create a service",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           }
         ],
         "requestBody": {
@@ -17742,10 +17567,10 @@
         "summary": "Get a service",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -17889,10 +17714,10 @@
         "summary": "Delete a service",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -17918,10 +17743,10 @@
         "summary": "Update a service",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -18128,10 +17953,10 @@
         "description": "The returned records are sorted by the `execution_time` from newest to oldest.\n\nSee [`Cursor-based pagination`](https://developer.pagerduty.com/docs/rest-api-v2/pagination/) for instructions on how to paginate through the result set.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#audit-record).\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint's interface is under development and subject to change. Do not use it in production systems.\n> Your request must set an X-EARLY-ACCESS header with value `audit-early-access` to acknowledge this.\n>\n> Audit records for escalation policies resource started in August 2020 and records may be purged while the API is in early access.\n",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -18226,10 +18051,10 @@
         "description": "Create a new integration belonging to a Service.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#services)\n",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -18355,16 +18180,22 @@
         "description": "Update an integration belonging to a Service.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#services)\n",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/components/parameters/integration_id"
+            "name": "integration_id",
+            "in": "path",
+            "description": "The integration ID on the service.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "requestBody": {
@@ -18477,16 +18308,16 @@
         "description": "Get details about an integration belonging to a service.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#services)\n",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/components/parameters/integration_id"
+            "$ref": "#/paths/~1services~1%7Bid%7D~1integrations~1%7Bintegration_id%7D/put/parameters/3"
           },
           {
             "name": "include[]",
@@ -18580,13 +18411,13 @@
         "summary": "List Service's Event Rules",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "$ref": "#/components/parameters/total"
+            "$ref": "#/paths/~1tags/get/parameters/2"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -18717,10 +18548,10 @@
         "summary": "Create an Event Rule on a Service",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -19070,10 +18901,10 @@
         "summary": "Get an Event Rule from a Service",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -19188,10 +19019,10 @@
         "description": "Update an Event Rule on a Service. Note that the endpoint supports partial updates, so any number of the writable fields can be provided.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -19357,10 +19188,10 @@
         "summary": "Delete an Event Rule from a Service",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -19412,6 +19243,594 @@
         }
       }
     },
+    "/subscriptions": {
+      "get": {
+        "tags": [
+          "Subscriptions"
+        ],
+        "operationId": "listSubscriptions",
+        "summary": "List subscriptions",
+        "description": "List existing subscriptions.\n\nFor more information on subscriptions and how they are used to configure v3 webhooks\nsee the [Webhooks v3 Developer Documentation](https://developer.pagerduty.com/docs/webhooks/v3-overview/).\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint's interface is under development and subject to change. Do not use it in production systems.\n> Your request must set an X-EARLY-ACCESS header with value `webhooks-v3` to acknowledge this.\n",
+        "parameters": [
+          {
+            "name": "X-EARLY-ACCESS",
+            "in": "header",
+            "description": "This endpoint's interface is under development and subject to change. Do not use it in production systems.\nYour request must set an X-EARLY-ACCESS header with value `webhooks-v3` to acknowledge this.\n",
+            "schema": {
+              "type": "string",
+              "default": "webhooks-v3",
+              "enum": [
+                "webhooks-v3"
+              ]
+            },
+            "required": true
+          },
+          {
+            "$ref": "#/components/parameters/Accept"
+          },
+          {
+            "$ref": "#/components/parameters/limit"
+          },
+          {
+            "$ref": "#/components/parameters/offset"
+          },
+          {
+            "$ref": "#/components/parameters/total"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A set of subscriptions matching the request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "subscriptions": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/paths/~1subscriptions/post/requestBody/content/application~1json/schema/properties/subscription"
+                          }
+                        }
+                      },
+                      "required": [
+                        "subscriptions"
+                      ]
+                    },
+                    {
+                      "$ref": "#/components/schemas/Pagination"
+                    }
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Example",
+                    "value": {
+                      "subscriptions": [
+                        {
+                          "delivery_method": {
+                            "id": "PF9KMXH",
+                            "type": "http_delivery_method",
+                            "url": "https://example.com/receive_a_pagerduty_webhook"
+                          },
+                          "description": "Sends PagerDuty v3 webhook events somewhere interesting.",
+                          "events": [
+                            "incident.acknowledged",
+                            "incident.annotated",
+                            "incident.delegated",
+                            "incident.escalated",
+                            "incident.priority_updated",
+                            "incident.reassigned",
+                            "incident.resolved",
+                            "incident.responder.added",
+                            "incident.responder.replied",
+                            "incident.triggered",
+                            "incident.unacknowledged"
+                          ],
+                          "filter": {
+                            "id": "P393ZNQ",
+                            "type": "service_reference"
+                          },
+                          "id": "PY1OL64",
+                          "type": "subscription"
+                        }
+                      ],
+                      "limit": 25,
+                      "offset": 0,
+                      "total": null,
+                      "more": false
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Caller provided invalid arguments. Please review the response for error\ndetails. Retrying with the same arguments will *not* work.\n"
+          },
+          "401": {
+            "description": "Caller did not supply credentials or did not provide the correct\ncredentials.\n\nIf you are using an API key, it may be invalid or your Authorization header may be malformed.\n"
+          },
+          "403": {
+            "description": "Caller is not authorized to view the requested resource.\n\nWhile your authentication is valid, the authenticated user or token does not have permission to perform this action.\n"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Subscriptions"
+        ],
+        "operationId": "createSubscription",
+        "summary": "Create a subscription",
+        "description": "Creates a new subscription.\n\nFor more information on subscriptions and how they are used to configure v3 webhooks\nsee the [Webhooks v3 Developer Documentation](https://developer.pagerduty.com/docs/webhooks/v3-overview/).\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint's interface is under development and subject to change. Do not use it in production systems.\n> Your request must set an X-EARLY-ACCESS header with value `webhooks-v3` to acknowledge this.\n",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1subscriptions/get/parameters/0"
+          },
+          {
+            "$ref": "#/components/parameters/Accept"
+          },
+          {
+            "$ref": "#/components/parameters/Content-Type"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "subscription": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "readOnly": true
+                      },
+                      "type": {
+                        "type": "string",
+                        "description": "The type indicating the schema of the object.",
+                        "default": "subscription",
+                        "enum": [
+                          "subscription"
+                        ]
+                      },
+                      "delivery_method": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "readOnly": true
+                          },
+                          "type": {
+                            "type": "string",
+                            "description": "Indicates the type of the delivery method.",
+                            "default": "http_delivery_method",
+                            "enum": [
+                              "http_delivery_method"
+                            ]
+                          },
+                          "url": {
+                            "type": "string",
+                            "description": "The destination URL for webhook delivery.",
+                            "format": "url"
+                          }
+                        },
+                        "required": [
+                          "type",
+                          "url"
+                        ]
+                      },
+                      "description": {
+                        "type": "string",
+                        "description": "A short description of the subscription."
+                      },
+                      "events": {
+                        "type": "array",
+                        "description": "The set of outbound event types the subscription will receive.",
+                        "minItems": 1,
+                        "uniqueItems": true,
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "filter": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "description": "The id of the object being used as the filter.  This field is required for all filter types except account_reference."
+                          },
+                          "type": {
+                            "type": "string",
+                            "description": "The type of object being used as the filter.",
+                            "enum": [
+                              "account_reference",
+                              "service_reference",
+                              "team_reference"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "type"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "delivery_method",
+                      "events",
+                      "filter"
+                    ]
+                  }
+                },
+                "required": [
+                  "subscription"
+                ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Example",
+                  "value": {
+                    "subscription": {
+                      "delivery_method": {
+                        "type": "http_delivery_method",
+                        "url": "https://example.com/receive_a_pagerduty_webhook"
+                      },
+                      "description": "Sends PagerDuty v3 webhook events somewhere interesting.",
+                      "events": [
+                        "incident.acknowledged",
+                        "incident.annotated",
+                        "incident.delegated",
+                        "incident.escalated",
+                        "incident.priority_updated",
+                        "incident.reassigned",
+                        "incident.reopened",
+                        "incident.resolved",
+                        "incident.responder.added",
+                        "incident.responder.replied",
+                        "incident.triggered",
+                        "incident.unacknowledged"
+                      ],
+                      "filter": {
+                        "id": "P393ZNQ",
+                        "type": "service_reference"
+                      },
+                      "type": "subscription"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The subscription that was created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "subscription": {
+                      "$ref": "#/paths/~1subscriptions/post/requestBody/content/application~1json/schema/properties/subscription"
+                    }
+                  },
+                  "required": [
+                    "subscription"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Example",
+                    "value": {
+                      "subscription": {
+                        "delivery_method": {
+                          "id": "PF9KMXH",
+                          "type": "http_delivery_method",
+                          "url": "https://example.com/receive_a_pagerduty_webhook"
+                        },
+                        "description": "Sends PagerDuty v3 webhook events somewhere interesting.",
+                        "events": [
+                          "incident.acknowledged",
+                          "incident.annotated",
+                          "incident.delegated",
+                          "incident.escalated",
+                          "incident.priority_updated",
+                          "incident.reassigned",
+                          "incident.reopened",
+                          "incident.resolved",
+                          "incident.responder.added",
+                          "incident.responder.replied",
+                          "incident.triggered",
+                          "incident.unacknowledged"
+                        ],
+                        "filter": {
+                          "id": "P393ZNQ",
+                          "type": "service_reference"
+                        },
+                        "id": "PY1OL64",
+                        "type": "subscription"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/paths/~1subscriptions/get/responses/400"
+          },
+          "401": {
+            "$ref": "#/paths/~1subscriptions/get/responses/401"
+          },
+          "403": {
+            "$ref": "#/paths/~1subscriptions/get/responses/403"
+          }
+        }
+      }
+    },
+    "/subscriptions/{id}": {
+      "description": "Manage an outbound event subscription.",
+      "get": {
+        "tags": [
+          "Subscriptions"
+        ],
+        "operationId": "getSubscription",
+        "summary": "Get a subscription",
+        "description": "Gets details about an existing subscription.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint's interface is under development and subject to change. Do not use it in production systems.\n> Your request must set an X-EARLY-ACCESS header with value `webhooks-v3` to acknowledge this.\n",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1subscriptions/get/parameters/0"
+          },
+          {
+            "$ref": "#/components/parameters/Accept"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The subscription that was requested.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "subscription": {
+                      "$ref": "#/paths/~1subscriptions/post/requestBody/content/application~1json/schema/properties/subscription"
+                    }
+                  },
+                  "required": [
+                    "subscription"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "$ref": "#/paths/~1subscriptions/post/responses/200/content/application~1json/examples/response"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/paths/~1subscriptions/get/responses/400"
+          },
+          "401": {
+            "$ref": "#/paths/~1subscriptions/get/responses/401"
+          },
+          "403": {
+            "$ref": "#/paths/~1subscriptions/get/responses/403"
+          },
+          "404": {
+            "description": "The requested resource was not found."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Subscriptions"
+        ],
+        "operationId": "updateSubscription",
+        "summary": "Update a subscription",
+        "description": "Updates an existing extension.\n\nOnly the fields being updated need to be included on the request.  This operation does not\nsupport updating the `delivery_method` of the subscription.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint's interface is under development and subject to change. Do not use it in production systems.\n> Your request must set an X-EARLY-ACCESS header with value `webhooks-v3` to acknowledge this.\n",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1subscriptions/get/parameters/0"
+          },
+          {
+            "$ref": "#/components/parameters/Accept"
+          },
+          {
+            "$ref": "#/components/parameters/Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "subscription": {
+                    "type": "object",
+                    "properties": {
+                      "description": {
+                        "type": "string",
+                        "description": "A short description of the subscription."
+                      },
+                      "events": {
+                        "type": "array",
+                        "description": "The set of outbound event types the subscription will receive.",
+                        "minItems": 1,
+                        "uniqueItems": true,
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "filter": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "description": "The id of the object being used as the filter.  This field is required for all filter types except account_reference."
+                          },
+                          "type": {
+                            "type": "string",
+                            "description": "The type of object being used as the filter.",
+                            "enum": [
+                              "account_reference",
+                              "service_reference",
+                              "team_reference"
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "examples": {
+                "request": {
+                  "summary": "Update Subscribed Events",
+                  "value": {
+                    "subscription": {
+                      "events": [
+                        "incident.acknowledged",
+                        "incident.annotated",
+                        "incident.delegated",
+                        "incident.escalated",
+                        "incident.priority_updated",
+                        "incident.reassigned",
+                        "incident.reopened",
+                        "incident.resolved",
+                        "incident.responder.added",
+                        "incident.responder.replied",
+                        "incident.triggered",
+                        "incident.unacknowledged"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The updated subscription.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "subscription": {
+                      "$ref": "#/paths/~1subscriptions/post/requestBody/content/application~1json/schema/properties/subscription"
+                    }
+                  },
+                  "required": [
+                    "subscription"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "$ref": "#/paths/~1subscriptions/post/responses/200/content/application~1json/examples/response"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/paths/~1subscriptions/get/responses/400"
+          },
+          "401": {
+            "$ref": "#/paths/~1subscriptions/get/responses/401"
+          },
+          "403": {
+            "$ref": "#/paths/~1subscriptions/get/responses/403"
+          },
+          "404": {
+            "$ref": "#/paths/~1subscriptions~1%7Bid%7D/get/responses/404"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Subscriptions"
+        ],
+        "operationId": "deleteSubscription",
+        "summary": "Delete a subscription",
+        "description": "Deletes a subscription.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint's interface is under development and subject to change. Do not use it in production systems.\n> Your request must set an X-EARLY-ACCESS header with value `webhooks-v3` to acknowledge this.\n",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1subscriptions/get/parameters/0"
+          },
+          {
+            "$ref": "#/components/parameters/Accept"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The subscription was deleted successfully."
+          },
+          "400": {
+            "$ref": "#/paths/~1subscriptions/get/responses/400"
+          },
+          "401": {
+            "$ref": "#/paths/~1subscriptions/get/responses/401"
+          },
+          "403": {
+            "$ref": "#/paths/~1subscriptions/get/responses/403"
+          },
+          "404": {
+            "$ref": "#/paths/~1subscriptions~1%7Bid%7D/get/responses/404"
+          }
+        }
+      }
+    },
+    "/subscriptions/{id}/ping": {
+      "post": {
+        "tags": [
+          "Subscriptions"
+        ],
+        "operationId": "testSubscription",
+        "summary": "Test a subscription",
+        "description": "Test a subscription.\n\nFires a test event against the subscription.  If the subscription is properly configured,\nthis will deliver the `pagey.ping` webhook event to the destination.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint's interface is under development and subject to change. Do not use it in production systems.\n> Your request must set an X-EARLY-ACCESS header with value `webhooks-v3` to acknowledge this.\n",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1subscriptions/get/parameters/0"
+          },
+          {
+            "$ref": "#/components/parameters/Accept"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Accepted"
+          },
+          "401": {
+            "$ref": "#/paths/~1subscriptions/get/responses/401"
+          },
+          "403": {
+            "$ref": "#/paths/~1subscriptions/get/responses/403"
+          },
+          "404": {
+            "$ref": "#/paths/~1subscriptions~1%7Bid%7D/get/responses/404"
+          }
+        }
+      }
+    },
     "/tags": {
       "get": {
         "tags": [
@@ -19422,29 +19841,19 @@
         "summary": "List tags",
         "parameters": [
           {
-            "name": "Accept",
-            "description": "The `Accept` header is used as a versioning header.",
-            "in": "header",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "default": "application/vnd.pagerduty+json;version=2"
-            }
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "name": "Content-Type",
-            "in": "header",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "default": "application/json",
-              "enum": [
-                "application/json"
-              ]
-            }
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "$ref": "#/components/parameters/total"
+            "name": "total",
+            "in": "query",
+            "description": "By default the `total` field in pagination responses is set to `null` to provide the fastest possible response times. Set `total` to `true` for this field to be populated.\n\nSee our [Pagination Docs](https://developer.pagerduty.com/docs/rest-api-v2/pagination/) for more information.\n",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
           },
           {
             "name": "query",
@@ -19525,10 +19934,10 @@
         "summary": "Create a tag",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           }
         ],
         "requestBody": {
@@ -19618,10 +20027,10 @@
         "summary": "Get a tag",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -19684,10 +20093,10 @@
         "summary": "Delete a tag",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -19719,19 +20128,19 @@
         "summary": "Get connected entities",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "$ref": "#/components/parameters/total"
+            "$ref": "#/paths/~1tags/get/parameters/2"
           },
           {
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/components/parameters/entity_type"
+            "$ref": "#/paths/~1%7Bentity_type%7D~1%7Bid%7D~1tags/get/parameters/3"
           }
         ],
         "responses": {
@@ -19816,10 +20225,10 @@
         "summary": "Create a team",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           }
         ],
         "requestBody": {
@@ -19914,13 +20323,13 @@
         "summary": "List teams",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "$ref": "#/components/parameters/total"
+            "$ref": "#/paths/~1tags/get/parameters/2"
           },
           {
             "name": "query",
@@ -20011,16 +20420,29 @@
         "summary": "Get a team",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/components/parameters/include_teams"
+            "name": "include[]",
+            "in": "query",
+            "description": "Array of additional Models to include in response.",
+            "explode": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "privileges"
+                ]
+              },
+              "uniqueItems": true
+            }
           }
         ],
         "responses": {
@@ -20088,10 +20510,10 @@
         "summary": "Delete a team",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "name": "reassignment_team",
@@ -20133,10 +20555,10 @@
         "summary": "Update a team",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -20237,10 +20659,10 @@
         "description": "The returned records are sorted by the `execution_time` from newest to oldest.\n\nSee [`Cursor-based pagination`](https://developer.pagerduty.com/docs/rest-api-v2/pagination/) for instructions on how to paginate through the result set.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#audit-record).\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint's interface is under development and subject to change. Do not use it in production systems.\n> Your request must set an X-EARLY-ACCESS header with value `audit-early-access` to acknowledge this.\n>\n> Audit records for user and team resources started in August 2020 and records may be purged while the API is in early access.\n",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -20335,16 +20757,16 @@
         "summary": "Remove an escalation policy from a team",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/components/parameters/team_escalation_policy_id"
+            "$ref": "#/paths/~1teams~1%7Bid%7D~1escalation_policies~1%7Bescalation_policy_id%7D/put/parameters/3"
           }
         ],
         "responses": {
@@ -20380,16 +20802,22 @@
         "summary": "Add an escalation policy to a team",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/components/parameters/team_escalation_policy_id"
+            "name": "escalation_policy_id",
+            "in": "path",
+            "description": "The escalation policy ID on the team.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -20428,19 +20856,32 @@
         "summary": "List members of a team",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "$ref": "#/components/parameters/total"
+            "$ref": "#/paths/~1tags/get/parameters/2"
           },
           {
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/components/parameters/include_teams_members"
+            "name": "include[]",
+            "in": "query",
+            "description": "Array of additional Models to include in response.",
+            "explode": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "users"
+                ]
+              },
+              "uniqueItems": true
+            }
           }
         ],
         "responses": {
@@ -20530,16 +20971,16 @@
         "summary": "Remove a user from a team",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/components/parameters/team_user_id"
+            "$ref": "#/paths/~1teams~1%7Bid%7D~1users~1%7Buser_id%7D/put/parameters/3"
           }
         ],
         "responses": {
@@ -20575,16 +21016,22 @@
         "summary": "Add a user to a team",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/components/parameters/team_user_id"
+            "name": "user_id",
+            "in": "path",
+            "description": "The user ID on the team.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "requestBody": {
@@ -20652,10 +21099,10 @@
         "summary": "List users",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "name": "query",
@@ -20666,13 +21113,38 @@
             }
           },
           {
-            "$ref": "#/components/parameters/team_ids"
+            "name": "team_ids[]",
+            "in": "query",
+            "description": "An array of team IDs. Only results related to these teams will be returned. Account must have the `teams` ability to use this parameter.",
+            "explode": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "uniqueItems": true
+            }
           },
           {
-            "$ref": "#/components/parameters/total"
+            "$ref": "#/paths/~1tags/get/parameters/2"
           },
           {
-            "$ref": "#/components/parameters/include_user"
+            "name": "include[]",
+            "in": "query",
+            "description": "Array of additional Models to include in response.",
+            "explode": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "contact_methods",
+                  "notification_rules",
+                  "teams"
+                ]
+              },
+              "uniqueItems": true
+            }
           }
         ],
         "responses": {
@@ -20824,13 +21296,20 @@
         "summary": "Create a user",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "$ref": "#/components/parameters/from_header"
+            "name": "From",
+            "in": "header",
+            "description": "The email address of a valid user associated with the account making the request.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "email"
+            }
           }
         ],
         "requestBody": {
@@ -20966,16 +21445,16 @@
         "summary": "Get a user",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/components/parameters/include_user"
+            "$ref": "#/paths/~1users/get/parameters/5"
           }
         ],
         "responses": {
@@ -21072,10 +21551,10 @@
         "summary": "Delete a user",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -21108,10 +21587,10 @@
         "summary": "Update a user",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -21253,10 +21732,10 @@
         "description": "The response will include audit records with changes that are made to the identified user not changes made by the identified user.\n\n\nThe returned records are sorted by the `execution_time` from newest to oldest.\n\nSee [`Cursor-based pagination`](https://developer.pagerduty.com/docs/rest-api-v2/pagination/) for instructions on how to paginate through the result set.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#audit-record).\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint's interface is under development and subject to change. Do not use it in production systems.\n> Your request must set an X-EARLY-ACCESS header with value `audit-early-access` to acknowledge this.\n>\n> Audit records for user and team resources started in August 2020 and records may be purged while the API is in early access.\n",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -21345,10 +21824,10 @@
         "summary": "List a user's contact methods",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -21424,10 +21903,10 @@
         "summary": "Create a user contact method",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -21545,16 +22024,22 @@
         "summary": "Get a user's contact method",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/components/parameters/user_contact_method_id"
+            "name": "contact_method_id",
+            "in": "path",
+            "description": "The contact method ID on the user.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -21625,16 +22110,16 @@
         "summary": "Delete a user's contact method",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/components/parameters/user_contact_method_id"
+            "$ref": "#/paths/~1users~1%7Bid%7D~1contact_methods~1%7Bcontact_method_id%7D/get/parameters/3"
           }
         ],
         "responses": {
@@ -21664,16 +22149,16 @@
         "summary": "Update a user's contact method",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/components/parameters/user_contact_method_id"
+            "$ref": "#/paths/~1users~1%7Bid%7D~1contact_methods~1%7Bcontact_method_id%7D/get/parameters/3"
           }
         ],
         "requestBody": {
@@ -21791,10 +22276,10 @@
         "summary": "List a user's notification rules",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -21886,10 +22371,10 @@
         "summary": "Create a user notification rule",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -22000,16 +22485,22 @@
         "summary": "Get a user's notification rule",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/components/parameters/user_notification_rule_id"
+            "name": "notification_rule_id",
+            "in": "path",
+            "description": "The notification rule ID on the user.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "include[]",
@@ -22095,16 +22586,16 @@
         "summary": "Delete a user's notification rule",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/components/parameters/user_notification_rule_id"
+            "$ref": "#/paths/~1users~1%7Bid%7D~1notification_rules~1%7Bnotification_rule_id%7D/get/parameters/3"
           }
         ],
         "responses": {
@@ -22134,16 +22625,16 @@
         "summary": "Update a user's notification rule",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/components/parameters/user_notification_rule_id"
+            "$ref": "#/paths/~1users~1%7Bid%7D~1notification_rules~1%7Bnotification_rule_id%7D/get/parameters/3"
           }
         ],
         "requestBody": {
@@ -22250,10 +22741,10 @@
         "summary": "List a user's active sessions",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -22323,10 +22814,10 @@
         "summary": "Delete all user sessions",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -22362,19 +22853,31 @@
         "summary": "Get a user's session",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/components/parameters/type"
+            "name": "type",
+            "in": "path",
+            "description": "The session type for the user session ID.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
           },
           {
-            "$ref": "#/components/parameters/session_id"
+            "name": "session_id",
+            "in": "path",
+            "description": "The session ID for the user.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -22436,19 +22939,19 @@
         "summary": "Delete a user's session",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/components/parameters/type"
+            "$ref": "#/paths/~1users~1%7Bid%7D~1sessions~1%7Btype%7D~1%7Bsession_id%7D/get/parameters/3"
           },
           {
-            "$ref": "#/components/parameters/session_id"
+            "$ref": "#/paths/~1users~1%7Bid%7D~1sessions~1%7Btype%7D~1%7Bsession_id%7D/get/parameters/4"
           }
         ],
         "responses": {
@@ -22481,10 +22984,10 @@
         "summary": "List a user's status update notification rules",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "name": "X-EARLY-ACCESS",
@@ -22587,10 +23090,10 @@
         "summary": "Create a user status update notification rule",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "name": "X-EARLY-ACCESS",
@@ -22723,10 +23226,10 @@
         "summary": "Get a user's status update notification rule",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "name": "X-EARLY-ACCESS",
@@ -22745,7 +23248,13 @@
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/components/parameters/user_status_update_notification_rule_id"
+            "name": "status_update_notification_rule_id",
+            "in": "path",
+            "description": "The status update notification rule ID on the user.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "include[]",
@@ -22830,10 +23339,10 @@
         "summary": "Delete a user's status update notification rule",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "name": "X-EARLY-ACCESS",
@@ -22852,7 +23361,7 @@
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/components/parameters/user_status_update_notification_rule_id"
+            "$ref": "#/paths/~1users~1%7Bid%7D~1status_update_notification_rules~1%7Bstatus_update_notification_rule_id%7D/get/parameters/4"
           }
         ],
         "responses": {
@@ -22882,10 +23391,10 @@
         "summary": "Update a user's status update notification rule",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "name": "X-EARLY-ACCESS",
@@ -22904,7 +23413,7 @@
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/components/parameters/user_status_update_notification_rule_id"
+            "$ref": "#/paths/~1users~1%7Bid%7D~1status_update_notification_rules~1%7Bstatus_update_notification_rule_id%7D/get/parameters/4"
           }
         ],
         "requestBody": {
@@ -23007,13 +23516,13 @@
         "summary": "Get the current user",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "$ref": "#/components/parameters/include_user"
+            "$ref": "#/paths/~1users/get/parameters/5"
           }
         ],
         "responses": {
@@ -23105,13 +23614,13 @@
         "summary": "List vendors",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "$ref": "#/components/parameters/total"
+            "$ref": "#/paths/~1tags/get/parameters/2"
           }
         ],
         "responses": {
@@ -23194,10 +23703,10 @@
         "summary": "Get a vendor",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/0"
+            "$ref": "#/components/parameters/Accept"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/1"
+            "$ref": "#/components/parameters/Content-Type"
           },
           {
             "$ref": "#/components/parameters/id"
