@@ -694,13 +694,13 @@
       "BearerToken": {
         "type": "http",
         "scheme": "bearer",
-        "description": "PagerDuty OAuth user Access Token"
+        "description": "PagerDuty OAuth user Access Token\n\n\nInspect network requests that are done by the Pagerduty Addon settings\npage\n\nand look for a request like `GET /accounts_mapping`.\n\n\nIn the request headers you will find `Authorization`.\n\nUse its value as it is to make your requests.\n"
       },
       "JiraSignature": {
         "type": "apiKey",
         "name": "x-pagerduty-jira-signature",
         "in": "header",
-        "description": "Jira Authorization Signature"
+        "description": "Jira Authorization Signature\n\n\nInspect network requests that are done by the Pagerduty Addon settings\npage\n\nand look for a request, like `GET /accounts_mapping`.\n\n\nIn the request headers you will find `x-pagerduty-jira-signature`.\n\nUse its value as it is to make your requests.\n"
       }
     }
   },
