@@ -5205,18 +5205,6 @@
                           "PT4KHLX"
                         ]
                       },
-                      "business_service_ids": {
-                        "type": "array",
-                        "description": "An array of business service IDs. Only incidents related to these business services will be included in the results. If omitted, all services the requestor has access to will be included in the results.",
-                        "items": {
-                          "type": "string"
-                        },
-                        "example": [
-                          "P0200S2",
-                          "PEKZXUX",
-                          "PUEMDG6"
-                        ]
-                      },
                       "priority_ids": {
                         "type": "array",
                         "description": "An array of priority IDs. Only incidents with these priorities will be included in the results. If omitted, all services the requestor has access to will be included in the results.",
@@ -5276,10 +5264,6 @@
                       "service_ids": [
                         "PJ51L11",
                         "PU2D9X2"
-                      ],
-                      "business_service_ids": [
-                        "P0200S2",
-                        "PEKZXUX"
                       ],
                       "priority_names": [
                         "SEV-1",
@@ -5438,10 +5422,6 @@
                         "PJ51L11",
                         "PU2D9X3"
                       ],
-                      "business_service_ids": [
-                        "P0200S2",
-                        "PEKZXUX"
-                      ],
                       "priority_ids": [
                         "PZOZQXA",
                         "POTCOTX"
@@ -5595,10 +5575,6 @@
                         "PJ51L11",
                         "PU2D9X2"
                       ],
-                      "business_service_ids": [
-                        "P0200S2",
-                        "PEKZXUX"
-                      ],
                       "priority_ids": [
                         "PZOZQXA",
                         "POTCOTX"
@@ -5684,13 +5660,6 @@
                           "type": "array",
                           "description": "The service ids filter applied to the results,\nfor up to 10 service ids.",
                           "maxItems": 10,
-                          "items": {
-                            "type": "string"
-                          }
-                        },
-                        "business_service_ids": {
-                          "type": "array",
-                          "description": "The business service ids filter applied to the results.",
                           "items": {
                             "type": "string"
                           }
@@ -5891,18 +5860,6 @@
                           "P5FK83M"
                         ]
                       },
-                      "business_service_ids": {
-                        "type": "array",
-                        "description": "An array of business service IDs. Only incidents related to these business services will be included in the results. If omitted, all services the requestor has access to will be included in the results.",
-                        "items": {
-                          "type": "string"
-                        },
-                        "example": [
-                          "P0200S2",
-                          "PEKZXUX",
-                          "PUEMDG6"
-                        ]
-                      },
                       "priority_ids": {
                         "type": "array",
                         "description": "The priority_ids filter applied to the results.",
@@ -5968,10 +5925,6 @@
                       "service_ids": [
                         "PJ51L11",
                         "PU2D9X3"
-                      ],
-                      "business_service_ids": [
-                        "P0200S2",
-                        "PEKZXUX"
                       ],
                       "priority_names": [
                         "SEV-1",
