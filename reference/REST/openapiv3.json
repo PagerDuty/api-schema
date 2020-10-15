@@ -1727,7 +1727,7 @@
               },
               "assignments": {
                 "type": "array",
-                "description": "List of all assignments for this incident.",
+                "description": "List of all assignments for this incident. This list will be empty if the `Incident.status` is `resolved`.",
                 "items": {
                   "$ref": "#/components/schemas/Assignment"
                 }
@@ -1743,7 +1743,7 @@
               },
               "acknowledgements": {
                 "type": "array",
-                "description": "List of all acknowledgements for this incident.",
+                "description": "List of all acknowledgements for this incident. This list will be empty if the `Incident.status` is `resolved` or `triggered`.",
                 "items": {
                   "$ref": "#/components/schemas/Acknowledgement"
                 }
