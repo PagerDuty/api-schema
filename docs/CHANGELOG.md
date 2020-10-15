@@ -8,6 +8,7 @@ Currently we do not deprecate or remove any API functionality.
 ### 2020-10-15
 - *BREAKING* Removed Business Services filter from all `/analytics` endpoints.
 - Improved error messaging for all `/analytics` endpoints
+- Added documentation for expected behavior of `Incident.assignments` and `Incident.acknowledgments`.
 
 ### 2020-10-13
 - Clarified the process of getting authorization headers for IntegrationJiraService API
