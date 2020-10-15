@@ -5,6 +5,10 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 Currently we do not deprecate or remove any API functionality.
 
 ----
+### 2020-10-15
+- *BREAKING* Removed Business Services filter from all `/analytics` endpoints.
+- Improved error messaging for all `/analytics` endpoints
+
 ### 2020-10-13
 - Clarified the process of getting authorization headers for IntegrationJiraService API
 - Added Early-Access endpoints for the Subscriptions API used to manage V3 webhooks.
