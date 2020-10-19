@@ -94,7 +94,7 @@
     },
     {
       "name": "Subscriptions",
-      "description": "A subscription indicates an interest in a set of events occurring on the PagerDuty platform and \nspecifies a destination for said events to be delivered.  Subscriptions power the next generation\nof PagerDuty webhooks.\n"
+      "description": "A subscription indicates an interest in a set of events occurring on the PagerDuty platform and\nspecifies a destination for said events to be delivered.  Subscriptions power the next generation\nof PagerDuty webhooks.\n"
     },
     {
       "name": "Tags",
@@ -152,6 +152,20 @@
           "type": "string"
         }
       },
+      "entity_type": {
+        "name": "entity_type",
+        "in": "path",
+        "description": "Type of entity related with the tag",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "enum": [
+            "users",
+            "teams",
+            "escalation_policies"
+          ]
+        }
+      },
       "limit": {
         "name": "limit",
         "in": "query",
@@ -174,10 +188,223 @@
         "name": "total",
         "in": "query",
         "required": false,
-        "description": "Indicates whether the request should display the total number of results.",
+        "description": "By default the `total` field in pagination responses is set to `null` to provide the fastest possible response times. Set `total` to `true` for this field to be populated.\n\nSee our [Pagination Docs](https://developer.pagerduty.com/docs/rest-api-v2/pagination/) for more information.\n",
         "schema": {
           "default": false,
           "type": "boolean"
+        }
+      },
+      "cursor": {
+        "name": "cursor",
+        "in": "query",
+        "required": false,
+        "description": "Optional parameter used to request the \"next\" set of results from an API.  The value provided here is most commonly obtained from the `next_cursor` field of the previous request.  When no value is provided, the request starts at the beginning of the result set.\n",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "cursor_limit": {
+        "name": "limit",
+        "in": "query",
+        "required": false,
+        "description": "The minimum of the `limit` parameter used in the request or the maximum request size of the API.",
+        "schema": {
+          "type": "integer"
+        }
+      },
+      "team_ids": {
+        "name": "team_ids[]",
+        "in": "query",
+        "description": "An array of team IDs. Only results related to these teams will be returned. Account must have the `teams` ability to use this parameter.",
+        "explode": true,
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        }
+      },
+      "audit_records_since": {
+        "name": "since",
+        "in": "query",
+        "description": "The start of the date range over which you want to search. If not specified, defaults to `now() - 24 hours` (past 24 hours)",
+        "schema": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "audit_records_until": {
+        "name": "until",
+        "in": "query",
+        "description": "The end of the date range over which you want to search. If not specified, defaults to `now()`",
+        "schema": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "audit_records_early_access": {
+        "schema": {
+          "type": "string",
+          "enum": [
+            "audit-early-access"
+          ]
+        },
+        "in": "header",
+        "description": "This header indicates that this API endpoint is __UNDER CONSTRUCTION__ and may change at any time.  You __MUST__ pass in this header and the above value.  Do not use this endpoint in production, as it may change!\n",
+        "name": "X-EARLY-ACCESS",
+        "required": true
+      },
+      "escalation_policy_escalation_rule_id": {
+        "name": "escalation_rule_id",
+        "in": "path",
+        "description": "The escalation rule ID on the escalation policy.",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "include_escalation_policy": {
+        "name": "include[]",
+        "in": "query",
+        "description": "Array of additional Models to include in response.",
+        "explode": true,
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "services",
+              "teams",
+              "targets"
+            ]
+          },
+          "uniqueItems": true
+        }
+      },
+      "team_escalation_policy_id": {
+        "name": "escalation_policy_id",
+        "in": "path",
+        "description": "The escalation policy ID on the team.",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "incident_key": {
+        "name": "incident_key",
+        "in": "query",
+        "description": "Incident de-duplication key. Incidents with child alerts do not have an incident key; querying by incident key will return incidents whose alerts have alert_key matching the given incident key.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "incident_services": {
+        "name": "service_ids[]",
+        "in": "query",
+        "description": "Returns only the incidents associated with the passed service(s). This expects one or more service IDs.",
+        "explode": true,
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        }
+      },
+      "incident_assigned_to_user": {
+        "name": "user_ids[]",
+        "in": "query",
+        "description": "Returns only the incidents currently assigned to the passed user(s). This expects one or more user IDs. Note: When using the assigned_to_user filter, you will only receive incidents with statuses of triggered or acknowledged. This is because resolved incidents are not assigned to any user.",
+        "explode": true,
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        }
+      },
+      "incident_urgencies": {
+        "name": "urgencies[]",
+        "in": "query",
+        "description": "Array of the urgencies of the incidents to be returned. Defaults to all urgencies. Account must have the `urgencies` ability to do this.",
+        "explode": true,
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "high",
+              "low"
+            ]
+          },
+          "uniqueItems": true
+        }
+      },
+      "time_zone": {
+        "name": "time_zone",
+        "in": "query",
+        "description": "Time zone in which dates in the result will be rendered.",
+        "schema": {
+          "type": "string",
+          "format": "tzinfo",
+          "default": "UTC"
+        }
+      },
+      "from_header": {
+        "name": "From",
+        "in": "header",
+        "description": "The email address of a valid user associated with the account making the request.",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "email"
+        }
+      },
+      "integration_id": {
+        "name": "integration_id",
+        "in": "path",
+        "description": "The integration ID on the service.",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "type": {
+        "name": "type",
+        "in": "path",
+        "description": "The session type for the user session ID.",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "session_id": {
+        "name": "session_id",
+        "in": "path",
+        "description": "The session ID for the user.",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "team_user_id": {
+        "name": "user_id",
+        "in": "path",
+        "description": "The user ID on the team.",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "user_contact_method_id": {
+        "name": "contact_method_id",
+        "in": "path",
+        "description": "The contact method ID on the user.",
+        "required": true,
+        "schema": {
+          "type": "string"
         }
       }
     },
@@ -4170,7 +4397,7 @@
             "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "$ref": "#/paths/~1%7Bentity_type%7D~1%7Bid%7D~1tags/get/parameters/3"
+            "$ref": "#/components/parameters/entity_type"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -4339,21 +4566,16 @@
             "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/2"
+            "$ref": "#/components/parameters/limit"
           },
           {
-            "name": "entity_type",
-            "in": "path",
-            "description": "Type of entity related with the tag",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "enum": [
-                "users",
-                "teams",
-                "escalation_policies"
-              ]
-            }
+            "$ref": "#/components/parameters/offset"
+          },
+          {
+            "$ref": "#/components/parameters/total"
+          },
+          {
+            "$ref": "#/components/parameters/entity_type"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -4545,7 +4767,13 @@
         "summary": "List installed Add-ons",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/2"
+            "$ref": "#/components/parameters/limit"
+          },
+          {
+            "$ref": "#/components/parameters/offset"
+          },
+          {
+            "$ref": "#/components/parameters/total"
           },
           {
             "$ref": "#/components/parameters/Accept"
@@ -6151,52 +6379,19 @@
             "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "name": "limit",
-            "in": "query",
-            "required": false,
-            "description": "The minimum of the `limit` parameter used in the request or the maximum request size of the API.",
-            "schema": {
-              "type": "integer"
-            }
+            "$ref": "#/components/parameters/cursor_limit"
           },
           {
-            "name": "cursor",
-            "in": "query",
-            "required": false,
-            "description": "Optional parameter used to request the \"next\" set of results from an API.  The value provided here is most commonly obtained from the `next_cursor` field of the previous request.  When no value is provided, the request starts at the beginning of the result set.\n",
-            "schema": {
-              "type": "string"
-            }
+            "$ref": "#/components/parameters/cursor"
           },
           {
-            "name": "since",
-            "in": "query",
-            "description": "The start of the date range over which you want to search. If not specified, defaults to `now() - 24 hours` (past 24 hours)",
-            "schema": {
-              "type": "string",
-              "format": "date-time"
-            }
+            "$ref": "#/components/parameters/audit_records_since"
           },
           {
-            "name": "until",
-            "in": "query",
-            "description": "The end of the date range over which you want to search. If not specified, defaults to `now()`",
-            "schema": {
-              "type": "string",
-              "format": "date-time"
-            }
+            "$ref": "#/components/parameters/audit_records_until"
           },
           {
-            "schema": {
-              "type": "string",
-              "enum": [
-                "audit-early-access"
-              ]
-            },
-            "in": "header",
-            "description": "This header indicates that this API endpoint is __UNDER CONSTRUCTION__ and may change at any time.  You __MUST__ pass in this header and the above value.  Do not use this endpoint in production, as it may change!\n",
-            "name": "X-EARLY-ACCESS",
-            "required": true
+            "$ref": "#/components/parameters/audit_records_early_access"
           },
           {
             "name": "resource_types[]",
@@ -6772,31 +6967,13 @@
             "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "name": "total",
-            "in": "query",
-            "description": "An optional parameter to display the total number of results.",
-            "schema": {
-              "default": false,
-              "type": "boolean"
-            }
+            "$ref": "#/components/parameters/limit"
           },
           {
-            "name": "offset",
-            "in": "query",
-            "description": "Offset to start pagination search results.",
-            "schema": {
-              "default": 0,
-              "type": "integer"
-            }
+            "$ref": "#/components/parameters/offset"
           },
           {
-            "name": "limit",
-            "in": "query",
-            "description": "Limit on number of results to load",
-            "schema": {
-              "default": 100,
-              "type": "integer"
-            }
+            "$ref": "#/components/parameters/total"
           }
         ],
         "responses": {
@@ -7249,7 +7426,13 @@
         "summary": "List escalation policies",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/2"
+            "$ref": "#/components/parameters/limit"
+          },
+          {
+            "$ref": "#/components/parameters/offset"
+          },
+          {
+            "$ref": "#/components/parameters/total"
           },
           {
             "$ref": "#/components/parameters/Accept"
@@ -7258,12 +7441,7 @@
             "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "name": "query",
-            "in": "query",
-            "description": "Filters the results, showing only the escalation policies whose names contain the query.",
-            "schema": {
-              "type": "string"
-            }
+            "$ref": "#/paths/~1tags/get/parameters/5"
           },
           {
             "name": "user_ids[]",
@@ -7279,25 +7457,10 @@
             }
           },
           {
-            "$ref": "#/paths/~1users/get/parameters/3"
+            "$ref": "#/components/parameters/team_ids"
           },
           {
-            "name": "include[]",
-            "in": "query",
-            "description": "Array of additional Models to include in response.",
-            "explode": true,
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "string",
-                "enum": [
-                  "services",
-                  "teams",
-                  "targets"
-                ]
-              },
-              "uniqueItems": true
-            }
+            "$ref": "#/components/parameters/include_escalation_policy"
           },
           {
             "name": "sort_by",
@@ -7614,7 +7777,7 @@
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/paths/~1escalation_policies/get/parameters/6"
+            "$ref": "#/components/parameters/include_escalation_policy"
           }
         ],
         "responses": {
@@ -7929,19 +8092,19 @@
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/paths/~1audit~1records/get/parameters/2"
+            "$ref": "#/components/parameters/cursor_limit"
           },
           {
-            "$ref": "#/paths/~1audit~1records/get/parameters/3"
+            "$ref": "#/components/parameters/cursor"
           },
           {
-            "$ref": "#/paths/~1audit~1records/get/parameters/4"
+            "$ref": "#/components/parameters/audit_records_since"
           },
           {
-            "$ref": "#/paths/~1audit~1records/get/parameters/5"
+            "$ref": "#/components/parameters/audit_records_until"
           },
           {
-            "$ref": "#/paths/~1audit~1records/get/parameters/6"
+            "$ref": "#/components/parameters/audit_records_early_access"
           }
         ],
         "responses": {
@@ -8018,7 +8181,13 @@
         "summary": "List extension schemas",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/2"
+            "$ref": "#/components/parameters/limit"
+          },
+          {
+            "$ref": "#/components/parameters/offset"
+          },
+          {
+            "$ref": "#/components/parameters/total"
           },
           {
             "$ref": "#/components/parameters/Accept"
@@ -8203,7 +8372,13 @@
         "summary": "List extensions",
         "parameters": [
           {
-            "$ref": "#/paths/~1tags/get/parameters/2"
+            "$ref": "#/components/parameters/limit"
+          },
+          {
+            "$ref": "#/components/parameters/offset"
+          },
+          {
+            "$ref": "#/components/parameters/total"
           },
           {
             "$ref": "#/components/parameters/Accept"
@@ -8212,17 +8387,12 @@
             "$ref": "#/components/parameters/Content-Type"
           },
           {
+            "$ref": "#/paths/~1tags/get/parameters/5"
+          },
+          {
             "name": "extension_object_id",
             "description": "The id of the extension object you want to filter by.",
             "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "query",
-            "in": "query",
-            "description": "Filters the result, showing only the extensions whose name matches the query.",
             "schema": {
               "type": "string"
             }
@@ -8925,7 +9095,13 @@
             "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/2"
+            "$ref": "#/components/parameters/limit"
+          },
+          {
+            "$ref": "#/components/parameters/offset"
+          },
+          {
+            "$ref": "#/components/parameters/total"
           },
           {
             "name": "since",
@@ -8975,61 +9151,22 @@
             }
           },
           {
-            "name": "incident_key",
-            "in": "query",
-            "description": "Incident de-duplication key. Incidents with child alerts do not have an incident key; querying by incident key will return incidents whose alerts have alert_key matching the given incident key.",
-            "schema": {
-              "type": "string"
-            }
+            "$ref": "#/components/parameters/incident_key"
           },
           {
-            "name": "service_ids[]",
-            "in": "query",
-            "description": "Returns only the incidents associated with the passed service(s). This expects one or more service IDs.",
-            "explode": true,
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              },
-              "uniqueItems": true
-            }
+            "$ref": "#/components/parameters/incident_services"
           },
           {
-            "$ref": "#/paths/~1users/get/parameters/3"
+            "$ref": "#/components/parameters/team_ids"
           },
           {
-            "name": "user_ids[]",
-            "in": "query",
-            "description": "Returns only the incidents currently assigned to the passed user(s). This expects one or more user IDs. Note: When using the assigned_to_user filter, you will only receive incidents with statuses of triggered or acknowledged. This is because resolved incidents are not assigned to any user.",
-            "explode": true,
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              },
-              "uniqueItems": true
-            }
+            "$ref": "#/components/parameters/incident_assigned_to_user"
           },
           {
-            "name": "urgencies[]",
-            "in": "query",
-            "description": "Array of the urgencies of the incidents to be returned. Defaults to all urgencies. Account must have the `urgencies` ability to do this.",
-            "explode": true,
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "string",
-                "enum": [
-                  "high",
-                  "low"
-                ]
-              },
-              "uniqueItems": true
-            }
+            "$ref": "#/components/parameters/incident_urgencies"
           },
           {
-            "$ref": "#/paths/~1oncalls/get/parameters/2"
+            "$ref": "#/components/parameters/time_zone"
           },
           {
             "name": "sort_by",
@@ -9208,10 +9345,16 @@
             "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/2"
+            "$ref": "#/components/parameters/limit"
           },
           {
-            "$ref": "#/paths/~1users/post/parameters/2"
+            "$ref": "#/components/parameters/offset"
+          },
+          {
+            "$ref": "#/components/parameters/total"
+          },
+          {
+            "$ref": "#/components/parameters/from_header"
           }
         ],
         "requestBody": {
@@ -9499,7 +9642,7 @@
             "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "$ref": "#/paths/~1users/post/parameters/2"
+            "$ref": "#/components/parameters/from_header"
           }
         ],
         "requestBody": {
@@ -9905,7 +10048,7 @@
             }
           },
           {
-            "$ref": "#/paths/~1users/post/parameters/2"
+            "$ref": "#/components/parameters/from_header"
           }
         ],
         "requestBody": {
@@ -10152,7 +10295,13 @@
             "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/2"
+            "$ref": "#/components/parameters/limit"
+          },
+          {
+            "$ref": "#/components/parameters/offset"
+          },
+          {
+            "$ref": "#/components/parameters/total"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -10336,13 +10485,19 @@
             "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/2"
+            "$ref": "#/components/parameters/limit"
+          },
+          {
+            "$ref": "#/components/parameters/offset"
+          },
+          {
+            "$ref": "#/components/parameters/total"
           },
           {
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/paths/~1users/post/parameters/2"
+            "$ref": "#/components/parameters/from_header"
           }
         ],
         "requestBody": {
@@ -10614,7 +10769,7 @@
             }
           },
           {
-            "$ref": "#/paths/~1users/post/parameters/2"
+            "$ref": "#/components/parameters/from_header"
           }
         ],
         "requestBody": {
@@ -10740,25 +10895,31 @@
             "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/2"
+            "$ref": "#/components/parameters/limit"
+          },
+          {
+            "$ref": "#/components/parameters/offset"
+          },
+          {
+            "$ref": "#/components/parameters/total"
           },
           {
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/paths/~1oncalls/get/parameters/2"
+            "$ref": "#/components/parameters/time_zone"
           },
           {
-            "$ref": "#/paths/~1incidents/get/parameters/3"
+            "$ref": "#/paths/~1incidents/get/parameters/5"
           },
           {
-            "$ref": "#/paths/~1incidents/get/parameters/4"
+            "$ref": "#/paths/~1incidents/get/parameters/6"
           },
           {
-            "$ref": "#/paths/~1log_entries/get/parameters/6"
+            "$ref": "#/paths/~1log_entries/get/parameters/8"
           },
           {
-            "$ref": "#/paths/~1log_entries/get/parameters/7"
+            "$ref": "#/paths/~1log_entries/get/parameters/9"
           }
         ],
         "responses": {
@@ -10875,7 +11036,7 @@
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/paths/~1users/post/parameters/2"
+            "$ref": "#/components/parameters/from_header"
           }
         ],
         "requestBody": {
@@ -11065,7 +11226,7 @@
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/paths/~1users/post/parameters/2"
+            "$ref": "#/components/parameters/from_header"
           }
         ],
         "requestBody": {
@@ -11171,7 +11332,7 @@
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/paths/~1users/post/parameters/2"
+            "$ref": "#/components/parameters/from_header"
           }
         ],
         "requestBody": {
@@ -11340,7 +11501,7 @@
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/paths/~1users/post/parameters/2"
+            "$ref": "#/components/parameters/from_header"
           }
         ],
         "requestBody": {
@@ -11518,7 +11679,7 @@
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/paths/~1users/post/parameters/2"
+            "$ref": "#/components/parameters/from_header"
           }
         ],
         "requestBody": {
@@ -11623,16 +11784,22 @@
             "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/2"
+            "$ref": "#/components/parameters/limit"
           },
           {
-            "$ref": "#/paths/~1oncalls/get/parameters/2"
+            "$ref": "#/components/parameters/offset"
           },
           {
-            "$ref": "#/paths/~1incidents/get/parameters/3"
+            "$ref": "#/components/parameters/total"
           },
           {
-            "$ref": "#/paths/~1incidents/get/parameters/4"
+            "$ref": "#/components/parameters/time_zone"
+          },
+          {
+            "$ref": "#/paths/~1incidents/get/parameters/5"
+          },
+          {
+            "$ref": "#/paths/~1incidents/get/parameters/6"
           },
           {
             "name": "is_overview",
@@ -11775,13 +11942,13 @@
             "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "$ref": "#/paths/~1oncalls/get/parameters/2"
+            "$ref": "#/components/parameters/time_zone"
           },
           {
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/paths/~1log_entries/get/parameters/7"
+            "$ref": "#/paths/~1log_entries/get/parameters/9"
           }
         ],
         "responses": {
@@ -11886,7 +12053,7 @@
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/paths/~1users/post/parameters/2"
+            "$ref": "#/components/parameters/from_header"
           }
         ],
         "requestBody": {
@@ -11976,10 +12143,19 @@
             "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/2"
+            "$ref": "#/paths/~1tags/get/parameters/5"
           },
           {
-            "$ref": "#/paths/~1users/get/parameters/3"
+            "$ref": "#/components/parameters/limit"
+          },
+          {
+            "$ref": "#/components/parameters/offset"
+          },
+          {
+            "$ref": "#/components/parameters/total"
+          },
+          {
+            "$ref": "#/components/parameters/team_ids"
           },
           {
             "name": "service_ids[]",
@@ -12024,14 +12200,6 @@
                 "open",
                 "all"
               ]
-            }
-          },
-          {
-            "name": "query",
-            "in": "query",
-            "description": "Filters the results, showing only the maintenance windows whose descriptions contain the query.",
-            "schema": {
-              "type": "string"
             }
           }
         ],
@@ -12142,7 +12310,7 @@
             "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "$ref": "#/paths/~1users/post/parameters/2"
+            "$ref": "#/components/parameters/from_header"
           }
         ],
         "requestBody": {
@@ -12279,7 +12447,7 @@
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/paths/~1maintenance_windows/get/parameters/5"
+            "$ref": "#/paths/~1maintenance_windows/get/parameters/8"
           }
         ],
         "responses": {
@@ -12549,10 +12717,16 @@
             "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/2"
+            "$ref": "#/components/parameters/limit"
           },
           {
-            "$ref": "#/paths/~1oncalls/get/parameters/2"
+            "$ref": "#/components/parameters/offset"
+          },
+          {
+            "$ref": "#/components/parameters/total"
+          },
+          {
+            "$ref": "#/components/parameters/time_zone"
           },
           {
             "name": "since",
@@ -12704,17 +12878,16 @@
             "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "name": "time_zone",
-            "in": "query",
-            "description": "Time zone in which dates in the result will be rendered.",
-            "schema": {
-              "type": "string",
-              "format": "tzinfo",
-              "default": "UTC"
-            }
+            "$ref": "#/components/parameters/time_zone"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/2"
+            "$ref": "#/components/parameters/limit"
+          },
+          {
+            "$ref": "#/components/parameters/offset"
+          },
+          {
+            "$ref": "#/components/parameters/total"
           },
           {
             "name": "include[]",
@@ -12900,7 +13073,13 @@
             "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/2"
+            "$ref": "#/components/parameters/limit"
+          },
+          {
+            "$ref": "#/components/parameters/offset"
+          },
+          {
+            "$ref": "#/components/parameters/total"
           }
         ],
         "responses": {
@@ -13014,12 +13193,7 @@
         "summary": "List Response Plays",
         "parameters": [
           {
-            "name": "query",
-            "in": "query",
-            "description": "Filters the result, showing only the Response Plays whose name matches the query.",
-            "schema": {
-              "type": "string"
-            }
+            "$ref": "#/paths/~1tags/get/parameters/5"
           },
           {
             "name": "filter_for_manual_run",
@@ -13485,7 +13659,7 @@
             }
           },
           {
-            "$ref": "#/paths/~1users/post/parameters/2"
+            "$ref": "#/components/parameters/from_header"
           }
         ],
         "requestBody": {
@@ -13572,7 +13746,13 @@
             "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/2"
+            "$ref": "#/components/parameters/limit"
+          },
+          {
+            "$ref": "#/components/parameters/offset"
+          },
+          {
+            "$ref": "#/components/parameters/total"
           }
         ],
         "responses": {
@@ -14178,7 +14358,13 @@
             "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/2"
+            "$ref": "#/components/parameters/limit"
+          },
+          {
+            "$ref": "#/components/parameters/offset"
+          },
+          {
+            "$ref": "#/components/parameters/total"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -15064,15 +15250,16 @@
             "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/2"
+            "$ref": "#/components/parameters/limit"
           },
           {
-            "name": "query",
-            "in": "query",
-            "description": "Filters the result, showing only the schedules whose name matches the query.",
-            "schema": {
-              "type": "string"
-            }
+            "$ref": "#/components/parameters/offset"
+          },
+          {
+            "$ref": "#/components/parameters/total"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/5"
           }
         ],
         "responses": {
@@ -15388,13 +15575,13 @@
             "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "$ref": "#/paths/~1oncalls/get/parameters/2"
+            "$ref": "#/components/parameters/time_zone"
           },
           {
-            "$ref": "#/paths/~1incidents/get/parameters/3"
+            "$ref": "#/paths/~1incidents/get/parameters/5"
           },
           {
-            "$ref": "#/paths/~1incidents/get/parameters/4"
+            "$ref": "#/paths/~1incidents/get/parameters/6"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -15795,19 +15982,19 @@
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/paths/~1audit~1records/get/parameters/2"
+            "$ref": "#/components/parameters/cursor_limit"
           },
           {
-            "$ref": "#/paths/~1audit~1records/get/parameters/3"
+            "$ref": "#/components/parameters/cursor"
           },
           {
-            "$ref": "#/paths/~1audit~1records/get/parameters/4"
+            "$ref": "#/components/parameters/audit_records_since"
           },
           {
-            "$ref": "#/paths/~1audit~1records/get/parameters/5"
+            "$ref": "#/components/parameters/audit_records_until"
           },
           {
-            "$ref": "#/paths/~1audit~1records/get/parameters/6"
+            "$ref": "#/components/parameters/audit_records_early_access"
           }
         ],
         "responses": {
@@ -16168,10 +16355,10 @@
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/paths/~1incidents/get/parameters/3"
+            "$ref": "#/paths/~1incidents/get/parameters/5"
           },
           {
-            "$ref": "#/paths/~1incidents/get/parameters/4"
+            "$ref": "#/paths/~1incidents/get/parameters/6"
           }
         ],
         "responses": {
@@ -16325,10 +16512,10 @@
             "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "$ref": "#/paths/~1incidents/get/parameters/3"
+            "$ref": "#/paths/~1incidents/get/parameters/5"
           },
           {
-            "$ref": "#/paths/~1incidents/get/parameters/4"
+            "$ref": "#/paths/~1incidents/get/parameters/6"
           },
           {
             "$ref": "#/paths/~1schedules/post/parameters/2"
@@ -17132,13 +17319,22 @@
             "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/2"
+            "$ref": "#/paths/~1tags/get/parameters/5"
           },
           {
-            "$ref": "#/paths/~1users/get/parameters/3"
+            "$ref": "#/components/parameters/limit"
           },
           {
-            "$ref": "#/paths/~1oncalls/get/parameters/2"
+            "$ref": "#/components/parameters/offset"
+          },
+          {
+            "$ref": "#/components/parameters/total"
+          },
+          {
+            "$ref": "#/components/parameters/team_ids"
+          },
+          {
+            "$ref": "#/components/parameters/time_zone"
           },
           {
             "name": "sort_by",
@@ -17152,14 +17348,6 @@
                 "name:desc"
               ],
               "default": "name"
-            }
-          },
-          {
-            "name": "query",
-            "in": "query",
-            "description": "Filters the result, showing only the services whose name or service_key matches the query.",
-            "schema": {
-              "type": "string"
             }
           },
           {
@@ -17915,19 +18103,19 @@
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/paths/~1audit~1records/get/parameters/2"
+            "$ref": "#/components/parameters/cursor_limit"
           },
           {
-            "$ref": "#/paths/~1audit~1records/get/parameters/3"
+            "$ref": "#/components/parameters/cursor"
           },
           {
-            "$ref": "#/paths/~1audit~1records/get/parameters/4"
+            "$ref": "#/components/parameters/audit_records_since"
           },
           {
-            "$ref": "#/paths/~1audit~1records/get/parameters/5"
+            "$ref": "#/components/parameters/audit_records_until"
           },
           {
-            "$ref": "#/paths/~1audit~1records/get/parameters/6"
+            "$ref": "#/components/parameters/audit_records_early_access"
           }
         ],
         "responses": {
@@ -18142,13 +18330,7 @@
             "$ref": "#/components/parameters/id"
           },
           {
-            "name": "integration_id",
-            "in": "path",
-            "description": "The integration ID on the service.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
+            "$ref": "#/components/parameters/integration_id"
           }
         ],
         "requestBody": {
@@ -18270,7 +18452,7 @@
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/paths/~1services~1%7Bid%7D~1integrations~1%7Bintegration_id%7D/put/parameters/3"
+            "$ref": "#/components/parameters/integration_id"
           },
           {
             "name": "include[]",
@@ -18370,7 +18552,13 @@
             "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/2"
+            "$ref": "#/components/parameters/limit"
+          },
+          {
+            "$ref": "#/components/parameters/offset"
+          },
+          {
+            "$ref": "#/components/parameters/total"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -19800,18 +19988,19 @@
             "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "name": "total",
-            "in": "query",
-            "description": "By default the `total` field in pagination responses is set to `null` to provide the fastest possible response times. Set `total` to `true` for this field to be populated.\n\nSee our [Pagination Docs](https://developer.pagerduty.com/docs/rest-api-v2/pagination/) for more information.\n",
-            "required": false,
-            "schema": {
-              "type": "boolean"
-            }
+            "$ref": "#/components/parameters/limit"
+          },
+          {
+            "$ref": "#/components/parameters/offset"
+          },
+          {
+            "$ref": "#/components/parameters/total"
           },
           {
             "name": "query",
             "in": "query",
             "description": "Filters the result, showing only the tags whose labels match the query.",
+            "required": false,
             "schema": {
               "type": "string"
             }
@@ -20087,13 +20276,19 @@
             "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/2"
+            "$ref": "#/components/parameters/limit"
+          },
+          {
+            "$ref": "#/components/parameters/offset"
+          },
+          {
+            "$ref": "#/components/parameters/total"
           },
           {
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/paths/~1%7Bentity_type%7D~1%7Bid%7D~1tags/get/parameters/3"
+            "$ref": "#/components/parameters/entity_type"
           }
         ],
         "responses": {
@@ -20282,15 +20477,16 @@
             "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/2"
+            "$ref": "#/components/parameters/limit"
           },
           {
-            "name": "query",
-            "in": "query",
-            "description": "Filters the result, showing only the teams whose names or email addresses match the query.",
-            "schema": {
-              "type": "string"
-            }
+            "$ref": "#/components/parameters/offset"
+          },
+          {
+            "$ref": "#/components/parameters/total"
+          },
+          {
+            "$ref": "#/paths/~1tags/get/parameters/5"
           }
         ],
         "responses": {
@@ -20621,19 +20817,19 @@
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/paths/~1audit~1records/get/parameters/2"
+            "$ref": "#/components/parameters/cursor_limit"
           },
           {
-            "$ref": "#/paths/~1audit~1records/get/parameters/3"
+            "$ref": "#/components/parameters/cursor"
           },
           {
-            "$ref": "#/paths/~1audit~1records/get/parameters/4"
+            "$ref": "#/components/parameters/audit_records_since"
           },
           {
-            "$ref": "#/paths/~1audit~1records/get/parameters/5"
+            "$ref": "#/components/parameters/audit_records_until"
           },
           {
-            "$ref": "#/paths/~1audit~1records/get/parameters/6"
+            "$ref": "#/components/parameters/audit_records_early_access"
           }
         ],
         "responses": {
@@ -20719,7 +20915,7 @@
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/paths/~1teams~1%7Bid%7D~1escalation_policies~1%7Bescalation_policy_id%7D/put/parameters/3"
+            "$ref": "#/components/parameters/team_escalation_policy_id"
           }
         ],
         "responses": {
@@ -20764,13 +20960,7 @@
             "$ref": "#/components/parameters/id"
           },
           {
-            "name": "escalation_policy_id",
-            "in": "path",
-            "description": "The escalation policy ID on the team.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
+            "$ref": "#/components/parameters/team_escalation_policy_id"
           }
         ],
         "responses": {
@@ -20815,7 +21005,13 @@
             "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/2"
+            "$ref": "#/components/parameters/limit"
+          },
+          {
+            "$ref": "#/components/parameters/offset"
+          },
+          {
+            "$ref": "#/components/parameters/total"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -20933,7 +21129,7 @@
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/paths/~1teams~1%7Bid%7D~1users~1%7Buser_id%7D/put/parameters/3"
+            "$ref": "#/components/parameters/team_user_id"
           }
         ],
         "responses": {
@@ -20978,13 +21174,7 @@
             "$ref": "#/components/parameters/id"
           },
           {
-            "name": "user_id",
-            "in": "path",
-            "description": "The user ID on the team.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
+            "$ref": "#/components/parameters/team_user_id"
           }
         ],
         "requestBody": {
@@ -21058,28 +21248,19 @@
             "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "name": "query",
-            "in": "query",
-            "description": "Filters the result, showing only the users whose names or email addresses match the query.",
-            "schema": {
-              "type": "string"
-            }
+            "$ref": "#/paths/~1tags/get/parameters/5"
           },
           {
-            "name": "team_ids[]",
-            "in": "query",
-            "description": "An array of team IDs. Only results related to these teams will be returned. Account must have the `teams` ability to use this parameter.",
-            "explode": true,
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              },
-              "uniqueItems": true
-            }
+            "$ref": "#/components/parameters/team_ids"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/2"
+            "$ref": "#/components/parameters/limit"
+          },
+          {
+            "$ref": "#/components/parameters/offset"
+          },
+          {
+            "$ref": "#/components/parameters/total"
           },
           {
             "name": "include[]",
@@ -21255,14 +21436,7 @@
             "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "name": "From",
-            "in": "header",
-            "description": "The email address of a valid user associated with the account making the request.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "email"
-            }
+            "$ref": "#/components/parameters/from_header"
           }
         ],
         "requestBody": {
@@ -21407,7 +21581,7 @@
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/paths/~1users/get/parameters/5"
+            "$ref": "#/paths/~1users/get/parameters/7"
           }
         ],
         "responses": {
@@ -21694,13 +21868,13 @@
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/paths/~1audit~1records/get/parameters/4"
+            "$ref": "#/components/parameters/audit_records_since"
           },
           {
-            "$ref": "#/paths/~1audit~1records/get/parameters/5"
+            "$ref": "#/components/parameters/audit_records_until"
           },
           {
-            "$ref": "#/paths/~1audit~1records/get/parameters/6"
+            "$ref": "#/components/parameters/audit_records_early_access"
           }
         ],
         "responses": {
@@ -21986,13 +22160,7 @@
             "$ref": "#/components/parameters/id"
           },
           {
-            "name": "contact_method_id",
-            "in": "path",
-            "description": "The contact method ID on the user.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
+            "$ref": "#/components/parameters/user_contact_method_id"
           }
         ],
         "responses": {
@@ -22072,7 +22240,7 @@
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/paths/~1users~1%7Bid%7D~1contact_methods~1%7Bcontact_method_id%7D/get/parameters/3"
+            "$ref": "#/components/parameters/user_contact_method_id"
           }
         ],
         "responses": {
@@ -22111,7 +22279,7 @@
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/paths/~1users~1%7Bid%7D~1contact_methods~1%7Bcontact_method_id%7D/get/parameters/3"
+            "$ref": "#/components/parameters/user_contact_method_id"
           }
         ],
         "requestBody": {
@@ -22815,22 +22983,10 @@
             "$ref": "#/components/parameters/id"
           },
           {
-            "name": "type",
-            "in": "path",
-            "description": "The session type for the user session ID.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
+            "$ref": "#/components/parameters/type"
           },
           {
-            "name": "session_id",
-            "in": "path",
-            "description": "The session ID for the user.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
+            "$ref": "#/components/parameters/session_id"
           }
         ],
         "responses": {
@@ -22901,10 +23057,10 @@
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/paths/~1users~1%7Bid%7D~1sessions~1%7Btype%7D~1%7Bsession_id%7D/get/parameters/3"
+            "$ref": "#/components/parameters/type"
           },
           {
-            "$ref": "#/paths/~1users~1%7Bid%7D~1sessions~1%7Btype%7D~1%7Bsession_id%7D/get/parameters/4"
+            "$ref": "#/components/parameters/session_id"
           }
         ],
         "responses": {
@@ -23475,7 +23631,7 @@
             "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "$ref": "#/paths/~1users/get/parameters/5"
+            "$ref": "#/paths/~1users/get/parameters/7"
           }
         ],
         "responses": {
@@ -23573,7 +23729,13 @@
             "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "$ref": "#/paths/~1tags/get/parameters/2"
+            "$ref": "#/components/parameters/limit"
+          },
+          {
+            "$ref": "#/components/parameters/offset"
+          },
+          {
+            "$ref": "#/components/parameters/total"
           }
         ],
         "responses": {
