@@ -18542,7 +18542,7 @@
           "Services"
         ],
         "operationId": "listServiceEventRules",
-        "description": "List Event Rules on a Service.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
+        "description": "List Event Rules on a Service.\n",
         "summary": "List Service's Event Rules",
         "parameters": [
           {
@@ -18562,18 +18562,6 @@
           },
           {
             "$ref": "#/components/parameters/id"
-          },
-          {
-            "name": "X-EARLY-ACCESS",
-            "in": "header",
-            "description": "This header indicates that this API endpoint is __UNDER CONSTRUCTION__ and may change at any time. You __MUST__ pass in this header and corresponding value. Do not use this endpoint in production, as it may change!\n",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "enum": [
-                "service-rules-early-access"
-              ]
-            }
           }
         ],
         "responses": {
@@ -18685,7 +18673,7 @@
           "Services"
         ],
         "operationId": "createServiceEventRule",
-        "description": "Create a new Event Rule on a Service.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
+        "description": "Create a new Event Rule on a Service.\n",
         "summary": "Create an Event Rule on a Service",
         "parameters": [
           {
@@ -18696,18 +18684,6 @@
           },
           {
             "$ref": "#/components/parameters/id"
-          },
-          {
-            "name": "X-EARLY-ACCESS",
-            "in": "header",
-            "description": "This header indicates that this API endpoint is __UNDER CONSTRUCTION__ and may change at any time. You __MUST__ pass in this header and corresponding value. Do not use this endpoint in production, as it may change!\n",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "enum": [
-                "service-rules-early-access"
-              ]
-            }
           }
         ],
         "requestBody": {
@@ -19038,7 +19014,7 @@
           "Services"
         ],
         "operationId": "getServiceEventRule",
-        "description": "Get an Event Rule from a Service.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
+        "description": "Get an Event Rule from a Service.\n",
         "summary": "Get an Event Rule from a Service",
         "parameters": [
           {
@@ -19049,18 +19025,6 @@
           },
           {
             "$ref": "#/components/parameters/id"
-          },
-          {
-            "name": "X-EARLY-ACCESS",
-            "in": "header",
-            "description": "This header indicates that this API endpoint is __UNDER CONSTRUCTION__ and may change at any time. You __MUST__ pass in this header and corresponding value. Do not use this endpoint in production, as it may change!\n",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "enum": [
-                "service-rules-early-access"
-              ]
-            }
           },
           {
             "name": "rule_id",
@@ -19157,7 +19121,7 @@
         ],
         "operationId": "updateServiceEventRule",
         "summary": "Update an Event Rule on a Service",
-        "description": "Update an Event Rule on a Service. Note that the endpoint supports partial updates, so any number of the writable fields can be provided.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
+        "description": "Update an Event Rule on a Service. Note that the endpoint supports partial updates, so any number of the writable fields can be provided.\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/Accept"
@@ -19167,18 +19131,6 @@
           },
           {
             "$ref": "#/components/parameters/id"
-          },
-          {
-            "name": "X-EARLY-ACCESS",
-            "in": "header",
-            "description": "This header indicates that this API endpoint is __UNDER CONSTRUCTION__ and may change at any time. You __MUST__ pass in this header and corresponding value. Do not use this endpoint in production, as it may change!\n",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "enum": [
-                "service-rules-early-access"
-              ]
-            }
           },
           {
             "name": "rule_id",
@@ -19325,7 +19277,7 @@
           "Services"
         ],
         "operationId": "deleteServiceEventRule",
-        "description": "Delete an Event Rule from a Service.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
+        "description": "Delete an Event Rule from a Service.\n",
         "summary": "Delete an Event Rule from a Service",
         "parameters": [
           {
@@ -19336,18 +19288,6 @@
           },
           {
             "$ref": "#/components/parameters/id"
-          },
-          {
-            "name": "X-EARLY-ACCESS",
-            "in": "header",
-            "description": "This header indicates that this API endpoint is __UNDER CONSTRUCTION__ and may change at any time. You __MUST__ pass in this header and corresponding value. Do not use this endpoint in production, as it may change!\n",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "enum": [
-                "service-rules-early-access"
-              ]
-            }
           },
           {
             "name": "rule_id",
