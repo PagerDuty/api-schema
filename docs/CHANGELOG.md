@@ -5,6 +5,9 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 Currently we do not deprecate or remove any API functionality.
 
 ----
+## 2020-10-20
+- Removed the Early-Access headers from all the Service-level Event Rules endpoints.
+
 ### 2020-10-15
 - *BREAKING* Removed Business Services filter from all `/analytics` endpoints.
 - Improved error messaging for all `/analytics` endpoints
@@ -32,7 +35,7 @@ Currently we do not deprecate or remove any API functionality.
 - Updated response examples and some definitions in `/analytics` Early Access Endpoints.
 
 ### 2020-09-16
-- Add [Change Events](https://pagerduty.atlassian.net/wiki/spaces/BIV/pages/1420919384/Change+Events+API+Endpoint) to Events API V2
+- Add [Change Events](https://developer.pagerduty.com/docs/events-api-v2/send-change-events/) to Events API V2
 
 ### 2020-09-16
 - Added Early-Access endpoints for Service-level Event Rules
@@ -74,7 +77,7 @@ Currently we do not deprecate or remove any API functionality.
    - `GET /schedules/{id}/audit/records`
 
 ### 2020-08-12
-- Added `conference_type` param to `ResponsePlay` model 
+- Added `conference_type` param to `ResponsePlay` model
 
 ### 2020-08-10
 - Added documentation on `config` and `headers` options for webhooks v2.
