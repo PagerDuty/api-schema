@@ -5,6 +5,9 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 Currently we do not deprecate or remove any API functionality.
 
 ----
+### 2020-10-22
+- *BREAKING* Changed top level attribute for `resource` to `root_resource` in audit record schema.
+
 ## 2020-10-20
 - Removed the Early-Access headers from all the Service-level Event Rules endpoints.
 
