@@ -6396,7 +6396,7 @@
           {
             "name": "resource_types[]",
             "in": "query",
-            "description": "Resource type filter",
+            "description": "Resource type filter for the root_resource.",
             "schema": {
               "type": "array",
               "items": {
@@ -6543,7 +6543,7 @@
                                   "type"
                                 ]
                               },
-                              "resource": {
+                              "root_resource": {
                                 "$ref": "#/components/schemas/Reference"
                               },
                               "action": {
@@ -6643,7 +6643,7 @@
                               "id",
                               "execution_time",
                               "method",
-                              "resource",
+                              "root_resource",
                               "action"
                             ]
                           }
@@ -6717,7 +6717,7 @@
                             "type": "api_token",
                             "truncated_token": "3usr"
                           },
-                          "resource": {
+                          "root_resource": {
                             "id": "PXASDFE",
                             "type": "team_reference",
                             "summary": "my DevOps team"
@@ -6749,7 +6749,7 @@
                             "type": "api_token",
                             "truncated_token": "2adm"
                           },
-                          "resource": {
+                          "root_resource": {
                             "id": "PRY9M8B",
                             "type": "team_reference",
                             "summary": "DevOps"
@@ -6787,7 +6787,7 @@
                             "type": "api_token",
                             "truncated_token": "2adm"
                           },
-                          "resource": {
+                          "root_resource": {
                             "id": "PRY9M8B",
                             "type": "team_reference",
                             "summary": "DevOps"
@@ -6826,7 +6826,7 @@
                           "method": {
                             "type": "identity_provider"
                           },
-                          "resource": {
+                          "root_resource": {
                             "id": "PDUSER",
                             "type": "user_reference",
                             "summary": "John Snow"
@@ -6871,7 +6871,7 @@
                             "type": "api_token",
                             "truncated_token": "2adm"
                           },
-                          "resource": {
+                          "root_resource": {
                             "id": "PDUSER",
                             "type": "user_reference",
                             "summary": "John Snow"
