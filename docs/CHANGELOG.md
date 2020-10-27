@@ -5,10 +5,17 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 Currently we do not deprecate or remove any API functionality.
 
 ----
+### 2020-10-27
+- Added Early-Access endpoints for Change Events
+  - `GET /change_events`
+  - `GET /change_events/{id}`
+  - `GET /services/{id}/change_events`
+  - `PUT /change_events/{id}`
+
 ### 2020-10-22
 - *BREAKING* Changed top level attribute for `resource` to `root_resource` in audit record schema.
 
-## 2020-10-20
+### 2020-10-20
 - Removed the Early-Access headers from all the Service-level Event Rules endpoints.
 
 ### 2020-10-15
@@ -38,7 +45,7 @@ Currently we do not deprecate or remove any API functionality.
 - Updated response examples and some definitions in `/analytics` Early Access Endpoints.
 
 ### 2020-09-16
-- Add [Change Events](https://developer.pagerduty.com/docs/events-api-v2/send-change-events/) to Events API V2
+- Added [Change Events](https://developer.pagerduty.com/docs/events-api-v2/send-change-events/) to Events API V2
 
 ### 2020-09-16
 - Added Early-Access endpoints for Service-level Event Rules
