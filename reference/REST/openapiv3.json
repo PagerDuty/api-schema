@@ -37,6 +37,10 @@
       "description": "Business services model capabilities that span multiple technical services and that may be owned by several different teams.\n"
     },
     {
+      "name": "Change Events",
+      "description": "Change Events enable you to send informational events about recent changes such as code deploys and system config changes from any system that can make an outbound HTTP connection. These events do not create incidents and do not send notifications; they are shown in context with incidents on the same PagerDuty service.\n"
+    },
+    {
       "name": "Escalation Policies",
       "description": "Escalation policies define which user should be alerted at which time.\n"
     },
@@ -371,6 +375,19 @@
           "type": "string"
         }
       },
+      "integration_ids": {
+        "name": "integration_ids[]",
+        "in": "query",
+        "description": "An array of integration IDs. Only results related to these integrations will be returned.",
+        "explode": true,
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        }
+      },
       "type": {
         "name": "type",
         "in": "path",
@@ -681,6 +698,132 @@
                   "business_service_reference"
                 ]
               }
+            }
+          }
+        ]
+      },
+      "ChangeEvent": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Tag/allOf/0"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "timestamp": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true,
+                "description": "The time at which the emitting tool detected or generated the event."
+              },
+              "type": {
+                "type": "string",
+                "readOnly": true,
+                "default": "change_event",
+                "description": "The type of object being created.",
+                "enum": [
+                  "change_event"
+                ]
+              },
+              "services": {
+                "type": "array",
+                "readOnly": true,
+                "description": "An array containing Service objects that this change event is associated with.",
+                "items": {
+                  "$ref": "#/components/schemas/ServiceReference"
+                }
+              },
+              "integration": {
+                "allOf": [
+                  {
+                    "readOnly": true
+                  },
+                  {
+                    "$ref": "#/components/schemas/IntegrationReference"
+                  }
+                ]
+              },
+              "routing_key": {
+                "readOnly": true,
+                "title": "Routing Key",
+                "description": "This is the 32 character Integration Key for an Integration on a Service. The same Integration Key can be used for both alert and change events.",
+                "type": "string"
+              },
+              "summary": {
+                "type": "string",
+                "description": "A brief text summary of the event. Displayed in PagerDuty to provide information about the change. The maximum permitted length of this property is 1024 characters."
+              },
+              "source": {
+                "type": "string",
+                "readOnly": true,
+                "description": "The unique name of the location where the Change Event occurred."
+              },
+              "links": {
+                "type": "array",
+                "readOnly": true,
+                "description": "List of links to include.",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "href": {
+                      "type": "string"
+                    },
+                    "text": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "images": {
+                "type": "array",
+                "readOnly": true,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "src": {
+                      "type": "string"
+                    },
+                    "href": {
+                      "type": "string"
+                    },
+                    "alt": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "custom_details": {
+                "type": "object",
+                "description": "Additional details about the change event.",
+                "title": "Custom Details"
+              }
+            },
+            "example": {
+              "summary": "Build Success - Increase snapshot create timeout to 30 seconds",
+              "timestamp": "2020-07-17T08:42:58Z",
+              "type": "change_event",
+              "source": "acme-build-pipeline-tool-default-i-9999",
+              "integration": {
+                "id": "PEYSGVF",
+                "type": "inbound_integration_reference"
+              },
+              "services": [
+                {
+                  "id": "PEYSGRV",
+                  "type": "service_reference"
+                }
+              ],
+              "custom_details": {
+                "build_state": "passed",
+                "build_number": "2",
+                "run_time": "1236s"
+              },
+              "links": [
+                {
+                  "href": "https://acme.pagerduty.dev/build/2",
+                  "text": "View more details in Acme!"
+                }
+              ]
             }
           }
         ]
@@ -2588,7 +2731,9 @@
                   "keynote_inbound_integration_reference",
                   "nagios_inbound_integration_reference",
                   "pingdom_inbound_integration_reference",
-                  "sql_monitor_inbound_integration_reference"
+                  "sql_monitor_inbound_integration_reference",
+                  "events_api_v2_inbound_integration_reference",
+                  "inbound_integration_reference"
                 ]
               }
             }
@@ -7404,6 +7549,402 @@
           },
           "400": {
             "$ref": "#/components/responses/ArgumentError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/change_events": {
+      "description": "List change events.",
+      "get": {
+        "tags": [
+          "Change Events"
+        ],
+        "operationId": "listChangeEvents",
+        "description": "List all of the existing Change Events.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
+        "summary": "List Change Events",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/limit"
+          },
+          {
+            "$ref": "#/components/parameters/offset"
+          },
+          {
+            "$ref": "#/components/parameters/total"
+          },
+          {
+            "$ref": "#/components/parameters/Accept"
+          },
+          {
+            "$ref": "#/components/parameters/Content-Type"
+          },
+          {
+            "name": "since",
+            "in": "query",
+            "description": "The start of the date range over which you want to search, as a UTC ISO 8601 datetime string. Will return an HTTP 400 for non-UTC datetimes.",
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "YYYY-MM-DDThh:mm:ssZ"
+            }
+          },
+          {
+            "name": "until",
+            "in": "query",
+            "description": "The end of the date range over which you want to search, as a UTC ISO 8601 datetime string. Will return an HTTP 400 for non-UTC datetimes.",
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "YYYY-MM-DDThh:mm:ssZ"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/team_ids"
+          },
+          {
+            "$ref": "#/components/parameters/integration_ids"
+          },
+          {
+            "name": "X-EARLY-ACCESS",
+            "schema": {
+              "type": "string",
+              "default": "change-events-early-access"
+            },
+            "in": "header",
+            "description": "This header indicates that this API endpoint is __UNDER CONSTRUCTION__ and may change at any time. You __MUST__ pass in this header with the value `change-events-early-access`. Do not use this endpoint in production, as it may change!",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The array of Change Events returned by the query.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "change_events": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ChangeEvent"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "change_events": [
+                        {
+                          "summary": "Build Success - Increase snapshot create timeout to 30 seconds",
+                          "id": "01BBYA6PEVW6A852BUO6QYUE7O",
+                          "timestamp": "2020-07-17T08:42:58Z",
+                          "type": "change_event",
+                          "source": "acme-build-pipeline-tool-default-i-9999",
+                          "integration": {
+                            "id": "PEYSGVF",
+                            "type": "inbound_integration_reference"
+                          },
+                          "services": [
+                            {
+                              "id": "PEYSGRV",
+                              "type": "service_reference"
+                            }
+                          ],
+                          "custom_details": {
+                            "build_state": "passed",
+                            "build_number": "2",
+                            "run_time": "1236s"
+                          },
+                          "links": [
+                            {
+                              "href": "https://acme.pagerduty.dev/build/2",
+                              "text": "View more details in Acme!"
+                            }
+                          ]
+                        },
+                        {
+                          "summary": "Build Success - Increase snapshot create timeout to 15 seconds",
+                          "id": "01BBYA6PDIXPL8KO1HPIUL9CZN",
+                          "timestamp": "2020-07-17T07:42:58Z",
+                          "type": "change_event",
+                          "source": "acme-build-pipeline-tool-default-i-9999",
+                          "integration": {
+                            "id": "PEYSGVF",
+                            "type": "inbound_integration_reference"
+                          },
+                          "services": [
+                            {
+                              "id": "PEYSGRV",
+                              "type": "service_reference"
+                            }
+                          ],
+                          "custom_details": {
+                            "build_state": "passed",
+                            "build_number": "1",
+                            "run_time": "1233s"
+                          },
+                          "links": [
+                            {
+                              "href": "https://acme.pagerduty.dev/build/1",
+                              "text": "View more details in Acme!"
+                            }
+                          ]
+                        }
+                      ],
+                      "limit": null,
+                      "offset": null,
+                      "total": null,
+                      "more": false
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create Change Event",
+        "description": "Sending Change Events is documented as part of the V2 Events API. See [`Send Change Event`](https://developer.pagerduty.com/api-reference/reference/events-v2/openapiv3.json/paths/~1change~1enqueue/post).\n",
+        "operationId": "createChangeEvent",
+        "tags": [
+          "Change Events"
+        ],
+        "responses": {
+          "202": {
+            "description": "See [`Send Change Event`](https://developer.pagerduty.com/api-reference/reference/events-v2/openapiv3.json/paths/~1change~1enqueue/post) in the V2 Events API reference."
+          }
+        }
+      }
+    },
+    "/change_events/{id}": {
+      "description": "Read and update a Change Event.",
+      "get": {
+        "tags": [
+          "Change Events"
+        ],
+        "operationId": "getChangeEvent",
+        "description": "Get details about an existing Change Event.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
+        "summary": "Get a Change Event",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Accept"
+          },
+          {
+            "$ref": "#/components/parameters/Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "name": "X-EARLY-ACCESS",
+            "schema": {
+              "type": "string",
+              "default": "change-events-early-access"
+            },
+            "in": "header",
+            "description": "This header indicates that this API endpoint is __UNDER CONSTRUCTION__ and may change at any time. You __MUST__ pass in this header with the value `change-events-early-access`. Do not use this endpoint in production, as it may change!",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The Change Event requested.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "change_event": {
+                      "$ref": "#/components/schemas/ChangeEvent"
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "change_event": {
+                        "summary": "Build Success - Increase snapshot create timeout to 30 seconds",
+                        "timestamp": "2020-07-17T08:42:58Z",
+                        "type": "change_event",
+                        "source": "acme-build-pipeline-tool-default-i-9999",
+                        "integration": {
+                          "id": "PEYSGVF",
+                          "type": "inbound_integration_reference"
+                        },
+                        "services": [
+                          {
+                            "id": "PEYSGRV",
+                            "type": "service_reference"
+                          }
+                        ],
+                        "custom_details": {
+                          "build_state": "passed",
+                          "build_number": "2",
+                          "run_time": "1236s"
+                        },
+                        "links": [
+                          {
+                            "href": "https://acme.pagerduty.dev/build/2",
+                            "text": "View more details in Acme!"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update an existing Change Event",
+        "description": "Update an existing Change Event\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
+        "tags": [
+          "Change Events"
+        ],
+        "operationId": "updateChangeEvent",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Accept"
+          },
+          {
+            "$ref": "#/components/parameters/Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "name": "X-EARLY-ACCESS",
+            "schema": {
+              "type": "string",
+              "default": "change-events-early-access"
+            },
+            "in": "header",
+            "description": "This header indicates that this API endpoint is __UNDER CONSTRUCTION__ and may change at any time. You __MUST__ pass in this header with the value `change-events-early-access`. Do not use this endpoint in production, as it may change!",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "change_event": {
+                    "$ref": "#/components/schemas/ChangeEvent"
+                  }
+                },
+                "required": [
+                  "change_event"
+                ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "change_event": {
+                      "summary": "Build Success - Increase snapshot create timeout to 30 seconds",
+                      "type": "change_event",
+                      "custom_details": {
+                        "build_state": "passed",
+                        "build_number": "2",
+                        "run_time": "1236s"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "description": "The Change Event to be updated."
+        },
+        "responses": {
+          "200": {
+            "description": "The Change Event that was updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "change_event": {
+                      "$ref": "#/components/schemas/ChangeEvent"
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "change_event": {
+                        "summary": "Build Success - Increase snapshot create timeout to 30 seconds",
+                        "timestamp": "2020-07-17T08:42:58Z",
+                        "type": "change_event",
+                        "source": "acme-build-pipeline-tool-default-i-9999",
+                        "integration": {
+                          "id": "PEYSGVF",
+                          "type": "inbound_integration_reference"
+                        },
+                        "services": [
+                          {
+                            "id": "PEYSGRV",
+                            "type": "service_reference"
+                          }
+                        ],
+                        "custom_details": {
+                          "build_state": "passed",
+                          "build_number": "2",
+                          "run_time": "1236s"
+                        },
+                        "links": [
+                          {
+                            "href": "https://acme.pagerduty.dev/build/2",
+                            "text": "View more details in Acme!"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
           },
           "403": {
             "$ref": "#/components/responses/Forbidden"
@@ -18176,6 +18717,174 @@
           },
           "500": {
             "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/services/{id}/change_events": {
+      "description": "List change events for a service.",
+      "get": {
+        "tags": [
+          "Change Events"
+        ],
+        "operationId": "listServiceChangeEvents",
+        "description": "List all of the existing Change Events for a service.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
+        "summary": "List Change Events for a service.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/limit"
+          },
+          {
+            "$ref": "#/components/parameters/offset"
+          },
+          {
+            "$ref": "#/components/parameters/total"
+          },
+          {
+            "$ref": "#/components/parameters/Accept"
+          },
+          {
+            "$ref": "#/components/parameters/Content-Type"
+          },
+          {
+            "name": "since",
+            "in": "query",
+            "description": "The start of the date range over which you want to search, as a UTC ISO 8601 datetime string. Will return an HTTP 400 for non-UTC datetimes.",
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "YYYY-MM-DDThh:mm:ssZ"
+            }
+          },
+          {
+            "name": "until",
+            "in": "query",
+            "description": "The end of the date range over which you want to search, as a UTC ISO 8601 datetime string. Will return an HTTP 400 for non-UTC datetimes.",
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "YYYY-MM-DDThh:mm:ssZ"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/team_ids"
+          },
+          {
+            "$ref": "#/components/parameters/integration_ids"
+          },
+          {
+            "name": "X-EARLY-ACCESS",
+            "schema": {
+              "type": "string",
+              "default": "change-events-early-access"
+            },
+            "in": "header",
+            "description": "This header indicates that this API endpoint is __UNDER CONSTRUCTION__ and may change at any time. You __MUST__ pass in this header with the value `change-events-early-access`. Do not use this endpoint in production, as it may change!",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The array of Change Events returned by the query.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "change_events": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ChangeEvent"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "change_events": [
+                        {
+                          "summary": "Build Success - Increase snapshot create timeout to 30 seconds",
+                          "id": "01BBYA6PEVW6A852BUO6QYUE7O",
+                          "timestamp": "2020-07-17T08:42:58Z",
+                          "type": "change_event",
+                          "source": "acme-build-pipeline-tool-default-i-9999",
+                          "integration": {
+                            "id": "PEYSGVF",
+                            "type": "inbound_integration_reference"
+                          },
+                          "services": [
+                            {
+                              "id": "PEYSGRV",
+                              "type": "service_reference"
+                            }
+                          ],
+                          "custom_details": {
+                            "build_state": "passed",
+                            "build_number": "2",
+                            "run_time": "1236s"
+                          },
+                          "links": [
+                            {
+                              "href": "https://acme.pagerduty.dev/build/2",
+                              "text": "View more details in Acme!"
+                            }
+                          ]
+                        },
+                        {
+                          "summary": "Build Success - Increase snapshot create timeout to 15 seconds",
+                          "id": "01BBYA6PDIXPL8KO1HPIUL9CZN",
+                          "timestamp": "2020-07-17T07:42:58Z",
+                          "type": "change_event",
+                          "source": "acme-build-pipeline-tool-default-i-9999",
+                          "integration": {
+                            "id": "PEYSGVF",
+                            "type": "inbound_integration_reference"
+                          },
+                          "services": [
+                            {
+                              "id": "PEYSGRV",
+                              "type": "service_reference"
+                            }
+                          ],
+                          "custom_details": {
+                            "build_state": "passed",
+                            "build_number": "1",
+                            "run_time": "1233s"
+                          },
+                          "links": [
+                            {
+                              "href": "https://acme.pagerduty.dev/build/1",
+                              "text": "View more details in Acme!"
+                            }
+                          ]
+                        }
+                      ],
+                      "limit": null,
+                      "offset": null,
+                      "total": null,
+                      "more": false
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
           }
         }
       }
