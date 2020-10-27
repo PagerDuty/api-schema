@@ -7721,7 +7721,7 @@
         }
       },
       "post": {
-        "summary": "Create Change Event",
+        "summary": "Create a Change Event",
         "description": "Sending Change Events is documented as part of the V2 Events API. See [`Send Change Event`](https://developer.pagerduty.com/api-reference/reference/events-v2/openapiv3.json/paths/~1change~1enqueue/post).\n",
         "operationId": "createChangeEvent",
         "tags": [
@@ -7829,7 +7829,7 @@
         }
       },
       "put": {
-        "summary": "Update an existing Change Event",
+        "summary": "Update a Change Event",
         "description": "Update an existing Change Event\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
         "tags": [
           "Change Events"
@@ -18729,7 +18729,7 @@
         ],
         "operationId": "listServiceChangeEvents",
         "description": "List all of the existing Change Events for a service.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
-        "summary": "List Change Events for a service.",
+        "summary": "List Change Events for a service",
         "parameters": [
           {
             "$ref": "#/components/parameters/id"
