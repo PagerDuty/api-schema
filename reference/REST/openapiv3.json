@@ -6917,9 +6917,8 @@
                           "Message about the result"
                         ]
                       },
-                      "pagination_token": "dXNlcjpVMEc5V0ZYTlo=",
-                      "more": true,
-                      "limit": 1
+                      "cursor": "dXNlcjaVMzc5V0ZYTlo==",
+                      "limit": 10
                     }
                   }
                 }
