@@ -6539,7 +6539,7 @@
             "$ref": "#/components/parameters/audit_records_early_access"
           },
           {
-            "name": "resource_types[]",
+            "name": "root_resource_types[]",
             "in": "query",
             "description": "Resource type filter for the root_resource.",
             "schema": {

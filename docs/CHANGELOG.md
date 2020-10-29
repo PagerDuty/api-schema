@@ -5,6 +5,9 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 Currently we do not deprecate or remove any API functionality.
 
 ----
+### 2020-10-28
+- *BREAKING* Changed audit record params for `resource_types` to `root_resource_types`.
+
 ### 2020-10-27
 - Added Early-Access endpoints for Change Events
   - `GET /change_events`
