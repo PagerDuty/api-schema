@@ -6,6 +6,15 @@ Currently we do not deprecate or remove any API functionality.
 
 ----
 
+## 2020-11-05
+- *BREAKING* The Subscriptions API used to manage V3 webhooks is now the Webhook Subscriptions API. You can find the details in their new home under the "Webhooks" tag.
+  - `GET /webhook_subscriptions`
+  - `POST /webhook_subscriptions`
+  - `GET /webhook_subscriptions/{id}`
+  - `PUT /webhook_subscriptions/{id}`
+  - `DELETE /webhook_subscriptions/{id}`
+  - `POST /webhook_subscriptions/{id}/ping`
+
 ### 2020-11-03
 - *BREAKING* Restricted the set of valid actions in the Audit records query
 

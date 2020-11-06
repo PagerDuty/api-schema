@@ -97,8 +97,8 @@
       "description": "A Service may represent an application, component, or team you wish to open incidents against.\n"
     },
     {
-      "name": "Subscriptions",
-      "description": "A subscription indicates an interest in a set of events occurring on the PagerDuty platform and\nspecifies a destination for said events to be delivered.  Subscriptions power the next generation\nof PagerDuty webhooks.\n"
+      "name": "Webhooks",
+      "description": "A webhook is a way to receive events that occur on the PagerDuty platform via an HTTP POST request.\nV3 webhooks are set up by creating a webhook subscription.\n"
     },
     {
       "name": "Tags",
@@ -4186,6 +4186,130 @@
             }
           }
         ]
+      },
+      "WebhookSubscription": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "readOnly": true
+          },
+          "type": {
+            "type": "string",
+            "description": "The type indicating the schema of the object.",
+            "default": "webhook_subscription",
+            "enum": [
+              "webhook_subscription"
+            ]
+          },
+          "delivery_method": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "readOnly": true
+              },
+              "type": {
+                "type": "string",
+                "description": "Indicates the type of the delivery method.",
+                "default": "http_delivery_method",
+                "enum": [
+                  "http_delivery_method"
+                ]
+              },
+              "url": {
+                "type": "string",
+                "description": "The destination URL for webhook delivery.",
+                "format": "url"
+              }
+            },
+            "required": [
+              "type",
+              "url"
+            ]
+          },
+          "description": {
+            "type": "string",
+            "description": "A short description of the webhook subscription."
+          },
+          "events": {
+            "type": "array",
+            "description": "The set of outbound event types the webhook will receive.",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "filter": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "The id of the object being used as the filter.  This field is required for all filter types except account_reference."
+              },
+              "type": {
+                "type": "string",
+                "description": "The type of object being used as the filter.",
+                "enum": [
+                  "account_reference",
+                  "service_reference",
+                  "team_reference"
+                ]
+              }
+            },
+            "required": [
+              "type"
+            ]
+          }
+        },
+        "required": [
+          "type",
+          "delivery_method",
+          "events",
+          "filter"
+        ]
+      },
+      "WebhookSubscriptionUpdate": {
+        "type": "object",
+        "properties": {
+          "webhook_subscription": {
+            "type": "object",
+            "properties": {
+              "description": {
+                "type": "string",
+                "description": "A short description of the webhook subscription."
+              },
+              "events": {
+                "type": "array",
+                "description": "The set of outbound event types the subscription will receive.",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": {
+                  "type": "string"
+                }
+              },
+              "filter": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "The id of the object being used as the filter.  This field is required for all filter types except account_reference."
+                  },
+                  "type": {
+                    "type": "string",
+                    "description": "The type of object being used as the filter.",
+                    "enum": [
+                      "account_reference",
+                      "service_reference",
+                      "team_reference"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
       },
       "WebhooksV1Message": {
         "type": "object",
@@ -20038,594 +20162,6 @@
         }
       }
     },
-    "/subscriptions": {
-      "get": {
-        "tags": [
-          "Subscriptions"
-        ],
-        "operationId": "listSubscriptions",
-        "summary": "List subscriptions",
-        "description": "List existing subscriptions.\n\nFor more information on subscriptions and how they are used to configure v3 webhooks\nsee the [Webhooks v3 Developer Documentation](https://developer.pagerduty.com/docs/webhooks/v3-overview/).\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint's interface is under development and subject to change. Do not use it in production systems.\n> Your request must set an X-EARLY-ACCESS header with value `webhooks-v3` to acknowledge this.\n",
-        "parameters": [
-          {
-            "name": "X-EARLY-ACCESS",
-            "in": "header",
-            "description": "This endpoint's interface is under development and subject to change. Do not use it in production systems.\nYour request must set an X-EARLY-ACCESS header with value `webhooks-v3` to acknowledge this.\n",
-            "schema": {
-              "type": "string",
-              "default": "webhooks-v3",
-              "enum": [
-                "webhooks-v3"
-              ]
-            },
-            "required": true
-          },
-          {
-            "$ref": "#/components/parameters/Accept"
-          },
-          {
-            "$ref": "#/components/parameters/limit"
-          },
-          {
-            "$ref": "#/components/parameters/offset"
-          },
-          {
-            "$ref": "#/components/parameters/total"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "A set of subscriptions matching the request.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "type": "object",
-                      "properties": {
-                        "subscriptions": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/paths/~1subscriptions/post/requestBody/content/application~1json/schema/properties/subscription"
-                          }
-                        }
-                      },
-                      "required": [
-                        "subscriptions"
-                      ]
-                    },
-                    {
-                      "$ref": "#/components/schemas/Pagination"
-                    }
-                  ]
-                },
-                "examples": {
-                  "response": {
-                    "summary": "Example",
-                    "value": {
-                      "subscriptions": [
-                        {
-                          "delivery_method": {
-                            "id": "PF9KMXH",
-                            "type": "http_delivery_method",
-                            "url": "https://example.com/receive_a_pagerduty_webhook"
-                          },
-                          "description": "Sends PagerDuty v3 webhook events somewhere interesting.",
-                          "events": [
-                            "incident.acknowledged",
-                            "incident.annotated",
-                            "incident.delegated",
-                            "incident.escalated",
-                            "incident.priority_updated",
-                            "incident.reassigned",
-                            "incident.resolved",
-                            "incident.responder.added",
-                            "incident.responder.replied",
-                            "incident.triggered",
-                            "incident.unacknowledged"
-                          ],
-                          "filter": {
-                            "id": "P393ZNQ",
-                            "type": "service_reference"
-                          },
-                          "id": "PY1OL64",
-                          "type": "subscription"
-                        }
-                      ],
-                      "limit": 25,
-                      "offset": 0,
-                      "total": null,
-                      "more": false
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Caller provided invalid arguments. Please review the response for error\ndetails. Retrying with the same arguments will *not* work.\n"
-          },
-          "401": {
-            "description": "Caller did not supply credentials or did not provide the correct\ncredentials.\n\nIf you are using an API key, it may be invalid or your Authorization header may be malformed.\n"
-          },
-          "403": {
-            "description": "Caller is not authorized to view the requested resource.\n\nWhile your authentication is valid, the authenticated user or token does not have permission to perform this action.\n"
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Subscriptions"
-        ],
-        "operationId": "createSubscription",
-        "summary": "Create a subscription",
-        "description": "Creates a new subscription.\n\nFor more information on subscriptions and how they are used to configure v3 webhooks\nsee the [Webhooks v3 Developer Documentation](https://developer.pagerduty.com/docs/webhooks/v3-overview/).\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint's interface is under development and subject to change. Do not use it in production systems.\n> Your request must set an X-EARLY-ACCESS header with value `webhooks-v3` to acknowledge this.\n",
-        "parameters": [
-          {
-            "$ref": "#/paths/~1subscriptions/get/parameters/0"
-          },
-          {
-            "$ref": "#/components/parameters/Accept"
-          },
-          {
-            "$ref": "#/components/parameters/Content-Type"
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "subscription": {
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "type": "string",
-                        "readOnly": true
-                      },
-                      "type": {
-                        "type": "string",
-                        "description": "The type indicating the schema of the object.",
-                        "default": "subscription",
-                        "enum": [
-                          "subscription"
-                        ]
-                      },
-                      "delivery_method": {
-                        "type": "object",
-                        "properties": {
-                          "id": {
-                            "type": "string",
-                            "readOnly": true
-                          },
-                          "type": {
-                            "type": "string",
-                            "description": "Indicates the type of the delivery method.",
-                            "default": "http_delivery_method",
-                            "enum": [
-                              "http_delivery_method"
-                            ]
-                          },
-                          "url": {
-                            "type": "string",
-                            "description": "The destination URL for webhook delivery.",
-                            "format": "url"
-                          }
-                        },
-                        "required": [
-                          "type",
-                          "url"
-                        ]
-                      },
-                      "description": {
-                        "type": "string",
-                        "description": "A short description of the subscription."
-                      },
-                      "events": {
-                        "type": "array",
-                        "description": "The set of outbound event types the subscription will receive.",
-                        "minItems": 1,
-                        "uniqueItems": true,
-                        "items": {
-                          "type": "string"
-                        }
-                      },
-                      "filter": {
-                        "type": "object",
-                        "properties": {
-                          "id": {
-                            "type": "string",
-                            "description": "The id of the object being used as the filter.  This field is required for all filter types except account_reference."
-                          },
-                          "type": {
-                            "type": "string",
-                            "description": "The type of object being used as the filter.",
-                            "enum": [
-                              "account_reference",
-                              "service_reference",
-                              "team_reference"
-                            ]
-                          }
-                        },
-                        "required": [
-                          "type"
-                        ]
-                      }
-                    },
-                    "required": [
-                      "type",
-                      "delivery_method",
-                      "events",
-                      "filter"
-                    ]
-                  }
-                },
-                "required": [
-                  "subscription"
-                ]
-              },
-              "examples": {
-                "request": {
-                  "summary": "Example",
-                  "value": {
-                    "subscription": {
-                      "delivery_method": {
-                        "type": "http_delivery_method",
-                        "url": "https://example.com/receive_a_pagerduty_webhook"
-                      },
-                      "description": "Sends PagerDuty v3 webhook events somewhere interesting.",
-                      "events": [
-                        "incident.acknowledged",
-                        "incident.annotated",
-                        "incident.delegated",
-                        "incident.escalated",
-                        "incident.priority_updated",
-                        "incident.reassigned",
-                        "incident.reopened",
-                        "incident.resolved",
-                        "incident.responder.added",
-                        "incident.responder.replied",
-                        "incident.triggered",
-                        "incident.unacknowledged"
-                      ],
-                      "filter": {
-                        "id": "P393ZNQ",
-                        "type": "service_reference"
-                      },
-                      "type": "subscription"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "The subscription that was created.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "subscription": {
-                      "$ref": "#/paths/~1subscriptions/post/requestBody/content/application~1json/schema/properties/subscription"
-                    }
-                  },
-                  "required": [
-                    "subscription"
-                  ]
-                },
-                "examples": {
-                  "response": {
-                    "summary": "Example",
-                    "value": {
-                      "subscription": {
-                        "delivery_method": {
-                          "id": "PF9KMXH",
-                          "type": "http_delivery_method",
-                          "url": "https://example.com/receive_a_pagerduty_webhook"
-                        },
-                        "description": "Sends PagerDuty v3 webhook events somewhere interesting.",
-                        "events": [
-                          "incident.acknowledged",
-                          "incident.annotated",
-                          "incident.delegated",
-                          "incident.escalated",
-                          "incident.priority_updated",
-                          "incident.reassigned",
-                          "incident.reopened",
-                          "incident.resolved",
-                          "incident.responder.added",
-                          "incident.responder.replied",
-                          "incident.triggered",
-                          "incident.unacknowledged"
-                        ],
-                        "filter": {
-                          "id": "P393ZNQ",
-                          "type": "service_reference"
-                        },
-                        "id": "PY1OL64",
-                        "type": "subscription"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/paths/~1subscriptions/get/responses/400"
-          },
-          "401": {
-            "$ref": "#/paths/~1subscriptions/get/responses/401"
-          },
-          "403": {
-            "$ref": "#/paths/~1subscriptions/get/responses/403"
-          }
-        }
-      }
-    },
-    "/subscriptions/{id}": {
-      "description": "Manage an outbound event subscription.",
-      "get": {
-        "tags": [
-          "Subscriptions"
-        ],
-        "operationId": "getSubscription",
-        "summary": "Get a subscription",
-        "description": "Gets details about an existing subscription.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint's interface is under development and subject to change. Do not use it in production systems.\n> Your request must set an X-EARLY-ACCESS header with value `webhooks-v3` to acknowledge this.\n",
-        "parameters": [
-          {
-            "$ref": "#/paths/~1subscriptions/get/parameters/0"
-          },
-          {
-            "$ref": "#/components/parameters/Accept"
-          },
-          {
-            "$ref": "#/components/parameters/id"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "The subscription that was requested.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "subscription": {
-                      "$ref": "#/paths/~1subscriptions/post/requestBody/content/application~1json/schema/properties/subscription"
-                    }
-                  },
-                  "required": [
-                    "subscription"
-                  ]
-                },
-                "examples": {
-                  "response": {
-                    "$ref": "#/paths/~1subscriptions/post/responses/200/content/application~1json/examples/response"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/paths/~1subscriptions/get/responses/400"
-          },
-          "401": {
-            "$ref": "#/paths/~1subscriptions/get/responses/401"
-          },
-          "403": {
-            "$ref": "#/paths/~1subscriptions/get/responses/403"
-          },
-          "404": {
-            "description": "The requested resource was not found."
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Subscriptions"
-        ],
-        "operationId": "updateSubscription",
-        "summary": "Update a subscription",
-        "description": "Updates an existing extension.\n\nOnly the fields being updated need to be included on the request.  This operation does not\nsupport updating the `delivery_method` of the subscription.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint's interface is under development and subject to change. Do not use it in production systems.\n> Your request must set an X-EARLY-ACCESS header with value `webhooks-v3` to acknowledge this.\n",
-        "parameters": [
-          {
-            "$ref": "#/paths/~1subscriptions/get/parameters/0"
-          },
-          {
-            "$ref": "#/components/parameters/Accept"
-          },
-          {
-            "$ref": "#/components/parameters/Content-Type"
-          },
-          {
-            "$ref": "#/components/parameters/id"
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "subscription": {
-                    "type": "object",
-                    "properties": {
-                      "description": {
-                        "type": "string",
-                        "description": "A short description of the subscription."
-                      },
-                      "events": {
-                        "type": "array",
-                        "description": "The set of outbound event types the subscription will receive.",
-                        "minItems": 1,
-                        "uniqueItems": true,
-                        "items": {
-                          "type": "string"
-                        }
-                      },
-                      "filter": {
-                        "type": "object",
-                        "properties": {
-                          "id": {
-                            "type": "string",
-                            "description": "The id of the object being used as the filter.  This field is required for all filter types except account_reference."
-                          },
-                          "type": {
-                            "type": "string",
-                            "description": "The type of object being used as the filter.",
-                            "enum": [
-                              "account_reference",
-                              "service_reference",
-                              "team_reference"
-                            ]
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              },
-              "examples": {
-                "request": {
-                  "summary": "Update Subscribed Events",
-                  "value": {
-                    "subscription": {
-                      "events": [
-                        "incident.acknowledged",
-                        "incident.annotated",
-                        "incident.delegated",
-                        "incident.escalated",
-                        "incident.priority_updated",
-                        "incident.reassigned",
-                        "incident.reopened",
-                        "incident.resolved",
-                        "incident.responder.added",
-                        "incident.responder.replied",
-                        "incident.triggered",
-                        "incident.unacknowledged"
-                      ]
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "The updated subscription.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "subscription": {
-                      "$ref": "#/paths/~1subscriptions/post/requestBody/content/application~1json/schema/properties/subscription"
-                    }
-                  },
-                  "required": [
-                    "subscription"
-                  ]
-                },
-                "examples": {
-                  "response": {
-                    "$ref": "#/paths/~1subscriptions/post/responses/200/content/application~1json/examples/response"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/paths/~1subscriptions/get/responses/400"
-          },
-          "401": {
-            "$ref": "#/paths/~1subscriptions/get/responses/401"
-          },
-          "403": {
-            "$ref": "#/paths/~1subscriptions/get/responses/403"
-          },
-          "404": {
-            "$ref": "#/paths/~1subscriptions~1%7Bid%7D/get/responses/404"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Subscriptions"
-        ],
-        "operationId": "deleteSubscription",
-        "summary": "Delete a subscription",
-        "description": "Deletes a subscription.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint's interface is under development and subject to change. Do not use it in production systems.\n> Your request must set an X-EARLY-ACCESS header with value `webhooks-v3` to acknowledge this.\n",
-        "parameters": [
-          {
-            "$ref": "#/paths/~1subscriptions/get/parameters/0"
-          },
-          {
-            "$ref": "#/components/parameters/Accept"
-          },
-          {
-            "$ref": "#/components/parameters/id"
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "The subscription was deleted successfully."
-          },
-          "400": {
-            "$ref": "#/paths/~1subscriptions/get/responses/400"
-          },
-          "401": {
-            "$ref": "#/paths/~1subscriptions/get/responses/401"
-          },
-          "403": {
-            "$ref": "#/paths/~1subscriptions/get/responses/403"
-          },
-          "404": {
-            "$ref": "#/paths/~1subscriptions~1%7Bid%7D/get/responses/404"
-          }
-        }
-      }
-    },
-    "/subscriptions/{id}/ping": {
-      "post": {
-        "tags": [
-          "Subscriptions"
-        ],
-        "operationId": "testSubscription",
-        "summary": "Test a subscription",
-        "description": "Test a subscription.\n\nFires a test event against the subscription.  If the subscription is properly configured,\nthis will deliver the `pagey.ping` webhook event to the destination.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint's interface is under development and subject to change. Do not use it in production systems.\n> Your request must set an X-EARLY-ACCESS header with value `webhooks-v3` to acknowledge this.\n",
-        "parameters": [
-          {
-            "$ref": "#/paths/~1subscriptions/get/parameters/0"
-          },
-          {
-            "$ref": "#/components/parameters/Accept"
-          },
-          {
-            "$ref": "#/components/parameters/id"
-          }
-        ],
-        "responses": {
-          "202": {
-            "description": "Accepted"
-          },
-          "401": {
-            "$ref": "#/paths/~1subscriptions/get/responses/401"
-          },
-          "403": {
-            "$ref": "#/paths/~1subscriptions/get/responses/403"
-          },
-          "404": {
-            "$ref": "#/paths/~1subscriptions~1%7Bid%7D/get/responses/404"
-          }
-        }
-      }
-    },
     "/tags": {
       "get": {
         "tags": [
@@ -24538,6 +24074,475 @@
           },
           "429": {
             "$ref": "#/components/responses/TooManyRequests"
+          }
+        }
+      }
+    },
+    "/webhook_subscriptions": {
+      "get": {
+        "tags": [
+          "Webhooks"
+        ],
+        "operationId": "listWebhookSubscriptions",
+        "summary": "List webhook subscriptions",
+        "description": "List existing webhook subscriptions.\n\nFor more information on webhook subscriptions and how they are used to configure v3 webhooks\nsee the [Webhooks v3 Developer Documentation](https://developer.pagerduty.com/docs/webhooks/v3-overview/).\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint's interface is under development and subject to change. Do not use it in production systems.\n> Your request must set an X-EARLY-ACCESS header with value `webhooks-v3` to acknowledge this.\n",
+        "parameters": [
+          {
+            "name": "X-EARLY-ACCESS",
+            "in": "header",
+            "description": "This endpoint's interface is under development and subject to change. Do not use it in production systems.\nYour request must set an X-EARLY-ACCESS header with value `webhooks-v3` to acknowledge this.\n",
+            "schema": {
+              "type": "string",
+              "default": "webhooks-v3",
+              "enum": [
+                "webhooks-v3"
+              ]
+            },
+            "required": true
+          },
+          {
+            "$ref": "#/components/parameters/Accept"
+          },
+          {
+            "$ref": "#/components/parameters/limit"
+          },
+          {
+            "$ref": "#/components/parameters/offset"
+          },
+          {
+            "$ref": "#/components/parameters/total"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A set of webhook subscriptions matching the request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "webhook_subscriptions": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/WebhookSubscription"
+                          }
+                        }
+                      },
+                      "required": [
+                        "webhook_subscriptions"
+                      ]
+                    },
+                    {
+                      "$ref": "#/components/schemas/Pagination"
+                    }
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Example",
+                    "value": {
+                      "webhook_subscriptions": [
+                        {
+                          "delivery_method": {
+                            "id": "PF9KMXH",
+                            "type": "http_delivery_method",
+                            "url": "https://example.com/receive_a_pagerduty_webhook"
+                          },
+                          "description": "Sends PagerDuty v3 webhook events somewhere interesting.",
+                          "events": [
+                            "incident.acknowledged",
+                            "incident.annotated",
+                            "incident.delegated",
+                            "incident.escalated",
+                            "incident.priority_updated",
+                            "incident.reassigned",
+                            "incident.resolved",
+                            "incident.responder.added",
+                            "incident.responder.replied",
+                            "incident.triggered",
+                            "incident.unacknowledged"
+                          ],
+                          "filter": {
+                            "id": "P393ZNQ",
+                            "type": "service_reference"
+                          },
+                          "id": "PY1OL64",
+                          "type": "webhook_subscription"
+                        }
+                      ],
+                      "limit": 25,
+                      "offset": 0,
+                      "total": null,
+                      "more": false
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Caller provided invalid arguments. Please review the response for error\ndetails. Retrying with the same arguments will *not* work.\n"
+          },
+          "401": {
+            "description": "Caller did not supply credentials or did not provide the correct\ncredentials.\n\nIf you are using an API key, it may be invalid or your Authorization header may be malformed.\n"
+          },
+          "403": {
+            "description": "Caller is not authorized to view the requested resource.\n\nWhile your authentication is valid, the authenticated user or token does not have permission to perform this action.\n"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Webhooks"
+        ],
+        "operationId": "createWebhookSubscription",
+        "summary": "Create a webhook subscription",
+        "description": "Creates a new webhook subscription.\n\nFor more information on webhook subscriptions and how they are used to configure v3 webhooks\nsee the [Webhooks v3 Developer Documentation](https://developer.pagerduty.com/docs/webhooks/v3-overview/).\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint's interface is under development and subject to change. Do not use it in production systems.\n> Your request must set an X-EARLY-ACCESS header with value `webhooks-v3` to acknowledge this.\n",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1webhook_subscriptions/get/parameters/0"
+          },
+          {
+            "$ref": "#/components/parameters/Accept"
+          },
+          {
+            "$ref": "#/components/parameters/Content-Type"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "webhook_subscription": {
+                    "$ref": "#/components/schemas/WebhookSubscription"
+                  }
+                },
+                "required": [
+                  "webhook_subscription"
+                ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Example",
+                  "value": {
+                    "webhook_subscription": {
+                      "delivery_method": {
+                        "type": "http_delivery_method",
+                        "url": "https://example.com/receive_a_pagerduty_webhook"
+                      },
+                      "description": "Sends PagerDuty v3 webhook events somewhere interesting.",
+                      "events": [
+                        "incident.acknowledged",
+                        "incident.annotated",
+                        "incident.delegated",
+                        "incident.escalated",
+                        "incident.priority_updated",
+                        "incident.reassigned",
+                        "incident.reopened",
+                        "incident.resolved",
+                        "incident.responder.added",
+                        "incident.responder.replied",
+                        "incident.triggered",
+                        "incident.unacknowledged"
+                      ],
+                      "filter": {
+                        "id": "P393ZNQ",
+                        "type": "service_reference"
+                      },
+                      "type": "webhook_subscription"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The webhook subscription that was created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "webhook_subscription": {
+                      "$ref": "#/components/schemas/WebhookSubscription"
+                    }
+                  },
+                  "required": [
+                    "webhook_subscription"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Example",
+                    "value": {
+                      "webhook_subscription": {
+                        "delivery_method": {
+                          "id": "PF9KMXH",
+                          "type": "http_delivery_method",
+                          "url": "https://example.com/receive_a_pagerduty_webhook"
+                        },
+                        "description": "Sends PagerDuty v3 webhook events somewhere interesting.",
+                        "events": [
+                          "incident.acknowledged",
+                          "incident.annotated",
+                          "incident.delegated",
+                          "incident.escalated",
+                          "incident.priority_updated",
+                          "incident.reassigned",
+                          "incident.reopened",
+                          "incident.resolved",
+                          "incident.responder.added",
+                          "incident.responder.replied",
+                          "incident.triggered",
+                          "incident.unacknowledged"
+                        ],
+                        "filter": {
+                          "id": "P393ZNQ",
+                          "type": "service_reference"
+                        },
+                        "id": "PY1OL64",
+                        "type": "webhook_subscription"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/paths/~1webhook_subscriptions/get/responses/400"
+          },
+          "401": {
+            "$ref": "#/paths/~1webhook_subscriptions/get/responses/401"
+          },
+          "403": {
+            "$ref": "#/paths/~1webhook_subscriptions/get/responses/403"
+          }
+        }
+      }
+    },
+    "/webhook_subscriptions/{id}": {
+      "get": {
+        "tags": [
+          "Webhooks"
+        ],
+        "operationId": "getWebhookSubscription",
+        "summary": "Get a webhook subscription",
+        "description": "Gets details about an existing webhook subscription.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint's interface is under development and subject to change. Do not use it in production systems.\n> Your request must set an X-EARLY-ACCESS header with value `webhooks-v3` to acknowledge this.\n",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1webhook_subscriptions/get/parameters/0"
+          },
+          {
+            "$ref": "#/components/parameters/Accept"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The webhook subscription that was requested.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "webhook_subscription": {
+                      "$ref": "#/components/schemas/WebhookSubscription"
+                    }
+                  },
+                  "required": [
+                    "webhook_subscription"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "$ref": "#/paths/~1webhook_subscriptions/post/responses/200/content/application~1json/examples/response"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/paths/~1webhook_subscriptions/get/responses/400"
+          },
+          "401": {
+            "$ref": "#/paths/~1webhook_subscriptions/get/responses/401"
+          },
+          "403": {
+            "$ref": "#/paths/~1webhook_subscriptions/get/responses/403"
+          },
+          "404": {
+            "description": "The requested resource was not found."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Webhooks"
+        ],
+        "operationId": "updateWebhookSubscription",
+        "summary": "Update a webhook subscription",
+        "description": "Updates an existing webhook subscription.\n\nOnly the fields being updated need to be included on the request.  This operation does not\nsupport updating the `delivery_method` of the webhook subscription.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint's interface is under development and subject to change. Do not use it in production systems.\n> Your request must set an X-EARLY-ACCESS header with value `webhooks-v3` to acknowledge this.\n",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1webhook_subscriptions/get/parameters/0"
+          },
+          {
+            "$ref": "#/components/parameters/Accept"
+          },
+          {
+            "$ref": "#/components/parameters/Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WebhookSubscriptionUpdate"
+              },
+              "examples": {
+                "request": {
+                  "summary": "Update Subscribed Events",
+                  "value": {
+                    "webhook_subscription": {
+                      "events": [
+                        "incident.acknowledged",
+                        "incident.annotated",
+                        "incident.delegated",
+                        "incident.escalated",
+                        "incident.priority_updated",
+                        "incident.reassigned",
+                        "incident.reopened",
+                        "incident.resolved",
+                        "incident.responder.added",
+                        "incident.responder.replied",
+                        "incident.triggered",
+                        "incident.unacknowledged"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The updated webhook subscription.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "webhook_subscription": {
+                      "$ref": "#/components/schemas/WebhookSubscription"
+                    }
+                  },
+                  "required": [
+                    "webhook_subscription"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "$ref": "#/paths/~1webhook_subscriptions/post/responses/200/content/application~1json/examples/response"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/paths/~1webhook_subscriptions/get/responses/400"
+          },
+          "401": {
+            "$ref": "#/paths/~1webhook_subscriptions/get/responses/401"
+          },
+          "403": {
+            "$ref": "#/paths/~1webhook_subscriptions/get/responses/403"
+          },
+          "404": {
+            "$ref": "#/paths/~1webhook_subscriptions~1%7Bid%7D/get/responses/404"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Webhooks"
+        ],
+        "operationId": "deleteWebhookSubscription",
+        "summary": "Delete a webhook subscription",
+        "description": "Deletes a webhook subscription.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint's interface is under development and subject to change. Do not use it in production systems.\n> Your request must set an X-EARLY-ACCESS header with value `webhooks-v3` to acknowledge this.\n",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1webhook_subscriptions/get/parameters/0"
+          },
+          {
+            "$ref": "#/components/parameters/Accept"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The webhook subscription was deleted successfully."
+          },
+          "400": {
+            "$ref": "#/paths/~1webhook_subscriptions/get/responses/400"
+          },
+          "401": {
+            "$ref": "#/paths/~1webhook_subscriptions/get/responses/401"
+          },
+          "403": {
+            "$ref": "#/paths/~1webhook_subscriptions/get/responses/403"
+          },
+          "404": {
+            "$ref": "#/paths/~1webhook_subscriptions~1%7Bid%7D/get/responses/404"
+          }
+        }
+      }
+    },
+    "/webhook_subscriptions/{id}/ping": {
+      "post": {
+        "tags": [
+          "Webhooks"
+        ],
+        "operationId": "testWebhookSubscription",
+        "summary": "Test a webhook subscription",
+        "description": "Test a webhook subscription.\n\nFires a test event against the webhook subscription.  If properly configured,\nthis will deliver the `pagey.ping` webhook event to the destination.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint's interface is under development and subject to change. Do not use it in production systems.\n> Your request must set an X-EARLY-ACCESS header with value `webhooks-v3` to acknowledge this.\n",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1webhook_subscriptions/get/parameters/0"
+          },
+          {
+            "$ref": "#/components/parameters/Accept"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Accepted"
+          },
+          "401": {
+            "$ref": "#/paths/~1webhook_subscriptions/get/responses/401"
+          },
+          "403": {
+            "$ref": "#/paths/~1webhook_subscriptions/get/responses/403"
+          },
+          "404": {
+            "$ref": "#/paths/~1webhook_subscriptions~1%7Bid%7D/get/responses/404"
           }
         }
       }
