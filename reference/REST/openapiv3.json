@@ -4209,6 +4209,12 @@
                 "type": "string",
                 "readOnly": true
               },
+              "secret": {
+                "type": "string",
+                "description": "The secret used to sign webhook payloads. Only provided on the initial create response.",
+                "nullable": true,
+                "readOnly": true
+              },
               "type": {
                 "type": "string",
                 "description": "Indicates the type of the delivery method.",
@@ -24085,7 +24091,7 @@
         ],
         "operationId": "listWebhookSubscriptions",
         "summary": "List webhook subscriptions",
-        "description": "List existing webhook subscriptions.\n\nFor more information on webhook subscriptions and how they are used to configure v3 webhooks\nsee the [Webhooks v3 Developer Documentation](https://developer.pagerduty.com/docs/webhooks/v3-overview/).\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint's interface is under development and subject to change. Do not use it in production systems.\n> Your request must set an X-EARLY-ACCESS header with value `webhooks-v3` to acknowledge this.\n",
+        "description": "List existing webhook subscriptions.\n\nThe `filter_type` and `filter_id` query parameters may be used to only show subscriptions\nfor a particular _service_ or _team_.\n\nFor more information on webhook subscriptions and how they are used to configure v3 webhooks\nsee the [Webhooks v3 Developer Documentation](https://developer.pagerduty.com/docs/webhooks/v3-overview/).\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint's interface is under development and subject to change. Do not use it in production systems.\n> Your request must set an X-EARLY-ACCESS header with value `webhooks-v3` to acknowledge this.\n",
         "parameters": [
           {
             "name": "X-EARLY-ACCESS",
@@ -24111,6 +24117,28 @@
           },
           {
             "$ref": "#/components/parameters/total"
+          },
+          {
+            "name": "filter_type",
+            "in": "query",
+            "required": false,
+            "description": "The type of resource to filter upon.",
+            "schema": {
+              "enum": [
+                "service",
+                "team"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "filter_id",
+            "in": "query",
+            "required": false,
+            "description": "The id of the resource to filter upon.",
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -24147,6 +24175,7 @@
                         {
                           "delivery_method": {
                             "id": "PF9KMXH",
+                            "secret": null,
                             "type": "http_delivery_method",
                             "url": "https://example.com/receive_a_pagerduty_webhook"
                           },
@@ -24284,6 +24313,7 @@
                       "webhook_subscription": {
                         "delivery_method": {
                           "id": "PF9KMXH",
+                          "secret": null,
                           "type": "http_delivery_method",
                           "url": "https://example.com/receive_a_pagerduty_webhook"
                         },
