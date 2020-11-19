@@ -6,6 +6,9 @@ Currently we do not deprecate or remove any API functionality.
 
 ----
 
+### 2020-11-17
+- Updated date_range documentation to reflect the maximum (6 month) and default (1 month) durations we enforce.
+
 ## 2020-11-05
 - *BREAKING* The Subscriptions API used to manage V3 webhooks is now the Webhook Subscriptions API. You can find the details in their new home under the "Webhooks" tag.
   - `GET /webhook_subscriptions`

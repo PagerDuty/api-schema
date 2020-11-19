@@ -9780,24 +9780,6 @@
             "$ref": "#/components/parameters/total"
           },
           {
-            "name": "since",
-            "in": "query",
-            "description": "The start of the date range over which you want to search.",
-            "schema": {
-              "type": "string",
-              "format": "date-time"
-            }
-          },
-          {
-            "name": "until",
-            "in": "query",
-            "description": "The end of the date range over which you want to search.",
-            "schema": {
-              "type": "string",
-              "format": "date-time"
-            }
-          },
-          {
             "name": "date_range",
             "in": "query",
             "description": "When set to all, the since and until parameters and defaults are ignored.",
@@ -9882,6 +9864,22 @@
               },
               "uniqueItems": true
             }
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "since",
+            "description": "The start of the date range over which you want to search. Maximum range is 6 months and default is 1 month."
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "until",
+            "description": "The end of the date range over which you want to search. Maximum range is 6 months and default is 1 month."
           }
         ],
         "responses": {
@@ -11586,10 +11584,10 @@
             "$ref": "#/components/parameters/time_zone"
           },
           {
-            "$ref": "#/paths/~1incidents/get/parameters/5"
+            "$ref": "#/paths/~1log_entries/get/parameters/6"
           },
           {
-            "$ref": "#/paths/~1incidents/get/parameters/6"
+            "$ref": "#/paths/~1log_entries/get/parameters/7"
           },
           {
             "$ref": "#/paths/~1log_entries/get/parameters/8"
@@ -12472,10 +12470,22 @@
             "$ref": "#/components/parameters/time_zone"
           },
           {
-            "$ref": "#/paths/~1incidents/get/parameters/5"
+            "name": "since",
+            "in": "query",
+            "description": "The start of the date range over which you want to search.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
           },
           {
-            "$ref": "#/paths/~1incidents/get/parameters/6"
+            "name": "until",
+            "in": "query",
+            "description": "The end of the date range over which you want to search.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
           },
           {
             "name": "is_overview",
@@ -15999,9 +16009,9 @@
                           "schedule_layers": [
                             {
                               "name": "Night Shift",
-                              "start": "2015-11-07T01:00:00.000Z",
-                              "end": "2016-11-07T01:00:00.000Z",
-                              "rotation_virtual_start": "2015-11-07T01:00:00.000Z",
+                              "start": "2015-11-06T20:00:00-05:00",
+                              "end": "2016-11-06T20:00:00-05:00",
+                              "rotation_virtual_start": "2015-11-06T20:00:00-05:00",
                               "rotation_turn_length_seconds": 86400,
                               "users": [
                                 {
@@ -16254,10 +16264,10 @@
             "$ref": "#/components/parameters/time_zone"
           },
           {
-            "$ref": "#/paths/~1incidents/get/parameters/5"
+            "$ref": "#/paths/~1log_entries/get/parameters/6"
           },
           {
-            "$ref": "#/paths/~1incidents/get/parameters/6"
+            "$ref": "#/paths/~1log_entries/get/parameters/7"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -17031,10 +17041,10 @@
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/paths/~1incidents/get/parameters/5"
+            "$ref": "#/paths/~1log_entries/get/parameters/6"
           },
           {
-            "$ref": "#/paths/~1incidents/get/parameters/6"
+            "$ref": "#/paths/~1log_entries/get/parameters/7"
           }
         ],
         "responses": {
@@ -17188,10 +17198,10 @@
             "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "$ref": "#/paths/~1incidents/get/parameters/5"
+            "$ref": "#/paths/~1log_entries/get/parameters/6"
           },
           {
-            "$ref": "#/paths/~1incidents/get/parameters/6"
+            "$ref": "#/paths/~1log_entries/get/parameters/7"
           },
           {
             "$ref": "#/paths/~1schedules/post/parameters/2"
