@@ -1847,7 +1847,7 @@
         "example": {
           "id": "PXPGF42",
           "user_id": "PXPGF42",
-          "created_at": "2018-10-06T21:30:42.000Z",
+          "created_at": "2018-10-06T21:30:42Z",
           "summary": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36",
           "type": "browser"
         }
@@ -2819,8 +2819,8 @@
             "example": {
               "id": "PIJ89JD",
               "type": "maintenance_window",
-              "start_time": "2015-11-10T01:00:00.000Z",
-              "end_time": "2015-11-10T03:00:00.000Z",
+              "start_time": "2015-11-09T20:00:00-05:00",
+              "end_time": "2015-11-09T22:00:00-05:00",
               "description": "Immanentizing the eschaton",
               "services": [
                 {
@@ -2930,9 +2930,9 @@
               "schedule_layers": [
                 {
                   "name": "Night Shift",
-                  "start": "2015-11-07T01:00:00.000Z",
-                  "end": "2016-11-07T01:00:00.000Z",
-                  "rotation_virtual_start": "2015-11-07T01:00:00.000Z",
+                  "start": "2015-11-06T20:00:00-05:00",
+                  "end": "2016-11-06T20:00:00-05:00",
+                  "rotation_virtual_start": "2015-11-06T20:00:00-05:00",
                   "rotation_turn_length_seconds": 86400,
                   "users": [
                     {
@@ -3116,8 +3116,8 @@
               "user"
             ],
             "example": {
-              "start": "2012-07-01T04:00:00.000Z",
-              "end": "2012-07-02T04:00:00.000Z",
+              "start": "2012-07-01T00:00:00-04:00",
+              "end": "2012-07-02T00:00:00-04:00",
               "user": {
                 "id": "PEYSGVF",
                 "type": "user_reference"
@@ -3316,8 +3316,8 @@
             "html_url": "https://subdomain.pagerduty.com/escalation_policies/PT20YPA"
           },
           "escalation_level": 2,
-          "start": "2015-03-06T20:28:51.000Z",
-          "end": "2015-03-07T20:28:51.000Z"
+          "start": "2015-03-06T15:28:51-05:00",
+          "end": "2015-03-07T15:28:51-05:00"
         }
       },
       "VendorReference": {
@@ -3852,7 +3852,7 @@
             "example": {
               "id": "bb4fcb00-6324-11e6-b9aa-22000affca53",
               "type": "incident.resolve",
-              "triggered_at": "2016-08-15T20:13:28.000Z",
+              "triggered_at": "2016-08-15T20:13:28Z",
               "log_entries": [
                 {
                   "id": "R0FFIOTKIU30MN7XWR99SI0",
@@ -3860,7 +3860,7 @@
                   "summary": "Resolved by Earline Greenholt",
                   "self": "https://api.pagerduty.com/log_entries/R0FFIOTKIU30MN7XWR99SI0",
                   "html_url": null,
-                  "created_at": "2017-09-22T18:37:29.000Z",
+                  "created_at": "2017-09-22T18:37:29+00:00",
                   "agent": {
                     "id": "PLMUP47",
                     "type": "user_reference",
@@ -3940,16 +3940,16 @@
                 "self": "https://api.pagerduty.com/incidents/PT4KHLK",
                 "html_url": "https://subdomain.pagerduty.com/incidents/PT4KHLK",
                 "incident_number": 1234,
-                "created_at": "2015-10-06T21:30:42.000Z",
+                "created_at": "2015-10-06T21:30:42Z",
                 "status": "resolved",
                 "pending_actions": [
                   {
                     "type": "unacknowledge",
-                    "at": "2015-11-10T01:02:52.000Z"
+                    "at": "2015-11-10T01:02:52Z"
                   },
                   {
                     "type": "resolve",
-                    "at": "2015-11-10T04:31:52.000Z"
+                    "at": "2015-11-10T04:31:52Z"
                   }
                 ],
                 "incident_key": "baf7cf21b1da41b4b0221008339ff357",
@@ -3963,7 +3963,7 @@
                   "description": "null",
                   "auto_resolve_timeout": 14400,
                   "acknowledgement_timeout": 600,
-                  "created_at": "2015-11-06T16:12:51.000Z",
+                  "created_at": "2015-11-06T11:12:51-05:00",
                   "status": "active",
                   "last_incident_timestamp": "null",
                   "integrations": [
@@ -4028,7 +4028,7 @@
                 },
                 "assignments": [
                   {
-                    "at": "2015-11-10T00:31:52.000Z",
+                    "at": "2015-11-10T00:31:52Z",
                     "assignee": {
                       "id": "PXPGF42",
                       "type": "user_reference",
@@ -4040,7 +4040,7 @@
                 ],
                 "acknowledgements": [
                   {
-                    "at": "2015-11-10T00:32:52.000Z",
+                    "at": "2015-11-10T00:32:52Z",
                     "acknowledger": {
                       "id": "PXPGF42",
                       "type": "user_reference",
@@ -4050,7 +4050,7 @@
                     }
                   }
                 ],
-                "last_status_change_at": "2015-10-06T21:38:23.000Z",
+                "last_status_change_at": "2015-10-06T21:38:23Z",
                 "last_status_change_by": {
                   "id": "PXPGF42",
                   "type": "user_reference",
@@ -9780,24 +9780,6 @@
             "$ref": "#/components/parameters/total"
           },
           {
-            "name": "since",
-            "in": "query",
-            "description": "The start of the date range over which you want to search.",
-            "schema": {
-              "type": "string",
-              "format": "date-time"
-            }
-          },
-          {
-            "name": "until",
-            "in": "query",
-            "description": "The end of the date range over which you want to search.",
-            "schema": {
-              "type": "string",
-              "format": "date-time"
-            }
-          },
-          {
             "name": "date_range",
             "in": "query",
             "description": "When set to all, the since and until parameters and defaults are ignored.",
@@ -9882,6 +9864,22 @@
               },
               "uniqueItems": true
             }
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "since",
+            "description": "The start of the date range over which you want to search. Maximum range is 6 months and default is 1 month."
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "until",
+            "description": "The end of the date range over which you want to search. Maximum range is 6 months and default is 1 month."
           }
         ],
         "responses": {
@@ -11586,10 +11584,10 @@
             "$ref": "#/components/parameters/time_zone"
           },
           {
-            "$ref": "#/paths/~1incidents/get/parameters/5"
+            "$ref": "#/paths/~1log_entries/get/parameters/6"
           },
           {
-            "$ref": "#/paths/~1incidents/get/parameters/6"
+            "$ref": "#/paths/~1log_entries/get/parameters/7"
           },
           {
             "$ref": "#/paths/~1log_entries/get/parameters/8"
@@ -12472,10 +12470,22 @@
             "$ref": "#/components/parameters/time_zone"
           },
           {
-            "$ref": "#/paths/~1incidents/get/parameters/5"
+            "name": "since",
+            "in": "query",
+            "description": "The start of the date range over which you want to search.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
           },
           {
-            "$ref": "#/paths/~1incidents/get/parameters/6"
+            "name": "until",
+            "in": "query",
+            "description": "The end of the date range over which you want to search.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
           },
           {
             "name": "is_overview",
@@ -15999,9 +16009,9 @@
                           "schedule_layers": [
                             {
                               "name": "Night Shift",
-                              "start": "2015-11-07T01:00:00.000Z",
-                              "end": "2016-11-07T01:00:00.000Z",
-                              "rotation_virtual_start": "2015-11-07T01:00:00.000Z",
+                              "start": "2015-11-06T20:00:00-05:00",
+                              "end": "2016-11-06T20:00:00-05:00",
+                              "rotation_virtual_start": "2015-11-06T20:00:00-05:00",
                               "rotation_turn_length_seconds": 86400,
                               "users": [
                                 {
@@ -16254,10 +16264,10 @@
             "$ref": "#/components/parameters/time_zone"
           },
           {
-            "$ref": "#/paths/~1incidents/get/parameters/5"
+            "$ref": "#/paths/~1log_entries/get/parameters/6"
           },
           {
-            "$ref": "#/paths/~1incidents/get/parameters/6"
+            "$ref": "#/paths/~1log_entries/get/parameters/7"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -17031,10 +17041,10 @@
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/paths/~1incidents/get/parameters/5"
+            "$ref": "#/paths/~1log_entries/get/parameters/6"
           },
           {
-            "$ref": "#/paths/~1incidents/get/parameters/6"
+            "$ref": "#/paths/~1log_entries/get/parameters/7"
           }
         ],
         "responses": {
@@ -17188,10 +17198,10 @@
             "$ref": "#/components/parameters/Content-Type"
           },
           {
-            "$ref": "#/paths/~1incidents/get/parameters/5"
+            "$ref": "#/paths/~1log_entries/get/parameters/6"
           },
           {
-            "$ref": "#/paths/~1incidents/get/parameters/6"
+            "$ref": "#/paths/~1log_entries/get/parameters/7"
           },
           {
             "$ref": "#/paths/~1schedules/post/parameters/2"
