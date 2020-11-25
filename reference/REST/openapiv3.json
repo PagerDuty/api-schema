@@ -7687,7 +7687,7 @@
           "Change Events"
         ],
         "operationId": "listChangeEvents",
-        "description": "List all of the existing Change Events.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
+        "description": "List all of the existing Change Events.\n",
         "summary": "List Change Events",
         "parameters": [
           {
@@ -7730,16 +7730,6 @@
           },
           {
             "$ref": "#/components/parameters/integration_ids"
-          },
-          {
-            "name": "X-EARLY-ACCESS",
-            "schema": {
-              "type": "string",
-              "default": "change-events-early-access"
-            },
-            "in": "header",
-            "description": "This header indicates that this API endpoint is __UNDER CONSTRUCTION__ and may change at any time. You __MUST__ pass in this header with the value `change-events-early-access`. Do not use this endpoint in production, as it may change!",
-            "required": true
           }
         ],
         "responses": {
@@ -7862,7 +7852,7 @@
           "Change Events"
         ],
         "operationId": "getChangeEvent",
-        "description": "Get details about an existing Change Event.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
+        "description": "Get details about an existing Change Event.\n",
         "summary": "Get a Change Event",
         "parameters": [
           {
@@ -7873,16 +7863,6 @@
           },
           {
             "$ref": "#/components/parameters/id"
-          },
-          {
-            "name": "X-EARLY-ACCESS",
-            "schema": {
-              "type": "string",
-              "default": "change-events-early-access"
-            },
-            "in": "header",
-            "description": "This header indicates that this API endpoint is __UNDER CONSTRUCTION__ and may change at any time. You __MUST__ pass in this header with the value `change-events-early-access`. Do not use this endpoint in production, as it may change!",
-            "required": true
           }
         ],
         "responses": {
@@ -7951,7 +7931,7 @@
       },
       "put": {
         "summary": "Update a Change Event",
-        "description": "Update an existing Change Event\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
+        "description": "Update an existing Change Event\n",
         "tags": [
           "Change Events"
         ],
@@ -7965,16 +7945,6 @@
           },
           {
             "$ref": "#/components/parameters/id"
-          },
-          {
-            "name": "X-EARLY-ACCESS",
-            "schema": {
-              "type": "string",
-              "default": "change-events-early-access"
-            },
-            "in": "header",
-            "description": "This header indicates that this API endpoint is __UNDER CONSTRUCTION__ and may change at any time. You __MUST__ pass in this header with the value `change-events-early-access`. Do not use this endpoint in production, as it may change!",
-            "required": true
           }
         ],
         "requestBody": {
@@ -18850,7 +18820,7 @@
           "Change Events"
         ],
         "operationId": "listServiceChangeEvents",
-        "description": "List all of the existing Change Events for a service.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
+        "description": "List all of the existing Change Events for a service.\n",
         "summary": "List Change Events for a service",
         "parameters": [
           {
@@ -18896,16 +18866,6 @@
           },
           {
             "$ref": "#/components/parameters/integration_ids"
-          },
-          {
-            "name": "X-EARLY-ACCESS",
-            "schema": {
-              "type": "string",
-              "default": "change-events-early-access"
-            },
-            "in": "header",
-            "description": "This header indicates that this API endpoint is __UNDER CONSTRUCTION__ and may change at any time. You __MUST__ pass in this header with the value `change-events-early-access`. Do not use this endpoint in production, as it may change!",
-            "required": true
           }
         ],
         "responses": {

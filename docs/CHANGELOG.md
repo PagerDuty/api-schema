@@ -7,6 +7,7 @@ Currently we do not deprecate or remove any API functionality.
 ----
 
 ### 2020-11-25
+- Removed Early-Access Header for all Change Events endpoints.
 - Removed Early-access requirements for all audit records APIs.
 
 ### 2020-11-17
