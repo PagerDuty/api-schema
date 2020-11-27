@@ -19,6 +19,7 @@
   "paths": {
     "/create_event.json": {
       "post": {
+        "parameters": [],
         "tags": [
           "Send Event"
         ],
