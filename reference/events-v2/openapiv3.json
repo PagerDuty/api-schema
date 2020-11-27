@@ -19,12 +19,13 @@
   "paths": {
     "/change/enqueue": {
       "post": {
+        "parameters": [],
         "summary": "Send change events to the PagerDuty Events API",
         "tags": [
           "Send Change Event"
         ],
         "operationId": "createChangeEvent",
-        "description": "Change Events API enables you to send informational events about recent changes such as code deploys and system config changes from any system that can make an outbound HTTP connection. \nThese events do not create incidents and do not send notifications; they are shown in context with incidents on the same PagerDuty service.\n",
+        "description": "Change Events API enables you to send informational events about recent changes such as code deploys and system config changes from any system that can make an outbound HTTP connection.\nThese events do not create incidents and do not send notifications; they are shown in context with incidents on the same PagerDuty service.\n",
         "requestBody": {
           "required": true,
           "content": {
@@ -114,6 +115,7 @@
     },
     "/enqueue": {
       "post": {
+        "parameters": [],
         "tags": [
           "Send Event"
         ],

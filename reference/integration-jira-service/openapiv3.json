@@ -1313,6 +1313,7 @@
         "tags": [
           "Rules"
         ],
+        "parameters": [],
         "summary": "Create a rule",
         "description": "Creates a rule.\n\n> ### Action required!\n>\n>  Make sure that all required PagerDuty and Jira webhooks are present. You can do this by clicking **Check webhooks** button on the *Rules* page of the PagerDuty Jira application\n",
         "operationId": "createRule",
