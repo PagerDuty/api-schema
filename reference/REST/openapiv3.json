@@ -132,7 +132,7 @@
             {
               "id": "PDRECORDID1_TEAM_CREATED",
               "self": "https://api.pagerduty.com/<...>/records/PDRECORDID1_TEAM_CREATED",
-              "execution_time": "2020-06-04T15:30:16Z",
+              "execution_time": "2020-06-04T15:30:16.272Z",
               "execution_context": {
                 "request_id": "111lDEOIH-534-4ljhLHJjh111",
                 "remote_address": "201.19.20.19"
@@ -171,7 +171,7 @@
             {
               "id": "PDRECORDID2_USER_REMOVED_FROM_TEAM",
               "self": "https://api.pagerduty.com/<...>/records/PDRECORDID2_USER_REMOVED_FROM_TEAM",
-              "execution_time": "2020-06-04T15:30:16Z",
+              "execution_time": "2020-06-04T15:30:16.272Z",
               "execution_context": {
                 "request_id": "222lDEOIH-534-4ljhLHJjh222",
                 "remote_address": "201.19.20.19"
@@ -209,7 +209,7 @@
             {
               "id": "PDRECORDID5_USERS_TEAM_ROLE_UPDATED",
               "self": "https://api.pagerduty.com/<...>/records/PDRECORDID5_USERS_TEAM_ROLE_UPDATED",
-              "execution_time": "2020-06-04T15:30:16Z",
+              "execution_time": "2020-06-04T15:30:16.272Z",
               "execution_context": {
                 "request_id": "222lDEOIH-534-4ljhLHJjh222",
                 "remote_address": "201.19.20.19"
@@ -242,7 +242,7 @@
             {
               "id": "PDRECORDID3_USERS_NAME_AND_EMAIL_UPDATED",
               "self": "https://api.pagerduty.com/<...>/records/PDRECORDID3_USERS_NAME_AND_EMAIL_UPDATED",
-              "execution_time": "2020-06-04T15:30:16Z",
+              "execution_time": "2020-06-04T15:30:16.272Z",
               "execution_context": {
                 "request_id": "222lDEOIH-534-4ljhLHJjh222",
                 "remote_address": "201.19.20.19"
@@ -286,7 +286,7 @@
             {
               "id": "PDRECORDID4_UPDATED_USERS_NOTIFICATION_RULE",
               "self": "https://api.pagerduty.com/<...>/records/PDRECORDID4_UPDATED_USERS_NOTIFICATION_RULE",
-              "execution_time": "2020-06-04T15:30:16Z",
+              "execution_time": "2020-06-04T15:30:16.272Z",
               "execution_context": {
                 "request_id": "222lDEOIH-534-4ljhLHJjh222",
                 "remote_address": "201.19.20.19"
@@ -2198,7 +2198,7 @@
           "execution_time": {
             "type": "string",
             "format": "date-time",
-            "description": "The date/time the action executed."
+            "description": "The date/time the action executed, in ISO8601 format and millisecond precision."
           },
           "execution_context": {
             "type": "object",
