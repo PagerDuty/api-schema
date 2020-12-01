@@ -357,8 +357,7 @@
           }
         },
         "required": [
-          "summary",
-          "timestamp"
+          "summary"
         ]
       }
     },
