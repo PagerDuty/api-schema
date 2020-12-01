@@ -6,6 +6,9 @@ Currently we do not deprecate or remove any API functionality.
 
 ----
 
+### 2020-12-01
+- Updated record-level audit trail record listing endpoints to indicate that a 402 Payment Required response can be returned for unentitled accounts. This now matches the account-level audit trail record listing endpoint's behavior.
+
 ### 2020-11-25
 - Removed Early-Access Header for all Change Events endpoints.
 - Removed Early-access requirements for all audit records APIs.
