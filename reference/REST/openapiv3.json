@@ -2000,9 +2000,6 @@
       "AnalyticsIncidentMetrics": {
         "title": "Analytics Incident Metrics",
         "type": "object",
-        "x-tags": [
-          "Analytics"
-        ],
         "properties": {
           "service_id": {
             "type": "string",
@@ -2030,23 +2027,23 @@
           },
           "mean_seconds_to_engage": {
             "type": "integer",
-            "description": "A measure of *people response time*. This metric measures the time from \nthe first user engagement (acknowledge or responder accept) to the last. \nThis metric is only used for incidents with **multiple responders**; \nfor incidents with one or no engaged users, this value is null.'"
+            "description": "A measure of *people response time*. This metric measures the time from\nthe first user engagement (acknowledge or responder accept) to the last.\nThis metric is only used for incidents with **multiple responders**;\nfor incidents with one or no engaged users, this value is null.'"
           },
           "mean_seconds_to_mobilize": {
             "type": "integer",
-            "description": "Mean time between the start of an incident, and the last additional responder \nto acknowledge. For incidents with one or no engaged users, this value is null."
+            "description": "Mean time between the start of an incident, and the last additional responder\nto acknowledge. For incidents with one or no engaged users, this value is null."
           },
           "mean_engaged_seconds": {
             "type": "integer",
-            "description": "Mean engaged time across all responders for incidents that match the given filters. \nEngaged time is measured from the time a user engages with an incident (by \nacknowledging or accepting a responder request) until the incident is resolved. \nThis may include periods in which the incidents was snoozed."
+            "description": "Mean engaged time across all responders for incidents that match the given filters.\nEngaged time is measured from the time a user engages with an incident (by\nacknowledging or accepting a responder request) until the incident is resolved.\nThis may include periods in which the incidents was snoozed."
           },
           "mean_engaged_user_count": {
             "type": "integer",
-            "description": "Mean number of users who engaged with an incident. *Engaged* is defined as \nacknowledging an incident or accepting a responder request in it."
+            "description": "Mean number of users who engaged with an incident. *Engaged* is defined as\nacknowledging an incident or accepting a responder request in it."
           },
           "total_escalation_count": {
             "type": "integer",
-            "description": "Total count of instances where an incident is escalated between responders \nassigned to an escalation policy."
+            "description": "Total count of instances where an incident is escalated between responders\nassigned to an escalation policy."
           },
           "mean_assignment_count": {
             "type": "integer",
@@ -2070,24 +2067,21 @@
           },
           "total_engaged_seconds": {
             "type": "integer",
-            "description": "Total engaged time across all responders for incidents. Engaged time is measured from \nthe time a user engages with an incident (by acknowledging or accepting a responder request) \nuntil the incident is resolved. This may include periods in which the incidents was snoozed.'"
+            "description": "Total engaged time across all responders for incidents. Engaged time is measured from\nthe time a user engages with an incident (by acknowledging or accepting a responder request)\nuntil the incident is resolved. This may include periods in which the incidents was snoozed.'"
           },
           "up_time_pct": {
             "type": "number",
-            "description": "The percentage of time in the defined date range that the service was not interrupted \nby a [major incident](https://support.pagerduty.com/docs/operational-reviews#major-incidents)."
+            "description": "The percentage of time in the defined date range that the service was not interrupted\nby a [major incident](https://support.pagerduty.com/docs/operational-reviews#major-incidents)."
           },
           "user_defined_effort_seconds": {
             "type": "integer",
-            "description": "The total response effort in seconds, \n[as defined by the user](https://support.pagerduty.com/docs/editing-incidents#edit-incident-duration)."
+            "description": "The total response effort in seconds,\n[as defined by the user](https://support.pagerduty.com/docs/editing-incidents#edit-incident-duration)."
           }
         }
       },
       "AnalyticsRawIncident": {
         "title": "Analytics Raw Incident",
         "type": "object",
-        "x-tags": [
-          "Analytics"
-        ],
         "properties": {
           "id": {
             "type": "string",
