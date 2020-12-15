@@ -4960,8 +4960,12 @@
                   "create_alerts_and_incidents"
                 ]
               },
+              "alert_grouping_parameters": {
+                "$ref": "#/components/schemas/AlertGroupingParameters"
+              },
               "alert_grouping": {
                 "type": "string",
+                "deprecated": true,
                 "description": "Defines how alerts on this service will be automatically grouped into incidents. Note that the alert grouping features are available only on certain plans. There are three available options:\n* null - No alert grouping on the service. Each alert will create a separate incident;\n* \"time\" - All alerts within a specified duration will be grouped into the same incident. This duration is set in the `alert_grouping_timeout` setting (described below). Available on Standard, Enterprise, and Event Intelligence plans;\n* \"intelligent\" - Alerts will be intelligently grouped based on a machine learning model that looks at the alert summary, timing, and the history of grouped alerts. Available on Enterprise and Event Intelligence plans\n",
                 "enum": [
                   "time",
@@ -4970,7 +4974,8 @@
               },
               "alert_grouping_timeout": {
                 "type": "integer",
-                "description": "The duration in minutes within which to automatically group incoming alerts. This setting applies only when `alert_grouping` is set to `\"time\"`. To continue grouping alerts until the incident is resolved, set this value to `0`.\n"
+                "deprecated": true,
+                "description": "The duration in minutes within which to automatically group incoming alerts. This setting applies only when `alert_grouping` is set to `time`. To continue grouping alerts until the Incident is resolved, set this value to `0`.\n"
               }
             },
             "required": [
@@ -5024,8 +5029,12 @@
                 }
               ],
               "alert_creation": "create_alerts_and_incidents",
-              "alert_grouping": "time",
-              "alert_grouping_timeout": 2
+              "alert_grouping_parameters": {
+                "type": "time",
+                "config": {
+                  "timeout": 2
+                }
+              }
             }
           }
         ]
@@ -7128,6 +7137,58 @@
           "account_id": {
             "type": "string",
             "description": "The ID of the account belonging to the subscriber entity"
+          }
+        }
+      },
+      "AlertGroupingParameters": {
+        "type": "object",
+        "description": "Defines how alerts on this service will be automatically grouped into incidents. Note that the alert grouping features are available only on certain plans.\n",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "The type of Alert Grouping",
+            "enum": [
+              "time",
+              "intelligent",
+              "content_based"
+            ]
+          },
+          "config": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TimeBasedAlertGroupingConfiguration"
+              },
+              {
+                "$ref": "#/components/schemas/ContentBasedAlertGroupingConfiguration"
+              }
+            ]
+          }
+        }
+      },
+      "ContentBasedAlertGroupingConfiguration": {
+        "type": "object",
+        "description": "The configuration for Content Based Alert Grouping",
+        "properties": {
+          "aggregate": {
+            "type": "string",
+            "description": "Whether Alerts should be grouped if `all` or `any` specified fields match. If `all` is selected, an exact match on every specified field name must occur for Alerts to be grouped. If `any` is selected, Alerts will be grouped when there is an exact match on at least one of the specified fields.",
+            "enum": [
+              "all, any"
+            ]
+          },
+          "fields": {
+            "type": "array",
+            "description": "The fields with which to group against. Depending on the aggregate, Alerts will group if some or all the fields match"
+          }
+        }
+      },
+      "TimeBasedAlertGroupingConfiguration": {
+        "type": "object",
+        "description": "The configuration for Time Based Alert Grouping",
+        "properties": {
+          "timeout": {
+            "type": "integer",
+            "description": "The duration in minutes within which to automatically group incoming Alerts.  To continue grouping Alerts until the Incident is resolved, set this value to 0."
           }
         }
       }
@@ -18818,6 +18879,9 @@
                           "status": "active",
                           "alert_creation": "create_alerts_and_incidents",
                           "alert_grouping": "intelligent",
+                          "alert_grouping_parameters": {
+                            "type": "intelligent"
+                          },
                           "integrations": [
                             {
                               "id": "PQ12345",
@@ -18980,7 +19044,13 @@
                       ],
                       "alert_creation": "create_alerts_and_incidents",
                       "alert_grouping": "time",
-                      "alert_grouping_timeout": 2
+                      "alert_grouping_timeout": 2,
+                      "alert_grouping_parameters": {
+                        "type": "time",
+                        "config": {
+                          "$ref": "#/components/schemas/TimeBasedAlertGroupingConfiguration"
+                        }
+                      }
                     }
                   }
                 }
@@ -19349,8 +19419,12 @@
                         }
                       ],
                       "alert_creation": "create_alerts_and_incidents",
-                      "alert_grouping": "time",
-                      "alert_grouping_timeout": 2
+                      "alert_grouping_parameters": {
+                        "type": "time",
+                        "config": {
+                          "$ref": "#/components/schemas/TimeBasedAlertGroupingConfiguration"
+                        }
+                      }
                     }
                   }
                 }
@@ -19393,6 +19467,12 @@
                         "alert_creation": "create_alerts_and_incidents",
                         "alert_grouping": "time",
                         "alert_grouping_timeout": 2,
+                        "alert_grouping_parameters": {
+                          "type": "time",
+                          "config": {
+                            "$ref": "#/components/schemas/TimeBasedAlertGroupingConfiguration"
+                          }
+                        },
                         "integrations": [
                           {
                             "id": "PQ12345",
