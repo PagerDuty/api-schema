@@ -6,6 +6,9 @@ Currently we do not deprecate or remove any API functionality.
 
 ----
 
+### 2020-12-14
+- Updated how Alert Grouping can be configured for Services using Services API. New field are backwards compatible.
+
 ### 2020-12-01
 - Updated record-level audit trail record listing endpoints to indicate that a 402 Payment Required response can be returned for unentitled accounts. This now matches the account-level audit trail record listing endpoint's behavior.
 
@@ -74,7 +77,7 @@ Currently we do not deprecate or remove any API functionality.
 - Updated response examples and some definitions in `/analytics` Early Access Endpoints.
 
 ### 2020-09-16
-- Added [Change Events](https://developer.pagerduty.com/docs/events-api-v2/send-change-events/) to Events API V2
+- Add [Change Events](https://developer.pagerduty.com/docs/events-api-v2/send-change-events/) to Events API V2
 
 ### 2020-09-16
 - Added Early-Access endpoints for Service-level Event Rules
