@@ -5,6 +5,10 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 Currently we do not deprecate or remove any API functionality.
 
 ----
+### 2020-12-16
+- Updated Cursor for the Analytics Raw Incidents endpoint to be an opaque/encoded string instead of an id.
+- Added ability to order by seconds_to_resolve in the Analytics Raw Incidents endpoint.
+- Added ability to specify the sort order (asc/desc) in the Analytics Raw Incidents endpoint.
 
 ### 2020-12-14
 - Updated how Alert Grouping can be configured for Services using Services API. New field are backwards compatible.

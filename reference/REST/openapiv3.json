@@ -8412,11 +8412,11 @@
                   "properties": {
                     "first": {
                       "type": "string",
-                      "description": "ID of the first incident in the response."
+                      "description": "Cursor to identify the first object in the response."
                     },
                     "last": {
                       "type": "string",
-                      "description": "ID of the last incident in the response."
+                      "description": "Cursor to identify the last object in the response."
                     },
                     "limit": {
                       "type": "integer",
@@ -8425,6 +8425,22 @@
                     "more": {
                       "type": "boolean",
                       "description": "Indicates if there are more resources available than were returned."
+                    },
+                    "order": {
+                      "type": "string",
+                      "description": "The order in which the results were sorted;  asc for ascending, desc for descending.",
+                      "enum": [
+                        "asc",
+                        "desc"
+                      ]
+                    },
+                    "order_by": {
+                      "type": "string",
+                      "description": "The column that was used for ordering the results.",
+                      "enum": [
+                        "created_at",
+                        "seconds_to_resolve"
+                      ]
                     },
                     "filters": {
                       "type": "object",
@@ -8500,6 +8516,8 @@
                     "last",
                     "limit",
                     "more",
+                    "order",
+                    "order_by",
                     "time_zone",
                     "data"
                   ]
@@ -8572,6 +8590,7 @@
                       "limit": 10,
                       "more": true,
                       "order": "desc",
+                      "order_by": "created_at",
                       "starting_after": null,
                       "time_zone": "Etc/UTC"
                     }
@@ -8680,11 +8699,27 @@
                   },
                   "starting_after": {
                     "type": "string",
-                    "description": "Specifies an incident by ID, the paginated results will begin with the incident directly after this one."
+                    "description": "A cursor to indicate the reference point that the results should follow"
                   },
                   "ending_before": {
                     "type": "string",
-                    "description": "Specifies an incident by ID, the paginated results will end with the incident directly before this one."
+                    "description": "A cursor to indicate the reference point that the results should precede"
+                  },
+                  "order": {
+                    "type": "string",
+                    "description": "The order the results;  asc for ascending, desc for descending. Defaults to 'desc'.",
+                    "enum": [
+                      "asc",
+                      "desc"
+                    ]
+                  },
+                  "order_by": {
+                    "type": "string",
+                    "description": "The column to use for ordering the results. Defaults to 'created_at'.",
+                    "enum": [
+                      "created_at",
+                      "seconds_to_resolve"
+                    ]
                   },
                   "limit": {
                     "type": "integer",
@@ -8723,8 +8758,10 @@
                         "SEV-2"
                       ]
                     },
-                    "starting_after": "P4UN5A1",
+                    "starting_after": "eyJjcmVhdGVkX2F0IjoiMjAyMC0wMS0wMVQwMDowMDowMC0wNTowMCIsImlkIjoiUElKOTBONyJ9",
                     "limit": 20,
+                    "order": "desc",
+                    "order_by": "created_at",
                     "time_zone": "Etc/UTC"
                   }
                 }
