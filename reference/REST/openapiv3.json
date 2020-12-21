@@ -4633,7 +4633,8 @@
                 "items": {
                   "$ref": "#/components/schemas/ServiceReference"
                 },
-                "minLength": 0
+                "minLength": 0,
+                "readOnly": true
               },
               "teams": {
                 "type": "array",
