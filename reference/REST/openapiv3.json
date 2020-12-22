@@ -7147,7 +7147,7 @@
         "properties": {
           "type": {
             "type": "string",
-            "description": "The type of Alert Grouping",
+            "description": "The type of Alert Grouping. When `type` is `intelligent`, `config` can be omitted.",
             "enum": [
               "time",
               "intelligent",
