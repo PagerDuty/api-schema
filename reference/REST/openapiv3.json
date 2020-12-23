@@ -348,7 +348,7 @@
               "Message about the result"
             ]
           },
-          "cursor": "dXNlcjaVMzc5V0ZYTlo==",
+          "next_cursor": "dXNlcjaVMzc5V0ZYTlo==",
           "limit": 10
         }
       },
@@ -2385,7 +2385,8 @@
               }
             },
             "required": [
-              "limit"
+              "limit",
+              "next_cursor"
             ]
           }
         ]
