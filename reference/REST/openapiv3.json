@@ -7085,6 +7085,50 @@
           "subscriber_type": "user"
         }
       },
+      "NotificationSubscriberWithContext": {
+        "title": "NotificationSubscriberWithContext",
+        "description": "A reference of a subscriber entity with additional subscription context.",
+        "type": "object",
+        "example": {
+          "subscriber_id": "PD1234",
+          "subscriber_type": "user"
+        },
+        "properties": {
+          "subscriber_id": {
+            "type": "string",
+            "description": "The ID of the entity being subscribed"
+          },
+          "subscriber_type": {
+            "type": "string",
+            "description": "The type of the entity being subscribed",
+            "enum": [
+              "user",
+              "team"
+            ]
+          },
+          "has_indirect_subscription": {
+            "type": "boolean",
+            "description": "If this subcriber has an indirect subscription to this incident via another object"
+          },
+          "subscribed_via": {
+            "nullable": true,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "description": "The id of the object this subscriber is subscribed via"
+                },
+                "name": {
+                  "type": "string",
+                  "description": "The type of the object this subscriber is subscribed via"
+                }
+              }
+            }
+          }
+        }
+      },
       "NotificationSubscribable": {
         "title": "NotificationSubscribable",
         "description": "A reference of a subscribable entity.",
@@ -7098,7 +7142,8 @@
             "type": "string",
             "description": "The type of the entity being subscribed to",
             "enum": [
-              "incident"
+              "incident",
+              "business_service"
             ]
           }
         },
@@ -7132,12 +7177,76 @@
             "type": "string",
             "description": "The type of the entity being subscribed to",
             "enum": [
-              "incident"
+              "incident",
+              "business_service"
             ]
           },
           "account_id": {
             "type": "string",
             "description": "The ID of the account belonging to the subscriber entity"
+          }
+        },
+        "x-examples": {
+          "example-1": {
+            "subscriber_id": "string",
+            "subscriber_type": "user",
+            "subscribable_id": "string",
+            "subscribable_type": "incident",
+            "account_id": "string"
+          }
+        }
+      },
+      "NotificationSubscriptionWithContext": {
+        "title": "NotificationSubscriptionWithContext",
+        "type": "object",
+        "description": "An object describing the relationship of a NotificationSubscriber and a NotificationSubscribable with additional context on status of subscription attempt.",
+        "x-examples": {
+          "example-1": {
+            "subscriber_id": "string",
+            "subscriber_type": "user",
+            "subscribable_id": "string",
+            "subscribable_type": "incident",
+            "account_id": "string",
+            "result": "success"
+          }
+        },
+        "properties": {
+          "subscriber_id": {
+            "type": "string",
+            "description": "The ID of the entity being subscribed"
+          },
+          "subscriber_type": {
+            "type": "string",
+            "enum": [
+              "user",
+              "team"
+            ],
+            "description": "The type of the entity being subscribed"
+          },
+          "subscribable_id": {
+            "type": "string",
+            "description": "The ID of the entity being subscribed to"
+          },
+          "subscribable_type": {
+            "type": "string",
+            "enum": [
+              "incident",
+              "business_service"
+            ],
+            "description": "The type of the entity being subscribed to"
+          },
+          "account_id": {
+            "type": "string",
+            "description": "The type of the entity being subscribed to"
+          },
+          "result": {
+            "type": "string",
+            "enum": [
+              "success",
+              "duplicate",
+              "unauthorized"
+            ],
+            "description": "The resulting status of the subscription"
           }
         }
       },
@@ -9019,7 +9128,6 @@
                           "point_of_contact": "PagerDuty Admin",
                           "name": "Cross-tier business service",
                           "id": "P1L1YEE",
-                          "description": "",
                           "summary": "Cross-tier business service",
                           "team": {
                             "id": "PQ9K7I8",
@@ -9406,6 +9514,436 @@
           "404": {
             "$ref": "#/components/responses/NotFound"
           }
+        }
+      }
+    },
+    "/business_services/{id}/account_subscription": {
+      "post": {
+        "summary": "Create Business Service Account Subscription",
+        "tags": [
+          "Business Services"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "account_is_subscribed": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "account_is_subscribed"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "account_is_subscribed": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
+          }
+        },
+        "operationId": "createBusinessServiceAccountSubscription",
+        "description": "Subscribe your Account to a Business Service.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_usms"
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Delete Business Service Account Subscription",
+        "tags": [
+          "Business Services"
+        ],
+        "operationId": "removeBusinessServiceAccountSubscription",
+        "responses": {
+          "204": {
+            "description": "The account was unsubscribed successfull."
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
+          }
+        },
+        "description": "Unsubscribe your Account from a Business Service.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_usms"
+          }
+        ]
+      }
+    },
+    "/business_services/{id}/subscribers": {
+      "get": {
+        "summary": "List Business Service Subscribers",
+        "tags": [
+          "Business Services"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Pagination"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "subscribers": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/NotificationSubscriber"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "account_id": {
+                          "type": "string",
+                          "description": "The ID of the account belonging to the subscriber entity"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "limit": 100,
+                      "more": false,
+                      "offset": 0,
+                      "subscribers": [
+                        {
+                          "subscriber_id": "PD1234",
+                          "subscriber_type": "user"
+                        },
+                        {
+                          "subscriber_id": "PD1234",
+                          "subscriber_type": "team"
+                        }
+                      ],
+                      "account_id": "PD1234",
+                      "total": 2
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        },
+        "operationId": "getBusinessServiceSubscribers",
+        "description": "Retrieve a list of Notification Subscribers on the Business Service.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n> Users must be added through `POST /business_services/{id}/subscribers` to be returned from this endpoint.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_usms"
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create Business Service Subscribers",
+        "tags": [
+          "Business Services"
+        ],
+        "operationId": "createBusinessServiceNotificationSubscribers",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "subscriptions": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/NotificationSubscriptionWithContext"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "subscriptions": [
+                        {
+                          "account_id": "PD1234",
+                          "subscribable_id": "PD1234",
+                          "subscribable_type": "business_service",
+                          "subscriber_id": "PD1234",
+                          "subscriber_type": "user",
+                          "result": "success"
+                        },
+                        {
+                          "account_id": "PD1234",
+                          "subscribable_id": "PD1234",
+                          "subscribable_type": "business_service",
+                          "subscriber_id": "PD1234",
+                          "subscriber_type": "team",
+                          "result": "duplicate"
+                        },
+                        {
+                          "account_id": "PD1234",
+                          "subscribable_id": "PD1235",
+                          "subscribable_type": "business_service",
+                          "subscriber_id": "PD1234",
+                          "subscriber_type": "team",
+                          "result": "unauthorized"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
+          }
+        },
+        "description": "Subscribe the given entities to the given Business Service.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_usms"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "subscribers": {
+                    "type": "array",
+                    "uniqueItems": true,
+                    "minItems": 1,
+                    "items": {
+                      "$ref": "#/components/schemas/NotificationSubscriber"
+                    }
+                  }
+                },
+                "required": [
+                  "subscribers"
+                ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "subscribers": [
+                      {
+                        "subscriber_id": "PD1234",
+                        "subscriber_type": "team"
+                      },
+                      {
+                        "subscriber_id": "PD1235",
+                        "subscriber_type": "team"
+                      },
+                      {
+                        "subscriber_id": "PD1234",
+                        "subscriber_type": "user"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "description": "The entities to subscribe."
+        }
+      }
+    },
+    "/business_services/{id}/unsubscribe": {
+      "post": {
+        "summary": "Remove Business Service Subscribers",
+        "tags": [
+          "Business Services"
+        ],
+        "operationId": "removeBusinessServiceNotificationSubscriber",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "deleted_count": {
+                      "type": "number"
+                    },
+                    "unauthorized_count": {
+                      "type": "number"
+                    },
+                    "non_existent_count": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "deleted_count",
+                    "unauthorized_count",
+                    "non_existent_count"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "deleted_count": 1,
+                      "unauthorized_count": 1,
+                      "non_existent_count": 0
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
+          }
+        },
+        "description": "Unsubscribes the matching Subscribers from a Business Service.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_usms"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "subscribers": {
+                    "type": "array",
+                    "uniqueItems": true,
+                    "minItems": 1,
+                    "items": {
+                      "$ref": "#/components/schemas/NotificationSubscriber"
+                    }
+                  }
+                },
+                "required": [
+                  "subscribers"
+                ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "subscribers": [
+                      {
+                        "subscriber_id": "PD1234",
+                        "subscriber_type": "team"
+                      },
+                      {
+                        "subscriber_id": "PD1234",
+                        "subscriber_type": "user"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "description": "The entities to unsubscribe."
         }
       }
     },
@@ -13874,6 +14412,348 @@
         }
       }
     },
+    "/incidents/{id}/status_updates/subscribers": {
+      "get": {
+        "summary": "List Notification Subscribers",
+        "tags": [
+          "Incidents"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Pagination"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "subscribers": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/NotificationSubscriberWithContext"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "account_id": {
+                          "type": "string",
+                          "description": "The ID of the account belonging to the subscriber entity"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "limit": 100,
+                      "more": false,
+                      "offset": 0,
+                      "subscribers": [
+                        {
+                          "subscriber_id": "PD1234",
+                          "subscriber_type": "user",
+                          "has_indirect_subscription": false,
+                          "subscribed_via": null
+                        },
+                        {
+                          "subscriber_id": "PD1234",
+                          "subscriber_type": "team",
+                          "has_indirect_subscription": true,
+                          "subscribed_via": [
+                            {
+                              "id": "PD1234",
+                              "type": "business_service"
+                            }
+                          ]
+                        }
+                      ],
+                      "account_id": "PD1234",
+                      "total": 2
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        },
+        "operationId": "getIncidentNotificationSubscribers",
+        "description": "Retrieve a list of Notification Subscribers on the Incident.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n> Users must be added through `POST /incident/{id}/status_updates/subscribers` to be returned from this endpoint.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_usms"
+          }
+        ]
+      },
+      "post": {
+        "summary": "Add Notification Subscribers",
+        "operationId": "createIncidentNotificationSubscribers",
+        "tags": [
+          "Incidents"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "subscriptions": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/NotificationSubscriptionWithContext"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "subscriptions": [
+                        {
+                          "account_id": "PD1234",
+                          "subscribable_id": "PD1234",
+                          "subscribable_type": "incident",
+                          "subscriber_id": "PD1234",
+                          "subscriber_type": "user",
+                          "result": "success"
+                        },
+                        {
+                          "account_id": "PD1234",
+                          "subscribable_id": "PD1234",
+                          "subscribable_type": "incident",
+                          "subscriber_id": "PD1234",
+                          "subscriber_type": "team",
+                          "result": "duplicate"
+                        },
+                        {
+                          "account_id": "PD1234",
+                          "subscribable_id": "PD1235",
+                          "subscribable_type": "incident",
+                          "subscriber_id": "PD1234",
+                          "subscriber_type": "team",
+                          "result": "unauthorized"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
+          }
+        },
+        "description": "Subscribe the given entities to Incident Status Update Notifications.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_usms"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "subscribers": {
+                    "type": "array",
+                    "uniqueItems": true,
+                    "minItems": 1,
+                    "items": {
+                      "$ref": "#/components/schemas/NotificationSubscriber"
+                    }
+                  }
+                },
+                "required": [
+                  "subscribers"
+                ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "subscribers": [
+                      {
+                        "subscriber_id": "PD1234",
+                        "subscriber_type": "team"
+                      },
+                      {
+                        "subscriber_id": "PD1235",
+                        "subscriber_type": "team"
+                      },
+                      {
+                        "subscriber_id": "PD1234",
+                        "subscriber_type": "user"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "description": "The entities to subscribe."
+        }
+      }
+    },
+    "/incidents/{id}/status_updates/unsubscribe": {
+      "post": {
+        "summary": "Remove Notification Subscriber",
+        "tags": [
+          "Incidents"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "deleted_count": {
+                      "type": "number"
+                    },
+                    "unauthorized_count": {
+                      "type": "number"
+                    },
+                    "non_existent_count": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "deleted_count",
+                    "unauthorized_count",
+                    "non_existent_count"
+                  ]
+                },
+                "examples": {
+                  "resonse": {
+                    "summary": "Response Example",
+                    "value": {
+                      "deleted_count": 1,
+                      "unauthorized_count": 1,
+                      "non_existent_count": 0
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
+          }
+        },
+        "operationId": "removeIncidentNotificationSubscribers",
+        "description": "Unsubscribes the matching Subscribers from Incident Status Update Notifications.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_usms"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "subscribers": {
+                    "type": "array",
+                    "uniqueItems": true,
+                    "minItems": 1,
+                    "items": {
+                      "$ref": "#/components/schemas/NotificationSubscriber"
+                    }
+                  }
+                },
+                "required": [
+                  "subscribers"
+                ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "subscribers": [
+                      {
+                        "subscriber_id": "PD1234",
+                        "subscriber_type": "team"
+                      },
+                      {
+                        "subscriber_id": "PD1234",
+                        "subscriber_type": "user"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "description": "The entities to unsubscribe."
+        }
+      }
+    },
     "/incidents/count": {
       "description": "Get a count of incidents matching a set of criteria such as service, status, and time. Counts may be fetched per status."
     },
@@ -16687,8 +17567,7 @@
                 }
               }
             }
-          },
-          "description": ""
+          }
         },
         "responses": {
           "200": {
@@ -21813,6 +22692,346 @@
         }
       }
     },
+    "/teams/{id}/notification_subscriptions": {
+      "get": {
+        "summary": "List Team Notification Subscriptions",
+        "tags": [
+          "Teams"
+        ],
+        "operationId": "getTeamNotificationSubscriptions",
+        "description": "Retrieve a list of Notification Subscriptions the given Team has.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n> Teams must be added through `POST /teams/{id}/notification_subscriptions` to be returned from this endpoint.\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_usms"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "subscriptions": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "subscription": {
+                            "$ref": "#/components/schemas/NotificationSubscription"
+                          },
+                          "subscribable_name": {
+                            "type": "string",
+                            "nullable": true,
+                            "description": "The name of the subscribable"
+                          }
+                        }
+                      }
+                    },
+                    "pagination": {
+                      "$ref": "#/components/schemas/Pagination"
+                    }
+                  }
+                },
+                "examples": {
+                  "resonse": {
+                    "summary": "Response Example",
+                    "value": {
+                      "subscriptions": [
+                        {
+                          "subscription": {
+                            "subscriber_id": "PD1234",
+                            "subscriber_type": "team",
+                            "subscribable_id": "PD1234",
+                            "subscribable_type": "incident",
+                            "subscribable_name": null,
+                            "account_id": "PD1234"
+                          }
+                        },
+                        {
+                          "subscription": {
+                            "subscriber_id": "PD1234",
+                            "subscriber_type": "team",
+                            "subscribable_id": "PD1234",
+                            "subscribable_type": "business_service",
+                            "subscribable_name": "Online Payment",
+                            "account_id": "PD1234"
+                          }
+                        }
+                      ],
+                      "limit": 2,
+                      "offset": 0,
+                      "total": 1000,
+                      "more": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create Team Notification Subscriptions",
+        "tags": [
+          "Teams"
+        ],
+        "operationId": "createTeamNotificationSubscriptions",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "subscriptions": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/NotificationSubscriptionWithContext"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "subscriptions": [
+                        {
+                          "account_id": "PD1234",
+                          "subscribable_id": "PD1234",
+                          "subscribable_type": "incident",
+                          "subscriber_id": "PD1234",
+                          "subscriber_type": "team",
+                          "result": "success"
+                        },
+                        {
+                          "account_id": "PD1234",
+                          "subscribable_id": "PD1234",
+                          "subscribable_type": "business_service",
+                          "subscriber_id": "PD1234",
+                          "subscriber_type": "team",
+                          "result": "duplicate"
+                        },
+                        {
+                          "account_id": "PD1234",
+                          "subscribable_id": "PD1235",
+                          "subscribable_type": "business_service",
+                          "subscriber_id": "PD1234",
+                          "subscriber_type": "team",
+                          "result": "unauthorized"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
+          }
+        },
+        "description": "Create new Notification Subscriptions for the given Team.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_usms"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "subscribables": {
+                    "type": "array",
+                    "uniqueItems": true,
+                    "minItems": 1,
+                    "items": {
+                      "$ref": "#/components/schemas/NotificationSubscribable"
+                    }
+                  }
+                },
+                "required": [
+                  "subscribables"
+                ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "subscribables": [
+                      {
+                        "subscribable_type": "incident",
+                        "subscribable_id": "PD1234"
+                      },
+                      {
+                        "subscribable_type": "business_service",
+                        "subscribable_id": "PD1234"
+                      },
+                      {
+                        "subscribable_type": "business_service",
+                        "subscribable_id": "PD1235"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "description": "The entities to subscribe to."
+        }
+      }
+    },
+    "/teams/{id}/notification_subscriptions/unsubscribe": {
+      "post": {
+        "tags": [
+          "Teams"
+        ],
+        "operationId": "removeTeamNotificationSubscriptions",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "deleted_count": {
+                      "type": "number"
+                    },
+                    "unauthorized_count": {
+                      "type": "number"
+                    },
+                    "non_existent_count": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "deleted_count",
+                    "unauthorized_count",
+                    "non_existent_count"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "deleted_count": 1,
+                      "unauthorized_count": 1,
+                      "non_existent_count": 0
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
+          }
+        },
+        "description": "Unsubscribe the given Team from Notifications on the matching Subscribable entities.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_usms"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "subscribables": {
+                    "type": "array",
+                    "uniqueItems": true,
+                    "minItems": 1,
+                    "items": {
+                      "$ref": "#/components/schemas/NotificationSubscribable"
+                    }
+                  }
+                },
+                "required": [
+                  "subscribables"
+                ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Response Example",
+                  "value": {
+                    "subscribables": [
+                      {
+                        "subscribable_type": "incident",
+                        "subscribable_id": "PD1234"
+                      },
+                      {
+                        "subscribable_type": "business_service",
+                        "subscribable_id": "PD1234"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "description": "The entities to unsubscribe from."
+        }
+      }
+    },
     "/teams/{id}/users/{user_id}": {
       "description": "Manage team memberships.",
       "delete": {
@@ -23479,6 +24698,347 @@
           "429": {
             "$ref": "#/components/responses/TooManyRequests"
           }
+        }
+      }
+    },
+    "/users/{id}/notification_subscriptions": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "operationId": "getUserNotificationSubscriptions",
+        "description": "Retrieve a list of Notification Subscriptions the given User has.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n> Users must be added through `POST /users/{id}/notification_subscriptions` to be returned from this endpoint.\n",
+        "summary": "List Notification Subscriptions",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_usms"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "subscriptions": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "subscription": {
+                            "$ref": "#/components/schemas/NotificationSubscription"
+                          },
+                          "subscribable_name": {
+                            "type": "string",
+                            "nullable": true,
+                            "description": "The name of the subscribable"
+                          }
+                        }
+                      }
+                    },
+                    "pagination": {
+                      "$ref": "#/components/schemas/Pagination"
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "subscriptions": [
+                        {
+                          "subscription": {
+                            "subscriber_id": "PD1234",
+                            "subscriber_type": "user",
+                            "subscribable_id": "PD1234",
+                            "subscribable_type": "incident",
+                            "subscribable_name": null,
+                            "account_id": "PD1234"
+                          }
+                        },
+                        {
+                          "subscription": {
+                            "subscriber_id": "PD1234",
+                            "subscriber_type": "user",
+                            "subscribable_id": "PD1234",
+                            "subscribable_type": "business_service",
+                            "subscribable_name": "business service name",
+                            "account_id": "PD1234"
+                          }
+                        }
+                      ],
+                      "limit": 2,
+                      "offset": 0,
+                      "total": 1000,
+                      "more": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create Notification Subcriptions",
+        "operationId": "createUserNotificationSubscriptions",
+        "tags": [
+          "Users"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "subscriptions": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/NotificationSubscriptionWithContext"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "subscriptions": [
+                        {
+                          "account_id": "PD1234",
+                          "subscribable_id": "PD1234",
+                          "subscribable_type": "incident",
+                          "subscriber_id": "PD1234",
+                          "subscriber_type": "user",
+                          "result": "success"
+                        },
+                        {
+                          "account_id": "PD1234",
+                          "subscribable_id": "PD1234",
+                          "subscribable_type": "business_service",
+                          "subscriber_id": "PD1234",
+                          "subscriber_type": "user",
+                          "result": "duplicate"
+                        },
+                        {
+                          "account_id": "PD1234",
+                          "subscribable_id": "PD1235",
+                          "subscribable_type": "business_service",
+                          "subscriber_id": "PD1234",
+                          "subscriber_type": "user",
+                          "result": "unauthorized"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
+          }
+        },
+        "description": "Create new Notification Subscriptions for the given User.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_usms"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "subscribables": {
+                    "type": "array",
+                    "uniqueItems": true,
+                    "minItems": 1,
+                    "items": {
+                      "$ref": "#/components/schemas/NotificationSubscribable"
+                    }
+                  }
+                },
+                "required": [
+                  "subscribables"
+                ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "subscribables": [
+                      {
+                        "subscribable_type": "incident",
+                        "subscribable_id": "PD1234"
+                      },
+                      {
+                        "subscribable_type": "business_service",
+                        "subscribable_id": "PD1234"
+                      },
+                      {
+                        "subscribable_type": "business_service",
+                        "subscribable_id": "PD1235"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "description": "The entities to subscribe to."
+        }
+      }
+    },
+    "/users/{id}/notification_subscriptions/unsubscribe": {
+      "post": {
+        "summary": "Remove Notification Subscriptions",
+        "tags": [
+          "Users"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "deleted_count": {
+                      "type": "number"
+                    },
+                    "unauthorized_count": {
+                      "type": "number"
+                    },
+                    "non_existent_count": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "deleted_count",
+                    "unauthorized_count",
+                    "non_existent_count"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "deleted_count": 1,
+                      "unauthorized_count": 1,
+                      "non_existent_count": 0
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
+          }
+        },
+        "operationId": "unsubscribeUserNotificationSubscriptions",
+        "description": "Unsubscribe the given User from Notifications on the matching Subscribable entities.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_usms"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "subscribables": {
+                    "type": "array",
+                    "uniqueItems": true,
+                    "minItems": 1,
+                    "items": {
+                      "$ref": "#/components/schemas/NotificationSubscribable"
+                    }
+                  }
+                },
+                "required": [
+                  "subscribables"
+                ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Response Example",
+                  "value": {
+                    "subscribables": [
+                      {
+                        "subscribable_type": "incident",
+                        "subscribable_id": "PD1234"
+                      },
+                      {
+                        "subscribable_type": "business_service",
+                        "subscribable_id": "PD1234"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "description": "The entities to unsubscribe from."
         }
       }
     },

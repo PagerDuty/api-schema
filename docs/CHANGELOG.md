@@ -5,6 +5,23 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 Currently we do not deprecate or remove any API functionality.
 
 ----
+### 2020-12-23
+- Added 14 new Early-Access endpoints for Status Update subscription management.
+  - `GET /business_services/{id}/account_subscription`
+  - `DELETE /business_services/{id}/account_subscription`
+  - `GET /business_services/{id}/subscribers`
+  - `POST /business_services/{id}/subscribers`
+  - `POST /business_services/{id}/unsubscribe`
+  - `GET /incidents/{id}/status_updates/subscribers`
+  - `POST /incidents/{id}/status_updates/subscribers`
+  - `POST /incidents/{id}/status_updates/unsubscribe`
+  - `GET /teams/{id}/notification_subscriptions`
+  - `POST /teams/{id}/notification_subscriptions`
+  - `POST /teams/{id}/notification_subscriptions/unsubscribe`
+  - `GET /users/{id}/notification_subscriptions`
+  - `POST /users/{id}/notification_subscriptions`
+  - `POST /users/{id}/notification_subscriptions/unsubscribe`
+
 ### 2020-12-16
 - Updated Cursor for the Analytics Raw Incidents endpoint to be an opaque/encoded string instead of an id.
 - Added ability to order by seconds_to_resolve in the Analytics Raw Incidents endpoint.
