@@ -131,7 +131,6 @@
           "records": [
             {
               "id": "PDRECORDID1_TEAM_CREATED",
-              "self": "https://api.pagerduty.com/<...>/records/PDRECORDID1_TEAM_CREATED",
               "execution_time": "2020-06-04T15:30:16.272Z",
               "execution_context": {
                 "request_id": "111lDEOIH-534-4ljhLHJjh111",
@@ -170,7 +169,6 @@
             },
             {
               "id": "PDRECORDID2_USER_REMOVED_FROM_TEAM",
-              "self": "https://api.pagerduty.com/<...>/records/PDRECORDID2_USER_REMOVED_FROM_TEAM",
               "execution_time": "2020-06-04T15:30:16.272Z",
               "execution_context": {
                 "request_id": "222lDEOIH-534-4ljhLHJjh222",
@@ -208,7 +206,6 @@
             },
             {
               "id": "PDRECORDID5_USERS_TEAM_ROLE_UPDATED",
-              "self": "https://api.pagerduty.com/<...>/records/PDRECORDID5_USERS_TEAM_ROLE_UPDATED",
               "execution_time": "2020-06-04T15:30:16.272Z",
               "execution_context": {
                 "request_id": "222lDEOIH-534-4ljhLHJjh222",
@@ -241,7 +238,6 @@
             },
             {
               "id": "PDRECORDID3_USERS_NAME_AND_EMAIL_UPDATED",
-              "self": "https://api.pagerduty.com/<...>/records/PDRECORDID3_USERS_NAME_AND_EMAIL_UPDATED",
               "execution_time": "2020-06-04T15:30:16.272Z",
               "execution_context": {
                 "request_id": "222lDEOIH-534-4ljhLHJjh222",
@@ -285,7 +281,6 @@
             },
             {
               "id": "PDRECORDID4_UPDATED_USERS_NOTIFICATION_RULE",
-              "self": "https://api.pagerduty.com/<...>/records/PDRECORDID4_UPDATED_USERS_NOTIFICATION_RULE",
               "execution_time": "2020-06-04T15:30:16.272Z",
               "execution_context": {
                 "request_id": "222lDEOIH-534-4ljhLHJjh222",
@@ -343,13 +338,842 @@
               }
             }
           ],
-          "response_metadata": {
-            "messages": [
-              "Message about the result"
-            ]
-          },
-          "next_cursor": "dXNlcjaVMzc5V0ZYTlo==",
+          "next_cursor": null,
           "limit": 10
+        }
+      },
+      "AuditRecordEscalationPolicyResponse": {
+        "summary": "Response Example",
+        "value": {
+          "records": [
+            {
+              "id": "PD_ASSIGN_TEAM_TO_ESCALATION_POLICY",
+              "action": "update",
+              "actors": [
+                {
+                  "id": "PDUSER",
+                  "summary": "John Snow",
+                  "type": "user_reference",
+                  "self": "https://api.pagerduty.com/users/PD_USER123",
+                  "html_url": "https://mydomain.pagerduty.com/users/PD_USER123"
+                }
+              ],
+              "details": {
+                "references": [
+                  {
+                    "added": [
+                      {
+                        "id": "PD_TEAM123",
+                        "summary": "Devops",
+                        "type": "team_reference",
+                        "self": "https://api.pagerduty.com/teams/PD_TEAM123",
+                        "html_url": "https://mydomain.pagerduty.com/teams/PD_TEAM123"
+                      }
+                    ],
+                    "name": "teams"
+                  }
+                ],
+                "resource": {
+                  "id": "PD_ESCALATION_ID",
+                  "summary": "DevOps Escalation",
+                  "type": "escalation_policy_reference",
+                  "self": "https://api.pagerduty.com/escalation_policies/PD_ESCALATION_ID",
+                  "html_url": "https://mydomain.pagerduty.com/escalation_policies/PD_ESCALATION_ID"
+                }
+              },
+              "execution_context": {
+                "request_id": "0cc413fb-8e7d-4414-b4bc-b7578bf3ba77"
+              },
+              "execution_time": "2021-01-05T16:33:52.026Z",
+              "method": {
+                "type": "browser"
+              },
+              "root_resource": {
+                "id": "PD_ESCALATION_ID",
+                "summary": "DevOps Escalation",
+                "type": "escalation_policy_reference",
+                "self": "https://api.pagerduty.com/escalation_policies/PD_ESCALATION_ID",
+                "html_url": "https://mydomain.pagerduty.com/escalation_policies/PD_ESCALATION_ID"
+              }
+            },
+            {
+              "id": "PD_CREATE_ESCALATION_POLICY",
+              "action": "create",
+              "actors": [
+                {
+                  "id": "PDUSER",
+                  "summary": "John Snow",
+                  "type": "user_reference",
+                  "self": "https://api.pagerduty.com/users/PD_USER123",
+                  "html_url": "https://mydomain.pagerduty.com/users/PD_USER123"
+                }
+              ],
+              "details": {
+                "fields": [
+                  {
+                    "name": "name",
+                    "value": "DevOps Escalation"
+                  },
+                  {
+                    "name": "description",
+                    "value": "Escalation Policy for devops"
+                  },
+                  {
+                    "name": "num_loops",
+                    "value": "1"
+                  }
+                ],
+                "resource": {
+                  "id": "PD_ESCALATION_ID",
+                  "summary": "DevOps Escalation",
+                  "type": "escalation_policy_reference",
+                  "self": "https://api.pagerduty.com/escalation_policies/PD_ESCALATION_ID",
+                  "html_url": "https://mydomain.pagerduty.com/escalation_policies/PD_ESCALATION_ID"
+                }
+              },
+              "execution_context": {
+                "request_id": "0cc413fb-8e7d-4414-b4bc-b7578bf3ba77"
+              },
+              "execution_time": "2021-01-05T16:33:51.951Z",
+              "method": {
+                "type": "browser"
+              },
+              "root_resource": {
+                "id": "PD_ESCALATION_ID",
+                "summary": "DevOps Escalation",
+                "type": "escalation_policy_reference",
+                "self": "https://api.pagerduty.com/escalation_policies/PD_ESCALATION_ID",
+                "html_url": "https://mydomain.pagerduty.com/escalation_policies/PD_ESCALATION_ID"
+              }
+            }
+          ],
+          "limit": 10,
+          "next_cursor": null
+        }
+      },
+      "AuditRecordScheduleResponse": {
+        "summary": "Response Example",
+        "value": {
+          "records": [
+            {
+              "id": "PD_ASSIGN_TEAM_TO_SCHEDULE",
+              "action": "update",
+              "actors": [
+                {
+                  "id": "PDUSER",
+                  "summary": "John Snow",
+                  "type": "user_reference",
+                  "self": "https://api.pagerduty.com/users/PD_USER123",
+                  "html_url": "https://mydomain.pagerduty.com/users/PD_USER123"
+                }
+              ],
+              "details": {
+                "references": [
+                  {
+                    "added": [
+                      {
+                        "id": "PD_TEAM123",
+                        "summary": "Devops",
+                        "type": "team_reference",
+                        "self": "https://api.pagerduty.com/teams/PD_TEAM123",
+                        "html_url": "https://mydomain.pagerduty.com/teams/PD_TEAM123"
+                      }
+                    ],
+                    "name": "teams"
+                  }
+                ],
+                "resource": {
+                  "id": "PD_SCHEDULE_ID",
+                  "summary": "DevOps Schedule",
+                  "type": "schedule_reference",
+                  "self": "https://api.pagerduty.com/schedules/PD_SCHEDULE_ID",
+                  "html_url": "https://mydomain.pagerduty.com/schedules/PD_SCHEDULE_ID"
+                }
+              },
+              "execution_context": {
+                "request_id": "13a1c0c3-545c-4ebb-4115-662fff9d8ad"
+              },
+              "execution_time": "2021-01-05T16:25:41.324Z",
+              "method": {
+                "type": "browser"
+              },
+              "root_resource": {
+                "id": "PD_SCHEDULE_ID",
+                "summary": "DevOps Schedule",
+                "type": "schedule_reference",
+                "self": "https://api.pagerduty.com/schedules/PD_SCHEDULE_ID",
+                "html_url": "https://mydomain.pagerduty.com/schedules/PD_SCHEDULE_ID"
+              }
+            },
+            {
+              "id": "PD_CREATE_SCHEDULE",
+              "action": "create",
+              "actors": [
+                {
+                  "id": "PDUSER",
+                  "summary": "John Snow",
+                  "type": "user_reference",
+                  "self": "https://api.pagerduty.com/users/PD_USER123",
+                  "html_url": "https://mydomain.pagerduty.com/users/PD_USER123"
+                }
+              ],
+              "details": {
+                "fields": [
+                  {
+                    "name": "name",
+                    "value": "DevOps Schedule"
+                  },
+                  {
+                    "name": "description",
+                    "value": "Our DevOps Team Schedule"
+                  },
+                  {
+                    "name": "time_zone",
+                    "value": "America/New_York"
+                  }
+                ],
+                "resource": {
+                  "id": "PD_SCHEDULE_ID",
+                  "summary": "DevOps Schedule",
+                  "type": "schedule_reference",
+                  "self": "https://api.pagerduty.com/schedules/PD_SCHEDULE_ID",
+                  "html_url": "https://mydomain.pagerduty.com/schedules/PD_SCHEDULE_ID"
+                }
+              },
+              "execution_context": {
+                "request_id": "13a1c0c3-545c-4ebb-4115-662fff9d8ad"
+              },
+              "execution_time": "2021-01-05T16:25:41.315Z",
+              "method": {
+                "type": "browser"
+              },
+              "root_resource": {
+                "id": "PD_SCHEDULE_ID",
+                "summary": "DevOps Schedule",
+                "type": "schedule_reference",
+                "self": "https://api.pagerduty.com/schedules/PD_SCHEDULE_ID",
+                "html_url": "https://mydomain.pagerduty.com/schedules/PD_SCHEDULE_ID"
+              }
+            }
+          ],
+          "limit": 10,
+          "next_cursor": null
+        }
+      },
+      "AuditRecordServiceResponse": {
+        "summary": "Response Example",
+        "value": {
+          "records": [
+            {
+              "id": "PDRECORDID1_SERVICE_CREATED",
+              "execution_time": "2020-06-04T15:30:16.272Z",
+              "execution_context": {
+                "request_id": "111lDEOIH-534-4ljhLHJjh111",
+                "remote_address": "201.19.20.19"
+              },
+              "actors": [
+                {
+                  "id": "PDUSER",
+                  "summary": "John Snow",
+                  "type": "user_reference"
+                }
+              ],
+              "method": {
+                "type": "api_token",
+                "truncated_token": "3usr"
+              },
+              "root_resource": {
+                "id": "PN2YA40",
+                "type": "service_reference",
+                "summary": "Documentation Hub"
+              },
+              "action": "create",
+              "details": {
+                "resource": {
+                  "id": "PD_SERVICE_ID",
+                  "type": "service_reference",
+                  "summary": "Documentation Hub"
+                },
+                "fields": [
+                  {
+                    "name": "name",
+                    "value": "Documentation Hub"
+                  },
+                  {
+                    "name": "description",
+                    "value": "Centralized documentation"
+                  },
+                  {
+                    "name": "incident_severity",
+                    "value": "always_high"
+                  },
+                  {
+                    "name": "alert_creation",
+                    "value": "create_alerts_and_incidents"
+                  },
+                  {
+                    "name": "auto_resolve_timeout",
+                    "value": ""
+                  },
+                  {
+                    "name": "acknowledgement_timeout",
+                    "value": ""
+                  },
+                  {
+                    "name": "alert_grouping",
+                    "value": null
+                  },
+                  {
+                    "name": "alert_grouping_timeout",
+                    "value": ""
+                  }
+                ],
+                "references": [
+                  {
+                    "name": "escalation_policy",
+                    "added": [
+                      {
+                        "id": "PD_SERVICE_ID",
+                        "summary": "Default",
+                        "type": "escalation_policy_reference"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "next_cursor": null,
+          "limit": 10
+        }
+      },
+      "AuditRecordTeamResponse": {
+        "summary": "Response Example",
+        "value": {
+          "records": [
+            {
+              "id": "PDRECORD_USER_ROLE_ON_TEAM",
+              "execution_time": "2020-06-04T15:30:16.272Z",
+              "execution_context": {
+                "request_id": "111lDEOIH-534-4ljhLHJjh111",
+                "remote_address": "201.19.20.19"
+              },
+              "actors": [
+                {
+                  "id": "PDUSER",
+                  "summary": "John Snow",
+                  "type": "user_reference",
+                  "self": "https://api.pagerduty.com/users/PD_USER123",
+                  "html_url": "https://mydomain.pagerduty.com/users/PD_USER123"
+                }
+              ],
+              "method": {
+                "type": "browser"
+              },
+              "root_resource": {
+                "id": "PD_TEAM123",
+                "type": "team_reference",
+                "summary": "my DevOps team",
+                "self": "https://api.pagerduty.com/teams/PD_TEAM123",
+                "html_url": "https://mydomain.pagerduty.com/teams/PD_TEAM123"
+              },
+              "action": "update",
+              "details": {
+                "resource": {
+                  "id": "PD_ADMIN_USER123",
+                  "type": "user_reference",
+                  "summary": "AA Admin User",
+                  "self": "https://api.pagerduty.com/users/PD_ADMIN_USER123",
+                  "html_url": "https://mydomain.pagerduty.com/users/PD_ADMIN_USER123"
+                },
+                "fields": [
+                  {
+                    "name": "members.role",
+                    "value": "manager"
+                  }
+                ]
+              }
+            },
+            {
+              "id": "PDRECORD_USER_ADDED_TO_TEAM",
+              "execution_time": "2020-06-04T15:30:16.272Z",
+              "execution_context": {
+                "request_id": "111lDEOIH-534-4ljhLHJjh111",
+                "remote_address": "201.19.20.19"
+              },
+              "actors": [
+                {
+                  "id": "PDUSER",
+                  "summary": "John Snow",
+                  "type": "user_reference",
+                  "self": "https://api.pagerduty.com/users/PD_USER123",
+                  "html_url": "https://mydomain.pagerduty.com/users/PD_USER123"
+                }
+              ],
+              "method": {
+                "type": "browser"
+              },
+              "root_resource": {
+                "id": "PD_TEAM123",
+                "type": "team_reference",
+                "summary": "DevOps"
+              },
+              "action": "update",
+              "details": {
+                "resource": {
+                  "id": "PD_TEAM123",
+                  "type": "team_reference",
+                  "summary": "DevOps"
+                },
+                "references": [
+                  {
+                    "name": "members",
+                    "added": [
+                      {
+                        "id": "PD_ADMIN_USER123",
+                        "type": "user_reference",
+                        "summary": "AA Admin User",
+                        "self": "https://api.pagerduty.com/users/PD_ADMIN_USER123",
+                        "html_url": "https://mydomain.pagerduty.com/users/PD_ADMIN_USER123"
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "id": "PDRECORD_TEAM_CREATED",
+              "execution_time": "2020-06-04T15:25:04.113Z",
+              "execution_context": {
+                "request_id": "222lDEOIH-534-4ljhLHJjh222",
+                "remote_address": "201.19.20.19"
+              },
+              "actors": [
+                {
+                  "id": "PDUSER",
+                  "summary": "John Snow",
+                  "type": "user_reference",
+                  "self": "https://api.pagerduty.com/users/PD_USER123",
+                  "html_url": "https://mydomain.pagerduty.com/users/PD_USER123"
+                }
+              ],
+              "method": {
+                "type": "browser"
+              },
+              "root_resource": {
+                "id": "PD_TEAM123",
+                "type": "team_reference",
+                "summary": "DevOps",
+                "self": "https://api.pagerduty.com/teams/PD_TEAM123",
+                "html_url": "https://mydomain.pagerduty.com/teams/PD_TEAM123"
+              },
+              "action": "create",
+              "details": {
+                "resource": {
+                  "id": "PD_TEAM123",
+                  "type": "team_reference",
+                  "summary": "DevOps",
+                  "self": "https://api.pagerduty.com/teams/PD_TEAM123",
+                  "html_url": "https://mydomain.pagerduty.com/teams/PD_TEAM123"
+                },
+                "fields": [
+                  {
+                    "name": "name",
+                    "value": "DevOps"
+                  },
+                  {
+                    "name": "description",
+                    "value": "MyDevOps Team"
+                  },
+                  {
+                    "name": "default_role",
+                    "value": "manager"
+                  }
+                ]
+              }
+            }
+          ],
+          "next_cursor": null,
+          "limit": 10
+        }
+      },
+      "AuditRecordUserResponse": {
+        "summary": "Response Example",
+        "value": {
+          "records": [
+            {
+              "id": "PD_ADD_HIGH_URGENCY_NOTIFICATION",
+              "action": "update",
+              "actors": [
+                {
+                  "id": "PDUSER",
+                  "summary": "John Snow",
+                  "type": "user_reference",
+                  "self": "https://api.pagerduty.com/users/PD_USER123",
+                  "html_url": "https://mydomain.pagerduty.com/users/PD_USER123"
+                }
+              ],
+              "details": {
+                "references": [
+                  {
+                    "added": [
+                      {
+                        "id": "PD_NOTIFICATION_RULE_HIGH",
+                        "summary": "High Urgency (Email: Default)",
+                        "type": "assignment_notification_rule_reference"
+                      }
+                    ],
+                    "name": "notification_rules"
+                  }
+                ],
+                "resource": {
+                  "id": "PD_USER_999",
+                  "summary": "Test User",
+                  "type": "user_reference",
+                  "self": "https://api.pagerduty.com/users/PD_USER_999",
+                  "html_url": "https://mydomain.pagerduty.com/users/PD_USER_999"
+                }
+              },
+              "execution_context": {
+                "request_id": "a68929b2-d0f4-4def-b1d2-6bb744c44e3d"
+              },
+              "execution_time": "2021-01-05T15:17:32.343Z",
+              "method": {
+                "type": "browser"
+              },
+              "root_resource": {
+                "id": "PD_USER_999",
+                "summary": "Test User",
+                "type": "user_reference",
+                "self": "https://api.pagerduty.com/users/PD_USER_999",
+                "html_url": "https://mydomain.pagerduty.com/users/PD_USER_999"
+              }
+            },
+            {
+              "id": "PD_ADD_HIGH_URGENCY_EMAIL_CONTACT",
+              "action": "update",
+              "actors": [
+                {
+                  "id": "PDUSER",
+                  "summary": "John Snow",
+                  "type": "user_reference",
+                  "self": "https://api.pagerduty.com/users/PD_USER123",
+                  "html_url": "https://mydomain.pagerduty.com/users/PD_USER123"
+                }
+              ],
+              "details": {
+                "fields": [
+                  {
+                    "name": "start_delay_in_minutes",
+                    "value": "0"
+                  },
+                  {
+                    "name": "urgency",
+                    "value": "high"
+                  }
+                ],
+                "references": [
+                  {
+                    "added": [
+                      {
+                        "id": "PD_CONTACT_METHOD",
+                        "summary": "Default",
+                        "type": "email_contact_method_reference"
+                      }
+                    ],
+                    "name": "contact_method"
+                  }
+                ],
+                "resource": {
+                  "id": "PD_NOTIFICATION_RULE_HIGH",
+                  "summary": "High Urgency (Email: Default)",
+                  "type": "assignment_notification_rule_reference"
+                }
+              },
+              "execution_context": {
+                "request_id": "a68929b2-d0f4-4def-b1d2-6bb744c44e3d"
+              },
+              "execution_time": "2021-01-05T15:17:32.343Z",
+              "method": {
+                "type": "browser"
+              },
+              "root_resource": {
+                "id": "PD_USER_999",
+                "summary": "Test User",
+                "type": "user_reference",
+                "self": "https://api.pagerduty.com/users/PD_USER_999",
+                "html_url": "https://mydomain.pagerduty.com/users/PD_USER_999"
+              }
+            },
+            {
+              "id": "PD_ADD_LOW_URGENCY_EMAIL_RULE",
+              "action": "update",
+              "actors": [
+                {
+                  "id": "PDUSER",
+                  "summary": "John Snow",
+                  "type": "user_reference",
+                  "self": "https://api.pagerduty.com/users/PD_USER123",
+                  "html_url": "https://mydomain.pagerduty.com/users/PD_USER123"
+                }
+              ],
+              "details": {
+                "fields": [
+                  {
+                    "name": "start_delay_in_minutes",
+                    "value": "0"
+                  },
+                  {
+                    "name": "urgency",
+                    "value": "low"
+                  }
+                ],
+                "references": [
+                  {
+                    "added": [
+                      {
+                        "id": "PD_CONTACT_METHOD",
+                        "summary": "Default",
+                        "type": "email_contact_method_reference"
+                      }
+                    ],
+                    "name": "contact_method"
+                  }
+                ],
+                "resource": {
+                  "id": "PD_NOTIFICATION_RULE_LOW",
+                  "summary": "Low Urgency (Email: Default)",
+                  "type": "assignment_notification_rule_reference"
+                }
+              },
+              "execution_context": {
+                "request_id": "a68929b2-d0f4-4def-b1d2-6bb744c44e3d"
+              },
+              "execution_time": "2021-01-05T15:17:32.335Z",
+              "method": {
+                "type": "browser"
+              },
+              "root_resource": {
+                "id": "PD_USER_999",
+                "summary": "Test User",
+                "type": "user_reference",
+                "self": "https://api.pagerduty.com/users/PD_USER_999",
+                "html_url": "https://mydomain.pagerduty.com/users/PD_USER_999"
+              }
+            },
+            {
+              "id": "PD_ADD_LOW_URGENCY_EMAIL_CONTACT",
+              "action": "update",
+              "actors": [
+                {
+                  "id": "PDUSER",
+                  "summary": "John Snow",
+                  "type": "user_reference",
+                  "self": "https://api.pagerduty.com/users/PD_USER123",
+                  "html_url": "https://mydomain.pagerduty.com/users/PD_USER123"
+                }
+              ],
+              "details": {
+                "references": [
+                  {
+                    "added": [
+                      {
+                        "id": "PD_NOTIFICATION_RULE_LOW",
+                        "summary": "Low Urgency (Email: Default)",
+                        "type": "assignment_notification_rule_reference"
+                      }
+                    ],
+                    "name": "notification_rules"
+                  }
+                ],
+                "resource": {
+                  "id": "PD_USER_999",
+                  "summary": "Test User",
+                  "type": "user_reference",
+                  "self": "https://api.pagerduty.com/users/PD_USER_999",
+                  "html_url": "https://mydomain.pagerduty.com/users/PD_USER_999"
+                }
+              },
+              "execution_context": {
+                "request_id": "a68929b2-d0f4-4def-b1d2-6bb744c44e3d"
+              },
+              "execution_time": "2021-01-05T15:17:32.335Z",
+              "method": {
+                "type": "browser"
+              },
+              "root_resource": {
+                "id": "PD_USER_999",
+                "summary": "Test User",
+                "type": "user_reference",
+                "self": "https://api.pagerduty.com/users/PD_USER_999",
+                "html_url": "https://mydomain.pagerduty.com/users/PD_USER_999"
+              }
+            },
+            {
+              "id": "PD_EMAIL_CONTACT_FOR_USER",
+              "action": "update",
+              "actors": [
+                {
+                  "id": "PDUSER",
+                  "summary": "John Snow",
+                  "type": "user_reference",
+                  "self": "https://api.pagerduty.com/users/PD_USER123",
+                  "html_url": "https://mydomain.pagerduty.com/users/PD_USER123"
+                }
+              ],
+              "details": {
+                "fields": [
+                  {
+                    "name": "label",
+                    "value": "Default"
+                  },
+                  {
+                    "name": "type",
+                    "value": "email_contact_method"
+                  },
+                  {
+                    "name": "address",
+                    "value": "testuser@testabc123.com"
+                  }
+                ],
+                "resource": {
+                  "id": "PD_CONTACT_METHOD",
+                  "summary": "Default",
+                  "type": "email_contact_method_reference"
+                }
+              },
+              "execution_context": {
+                "request_id": "a68929b2-d0f4-4def-b1d2-6bb744c44e3d"
+              },
+              "execution_time": "2021-01-05T15:17:32.327Z",
+              "method": {
+                "type": "browser"
+              },
+              "root_resource": {
+                "id": "PD_USER_999",
+                "summary": "Test User",
+                "type": "user_reference",
+                "self": "https://api.pagerduty.com/users/PD_USER_999",
+                "html_url": "https://mydomain.pagerduty.com/users/PD_USER_999"
+              }
+            },
+            {
+              "id": "PD_ADD_EMAIL_CONTACT_TO_USER",
+              "action": "update",
+              "actors": [
+                {
+                  "id": "PDUSER",
+                  "summary": "John Snow",
+                  "type": "user_reference",
+                  "self": "https://api.pagerduty.com/users/PD_USER123",
+                  "html_url": "https://mydomain.pagerduty.com/users/PD_USER123"
+                }
+              ],
+              "details": {
+                "references": [
+                  {
+                    "added": [
+                      {
+                        "id": "PD_CONTACT_METHOD",
+                        "summary": "Default",
+                        "type": "email_contact_method_reference"
+                      }
+                    ],
+                    "name": "contact_methods"
+                  }
+                ],
+                "resource": {
+                  "id": "PD_USER_999",
+                  "summary": "Test User",
+                  "type": "user_reference",
+                  "self": "https://api.pagerduty.com/users/PD_USER_999",
+                  "html_url": "https://mydomain.pagerduty.com/users/PD_USER_999"
+                }
+              },
+              "execution_context": {
+                "request_id": "a68929b2-d0f4-4def-b1d2-6bb744c44e3d"
+              },
+              "execution_time": "2021-01-05T15:17:32.327Z",
+              "method": {
+                "type": "browser"
+              },
+              "root_resource": {
+                "id": "PD_USER_999",
+                "summary": "Test User",
+                "type": "user_reference",
+                "self": "https://api.pagerduty.com/users/PD_USER_999",
+                "html_url": "https://mydomain.pagerduty.com/users/PD_USER_999"
+              }
+            },
+            {
+              "id": "PD_CREATE_USER",
+              "action": "create",
+              "actors": [
+                {
+                  "id": "PDUSER",
+                  "summary": "John Snow",
+                  "type": "user_reference",
+                  "self": "https://api.pagerduty.com/users/PD_USER123",
+                  "html_url": "https://mydomain.pagerduty.com/users/PD_USER123"
+                }
+              ],
+              "details": {
+                "fields": [
+                  {
+                    "name": "name",
+                    "value": "Test User"
+                  },
+                  {
+                    "name": "role",
+                    "value": "user"
+                  },
+                  {
+                    "name": "email",
+                    "value": "testuser@testabc123.com"
+                  },
+                  {
+                    "name": "time_zone",
+                    "value": "America/New_York"
+                  },
+                  {
+                    "name": "description",
+                    "value": null
+                  },
+                  {
+                    "name": "job_title",
+                    "value": null
+                  },
+                  {
+                    "name": "color",
+                    "value": "brown"
+                  }
+                ],
+                "resource": {
+                  "id": "PD_USER_999",
+                  "summary": "Test User",
+                  "type": "user_reference",
+                  "self": "https://api.pagerduty.com/users/PD_USER_999",
+                  "html_url": "https://mydomain.pagerduty.com/users/PD_USER_999"
+                }
+              },
+              "execution_context": {
+                "request_id": "a68929b2-d0f4-4def-b1d2-6bb744c44e3d"
+              },
+              "execution_time": "2021-01-05T15:17:31.708Z",
+              "method": {
+                "type": "browser"
+              },
+              "root_resource": {
+                "id": "PD_USER_999",
+                "summary": "Test User",
+                "type": "user_reference",
+                "self": "https://api.pagerduty.com/users/PD_USER_999",
+                "html_url": "https://mydomain.pagerduty.com/users/PD_USER_999"
+              }
+            }
+          ],
+          "limit": 10,
+          "next_cursor": null
         }
       },
       "CreateSubscriptionExample": {
@@ -10979,7 +11803,7 @@
                 },
                 "examples": {
                   "response": {
-                    "$ref": "#/components/examples/AuditRecordResponse"
+                    "$ref": "#/components/examples/AuditRecordEscalationPolicyResponse"
                   }
                 }
               }
@@ -18470,7 +19294,7 @@
                 },
                 "examples": {
                   "response": {
-                    "$ref": "#/components/examples/AuditRecordResponse"
+                    "$ref": "#/components/examples/AuditRecordScheduleResponse"
                   }
                 }
               }
@@ -20509,7 +21333,7 @@
                 },
                 "examples": {
                   "response": {
-                    "$ref": "#/components/examples/AuditRecordResponse"
+                    "$ref": "#/components/examples/AuditRecordServiceResponse"
                   }
                 }
               }
@@ -22462,7 +23286,7 @@
                 },
                 "examples": {
                   "response": {
-                    "$ref": "#/components/examples/AuditRecordResponse"
+                    "$ref": "#/components/examples/AuditRecordTeamResponse"
                   }
                 }
               }
@@ -23777,6 +24601,12 @@
             "$ref": "#/components/parameters/id"
           },
           {
+            "$ref": "#/components/parameters/cursor_limit"
+          },
+          {
+            "$ref": "#/components/parameters/cursor_cursor"
+          },
+          {
             "$ref": "#/components/parameters/audit_since"
           },
           {
@@ -23793,7 +24623,7 @@
                 },
                 "examples": {
                   "response": {
-                    "$ref": "#/components/examples/AuditRecordResponse"
+                    "$ref": "#/components/examples/AuditRecordUserResponse"
                   }
                 }
               }

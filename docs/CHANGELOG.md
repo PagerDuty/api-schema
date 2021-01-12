@@ -5,6 +5,14 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 Currently we do not deprecate or remove any API functionality.
 
 ----
+### 2021-01-05
+- Added response examples for audit records endpoints
+  - `GET /users/{id}/audit/records`
+  - `GET /teams/{id}/audit/records`
+  - `GET /services/{id}/audit/records`
+  - `GET /schedules/{id}/audit/records`
+  - `GET /escalation_policies/{id}/audit/records`
+
 ### 2020-12-23
 - Added 14 new Early-Access endpoints for Status Update subscription management.
   - `GET /business_services/{id}/account_subscription`
