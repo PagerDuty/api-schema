@@ -1422,7 +1422,7 @@
           }
         }
       },
-      "classic_limit": {
+      "offset_limit": {
         "name": "limit",
         "in": "query",
         "required": false,
@@ -1431,7 +1431,7 @@
           "type": "integer"
         }
       },
-      "classic_offset": {
+      "offset_offset": {
         "name": "offset",
         "in": "query",
         "required": false,
@@ -1440,7 +1440,7 @@
           "type": "integer"
         }
       },
-      "classic_total": {
+      "offset_total": {
         "name": "total",
         "in": "query",
         "required": false,
@@ -8315,13 +8315,13 @@
             "$ref": "#/components/parameters/header_Content-Type"
           },
           {
-            "$ref": "#/components/parameters/classic_limit"
+            "$ref": "#/components/parameters/offset_limit"
           },
           {
-            "$ref": "#/components/parameters/classic_offset"
+            "$ref": "#/components/parameters/offset_offset"
           },
           {
-            "$ref": "#/components/parameters/classic_total"
+            "$ref": "#/components/parameters/offset_total"
           },
           {
             "$ref": "#/components/parameters/entity_type"
@@ -8516,13 +8516,13 @@
         "summary": "List installed Add-ons",
         "parameters": [
           {
-            "$ref": "#/components/parameters/classic_limit"
+            "$ref": "#/components/parameters/offset_limit"
           },
           {
-            "$ref": "#/components/parameters/classic_offset"
+            "$ref": "#/components/parameters/offset_offset"
           },
           {
-            "$ref": "#/components/parameters/classic_total"
+            "$ref": "#/components/parameters/offset_total"
           },
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -9895,13 +9895,13 @@
             "$ref": "#/components/parameters/header_Content-Type"
           },
           {
-            "$ref": "#/components/parameters/classic_limit"
+            "$ref": "#/components/parameters/offset_limit"
           },
           {
-            "$ref": "#/components/parameters/classic_offset"
+            "$ref": "#/components/parameters/offset_offset"
           },
           {
-            "$ref": "#/components/parameters/classic_total"
+            "$ref": "#/components/parameters/offset_total"
           }
         ],
         "responses": {
@@ -10783,13 +10783,13 @@
         "summary": "List Change Events",
         "parameters": [
           {
-            "$ref": "#/components/parameters/classic_limit"
+            "$ref": "#/components/parameters/offset_limit"
           },
           {
-            "$ref": "#/components/parameters/classic_offset"
+            "$ref": "#/components/parameters/offset_offset"
           },
           {
-            "$ref": "#/components/parameters/classic_total"
+            "$ref": "#/components/parameters/offset_total"
           },
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -11143,13 +11143,13 @@
         "summary": "List escalation policies",
         "parameters": [
           {
-            "$ref": "#/components/parameters/classic_limit"
+            "$ref": "#/components/parameters/offset_limit"
           },
           {
-            "$ref": "#/components/parameters/classic_offset"
+            "$ref": "#/components/parameters/offset_offset"
           },
           {
-            "$ref": "#/components/parameters/classic_total"
+            "$ref": "#/components/parameters/offset_total"
           },
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -11844,13 +11844,13 @@
         "summary": "List extension schemas",
         "parameters": [
           {
-            "$ref": "#/components/parameters/classic_limit"
+            "$ref": "#/components/parameters/offset_limit"
           },
           {
-            "$ref": "#/components/parameters/classic_offset"
+            "$ref": "#/components/parameters/offset_offset"
           },
           {
-            "$ref": "#/components/parameters/classic_total"
+            "$ref": "#/components/parameters/offset_total"
           },
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -12035,13 +12035,13 @@
         "summary": "List extensions",
         "parameters": [
           {
-            "$ref": "#/components/parameters/classic_limit"
+            "$ref": "#/components/parameters/offset_limit"
           },
           {
-            "$ref": "#/components/parameters/classic_offset"
+            "$ref": "#/components/parameters/offset_offset"
           },
           {
-            "$ref": "#/components/parameters/classic_total"
+            "$ref": "#/components/parameters/offset_total"
           },
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -12721,13 +12721,13 @@
             "$ref": "#/components/parameters/header_Content-Type"
           },
           {
-            "$ref": "#/components/parameters/classic_limit"
+            "$ref": "#/components/parameters/offset_limit"
           },
           {
-            "$ref": "#/components/parameters/classic_offset"
+            "$ref": "#/components/parameters/offset_offset"
           },
           {
-            "$ref": "#/components/parameters/classic_total"
+            "$ref": "#/components/parameters/offset_total"
           },
           {
             "$ref": "#/components/parameters/date_range"
@@ -12903,13 +12903,13 @@
             "$ref": "#/components/parameters/header_Content-Type"
           },
           {
-            "$ref": "#/components/parameters/classic_limit"
+            "$ref": "#/components/parameters/offset_limit"
           },
           {
-            "$ref": "#/components/parameters/classic_offset"
+            "$ref": "#/components/parameters/offset_offset"
           },
           {
-            "$ref": "#/components/parameters/classic_total"
+            "$ref": "#/components/parameters/offset_total"
           },
           {
             "$ref": "#/components/parameters/from_header"
@@ -13834,13 +13834,13 @@
             "$ref": "#/components/parameters/header_Content-Type"
           },
           {
-            "$ref": "#/components/parameters/classic_limit"
+            "$ref": "#/components/parameters/offset_limit"
           },
           {
-            "$ref": "#/components/parameters/classic_offset"
+            "$ref": "#/components/parameters/offset_offset"
           },
           {
-            "$ref": "#/components/parameters/classic_total"
+            "$ref": "#/components/parameters/offset_total"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -13970,13 +13970,13 @@
             "$ref": "#/components/parameters/header_Content-Type"
           },
           {
-            "$ref": "#/components/parameters/classic_limit"
+            "$ref": "#/components/parameters/offset_limit"
           },
           {
-            "$ref": "#/components/parameters/classic_offset"
+            "$ref": "#/components/parameters/offset_offset"
           },
           {
-            "$ref": "#/components/parameters/classic_total"
+            "$ref": "#/components/parameters/offset_total"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -14368,13 +14368,13 @@
             "$ref": "#/components/parameters/header_Content-Type"
           },
           {
-            "$ref": "#/components/parameters/classic_limit"
+            "$ref": "#/components/parameters/offset_limit"
           },
           {
-            "$ref": "#/components/parameters/classic_offset"
+            "$ref": "#/components/parameters/offset_offset"
           },
           {
-            "$ref": "#/components/parameters/classic_total"
+            "$ref": "#/components/parameters/offset_total"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -15599,13 +15599,13 @@
             "$ref": "#/components/parameters/header_Content-Type"
           },
           {
-            "$ref": "#/components/parameters/classic_limit"
+            "$ref": "#/components/parameters/offset_limit"
           },
           {
-            "$ref": "#/components/parameters/classic_offset"
+            "$ref": "#/components/parameters/offset_offset"
           },
           {
-            "$ref": "#/components/parameters/classic_total"
+            "$ref": "#/components/parameters/offset_total"
           },
           {
             "$ref": "#/components/parameters/time_zone"
@@ -15941,13 +15941,13 @@
             "$ref": "#/components/parameters/query"
           },
           {
-            "$ref": "#/components/parameters/classic_limit"
+            "$ref": "#/components/parameters/offset_limit"
           },
           {
-            "$ref": "#/components/parameters/classic_offset"
+            "$ref": "#/components/parameters/offset_offset"
           },
           {
-            "$ref": "#/components/parameters/classic_total"
+            "$ref": "#/components/parameters/offset_total"
           },
           {
             "$ref": "#/components/parameters/team_ids"
@@ -16476,13 +16476,13 @@
             "$ref": "#/components/parameters/header_Content-Type"
           },
           {
-            "$ref": "#/components/parameters/classic_limit"
+            "$ref": "#/components/parameters/offset_limit"
           },
           {
-            "$ref": "#/components/parameters/classic_offset"
+            "$ref": "#/components/parameters/offset_offset"
           },
           {
-            "$ref": "#/components/parameters/classic_total"
+            "$ref": "#/components/parameters/offset_total"
           },
           {
             "$ref": "#/components/parameters/time_zone"
@@ -16602,13 +16602,13 @@
             "$ref": "#/components/parameters/time_zone"
           },
           {
-            "$ref": "#/components/parameters/classic_limit"
+            "$ref": "#/components/parameters/offset_limit"
           },
           {
-            "$ref": "#/components/parameters/classic_offset"
+            "$ref": "#/components/parameters/offset_offset"
           },
           {
-            "$ref": "#/components/parameters/classic_total"
+            "$ref": "#/components/parameters/offset_total"
           },
           {
             "$ref": "#/components/parameters/include_oncalls"
@@ -16732,13 +16732,13 @@
             "$ref": "#/components/parameters/header_Content-Type"
           },
           {
-            "$ref": "#/components/parameters/classic_limit"
+            "$ref": "#/components/parameters/offset_limit"
           },
           {
-            "$ref": "#/components/parameters/classic_offset"
+            "$ref": "#/components/parameters/offset_offset"
           },
           {
-            "$ref": "#/components/parameters/classic_total"
+            "$ref": "#/components/parameters/offset_total"
           }
         ],
         "responses": {
@@ -17426,13 +17426,13 @@
             "$ref": "#/components/parameters/header_Content-Type"
           },
           {
-            "$ref": "#/components/parameters/classic_limit"
+            "$ref": "#/components/parameters/offset_limit"
           },
           {
-            "$ref": "#/components/parameters/classic_offset"
+            "$ref": "#/components/parameters/offset_offset"
           },
           {
-            "$ref": "#/components/parameters/classic_total"
+            "$ref": "#/components/parameters/offset_total"
           }
         ],
         "responses": {
@@ -17899,13 +17899,13 @@
             "$ref": "#/components/parameters/header_Content-Type"
           },
           {
-            "$ref": "#/components/parameters/classic_limit"
+            "$ref": "#/components/parameters/offset_limit"
           },
           {
-            "$ref": "#/components/parameters/classic_offset"
+            "$ref": "#/components/parameters/offset_offset"
           },
           {
-            "$ref": "#/components/parameters/classic_total"
+            "$ref": "#/components/parameters/offset_total"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -18546,13 +18546,13 @@
             "$ref": "#/components/parameters/header_Content-Type"
           },
           {
-            "$ref": "#/components/parameters/classic_limit"
+            "$ref": "#/components/parameters/offset_limit"
           },
           {
-            "$ref": "#/components/parameters/classic_offset"
+            "$ref": "#/components/parameters/offset_offset"
           },
           {
-            "$ref": "#/components/parameters/classic_total"
+            "$ref": "#/components/parameters/offset_total"
           },
           {
             "$ref": "#/components/parameters/query"
@@ -20556,13 +20556,13 @@
             "$ref": "#/components/parameters/query"
           },
           {
-            "$ref": "#/components/parameters/classic_limit"
+            "$ref": "#/components/parameters/offset_limit"
           },
           {
-            "$ref": "#/components/parameters/classic_offset"
+            "$ref": "#/components/parameters/offset_offset"
           },
           {
-            "$ref": "#/components/parameters/classic_total"
+            "$ref": "#/components/parameters/offset_total"
           },
           {
             "$ref": "#/components/parameters/team_ids"
@@ -21383,13 +21383,13 @@
             "$ref": "#/components/parameters/change_until"
           },
           {
-            "$ref": "#/components/parameters/classic_limit"
+            "$ref": "#/components/parameters/offset_limit"
           },
           {
-            "$ref": "#/components/parameters/classic_offset"
+            "$ref": "#/components/parameters/offset_offset"
           },
           {
-            "$ref": "#/components/parameters/classic_total"
+            "$ref": "#/components/parameters/offset_total"
           },
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -21864,13 +21864,13 @@
             "$ref": "#/components/parameters/header_Content-Type"
           },
           {
-            "$ref": "#/components/parameters/classic_limit"
+            "$ref": "#/components/parameters/offset_limit"
           },
           {
-            "$ref": "#/components/parameters/classic_offset"
+            "$ref": "#/components/parameters/offset_offset"
           },
           {
-            "$ref": "#/components/parameters/classic_total"
+            "$ref": "#/components/parameters/offset_total"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -22460,13 +22460,13 @@
             "$ref": "#/components/parameters/header_Content-Type"
           },
           {
-            "$ref": "#/components/parameters/classic_limit"
+            "$ref": "#/components/parameters/offset_limit"
           },
           {
-            "$ref": "#/components/parameters/classic_offset"
+            "$ref": "#/components/parameters/offset_offset"
           },
           {
-            "$ref": "#/components/parameters/classic_total"
+            "$ref": "#/components/parameters/offset_total"
           },
           {
             "$ref": "#/components/parameters/query"
@@ -22742,13 +22742,13 @@
             "$ref": "#/components/parameters/header_Content-Type"
           },
           {
-            "$ref": "#/components/parameters/classic_limit"
+            "$ref": "#/components/parameters/offset_limit"
           },
           {
-            "$ref": "#/components/parameters/classic_offset"
+            "$ref": "#/components/parameters/offset_offset"
           },
           {
-            "$ref": "#/components/parameters/classic_total"
+            "$ref": "#/components/parameters/offset_total"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -22943,13 +22943,13 @@
             "$ref": "#/components/parameters/header_Content-Type"
           },
           {
-            "$ref": "#/components/parameters/classic_limit"
+            "$ref": "#/components/parameters/offset_limit"
           },
           {
-            "$ref": "#/components/parameters/classic_offset"
+            "$ref": "#/components/parameters/offset_offset"
           },
           {
-            "$ref": "#/components/parameters/classic_total"
+            "$ref": "#/components/parameters/offset_total"
           },
           {
             "$ref": "#/components/parameters/query"
@@ -23426,13 +23426,13 @@
             "$ref": "#/components/parameters/header_Content-Type"
           },
           {
-            "$ref": "#/components/parameters/classic_limit"
+            "$ref": "#/components/parameters/offset_limit"
           },
           {
-            "$ref": "#/components/parameters/classic_offset"
+            "$ref": "#/components/parameters/offset_offset"
           },
           {
-            "$ref": "#/components/parameters/classic_total"
+            "$ref": "#/components/parameters/offset_total"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -23542,28 +23542,35 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "subscriptions": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "subscription": {
-                            "$ref": "#/components/schemas/NotificationSubscription"
-                          },
-                          "subscribable_name": {
-                            "type": "string",
-                            "nullable": true,
-                            "description": "The name of the subscribable"
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Pagination"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "subscriptions": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "subscription": {
+                                "$ref": "#/components/schemas/NotificationSubscription"
+                              },
+                              "subscribable_name": {
+                                "type": "string",
+                                "nullable": true,
+                                "description": "The name of the subscribable"
+                              }
+                            }
                           }
                         }
-                      }
-                    },
-                    "pagination": {
-                      "$ref": "#/components/schemas/Pagination"
+                      },
+                      "required": [
+                        "subscriptions"
+                      ]
                     }
-                  }
+                  ]
                 },
                 "examples": {
                   "resonse": {
@@ -24002,13 +24009,13 @@
             "$ref": "#/components/parameters/team_ids"
           },
           {
-            "$ref": "#/components/parameters/classic_limit"
+            "$ref": "#/components/parameters/offset_limit"
           },
           {
-            "$ref": "#/components/parameters/classic_offset"
+            "$ref": "#/components/parameters/offset_offset"
           },
           {
-            "$ref": "#/components/parameters/classic_total"
+            "$ref": "#/components/parameters/offset_total"
           },
           {
             "$ref": "#/components/parameters/include_user"
@@ -25557,28 +25564,35 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "subscriptions": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "subscription": {
-                            "$ref": "#/components/schemas/NotificationSubscription"
-                          },
-                          "subscribable_name": {
-                            "type": "string",
-                            "nullable": true,
-                            "description": "The name of the subscribable"
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Pagination"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "subscriptions": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "subscription": {
+                                "$ref": "#/components/schemas/NotificationSubscription"
+                              },
+                              "subscribable_name": {
+                                "type": "string",
+                                "nullable": true,
+                                "description": "The name of the subscribable"
+                              }
+                            }
                           }
                         }
-                      }
-                    },
-                    "pagination": {
-                      "$ref": "#/components/schemas/Pagination"
+                      },
+                      "required": [
+                        "subscriptions"
+                      ]
                     }
-                  }
+                  ]
                 },
                 "examples": {
                   "response": {
@@ -26654,13 +26668,13 @@
             "$ref": "#/components/parameters/header_Content-Type"
           },
           {
-            "$ref": "#/components/parameters/classic_limit"
+            "$ref": "#/components/parameters/offset_limit"
           },
           {
-            "$ref": "#/components/parameters/classic_offset"
+            "$ref": "#/components/parameters/offset_offset"
           },
           {
-            "$ref": "#/components/parameters/classic_total"
+            "$ref": "#/components/parameters/offset_total"
           }
         ],
         "responses": {
@@ -26829,13 +26843,13 @@
             "$ref": "#/components/parameters/header_Accept"
           },
           {
-            "$ref": "#/components/parameters/classic_limit"
+            "$ref": "#/components/parameters/offset_limit"
           },
           {
-            "$ref": "#/components/parameters/classic_offset"
+            "$ref": "#/components/parameters/offset_offset"
           },
           {
-            "$ref": "#/components/parameters/classic_total"
+            "$ref": "#/components/parameters/offset_total"
           },
           {
             "$ref": "#/components/parameters/webhooks_filter_type"

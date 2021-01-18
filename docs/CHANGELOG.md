@@ -5,6 +5,10 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 Currently we do not deprecate or remove any API functionality.
 
 ----
+
+### 2021-01-18
+- Documented Offset Pagination more clearly.
+
 ### 2021-01-05
 - Added response examples for audit records endpoints
   - `GET /users/{id}/audit/records`
@@ -120,6 +124,7 @@ Currently we do not deprecate or remove any API functionality.
 
 ### 2020-09-15
 - Clarified `status` on `POST /services` endpoint.
+
 ### 2020-09-08
 - Fixed a lot of example requests and responses.
 
