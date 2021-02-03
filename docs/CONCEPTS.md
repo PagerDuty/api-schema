@@ -23,8 +23,13 @@ The **Audit Trail** data is a collection of **Audit Records**.
 Business Services model capabilities that span multiple technical Services and that may be owned by several different teams.
 
 
-Mapping technical Services to business Services gives responders context on an Incident’s impact to the business.
+Mapping technical Services to Business Services gives responders context on an Incident’s impact to the business.
 
+#### Impactors
+A Business Service may be become impacted by one or more **Impactor**s.  An Impactor represents
+an entity that could be causing the functionality represented by the Business Service to be degraded or broken.
+
+The definition of an Impactor is generic, but is currently limited to Incidents.
 
 [*Read more about business Services in the PagerDuty Knowledge Base*](https://support.pagerduty.com/docs/business-services).
 
