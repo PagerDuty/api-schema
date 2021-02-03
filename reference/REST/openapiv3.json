@@ -101,6 +101,10 @@
       "description": "A webhook is a way to receive events that occur on the PagerDuty platform via an HTTP POST request.\nV3 webhooks are set up by creating a webhook subscription.\n"
     },
     {
+      "name": "Status Dashboards",
+      "description": "Status Dashboards represent user-defined views for the Status Dashboard product that are limited to specific Business Services rather than the whole set of top-level Business Services (those with no dependent Services).\n"
+    },
+    {
       "name": "Tags",
       "description": "A Tag is applied to EScalation Policies, Teams or Users and can be used to filter them.\n"
     },
@@ -1504,6 +1508,26 @@
           ]
         }
       },
+      "early_access_bis": {
+        "schema": {
+          "type": "string",
+          "default": "business-impact-early-access"
+        },
+        "in": "header",
+        "name": "X-EARLY-ACCESS",
+        "description": "This header indicates that this API endpoint is __UNDER CONSTRUCTION__ and may change at any time. You __MUST__ pass in this header with the value `business-impact-early-access`. Do not use this endpoint in production, as it may change!",
+        "required": true
+      },
+      "early_access_status_dashboards": {
+        "schema": {
+          "type": "string",
+          "default": "status-dashboards"
+        },
+        "in": "header",
+        "name": "X-EARLY-ACCESS",
+        "description": "This header indicates that this API endpoint is __UNDER CONSTRUCTION__ and may change at any time. You __MUST__ pass in this header with the value `status-dashboards`. Do not use this endpoint in production, as it may change!",
+        "required": true
+      },
       "webhooks_early-access": {
         "name": "X-EARLY-ACCESS",
         "in": "header",
@@ -1548,6 +1572,15 @@
           "type": "string"
         }
       },
+      "ids": {
+        "name": "ids[]",
+        "description": "The IDs of the resources.",
+        "in": "query",
+        "explode": true,
+        "schema": {
+          "type": "string"
+        }
+      },
       "entity_type": {
         "name": "entity_type",
         "in": "path",
@@ -1560,6 +1593,15 @@
             "teams",
             "escalation_policies"
           ]
+        }
+      },
+      "business_service_id": {
+        "name": "business_service_id",
+        "in": "path",
+        "description": "The business service ID.",
+        "required": true,
+        "schema": {
+          "type": "string"
         }
       },
       "team_user_id": {
@@ -1587,6 +1629,19 @@
         "required": true,
         "schema": {
           "type": "string"
+        }
+      },
+      "impacts_additional_fields": {
+        "name": "additional_fields[]",
+        "in": "query",
+        "description": "Provides access to additional fields such as highest priority per business service and total impacted count",
+        "explode": true,
+        "schema": {
+          "type": "string",
+          "enum": [
+            "services.highest_impacting_priority",
+            "total_impacted_count"
+          ]
         }
       },
       "include_addon": {
@@ -1839,6 +1894,15 @@
         "schema": {
           "type": "string",
           "format": "date-time"
+        }
+      },
+      "url_slug": {
+        "name": "url_slug",
+        "in": "path",
+        "description": "The `url_slug` for a status dashboard",
+        "required": true,
+        "schema": {
+          "type": "string"
         }
       },
       "date_range": {
@@ -3193,25 +3257,7 @@
             ]
           },
           {
-            "type": "object",
-            "properties": {
-              "limit": {
-                "type": "integer",
-                "description": "The minimum of the `limit` parameter used in the request or the maximum request size of the API.",
-                "readOnly": true
-              },
-              "next_cursor": {
-                "type": "string",
-                "description": "An opaque string than will deliver the next set of results when provided as the `cursor` parameter in a subsequent request.  A `null` value for this field indicates that there are no additional results.\n",
-                "example": "dXNlcjaVMzc5V0ZYTlo=",
-                "nullable": true,
-                "readOnly": true
-              }
-            },
-            "required": [
-              "limit",
-              "next_cursor"
-            ]
+            "$ref": "#/components/schemas/CursorPagination"
           }
         ]
       },
@@ -5252,6 +5298,72 @@
           }
         ]
       },
+      "Impact": {
+        "title": "Impact",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "readOnly": true
+          },
+          "name": {
+            "type": "string",
+            "readOnly": true
+          },
+          "type": {
+            "type": "string",
+            "description": "The kind of object that has been impacted",
+            "enum": [
+              "business_service"
+            ]
+          },
+          "status": {
+            "type": "string",
+            "description": "The current impact status of the object",
+            "enum": [
+              "impacted",
+              "not_impacted"
+            ]
+          },
+          "additional_fields": {
+            "type": "object",
+            "properties": {
+              "highest_impacting_priority": {
+                "type": "object",
+                "nullable": true,
+                "description": "Priority information for the highest priority level that is affecting the impacted object.",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "readOnly": true
+                  },
+                  "order": {
+                    "type": "integer",
+                    "readOnly": true
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "Impactor": {
+        "title": "Impactor",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "readOnly": true
+          },
+          "type": {
+            "type": "string",
+            "description": "The kind of object that is impacting",
+            "enum": [
+              "incident"
+            ]
+          }
+        }
+      },
       "IncidentReference": {
         "allOf": [
           {
@@ -6318,6 +6430,21 @@
           "user"
         ]
       },
+      "StatusDashboard": {
+        "title": "StatusDashboard",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "url_slug": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
       "Override": {
         "allOf": [
           {
@@ -6439,6 +6566,42 @@
             "type": "integer",
             "description": "The total number of records matching the given query.",
             "nullable": true,
+            "readOnly": true
+          }
+        }
+      },
+      "CursorPagination": {
+        "type": "object",
+        "properties": {
+          "limit": {
+            "type": "integer",
+            "description": "The minimum of the `limit` parameter used in the request or the maximum request size of the API.",
+            "readOnly": true
+          },
+          "next_cursor": {
+            "type": "string",
+            "description": "An opaque string than will deliver the next set of results when provided as the `cursor` parameter in a subsequent request.  A `null` value for this field indicates that there are no additional results.\n",
+            "example": "dXNlcjaVMzc5V0ZYTlo=",
+            "nullable": true,
+            "readOnly": true
+          }
+        },
+        "required": [
+          "limit",
+          "next_cursor"
+        ]
+      },
+      "LiveListResponse": {
+        "type": "object",
+        "properties": {
+          "limit": {
+            "type": "integer",
+            "description": "Echoes limit pagination property.",
+            "readOnly": true
+          },
+          "more": {
+            "type": "boolean",
+            "description": "Indicates if there are additional records to return",
             "readOnly": true
           }
         }
@@ -9879,14 +10042,14 @@
       }
     },
     "/business_services": {
-      "description": "List and create business services.",
+      "description": "List and create Business Services.",
       "get": {
         "tags": [
           "Business Services"
         ],
         "operationId": "listBusinessServices",
-        "description": "List existing business services.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#business-services)\n",
-        "summary": "List business services",
+        "description": "List existing Business Services.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#business-services)\n",
+        "summary": "List Business Services",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -9987,8 +10150,8 @@
           "Business Services"
         ],
         "operationId": "createBusinessService",
-        "description": "Create a new business service.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#business-services)\n",
-        "summary": "Create a business service",
+        "description": "Create a new Business Service.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#business-services)\n",
+        "summary": "Create a Business Service",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -10005,28 +10168,28 @@
                 "properties": {
                   "business_service": {
                     "type": "object",
-                    "description": "The business service to be created",
+                    "description": "The Business Service to be created",
                     "properties": {
                       "name": {
                         "type": "string",
-                        "description": "The name of the business service."
+                        "description": "The name of the Business Service."
                       },
                       "description": {
                         "type": "string",
-                        "description": "The description of the business service."
+                        "description": "The description of the Business Service."
                       },
                       "point_of_contact": {
                         "type": "string",
-                        "description": "The owner of the business service."
+                        "description": "The owner of the Business Service."
                       },
                       "team": {
                         "type": "object",
                         "title": "Team",
-                        "description": "Reference to the team that owns the business service.",
+                        "description": "Reference to the team that owns the Business Service.",
                         "properties": {
                           "id": {
                             "type": "string",
-                            "description": "The team ID"
+                            "description": "The Team ID"
                           }
                         }
                       }
@@ -10054,7 +10217,7 @@
         },
         "responses": {
           "200": {
-            "description": "The business service that was created.",
+            "description": "The Business Service that was created.",
             "content": {
               "application/json": {
                 "schema": {
@@ -10109,14 +10272,14 @@
       }
     },
     "/business_services/{id}": {
-      "description": "Manage a business service.",
+      "description": "Manage a Business Service.",
       "get": {
         "tags": [
           "Business Services"
         ],
         "operationId": "getBusinessService",
-        "description": "Get details about an existing business service.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#business-services)\n",
-        "summary": "Get a business service",
+        "description": "Get details about an existing Business Service.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#business-services)\n",
+        "summary": "Get a Business Service",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -10188,8 +10351,8 @@
           "Business Services"
         ],
         "operationId": "deleteBusinessService",
-        "description": "Delete an existing business service.\n\nOnce the service is deleted, it will not be accessible from the web UI and new incidents won't be able to be created for this service.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#business-services)\n",
-        "summary": "Delete a business service",
+        "description": "Delete an existing Business Service.\n\nOnce the service is deleted, it will not be accessible from the web UI and new incidents won't be able to be created for this service.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#business-services)\n",
+        "summary": "Delete a Business Service",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -10203,7 +10366,7 @@
         ],
         "responses": {
           "204": {
-            "description": "The business service was deleted successfully."
+            "description": "The Business Service was deleted successfully."
           },
           "401": {
             "$ref": "#/components/responses/Unauthorized"
@@ -10221,8 +10384,8 @@
           "Business Services"
         ],
         "operationId": "updateBusinessService",
-        "description": "Update an existing business service. NOTE that this endpoint also accepts the PATCH verb.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#business-services)\n",
-        "summary": "Update a business service",
+        "description": "Update an existing Business Service. NOTE that this endpoint also accepts the PATCH verb.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#business-services)\n",
+        "summary": "Update a Business Service",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -10242,24 +10405,24 @@
                 "properties": {
                   "business_service": {
                     "type": "object",
-                    "description": "The business service to be created",
+                    "description": "The Business Service to be created",
                     "properties": {
                       "name": {
                         "type": "string",
-                        "description": "The name of the business service."
+                        "description": "The name of the Business Service."
                       },
                       "description": {
                         "type": "string",
-                        "description": "The description of the business service."
+                        "description": "The description of the Business Service."
                       },
                       "point_of_contact": {
                         "type": "string",
-                        "description": "The owner of the business service."
+                        "description": "The owner of the Business Service."
                       },
                       "team": {
                         "type": "object",
                         "title": "Team",
-                        "description": "Reference to the team that owns the business service.",
+                        "description": "Reference to the team that owns the Business Service.",
                         "properties": {
                           "id": {
                             "type": "string",
@@ -10291,7 +10454,7 @@
         },
         "responses": {
           "200": {
-            "description": "The business service that was updated.",
+            "description": "The Business Service that was updated.",
             "content": {
               "application/json": {
                 "schema": {
@@ -10435,6 +10598,88 @@
           },
           {
             "$ref": "#/components/parameters/early_access_usms"
+          }
+        ]
+      }
+    },
+    "/business_services/{id}/impactors": {
+      "get": {
+        "summary": "List Impactors for a specific Business Service",
+        "tags": [
+          "Business Services"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/LiveListResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "impactors": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Impactor"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "limit": 100,
+                      "more": false,
+                      "impactors": [
+                        {
+                          "id": "PD1234",
+                          "type": "incident"
+                        },
+                        {
+                          "id": "PF9KMXH",
+                          "type": "incident"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        },
+        "operationId": "getBusinessServiceImpactors",
+        "description": "Retrieve a list of Impactors on the Business Service. Impactors are currently limited to Incidents.\n\nThis endpoint does not return an exhaustive list of Impactors but rather provides access to the highest impacting priority Impactors for the Business Service in question up to the limit of 200.\n\nTo get Impactors for a specific set of Business Services, use the `ids[]` parameter on the `/business_services/impactors` endpoint.\n\nThe returned Impactors are sorted first by priority and secondarily by their creation date.\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_bis"
           }
         ]
       }
@@ -10661,6 +10906,123 @@
         }
       }
     },
+    "/business_services/{id}/supporting_services/impacts": {
+      "get": {
+        "summary": "List the supporting Business Services for the given Business Service Id, sorted by impacted status.",
+        "tags": [
+          "Business Services"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/LiveListResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "services": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Impact"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "additional_fields": {
+                          "type": "object",
+                          "properties": {
+                            "total_impacted_count": {
+                              "type": "integer"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "limit": 100,
+                      "more": false,
+                      "services": [
+                        {
+                          "id": "PD1234",
+                          "name": "Web API",
+                          "type": "business_service",
+                          "status": "impacted",
+                          "additional_fields": {
+                            "highest_impacting_priority": {
+                              "id": "PQOMK4S",
+                              "order": 128
+                            }
+                          }
+                        },
+                        {
+                          "id": "PF9KMXH",
+                          "name": "Analytics Backend",
+                          "type": "business_service",
+                          "status": "not_impacted",
+                          "additional_fields": {
+                            "highest_impacting_priority": null
+                          }
+                        }
+                      ],
+                      "additional_fields": {
+                        "total_impacted_count": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        },
+        "operationId": "getBusinessServiceSupportingServiceImpacts",
+        "description": "Retrieve of Business Services that support the given Business Service sorted by highest Impact with `status` included.\nThis endpoint does not return an exhaustive list of Business Services but rather provides access to the most impacted up to the limit of 200.\n\nThe returned Business Services are sorted first by Impact, secondarily by most recently impacted, and finally by name.\n\nTo get impact information about a specific set of Business Services, use the `ids[]` parameter on the `/business_services/impacts` endpoint.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_bis"
+          },
+          {
+            "$ref": "#/components/parameters/impacts_additional_fields"
+          },
+          {
+            "$ref": "#/components/parameters/ids"
+          }
+        ]
+      }
+    },
     "/business_services/{id}/unsubscribe": {
       "post": {
         "summary": "Remove Business Service Subscribers",
@@ -10769,6 +11131,426 @@
             }
           },
           "description": "The entities to unsubscribe."
+        }
+      }
+    },
+    "/business_services/impactors": {
+      "get": {
+        "summary": "List Impactors affecting Business Services",
+        "tags": [
+          "Business Services"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/LiveListResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "impactors": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Impactor"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "limit": 100,
+                      "more": false,
+                      "impactors": [
+                        {
+                          "id": "PD1234",
+                          "type": "incident"
+                        },
+                        {
+                          "id": "PF9KMXH",
+                          "type": "incident"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        },
+        "operationId": "getBusinessServiceTopLevelImpactors",
+        "description": "Retrieve a list of Impactors for the top-level Business Services on the account. Impactors are currently limited to Incidents.\n\nThis endpoint does not return an exhaustive list of Impactors but rather provides access to the highest priority Impactors for the Business Services in question up to the limit of 200.\n\nTo get Impactors for a specific set of Business Services, use the `ids[]` parameter.\n\nThe returned Impactors are sorted first by priority and secondarily by their creation date.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_bis"
+          },
+          {
+            "$ref": "#/components/parameters/ids"
+          }
+        ]
+      }
+    },
+    "/business_services/impacts": {
+      "get": {
+        "summary": "List Business Services sorted by impacted status",
+        "tags": [
+          "Business Services"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/LiveListResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "services": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Impact"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "additional_fields": {
+                          "type": "object",
+                          "properties": {
+                            "total_impacted_count": {
+                              "type": "integer"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "limit": 100,
+                      "more": false,
+                      "services": [
+                        {
+                          "id": "PD1234",
+                          "name": "Web API",
+                          "type": "business_service",
+                          "status": "impacted",
+                          "additional_fields": {
+                            "highest_impacting_priority": {
+                              "id": "PQOMK4S",
+                              "order": 128
+                            }
+                          }
+                        },
+                        {
+                          "id": "PF9KMXH",
+                          "name": "Analytics Backend",
+                          "type": "business_service",
+                          "status": "not_impacted",
+                          "additional_fields": {
+                            "highest_impacting_priority": null
+                          }
+                        }
+                      ],
+                      "additional_fields": {
+                        "total_impacted_count": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        },
+        "operationId": "getBusinessServiceImpacts",
+        "description": "Retrieve a list top-level Business Services sorted by highest Impact with `status` included.\nWhen called without the `ids[]` parameter, this endpoint does not return an exhaustive list of Business Services but rather provides access to the most impacted up to the limit of 200.\n\nThe returned Business Services are sorted first by Impact, secondarily by most recently impacted, and finally by name.\n\nTo get impact information about a specific set of Business Services, use the `ids[]` parameter.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_bis"
+          },
+          {
+            "$ref": "#/components/parameters/impacts_additional_fields"
+          },
+          {
+            "$ref": "#/components/parameters/ids"
+          }
+        ]
+      }
+    },
+    "/business_services/priority_thresholds": {
+      "get": {
+        "summary": "Get the global priority threshold for a Business Service to be considered impacted by an Incident",
+        "tags": [
+          "Business Services"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "global_threshold": {
+                      "type": "object",
+                      "nullable": true,
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "order": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "limit": 100,
+                      "more": false,
+                      "global_threshold": null,
+                      "type": "object",
+                      "properties": {
+                        "id": "string",
+                        "order": "integer"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        },
+        "operationId": "getBusinessServicePriorityThresholds",
+        "description": "Retrieves the priority threshold information for an account.  Currently, there is a `global_threshold` that can be set for the account.  Incidents that have a priority meeting or exceeding this threshold will be considered impacting on any Business Service that depends on the Service to which the Incident belongs.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_bis"
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Deletes the account-level priority threshold for Business Service impact",
+        "tags": [
+          "Business Services"
+        ],
+        "responses": {
+          "204": {
+            "description": "The Priority Threshold for the account was successfully cleared."
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        },
+        "operationId": "deleteBusinessServicePriorityThresholds",
+        "description": "Clears the Priority Threshold for the account.  If the priority threshold is cleared, any Incident with a Priority set will be able to impact Business Services.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_bis"
+          }
+        ]
+      },
+      "put": {
+        "summary": "Set the Account-level priority threshold for Business Service impact.",
+        "tags": [
+          "Business Services"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "global_threshold": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "order": {
+                          "type": "number"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "order"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "global_threshold"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "global_threshold": {
+                        "id": "PTLNKGF",
+                        "order": 256
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "operationId": "putBusinessServicePriorityThresholds",
+        "description": "Set the Account-level priority threshold for Business Service.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_bis"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "description": "",
+                "type": "object",
+                "properties": {
+                  "global_threshold": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "order": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "order"
+                    ]
+                  }
+                },
+                "required": [
+                  "global_threshold"
+                ]
+              },
+              "examples": {
+                "example": {
+                  "value": {
+                    "global_threshold": {
+                      "id": "PTLNKGF",
+                      "order": 256
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "description": "Set the `id` and `order` of the global Priority Threshold. These values can be obtained by calling the `/priorities` endpoint.\n\nOnce set, Incidents must be at or above the specified level in order to impact Business Services.  An exception to this rule is if the Incident has been added to the incident directly using the `PUT /incidents/{id}/business_services/{business_service_id}/impacts` endpoint."
         }
       }
     },
@@ -14349,6 +15131,184 @@
             "$ref": "#/components/responses/TooManyRequests"
           }
         }
+      }
+    },
+    "/incidents/{id}/business_services/{business_service_id}/impacts": {
+      "put": {
+        "summary": "Manually change an Incident's Impact on a Business Service.",
+        "tags": [
+          "Incidents"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "relation": {
+                      "type": "string",
+                      "enum": [
+                        "impacted",
+                        "not_impacted"
+                      ]
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "relation": "impacted"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        },
+        "operationId": "putIncidentManualBusinessServiceAssociation",
+        "description": "Change Impact of an Incident on a Business Service.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/business_service_id"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_bis"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "description": "",
+                "type": "object",
+                "properties": {
+                  "relation": {
+                    "type": "string",
+                    "enum": [
+                      "impacted",
+                      "not_impacted"
+                    ]
+                  }
+                },
+                "required": [
+                  "relation"
+                ]
+              }
+            }
+          },
+          "description": "The `impacted` relation will cause the Business Service and any Services that it supports to become impacted by this incident.\n\nThe `not_impacted` relation will remove the Incident's Impact from the specified Business Service.\n\nThe effect of adding or removing Impact to a Business Service in this way will also change the propagation of Impact to other Services supported by that Business Service."
+        }
+      }
+    },
+    "/incidents/{id}/business_services/impacts": {
+      "get": {
+        "summary": "List Business Services impacted by the given Incident",
+        "tags": [
+          "Incidents"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/CursorPagination"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "services": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Impact"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "limit": 100,
+                      "next_cursor": null,
+                      "services": [
+                        {
+                          "id": "PD1234",
+                          "name": "Web API",
+                          "type": "business_service",
+                          "status": "impacted"
+                        },
+                        {
+                          "id": "PF9KMXH",
+                          "name": "Analytics Backend",
+                          "type": "business_service",
+                          "status": "impacted"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        },
+        "operationId": "getIncidentImpactedBusinessServices",
+        "description": "Retrieve a list of Business Services that are being impacted by the given Incident.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_bis"
+          }
+        ]
       }
     },
     "/incidents/{id}/log_entries": {
@@ -20107,14 +21067,14 @@
       }
     },
     "/service_dependencies/business_services/{id}": {
-      "description": "Get the dependencies of a given business service.",
+      "description": "Get the dependencies of a given Business Service.",
       "get": {
         "tags": [
           "Service Dependencies"
         ],
         "operationId": "getBusinessServiceServiceDependencies",
-        "summary": "Get business service dependencies",
-        "description": "Get all immediate dependencies of any business service.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#business-services)\n",
+        "summary": "Get Business Service dependencies",
+        "description": "Get all immediate dependencies of any Business Service.\n\nBusiness Services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#business-services)\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -20136,13 +21096,13 @@
                   "properties": {
                     "relationships": {
                       "type": "array",
-                      "description": "List of all the business service's dependencies.",
+                      "description": "List of all the Business Service's dependencies.",
                       "items": {
                         "type": "object",
                         "properties": {
                           "supporting_service": {
                             "type": "object",
-                            "description": "The reference to the service that supports the business service.",
+                            "description": "The reference to the service that supports the Business Service.",
                             "properties": {
                               "id": {
                                 "type": "string"
@@ -20154,7 +21114,7 @@
                           },
                           "dependent_service": {
                             "type": "object",
-                            "description": "The reference to the service that is dependent on the business service.",
+                            "description": "The reference to the service that is dependent on the Business Service.",
                             "properties": {
                               "id": {
                                 "type": "string"
@@ -22442,6 +23402,434 @@
             "$ref": "#/components/responses/Conflict"
           }
         }
+      }
+    },
+    "/status_dashboards": {
+      "get": {
+        "tags": [
+          "Status Dashboards"
+        ],
+        "operationId": "listStatusDashboards",
+        "summary": "List Status Dashboards",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/CursorPagination"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "status_dashboards": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/StatusDashboard"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "limit": 100,
+                      "next_cursor": null,
+                      "status_dashboards": [
+                        {
+                          "id": "PFCVPS0",
+                          "url_slug": "analytics-api",
+                          "name": "Analytics API"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        },
+        "description": "Get all your account's custom Status Dashboard views\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_status_dashboards"
+          }
+        ]
+      }
+    },
+    "/status_dashboards/{id}": {
+      "get": {
+        "tags": [
+          "Status Dashboards"
+        ],
+        "operationId": "getStatusDashboardById",
+        "summary": "Get a single Status Dashboard by `id`",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status_dashboard": {
+                      "$ref": "#/components/schemas/StatusDashboard"
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "status_dashboard": {
+                        "id": "PFCVPS0",
+                        "url_slug": "analytics-api",
+                        "name": "Analytics API"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        },
+        "description": "Get a Status Dashboard by its PagerDuty `id`.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_status_dashboards"
+          }
+        ]
+      }
+    },
+    "/status_dashboards/{id}/service_impacts": {
+      "get": {
+        "tags": [
+          "Status Dashboards"
+        ],
+        "operationId": "getStatusDashboardServiceImpactsById",
+        "summary": "Get impacted Business Services for a Status Dashboard by `id`.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/LiveListResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "services": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Impact"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "additional_fields": {
+                          "type": "object",
+                          "properties": {
+                            "total_impacted_count": {
+                              "type": "integer"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "limit": 100,
+                      "more": false,
+                      "services": [
+                        {
+                          "id": "PD1234",
+                          "name": "Web API",
+                          "type": "business_service",
+                          "status": "impacted",
+                          "additional_fields": {
+                            "highest_impacting_priority": {
+                              "id": "PQOMK4S",
+                              "order": 128
+                            }
+                          }
+                        },
+                        {
+                          "id": "PF9KMXH",
+                          "name": "Analytics Backend",
+                          "type": "business_service",
+                          "status": "not_impacted",
+                          "additional_fields": {
+                            "highest_impacting_priority": null
+                          }
+                        }
+                      ],
+                      "additional_fields": {
+                        "total_impacted_count": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        },
+        "description": "Get impacted Business Services for a Status Dashboard by `id`\n\nThis endpoint does not return an exhaustive list of Business Services but rather provides access to the most impacted on the specified Status Dashboard up to the limit of 200.\n\nThe returned Business Services are sorted first by Impact, secondarily by most recently impacted, and finally by name.\n\nTo get Impact information about a specific Business Service on the Status Dashboard that does not appear in the Impact-sorted response, use the `ids[]` parameter on the `/business_services/impacts` endpoint.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/impacts_additional_fields"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_status_dashboards"
+          }
+        ]
+      }
+    },
+    "/status_dashboards/url_slugs/{url_slug}": {
+      "get": {
+        "tags": [
+          "Status Dashboards"
+        ],
+        "operationId": "getStatusDashboardByUrlSlug",
+        "summary": "Get a single Status Dashboard by `url_slug`",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status_dashboard": {
+                      "$ref": "#/components/schemas/StatusDashboard"
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "status_dashboard": {
+                        "id": "PFCVPS0",
+                        "url_slug": "analytics-api",
+                        "name": "Analytics API"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        },
+        "description": "Get a Status Dashboard by its PagerDuty `url_slug`.  A `url_slug` is a human-readable reference\nfor a custom Status Dashboard that may be created or changed in the UI. It will generally be a `dash-separated-string-like-this`.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/url_slug"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_status_dashboards"
+          }
+        ]
+      }
+    },
+    "/status_dashboards/url_slugs/{url_slug}/service_impacts": {
+      "get": {
+        "tags": [
+          "Status Dashboards"
+        ],
+        "operationId": "getStatusDashboardServiceImpactsByUrlSlug",
+        "summary": "Get impacted Business Services for a  Status Dashboard by `url_slug`",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/LiveListResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "services": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Impact"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "additional_fields": {
+                          "type": "object",
+                          "properties": {
+                            "total_impacted_count": {
+                              "type": "integer"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "limit": 100,
+                      "more": false,
+                      "services": [
+                        {
+                          "id": "PD1234",
+                          "name": "Web API",
+                          "type": "business_service",
+                          "status": "impacted",
+                          "additional_fields": {
+                            "highest_impacting_priority": {
+                              "id": "PQOMK4S",
+                              "order": 128
+                            }
+                          }
+                        },
+                        {
+                          "id": "PF9KMXH",
+                          "name": "Analytics Backend",
+                          "type": "business_service",
+                          "status": "not_impacted",
+                          "additional_fields": {
+                            "highest_impacting_priority": null
+                          }
+                        }
+                      ],
+                      "additional_fields": {
+                        "total_impacted_count": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        },
+        "description": "Get Business Service Impacts for the Business Services on a Status Dashboard by its `url_slug`. A `url_slug` is a human-readable reference\nfor a custom Status Dashboard that may be created or changed in the UI. It will generally be a `dash-separated-string-like-this`.\n\nThis endpoint does not return an exhaustive list of Business Services but rather provides access to the most impacted on the Status Dashboard up to the limit of 200.\n\nThe returned Business Services are sorted first by Impact, secondarily by most recently impacted, and finally by name.\n\nTo get impact information about a specific Business Service on the Status Dashboard that does not appear in the Impact-sored response, use the `ids[]` parameter on the `/business_services/impacts` endpoint.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/url_slug"
+          },
+          {
+            "$ref": "#/components/parameters/impacts_additional_fields"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_status_dashboards"
+          }
+        ]
       }
     },
     "/tags": {

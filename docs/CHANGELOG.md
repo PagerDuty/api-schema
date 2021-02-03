@@ -6,6 +6,25 @@ Currently we do not deprecate or remove any API functionality.
 
 ----
 
+### 2021-02-03
+- Added nine new Early-Access endpoints for business impact monitoring and management.
+  - `GET /business_services/impactors`
+  - `GET /business_services/{id}/impactors`
+  - `GET /business_services/impacts`
+  - `GET /business_services/{id}/supporting_services/impacts`
+  - `GET /incidents/{id}/business_services/impacts`
+  - `PUT /incidents/{id}/business_services/{business_service_id}/impacts`
+  - `GET /business_services/priority_thresholds`
+  - `PUT /business_services/priority_thresholds`
+  - `DELETE /business_services/priority_thresholds`
+
+- Added five new Early-Access endpoints for Status Dashboards
+  - `GET /status_dashboards`
+  - `GET /status_dashboards/{id}`
+  - `GET /status_dashboards/url_slugs/{url_slug}`
+  - `GET /status_dashboards/{id}/service_impacts`
+  - `GET /status_dashboards/url_slugs/{url_slug}/service_impacts`
+
 ### 2021-01-18
 - Documented Offset Pagination more clearly.
 
