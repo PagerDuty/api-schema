@@ -6,6 +6,10 @@ Currently we do not deprecate or remove any API functionality.
 
 ----
 
+### 2021-02-05
+- Added one new Early-Access endpoint for enabling a webhook subscription
+  - `POST /webhook_subscriptions/{id}/enable`
+
 ### 2021-02-03
 - Added nine new Early-Access endpoints for business impact monitoring and management.
   - `GET /business_services/impactors`
