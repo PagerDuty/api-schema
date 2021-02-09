@@ -1218,6 +1218,7 @@
             "delivery_method": {
               "id": "PF9KMXH",
               "secret": null,
+              "temporarily_disabled": false,
               "type": "http_delivery_method",
               "url": "https://example.com/receive_a_pagerduty_webhook"
             },
@@ -7611,6 +7612,10 @@
                 "description": "The secret used to sign webhook payloads. Only provided on the initial create response.",
                 "nullable": true,
                 "readOnly": true
+              },
+              "temporarily_disabled": {
+                "type": "boolean",
+                "description": "Whether or not this webhook subscription is temporarily disabled. Becomes `true` if the delivery method URL is repeatedly rejected by the server."
               },
               "type": {
                 "type": "string",
@@ -28521,6 +28526,61 @@
           },
           "400": {
             "$ref": "#/components/responses/WebhookBadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/WebhookUnauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/WebhookForbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/WebhookNotFound"
+          }
+        }
+      }
+    },
+    "/webhook_subscriptions/{id}/enable": {
+      "post": {
+        "tags": [
+          "Webhooks"
+        ],
+        "operationId": "enableWebhookSubscription",
+        "summary": "Enable a webhook subscription",
+        "description": "Enable a webhook subscription that is temporarily disabled. (This API does not require a request body.)\n\nWebhook subscriptions can become temporarily disabled when the subscription's delivery method is repeatedly rejected by the server.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint's interface is under development and subject to change. Do not use it in production systems.\n> Your request must set an X-EARLY-ACCESS header with value `webhooks-v3` to acknowledge this.\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/webhooks_early-access"
+          },
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The webhook subscription that was successfully enabled.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "webhook_subscription": {
+                      "$ref": "#/components/schemas/WebhookSubscription"
+                    }
+                  },
+                  "required": [
+                    "webhook_subscription"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "$ref": "#/components/examples/GetSubscriptionExample"
+                  }
+                }
+              }
+            }
           },
           "401": {
             "$ref": "#/components/responses/WebhookUnauthorized"
