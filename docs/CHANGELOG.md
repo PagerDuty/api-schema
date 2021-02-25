@@ -6,6 +6,9 @@ Currently we do not deprecate or remove any API functionality.
 
 ----
 
+### 2021-02-24
+- Removed Early Access for User Subscription endpoints. `usms-early-access`
+
 ### 2021-02-05
 - Added one new Early-Access endpoint for enabling a webhook subscription
   - `POST /webhook_subscriptions/{id}/enable`

@@ -1486,16 +1486,6 @@
         "name": "X-EARLY-ACCESS",
         "required": true
       },
-      "early_access_usms": {
-        "schema": {
-          "type": "string",
-          "default": "usms-early-access"
-        },
-        "in": "header",
-        "name": "X-EARLY-ACCESS",
-        "description": "This header indicates that this API endpoint is __UNDER CONSTRUCTION__ and may change at any time. You __MUST__ pass in this header with the value `usms-early-access`. Do not use this endpoint in production, as it may change!",
-        "required": true
-      },
       "early_access_status-update-notification-rules": {
         "name": "X-EARLY-ACCESS",
         "in": "header",
@@ -10557,16 +10547,13 @@
           }
         },
         "operationId": "createBusinessServiceAccountSubscription",
-        "description": "Subscribe your Account to a Business Service.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
+        "description": "Subscribe your Account to a Business Service.",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
           },
           {
             "$ref": "#/components/parameters/id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_usms"
           }
         ]
       },
@@ -10593,16 +10580,13 @@
             "$ref": "#/components/responses/UnprocessableEntity"
           }
         },
-        "description": "Unsubscribe your Account from a Business Service.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
+        "description": "Unsubscribe your Account from a Business Service.",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
           },
           {
             "$ref": "#/components/parameters/id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_usms"
           }
         ]
       }
@@ -10769,16 +10753,13 @@
           }
         },
         "operationId": "getBusinessServiceSubscribers",
-        "description": "Retrieve a list of Notification Subscribers on the Business Service.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n> Users must be added through `POST /business_services/{id}/subscribers` to be returned from this endpoint.",
+        "description": "Retrieve a list of Notification Subscribers on the Business Service.\n\n<!-- theme: warning -->\n> Users must be added through `POST /business_services/{id}/subscribers` to be returned from this endpoint.",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
           },
           {
             "$ref": "#/components/parameters/id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_usms"
           }
         ]
       },
@@ -10853,16 +10834,13 @@
             "$ref": "#/components/responses/UnprocessableEntity"
           }
         },
-        "description": "Subscribe the given entities to the given Business Service.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
+        "description": "Subscribe the given entities to the given Business Service.",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
           },
           {
             "$ref": "#/components/parameters/id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_usms"
           }
         ],
         "requestBody": {
@@ -11085,16 +11063,13 @@
             "$ref": "#/components/responses/UnprocessableEntity"
           }
         },
-        "description": "Unsubscribes the matching Subscribers from a Business Service.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
+        "description": "Unsubscribes the matching Subscribers from a Business Service.",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
           },
           {
             "$ref": "#/components/parameters/id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_usms"
           }
         ],
         "requestBody": {
@@ -16291,16 +16266,13 @@
           }
         },
         "operationId": "getIncidentNotificationSubscribers",
-        "description": "Retrieve a list of Notification Subscribers on the Incident.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n> Users must be added through `POST /incident/{id}/status_updates/subscribers` to be returned from this endpoint.",
+        "description": "Retrieve a list of Notification Subscribers on the Incident.\n\n<!-- theme: warning -->\n> Users must be added through `POST /incident/{id}/status_updates/subscribers` to be returned from this endpoint.",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
           },
           {
             "$ref": "#/components/parameters/id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_usms"
           }
         ]
       },
@@ -16375,16 +16347,13 @@
             "$ref": "#/components/responses/UnprocessableEntity"
           }
         },
-        "description": "Subscribe the given entities to Incident Status Update Notifications.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
+        "description": "Subscribe the given entities to Incident Status Update Notifications.",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
           },
           {
             "$ref": "#/components/parameters/id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_usms"
           }
         ],
         "requestBody": {
@@ -16490,16 +16459,13 @@
           }
         },
         "operationId": "removeIncidentNotificationSubscribers",
-        "description": "Unsubscribes the matching Subscribers from Incident Status Update Notifications.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
+        "description": "Unsubscribes the matching Subscribers from Incident Status Update Notifications.",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
           },
           {
             "$ref": "#/components/parameters/id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_usms"
           }
         ],
         "requestBody": {
@@ -24917,16 +24883,13 @@
           "Teams"
         ],
         "operationId": "getTeamNotificationSubscriptions",
-        "description": "Retrieve a list of Notification Subscriptions the given Team has.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n> Teams must be added through `POST /teams/{id}/notification_subscriptions` to be returned from this endpoint.\n",
+        "description": "Retrieve a list of Notification Subscriptions the given Team has.\n\n<!-- theme: warning -->\n> Teams must be added through `POST /teams/{id}/notification_subscriptions` to be returned from this endpoint.\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
           },
           {
             "$ref": "#/components/parameters/id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_usms"
           }
         ],
         "responses": {
@@ -25089,16 +25052,13 @@
             "$ref": "#/components/responses/UnprocessableEntity"
           }
         },
-        "description": "Create new Notification Subscriptions for the given Team.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
+        "description": "Create new Notification Subscriptions for the given Team.",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
           },
           {
             "$ref": "#/components/parameters/id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_usms"
           }
         ],
         "requestBody": {
@@ -25203,16 +25163,13 @@
             "$ref": "#/components/responses/UnprocessableEntity"
           }
         },
-        "description": "Unsubscribe the given Team from Notifications on the matching Subscribable entities.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
+        "description": "Unsubscribe the given Team from Notifications on the matching Subscribable entities.",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
           },
           {
             "$ref": "#/components/parameters/id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_usms"
           }
         ],
         "requestBody": {
@@ -26938,7 +26895,7 @@
           "Users"
         ],
         "operationId": "getUserNotificationSubscriptions",
-        "description": "Retrieve a list of Notification Subscriptions the given User has.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n> Users must be added through `POST /users/{id}/notification_subscriptions` to be returned from this endpoint.\n",
+        "description": "Retrieve a list of Notification Subscriptions the given User has.\n\n<!-- theme: warning -->\n> Users must be added through `POST /users/{id}/notification_subscriptions` to be returned from this endpoint.\n",
         "summary": "List Notification Subscriptions",
         "parameters": [
           {
@@ -26946,9 +26903,6 @@
           },
           {
             "$ref": "#/components/parameters/id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_usms"
           }
         ],
         "responses": {
@@ -27111,16 +27065,13 @@
             "$ref": "#/components/responses/UnprocessableEntity"
           }
         },
-        "description": "Create new Notification Subscriptions for the given User.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
+        "description": "Create new Notification Subscriptions for the given User.",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
           },
           {
             "$ref": "#/components/parameters/id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_usms"
           }
         ],
         "requestBody": {
@@ -27226,16 +27177,13 @@
           }
         },
         "operationId": "unsubscribeUserNotificationSubscriptions",
-        "description": "Unsubscribe the given User from Notifications on the matching Subscribable entities.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
+        "description": "Unsubscribe the given User from Notifications on the matching Subscribable entities.",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
           },
           {
             "$ref": "#/components/parameters/id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_usms"
           }
         ],
         "requestBody": {
