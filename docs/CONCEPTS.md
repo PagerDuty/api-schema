@@ -116,6 +116,9 @@ Snoozing an Incident will re-trigger it after a specified amount of time.
 ### Alerts
 An Alert is sent to a [User](#user) to have them respond to an Incident. Alerts will follow a User's notification policies.
 
+### Past Incidents
+Past Incidents allow Responders to view past resolved Incidents that have similar metadata and were generated on the same Service as their current active Incident. Past Incidents add helpful context for accurate triage, which can lead to shorter resolution time. Responders can see who was involved in a previous Incident, when these types of Incidents happened, and dive into Incident details to discover the remediation steps that were taken.
+
 ## Log Entries
 Updates to an Incident generate [Log Entries](#log_Entries) that capture the changes to an Incident over time, whether these changes were prompted by a [User](#users), an [Integration](#integrations), or were performed automatically.
 

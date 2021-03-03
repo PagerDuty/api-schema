@@ -1455,6 +1455,28 @@
           "type": "boolean"
         }
       },
+      "past_incidents_limit": {
+        "name": "limit",
+        "in": "query",
+        "required": false,
+        "description": "The number of results to be returned in the response.",
+        "schema": {
+          "type": "integer",
+          "default": 5,
+          "minimum": 1,
+          "maximum": 999
+        }
+      },
+      "past_incidents_total": {
+        "name": "total",
+        "in": "query",
+        "required": false,
+        "description": "By default the `total` field in the response body is set to `null` to provide the fastest possible response times. Set `total` to `true` for this field to be populated with the total number of Past Incidents.\n",
+        "schema": {
+          "type": "boolean",
+          "default": false
+        }
+      },
       "cursor_limit": {
         "name": "limit",
         "in": "query",
@@ -15812,15 +15834,147 @@
         }
       }
     },
+    "/incidents/{id}/past_incidents": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/header_Accept"
+        },
+        {
+          "$ref": "#/components/parameters/header_Content-Type"
+        },
+        {
+          "$ref": "#/components/parameters/id"
+        }
+      ],
+      "get": {
+        "summary": "Get Past Incidents",
+        "tags": [
+          "Incidents"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "past_incidents": {
+                      "type": "array",
+                      "description": "Aggregate of past incidents",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "incident": {
+                            "type": "object",
+                            "description": "Incident model reference",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "description": "The globally unique identifier of the incident"
+                              },
+                              "created_at": {
+                                "type": "string",
+                                "description": "The date/time the incident was first triggered"
+                              },
+                              "self": {
+                                "type": "string",
+                                "description": "The URL at which the object is accessible"
+                              },
+                              "title": {
+                                "type": "string",
+                                "description": "The description of the nature, symptoms, cause, or effect of the incident"
+                              }
+                            }
+                          },
+                          "score": {
+                            "type": "number",
+                            "description": "The computed similarity score associated with the incident and parent incident "
+                          }
+                        }
+                      }
+                    },
+                    "total": {
+                      "type": "number",
+                      "description": "The total number of Past Incidents if the total parameter was set in the request."
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "past_incidents": [
+                        {
+                          "incident": {
+                            "id": "PFBE9I2",
+                            "created_at": "2020-11-04T16:08:15Z",
+                            "self": "https://api.pagerduty.com/incidents/PFBE9I2",
+                            "title": "Things are so broken!"
+                          },
+                          "score": 46.8249
+                        },
+                        {
+                          "incident": {
+                            "id": "P1J6V6M",
+                            "created_at": "2020-10-22T17:18:14Z",
+                            "self": "https://api.pagerduty.com/incidents/P1J6V6M",
+                            "title": "Things are so broken!"
+                          },
+                          "score": 46.8249
+                        },
+                        {
+                          "incident": {
+                            "id": "P6HPX5N",
+                            "created_at": "2020-10-06T22:01:13Z",
+                            "self": "https://api.pagerduty.com/incidents/P6HPX5N",
+                            "title": "You forgot to feed the cat!"
+                          },
+                          "score": 0
+                        }
+                      ],
+                      "total": 3
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        },
+        "operationId": "getPastIncidents",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/past_incidents_limit"
+          },
+          {
+            "$ref": "#/components/parameters/past_incidents_total"
+          }
+        ],
+        "description": "Past Incidents returns resolved Incidents within the past 6 months that have similar metadata and were generated on the same Service as the parent Incident. By default, 5 Past Incidents are returned.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#past_incidents)\n"
+      }
+    },
     "/incidents/{id}/related_incidents": {
-      "description": "Get Related Incidents.",
+      "description": "Get Related Incidents",
       "get": {
         "tags": [
           "Incidents"
         ],
         "operationId": "getRelatedIncidents",
         "description": "Returns the 20 most recent Related Incidents that are impacting other Responders and Services.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#related_incidents)\n",
-        "summary": "Get Related Incidents.",
+        "summary": "Get Related Incidents",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -15938,6 +16092,9 @@
           },
           "404": {
             "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
           },
           "500": {
             "$ref": "#/components/responses/InternalServerError"
