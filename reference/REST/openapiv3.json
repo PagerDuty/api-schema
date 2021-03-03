@@ -2595,6 +2595,22 @@
           },
           "uniqueItems": true
         }
+      },
+      "additional_details": {
+        "name": "additional_details[]",
+        "in": "query",
+        "description": "Array of additional attributes to any of the returned incidents for related incidents.",
+        "explode": true,
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "incident"
+            ]
+          },
+          "uniqueItems": true
+        }
       }
     },
     "responses": {
@@ -8282,6 +8298,77 @@
           "timeout": {
             "type": "integer",
             "description": "The duration in minutes within which to automatically group incoming Alerts.  To continue grouping Alerts until the Incident is resolved, set this value to 0."
+          }
+        }
+      },
+      "RelatedIncidentServiceDependencyBase": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The ID of the Service referenced.",
+            "readOnly": true
+          },
+          "type": {
+            "type": "string",
+            "description": "The type of the related Service.",
+            "enum": [
+              "business_service_reference",
+              "technical_service_reference"
+            ]
+          },
+          "self": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true,
+            "format": "url",
+            "description": "The API show URL at which the object is accessible."
+          }
+        }
+      },
+      "RelatedIncidentMachineLearningRelationship": {
+        "type": "object",
+        "description": "The data for a type of relationship where the Incident is related due to our machine learning algorithm.\n",
+        "properties": {
+          "grouping_classification": {
+            "type": "string",
+            "description": "The classification for why this Related Incident was grouped into this group.\nValues can be one of: [similar_contents, prior_feedback], where:\nsimilar_contents - The Related Incident was due to similar contents of the Incidents.\nprior_feedback - The Related Incident was determined to be related, based on User feedback or Incident merge/unmerge actions.\n",
+            "enum": [
+              "similar_contents",
+              "prior_feedback"
+            ]
+          },
+          "user_feedback": {
+            "type": "object",
+            "description": "The feedback provided from Users to influence the machine learning algorithm for future Related Incidents.",
+            "properties": {
+              "positive_feedback_count": {
+                "type": "integer",
+                "description": "The total number of times Users agreed that the Incidents are related."
+              },
+              "negative_feedback_count": {
+                "type": "integer",
+                "description": "The total number of times Users disagreed that the Incidents are related."
+              }
+            }
+          }
+        }
+      },
+      "RelatedIncidentServiceDependencyRelationship": {
+        "type": "object",
+        "description": "The data for a type of relationship where the Incident is related due to Business or Technical Service dependencies.\n\nBoth `dependent_services` and `supporting_services` are returned to signify the dependencies between the Services\nthat the Incident and Related Incident belong to.\n\nEach Service reference returned in the list of supporting and dependent Services has a type of:\n[business_service_reference, technical_service_reference].\n",
+        "properties": {
+          "dependent_services": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RelatedIncidentServiceDependencyBase"
+            }
+          },
+          "supporting_services": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RelatedIncidentServiceDependencyBase"
+            }
           }
         }
       }
@@ -15721,6 +15808,139 @@
           },
           "429": {
             "$ref": "#/components/responses/TooManyRequests"
+          }
+        }
+      }
+    },
+    "/incidents/{id}/related_incidents": {
+      "description": "Get Related Incidents.",
+      "get": {
+        "tags": [
+          "Incidents"
+        ],
+        "operationId": "getRelatedIncidents",
+        "description": "Returns the 20 most recent Related Incidents that are impacting other Responders and Services.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#related_incidents)\n",
+        "summary": "Get Related Incidents.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/additional_details"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of Related Incidents and their relationships.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "related_incidents": {
+                      "type": "array",
+                      "description": "A list of Related Incidents and their relationships.",
+                      "items": {
+                        "properties": {
+                          "incident": {
+                            "$ref": "#/components/schemas/Incident"
+                          },
+                          "relationships": {
+                            "type": "array",
+                            "description": "A list of reasons for why the Incident is considered related.",
+                            "items": {
+                              "properties": {
+                                "type": {
+                                  "type": "string",
+                                  "description": "The type of relationship. A relationship outlines the reason why two Incidents are considered related.",
+                                  "enum": [
+                                    "machine_learning_inferred",
+                                    "service_dependency"
+                                  ]
+                                },
+                                "metadata": {
+                                  "anyOf": [
+                                    {
+                                      "$ref": "#/components/schemas/RelatedIncidentMachineLearningRelationship"
+                                    },
+                                    {
+                                      "$ref": "#/components/schemas/RelatedIncidentServiceDependencyRelationship"
+                                    }
+                                  ]
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "related_incidents": [
+                        {
+                          "incident": {
+                            "id": "PR2P3RW",
+                            "created_at": "2020-11-18T13:08:14Z",
+                            "self": "https://api.pagerduty.com/incidents/PR2P3RW",
+                            "title": "The server is on fire."
+                          },
+                          "relationships": [
+                            {
+                              "type": "machine_learning_inferred",
+                              "metadata": {
+                                "grouping_classification": "similar_contents",
+                                "user_feedback": {
+                                  "positive_feedback_count": 12,
+                                  "negative_feedback_count": 3
+                                }
+                              }
+                            },
+                            {
+                              "type": "service_dependency",
+                              "metadata": {
+                                "dependent_services": {
+                                  "id": "P1L1YEE",
+                                  "type": "business_service_reference",
+                                  "self": "https://api.pagerduty.com/business_services/P1L1YEE"
+                                },
+                                "supporting_services": {
+                                  "id": "PNGCNV2",
+                                  "type": "technical_service_reference",
+                                  "self": "https://api.pagerduty.com/services/PNGCNV2"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           }
         }
       }
