@@ -175,6 +175,8 @@ On-Calls cannot be created directly through the API; they are the computed resul
 ## Priorities
 A Priority is a label representing the importance and impact of an incident. This feature is only available on Standard and Enterprise plans.
 
+## Related Incidents
+Related Incidents provide Responders with the 20 most recent Related Incidents that are impacting other Responders and Services. This feature uses a completely online and real-time machine learning algorithm as well as your Service dependency data to provide these insights, giving Responders an at-a-glance-view of the full breadth and scope of Incident impact.
 
 ## Response Plays
 Response Plays let you create packages of Incident Actions that can be applied to an [Incident.](#incident)

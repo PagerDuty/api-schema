@@ -5,6 +5,9 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 Currently we do not deprecate or remove any API functionality.
 
 ----
+### 2021-01-19
+- Added a new public endpoint for the Related Incidents. 
+  - `GET /incidents/{id}/related_incidents`
 
 ### 2021-02-24
 - Removed Early Access for User Subscription endpoints. `usms-early-access`
@@ -41,7 +44,7 @@ Currently we do not deprecate or remove any API functionality.
   - `GET /teams/{id}/audit/records`
   - `GET /services/{id}/audit/records`
   - `GET /schedules/{id}/audit/records`
-  - `GET /escalation_policies/{id}/audit/records`
+  - `GET /escalation_policies/{id}/audit/records`  
 
 ### 2020-12-23
 - Added 14 new Early-Access endpoints for Status Update subscription management.
