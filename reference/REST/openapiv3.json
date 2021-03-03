@@ -15897,7 +15897,11 @@
                     },
                     "total": {
                       "type": "number",
-                      "description": "The total number of Past Incidents if the total parameter was set in the request."
+                      "description": "The total number of Past Incidents if the total parameter was set in the request"
+                    },
+                    "limit": {
+                      "type": "number",
+                      "description": "The maximum number of Incidents requested"
                     }
                   }
                 },
@@ -15934,7 +15938,8 @@
                           "score": 0
                         }
                       ],
-                      "total": 3
+                      "total": 3,
+                      "limit": 5
                     }
                   }
                 }
