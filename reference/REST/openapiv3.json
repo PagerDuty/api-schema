@@ -6077,11 +6077,107 @@
               "created_at": {
                 "type": "string",
                 "format": "date-time",
-                "readOnly": true,
-                "description": "The date/time when this integration was created."
+                "description": "The date/time when this integration was created.",
+                "readOnly": true
               },
               "vendor": {
                 "$ref": "#/components/schemas/VendorReference"
+              },
+              "integration_email": {
+                "type": "string",
+                "description": "Specify for generic_email_inbound_integration. Must be set to an email address @your-subdomain.pagerduty.com"
+              },
+              "email_incident_creation": {
+                "type": "string",
+                "description": "Specify for generic_email_inbound_integration",
+                "enum": [
+                  "on_new_email",
+                  "on_new_email_subject",
+                  "only_if_no_open_incidents",
+                  "use_rules"
+                ]
+              },
+              "email_filter_mode": {
+                "type": "string",
+                "description": "Specify for generic_email_inbound_integration. May override email_incident_creation",
+                "enum": [
+                  "all-email",
+                  "or-rules-email",
+                  "and-rules-email"
+                ]
+              },
+              "email_parsers": {
+                "type": "array",
+                "description": "Specify for generic_email_inbound_integration.",
+                "uniqueItems": true,
+                "minItems": 1,
+                "items": {
+                  "$ref": "#/components/schemas/EmailParser"
+                }
+              },
+              "email_parsing_fallback": {
+                "type": "string",
+                "description": "Specify for generic_email_inbound_integration.",
+                "enum": [
+                  "open_new_incident",
+                  "discard"
+                ]
+              },
+              "email_filters": {
+                "type": "array",
+                "description": "Specify for generic_email_inbound_integration.",
+                "uniqueItems": true,
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "subject_mode": {
+                      "type": "string",
+                      "enum": [
+                        "match",
+                        "no-match",
+                        "always"
+                      ]
+                    },
+                    "subject_regex": {
+                      "type": "string",
+                      "description": "Specify if subject_mode is set to match or no-match"
+                    },
+                    "body_mode": {
+                      "type": "string",
+                      "enum": [
+                        "match",
+                        "no-match",
+                        "always"
+                      ]
+                    },
+                    "body_regex": {
+                      "type": "string",
+                      "description": "Specify if body_mode is set to match or no-match"
+                    },
+                    "from_email_mode": {
+                      "type": "string",
+                      "enum": [
+                        "match",
+                        "no-match",
+                        "always"
+                      ]
+                    },
+                    "from_email_regex": {
+                      "type": "string",
+                      "description": "Specify if from_email_mode is set to match or no-match"
+                    }
+                  },
+                  "required": [
+                    "subject_mode",
+                    "body_mode",
+                    "from_email_mode"
+                  ]
+                },
+                "required": [
+                  "type",
+                  "name"
+                ]
               }
             }
           }
@@ -8393,6 +8489,113 @@
             }
           }
         }
+      },
+      "EmailParser": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string",
+            "enum": [
+              "trigger",
+              "resolve"
+            ]
+          },
+          "match_predicate": {
+            "$ref": "#/components/schemas/MatchPredicate"
+          },
+          "value_extractors": {
+            "type": "array",
+            "description": "Additional values that will be pulled in to the Incident object. Exactly one value extractor must have a `value_name` of `incident_key`.",
+            "uniqueItems": true,
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": [
+                    "entire",
+                    "regex",
+                    "between"
+                  ]
+                },
+                "part": {
+                  "type": "string",
+                  "enum": [
+                    "body",
+                    "subject",
+                    "from_addresses"
+                  ]
+                },
+                "value_name": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "The field name to set in the Incident object. Exactly one must use the `value_name` of `incident_key`"
+                },
+                "regex": {
+                  "type": "string"
+                },
+                "starts_after": {
+                  "type": "string"
+                },
+                "ends_with": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "type",
+                "part",
+                "value_name"
+              ]
+            }
+          }
+        },
+        "required": [
+          "action",
+          "match_predicate"
+        ]
+      },
+      "MatchPredicate": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "all",
+              "any",
+              "not",
+              "contains",
+              "exactly",
+              "regex"
+            ]
+          },
+          "matcher": {
+            "type": "string",
+            "description": "Required if the type is `contains`, `exactly` or `regex`.",
+            "minLength": 1
+          },
+          "part": {
+            "type": "string",
+            "description": "The email field that will attempt to use the matcher expression. Required if the type is `contains`, `exactly` or `regex`.",
+            "enum": [
+              "body",
+              "subject",
+              "from_addresses"
+            ]
+          },
+          "children": {
+            "type": "array",
+            "description": "Additional matchers to be run. Must be not empty if the type is `all`, `any`, or `not`.",
+            "items": {
+              "$ref": "#/components/schemas/MatchPredicate"
+            }
+          }
+        },
+        "required": [
+          "type",
+          "part",
+          "children"
+        ]
       }
     }
   },
@@ -22787,6 +22990,47 @@
                       "vendor": {
                         "type": "vendor_reference",
                         "id": "PZD94QK"
+                      }
+                    },
+                    "email_integration_with_filters": {
+                      "summary": "Email Integration With Filters",
+                      "value": {
+                        "integration": {
+                          "type": "generic_email_inbound_integration",
+                          "name": "Email with Filters",
+                          "integration_email": "your-service@subdomain.pd-staging.com",
+                          "email_incident_creation": "on_new_email_subject",
+                          "email_filter_mode": "or-rules-email",
+                          "email_parsers": [
+                            {
+                              "action": "trigger",
+                              "match_predicate": {
+                                "type": "any",
+                                "matcher": "this thing",
+                                "part": "body",
+                                "children": []
+                              },
+                              "value_extractors": [
+                                {
+                                  "type": "entire",
+                                  "part": "body",
+                                  "value_name": "incident_key"
+                                }
+                              ]
+                            }
+                          ],
+                          "email_parsing_fallback": "discard",
+                          "email_filters": [
+                            {
+                              "subject_mode": "match",
+                              "subject_regex": "alert",
+                              "body_mode": "match",
+                              "body_regex": "alert",
+                              "from_email_mode": "match",
+                              "from_email_regex": "alert"
+                            }
+                          ]
+                        }
                       }
                     }
                   }

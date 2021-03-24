@@ -6,6 +6,9 @@ Currently we do not deprecate or remove any API functionality.
 
 ----
 
+### 2021-03-24
+- Added documentation on setting filters and parsers for generic email inbound integrations
+
 ### 2021-02-24
 - Removed Early Access for User Subscription endpoints. `usms-early-access`
 
@@ -33,7 +36,7 @@ Currently we do not deprecate or remove any API functionality.
   - `GET /status_dashboards/url_slugs/{url_slug}/service_impacts`
 
 ### 2021-01-19
-- Added a new public endpoint for the Related Incidents. 
+- Added a new public endpoint for the Related Incidents.
   - `GET /incidents/{id}/related_incidents`
 
 ### 2021-01-18
