@@ -22991,47 +22991,47 @@
                         "type": "vendor_reference",
                         "id": "PZD94QK"
                       }
-                    },
-                    "email_integration_with_filters": {
-                      "summary": "Email Integration With Filters",
-                      "value": {
-                        "integration": {
-                          "type": "generic_email_inbound_integration",
-                          "name": "Email with Filters",
-                          "integration_email": "your-service@subdomain.pd-staging.com",
-                          "email_incident_creation": "on_new_email_subject",
-                          "email_filter_mode": "or-rules-email",
-                          "email_parsers": [
+                    }
+                  }
+                },
+                "email_integration_with_filters": {
+                  "summary": "Email Integration With Filters",
+                  "value": {
+                    "integration": {
+                      "type": "generic_email_inbound_integration",
+                      "name": "Email with Filters",
+                      "integration_email": "your-service@subdomain.pd-staging.com",
+                      "email_incident_creation": "on_new_email_subject",
+                      "email_filter_mode": "or-rules-email",
+                      "email_parsers": [
+                        {
+                          "action": "trigger",
+                          "match_predicate": {
+                            "type": "any",
+                            "matcher": "this thing",
+                            "part": "body",
+                            "children": []
+                          },
+                          "value_extractors": [
                             {
-                              "action": "trigger",
-                              "match_predicate": {
-                                "type": "any",
-                                "matcher": "this thing",
-                                "part": "body",
-                                "children": []
-                              },
-                              "value_extractors": [
-                                {
-                                  "type": "entire",
-                                  "part": "body",
-                                  "value_name": "incident_key"
-                                }
-                              ]
-                            }
-                          ],
-                          "email_parsing_fallback": "discard",
-                          "email_filters": [
-                            {
-                              "subject_mode": "match",
-                              "subject_regex": "alert",
-                              "body_mode": "match",
-                              "body_regex": "alert",
-                              "from_email_mode": "match",
-                              "from_email_regex": "alert"
+                              "type": "entire",
+                              "part": "body",
+                              "value_name": "incident_key"
                             }
                           ]
                         }
-                      }
+                      ],
+                      "email_parsing_fallback": "discard",
+                      "email_filters": [
+                        {
+                          "subject_mode": "match",
+                          "subject_regex": "alert",
+                          "body_mode": "match",
+                          "body_regex": "alert",
+                          "from_email_mode": "match",
+                          "from_email_regex": "alert"
+                        }
+                      ]
                     }
                   }
                 },
