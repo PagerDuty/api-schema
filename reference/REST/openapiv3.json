@@ -3439,7 +3439,7 @@
             }
           },
           "suppress": {
-            "description": "Set whether the resulting alert is suppressed. Can optionally be used with a threshold where resulting alerts will be suppressed until the threshold is met in a window of time.",
+            "description": "Set whether the resulting alert is suppressed. Can optionally be used with a threshold where resulting alerts will be suppressed until the threshold is met in a window of time. If using a threshold the rule must also set a route action.",
             "type": "object",
             "required": [
               "value"
@@ -3468,7 +3468,7 @@
             }
           },
           "suspend": {
-            "description": "[Early Access] Set the length of time to suspend the resulting alert before triggering.",
+            "description": "Set the length of time to suspend the resulting alert before triggering. Rules with a suspend action must also set a route action, and cannot have a suppress with threshold action",
             "type": "object",
             "required": [
               "value"
