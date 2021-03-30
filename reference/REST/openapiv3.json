@@ -4608,8 +4608,13 @@
           {
             "type": "object",
             "properties": {
-              "assigned_user": {
-                "$ref": "#/components/schemas/UserReference"
+              "assignees": {
+                "type": "array",
+                "readOnly": true,
+                "description": "An array of assigned Users for this log entry",
+                "items": {
+                  "$ref": "#/components/schemas/UserReference"
+                }
               },
               "type": {
                 "type": "string",
@@ -4629,8 +4634,13 @@
           {
             "type": "object",
             "properties": {
-              "assigned_user": {
-                "$ref": "#/components/schemas/UserReference"
+              "assignees": {
+                "type": "array",
+                "readOnly": true,
+                "description": "An array of assigned Users for this log entry",
+                "items": {
+                  "$ref": "#/components/schemas/UserReference"
+                }
               },
               "type": {
                 "type": "string",

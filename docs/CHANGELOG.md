@@ -6,6 +6,9 @@ Currently we do not deprecate or remove any API functionality.
 
 ----
 
+### 2021-03-30
+- Fix assignee response format for AssignLogEntry and EscalateLogEntry
+
 ### 2021-03-24
 - Added documentation on setting filters and parsers for generic email inbound integrations
 
@@ -52,7 +55,7 @@ Currently we do not deprecate or remove any API functionality.
   - `GET /teams/{id}/audit/records`
   - `GET /services/{id}/audit/records`
   - `GET /schedules/{id}/audit/records`
-  - `GET /escalation_policies/{id}/audit/records`  
+  - `GET /escalation_policies/{id}/audit/records`
 
 ### 2020-12-23
 - Added 14 new Early-Access endpoints for Status Update subscription management.
