@@ -20801,7 +20801,7 @@
           }
         ],
         "responses": {
-          "200": {
+          "201": {
             "description": "The collection of override objects returned by the query.",
             "content": {
               "application/json": {
@@ -20865,8 +20865,8 @@
           "Schedules"
         ],
         "operationId": "createScheduleOverride",
-        "description": "Create an override for a specific user covering the specified time range. If you create an override on top of an existing one, the last created override will have priority.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#schedules)\n",
-        "summary": "Create an override",
+        "description": "Create one or more overrides, each for a specific user covering a specified time range. If you create an override on top of an existing override, the last created override will have priority.\n\nA Schedule determines the time periods that users are On-Call.\n\nNote: An older implementation of this endpoint only supported creating a single ocverride per request. That functionality is still supported, but deprecated and may be removed in the future.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#schedules)\n",
+        "summary": "Create one or more overrides",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -20882,69 +20882,134 @@
           "content": {
             "application/json": {
               "schema": {
+                "description": "",
                 "type": "object",
                 "properties": {
-                  "override": {
-                    "$ref": "#/components/schemas/Override"
+                  "overrides": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Override"
+                    }
                   }
-                },
-                "required": [
-                  "override"
-                ]
+                }
               },
               "examples": {
                 "request": {
                   "summary": "Request Example",
                   "value": {
-                    "override": {
-                      "start": "2012-07-01T00:00:00-04:00",
-                      "end": "2012-07-02T00:00:00-04:00",
-                      "user": {
-                        "id": "PEYSGVF",
-                        "type": "user_reference"
+                    "overrides": [
+                      {
+                        "start": "2012-07-01T00:00:00-04:00",
+                        "end": "2012-07-02T00:00:00-04:00",
+                        "user": {
+                          "id": "PEYSGVA",
+                          "type": "user_reference"
+                        },
+                        "time_zone": "UTC"
+                      },
+                      {
+                        "start": "2012-07-03T00:00:00-04:00",
+                        "end": "2012-07-04T00:00:00-04:00",
+                        "user": {
+                          "id": "PEYSGVF",
+                          "type": "user_reference"
+                        },
+                        "time_zone": "UTC"
                       }
-                    }
+                    ]
                   }
                 }
               }
             }
           },
-          "description": "The override to be created",
+          "description": "The overrides to be created",
           "required": true
         },
         "responses": {
           "201": {
-            "description": "The override that was created.",
+            "description": "A list of overrides requested and a status code indicating whether they were created or rejected",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "override": {
-                      "$ref": "#/components/schemas/Override"
-                    }
-                  },
-                  "required": [
-                    "override"
-                  ]
+                  "type": "array",
+                  "description": "",
+                  "minItems": 1,
+                  "uniqueItems": true,
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "status": {
+                        "type": "number",
+                        "description": "HTTP Status Code reflecting the result of creating this specific override, e.g. 201 for success, 400 for invalid parameters."
+                      },
+                      "errors": {
+                        "type": "array",
+                        "description": "If present, an array of strings representing human-readable explanations for errors found.",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "override": {
+                        "$ref": "#/components/schemas/Override"
+                      }
+                    },
+                    "required": [
+                      "override"
+                    ]
+                  }
                 },
                 "examples": {
                   "response": {
                     "summary": "Response Example",
-                    "value": {
-                      "override": {
-                        "id": "PQ47DCP",
-                        "start": "2012-07-01T00:00:00-04:00",
-                        "end": "2012-07-02T00:00:00-04:00",
-                        "user": {
-                          "id": "PEYSGVF",
-                          "type": "user_reference",
-                          "summary": "Aurelio Rice",
-                          "self": "https://api.pagerduty.com/users/PEYSGVF",
-                          "html_url": "https://subdomain.pagerduty.com/users/PEYSGVF"
+                    "value": [
+                      {
+                        "status": 201,
+                        "override": {
+                          "start": "2021-03-09T05:00:00Z",
+                          "end": "2021-03-09T17:00:00Z",
+                          "user": {
+                            "id": "P37CSDJ",
+                            "type": "user_reference",
+                            "summary": "Scott",
+                            "self": "https://api.pd-staging.com/users/P37CSDJ",
+                            "html_url": "https://pdt-braythwayt.pd-staging.com/users/P37CSDJ"
+                          },
+                          "id": "Q3X6MJ1LUKD6QW"
+                        }
+                      },
+                      {
+                        "status": 201,
+                        "override": {
+                          "start": "2021-03-10T05:00:00Z",
+                          "end": "2021-03-10T17:00:00Z",
+                          "user": {
+                            "id": "P37CSDJ",
+                            "type": "user_reference",
+                            "summary": "Scott",
+                            "self": "https://api.pd-staging.com/users/P37CSDJ",
+                            "html_url": "https://pdt-braythwayt.pd-staging.com/users/P37CSDJ"
+                          },
+                          "id": "Q37A85CJZP1DTT"
+                        }
+                      },
+                      {
+                        "status": 400,
+                        "errors": [
+                          "Override must end after its start"
+                        ],
+                        "override": {
+                          "start": "2021-03-11T05:00:00Z",
+                          "end": "2021-03-11T05:00:00Z",
+                          "user": {
+                            "id": "P37CSDJ",
+                            "type": "user_reference",
+                            "summary": "Scott",
+                            "self": "https://api.pd-staging.com/users/P37CSDJ",
+                            "html_url": "https://pdt-braythwayt.pd-staging.com/users/P37CSDJ"
+                          }
                         }
                       }
-                    }
+                    ]
                   }
                 }
               }

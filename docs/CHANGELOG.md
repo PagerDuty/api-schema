@@ -2,15 +2,19 @@
 
 PagerDuty aims to have no breaking changes to our API, we do fix bugs and add new functionality continously. This document serves as a reference for any bug fixes or additions to our API.
 
-Currently we do not deprecate or remove any API functionality.
+Currently we rarely deprecate, and do not remove any API functionality.
 
 ----
+
+### 2021-04-01
+- Added bulk overrides functionality to `PUT /schedules/{id}/overrides`. This deprecates the original single-override request/response schema and semantics. We will continue to support unmanaged clients using the deprecated schema and semantics.
 
 ### 2021-03-30
 - Fix assignee response format for AssignLogEntry and EscalateLogEntry
 
 ### 2021-03-24
 - Added documentation on setting filters and parsers for generic email inbound integrations
+
 
 ### 2021-02-24
 - Removed Early Access for User Subscription endpoints. `usms-early-access`
