@@ -1541,6 +1541,16 @@
         "description": "This header indicates that this API endpoint is __UNDER CONSTRUCTION__ and may change at any time. You __MUST__ pass in this header with the value `status-dashboards`. Do not use this endpoint in production, as it may change!",
         "required": true
       },
+      "early_access_related_change_events": {
+        "schema": {
+          "type": "string",
+          "default": "related-change-events-early-access"
+        },
+        "in": "header",
+        "name": "X-EARLY-ACCESS",
+        "description": "This header indicates that this API endpoint is __UNDER CONSTRUCTION__ and may change at any time. You __MUST__ pass in this header with the value `related-change-events-early-access`. Do not use this endpoint in production, as it may change!",
+        "required": true
+      },
       "webhooks_early-access": {
         "name": "X-EARLY-ACCESS",
         "in": "header",
@@ -16100,6 +16110,165 @@
           }
         ],
         "description": "Past Incidents returns resolved Incidents within the past 6 months that have similar metadata and were generated on the same Service as the parent Incident. By default, 5 Past Incidents are returned.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#past_incidents)\n"
+      }
+    },
+    "/incidents/{id}/related_change_events": {
+      "description": "List change events related to an incident.",
+      "get": {
+        "tags": [
+          "Change Events"
+        ],
+        "operationId": "listIncidentRelatedChangeEvents",
+        "description": "List related Change Events for an Incident.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
+        "summary": "List related Change Events for an Incident",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/offset_limit"
+          },
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_related_change_events"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The array of Change Events returned by the query.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "change_events": {
+                      "type": "array",
+                      "items": {
+                        "allOf": [
+                          {
+                            "$ref": "#/components/schemas/ChangeEvent"
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "correlation_reason": {
+                                "type": "object",
+                                "properties": {
+                                  "reason": {
+                                    "type": "string",
+                                    "enum": [
+                                      "most_recent",
+                                      "related_service",
+                                      "intelligent"
+                                    ],
+                                    "readOnly": true,
+                                    "description": "The reason a change event was determined to be related to the given incident."
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "change_events": [
+                        {
+                          "summary": "Build Success - Increase snapshot create timeout to 30 seconds",
+                          "id": "01BBYA6PEVW6A852BUO6QYUE7O",
+                          "timestamp": "2020-07-17T08:42:58Z",
+                          "type": "change_event",
+                          "source": "acme-build-pipeline-tool-default-i-9999",
+                          "integration": {
+                            "id": "PEYSGVF",
+                            "type": "inbound_integration_reference"
+                          },
+                          "services": [
+                            {
+                              "id": "PEYSGRV",
+                              "type": "service_reference"
+                            }
+                          ],
+                          "custom_details": {
+                            "build_state": "passed",
+                            "build_number": "2",
+                            "run_time": "1236s"
+                          },
+                          "links": [
+                            {
+                              "href": "https://acme.pagerduty.dev/build/2",
+                              "text": "View more details in Acme!"
+                            }
+                          ],
+                          "correlation_reason": {
+                            "reason": "most_recent"
+                          }
+                        },
+                        {
+                          "summary": "Build Success - Increase snapshot create timeout to 15 seconds",
+                          "id": "01BBYA6PDIXPL8KO1HPIUL9CZN",
+                          "timestamp": "2020-07-17T07:42:58Z",
+                          "type": "change_event",
+                          "source": "acme-build-pipeline-tool-default-i-9999",
+                          "integration": {
+                            "id": "PEYSGVF",
+                            "type": "inbound_integration_reference"
+                          },
+                          "services": [
+                            {
+                              "id": "PEYSGRV",
+                              "type": "service_reference"
+                            }
+                          ],
+                          "custom_details": {
+                            "build_state": "passed",
+                            "build_number": "1",
+                            "run_time": "1233s"
+                          },
+                          "links": [
+                            {
+                              "href": "https://acme.pagerduty.dev/build/1",
+                              "text": "View more details in Acme!"
+                            }
+                          ],
+                          "correlation_reason": {
+                            "reason": "related_service"
+                          }
+                        }
+                      ],
+                      "limit": null,
+                      "offset": null,
+                      "total": null,
+                      "more": false
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
       }
     },
     "/incidents/{id}/related_incidents": {

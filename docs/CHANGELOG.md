@@ -6,6 +6,10 @@ Currently we rarely deprecate, and do not remove any API functionality.
 
 ----
 
+### 2021-04-12
+- Added Early-Access endpoint for Related Change Events
+  - `GET /incidents/{id}/related_change_events`
+
 ### 2021-04-01
 - Added bulk overrides functionality to `PUT /schedules/{id}/overrides`. This deprecates the original single-override request/response schema and semantics. We will continue to support unmanaged clients using the deprecated schema and semantics.
 
