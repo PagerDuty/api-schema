@@ -1732,7 +1732,8 @@
             "enum": [
               "contact_methods",
               "notification_rules",
-              "teams"
+              "teams",
+              "subdomains"
             ]
           },
           "uniqueItems": true

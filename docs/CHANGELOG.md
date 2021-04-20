@@ -7,6 +7,10 @@ Currently we rarely deprecate, and do not remove any API functionality.
 ----
 
 ### 2021-04-12
+- Added subdomain as part of includes
+  - `GET /users/me`
+
+### 2021-04-12
 - Added Early-Access endpoint for Related Change Events
   - `GET /incidents/{id}/related_change_events`
 
