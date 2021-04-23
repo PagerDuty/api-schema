@@ -1242,7 +1242,8 @@
               "type": "service_reference"
             },
             "id": "PY1OL64",
-            "type": "webhook_subscription"
+            "type": "webhook_subscription",
+            "active": true
           }
         }
       },
@@ -1276,7 +1277,8 @@
                 "type": "service_reference"
               },
               "id": "PY1OL64",
-              "type": "webhook_subscription"
+              "type": "webhook_subscription",
+              "active": true
             }
           ],
           "limit": 25,
@@ -7732,6 +7734,11 @@
               "webhook_subscription"
             ]
           },
+          "active": {
+            "type": "boolean",
+            "default": true,
+            "description": "Determines whether this subscription will produce webhook events."
+          },
           "delivery_method": {
             "type": "object",
             "properties": {
@@ -7846,6 +7853,10 @@
                     ]
                   }
                 }
+              },
+              "active": {
+                "type": "boolean",
+                "description": "If true, a webhook will be sent. True is the default state. If false, a webhook will not be sent."
               }
             }
           }

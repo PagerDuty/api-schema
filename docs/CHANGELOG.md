@@ -5,6 +5,8 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 Currently we rarely deprecate, and do not remove any API functionality.
 
 ----
+### 2021-04-22
+- Added documentation on the new acive field for webhook_subscriptions.
 
 ### 2021-04-12
 - Added subdomain as part of includes
