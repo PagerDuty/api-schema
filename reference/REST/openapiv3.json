@@ -1551,19 +1551,6 @@
         "description": "This header indicates that this API endpoint is __UNDER CONSTRUCTION__ and may change at any time. You __MUST__ pass in this header with the value `related-change-events-early-access`. Do not use this endpoint in production, as it may change!",
         "required": true
       },
-      "webhooks_early-access": {
-        "name": "X-EARLY-ACCESS",
-        "in": "header",
-        "description": "This endpoint's interface is under development and subject to change. Do not use it in production systems.\nYour request must set an X-EARLY-ACCESS header with value `webhooks-v3` to acknowledge this.\n",
-        "schema": {
-          "type": "string",
-          "default": "webhooks-v3",
-          "enum": [
-            "webhooks-v3"
-          ]
-        },
-        "required": true
-      },
       "webhooks_filter_type": {
         "name": "filter_type",
         "in": "query",
@@ -28964,11 +28951,8 @@
         ],
         "operationId": "listWebhookSubscriptions",
         "summary": "List webhook subscriptions",
-        "description": "List existing webhook subscriptions.\n\nThe `filter_type` and `filter_id` query parameters may be used to only show subscriptions\nfor a particular _service_ or _team_.\n\nFor more information on webhook subscriptions and how they are used to configure v3 webhooks\nsee the [Webhooks v3 Developer Documentation](https://developer.pagerduty.com/docs/webhooks/v3-overview/).\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint's interface is under development and subject to change. Do not use it in production systems.\n> Your request must set an X-EARLY-ACCESS header with value `webhooks-v3` to acknowledge this.\n",
+        "description": "List existing webhook subscriptions.\n\nThe `filter_type` and `filter_id` query parameters may be used to only show subscriptions\nfor a particular _service_ or _team_.\n\nFor more information on webhook subscriptions and how they are used to configure v3 webhooks\nsee the [Webhooks v3 Developer Documentation](https://developer.pagerduty.com/docs/webhooks/v3-overview/).\n",
         "parameters": [
-          {
-            "$ref": "#/components/parameters/webhooks_early-access"
-          },
           {
             "$ref": "#/components/parameters/header_Accept"
           },
@@ -29039,11 +29023,8 @@
         ],
         "operationId": "createWebhookSubscription",
         "summary": "Create a webhook subscription",
-        "description": "Creates a new webhook subscription.\n\nFor more information on webhook subscriptions and how they are used to configure v3 webhooks\nsee the [Webhooks v3 Developer Documentation](https://developer.pagerduty.com/docs/webhooks/v3-overview/).\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint's interface is under development and subject to change. Do not use it in production systems.\n> Your request must set an X-EARLY-ACCESS header with value `webhooks-v3` to acknowledge this.\n",
+        "description": "Creates a new webhook subscription.\n\nFor more information on webhook subscriptions and how they are used to configure v3 webhooks\nsee the [Webhooks v3 Developer Documentation](https://developer.pagerduty.com/docs/webhooks/v3-overview/).\n",
         "parameters": [
-          {
-            "$ref": "#/components/parameters/webhooks_early-access"
-          },
           {
             "$ref": "#/components/parameters/header_Accept"
           },
@@ -29116,11 +29097,8 @@
         ],
         "operationId": "getWebhookSubscription",
         "summary": "Get a webhook subscription",
-        "description": "Gets details about an existing webhook subscription.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint's interface is under development and subject to change. Do not use it in production systems.\n> Your request must set an X-EARLY-ACCESS header with value `webhooks-v3` to acknowledge this.\n",
+        "description": "Gets details about an existing webhook subscription.\n",
         "parameters": [
-          {
-            "$ref": "#/components/parameters/webhooks_early-access"
-          },
           {
             "$ref": "#/components/parameters/header_Accept"
           },
@@ -29172,11 +29150,8 @@
         ],
         "operationId": "updateWebhookSubscription",
         "summary": "Update a webhook subscription",
-        "description": "Updates an existing webhook subscription.\n\nOnly the fields being updated need to be included on the request.  This operation does not\nsupport updating the `delivery_method` of the webhook subscription.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint's interface is under development and subject to change. Do not use it in production systems.\n> Your request must set an X-EARLY-ACCESS header with value `webhooks-v3` to acknowledge this.\n",
+        "description": "Updates an existing webhook subscription.\n\nOnly the fields being updated need to be included on the request.  This operation does not\nsupport updating the `delivery_method` of the webhook subscription.\n",
         "parameters": [
-          {
-            "$ref": "#/components/parameters/webhooks_early-access"
-          },
           {
             "$ref": "#/components/parameters/header_Accept"
           },
@@ -29245,11 +29220,8 @@
         ],
         "operationId": "deleteWebhookSubscription",
         "summary": "Delete a webhook subscription",
-        "description": "Deletes a webhook subscription.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint's interface is under development and subject to change. Do not use it in production systems.\n> Your request must set an X-EARLY-ACCESS header with value `webhooks-v3` to acknowledge this.\n",
+        "description": "Deletes a webhook subscription.\n",
         "parameters": [
-          {
-            "$ref": "#/components/parameters/webhooks_early-access"
-          },
           {
             "$ref": "#/components/parameters/header_Accept"
           },
@@ -29283,11 +29255,8 @@
         ],
         "operationId": "enableWebhookSubscription",
         "summary": "Enable a webhook subscription",
-        "description": "Enable a webhook subscription that is temporarily disabled. (This API does not require a request body.)\n\nWebhook subscriptions can become temporarily disabled when the subscription's delivery method is repeatedly rejected by the server.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint's interface is under development and subject to change. Do not use it in production systems.\n> Your request must set an X-EARLY-ACCESS header with value `webhooks-v3` to acknowledge this.\n",
+        "description": "Enable a webhook subscription that is temporarily disabled. (This API does not require a request body.)\n\nWebhook subscriptions can become temporarily disabled when the subscription's delivery method is repeatedly rejected by the server.\n",
         "parameters": [
-          {
-            "$ref": "#/components/parameters/webhooks_early-access"
-          },
           {
             "$ref": "#/components/parameters/header_Accept"
           },
@@ -29338,11 +29307,8 @@
         ],
         "operationId": "testWebhookSubscription",
         "summary": "Test a webhook subscription",
-        "description": "Test a webhook subscription.\n\nFires a test event against the webhook subscription.  If properly configured,\nthis will deliver the `pagey.ping` webhook event to the destination.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint's interface is under development and subject to change. Do not use it in production systems.\n> Your request must set an X-EARLY-ACCESS header with value `webhooks-v3` to acknowledge this.\n",
+        "description": "Test a webhook subscription.\n\nFires a test event against the webhook subscription.  If properly configured,\nthis will deliver the `pagey.ping` webhook event to the destination.\n",
         "parameters": [
-          {
-            "$ref": "#/components/parameters/webhooks_early-access"
-          },
           {
             "$ref": "#/components/parameters/header_Accept"
           },
