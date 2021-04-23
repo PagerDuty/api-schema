@@ -5,6 +5,8 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 Currently we rarely deprecate, and do not remove any API functionality.
 
 ----
+### 2021-04-22
+- Added documentation on the new acive field for webhook_subscriptions.
 
 ### 2021-04-12
 - Added subdomain as part of includes
@@ -341,3 +343,6 @@ Currently we rarely deprecate, and do not remove any API functionality.
    - The field allow users to set whether they would like on-call handoff notifications for escalation policies that have no attached services.
    - The field has been added to all `/escalation_policies` endpoints' request and response schema.
    - The field has two options `always` and `if_has_services`, and defaults to `if_has_services` on `PUT` and `POST`
+
+### 2021-04-23
+- Removed Early Access for webhook-v3. `webhooks_early-access`
