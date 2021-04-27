@@ -8,6 +8,10 @@ Currently we rarely deprecate, and do not remove any API functionality.
 ### 2021-04-22
 - Added documentation on the new acive field for webhook_subscriptions.
 
+### 2021-04-20
+- Added includes to list schedules endpoint with an example
+  - `GET /schedules`
+
 ### 2021-04-12
 - Added subdomain as part of includes
   - `GET /users/me`
