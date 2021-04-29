@@ -18475,7 +18475,7 @@
           "Response Plays"
         ],
         "operationId": "listResponsePlays",
-        "description": "List all of the existing Response Plays.\n\nResponse Plays allow you to create packages of Incident Actions that can be applied during an Incident's life cycle.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#response-plays)\n",
+        "description": "List all of the existing Response Plays.\n\nResponse Plays allow you to create packages of Incident Actions that can be applied during an Incident's life cycle.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#response-plays)\n\nWhen using a Global API token, the `From` header is required.\n",
         "summary": "List Response Plays",
         "parameters": [
           {
@@ -18489,6 +18489,9 @@
           },
           {
             "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/optional_from_header"
           }
         ],
         "responses": {
@@ -18710,7 +18713,7 @@
           "Response Plays"
         ],
         "operationId": "getResponsePlay",
-        "description": "Get details about an existing Response Play.\n\nResponse Plays allow you to create packages of Incident Actions that can be applied during an Incident's life cycle.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#response-plays)\n",
+        "description": "Get details about an existing Response Play.\n\nResponse Plays allow you to create packages of Incident Actions that can be applied during an Incident's life cycle.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#response-plays)\n\nWhen using a Global API token, the `From` header is required.",
         "summary": "Get a Response Play",
         "parameters": [
           {
@@ -18721,6 +18724,9 @@
           },
           {
             "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/optional_from_header"
           }
         ],
         "responses": {
