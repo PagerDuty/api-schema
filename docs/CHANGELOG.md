@@ -5,6 +5,11 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 Currently we rarely deprecate, and do not remove any API functionality.
 
 ----
+### 2021-04-28
+- Fix missing From header requirement on response play endpoints.
+  - `GET /response_plays`
+  - `GET /response_plays/{id}`
+
 ### 2021-04-22
 - Added documentation on the new acive field for webhook_subscriptions.
 
