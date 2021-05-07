@@ -1,1 +1,877 @@
-{}
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "PagerDuty Slack Integration API",
+    "version": "1.0.0",
+    "contact": {
+      "name": "PagerDuty Support",
+      "url": "http://www.pagerduty.com/support",
+      "email": "support@pagerduty.com"
+    },
+    "description": "This is API documentation for PagerDuty's integration with Slack. \n\nTo begin the integration, you will need to map your PagerDuty account to your Slack Workspace.\nAfter configuring an Extension on each Service, Incident notifications will be posted in the configured Slack channel.\n\nAdditional integration documentation can be found here: https://support.pagerduty.com/docs/slack-integration-guide.\n\n> ### Important\n>\n>  Ensure you are using a User API Token to make requests to this API. Also, check that your user has necessary\n>  permissions (Owner or Global Admin). See https://developer.pagerduty.com/docs/rest-api-v2/authentication/ for the\n>  details."
+  },
+  "servers": [
+    {
+      "url": "https://app.pagerduty.com/integration-slack"
+    }
+  ],
+  "tags": [
+    {
+      "name": "SlackConnections",
+      "description": "Slack Connections are used to create mappings between Slack channels and PagerDuty Services and Teams."
+    }
+  ],
+  "paths": {
+    "/workspaces/{slack_team_id}/connections": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/slack_team_id"
+        }
+      ],
+      "get": {
+        "tags": [
+          "SlackConnections"
+        ],
+        "summary": "List Slack Connections",
+        "description": "Returns a list of Slack Connections.",
+        "operationId": "getConnections",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/slack_team_id"
+          },
+          {
+            "$ref": "#/components/parameters/limit"
+          },
+          {
+            "$ref": "#/components/parameters/offset"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A set of Slack Connections matching the request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "slack_connections": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/SlackConnection"
+                          }
+                        }
+                      },
+                      "required": [
+                        "slack_connections"
+                      ]
+                    },
+                    {
+                      "$ref": "#/components/schemas/Pagination"
+                    }
+                  ]
+                },
+                "examples": {
+                  "Response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "slack_connections": [
+                        {
+                          "id": "A12BCDE",
+                          "source_id": "A1234B5",
+                          "source_name": "test_team",
+                          "source_type": "team_reference",
+                          "channel_id": "A123B456C7D",
+                          "channel_name": "random",
+                          "config": {
+                            "events": [
+                              "incident.triggered",
+                              "incident.acknowledged",
+                              "incident.escalated",
+                              "incident.resolved",
+                              "incident.reassigned",
+                              "incident.annotated",
+                              "incident.unacknowledged",
+                              "incident.delegated",
+                              "incident.priority_updated",
+                              "incident.responder.added",
+                              "incident.responder.replied"
+                            ]
+                          },
+                          "priorities": [
+                            "ABCDEF1",
+                            "AB1CDE2"
+                          ],
+                          "urgency": null
+                        }
+                      ],
+                      "limit": 1,
+                      "offset": 0,
+                      "more": true,
+                      "total": 99
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "SlackConnections"
+        ],
+        "summary": "Create a Slack Connection",
+        "description": "Creates a Slack Connection\n\n> ### Important\n>\n>  Make sure that your PagerDuty account is linked to your Slack workspace and your PagerDuty user is linked to your Slack user. You can do this on the Slack extension page in your PagerDuty account.\n",
+        "operationId": "createConnection",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/slack_team_id"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "slack_connection": {
+                    "$ref": "#/components/schemas/SlackConnection"
+                  }
+                },
+                "required": [
+                  "slack_connection"
+                ]
+              },
+              "examples": {
+                "Request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "slack_connection": {
+                      "source_id": "A1234B5",
+                      "source_type": "team_reference",
+                      "channel_id": "A123B456C7D",
+                      "config": {
+                        "events": [
+                          "incident.triggered",
+                          "incident.acknowledged",
+                          "incident.escalated",
+                          "incident.resolved",
+                          "incident.reassigned",
+                          "incident.annotated",
+                          "incident.unacknowledged",
+                          "incident.delegated",
+                          "incident.priority_updated",
+                          "incident.responder.added",
+                          "incident.responder.replied"
+                        ]
+                      },
+                      "priorities": [
+                        "ABCDEF1",
+                        "AB1CDE2"
+                      ],
+                      "urgency": null
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Returns created Slack Connection.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "slack_connection": {
+                      "$ref": "#/components/schemas/SlackConnection"
+                    }
+                  },
+                  "required": [
+                    "slack_connection"
+                  ]
+                },
+                "examples": {
+                  "Response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "slack_connection": {
+                        "id": "A12BCDE",
+                        "source_id": "A1234B5",
+                        "source_name": "test_team",
+                        "source_type": "team_reference",
+                        "channel_id": "A123B456C7D",
+                        "channel_name": "random",
+                        "config": {
+                          "events": [
+                            "incident.triggered",
+                            "incident.acknowledged",
+                            "incident.escalated",
+                            "incident.resolved",
+                            "incident.reassigned",
+                            "incident.annotated",
+                            "incident.unacknowledged",
+                            "incident.delegated",
+                            "incident.priority_updated",
+                            "incident.responder.added",
+                            "incident.responder.replied"
+                          ]
+                        },
+                        "priorities": [
+                          "ABCDEF1",
+                          "AB1CDE2"
+                        ],
+                        "urgency": null
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/workspaces/{slack_team_id}/connections/{connection_id}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/slack_team_id"
+        },
+        {
+          "$ref": "#/components/parameters/connection_id"
+        }
+      ],
+      "get": {
+        "summary": "Get a Slack Connection",
+        "operationId": "getConnection",
+        "description": "Get details about an existing Slack Connection.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/slack_team_id"
+          },
+          {
+            "$ref": "#/components/parameters/connection_id"
+          }
+        ],
+        "tags": [
+          "SlackConnections"
+        ],
+        "responses": {
+          "200": {
+            "description": "The Slack Connection requested.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "slack_connection": {
+                      "$ref": "#/components/schemas/SlackConnection"
+                    }
+                  },
+                  "required": [
+                    "slack_connection"
+                  ]
+                },
+                "examples": {
+                  "Response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "slack_connection": {
+                        "id": "A12BCDE",
+                        "source_id": "A1234B5",
+                        "source_name": "test_service",
+                        "source_type": "service_reference",
+                        "channel_id": "A123B456C7D",
+                        "channel_name": "random",
+                        "config": {
+                          "events": [
+                            "incident.triggered",
+                            "incident.acknowledged",
+                            "incident.escalated",
+                            "incident.resolved",
+                            "incident.reassigned",
+                            "incident.annotated",
+                            "incident.unacknowledged",
+                            "incident.delegated",
+                            "incident.priority_updated",
+                            "incident.responder.added",
+                            "incident.responder.replied"
+                          ]
+                        },
+                        "priorities": [
+                          "ABCDEF1",
+                          "AB1CDE2"
+                        ],
+                        "urgency": null
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "SlackConnections"
+        ],
+        "summary": "Update a Slack Connection",
+        "description": "Update an existing Slack Connection.",
+        "operationId": "updateConnection",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/slack_team_id"
+          },
+          {
+            "$ref": "#/components/parameters/connection_id"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "slack_connection": {
+                    "$ref": "#/components/schemas/SlackConnection"
+                  }
+                },
+                "required": [
+                  "slack_connection"
+                ]
+              },
+              "examples": {
+                "Request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "slack_connection": {
+                      "source_id": "A1234B5",
+                      "source_type": "team_reference",
+                      "channel_id": "A123B456C7D",
+                      "config": {
+                        "events": [
+                          "incident.triggered",
+                          "incident.acknowledged",
+                          "incident.escalated",
+                          "incident.resolved",
+                          "incident.reassigned",
+                          "incident.annotated",
+                          "incident.unacknowledged",
+                          "incident.delegated",
+                          "incident.priority_updated",
+                          "incident.responder.added",
+                          "incident.responder.replied"
+                        ]
+                      },
+                      "priorities": [
+                        "ABCDEF1",
+                        "AB1CDE2"
+                      ],
+                      "urgency": null
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns updated Slack Connection.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "slack_connection": {
+                      "$ref": "#/components/schemas/SlackConnection"
+                    }
+                  },
+                  "required": [
+                    "slack_connection"
+                  ]
+                },
+                "examples": {
+                  "Response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "slack_connection": {
+                        "id": "A12BCDE",
+                        "source_id": "A1234B5",
+                        "source_name": "test_team",
+                        "source_type": "team_reference",
+                        "channel_id": "A123B456C7D",
+                        "channel_name": "random",
+                        "config": {
+                          "events": [
+                            "incident.triggered",
+                            "incident.acknowledged",
+                            "incident.escalated",
+                            "incident.resolved",
+                            "incident.reassigned",
+                            "incident.annotated",
+                            "incident.unacknowledged",
+                            "incident.delegated",
+                            "incident.priority_updated",
+                            "incident.responder.added",
+                            "incident.responder.replied"
+                          ]
+                        },
+                        "priorities": [
+                          "ABCDEF1",
+                          "AB1CDE2"
+                        ],
+                        "urgency": null
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "SlackConnections"
+        ],
+        "summary": "Delete a Slack Connection",
+        "description": "Delete an existing Slack Connection.",
+        "operationId": "deleteConnection",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/slack_team_id"
+          },
+          {
+            "$ref": "#/components/parameters/connection_id"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The Slack Connection was deleted successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "slack_connection": {
+                      "$ref": "#/components/schemas/SlackConnection"
+                    }
+                  },
+                  "required": [
+                    "slack_connection"
+                  ]
+                },
+                "examples": {
+                  "Response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "slack_connection": {
+                        "id": "A12BCDE",
+                        "source_id": "A1234B5",
+                        "source_name": "test_team",
+                        "source_type": "team_reference",
+                        "channel_id": "A123B456C7D",
+                        "channel_name": "random",
+                        "config": {
+                          "events": [
+                            "incident.triggered",
+                            "incident.acknowledged",
+                            "incident.escalated",
+                            "incident.resolved",
+                            "incident.reassigned",
+                            "incident.annotated",
+                            "incident.unacknowledged",
+                            "incident.delegated",
+                            "incident.priority_updated",
+                            "incident.responder.added",
+                            "incident.responder.replied"
+                          ]
+                        },
+                        "priorities": [
+                          "ABCDEF1",
+                          "AB1CDE2"
+                        ],
+                        "urgency": null
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "responses": {
+      "BadRequest": {
+        "description": "Caller provided invalid arguments. Please review the response for error details. Retrying with the same arguments will *not* work.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "examples": {
+              "InvalidInputProvided": {
+                "summary": "Invalid channel_id provided",
+                "value": {
+                  "error": {
+                    "message": "Unable to update a Slack Connection: Slack channel name fetch failed"
+                  }
+                }
+              },
+              "ValidationError": {
+                "summary": "Validation Error",
+                "value": {
+                  "error": {
+                    "errors": [
+                      "Name can't be blank"
+                    ],
+                    "message": "Invalid Input Provided"
+                  }
+                }
+              },
+              "MalformedJson": {
+                "summary": "Malformed JSON",
+                "value": {
+                  "error": {
+                    "message": "Malformed JSON"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "Forbidden": {
+        "description": "Caller is not authorized to view the requested resource.\nWhile your authentication is valid, the authenticated user or token does not have permission to perform this action.\n",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "examples": {
+              "AuthorizationError": {
+                "summary": "Forbidden",
+                "value": {
+                  "error": {
+                    "message": "Forbidden"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "Unauthorized": {
+        "description": "Caller did not supply credentials or did not provide the correct credentials.\nIf you are using an API key, it may be invalid or your Authorization header may be malformed.\n",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "examples": {
+              "AuthorizationError": {
+                "summary": "Unauthorized",
+                "value": {
+                  "error": {
+                    "message": "Unauthorized"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "NotFound": {
+        "description": "The requested resource was not found.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "examples": {
+              "NotFound": {
+                "summary": "Not Found",
+                "value": {
+                  "error": {
+                    "message": "Not Found"
+                  }
+                }
+              },
+              "InvalidWorkspace": {
+                "summary": "Invalid Workspace",
+                "value": {
+                  "error": {
+                    "message": "The PagerDuty has not been connected to this workspace. Please complete the installation and try again."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "SlackConnection": {
+        "title": "SlackConnection",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "source_id": {
+            "type": "string"
+          },
+          "source_name": {
+            "type": "string"
+          },
+          "source_type": {
+            "$ref": "#/components/schemas/SlackConnectionSourceType"
+          },
+          "channel_id": {
+            "type": "string"
+          },
+          "channel_name": {
+            "type": "string"
+          },
+          "config": {
+            "$ref": "#/components/schemas/SlackConnectionConfigType"
+          }
+        }
+      },
+      "SlackConnectionSourceType": {
+        "title": "ConnectionSourceType",
+        "description": "Configuration item of the Slack connection that indicates what PagerDuty source would be used for the connection (can be Service or Team).",
+        "type": "string",
+        "enum": [
+          "service_reference",
+          "team_reference"
+        ]
+      },
+      "SlackConnectionConfigType": {
+        "title": "Config",
+        "description": "Item of the Slack connection that contains configuration options (filters).",
+        "type": "object",
+        "properties": {
+          "events": {
+            "$ref": "#/components/schemas/SlackConnectionEventType"
+          },
+          "urgency": {
+            "$ref": "#/components/schemas/SlackConnectionUrgencyType"
+          },
+          "priorities": {
+            "$ref": "#/components/schemas/SlackConnectionPriorityType"
+          }
+        }
+      },
+      "SlackConnectionUrgencyType": {
+        "title": "ConnectionUrgencyType",
+        "description": "Configuration item of the Slack connection allows you to filter events by urgency.",
+        "type": "string",
+        "nullable": true,
+        "enum": [
+          "high",
+          "low",
+          null
+        ]
+      },
+      "SlackConnectionEventType": {
+        "title": "ConnectionEventType",
+        "description": "Configuration item of the Slack connection allows you to subscribe to different type of events.",
+        "type": "array",
+        "items": {
+          "type": "string",
+          "enum": [
+            "incident.acknowledged",
+            "incident.annotated",
+            "incident.delegated",
+            "incident.escalated",
+            "incident.priority_updated",
+            "incident.reassigned",
+            "incident.resolved",
+            "incident.triggered",
+            "incident.unacknowledged",
+            "incident.responder.added",
+            "incident.responder.replied"
+          ]
+        }
+      },
+      "SlackConnectionPriorityType": {
+        "title": "ConnectionPriorityType",
+        "description": "Configuration item of the Slack connection allows you to filter events by priorities.",
+        "nullable": true,
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string",
+                "readOnly": true,
+                "description": "Error message string.",
+                "example": "Invalid Input Provided"
+              }
+            },
+            "required": [
+              "message"
+            ]
+          }
+        },
+        "required": [
+          "error"
+        ]
+      },
+      "Pagination": {
+        "type": "object",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "description": "Echoes offset pagination property.",
+            "readOnly": true,
+            "default": 0
+          },
+          "limit": {
+            "type": "integer",
+            "description": "Echoes limit pagination property.",
+            "readOnly": true,
+            "minimum": 0,
+            "maximum": 100,
+            "default": 50
+          },
+          "more": {
+            "type": "boolean",
+            "description": "Indicates if there are additional records to return.",
+            "readOnly": true,
+            "default": false
+          },
+          "total": {
+            "type": "integer",
+            "description": "The total number of records matching the given query.",
+            "nullable": false,
+            "readOnly": true,
+            "default": null
+          }
+        },
+        "required": [
+          "offset",
+          "limit",
+          "more",
+          "total"
+        ]
+      }
+    },
+    "securitySchemes": {
+      "user-access-token": {
+        "name": "User account API Key",
+        "type": "apiKey",
+        "in": "header"
+      }
+    },
+    "parameters": {
+      "connection_id": {
+        "name": "connection_id",
+        "description": "Slack connection id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "slack_team_id": {
+        "name": "slack_team_id",
+        "description": "Slack team (workspace) id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "limit": {
+        "name": "limit",
+        "in": "query",
+        "description": "Set the maximum number of results matched by the query.",
+        "schema": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100,
+          "default": 50
+        }
+      },
+      "offset": {
+        "name": "offset",
+        "in": "query",
+        "description": "The number of items to skip before starting to collect the result set.",
+        "schema": {
+          "type": "integer",
+          "minimum": 0,
+          "default": 0
+        }
+      }
+    }
+  }
+}
