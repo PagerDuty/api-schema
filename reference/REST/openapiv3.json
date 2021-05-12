@@ -16123,7 +16123,7 @@
             "$ref": "#/components/parameters/past_incidents_total"
           }
         ],
-        "description": "Past Incidents returns resolved Incidents within the past 6 months that have similar metadata and were generated on the same Service as the parent Incident. By default, 5 Past Incidents are returned.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#past_incidents)\n"
+        "description": "Past Incidents returns Incidents within the past 6 months that have similar metadata and were generated on the same Service as the parent Incident. By default, 5 Past Incidents are returned. Note: This feature is currently available as part of the Event Intelligence package or Digital Operations plan only.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#past_incidents)\n"
       }
     },
     "/incidents/{id}/related_change_events": {
@@ -16292,7 +16292,7 @@
           "Incidents"
         ],
         "operationId": "getRelatedIncidents",
-        "description": "Returns the 20 most recent Related Incidents that are impacting other Responders and Services.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#related_incidents)\n",
+        "description": "Returns the 20 most recent Related Incidents that are impacting other Responders and Services. Note: This feature is currently available as part of the Event Intelligence package or Digital Operations plan only.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#related_incidents)\n",
         "summary": "Get Related Incidents",
         "parameters": [
           {
