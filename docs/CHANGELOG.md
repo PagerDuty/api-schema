@@ -5,8 +5,13 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 Currently we rarely deprecate, and do not remove any API functionality.
 
 ---
+### 2021-05-18
+- Fixed typos in Slack Integration API documentation
+- Added `incident.status_update_published` event to Slack Connection
+
 ### 2021-05-10
 - Wording changes for past incidents documentation
+
 ### 2021-05-06
 - Added new API endpoints that provide the ability to create Slack specific Webhook Subscriptions (Slack Connections). These endpoints are used to manage mappings between Slack channels and PagerDuty Services and Teams.
   - `GET /workspaces/{slack_team_id}/connections`

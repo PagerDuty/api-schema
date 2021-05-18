@@ -17,7 +17,7 @@
   ],
   "tags": [
     {
-      "name": "SlackConnections",
+      "name": "Slack Connections",
       "description": "Slack Connections are used to create mappings between Slack channels and PagerDuty Services and Teams."
     }
   ],
@@ -30,7 +30,7 @@
       ],
       "get": {
         "tags": [
-          "SlackConnections"
+          "Slack Connections"
         ],
         "summary": "List Slack Connections",
         "description": "Returns a list of Slack Connections.",
@@ -96,7 +96,8 @@
                               "incident.delegated",
                               "incident.priority_updated",
                               "incident.responder.added",
-                              "incident.responder.replied"
+                              "incident.responder.replied",
+                              "incident.status_update_published"
                             ]
                           },
                           "priorities": [
@@ -129,7 +130,7 @@
       },
       "post": {
         "tags": [
-          "SlackConnections"
+          "Slack Connections"
         ],
         "summary": "Create a Slack Connection",
         "description": "Creates a Slack Connection\n\n> ### Important\n>\n>  Make sure that your PagerDuty account is linked to your Slack workspace and your PagerDuty user is linked to your Slack user. You can do this on the Slack extension page in your PagerDuty account.\n",
@@ -173,7 +174,8 @@
                           "incident.delegated",
                           "incident.priority_updated",
                           "incident.responder.added",
-                          "incident.responder.replied"
+                          "incident.responder.replied",
+                          "incident.status_update_published"
                         ]
                       },
                       "priorities": [
@@ -227,7 +229,8 @@
                             "incident.delegated",
                             "incident.priority_updated",
                             "incident.responder.added",
-                            "incident.responder.replied"
+                            "incident.responder.replied",
+                            "incident.status_update_published"
                           ]
                         },
                         "priorities": [
@@ -279,7 +282,7 @@
           }
         ],
         "tags": [
-          "SlackConnections"
+          "Slack Connections"
         ],
         "responses": {
           "200": {
@@ -320,7 +323,8 @@
                             "incident.delegated",
                             "incident.priority_updated",
                             "incident.responder.added",
-                            "incident.responder.replied"
+                            "incident.responder.replied",
+                            "incident.status_update_published"
                           ]
                         },
                         "priorities": [
@@ -348,7 +352,7 @@
       },
       "put": {
         "tags": [
-          "SlackConnections"
+          "Slack Connections"
         ],
         "summary": "Update a Slack Connection",
         "description": "Update an existing Slack Connection.",
@@ -395,7 +399,8 @@
                           "incident.delegated",
                           "incident.priority_updated",
                           "incident.responder.added",
-                          "incident.responder.replied"
+                          "incident.responder.replied",
+                          "incident.status_update_published"
                         ]
                       },
                       "priorities": [
@@ -449,7 +454,8 @@
                             "incident.delegated",
                             "incident.priority_updated",
                             "incident.responder.added",
-                            "incident.responder.replied"
+                            "incident.responder.replied",
+                            "incident.status_update_published"
                           ]
                         },
                         "priorities": [
@@ -480,7 +486,7 @@
       },
       "delete": {
         "tags": [
-          "SlackConnections"
+          "Slack Connections"
         ],
         "summary": "Delete a Slack Connection",
         "description": "Delete an existing Slack Connection.",
@@ -532,7 +538,8 @@
                             "incident.delegated",
                             "incident.priority_updated",
                             "incident.responder.added",
-                            "incident.responder.replied"
+                            "incident.responder.replied",
+                            "incident.status_update_published"
                           ]
                         },
                         "priorities": [
@@ -672,7 +679,7 @@
     },
     "schemas": {
       "SlackConnection": {
-        "title": "SlackConnection",
+        "title": "Slack Connection",
         "type": "object",
         "properties": {
           "id": {
@@ -694,12 +701,12 @@
             "type": "string"
           },
           "config": {
-            "$ref": "#/components/schemas/SlackConnectionConfigType"
+            "$ref": "#/components/schemas/SlackConnectionConfig"
           }
         }
       },
       "SlackConnectionSourceType": {
-        "title": "ConnectionSourceType",
+        "title": "Slack Connection Source Type",
         "description": "Configuration item of the Slack connection that indicates what PagerDuty source would be used for the connection (can be Service or Team).",
         "type": "string",
         "enum": [
@@ -707,24 +714,24 @@
           "team_reference"
         ]
       },
-      "SlackConnectionConfigType": {
-        "title": "Config",
+      "SlackConnectionConfig": {
+        "title": "Slack Connection Config",
         "description": "Item of the Slack connection that contains configuration options (filters).",
         "type": "object",
         "properties": {
           "events": {
-            "$ref": "#/components/schemas/SlackConnectionEventType"
+            "$ref": "#/components/schemas/SlackConnectionEvents"
           },
           "urgency": {
-            "$ref": "#/components/schemas/SlackConnectionUrgencyType"
+            "$ref": "#/components/schemas/SlackConnectionUrgency"
           },
           "priorities": {
-            "$ref": "#/components/schemas/SlackConnectionPriorityType"
+            "$ref": "#/components/schemas/SlackConnectionPriorities"
           }
         }
       },
-      "SlackConnectionUrgencyType": {
-        "title": "ConnectionUrgencyType",
+      "SlackConnectionUrgency": {
+        "title": "Slack Connection Urgency",
         "description": "Configuration item of the Slack connection allows you to filter events by urgency.",
         "type": "string",
         "nullable": true,
@@ -734,8 +741,8 @@
           null
         ]
       },
-      "SlackConnectionEventType": {
-        "title": "ConnectionEventType",
+      "SlackConnectionEvents": {
+        "title": "Slack Connection Events",
         "description": "Configuration item of the Slack connection allows you to subscribe to different type of events.",
         "type": "array",
         "items": {
@@ -751,12 +758,13 @@
             "incident.triggered",
             "incident.unacknowledged",
             "incident.responder.added",
-            "incident.responder.replied"
+            "incident.responder.replied",
+            "incident.status_update_published"
           ]
         }
       },
-      "SlackConnectionPriorityType": {
-        "title": "ConnectionPriorityType",
+      "SlackConnectionPriorities": {
+        "title": "Slack Connection Priorities",
         "description": "Configuration item of the Slack connection allows you to filter events by priorities.",
         "nullable": true,
         "type": "array",
