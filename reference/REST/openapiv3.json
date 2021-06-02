@@ -10911,7 +10911,7 @@
         "operationId": "removeBusinessServiceAccountSubscription",
         "responses": {
           "204": {
-            "description": "The account was unsubscribed successfull."
+            "description": "The account was unsubscribed successfully."
           },
           "401": {
             "$ref": "#/components/responses/Unauthorized"
