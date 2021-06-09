@@ -5553,6 +5553,43 @@
               },
               "body": {
                 "$ref": "#/components/schemas/IncidentBody"
+              },
+              "occurrence": {
+                "type": "object",
+                "properties": {
+                  "count": {
+                    "type": "integer",
+                    "description": "The ID of the Service referenced.",
+                    "readOnly": true
+                  },
+                  "frequency": {
+                    "type": "number",
+                    "readOnly": true,
+                    "description": "The percentage that this kind of Incident has occurred on this Service over the given period of time."
+                  },
+                  "category": {
+                    "type": "string",
+                    "description": "The classifcation of the Outlier Incident. The values can be one of [\"novel\", \"rare\",  \"frequent\", \"other\"].\n\"novel\": It means this Incident hasn't occured.\n\"rare\": It means this Incident occurs with a low frequency.\n\"frequent\": It means this Incident occurs with a high frequency.\n\"other\": It means this Incident occurs with a medium frequency.\n",
+                    "enum": [
+                      "novel",
+                      "rare",
+                      "frequent",
+                      "other"
+                    ]
+                  },
+                  "since": {
+                    "type": "string",
+                    "format": "date-time",
+                    "readOnly": true,
+                    "description": "The start of the date/time range over which Outlier Incident was calculated."
+                  },
+                  "until": {
+                    "type": "string",
+                    "format": "date-time",
+                    "readOnly": true,
+                    "description": "The end of the date/time range over which Outlier Incident was calculated."
+                  }
+                }
               }
             }
           }
@@ -15985,6 +16022,119 @@
           },
           "429": {
             "$ref": "#/components/responses/TooManyRequests"
+          }
+        }
+      }
+    },
+    "/incidents/{id}/outlier_incident": {
+      "description": "Get Outlier Incident",
+      "get": {
+        "tags": [
+          "Incidents"
+        ],
+        "operationId": "getOutlierIncident",
+        "description": "Gets Outlier Incident information for a given Incident on its Service.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#related_incidents)\n",
+        "summary": "Get Outlier Incident",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/since"
+          },
+          {
+            "$ref": "#/components/parameters/additional_details"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Outlier Incident information calculated over the same Service as the given Incident.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "outlier_incident": {
+                      "type": "object",
+                      "description": "Outlier Incident information calculated over the same Service as the given Incident.",
+                      "properties": {
+                        "incident": {
+                          "$ref": "#/components/schemas/Incident"
+                        },
+                        "incident_template": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "readOnly": true
+                            },
+                            "cluster_id": {
+                              "type": "string",
+                              "readOnly": true,
+                              "description": "The cluster the Incident Template pattern belongs to"
+                            },
+                            "mined_text": {
+                              "type": "string",
+                              "readOnly": true,
+                              "description": "The Incident Template mined pattern text"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "outlier_incident": {
+                        "incident": {
+                          "id": "PR2P3RW",
+                          "created_at": "2020-11-18T13:08:14Z",
+                          "self": "https://api.pagerduty.com/incidents/PR2P3RW",
+                          "title": "[LINUX]Used disk space is more than 5 GB on volume /var/log : PROBLEM for ce51323",
+                          "occurrence": {
+                            "count": 10,
+                            "frequency": 0.04,
+                            "category": "rare",
+                            "since": "2020-09-23T13:08:14Z",
+                            "until": "2021-01-18T13:08:14Z"
+                          }
+                        },
+                        "incident_template": {
+                          "id": "PX3P1PX",
+                          "cluster_id": "P2B3X5",
+                          "mined_text": "[LINUX]Used disk space is more than <MEASUREMENT> on volume <*> : PROBLEM for <*>"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           }
         }
       }
