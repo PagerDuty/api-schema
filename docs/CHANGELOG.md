@@ -5,10 +5,6 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 Currently we rarely deprecate, and do not remove any API functionality.
 
 ---
-### 2021-06-09
-- Added new API endpoint that returns Outlier Incident information for a given incident on its Service.
-  - `GET /incidents/{incident_id}/outlier_incident`
-
 ### 2021-05-18
 - Fixed typos in Slack Integration API documentation
 - Added `incident.status_update_published` event to Slack Connection
