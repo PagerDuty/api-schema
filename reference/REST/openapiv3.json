@@ -1543,16 +1543,6 @@
         "description": "This header indicates that this API endpoint is __UNDER CONSTRUCTION__ and may change at any time. You __MUST__ pass in this header with the value `status-dashboards`. Do not use this endpoint in production, as it may change!",
         "required": true
       },
-      "early_access_related_change_events": {
-        "schema": {
-          "type": "string",
-          "default": "related-change-events-early-access"
-        },
-        "in": "header",
-        "name": "X-EARLY-ACCESS",
-        "description": "This header indicates that this API endpoint is __UNDER CONSTRUCTION__ and may change at any time. You __MUST__ pass in this header with the value `related-change-events-early-access`. Do not use this endpoint in production, as it may change!",
-        "required": true
-      },
       "webhooks_filter_type": {
         "name": "filter_type",
         "in": "query",
@@ -16283,7 +16273,7 @@
           "Change Events"
         ],
         "operationId": "listIncidentRelatedChangeEvents",
-        "description": "List related Change Events for an Incident.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
+        "description": "List related Change Events for an Incident, as well as the reason these changes are correlated with the incident.\n\nChange events represent service changes such as deploys, build completion, and configuration changes, providing information that is critical during incident triage or hypercare. For more information on change events, see [Change Events](https://support.pagerduty.com/docs/change-events).\n\nThe Change Correlation feature provides incident responders with recent change events that are most relevant to that incident. Change Correlation informs the responder why a particular change event was surfaced and correlated to an incident based on three key factors which include time, related service, or intelligence (machine learning).",
         "summary": "List related Change Events for an Incident",
         "parameters": [
           {
@@ -16297,9 +16287,6 @@
           },
           {
             "$ref": "#/components/parameters/header_Content-Type"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_related_change_events"
           }
         ],
         "responses": {
