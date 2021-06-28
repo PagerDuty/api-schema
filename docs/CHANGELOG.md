@@ -5,6 +5,10 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 Currently we rarely deprecate, and do not remove any API functionality.
 
 ---
+### 2021-06-28
+- Removed limits for `team_ids` and `service_ids` filters
+  - `POST /analytics/raw/incidents`
+
 ### 2021-06-14
 - Removed Early-Access for Related Change Events endpoint
   - `GET /incidents/{id}/related_change_events`
