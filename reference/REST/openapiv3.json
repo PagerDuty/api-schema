@@ -9934,16 +9934,14 @@
                         },
                         "team_ids": {
                           "type": "array",
-                          "description": "The team ids filter applied to the results",
-                          "maxItems": 10,
+                          "description": "The team_ids filter applied to the results.",
                           "items": {
                             "type": "string"
                           }
                         },
                         "service_ids": {
                           "type": "array",
-                          "description": "The service ids filter applied to the results,\nfor up to 10 service ids.",
-                          "maxItems": 10,
+                          "description": "The service_ids filter applied to the results.",
                           "items": {
                             "type": "string"
                           }
