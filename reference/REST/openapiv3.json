@@ -4373,7 +4373,60 @@
             "readOnly": true
           },
           "user": {
-            "$ref": "#/components/schemas/UserReference"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Reference"
+              },
+              {
+                "type": "object",
+                "description": "The user who created a Note. If a service created this Note the `user.type` will be \"bot_user_reference\" and `user.summary` will list the name of the service rather than the user.",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "user_reference",
+                      "bot_user_reference"
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          "channel": {
+            "type": "object",
+            "readOnly": true,
+            "description": "The means by which this Note was created. Has different formats depending on type.",
+            "properties": {
+              "summary": {
+                "type": "string",
+                "description": "A string describing the source of the Note.",
+                "readOnly": true
+              },
+              "id": {
+                "type": "string",
+                "readOnly": true
+              },
+              "type": {
+                "type": "string",
+                "description": "A string that determines the schema of the object",
+                "readOnly": true
+              },
+              "self": {
+                "type": "string",
+                "format": "url",
+                "description": "The API show URL at which the object is accessible",
+                "readOnly": true
+              },
+              "html_url": {
+                "type": "string",
+                "format": "url",
+                "description": "a URL at which the entity is uniquely displayed in the Web app",
+                "readOnly": true
+              }
+            },
+            "required": [
+              "summary"
+            ]
           },
           "content": {
             "type": "string",
@@ -4386,6 +4439,9 @@
             "readOnly": true
           }
         },
+        "required": [
+          "content"
+        ],
         "example": {
           "content": "Firefighters are on the scene."
         }
@@ -15883,8 +15939,30 @@
                             "self": "https://api.pagerduty.com/users/PXPGF42",
                             "html_url": "https://subdomain.pagerduty.com/users/PXPGF42"
                           },
+                          "channel": {
+                            "summary": "The PagerDuty website or APIs"
+                          },
                           "content": "Firefighters are on the scene.",
                           "created_at": "2013-03-06T15:28:51-05:00"
+                        },
+                        {
+                          "id": "PCQC25",
+                          "user": {
+                            "id": "PXPGF42",
+                            "type": "bot_user_reference",
+                            "summary": "A Global Event Rule",
+                            "self": "https://api.pagerduty.com/users/PXPGF42",
+                            "html_url": "https://subdomain.pagerduty.com/event-rules/global/0e84de00-9511-4380-9f4f-a7b568bb49a0/rules/14e56445-ebab-4dd0-ba9d-fc28a41b7e7b"
+                          },
+                          "channel": {
+                            "id": "14e56445-ebab-4dd0-ba9d-fc28a41b7e7b",
+                            "type": "event_rule_reference",
+                            "summary": "A Global Event Rule",
+                            "self": "https://api.pagerduty.com/rulesets/0e84de00-9511-4380-9f4f-a7b568bb49a0/rules/14e56445-ebab-4dd0-ba9d-fc28a41b7e7b",
+                            "html_url": "https://subdomain.pagerduty.com/event-rules/global/0e84de00-9511-4380-9f4f-a7b568bb49a0/rules/14e56445-ebab-4dd0-ba9d-fc28a41b7e7b"
+                          },
+                          "content": "Initial alert information indicates a 1-alarm fire",
+                          "created_at": "2013-03-06T15:28:42-05:00"
                         }
                       ]
                     }
@@ -15938,7 +16016,16 @@
                 "type": "object",
                 "properties": {
                   "note": {
-                    "$ref": "#/components/schemas/IncidentNote"
+                    "type": "object",
+                    "properties": {
+                      "content": {
+                        "type": "string",
+                        "description": "The note content"
+                      }
+                    },
+                    "required": [
+                      "content"
+                    ]
                   }
                 },
                 "required": [
@@ -15986,6 +16073,9 @@
                           "summary": "Earline Greenholt",
                           "self": "https://api.pagerduty.com/users/PXPGF42",
                           "html_url": "https://subdomain.pagerduty.com/users/PXPGF42"
+                        },
+                        "channel": {
+                          "summary": "The PagerDuty website or APIs"
                         },
                         "content": "Firefighters are on the scene.",
                         "created_at": "2013-03-06T15:28:51-05:00"
