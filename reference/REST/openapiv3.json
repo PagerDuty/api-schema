@@ -2854,7 +2854,7 @@
               },
               "team_ids": {
                 "type": "array",
-                "description": "An array of team IDs. Only incidents related to these teams will be included in the results. Account must have the teams ability to use this parameter.  Any teams that the requestor does not have access to will be omitted from the results.  If omitted, all teams the requestor has access to will be included in the results.",
+                "description": "An array of team IDs. Only incidents related to these teams will be included in the results. If omitted, all teams the requestor has access to will be included in the results.",
                 "items": {
                   "type": "string"
                 },

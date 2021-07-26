@@ -5,6 +5,13 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 Currently we rarely deprecate, and do not remove any API functionality.
 
 ---
+### 2021-07-26
+- Removed requirement for teams ability to use `team_ids` filter
+  - `POST /analytics/raw/incidents`
+  - `POST /analytics/metrics/incidents/all`
+  - `POST /analytics/metrics/incidents/services`
+  - `POST /analytics/metrics/incidents/teams`
+
 ### 2021-06-29
 - Updated documentation for Incident Notes now that the API can differentiate between User-created Notes and system-created Notes.
   - `GET /incidents/{id}/notes`
