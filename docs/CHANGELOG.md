@@ -13,6 +13,14 @@ Currently we rarely deprecate, and do not remove any API functionality.
    - The field has two options `responder` and `stakeholder`, and defaults to `responder` on `PUT` and `POST`
 
 ### 2021-07-26
+- Added documentation for HandoffNotificationRules
+  - `GET /users/{user_id}/oncall_handoff_notification_rules/`
+  - `POST /users/{user_id}/oncall_handoff_notification_rules/`
+  - `DELETE /users/{user_id}/oncall_handoff_notification_rules/`
+  - `GET /users/{user_id}/oncall_handoff_notification_rules/{oncall_handoff_notification_rule_id}`
+  - `PUT /users/{user_id}/oncall_handoff_notification_rules/{oncall_handoff_notification_rule_id}`
+
+### 2021-07-26
 - Removed requirement for teams ability to use `team_ids` filter
   - `POST /analytics/raw/incidents`
   - `POST /analytics/metrics/incidents/all`
