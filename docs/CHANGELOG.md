@@ -5,6 +5,13 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 Currently we rarely deprecate, and do not remove any API functionality.
 
 ---
+### 2021-09-06
+- Added the authorization section for Slack Connections
+- Added `notification_type` to `SlackConnection` model.
+   - The field allows users to set which format of slack card they would like to receive.
+   - The field has been added to all `/workspaces/{slack_team_id}/connections` endpoints' request and response schema.
+   - The field has two options `responder` and `stakeholder`, and defaults to `responder` on `PUT` and `POST`
+
 ### 2021-07-26
 - Removed requirement for teams ability to use `team_ids` filter
   - `POST /analytics/raw/incidents`
@@ -47,6 +54,9 @@ Currently we rarely deprecate, and do not remove any API functionality.
 - Fix missing From header requirement on response play endpoints.
   - `GET /response_plays`
   - `GET /response_plays/{id}`
+
+### 2021-04-23
+- Removed Early Access for webhook-v3. `webhooks_early-access`
 
 ### 2021-04-22
 - Added documentation on the new acive field for webhook_subscriptions.
@@ -379,11 +389,11 @@ Currently we rarely deprecate, and do not remove any API functionality.
 ### 2020-03-02
  - Add new Business Services endpoints
 
-### 2020-01-27
- - Clarified `POST /escalation_policies` description.
-
 ### 2020-02-26
  - `GET /oncalls OnCalls[].end` will now correctly respond `null` only when the user does not go off call.
+
+### 2020-01-27
+ - Clarified `POST /escalation_policies` description.
 
 ### 2020-01-10
  - Added `on_call_handoff_notifications` to `EscalationPolicy` model.
@@ -391,5 +401,3 @@ Currently we rarely deprecate, and do not remove any API functionality.
    - The field has been added to all `/escalation_policies` endpoints' request and response schema.
    - The field has two options `always` and `if_has_services`, and defaults to `if_has_services` on `PUT` and `POST`
 
-### 2021-04-23
-- Removed Early Access for webhook-v3. `webhooks_early-access`

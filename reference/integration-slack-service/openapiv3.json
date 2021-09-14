@@ -21,6 +21,14 @@
       "description": "Slack Connections are used to create mappings between Slack channels and PagerDuty Services and Teams."
     }
   ],
+  "security": [
+    {
+      "apiKey": []
+    },
+    {
+      "bearerAuth": []
+    }
+  ],
   "paths": {
     "/workspaces/{slack_team_id}/connections": {
       "parameters": [
@@ -84,6 +92,7 @@
                           "source_type": "team_reference",
                           "channel_id": "A123B456C7D",
                           "channel_name": "random",
+                          "notification_type": "responder",
                           "config": {
                             "events": [
                               "incident.triggered",
@@ -162,6 +171,7 @@
                       "source_id": "A1234B5",
                       "source_type": "team_reference",
                       "channel_id": "A123B456C7D",
+                      "notification_type": "responder",
                       "config": {
                         "events": [
                           "incident.triggered",
@@ -217,6 +227,7 @@
                         "source_type": "team_reference",
                         "channel_id": "A123B456C7D",
                         "channel_name": "random",
+                        "notification_type": "responder",
                         "config": {
                           "events": [
                             "incident.triggered",
@@ -311,6 +322,7 @@
                         "source_type": "service_reference",
                         "channel_id": "A123B456C7D",
                         "channel_name": "random",
+                        "notification_type": "responder",
                         "config": {
                           "events": [
                             "incident.triggered",
@@ -387,6 +399,7 @@
                       "source_id": "A1234B5",
                       "source_type": "team_reference",
                       "channel_id": "A123B456C7D",
+                      "notification_type": "responder",
                       "config": {
                         "events": [
                           "incident.triggered",
@@ -442,6 +455,7 @@
                         "source_type": "team_reference",
                         "channel_id": "A123B456C7D",
                         "channel_name": "random",
+                        "notification_type": "responder",
                         "config": {
                           "events": [
                             "incident.triggered",
@@ -526,6 +540,7 @@
                         "source_type": "team_reference",
                         "channel_id": "A123B456C7D",
                         "channel_name": "random",
+                        "notification_type": "responder",
                         "config": {
                           "events": [
                             "incident.triggered",
@@ -700,10 +715,23 @@
           "channel_name": {
             "type": "string"
           },
+          "notification_type": {
+            "$ref": "#/components/schemas/SlackConnectionNotifiationType"
+          },
           "config": {
             "$ref": "#/components/schemas/SlackConnectionConfig"
           }
         }
+      },
+      "SlackConnectionNotifiationType": {
+        "title": "Slack Connection Notification Type",
+        "default": "responder",
+        "description": "Configuration item of the Slack connection that indicates how Slack message will be formatted (can be `responder` or `stakeholder`)",
+        "type": "string",
+        "enum": [
+          "responder",
+          "stakeholder"
+        ]
       },
       "SlackConnectionSourceType": {
         "title": "Slack Connection Source Type",
@@ -834,10 +862,16 @@
       }
     },
     "securitySchemes": {
-      "user-access-token": {
-        "name": "User account API Key",
+      "apiKey": {
         "type": "apiKey",
-        "in": "header"
+        "name": "Authorization",
+        "in": "header",
+        "description": "The API Key with format `Token token=<API_KEY>`"
+      },
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "The Bearer access token with format `Bearer <BEARER TOKEN>`"
       }
     },
     "parameters": {
