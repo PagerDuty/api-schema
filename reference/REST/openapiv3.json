@@ -2017,6 +2017,15 @@
           "type": "string"
         }
       },
+      "oncall_handoff_notification_rule_id": {
+        "name": "oncall_handoff_notification_rule_id",
+        "in": "path",
+        "description": "The oncall handoff notification rule ID on the user.",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
       "session_id": {
         "name": "session_id",
         "in": "path",
@@ -8713,6 +8722,48 @@
           "part",
           "children"
         ]
+      },
+      "HandoffNotificationRule": {
+        "type": "object",
+        "description": "A rule for contacting the user for Handoff Notifications.",
+        "properties": {
+          "id": {
+            "type": "string",
+            "readOnly": true
+          },
+          "notify_advance_in_minutes": {
+            "type": "integer",
+            "description": "The delay before firing the rule, in minutes.",
+            "minimum": 0
+          },
+          "handoff_type": {
+            "type": "string",
+            "description": "The type of handoff being created.",
+            "default": "both",
+            "enum": [
+              "both",
+              "oncall",
+              "offcall"
+            ]
+          },
+          "contact_method": {
+            "$ref": "#/components/schemas/ContactMethodReference"
+          }
+        },
+        "required": [
+          "id",
+          "handoff_type",
+          "contact_method"
+        ],
+        "example": {
+          "id": "PXPGF42",
+          "notify_advance_in_minutes": 180,
+          "handoff_type": "both",
+          "contact_method": {
+            "id": "PXPGF42",
+            "type": "email_contact_method_reference"
+          }
+        }
       }
     }
   },
@@ -28299,6 +28350,415 @@
             }
           },
           "description": "The entities to unsubscribe from."
+        }
+      }
+    },
+    "/users/{id}/oncall_handoff_notification_rules": {
+      "description": "List a User's Oncall Handoff Notification Rules.",
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "operationId": "getUserHandoffNotificationRules",
+        "description": "List Handoff Notification Rules of your PagerDuty User.\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#users)\n",
+        "summary": "List a User's Handoff Notification Rules",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of Handoff Notification Rules.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "oncall_handoff_notification_rules": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/HandoffNotificationRule"
+                      }
+                    }
+                  },
+                  "required": [
+                    "oncall_handoff_notification_rules"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "oncall_handoff_notification_rules": [
+                        {
+                          "id": "PXPGF42",
+                          "handoff_type": "both",
+                          "notify_advance_in_minutes": 0,
+                          "contact_method": {
+                            "id": "PXPGF42",
+                            "type": "email_contact_method_reference",
+                            "summary": "Work",
+                            "self": "https://api.pagerduty.com/users/PXPGF42/contact_methods/PXPGF42"
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "operationId": "createUserHandoffNotificationRule",
+        "description": "Create a new Handoff Notification Rule.\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#users)\n",
+        "summary": "Create a User Handoff Notification Rule",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "oncall_handoff_notification_rule": {
+                    "$ref": "#/components/schemas/HandoffNotificationRule"
+                  }
+                },
+                "required": [
+                  "oncall_handoff_notification_rule"
+                ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "oncall_handoff_notification_rule": {
+                      "id": "PXPGF43",
+                      "handoff_type": "both",
+                      "notify_advance_in_minutes": 180,
+                      "contact_method": {
+                        "id": "PXPGF42",
+                        "type": "email_contact_method_reference"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "description": "The Handoff Notification Rule to be created."
+        },
+        "responses": {
+          "201": {
+            "description": "The Handoff Notification Rule that was created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "oncall_handoff_notification_rule": {
+                      "$ref": "#/components/schemas/HandoffNotificationRule"
+                    }
+                  },
+                  "required": [
+                    "oncall_handoff_notification_rule"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "oncall_handoff_notification_rule": {
+                        "id": "PXPGF42",
+                        "handoff_type": "both",
+                        "notify_advance_in_minutes": 180,
+                        "contact_method": {
+                          "id": "PXPGF42",
+                          "type": "email_contact_method_reference",
+                          "summary": "Work",
+                          "self": "https://api.pagerduty.com/users/PXPGF42/contact_methods/PXPGF42"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        }
+      }
+    },
+    "/users/{id}/oncall_handoff_notification_rules/{oncall_handoff_notification_rule_id}": {
+      "description": "Manage a User's Handoff Notification Rule.",
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "operationId": "getUserHandoffNotifiactionRule",
+        "description": "Get details about a User's Handoff Notification Rule.\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#users)\n",
+        "summary": "Get a user's handoff notification rule",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/oncall_handoff_notification_rule_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The user's handoff notification rule requested.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "oncall_handoff_notification_rule": {
+                      "$ref": "#/components/schemas/HandoffNotificationRule"
+                    }
+                  },
+                  "required": [
+                    "oncall_handoff_notification_rule"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "oncall_handoff_notification_rule": {
+                        "id": "PXPGF42",
+                        "handoff_type": "both",
+                        "notify_advance_in_minutes": 60,
+                        "contact_method": {
+                          "id": "PXPGF42",
+                          "type": "email_contact_method_reference",
+                          "summary": "Work",
+                          "self": "https://api.pagerduty.com/users/PXPGF42/contact_methods/PXPGF42"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Users"
+        ],
+        "operationId": "deleteUserHandoffNotificationRule",
+        "description": "Remove a User's Handoff Notification Rule.\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#users)\n",
+        "summary": "Delete a User's Handoff Notification rule",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/oncall_handoff_notification_rule_id"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The handoff notification rule was deleted successfully."
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Users"
+        ],
+        "operationId": "updateUserHandoffNotification",
+        "description": "Update a User's Handoff Notification Rule.\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#users)\n",
+        "summary": "Update a User's Handoff Notification Rule",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/oncall_handoff_notification_rule_id"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "oncall_handoff_notification_rule": {
+                    "$ref": "#/components/schemas/HandoffNotificationRule"
+                  }
+                },
+                "required": [
+                  "oncall_handoff_notification_rule"
+                ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "oncall_handoff_notification_rule": {
+                      "id": "PXPGF42",
+                      "handoff_type": "both",
+                      "notify_advance_in_minutes": 60,
+                      "contact_method": {
+                        "id": "PXPGF42",
+                        "type": "email_contact_method_reference"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "description": "The User's Handoff Notification Rule to be updated."
+        },
+        "responses": {
+          "200": {
+            "description": "The User's Handoff Notification Rule that was updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "oncall_handoff_notification_rule": {
+                      "$ref": "#/components/schemas/HandoffNotificationRule"
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "oncall_handoff_notification_rule": {
+                        "id": "PXPGF42",
+                        "handoff_type": "oncall",
+                        "notify_advance_in_minutes": 30,
+                        "contact_method": {
+                          "id": "PXPGF42",
+                          "type": "email_contact_method_reference",
+                          "summary": "Work",
+                          "self": "https://api.pagerduty.com/users/PXPGF42/contact_methods/PXPGF42"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
         }
       }
     },
