@@ -1355,18 +1355,15 @@
         "in": "query",
         "description": "Resource type filter for the root_resource.",
         "schema": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "users",
-              "teams",
-              "schedules",
-              "escalation_policies",
-              "services"
-            ],
-            "example": "users"
-          }
+          "type": "string",
+          "enum": [
+            "users",
+            "teams",
+            "schedules",
+            "escalation_policies",
+            "services"
+          ],
+          "example": "users"
         }
       },
       "audit_actor_type": {
@@ -1417,16 +1414,13 @@
         "in": "query",
         "description": "Action filter",
         "schema": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "description": "The action executed on the aggregate\n",
-            "enum": [
-              "create",
-              "update",
-              "delete"
-            ]
-          }
+          "type": "string",
+          "description": "The action executed on the aggregate\n",
+          "enum": [
+            "create",
+            "update",
+            "delete"
+          ]
         }
       },
       "offset_limit": {
@@ -1652,13 +1646,10 @@
         "description": "Array of additional Models to include in response.",
         "explode": true,
         "schema": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "services"
-            ]
-          },
+          "type": "string",
+          "enum": [
+            "services"
+          ],
           "uniqueItems": true
         }
       },
@@ -1668,15 +1659,12 @@
         "description": "Array of additional Models to include in response.",
         "explode": true,
         "schema": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "services",
-              "teams",
-              "targets"
-            ]
-          },
+          "type": "string",
+          "enum": [
+            "services",
+            "teams",
+            "targets"
+          ],
           "uniqueItems": true
         }
       },
@@ -1686,16 +1674,13 @@
         "description": "Array of additional Models to include in response.",
         "explode": true,
         "schema": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "incidents",
-              "services",
-              "channels",
-              "teams"
-            ]
-          },
+          "type": "string",
+          "enum": [
+            "incidents",
+            "services",
+            "channels",
+            "teams"
+          ],
           "uniqueItems": true
         }
       },
@@ -1705,16 +1690,13 @@
         "description": "Array of additional Models to include in response.",
         "explode": true,
         "schema": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "contact_methods",
-              "notification_rules",
-              "teams",
-              "subdomains"
-            ]
-          },
+          "type": "string",
+          "enum": [
+            "contact_methods",
+            "notification_rules",
+            "teams",
+            "subdomains"
+          ],
           "uniqueItems": true
         }
       },
@@ -1724,15 +1706,12 @@
         "description": "Array of additional Models to include in response.",
         "explode": true,
         "schema": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "teams",
-              "services",
-              "users"
-            ]
-          },
+          "type": "string",
+          "enum": [
+            "teams",
+            "services",
+            "users"
+          ],
           "uniqueItems": true
         }
       },
@@ -1742,13 +1721,10 @@
         "description": "Array of additional Models to include in response.",
         "explode": true,
         "schema": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "privileges"
-            ]
-          },
+          "type": "string",
+          "enum": [
+            "privileges"
+          ],
           "uniqueItems": true
         }
       },
@@ -1758,13 +1734,10 @@
         "description": "Array of additional Models to include in response.",
         "explode": true,
         "schema": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "users"
-            ]
-          },
+          "type": "string",
+          "enum": [
+            "users"
+          ],
           "uniqueItems": true
         }
       },
@@ -1959,14 +1932,11 @@
         "description": "Array of the urgencies of the incidents to be returned. Defaults to all urgencies. Account must have the `urgencies` ability to do this.",
         "explode": true,
         "schema": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "high",
-              "low"
-            ]
-          },
+          "type": "string",
+          "enum": [
+            "high",
+            "low"
+          ],
           "uniqueItems": true
         }
       },
@@ -2150,14 +2120,11 @@
         "description": "Array of additional details to include.",
         "explode": true,
         "schema": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "extension_objects",
-              "extension_schemas"
-            ]
-          },
+          "type": "string",
+          "enum": [
+            "extension_objects",
+            "extension_schemas"
+          ],
           "uniqueItems": true
         }
       },
@@ -2167,15 +2134,12 @@
         "description": "Array of additional details to include.",
         "explode": true,
         "schema": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "extension_schemas",
-              "extension_objects",
-              "temporarily_disabled"
-            ]
-          },
+          "type": "string",
+          "enum": [
+            "extension_schemas",
+            "extension_objects",
+            "temporarily_disabled"
+          ],
           "uniqueItems": true
         }
       },
@@ -2185,15 +2149,12 @@
         "description": "Return only incidents with the given statuses. (More status codes may be introduced in the future.)",
         "explode": true,
         "schema": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "triggered",
-              "acknowledged",
-              "resolved"
-            ]
-          },
+          "type": "string",
+          "enum": [
+            "triggered",
+            "acknowledged",
+            "resolved"
+          ],
           "uniqueItems": true
         }
       },
@@ -2218,21 +2179,18 @@
         "description": "Array of additional details to include.",
         "explode": true,
         "schema": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "users",
-              "services",
-              "first_trigger_log_entries",
-              "escalation_policies",
-              "teams",
-              "assignees",
-              "acknowledgers",
-              "priorities",
-              "conference_bridge"
-            ]
-          },
+          "type": "string",
+          "enum": [
+            "users",
+            "services",
+            "first_trigger_log_entries",
+            "escalation_policies",
+            "teams",
+            "assignees",
+            "acknowledgers",
+            "priorities",
+            "conference_bridge"
+          ],
           "uniqueItems": true
         }
       },
@@ -2258,14 +2216,11 @@
         "description": "Return only alerts with the given statuses. (More status codes may be introduced in the future.)",
         "explode": true,
         "schema": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "triggered",
-              "resolved"
-            ]
-          },
+          "type": "string",
+          "enum": [
+            "triggered",
+            "resolved"
+          ],
           "uniqueItems": true
         }
       },
@@ -2276,18 +2231,15 @@
         "style": "form",
         "explode": false,
         "schema": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "created_at",
-              "resolved_at",
-              "created_at:asc",
-              "created_at:desc",
-              "resolved_at:asc",
-              "resolved_at:desc"
-            ]
-          },
+          "type": "string",
+          "enum": [
+            "created_at",
+            "resolved_at",
+            "created_at:asc",
+            "created_at:desc",
+            "resolved_at:asc",
+            "resolved_at:desc"
+          ],
           "maxItems": 2,
           "uniqueItems": true
         }
@@ -2298,15 +2250,12 @@
         "description": "Array of additional details to include.",
         "explode": true,
         "schema": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "services",
-              "first_trigger_log_entries",
-              "incidents"
-            ]
-          },
+          "type": "string",
+          "enum": [
+            "services",
+            "first_trigger_log_entries",
+            "incidents"
+          ],
           "uniqueItems": true
         }
       },
@@ -2325,17 +2274,14 @@
         "description": "Count only incidents with the requested statuses. `all` returns all statuses. If `any` is specified, there will be an additional `any` boolean field in the response that is true if there are any incidents matching the criteria in the request. If no statuses are provided, then only the total count of incidents is returned regardless of status. More status codes may be introduced in the future.",
         "explode": true,
         "schema": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "triggered",
-              "acknowledged",
-              "resolved",
-              "any",
-              "all"
-            ]
-          },
+          "type": "string",
+          "enum": [
+            "triggered",
+            "acknowledged",
+            "resolved",
+            "any",
+            "all"
+          ],
           "uniqueItems": true
         }
       },
@@ -2394,13 +2340,10 @@
         "description": "Array of additional details to include.",
         "explode": true,
         "schema": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "users"
-            ]
-          },
+          "type": "string",
+          "enum": [
+            "users"
+          ],
           "uniqueItems": true
         }
       },
@@ -2410,15 +2353,12 @@
         "description": "Array of additional details to include.",
         "explode": true,
         "schema": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "escalation_policies",
-              "users",
-              "schedules"
-            ]
-          },
+          "type": "string",
+          "enum": [
+            "escalation_policies",
+            "users",
+            "schedules"
+          ],
           "uniqueItems": true
         }
       },
@@ -2546,15 +2486,12 @@
         "description": "Array of additional details to include.",
         "explode": true,
         "schema": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "escalation_policies",
-              "teams",
-              "integrations"
-            ]
-          },
+          "type": "string",
+          "enum": [
+            "escalation_policies",
+            "teams",
+            "integrations"
+          ],
           "uniqueItems": true
         }
       },
@@ -2564,14 +2501,11 @@
         "description": "Array of additional details to include.",
         "explode": true,
         "schema": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "escalation_policies",
-              "teams"
-            ]
-          },
+          "type": "string",
+          "enum": [
+            "escalation_policies",
+            "teams"
+          ],
           "uniqueItems": true
         }
       },
@@ -2581,14 +2515,11 @@
         "description": "Array of additional details to include.",
         "explode": true,
         "schema": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "services",
-              "vendors"
-            ]
-          },
+          "type": "string",
+          "enum": [
+            "services",
+            "vendors"
+          ],
           "uniqueItems": true
         }
       },
@@ -2607,13 +2538,10 @@
         "description": "Array of additional details to include.",
         "explode": true,
         "schema": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "contact_methods"
-            ]
-          },
+          "type": "string",
+          "enum": [
+            "contact_methods"
+          ],
           "uniqueItems": true
         }
       },
@@ -2623,13 +2551,10 @@
         "description": "Array of additional attributes to any of the returned incidents for related incidents.",
         "explode": true,
         "schema": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "incident"
-            ]
-          },
+          "type": "string",
+          "enum": [
+            "incident"
+          ],
           "uniqueItems": true
         }
       },
@@ -2639,13 +2564,10 @@
         "description": "Array of additional details to include.",
         "explode": true,
         "schema": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "schedule_layers"
-            ]
-          },
+          "type": "string",
+          "enum": [
+            "schedule_layers"
+          ],
           "uniqueItems": true
         }
       }
