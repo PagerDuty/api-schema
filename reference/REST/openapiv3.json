@@ -25514,7 +25514,7 @@
           "Teams"
         ],
         "operationId": "deleteTeam",
-        "description": "Remove an existing team.\n\nSucceeds only if the team has no associated Escalation Policies, Services, Schedules and Subteams.\n\nAll associated unresovled incidents will be reassigned to another team (if specified) or will loose team association, thus becoming account-level (with visibility implications).\n\nNote that the incidents reassignment process is asynchronous and has no guarantee to complete before the API call return.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#teams)\n",
+        "description": "Remove an existing team.\n\nSucceeds only if the team has no associated Escalation Policies, Services, Schedules and Subteams.\n\nAll associated unresolved incidents will be reassigned to another team (if specified) or will lose team association, thus becoming account-level (with visibility implications).\n\nNote that the incidents reassignment process is asynchronous and has no guarantee to complete before the API call return.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#teams)\n",
         "summary": "Delete a team",
         "parameters": [
           {
