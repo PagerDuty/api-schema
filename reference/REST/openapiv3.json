@@ -5922,6 +5922,24 @@
               "escalation_policy": {
                 "$ref": "#/components/schemas/EscalationPolicyReference"
               },
+              "response_play": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Reference"
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "response_play_reference"
+                        ]
+                      }
+                    }
+                  }
+                ]
+              },
               "teams": {
                 "type": "array",
                 "readOnly": true,
@@ -6000,6 +6018,10 @@
               "escalation_policy": {
                 "id": "PWIP6CQ",
                 "type": "escalation_policy_reference"
+              },
+              "response_play": {
+                "id": "1677af3c-44cf-50f4-6c68-818f7f514802",
+                "type": "response_play_reference"
               },
               "incident_urgency_rule": {
                 "type": "use_support_hours",
