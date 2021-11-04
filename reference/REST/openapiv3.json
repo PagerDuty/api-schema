@@ -4386,14 +4386,14 @@
           },
           "type": {
             "type": "string",
-            "readOnly": true,
             "description": "The type of notification.",
             "enum": [
               "sms_notification",
               "email_notification",
               "phone_notification",
               "push_notification"
-            ]
+            ],
+            "readOnly": true
           },
           "started_at": {
             "type": "string",
@@ -4408,6 +4408,16 @@
           },
           "user": {
             "$ref": "#/components/schemas/UserReference"
+          },
+          "conferenceAddress": {
+            "type": "string",
+            "description": "The address of the conference bridge"
+          },
+          "status": {
+            "type": "string"
+          },
+          "": {
+            "type": "string"
           }
         }
       },
@@ -4451,12 +4461,13 @@
             "description": "type"
           },
           "user": {
-            "type": "object",
-            "description": "user"
+            "type": "object"
           },
           "team": {
-            "type": "object",
-            "description": "team"
+            "type": "object"
+          },
+          "notification": {
+            "$ref": "#/components/schemas/Notification"
           },
           "channel": {
             "type": "object",
@@ -4726,6 +4737,9 @@
               },
               "service": {
                 "$ref": "#/components/schemas/ServiceReference"
+              },
+              "user": {
+                "$ref": "#/components/schemas/UserReference"
               },
               "incident": {
                 "$ref": "#/components/schemas/IncidentReference"

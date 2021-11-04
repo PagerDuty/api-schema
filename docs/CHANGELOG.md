@@ -5,6 +5,11 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 Currently we rarely deprecate, and do not remove any API functionality.
 
 ---
+### 2021-11-03
+- Added `user` to Log Entry
+- Added `notification` to Channel
+- Added `conferenceAddress` to Notification
+
 ### 2021-09-06
 - Added the authorization section for Slack Connections
 - Added `notification_type` to `SlackConnection` model.
