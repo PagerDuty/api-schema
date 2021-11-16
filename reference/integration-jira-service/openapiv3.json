@@ -17,8 +17,7 @@
   ],
   "security": [
     {
-      "BearerToken": [],
-      "JiraSignature": []
+      "BearerToken": []
     }
   ],
   "tags": [
@@ -63,6 +62,15 @@
         "name": "id",
         "description": "The ID of the resource.",
         "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "x-pagerduty-jira-signature": {
+        "name": "x-pagerduty-jira-signature",
+        "in": "header",
+        "description": "Jira Authorization Signature\n\nInspect network requests that are done by the PagerDuty Addon settings page\nand look for a request, like `GET /accounts_mapping`.\n\nIn the request headers you will find `x-pagerduty-jira-signature`.\nUse its value as it is to make your requests.\n",
         "required": true,
         "schema": {
           "type": "string"
@@ -694,13 +702,7 @@
       "BearerToken": {
         "type": "http",
         "scheme": "bearer",
-        "description": "PagerDuty OAuth user Access Token\n\nInspect network requests that are done by the Pagerduty Addon settings page\nand look for a request like `GET /accounts_mapping`.\n\nIn the request headers you will find `Authorization`.\nUse its value as it is to make your requests.\n"
-      },
-      "JiraSignature": {
-        "type": "apiKey",
-        "name": "x-pagerduty-jira-signature",
-        "in": "header",
-        "description": "Jira Authorization Signature\n\nInspect network requests that are done by the Pagerduty Addon settings page\nand look for a request, like `GET /accounts_mapping`.\n\nIn the request headers you will find `x-pagerduty-jira-signature`.\nUse its value as it is to make your requests.\n"
+        "description": "PagerDuty OAuth user Access Token\n\nInspect network requests that are done by the PagerDuty Addon settings page\nand look for a request like `GET /accounts_mapping`.\n\nIn the request headers you will find `Authorization`.\nUse its value as it is to make your requests.\n"
       }
     }
   },
@@ -722,6 +724,9 @@
           },
           {
             "$ref": "#/components/parameters/offset"
+          },
+          {
+            "$ref": "#/components/parameters/x-pagerduty-jira-signature"
           }
         ],
         "responses": {
@@ -1313,7 +1318,11 @@
         "tags": [
           "Rules"
         ],
-        "parameters": [],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-pagerduty-jira-signature"
+          }
+        ],
         "summary": "Create a rule",
         "description": "Creates a rule.\n\n> ### Action required!\n>\n>  Make sure that all required PagerDuty and Jira webhooks are present. You can do this by clicking **Check webhooks** button on the *Rules* page of the PagerDuty Jira application\n",
         "operationId": "createRule",
@@ -2462,6 +2471,9 @@
         "parameters": [
           {
             "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/x-pagerduty-jira-signature"
           }
         ],
         "operationId": "getRule",
@@ -3046,6 +3058,9 @@
         "parameters": [
           {
             "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/x-pagerduty-jira-signature"
           }
         ],
         "operationId": "updateRule",
@@ -4192,6 +4207,9 @@
         "parameters": [
           {
             "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/x-pagerduty-jira-signature"
           }
         ],
         "operationId": "deleteRule",
