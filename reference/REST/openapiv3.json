@@ -12027,7 +12027,7 @@
       },
       "post": {
         "summary": "Create a Change Event",
-        "description": "Sending Change Events is documented as part of the V2 Events API. See [`Send Change Event`](https://developer.pagerduty.com/api-reference/reference/events-v2/openapiv3.json/paths/~1change~1enqueue/post).\n",
+        "description": "Sending Change Events is documented as part of the V2 Events API. See [`Send Change Event`](https://developer.pagerduty.com/api-reference/b3A6Mjc0ODI2Ng-send-change-events-to-the-pager-duty-events-api).\n",
         "operationId": "createChangeEvent",
         "tags": [
           "Change Events"
@@ -12042,7 +12042,7 @@
         ],
         "responses": {
           "202": {
-            "description": "See [`Send Change Event`](https://developer.pagerduty.com/api-reference/reference/events-v2/openapiv3.json/paths/~1change~1enqueue/post) in the V2 Events API reference."
+            "description": "See [`Send Change Event`](https://developer.pagerduty.com/api-reference/b3A6Mjc0ODI2Ng-send-change-events-to-the-pager-duty-events-api) in the V2 Events API reference."
           }
         }
       }
