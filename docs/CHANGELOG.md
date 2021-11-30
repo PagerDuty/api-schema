@@ -5,6 +5,9 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 Currently we rarely deprecate, and do not remove any API functionality.
 
 ---
+### 2021-11-30
+- Added documentation for `incidents_responders` and `responder_requests` as part of Incident responses
+
 ### 2021-11-03
 - Added `user` to Log Entry
 - Added `notification` to Channel
