@@ -5581,6 +5581,20 @@
                     "description": "The end of the date/time range over which Outlier Incident was calculated."
                   }
                 }
+              },
+              "incidents_responders": {
+                "type": "array",
+                "readOnly": true,
+                "items": {
+                  "$ref": "#/components/schemas/IncidentsRespondersReference"
+                }
+              },
+              "responder_requests": {
+                "type": "array",
+                "readOnly": true,
+                "items": {
+                  "$ref": "#/components/schemas/ResponderRequest"
+                }
               }
             }
           }
@@ -14660,7 +14674,97 @@
                             "html_url": "https://subdomain.pagerduty.com/teams/PQ9K7I8"
                           }
                         ],
-                        "urgency": "high"
+                        "urgency": "high",
+                        "responder_requests": [
+                          {
+                            "incident": {
+                              "id": "PXP12GZ",
+                              "type": "incident_reference",
+                              "summary": "Ongoing Incident in Mailroom",
+                              "self": "https://api.pagerduty.com/incidents/PXP12GZ",
+                              "html_url": "https://subdomain.pagerduty.com/incidents/PXP12GZ"
+                            },
+                            "requester": {
+                              "id": "P09TT3C",
+                              "type": "user_reference",
+                              "summary": "Jane Doe",
+                              "self": "https://api.pagerduty.com/users/P09TT3C",
+                              "html_url": "https://subdomain.pagerduty.com/users/P09TT3C"
+                            },
+                            "requested_at": "2018-08-16T14:55:17-07:00",
+                            "message": "Please help with issue - join bridge at +1(234)-567-8910",
+                            "responder_request_targets": [
+                              {
+                                "responder_request_target": {
+                                  "type": "user",
+                                  "id": "PL7A2O4",
+                                  "incidents_responders": [
+                                    {
+                                      "state": "pending",
+                                      "user": {
+                                        "id": "PL7A2O4",
+                                        "type": "user_reference",
+                                        "summary": "Lee Turner",
+                                        "self": "https://api.pagerduty.com/users/PL7A2O4",
+                                        "html_url": "https://subdomain.pagerduty.com/users/PL7A2O4",
+                                        "avatar_url": "https://secure.gravatar.com/avatar/51c673f51f6b483b24c889bbafbd2a67.png?d=mm&r=PG"
+                                      },
+                                      "incident": {
+                                        "id": "PXP12GZ",
+                                        "type": "incident_reference",
+                                        "summary": "Ongoing Incident in Mailroom",
+                                        "self": "https://api.pagerduty.com/incidents/PXP12GZ",
+                                        "html_url": "https://subdomain.pagerduty.com/incidents/PXP12GZ"
+                                      },
+                                      "updated_at": "2018-08-09T14:40:48-07:00",
+                                      "message": "Please help with issue - join bridge at +1(234)-567-8910",
+                                      "requester": {
+                                        "id": "P09TT3C",
+                                        "type": "user_reference",
+                                        "summary": "Jane Doe",
+                                        "self": "https://api.pagerduty.com/users/P09TT3C",
+                                        "html_url": "https://subdomain.pagerduty.com/users/P09TT3C",
+                                        "avatar_url": "https://secure.gravatar.com/avatar/1c747247b75acc1f724e2784c838b3f8.png?d=mm&r=PG"
+                                      },
+                                      "requested_at": "2018-08-09T21:40:49Z"
+                                    }
+                                  ]
+                                }
+                              }
+                            ]
+                          }
+                        ],
+                        "incidents_responders": [
+                          {
+                            "state": "pending",
+                            "user": {
+                              "id": "PL7A2O4",
+                              "type": "user_reference",
+                              "summary": "Lee Turner",
+                              "self": "https://api.pagerduty.com/users/PL7A2O4",
+                              "html_url": "https://subdomain.pagerduty.com/users/PL7A2O4",
+                              "avatar_url": "https://secure.gravatar.com/avatar/51c673f51f6b483b24c889bbafbd2a67.png?d=mm&r=PG"
+                            },
+                            "incident": {
+                              "id": "PXP12GZ",
+                              "type": "incident_reference",
+                              "summary": "Ongoing Incident in Mailroom",
+                              "self": "https://api.pagerduty.com/incidents/PXP12GZ",
+                              "html_url": "https://subdomain.pagerduty.com/incidents/PXP12GZ"
+                            },
+                            "updated_at": "2018-08-09T14:40:48-07:00",
+                            "message": "Please help with issue - join bridge at +1(234)-567-8910",
+                            "requester": {
+                              "id": "P09TT3C",
+                              "type": "user_reference",
+                              "summary": "Jane Doe",
+                              "self": "https://api.pagerduty.com/users/P09TT3C",
+                              "html_url": "https://subdomain.pagerduty.com/users/P09TT3C",
+                              "avatar_url": "https://secure.gravatar.com/avatar/1c747247b75acc1f724e2784c838b3f8.png?d=mm&r=PG"
+                            },
+                            "requested_at": "2018-08-09T21:40:49Z"
+                          }
+                        ]
                       }
                     }
                   }
@@ -16767,35 +16871,37 @@
                             "responder_request_target": {
                               "type": "user",
                               "id": "PL7A2O4",
-                              "incidents_responders": {
-                                "state": "pending",
-                                "user": {
-                                  "id": "PL7A2O4",
-                                  "type": "user_reference",
-                                  "summary": "Lee Turner",
-                                  "self": "https://api.pagerduty.com/users/PL7A2O4",
-                                  "html_url": "https://subdomain.pagerduty.com/users/PL7A2O4",
-                                  "avatar_url": "https://secure.gravatar.com/avatar/51c673f51f6b483b24c889bbafbd2a67.png?d=mm&r=PG"
-                                },
-                                "incident": {
-                                  "id": "PXP12GZ",
-                                  "type": "incident_reference",
-                                  "summary": "Ongoing Incident in Mailroom",
-                                  "self": "https://api.pagerduty.com/incidents/PXP12GZ",
-                                  "html_url": "https://subdomain.pagerduty.com/incidents/PXP12GZ"
-                                },
-                                "updated_at": "2018-08-09T14:40:48-07:00",
-                                "message": "Please help with issue - join bridge at +1(234)-567-8910",
-                                "requester": {
-                                  "id": "P09TT3C",
-                                  "type": "user_reference",
-                                  "summary": "Jane Doe",
-                                  "self": "https://api.pagerduty.com/users/P09TT3C",
-                                  "html_url": "https://subdomain.pagerduty.com/users/P09TT3C",
-                                  "avatar_url": "https://secure.gravatar.com/avatar/1c747247b75acc1f724e2784c838b3f8.png?d=mm&r=PG"
-                                },
-                                "requested_at": "2018-08-09T21:40:49Z"
-                              }
+                              "incidents_responders": [
+                                {
+                                  "state": "pending",
+                                  "user": {
+                                    "id": "PL7A2O4",
+                                    "type": "user_reference",
+                                    "summary": "Lee Turner",
+                                    "self": "https://api.pagerduty.com/users/PL7A2O4",
+                                    "html_url": "https://subdomain.pagerduty.com/users/PL7A2O4",
+                                    "avatar_url": "https://secure.gravatar.com/avatar/51c673f51f6b483b24c889bbafbd2a67.png?d=mm&r=PG"
+                                  },
+                                  "incident": {
+                                    "id": "PXP12GZ",
+                                    "type": "incident_reference",
+                                    "summary": "Ongoing Incident in Mailroom",
+                                    "self": "https://api.pagerduty.com/incidents/PXP12GZ",
+                                    "html_url": "https://subdomain.pagerduty.com/incidents/PXP12GZ"
+                                  },
+                                  "updated_at": "2018-08-09T14:40:48-07:00",
+                                  "message": "Please help with issue - join bridge at +1(234)-567-8910",
+                                  "requester": {
+                                    "id": "P09TT3C",
+                                    "type": "user_reference",
+                                    "summary": "Jane Doe",
+                                    "self": "https://api.pagerduty.com/users/P09TT3C",
+                                    "html_url": "https://subdomain.pagerduty.com/users/P09TT3C",
+                                    "avatar_url": "https://secure.gravatar.com/avatar/1c747247b75acc1f724e2784c838b3f8.png?d=mm&r=PG"
+                                  },
+                                  "requested_at": "2018-08-09T21:40:49Z"
+                                }
+                              ]
                             }
                           }
                         ]
