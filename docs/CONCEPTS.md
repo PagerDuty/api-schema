@@ -152,7 +152,7 @@ Maintenance windows are specified to start at a certain time and end after they 
 [*Read more about Maintenance Windows in the PagerDuty Knowledge Base*](https://support.pagerduty.com/hc/en-us/articles/202830350-Putting-a-service-in-maintenance-mode).
 
 ## Notifications
-A Notification is created when an [Incident](#incident) is triggered or escalated and an [Alert](#alert) is sent to a [User.](#user)
+A Notification is created when an [Incident](#incidents) is triggered or escalated and an [Alert](#alert) is sent to a [User.](#user)
 
 
 Notifications are messages containing the details of the [Incident](#incidents), and can be through SMS, email, phone calls, and push notifications.
@@ -182,7 +182,7 @@ A Priority is a label representing the importance and impact of an incident. Thi
 Related Incidents provide Responders with the 20 most recent Related Incidents that are impacting other Responders and Services. This feature uses a completely online and real-time machine learning algorithm as well as your Service dependency data to provide these insights, giving Responders an at-a-glance-view of the full breadth and scope of Incident impact.
 
 ## Response Plays
-Response Plays let you create packages of Incident Actions that can be applied to an [Incident.](#incident)
+Response Plays let you create packages of Incident Actions that can be applied to an [Incident.](#incidents)
 
 
 This enables you to take a complex activity, like assembling a response team of multiple On-Calls and an Incident commander, and make it available to anyone that needs to use it.
