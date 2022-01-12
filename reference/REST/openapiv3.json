@@ -1186,7 +1186,13 @@
           "webhook_subscription": {
             "delivery_method": {
               "type": "http_delivery_method",
-              "url": "https://example.com/receive_a_pagerduty_webhook"
+              "url": "https://example.com/receive_a_pagerduty_webhook",
+              "custom_headers": [
+                {
+                  "name": "header-name",
+                  "value": "header-value"
+                }
+              ]
             },
             "description": "Sends PagerDuty v3 webhook events somewhere interesting.",
             "events": [
@@ -1220,7 +1226,13 @@
               "secret": null,
               "temporarily_disabled": false,
               "type": "http_delivery_method",
-              "url": "https://example.com/receive_a_pagerduty_webhook"
+              "url": "https://example.com/receive_a_pagerduty_webhook",
+              "custom_headers": [
+                {
+                  "name": "your-header-name",
+                  "value": "-- redacted --"
+                }
+              ]
             },
             "description": "Sends PagerDuty v3 webhook events somewhere interesting.",
             "events": [
@@ -1256,7 +1268,13 @@
                 "id": "PF9KMXH",
                 "secret": null,
                 "type": "http_delivery_method",
-                "url": "https://example.com/receive_a_pagerduty_webhook"
+                "url": "https://example.com/receive_a_pagerduty_webhook",
+                "custom_headers": [
+                  {
+                    "name": "your-header-name",
+                    "value": "-- redacted --"
+                  }
+                ]
               },
               "description": "Sends PagerDuty v3 webhook events somewhere interesting.",
               "events": [
@@ -7847,6 +7865,10 @@
                 "type": "string",
                 "description": "The destination URL for webhook delivery.",
                 "format": "url"
+              },
+              "custom_headers": {
+                "type": "array",
+                "description": "Optional headers to be set on this webhook subscription when sent. The header values are redacted in GET requests, but are not redacted on the webhook when delivered to the webhook's endpoint."
               }
             },
             "required": [
