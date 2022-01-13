@@ -57,6 +57,14 @@ If all [On-Call](#on-calls) [User](#users) for a given Escalation Rule have been
 
 [*Read more about Escalation Policies in the PagerDuty Knowledge Base*](https://support.pagerduty.com/hc/en-us/articles/202828950-What-is-an-escalation-policy-).
 
+## Event Orchestrations
+
+A Global Event Orchestrations allow you define a set of Event Rules, so that when you ingest events using the Orchestration's Routing Key your events will be routed to the correct Service, based on the event's content. 
+
+A Service Orchestration allows you to create a set of Event Rules specific to a Service. The Service Orchestration evaluates Events sent to this Service against each of its rules, beginning with the rules in the "start" set. When a matching rule is found, it can modify and enhance the event and can route the event to another set of rules within this Service Orchestration for further processing.
+
+[*Read more about Event Orchestrations in the PagerDuty Knowledge Base*](https://support.pagerduty.com/docs/event-orchestration).
+
 
 ## Extensions
 A PagerDuty Extension represents an instance of an [Extension Schema](#extension-schema) on a object that an Extension can be attached to, such as a Service.

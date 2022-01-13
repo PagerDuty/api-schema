@@ -45,6 +45,10 @@
       "description": "Escalation policies define which user should be alerted at which time.\n"
     },
     {
+      "name": "Event Orchestrations",
+      "description": "Event Orchestrations allow you to route events to an endpoint and create collections of Event Orchestrations, which define sets of actions to take based on event content.\n"
+    },
+    {
       "name": "Extension Schemas",
       "description": "A PagerDuty extension vendor represents a specific type of outbound extension such as Generic Webhook, Slack, ServiceNow.\n"
     },
@@ -2588,6 +2592,23 @@
           ],
           "uniqueItems": true
         }
+      },
+      "sort_by_event_orchestration": {
+        "name": "sort_by",
+        "in": "query",
+        "description": "Used to specify the field you wish to sort the results on.",
+        "schema": {
+          "type": "string",
+          "enum": [
+            "name:asc",
+            "name:desc",
+            "routes:asc",
+            "routes:desc",
+            "created_at:asc",
+            "created_at:desc"
+          ],
+          "default": "name:asc"
+        }
       }
     },
     "responses": {
@@ -2726,6 +2747,303 @@
           "application/json": {
             "schema": {
               "$ref": "#/components/responses/Conflict/content/application~1json/schema"
+            }
+          }
+        }
+      },
+      "OrchestrationPathRouterTypeResponse": {
+        "description": "The Orchestration Router object.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/OrchestrationRouter"
+            },
+            "examples": {
+              "response": {
+                "summary": "Example Response",
+                "value": {
+                  "orchestration_path": {
+                    "type": "router",
+                    "parent": {
+                      "id": "b02e973d-9620-4e0a-9edc-00fedf7d4694",
+                      "self": "https://api.pagerduty.com/event_orchestrations/b02e973d-9620-4e0a-9edc-00fedf7d4694",
+                      "type": "event_orchestration_reference"
+                    },
+                    "self": "https://api.pagerduty.com/event_orchestrations/b02e973d-9620-4e0a-9edc-00fedf7d4694/router",
+                    "sets": [
+                      {
+                        "id": "start",
+                        "rules": [
+                          {
+                            "label": "Events relating to our relational database",
+                            "id": "1c26698b",
+                            "conditions": [
+                              {
+                                "expression": "event.summary matches part 'database'"
+                              },
+                              {
+                                "expression": "event.source matches regex 'db[0-9]+-server'"
+                              }
+                            ],
+                            "actions": {
+                              "route_to": "PB31XBA"
+                            }
+                          },
+                          {
+                            "label": "Events relating to our www app server",
+                            "id": "d9801904",
+                            "conditions": [
+                              {
+                                "expression": "event.summary matches part 'www'"
+                              }
+                            ],
+                            "actions": {
+                              "route_to": "PC2D9ML"
+                            }
+                          }
+                        ]
+                      }
+                    ],
+                    "catch_all": {
+                      "actions": {
+                        "route_to": "unrouted"
+                      }
+                    },
+                    "created_at": "2021-11-18T16:42:01Z",
+                    "created_by": {
+                      "id": "P8B9WR8",
+                      "self": "https://api.pagerduty.com/users/P8B9WR8",
+                      "type": "user_reference"
+                    },
+                    "updated_at": "2021-11-18T16:42:01Z",
+                    "updated_by": {
+                      "id": "P8B9WR8",
+                      "self": "https://api.pagerduty.com/users/P8B9WR8",
+                      "type": "user_reference"
+                    },
+                    "version": "9co0z4b152oICsoV91_PW2.ww8ip_xap"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "OrchestrationPathServiceTypeResponse": {
+        "description": "The Service Orchestration object.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ServiceOrchestration"
+            },
+            "examples": {
+              "response": {
+                "summary": "Example Response",
+                "value": {
+                  "orchestration_path": {
+                    "type": "service",
+                    "parent": {
+                      "id": "PC2D9ML",
+                      "self": "https://api.pagerduty.com/service/PC2D9ML",
+                      "type": "service_reference"
+                    },
+                    "self": "https://api.pagerduty.com/event_orchestrations/service/PC2D9ML",
+                    "sets": [
+                      {
+                        "id": "start",
+                        "rules": [
+                          {
+                            "label": "Always apply some consistent event transformations to all events",
+                            "id": "c91f72f3",
+                            "conditions": [],
+                            "actions": {
+                              "variables": [
+                                {
+                                  "name": "hostname",
+                                  "path": "event.component",
+                                  "value": "hostname: (.*)",
+                                  "type": "regex"
+                                }
+                              ],
+                              "extractions": [
+                                {
+                                  "template": "{{variables.hostname}}",
+                                  "target": "event.custom_details.hostname"
+                                },
+                                {
+                                  "source": "event.source",
+                                  "regex": "www (.*) service",
+                                  "target": "event.source"
+                                }
+                              ],
+                              "route_to": "step-two"
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "id": "step-two",
+                        "rules": [
+                          {
+                            "label": "All critical alerts should be treated as P1 incidents",
+                            "id": "7c54529d",
+                            "conditions": [
+                              {
+                                "expression": "event.severity matches 'critical'"
+                              }
+                            ],
+                            "actions": {
+                              "annotate": "Please use our P1 runbook: https://docs.test/p1-runbook",
+                              "priority": "P0IN2KQ",
+                              "suppress": false
+                            }
+                          },
+                          {
+                            "label": "If there's something wrong on the canary let the team know about it in our deployments Slack channel",
+                            "id": "1f6d9a33",
+                            "conditions": [
+                              {
+                                "expression": "event.custom_details.hostname matches part 'canary'"
+                              }
+                            ],
+                            "actions": {
+                              "automation_actions": [
+                                {
+                                  "name": "Canary Slack Notification",
+                                  "url": "https://our-slack-listerner.test/send-notification",
+                                  "auto_send": true,
+                                  "headers": [
+                                    {
+                                      "key": "X-Notification-Source",
+                                      "value": "PagerDuty Incident Webhook"
+                                    }
+                                  ],
+                                  "parameters": [
+                                    {
+                                      "key": "channel",
+                                      "value": "#my-team-channel"
+                                    },
+                                    {
+                                      "key": "message",
+                                      "value": "Something is wrong with the canary deployment"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "label": "Never bother the on-call for info-level events outside of work hours",
+                            "id": "cd770384",
+                            "conditions": [
+                              {
+                                "expression": "event.severity matches 'info' and not (now in Mon,Tue,Wed,Thu,Fri 09:00:00 to 17:00:00 America/Los_Angeles)"
+                              }
+                            ],
+                            "actions": {
+                              "suppress": true
+                            }
+                          }
+                        ]
+                      }
+                    ],
+                    "catch_all": {
+                      "actions": {
+                        "suppress": true
+                      }
+                    },
+                    "created_at": "2021-11-18T16:42:01Z",
+                    "created_by": {
+                      "id": "P8B9WR8",
+                      "self": "https://api.pagerduty.com/users/P8B9WR8",
+                      "type": "user_reference"
+                    },
+                    "updated_at": "2021-11-18T16:42:01Z",
+                    "updated_by": {
+                      "id": "P8B9WR8",
+                      "self": "https://api.pagerduty.com/users/P8B9WR8",
+                      "type": "user_reference"
+                    },
+                    "version": "rn1Mja13T1HBdmPChqFilSQXUW2fWXM_"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "OrchestrationPathUnroutedTypeResponse": {
+        "description": "The Unrouted Orchestration object.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/OrchestrationUnrouted"
+            },
+            "examples": {
+              "response": {
+                "summary": "Example Response",
+                "value": {
+                  "orchestration_path": {
+                    "type": "unrouted",
+                    "parent": {
+                      "id": "b02e973d-9620-4e0a-9edc-00fedf7d4694",
+                      "self": "https://api.pagerduty.com/event_orchestrations/b02e973d-9620-4e0a-9edc-00fedf7d4694",
+                      "type": "event_orchestration_reference"
+                    },
+                    "self": "https://api.pagerduty.com/event_orchestrations/b02e973d-9620-4e0a-9edc-00fedf7d4694/router",
+                    "sets": [
+                      {
+                        "id": "start",
+                        "rules": [
+                          {
+                            "label": "Update the summary of un-matched Critical alerts so they're easier to spot",
+                            "id": "38880ffb",
+                            "conditions": [
+                              {
+                                "expression": "event.severity matches 'critical'"
+                              }
+                            ],
+                            "actions": {
+                              "extractions": [
+                                {
+                                  "target": "event.summary",
+                                  "template": "[Critical Unrouted] {{event.summary}}"
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "label": "Reduce the severity of all other unrouted events",
+                            "id": "3896801e",
+                            "conditions": [],
+                            "actions": {
+                              "severity": "info"
+                            }
+                          }
+                        ]
+                      }
+                    ],
+                    "catch_all": {
+                      "actions": {
+                        "suppress": true
+                      }
+                    },
+                    "created_at": "2021-11-18T16:42:01Z",
+                    "created_by": {
+                      "id": "P8B9WR8",
+                      "self": "https://api.pagerduty.com/users/P8B9WR8",
+                      "type": "user_reference"
+                    },
+                    "updated_at": "2021-11-18T16:42:01Z",
+                    "updated_by": {
+                      "id": "P8B9WR8",
+                      "self": "https://api.pagerduty.com/users/P8B9WR8",
+                      "type": "user_reference"
+                    },
+                    "version": "aZO.EEf9zWb9Vg0NYq.Uqad1hOC2Maod"
+                  }
+                }
+              }
             }
           }
         }
@@ -8758,6 +9076,963 @@
             "type": "email_contact_method_reference"
           }
         }
+      },
+      "Orchestration": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "ID of the Orchestration.",
+            "readOnly": true
+          },
+          "self": {
+            "type": "string",
+            "format": "url",
+            "description": "The API show URL at which the object is accessible",
+            "readOnly": true
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the Orchestration."
+          },
+          "description": {
+            "type": "string",
+            "description": "A description of this Orchestration's purpose."
+          },
+          "team": {
+            "type": "object",
+            "description": "Reference to the team that owns the Orchestration. If none is specified, only admins have access.",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string",
+                "description": "A string that determines the schema of the object",
+                "readOnly": true
+              },
+              "self": {
+                "type": "string",
+                "format": "url",
+                "description": "The API show URL at which the object is accessible",
+                "readOnly": true
+              }
+            }
+          },
+          "integrations": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "routing_key": {
+                      "type": "string",
+                      "description": "Routing key that routes to this Orchestration"
+                    },
+                    "type": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "readOnly": true
+          },
+          "routes": {
+            "type": "integer",
+            "description": "Number of different Service Orchestration being routed to",
+            "readOnly": true
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The date the Orchestration was created at.",
+            "readOnly": true
+          },
+          "created_by": {
+            "type": "object",
+            "description": "Reference to the user that has created the Orchestration.",
+            "properties": {
+              "id": {
+                "type": "string",
+                "readOnly": true
+              },
+              "type": {
+                "type": "string",
+                "description": "A string that determines the schema of the object",
+                "readOnly": true
+              },
+              "self": {
+                "type": "string",
+                "format": "url",
+                "description": "The API show URL at which the object is accessible",
+                "readOnly": true
+              }
+            },
+            "readOnly": true
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The date the Orchestration was last updated.",
+            "readOnly": true
+          },
+          "updated_by": {
+            "type": "object",
+            "description": "Reference to the user that has updated the Orchestration last.",
+            "properties": {
+              "id": {
+                "type": "string",
+                "readOnly": true
+              },
+              "type": {
+                "type": "string",
+                "description": "A string that determines the schema of the object",
+                "readOnly": true
+              },
+              "self": {
+                "type": "string",
+                "format": "url",
+                "description": "The API show URL at which the object is accessible",
+                "readOnly": true
+              }
+            },
+            "readOnly": true
+          },
+          "version": {
+            "type": "string",
+            "description": "Version of the Orchestration.",
+            "readOnly": true
+          }
+        },
+        "example": {
+          "id": "b02e973d-9620-4e0a-9edc-00fedf7d4694",
+          "self": "https://api.pagerduty.com/event_orchestrations/b02e973d-9620-4e0a-9edc-00fedf7d4694",
+          "name": "Shopping Cart Orchestration",
+          "description": "Send shopping cart alerts to the right services",
+          "team": {
+            "type": "team_reference",
+            "self": "https://api.pagerduty.com/teams/P3ZQXDF",
+            "id": "P3ZQXDF"
+          },
+          "integrations": [
+            {
+              "id": "9c5ff030-12da-4204-a067-25ee61a8df6c",
+              "parameters": {
+                "routing_key": "R028DIE06SNKNO6V5ACSLRV7Y0TUVG7T",
+                "type": "global"
+              }
+            }
+          ],
+          "routes": 0,
+          "created_at": "2019-12-24T21:18:52Z",
+          "created_by": {
+            "type": "user_reference",
+            "self": "https://api.pagerduty.com/users/PABO808",
+            "id": "PABO808"
+          },
+          "updated_at": "2019-12-25T14:54:23Z",
+          "updated_by": {
+            "type": "user_reference",
+            "self": "https://api.pagerduty.com/users/PABO808",
+            "id": "PABO808"
+          },
+          "version": "BrWLKQBLm8QO2ZYQ0GosHLxdbgWZ0ZR3"
+        }
+      },
+      "OrchestrationRouter": {
+        "allOf": [
+          {
+            "type": "object",
+            "properties": {
+              "orchestration_path": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "default": "service",
+                    "readOnly": true
+                  },
+                  "parent": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "description": "ID of the object these Orchestration Rules belongs to.",
+                        "readOnly": true
+                      },
+                      "type": {
+                        "type": "string",
+                        "description": "A string that determines the schema of the parent object",
+                        "readOnly": true
+                      },
+                      "self": {
+                        "type": "string",
+                        "format": "url",
+                        "description": "The API show URL at which the parent object is accessible",
+                        "readOnly": true
+                      }
+                    },
+                    "readOnly": true
+                  },
+                  "sets": {
+                    "type": "array",
+                    "description": "Must contain at least a \"start\" set, but can contain any number of additional sets that are routed to by other rules to form a directional graph of rules.",
+                    "items": {
+                      "type": "object",
+                      "description": "A set of rules",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "description": "The ID of this set of rules. Rules in other sets can route events into this set using the \"route_to\" properties.",
+                          "default": "start"
+                        },
+                        "rules": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "description": "ID of the rule",
+                                "readOnly": true
+                              },
+                              "label": {
+                                "type": "string",
+                                "description": "A description of this rule's purpose."
+                              },
+                              "conditions": {
+                                "type": "array",
+                                "description": "Each of these conditions is evaluated to check if an event matches this rule. The rule is considered a match if **any** of these conditions match.",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "expression": {
+                                      "type": "string",
+                                      "description": "A PCL condition string",
+                                      "example": "event.summary matches part 'my service error'"
+                                    }
+                                  }
+                                }
+                              },
+                              "actions": {
+                                "type": "object",
+                                "description": "When an event matches this rule, these are the actions that will be taken to change the resulting alert and incident."
+                              },
+                              "disabled": {
+                                "type": "boolean",
+                                "description": "Indicates whether the rule is disabled and would therefore not be evaluated."
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "catch_all": {
+                    "type": "object",
+                    "description": "When none of the Rules in a set match an event, we apply the catch_all actions to the event.",
+                    "properties": {
+                      "actions": {
+                        "type": "object",
+                        "description": "These are the actions that will be taken to change the resulting alert and incident."
+                      }
+                    }
+                  },
+                  "created_at": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "The date/time the object was created.",
+                    "readOnly": true
+                  },
+                  "created_by": {
+                    "type": "object",
+                    "description": "Reference to the user that created the object.",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "readOnly": true
+                      },
+                      "type": {
+                        "type": "string",
+                        "description": "A string that determines the schema of the object. This must be the standard name for the entity, suffixed by `_reference` if the object is a reference.",
+                        "readOnly": true
+                      },
+                      "self": {
+                        "type": "string",
+                        "format": "url",
+                        "description": "The API show URL at which the object is accessible",
+                        "readOnly": true
+                      }
+                    },
+                    "readOnly": true
+                  },
+                  "updated_at": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "The date/time the object was last updated.",
+                    "readOnly": true
+                  },
+                  "updated_by": {
+                    "type": "object",
+                    "description": "Reference to the user that last updated the object.",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "readOnly": true
+                      },
+                      "type": {
+                        "type": "string",
+                        "description": "A string that determines the schema of the object. This must be the standard name for the entity, suffixed by `_reference` if the object is a reference.",
+                        "readOnly": true
+                      },
+                      "self": {
+                        "type": "string",
+                        "format": "url",
+                        "description": "The API show URL at which the object is accessible",
+                        "readOnly": true
+                      }
+                    },
+                    "readOnly": true
+                  },
+                  "version": {
+                    "type": "string",
+                    "description": "Version of these Orchestration Rules",
+                    "readOnly": true
+                  }
+                }
+              }
+            },
+            "required": [
+              "orchestration_path"
+            ]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "orchestration_path": {
+                "properties": {
+                  "type": {
+                    "description": "Indicates that these are a \"router\" type set of rules.",
+                    "default": "router"
+                  },
+                  "parent": {
+                    "properties": {
+                      "id": {
+                        "description": "ID of the Global Event Orchestration this Router belongs to."
+                      },
+                      "type": {
+                        "enum": [
+                          "event_orchestration_reference"
+                        ]
+                      }
+                    }
+                  },
+                  "sets": {
+                    "description": "The Router contains a single set of rules (the \"start\" set). The Router evaluates Events against these Rules, one at a time, and routes each Event to a specific Service based on the first rule that matches.",
+                    "maxItems": 1,
+                    "minItems": 1,
+                    "items": {
+                      "properties": {
+                        "rules": {
+                          "items": {
+                            "properties": {
+                              "actions": {
+                                "properties": {
+                                  "route_to": {
+                                    "type": "string",
+                                    "description": "The ID of the target Service for the resulting alert. You can find the service you want to route to by calling the services endpoint.",
+                                    "example": "PSI2I2O"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "catch_all": {
+                    "description": "When none of the rules match an event, the event will be routed according to the catch_all settings.",
+                    "properties": {
+                      "actions": {
+                        "properties": {
+                          "route_to": {
+                            "description": "With a value of 'unrouted', all events are sent to the Unrouted Orchestration.",
+                            "type": "string",
+                            "default": "unrouted"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "example": {
+              "orchestration_path": {
+                "type": "router",
+                "parent": {
+                  "id": "b02e973d-9620-4e0a-9edc-00fedf7d4694",
+                  "self": "https://api.pagerduty.com/event_orchestrations/b02e973d-9620-4e0a-9edc-00fedf7d4694",
+                  "type": "event_orchestration_reference"
+                },
+                "self": "https://api.pagerduty.com/event_orchestrations/b02e973d-9620-4e0a-9edc-00fedf7d4694/router",
+                "sets": [
+                  {
+                    "id": "start",
+                    "rules": [
+                      {
+                        "label": "Events relating to our relational database",
+                        "id": "1c26698b",
+                        "conditions": [
+                          {
+                            "expression": "event.summary matches part 'database'"
+                          },
+                          {
+                            "expression": "event.source matches regex 'db[0-9]+-server'"
+                          }
+                        ],
+                        "actions": {
+                          "route_to": "PB31XBA"
+                        }
+                      },
+                      {
+                        "label": "Events relating to our www app server",
+                        "id": "d9801904",
+                        "conditions": [
+                          {
+                            "expression": "event.summary matches part 'www'"
+                          }
+                        ],
+                        "actions": {
+                          "route_to": "PC2D9ML"
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "catch_all": {
+                  "actions": {
+                    "route_to": "unrouted"
+                  }
+                },
+                "created_at": "2021-11-18T16:42:01Z",
+                "created_by": {
+                  "id": "P8B9WR8",
+                  "self": "https://api.pagerduty.com/users/P8B9WR8",
+                  "type": "user_reference"
+                },
+                "updated_at": "2021-11-18T16:42:01Z",
+                "updated_by": {
+                  "id": "P8B9WR8",
+                  "self": "https://api.pagerduty.com/users/P8B9WR8",
+                  "type": "user_reference"
+                },
+                "version": "9co0z4b152oICsoV91_PW2.ww8ip_xap"
+              }
+            }
+          }
+        ]
+      },
+      "OrchestrationUnrouted": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/OrchestrationRouter/allOf/0"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "orchestration_path": {
+                "properties": {
+                  "type": {
+                    "description": "Indicates that these are a \"unrouted\" type set of rules.",
+                    "default": "unrouted"
+                  },
+                  "parent": {
+                    "properties": {
+                      "id": {
+                        "description": "ID of the Global Event Orchestration this Unrouted Orchestration belongs to."
+                      },
+                      "type": {
+                        "enum": [
+                          "event_orchestration_reference"
+                        ]
+                      }
+                    }
+                  },
+                  "sets": {
+                    "description": "An Unrouted Orchestration must contain at least a \"start\" set, but can contain any number of additional sets that are routed to by other rules to form a directional graph.",
+                    "items": {
+                      "properties": {
+                        "rules": {
+                          "items": {
+                            "properties": {
+                              "actions": {
+                                "allOf": [
+                                  {
+                                    "properties": {
+                                      "route_to": {
+                                        "type": "string",
+                                        "description": "The ID of a Set from this Unrouted Orchestration whose rules you also want to use with event that match this rule."
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "$ref": "#/components/schemas/OrchestrationUnrouted/allOf/1/properties/orchestration_path/properties/catch_all/properties/actions"
+                                  }
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "catch_all": {
+                    "properties": {
+                      "actions": {
+                        "type": "object",
+                        "properties": {
+                          "severity": {
+                            "type": "string",
+                            "description": "Set the severity of the resulting alert.",
+                            "enum": [
+                              "info",
+                              "error",
+                              "warning",
+                              "critical"
+                            ]
+                          },
+                          "event_action": {
+                            "type": "string",
+                            "description": "Set whether the resulting alert status is trigger or resolve.",
+                            "enum": [
+                              "trigger",
+                              "resolve"
+                            ]
+                          },
+                          "variables": {
+                            "type": "array",
+                            "description": "Populate variables from event payloads and use those variables in other event actions.",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "name": {
+                                  "type": "string",
+                                  "description": "The name of the variable",
+                                  "example": "server_name"
+                                },
+                                "path": {
+                                  "type": "string",
+                                  "description": "Path to a field in an event, in dot-notation.",
+                                  "example": "event.summary"
+                                },
+                                "type": {
+                                  "type": "string",
+                                  "description": "The type of operation to populate the variable. Currently only Regex-based variable extraction is supported.",
+                                  "enum": [
+                                    "regex"
+                                  ]
+                                },
+                                "value": {
+                                  "type": "string",
+                                  "description": "A RE2 regular expression. If it contains one or more capture groups, their values will be extracted and appended together. If it contains no capture groups, the whole match is used.",
+                                  "example": "High CPU on (.*) server"
+                                }
+                              }
+                            }
+                          },
+                          "extractions": {
+                            "type": "array",
+                            "description": "Dynamically extract values to set and modify new and existing PD-CEF fields.",
+                            "items": {
+                              "anyOf": [
+                                {
+                                  "type": "object",
+                                  "description": "Use a template string & variables",
+                                  "properties": {
+                                    "target": {
+                                      "type": "string",
+                                      "description": "The PD-CEF field that will be set with the value from the template.",
+                                      "example": "event.summary"
+                                    },
+                                    "template": {
+                                      "type": "string",
+                                      "description": "A value that will be used to populate the target PD-CEF field. You can include variables extracted from the payload by using string interpolation.",
+                                      "example": "High CPU on {{hostname}} server"
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "object",
+                                  "description": "Use a regex to extract a value",
+                                  "properties": {
+                                    "target": {
+                                      "type": "string",
+                                      "description": "The PD-CEF field that will be set with the value from the regex.",
+                                      "example": "event.custom_details.server"
+                                    },
+                                    "regex": {
+                                      "type": "string",
+                                      "description": "A RE2 regular expression. If it contains one or more capture groups, their values will be extracted and appended together. If it contains no capture groups, the whole match is used.",
+                                      "example": "High CPU on (.*) server"
+                                    },
+                                    "source": {
+                                      "type": "string",
+                                      "description": "The path to the event field where the regex will be applied to extract a value.",
+                                      "example": "event.summary"
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "example": {
+              "orchestration_path": {
+                "type": "unrouted",
+                "parent": {
+                  "id": "b02e973d-9620-4e0a-9edc-00fedf7d4694",
+                  "self": "https://api.pagerduty.com/event_orchestrations/b02e973d-9620-4e0a-9edc-00fedf7d4694",
+                  "type": "event_orchestration_reference"
+                },
+                "self": "https://api.pagerduty.com/event_orchestrations/b02e973d-9620-4e0a-9edc-00fedf7d4694/router",
+                "sets": [
+                  {
+                    "id": "start",
+                    "rules": [
+                      {
+                        "label": "Update the summary of un-matched Critical alerts so they're easier to spot",
+                        "id": "38880ffb",
+                        "conditions": [
+                          {
+                            "expression": "event.severity matches 'critical'"
+                          }
+                        ],
+                        "actions": {
+                          "extractions": [
+                            {
+                              "target": "event.summary",
+                              "template": "[Critical Unrouted] {{event.summary}}"
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "label": "Reduce the severity of all other unrouted events",
+                        "id": "3896801e",
+                        "conditions": [],
+                        "actions": {
+                          "severity": "info"
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "catch_all": {
+                  "actions": {
+                    "suppress": true
+                  }
+                },
+                "created_at": "2021-11-18T16:42:01Z",
+                "created_by": {
+                  "id": "P8B9WR8",
+                  "self": "https://api.pagerduty.com/users/P8B9WR8",
+                  "type": "user_reference"
+                },
+                "updated_at": "2021-11-18T16:42:01Z",
+                "updated_by": {
+                  "id": "P8B9WR8",
+                  "self": "https://api.pagerduty.com/users/P8B9WR8",
+                  "type": "user_reference"
+                },
+                "version": "aZO.EEf9zWb9Vg0NYq.Uqad1hOC2Maod"
+              }
+            }
+          }
+        ]
+      },
+      "ServiceOrchestration": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/OrchestrationRouter/allOf/0"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "orchestration_path": {
+                "properties": {
+                  "type": {
+                    "description": "Indicates that these are sets of rules belonging to a service.",
+                    "default": "service"
+                  },
+                  "parent": {
+                    "properties": {
+                      "id": {
+                        "description": "The ID of the Service this Orchestration belongs to."
+                      },
+                      "type": {
+                        "enum": [
+                          "service_reference"
+                        ]
+                      }
+                    }
+                  },
+                  "sets": {
+                    "description": "A Service Orchestration must contain at least a \"start\" set, but can contain any number of additional sets that are routed to by other rules to form a directional graph.",
+                    "items": {
+                      "properties": {
+                        "rules": {
+                          "items": {
+                            "properties": {
+                              "actions": {
+                                "allOf": [
+                                  {
+                                    "properties": {
+                                      "route_to": {
+                                        "type": "string",
+                                        "description": "The ID of a Set from this Service Orchestration whose rules you also want to use with event that match this rule."
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "$ref": "#/components/schemas/ServiceOrchestration/allOf/1/properties/orchestration_path/properties/catch_all/properties/actions/allOf/0"
+                                  },
+                                  {
+                                    "$ref": "#/components/schemas/OrchestrationUnrouted/allOf/1/properties/orchestration_path/properties/catch_all/properties/actions"
+                                  }
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "catch_all": {
+                    "properties": {
+                      "actions": {
+                        "allOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "suppress": {
+                                "type": "boolean",
+                                "description": "Set whether the resulting alert is suppressed. Suppressed alerts will not trigger an incident."
+                              },
+                              "suspend": {
+                                "type": "integer",
+                                "description": "The number of seconds to suspend the resulting alert before triggering. This effectively pauses incident notifications. If a resolve event arrives before the alert triggers then PagerDuty won't create an incident for this the resulting alert."
+                              },
+                              "priority": {
+                                "type": "string",
+                                "description": "The ID of the priority you want to set on resulting incident. You can find the list of priority IDs for your account by calling the priorities endpoint.",
+                                "example": "P53ZZH5"
+                              },
+                              "annotate": {
+                                "type": "string",
+                                "description": "Add this text as a note on the resulting incident."
+                              },
+                              "automation_actions": {
+                                "type": "array",
+                                "description": "Create a Webhoook associated with the resulting incident.",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "name": {
+                                      "type": "string",
+                                      "description": "The name of the Webhook."
+                                    },
+                                    "url": {
+                                      "type": "string",
+                                      "description": "The API endpoint where PagerDuty's servers will send the webhook request."
+                                    },
+                                    "auto_send": {
+                                      "type": "boolean",
+                                      "description": "When true, PagerDuty's servers will automatically send this webhook request as soon as the resulting incident is created. When false, your incident responder will be able to manually trigger the Webhook via the PagerDuty website & mobile app.",
+                                      "default": false
+                                    },
+                                    "headers": {
+                                      "type": "array",
+                                      "description": "Specify custom key/value pairs that'll be sent with the webhook request as request headers.",
+                                      "items": {
+                                        "type": "object",
+                                        "properties": {
+                                          "key": {
+                                            "type": "string"
+                                          },
+                                          "value": {
+                                            "type": "string"
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "parameters": {
+                                      "type": "array",
+                                      "description": "Specify custom key/value pairs that'll be included in the webhook request's JSON payload.",
+                                      "items": {
+                                        "type": "object",
+                                        "properties": {
+                                          "key": {
+                                            "type": "string"
+                                          },
+                                          "value": {
+                                            "type": "string"
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          {
+                            "$ref": "#/components/schemas/OrchestrationUnrouted/allOf/1/properties/orchestration_path/properties/catch_all/properties/actions"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "example": {
+              "orchestration_path": {
+                "type": "service",
+                "parent": {
+                  "id": "PC2D9ML",
+                  "self": "https://api.pagerduty.com/service/PC2D9ML",
+                  "type": "service_reference"
+                },
+                "self": "https://api.pagerduty.com/event_orchestrations/service/PC2D9ML",
+                "sets": [
+                  {
+                    "id": "start",
+                    "rules": [
+                      {
+                        "label": "Always apply some consistent event transformations to all events",
+                        "id": "c91f72f3",
+                        "conditions": [],
+                        "actions": {
+                          "variables": [
+                            {
+                              "name": "hostname",
+                              "path": "event.component",
+                              "value": "hostname: (.*)",
+                              "type": "regex"
+                            }
+                          ],
+                          "extractions": [
+                            {
+                              "template": "{{variables.hostname}}",
+                              "target": "event.custom_details.hostname"
+                            },
+                            {
+                              "source": "event.source",
+                              "regex": "www (.*) service",
+                              "target": "event.source"
+                            }
+                          ],
+                          "route_to": "step-two"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "id": "step-two",
+                    "rules": [
+                      {
+                        "label": "All critical alerts should be treated as P1 incidents",
+                        "id": "7c54529d",
+                        "conditions": [
+                          "event.severity matches 'critical'"
+                        ],
+                        "actions": {
+                          "annotate": "Please use our P1 runbook: https://docs.test/p1-runbook",
+                          "priority": "P0IN2KQ",
+                          "suppress": false
+                        }
+                      },
+                      {
+                        "label": "If there's something wrong on the canary let the team know about it in our deployments Slack channel",
+                        "id": "1f6d9a33",
+                        "conditions": [
+                          "event.custom_details.hostname matches part 'canary'"
+                        ],
+                        "actions": {
+                          "automation_actions": [
+                            {
+                              "name": "Canary Slack Notification",
+                              "url": "https://our-slack-listerner.test/send-notification",
+                              "auto_send": true,
+                              "headers": [
+                                {
+                                  "key": "X-Notification-Source",
+                                  "value": "PagerDuty Incident Webhook"
+                                }
+                              ],
+                              "parameters": [
+                                {
+                                  "key": "channel",
+                                  "value": "#my-team-channel"
+                                },
+                                {
+                                  "key": "message",
+                                  "value": "Something is wrong with the canary deployment"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "label": "Never bother the on-call for info-level events outside of work hours",
+                        "id": "cd770384",
+                        "conditions": [
+                          "event.severity matches 'info' and not (now in Mon,Tue,Wed,Thu,Fri 09:00:00 to 17:00:00 America/Los_Angeles)"
+                        ],
+                        "actions": {
+                          "suppress": true
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "catch_all": {
+                  "actions": {
+                    "suppress": true
+                  }
+                },
+                "created_at": "2021-11-18T16:42:01Z",
+                "created_by": {
+                  "id": "P8B9WR8",
+                  "self": "https://api.pagerduty.com/users/P8B9WR8",
+                  "type": "user_reference"
+                },
+                "updated_at": "2021-11-18T16:42:01Z",
+                "updated_by": {
+                  "id": "P8B9WR8",
+                  "self": "https://api.pagerduty.com/users/P8B9WR8",
+                  "type": "user_reference"
+                },
+                "version": "rn1Mja13T1HBdmPChqFilSQXUW2fWXM_"
+              }
+            }
+          }
+        ]
       }
     }
   },
@@ -12981,6 +14256,993 @@
           },
           "500": {
             "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/event_orchestrations": {
+      "description": "Get a list of Event Orchestrations",
+      "get": {
+        "tags": [
+          "Event Orchestrations"
+        ],
+        "operationId": "listEventOrchestrations",
+        "description": "List all Global Event Orchestrations on an Account.\n\nGlobal Event Orchestrations allow you define a set of Event Rules, so that when you ingest events using the Orchestration's Routing Key your events will be routed to the correct Service, based on the event's content.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#event-orchestrations)\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time.\n",
+        "summary": "List Event Orchestrations",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/offset_limit"
+          },
+          {
+            "$ref": "#/components/parameters/offset_offset"
+          },
+          {
+            "$ref": "#/components/parameters/sort_by_event_orchestration"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A paginated array of Event Orchestration objects.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Pagination"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "orchestrations": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Orchestration"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "orchestrations": [
+                        {
+                          "id": "b02e973d-9620-4e0a-9edc-00fedf7d4694",
+                          "self": "https://api.pagerduty.com/event_orchestrations/b02e973d-9620-4e0a-9edc-00fedf7d4694",
+                          "name": "Shopping Cart Orchestration",
+                          "description": "Send shopping cart alerts to the right services",
+                          "team": {
+                            "id": "PQYP5MN",
+                            "type": "team_reference",
+                            "self": "https://api.pagerduty.com/teams/PQYP5MN"
+                          },
+                          "integration": [
+                            {
+                              "id": "9c5ff030-12da-4204-a067-25ee61a8df6c",
+                              "parameters": {
+                                "routing_key": "R028DIE06SNKNO6V5ACSLRV7Y0TUVG7T",
+                                "type": "global"
+                              }
+                            }
+                          ],
+                          "routes": 0,
+                          "created_at": "2021-11-18T16:42:01Z",
+                          "created_by": {
+                            "id": "P8B9WR8",
+                            "self": "https://api.pagerduty.com/users/P8B9WR8",
+                            "type": "user_reference"
+                          },
+                          "updated_at": "2021-11-18T16:42:01Z",
+                          "updated_by": {
+                            "id": "P8B9WR8",
+                            "self": "https://api.pagerduty.com/users/P8B9WR8",
+                            "type": "user_reference"
+                          },
+                          "version": "9co0z4b152oICsoV91_PW2.ww8ip_xap"
+                        }
+                      ],
+                      "limit": 25,
+                      "offset": 0,
+                      "more": false,
+                      "total": 1
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/event_orchestrations/{id}": {
+      "description": "Manage Global Orchestrations.",
+      "get": {
+        "tags": [
+          "Event Orchestrations"
+        ],
+        "operationId": "getOrchestration",
+        "description": "Get a Global Event Orchestration.\n\nGlobal Event Orchestrations allow you define a set of Event Rules, so that when you ingest events using the Orchestration's Routing Key your events will be routed to the correct Service, based on the event's content.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#event-orchestrations)\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time.\n",
+        "summary": "Get an Orchestration",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The Orchestration object.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "orchestration": {
+                      "$ref": "#/components/schemas/Orchestration"
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "orchestration": {
+                        "id": "b02e973d-9620-4e0a-9edc-00fedf7d4694",
+                        "self": "https://api.pagerduty.com/event_orchestrations/b02e973d-9620-4e0a-9edc-00fedf7d4694",
+                        "name": "Shopping Cart Orchestration",
+                        "description": "Send shopping cart alerts to the right services",
+                        "team": {
+                          "id": "PQYP5MN",
+                          "type": "team_reference",
+                          "self": "https://api.pagerduty.com/teams/PQYP5MN"
+                        },
+                        "integration": [
+                          {
+                            "id": "9c5ff030-12da-4204-a067-25ee61a8df6c",
+                            "parameters": {
+                              "routing_key": "R028DIE06SNKNO6V5ACSLRV7Y0TUVG7T",
+                              "type": "global"
+                            }
+                          }
+                        ],
+                        "routes": 0,
+                        "created_at": "2021-11-18T16:42:01Z",
+                        "created_by": {
+                          "id": "P8B9WR8",
+                          "self": "https://api.pagerduty.com/users/P8B9WR8",
+                          "type": "user_reference"
+                        },
+                        "updated_at": "2021-11-18T16:42:01Z",
+                        "updated_by": {
+                          "id": "P8B9WR8",
+                          "self": "https://api.pagerduty.com/users/P8B9WR8",
+                          "type": "user_reference"
+                        },
+                        "version": "9co0z4b152oICsoV91_PW2.ww8ip_xap"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Event Orchestrations"
+        ],
+        "operationId": "updateOrchestration",
+        "description": "Update a Global Event Orchestration.\n\nGlobal Event Orchestrations allow you define a set of Event Rules, so that when you ingest events using the Orchestration's Routing Key your events will be routed to the correct Service, based on the event's content.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#event-orchestrations)\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time.\n",
+        "summary": "Update an Orchestration",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "orchestration": {
+                    "$ref": "#/components/schemas/Orchestration"
+                  }
+                },
+                "required": [
+                  "orchestration"
+                ]
+              },
+              "examples": {
+                "change_name": {
+                  "summary": "Example: Change name",
+                  "value": {
+                    "orchestration": {
+                      "name": "Go-Kart Orchestration"
+                    }
+                  }
+                },
+                "change_team": {
+                  "summary": "Example: Change team",
+                  "value": {
+                    "orchestration": {
+                      "team": {
+                        "id": "PWL7QXS"
+                      }
+                    }
+                  }
+                },
+                "change_description": {
+                  "summary": "Example: Change description",
+                  "value": {
+                    "orchestration": {
+                      "description": "Orchestration that does some stuff"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "description": ""
+        },
+        "responses": {
+          "200": {
+            "description": "The Orchestration that was updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "orchestration": {
+                      "$ref": "#/components/schemas/Orchestration"
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "orchestration": {
+                        "id": "b02e973d-9620-4e0a-9edc-00fedf7d4694",
+                        "self": "https://api.pagerduty.com/event_orchestrations/b02e973d-9620-4e0a-9edc-00fedf7d4694",
+                        "name": "Go-Kart Orchestration",
+                        "description": "Orchestration that does some stuff",
+                        "team": {
+                          "id": "PWL7QXS",
+                          "type": "team_reference",
+                          "self": "https://api.pagerduty.com/teams/PWL7QXS"
+                        },
+                        "integration": [
+                          {
+                            "id": "9c5ff030-12da-4204-a067-25ee61a8df6c",
+                            "parameters": {
+                              "routing_key": "R028DIE06SNKNO6V5ACSLRV7Y0TUVG7T",
+                              "type": "global"
+                            }
+                          }
+                        ],
+                        "routes": 0,
+                        "created_at": "2021-11-18T16:42:01Z",
+                        "created_by": {
+                          "id": "P8B9WR8",
+                          "self": "https://api.pagerduty.com/users/P8B9WR8",
+                          "type": "user_reference"
+                        },
+                        "updated_at": "2021-11-19T11:42:32Z",
+                        "updated_by": {
+                          "id": "P8B9WR8",
+                          "self": "https://api.pagerduty.com/users/P8B9WR8",
+                          "type": "user_reference"
+                        },
+                        "version": "BrWLKQBLm8QO2ZYQ0GosHLxdbgWZ0ZR3"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "405": {
+            "$ref": "#/components/responses/NotAllowed"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Event Orchestrations"
+        ],
+        "operationId": "deleteOrchestration",
+        "description": "Delete a Global Event Orchestration.\n\nOnce deleted, you will no longer be able to ingest events into PagerDuty using this Orchestration's routing key.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#event-orchestrations)\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time.\n",
+        "summary": "Delete an Orchestration",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The Orchestration was deleted successfully."
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "405": {
+            "$ref": "#/components/responses/NotAllowed"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Event Orchestrations"
+        ],
+        "description": "Create a Global Event Orchestration.\n\nGlobal Event Orchestrations allow you define a set of Event Rules, so that when you ingest events using the Orchestration's Routing Key your events will be routed to the correct Service, based on the event's content.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#event-orchestrations)\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time.\n",
+        "summary": "Create an Orchestration",
+        "operationId": "postOrchestration",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "orchestration": {
+                    "$ref": "#/components/schemas/Orchestration"
+                  }
+                },
+                "required": [
+                  "orchestration"
+                ]
+              },
+              "examples": {
+                "create_orchestration": {
+                  "summary": "Example: Create Orchestration",
+                  "value": {
+                    "orchestration": {
+                      "name": "New Orchestration",
+                      "description": "This is a newly created orchestration",
+                      "team": {
+                        "id": "PXD0WR8"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "The Orchestration that was created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "orchestration": {
+                      "$ref": "#/components/schemas/Orchestration"
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "orchestration": {
+                        "id": "3aae9a17-8585-4d8c-93d3-99742801cd95",
+                        "self": "https://api.pagerduty.com/event_orchestrations/3aae9a17-8585-4d8c-93d3-99742801cd95",
+                        "name": "New Orchestration",
+                        "description": "This is a newly created orchestration",
+                        "team": {
+                          "id": "PXD0WR8",
+                          "self": "https://api.pagerduty.com/teams/PXD0WR8",
+                          "type": "team_reference"
+                        },
+                        "integrations": [
+                          {
+                            "id": "461cd942-d7cc-43ef-ac7d-86ba2d58fc45",
+                            "parameters": {
+                              "routing_key": "R022XIJR9M266DX570EVE6EXP1AFBN6D",
+                              "type": "global"
+                            }
+                          }
+                        ],
+                        "routes": 0,
+                        "created_at": "2021-12-02T14:21:42Z",
+                        "created_by": {
+                          "id": "P8B9WR8",
+                          "self": "https://api.pagerduty.com/users/P8B9WR8",
+                          "type": "user_reference"
+                        },
+                        "updated_at": "2021-12-02T14:21:42Z",
+                        "updated_by": {
+                          "id": "P8B9WR8",
+                          "self": "https://api.pagerduty.com/users/P8B9WR8",
+                          "type": "user_reference"
+                        },
+                        "version": "oBgzJsGDOz99G.FKZ0c1C6hw35twk_Ib"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "405": {
+            "$ref": "#/components/responses/NotAllowed"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          }
+        }
+      }
+    },
+    "/event_orchestrations/{id}/router": {
+      "description": "View and update an Orchestration Router.",
+      "get": {
+        "tags": [
+          "Event Orchestrations"
+        ],
+        "operationId": "getOrchPathRouter",
+        "summary": "Get the Router for a Global Event Orchestration",
+        "description": "Get a Global Event Orchestration's Routing Rules.\n\nAn Orchestration Router allows you to create a set of Event Rules. The Router evaluates Events you send to this Orchestration against each of its rules, one at a time, and routes the event to a specific Service based on the first rule that matches. If an event doesn't match any rules, it'll be sent to service specified in as the `catch_all` or the \"Unrouted\" Orchestration if no service is specified.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#event-orchestrations)\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time.\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/OrchestrationPathRouterTypeResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Event Orchestrations"
+        ],
+        "operationId": "updateOrchPathRouter",
+        "summary": "Update the Router for a Global Event Orchestration",
+        "description": "Update an Orchestration's Routing Rules.\n\nAn Orchestration Router allows you to create a set of Event Rules. The Router evaluates Events you send to this Orchestration against each of its rules, one at a time, and routes the event to a specific Service based on the first rule that matches. If an event doesn't match any rules, it'll be sent to service specified in as the `catch_all` or the \"Unrouted\" Orchestration if no service is specified.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#event-orchestrations)\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time.\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "requestBody": {
+          "description": "Updates to Orchestration Router details. Omitted rules and rule details are deleted.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrchestrationRouter"
+              },
+              "examples": {
+                "request": {
+                  "summary": "Example Request",
+                  "value": {
+                    "orchestration_path": {
+                      "sets": [
+                        {
+                          "id": "start",
+                          "rules": [
+                            {
+                              "label": "Events relating to our relational database",
+                              "id": "1c26698b",
+                              "conditions": [
+                                {
+                                  "expression": "event.summary matches part 'database'"
+                                },
+                                {
+                                  "expression": "event.source matches regex 'db[0-9]+-server'"
+                                }
+                              ],
+                              "actions": {
+                                "route_to": "PB31XBA"
+                              }
+                            },
+                            {
+                              "label": "Events relating to our www app server",
+                              "id": "d9801904",
+                              "conditions": [
+                                {
+                                  "expression": "event.summary matches part 'www'"
+                                }
+                              ],
+                              "actions": {
+                                "route_to": "PC2D9ML"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/OrchestrationPathRouterTypeResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "405": {
+            "$ref": "#/components/responses/NotAllowed"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          }
+        }
+      }
+    },
+    "/event_orchestrations/{id}/unrouted": {
+      "description": "View and update an Unrouted Orchestration.",
+      "get": {
+        "tags": [
+          "Event Orchestrations"
+        ],
+        "operationId": "getOrchPathUnrouted",
+        "summary": "Get the Unrouted Orchestration for a Global Event Orchestration",
+        "description": "Get a Global Event Orchestration's Rules for Unrouted events.\n\nAn Unrouted Orchestration allows you to create a set of Event Rules that will be evaluated against all events that don't match any rules in the Orchestration's Router.\n\nThe Unrouted Orchestration evaluates Events sent to it against each of its rules, beginning with the rules in the \"start\" set. When a matching rule is found, it can modify and enhance the event and can route the event to another set of rules within this Unrouted Orchestration for further processing.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#event-orchestrations)\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time.\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/OrchestrationPathUnroutedTypeResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Event Orchestrations"
+        ],
+        "operationId": "updateOrchPathUnrouted",
+        "summary": "Update the Unrouted Orchestration for a Global Event Orchestration",
+        "description": "Update a Global Event Orchestration's Rules for Unrouted events.\n\nAn Unrouted Orchestration allows you to create a set of Event Rules that will be evaluated against all events that don't match any rules in the Orchestration's Router.\n\nThe Unrouted Orchestration evaluates Events sent to it against each of its rules, beginning with the rules in the \"start\" set. When a matching rule is found, it can modify and enhance the event and can route the event to another set of rules within this Unrouted Orchestration for further processing.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#event-orchestrations)\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time.\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "requestBody": {
+          "description": "Updates to Unrouted Orchestration rules. Omitted rules and rule details are deleted.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrchestrationUnrouted"
+              },
+              "examples": {
+                "request": {
+                  "summary": "Example Request",
+                  "value": {
+                    "orchestration_path": {
+                      "sets": [
+                        {
+                          "id": "start",
+                          "rules": [
+                            {
+                              "label": "Update the summary of un-matched Critical alerts so they're easier to spot",
+                              "id": "38880ffb",
+                              "conditions": [
+                                {
+                                  "expression": "event.severity matches 'critical'"
+                                }
+                              ],
+                              "actions": {
+                                "extractions": [
+                                  {
+                                    "target": "event.summary",
+                                    "template": "[Critical Unrouted] {{event.summary}}"
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "label": "Reduce the severity of all other unrouted events",
+                              "id": "3896801e",
+                              "conditions": [],
+                              "actions": {
+                                "severity": "info"
+                              }
+                            }
+                          ],
+                          "catch_all": {
+                            "actions": {
+                              "suppress": true
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/OrchestrationPathUnroutedTypeResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "405": {
+            "$ref": "#/components/responses/NotAllowed"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          }
+        }
+      }
+    },
+    "/event_orchestrations/services/{id}": {
+      "description": "View and update a Service Orchestration.",
+      "get": {
+        "tags": [
+          "Event Orchestrations"
+        ],
+        "operationId": "getOrchPathService",
+        "summary": "Get the Service Orchestration for a Service",
+        "description": "Get a Service Orchestration.\n\nA Service Orchestration allows you to create a set of Event Rules. The Service Orchestration evaluates Events sent to this Service against each of its rules, beginning with the rules in the \"start\" set. When a matching rule is found, it can modify and enhance the event and can route the event to another set of rules within this Service Orchestration for further processing.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#event-orchestrations)\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time.\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/OrchestrationPathServiceTypeResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Event Orchestrations"
+        ],
+        "operationId": "updateOrchPathService",
+        "summary": "Update the Service Orchestration for a Service",
+        "description": "Update a Service Orchestration.\n\nA Service Orchestration allows you to create a set of Event Rules. The Service Orchestration evaluates Events sent to this Service against each of its rules, beginning with the rules in the \"start\" set. When a matching rule is found, it can modify and enhance the event and can route the event to another set of rules within this Service Orchestration for further processing.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#event-orchestrations)\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time.\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "requestBody": {
+          "description": "Update Service Orchestration rules. Omitted rules and rule details are deleted.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ServiceOrchestration"
+              },
+              "examples": {
+                "request": {
+                  "summary": "Example Request",
+                  "value": {
+                    "orchestration_path": {
+                      "sets": [
+                        {
+                          "id": "start",
+                          "rules": [
+                            {
+                              "label": "Always apply some consistent event transformations to all events",
+                              "id": "c91f72f3",
+                              "conditions": [],
+                              "actions": {
+                                "variables": [
+                                  {
+                                    "name": "hostname",
+                                    "path": "event.component",
+                                    "value": "hostname: (.*)",
+                                    "type": "regex"
+                                  }
+                                ],
+                                "extractions": [
+                                  {
+                                    "template": "{{variables.hostname}}",
+                                    "target": "event.custom_details.hostname"
+                                  },
+                                  {
+                                    "source": "event.source",
+                                    "regex": "www (.*) service",
+                                    "target": "event.source"
+                                  }
+                                ],
+                                "route_to": "step-two"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "id": "step-two",
+                          "rules": [
+                            {
+                              "label": "All critical alerts should be treated as P1 incidents",
+                              "id": "7c54529d",
+                              "conditions": [
+                                {
+                                  "expression": "event.severity matches 'critical'"
+                                }
+                              ],
+                              "actions": {
+                                "annotate": "Please use our P1 runbook: https://docs.test/p1-runbook",
+                                "priority": "P0IN2KQ",
+                                "suppress": false
+                              }
+                            },
+                            {
+                              "label": "If there's something wrong on the canary let the team know about it in our deployments Slack channel",
+                              "id": "1f6d9a33",
+                              "conditions": [
+                                {
+                                  "expression": "event.custom_details.hostname matches part 'canary'"
+                                }
+                              ],
+                              "actions": {
+                                "automation_actions": [
+                                  {
+                                    "name": "Canary Slack Notification",
+                                    "url": "https://our-slack-listerner.test/send-notification",
+                                    "auto_send": true,
+                                    "headers": [
+                                      {
+                                        "key": "X-Notification-Source",
+                                        "value": "PagerDuty Incident Webhook"
+                                      }
+                                    ],
+                                    "parameters": [
+                                      {
+                                        "key": "channel",
+                                        "value": "#my-team-channel"
+                                      },
+                                      {
+                                        "key": "message",
+                                        "value": "Something is wrong with the canary deployment"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "label": "Never bother the on-call for info-level events outside of work hours",
+                              "id": "cd770384",
+                              "conditions": [
+                                {
+                                  "expression": "event.severity matches 'info' and not (now in Mon,Tue,Wed,Thu,Fri 09:00:00 to 17:00:00 America/Los_Angeles)"
+                                }
+                              ],
+                              "actions": {
+                                "suppress": true
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    "catch_all": {
+                      "actions": {
+                        "suppress": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/OrchestrationPathServiceTypeResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "405": {
+            "$ref": "#/components/responses/NotAllowed"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
           }
         }
       }
