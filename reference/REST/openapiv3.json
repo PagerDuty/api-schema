@@ -31117,7 +31117,7 @@
           "Users"
         ],
         "operationId": "getUserSessions",
-        "description": "List active sessions of a PagerDuty user.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#users)\n",
+        "description": "List active sessions of a PagerDuty user.\n\nBeginning November 2021, active sessions no longer includes newly issued OAuth tokens. \n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#users)\n",
         "summary": "List a user's active sessions",
         "parameters": [
           {
@@ -31190,7 +31190,7 @@
           "Users"
         ],
         "operationId": "deleteUserSessions",
-        "description": "Delete all user sessions.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#users)\n",
+        "description": "Delete all user sessions.\n\nBeginning November 2021, user sessions no longer includes newly issued OAuth tokens.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#users)\n",
         "summary": "Delete all user sessions",
         "parameters": [
           {
@@ -31229,7 +31229,7 @@
           "Users"
         ],
         "operationId": "getUserSession",
-        "description": "Get details about a user's session.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#users)\n",
+        "description": "Get details about a user's session.\n\nBeginning November 2021, user sessions no longer includes newly issued OAuth tokens.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#users)\n",
         "summary": "Get a user's session",
         "parameters": [
           {
@@ -31303,7 +31303,7 @@
           "Users"
         ],
         "operationId": "deleteUserSession",
-        "description": "Delete a user's session.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#users)\n",
+        "description": "Delete a user's session.\n\nBeginning November 2021, user sessions no longer includes newly issued OAuth tokens.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#users)\n",
         "summary": "Delete a user's session",
         "parameters": [
           {
