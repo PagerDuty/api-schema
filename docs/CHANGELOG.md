@@ -5,6 +5,9 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 Currently we rarely deprecate, and do not remove any API functionality.
 
 ---
+### 2022-01-14
+- *BREAKING* Beginning November 2021, newly issued oauth tokens are no longer included in the `users/{id}/sessions` endpoints
+
 ### 2022-01-13
 - Added documentation for Event Orchestration
   - `GET /event_orchestrations`
