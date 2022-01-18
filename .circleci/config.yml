@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   publish:
     docker:
-      - image: cimg/node:erbium
+      - image: cimg/node:fermium
     steps:
       - checkout
       - run:
