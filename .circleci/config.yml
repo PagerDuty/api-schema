@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   publish:
     docker:
-      - image: circleci/node:erbium
+      - image: cimg/node:erbium
     steps:
       - checkout
       - run:
