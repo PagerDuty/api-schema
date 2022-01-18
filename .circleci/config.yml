@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   publish:
     docker:
-      - image: cimg/node:fermium
+      - image: cimg/node:12.22.9
     steps:
       - checkout
       - run:
