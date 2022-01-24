@@ -21209,6 +21209,9 @@
           },
           {
             "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/from_header"
           }
         ],
         "requestBody": {
@@ -21446,6 +21449,9 @@
           },
           {
             "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/from_header"
           }
         ],
         "requestBody": {
@@ -21573,6 +21579,9 @@
           },
           {
             "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/from_header"
           }
         ],
         "responses": {

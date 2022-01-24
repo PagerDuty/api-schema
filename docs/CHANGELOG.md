@@ -5,6 +5,12 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 Currently we rarely deprecate, and do not remove any API functionality.
 
 ---
+### 2022-01-24
+- Fix missing `From` header requirement on response play endpoints.
+  - `POST /response_plays`
+  - `PUT /response_plays/{response_play_id}`
+  - `DELETE /response_play/{response_play_id}`
+
 ### 2022-01-22
 - Added documentation for `urgency` query parameter for `GET /users/{user_id}/notification_rules` endpoint.
 
