@@ -14267,7 +14267,7 @@
           "Event Orchestrations"
         ],
         "operationId": "listEventOrchestrations",
-        "description": "List all Global Event Orchestrations on an Account.\n\nGlobal Event Orchestrations allow you define a set of Event Rules, so that when you ingest events using the Orchestration's Routing Key your events will be routed to the correct Service, based on the event's content.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#event-orchestrations)\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time.\n",
+        "description": "List all Global Event Orchestrations on an Account.\n\nGlobal Event Orchestrations allow you define a set of Event Rules, so that when you ingest events using the Orchestration's Routing Key your events will be routed to the correct Service, based on the event's content.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#event-orchestrations)\n",
         "summary": "List Event Orchestrations",
         "parameters": [
           {
@@ -14378,7 +14378,7 @@
           "Event Orchestrations"
         ],
         "operationId": "getOrchestration",
-        "description": "Get a Global Event Orchestration.\n\nGlobal Event Orchestrations allow you define a set of Event Rules, so that when you ingest events using the Orchestration's Routing Key your events will be routed to the correct Service, based on the event's content.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#event-orchestrations)\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time.\n",
+        "description": "Get a Global Event Orchestration.\n\nGlobal Event Orchestrations allow you define a set of Event Rules, so that when you ingest events using the Orchestration's Routing Key your events will be routed to the correct Service, based on the event's content.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#event-orchestrations)\n",
         "summary": "Get an Orchestration",
         "parameters": [
           {
@@ -14467,7 +14467,7 @@
           "Event Orchestrations"
         ],
         "operationId": "updateOrchestration",
-        "description": "Update a Global Event Orchestration.\n\nGlobal Event Orchestrations allow you define a set of Event Rules, so that when you ingest events using the Orchestration's Routing Key your events will be routed to the correct Service, based on the event's content.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#event-orchestrations)\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time.\n",
+        "description": "Update a Global Event Orchestration.\n\nGlobal Event Orchestrations allow you define a set of Event Rules, so that when you ingest events using the Orchestration's Routing Key your events will be routed to the correct Service, based on the event's content.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#event-orchestrations)\n",
         "summary": "Update an Orchestration",
         "parameters": [
           {
@@ -14608,7 +14608,7 @@
           "Event Orchestrations"
         ],
         "operationId": "deleteOrchestration",
-        "description": "Delete a Global Event Orchestration.\n\nOnce deleted, you will no longer be able to ingest events into PagerDuty using this Orchestration's routing key.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#event-orchestrations)\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time.\n",
+        "description": "Delete a Global Event Orchestration.\n\nOnce deleted, you will no longer be able to ingest events into PagerDuty using this Orchestration's routing key.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#event-orchestrations)\n",
         "summary": "Delete an Orchestration",
         "parameters": [
           {
@@ -14649,7 +14649,7 @@
         "tags": [
           "Event Orchestrations"
         ],
-        "description": "Create a Global Event Orchestration.\n\nGlobal Event Orchestrations allow you define a set of Event Rules, so that when you ingest events using the Orchestration's Routing Key your events will be routed to the correct Service, based on the event's content.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#event-orchestrations)\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time.\n",
+        "description": "Create a Global Event Orchestration.\n\nGlobal Event Orchestrations allow you define a set of Event Rules, so that when you ingest events using the Orchestration's Routing Key your events will be routed to the correct Service, based on the event's content.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#event-orchestrations)\n",
         "summary": "Create an Orchestration",
         "operationId": "postOrchestration",
         "requestBody": {
@@ -14780,7 +14780,7 @@
         ],
         "operationId": "getOrchPathRouter",
         "summary": "Get the Router for a Global Event Orchestration",
-        "description": "Get a Global Event Orchestration's Routing Rules.\n\nAn Orchestration Router allows you to create a set of Event Rules. The Router evaluates Events you send to this Orchestration against each of its rules, one at a time, and routes the event to a specific Service based on the first rule that matches. If an event doesn't match any rules, it'll be sent to service specified in as the `catch_all` or the \"Unrouted\" Orchestration if no service is specified.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#event-orchestrations)\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time.\n",
+        "description": "Get a Global Event Orchestration's Routing Rules.\n\nAn Orchestration Router allows you to create a set of Event Rules. The Router evaluates Events you send to this Orchestration against each of its rules, one at a time, and routes the event to a specific Service based on the first rule that matches. If an event doesn't match any rules, it'll be sent to service specified in as the `catch_all` or the \"Unrouted\" Orchestration if no service is specified.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#event-orchestrations)\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -14816,7 +14816,7 @@
         ],
         "operationId": "updateOrchPathRouter",
         "summary": "Update the Router for a Global Event Orchestration",
-        "description": "Update an Orchestration's Routing Rules.\n\nAn Orchestration Router allows you to create a set of Event Rules. The Router evaluates Events you send to this Orchestration against each of its rules, one at a time, and routes the event to a specific Service based on the first rule that matches. If an event doesn't match any rules, it'll be sent to service specified in as the `catch_all` or the \"Unrouted\" Orchestration if no service is specified.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#event-orchestrations)\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time.\n",
+        "description": "Update an Orchestration's Routing Rules.\n\nAn Orchestration Router allows you to create a set of Event Rules. The Router evaluates Events you send to this Orchestration against each of its rules, one at a time, and routes the event to a specific Service based on the first rule that matches. If an event doesn't match any rules, it'll be sent to service specified in as the `catch_all` or the \"Unrouted\" Orchestration if no service is specified.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#event-orchestrations)\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -14914,7 +14914,7 @@
         ],
         "operationId": "getOrchPathUnrouted",
         "summary": "Get the Unrouted Orchestration for a Global Event Orchestration",
-        "description": "Get a Global Event Orchestration's Rules for Unrouted events.\n\nAn Unrouted Orchestration allows you to create a set of Event Rules that will be evaluated against all events that don't match any rules in the Orchestration's Router.\n\nThe Unrouted Orchestration evaluates Events sent to it against each of its rules, beginning with the rules in the \"start\" set. When a matching rule is found, it can modify and enhance the event and can route the event to another set of rules within this Unrouted Orchestration for further processing.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#event-orchestrations)\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time.\n",
+        "description": "Get a Global Event Orchestration's Rules for Unrouted events.\n\nAn Unrouted Orchestration allows you to create a set of Event Rules that will be evaluated against all events that don't match any rules in the Orchestration's Router.\n\nThe Unrouted Orchestration evaluates Events sent to it against each of its rules, beginning with the rules in the \"start\" set. When a matching rule is found, it can modify and enhance the event and can route the event to another set of rules within this Unrouted Orchestration for further processing.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#event-orchestrations)\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -14950,7 +14950,7 @@
         ],
         "operationId": "updateOrchPathUnrouted",
         "summary": "Update the Unrouted Orchestration for a Global Event Orchestration",
-        "description": "Update a Global Event Orchestration's Rules for Unrouted events.\n\nAn Unrouted Orchestration allows you to create a set of Event Rules that will be evaluated against all events that don't match any rules in the Orchestration's Router.\n\nThe Unrouted Orchestration evaluates Events sent to it against each of its rules, beginning with the rules in the \"start\" set. When a matching rule is found, it can modify and enhance the event and can route the event to another set of rules within this Unrouted Orchestration for further processing.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#event-orchestrations)\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time.\n",
+        "description": "Update a Global Event Orchestration's Rules for Unrouted events.\n\nAn Unrouted Orchestration allows you to create a set of Event Rules that will be evaluated against all events that don't match any rules in the Orchestration's Router.\n\nThe Unrouted Orchestration evaluates Events sent to it against each of its rules, beginning with the rules in the \"start\" set. When a matching rule is found, it can modify and enhance the event and can route the event to another set of rules within this Unrouted Orchestration for further processing.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#event-orchestrations)\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -15051,7 +15051,7 @@
         ],
         "operationId": "getOrchPathService",
         "summary": "Get the Service Orchestration for a Service",
-        "description": "Get a Service Orchestration.\n\nA Service Orchestration allows you to create a set of Event Rules. The Service Orchestration evaluates Events sent to this Service against each of its rules, beginning with the rules in the \"start\" set. When a matching rule is found, it can modify and enhance the event and can route the event to another set of rules within this Service Orchestration for further processing.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#event-orchestrations)\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time.\n",
+        "description": "Get a Service Orchestration.\n\nA Service Orchestration allows you to create a set of Event Rules. The Service Orchestration evaluates Events sent to this Service against each of its rules, beginning with the rules in the \"start\" set. When a matching rule is found, it can modify and enhance the event and can route the event to another set of rules within this Service Orchestration for further processing.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#event-orchestrations)\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -15087,7 +15087,7 @@
         ],
         "operationId": "updateOrchPathService",
         "summary": "Update the Service Orchestration for a Service",
-        "description": "Update a Service Orchestration.\n\nA Service Orchestration allows you to create a set of Event Rules. The Service Orchestration evaluates Events sent to this Service against each of its rules, beginning with the rules in the \"start\" set. When a matching rule is found, it can modify and enhance the event and can route the event to another set of rules within this Service Orchestration for further processing.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#event-orchestrations)\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time.\n",
+        "description": "Update a Service Orchestration.\n\nA Service Orchestration allows you to create a set of Event Rules. The Service Orchestration evaluates Events sent to this Service against each of its rules, beginning with the rules in the \"start\" set. When a matching rule is found, it can modify and enhance the event and can route the event to another set of rules within this Service Orchestration for further processing.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#event-orchestrations)\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -31117,7 +31117,7 @@
           "Users"
         ],
         "operationId": "getUserSessions",
-        "description": "List active sessions of a PagerDuty user.\n\nBeginning November 2021, active sessions no longer includes newly issued OAuth tokens. \n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#users)\n",
+        "description": "List active sessions of a PagerDuty user.\n\nBeginning November 2021, active sessions no longer includes newly issued OAuth tokens.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#users)\n",
         "summary": "List a user's active sessions",
         "parameters": [
           {
