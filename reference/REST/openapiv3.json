@@ -2609,6 +2609,21 @@
           ],
           "default": "name:asc"
         }
+      },
+      "urgency": {
+        "name": "urgency",
+        "in": "query",
+        "description": "The incident urgency for which the notification rules are applied. If not specified, defaults to `high`.",
+        "explode": true,
+        "schema": {
+          "type": "string",
+          "enum": [
+            "high",
+            "low",
+            "all"
+          ],
+          "uniqueItems": true
+        }
       }
     },
     "responses": {
@@ -29950,6 +29965,9 @@
           },
           {
             "$ref": "#/components/parameters/include_notification_rules"
+          },
+          {
+            "$ref": "#/components/parameters/urgency"
           }
         ],
         "responses": {
