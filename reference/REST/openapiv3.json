@@ -2624,6 +2624,24 @@
           ],
           "uniqueItems": true
         }
+      },
+      "schedule_since": {
+        "name": "since",
+        "in": "query",
+        "description": "The start of the date range over which you want to show schedule entries. Defaults to 2 weeks before until if an until is given.",
+        "schema": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "schedule_until": {
+        "name": "until",
+        "in": "query",
+        "description": "The end of the date range over which you want to show schedule entries. Defaults to 2 weeks after since if a since is given.",
+        "schema": {
+          "type": "string",
+          "format": "date-time"
+        }
       }
     },
     "responses": {
@@ -23190,10 +23208,10 @@
             "$ref": "#/components/parameters/time_zone"
           },
           {
-            "$ref": "#/components/parameters/since"
+            "$ref": "#/components/parameters/schedule_since"
           },
           {
-            "$ref": "#/components/parameters/until"
+            "$ref": "#/components/parameters/schedule_until"
           },
           {
             "$ref": "#/components/parameters/id"
