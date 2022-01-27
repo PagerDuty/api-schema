@@ -19768,7 +19768,7 @@
                   ]
                 },
                 "examples": {
-                  "resonse": {
+                  "response": {
                     "summary": "Response Example",
                     "value": {
                       "deleted_count": 1,
@@ -28426,7 +28426,7 @@
                   ]
                 },
                 "examples": {
-                  "resonse": {
+                  "response": {
                     "summary": "Response Example",
                     "value": {
                       "subscriptions": [
@@ -28605,6 +28605,7 @@
       }
     },
     "/teams/{id}/notification_subscriptions/unsubscribe": {
+      "summary": "Remove Team Notification Subscriptions",
       "post": {
         "tags": [
           "Teams"
