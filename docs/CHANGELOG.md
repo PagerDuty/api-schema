@@ -31,6 +31,9 @@ Currently we rarely deprecate, and do not remove any API functionality.
   - `GET /event_orchestrations/services/{service_id}`
   - `PUT /event_orchestrations/services/{service_id}`
 
+### 202l-01-06
+- Updated how since and until parameters work for schedules GET API
+
 ### 2021-12-1
 - Added documentation for `custom_headers` as part of the `delivery_method` on a `subscription_webhook`
 
