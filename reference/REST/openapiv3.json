@@ -29013,7 +29013,7 @@
           "Users"
         ],
         "operationId": "createUser",
-        "description": "Create a new user. Note that you must also supply a `password` property to create a user--it will not be returned by any API.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#users)\n",
+        "description": "Create a new user.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#users)\n",
         "summary": "Create a user",
         "parameters": [
           {
