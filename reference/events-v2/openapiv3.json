@@ -43,6 +43,9 @@
                   },
                   "links": {
                     "$ref": "#/components/schemas/Links"
+                  },
+                  "images": {
+                    "$ref": "#/components/schemas/Images"
                   }
                 },
                 "required": [
@@ -69,6 +72,13 @@
                       {
                         "href": "https://buildpipeline.com/pagerduty/deployment/builds/220",
                         "text": "View in Build Pipeline"
+                      }
+                    ],
+                    "images": [
+                      {
+                        "src": "https://chart.googleapis.com/chart?chs=600x400&chd=t:6,2,9,5,2,5,7,4,8,2,1&cht=lc&chds=a&chxt=y&chm=D,0033FF,0,0,5,1",
+                        "href": "https://google.com",
+                        "alt": "An example link with an image"
                       }
                     ]
                   }
@@ -260,6 +270,15 @@
           },
           "required": [
             "src"
+          ]
+        },
+        "x-examples": {
+          "example-1": [
+            {
+              "src": "string",
+              "href": "string",
+              "alt": "string"
+            }
           ]
         }
       },

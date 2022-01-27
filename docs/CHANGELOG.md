@@ -5,6 +5,11 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 Currently we rarely deprecate, and do not remove any API functionality.
 
 ---
+
+### 2022-01-26
+- Added missing documentation for the `Images` field
+  - `POST /change/enqueue`
+
 ### 2022-01-24
 - Fix missing `From` header requirement on response play endpoints.
   - `POST /response_plays`
