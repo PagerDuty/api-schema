@@ -6,6 +6,11 @@ Currently we rarely deprecate, and do not remove any API functionality.
 
 ---
 
+### 2022-01-31
+- Removed reference to an incorrect statement in the documentation indicating a `password` property is required for user creation.
+  - `POST /users`
+
+
 ### 2022-01-26
 - Added missing documentation for the `Images` field
   - `POST /change/enqueue`
