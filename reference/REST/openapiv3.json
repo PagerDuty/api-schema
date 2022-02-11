@@ -10076,7 +10076,7 @@
           "Tags"
         ],
         "operationId": "createEntityTypeByIdChangeTags",
-        "description": "Assign existing or new tags.\n\nA Tag is applied to EScalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#tags)\n",
+        "description": "Assign existing or new tags.\n\nA Tag is applied to EScalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#tags)\n",
         "summary": "Assign tags",
         "parameters": [
           {
@@ -10245,7 +10245,7 @@
           "Tags"
         ],
         "operationId": "getEntityTypeByIdTags",
-        "description": "Get related tags for Users, Teams or Escalation Policies.\n\nA Tag is applied to EScalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#tags)\n",
+        "description": "Get related tags for Users, Teams or Escalation Policies.\n\nA Tag is applied to EScalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#tags)\n",
         "summary": "Get tags for entities",
         "parameters": [
           {
@@ -10339,7 +10339,7 @@
           "Abilities"
         ],
         "operationId": "listAbilities",
-        "description": "List all of your account's abilities, by name.\n\n\"Abilities\" describes your account's capabilities by feature name. For example `\"teams\"`.\n\nAn ability may be available to your account based on things like your pricing plan or account state.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#abilities)\n",
+        "description": "List all of your account's abilities, by name.\n\n\"Abilities\" describes your account's capabilities by feature name. For example `\"teams\"`.\n\nAn ability may be available to your account based on things like your pricing plan or account state.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#abilities)\n",
         "summary": "List abilities",
         "parameters": [
           {
@@ -10410,7 +10410,7 @@
           "Abilities"
         ],
         "operationId": "getAbility",
-        "description": "Test whether your account has a given ability.\n\n\"Abilities\" describes your account's capabilities by feature name. For example `\"teams\"`.\n\nAn ability may be available to your account based on things like your pricing plan or account state.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#abilities)\n",
+        "description": "Test whether your account has a given ability.\n\n\"Abilities\" describes your account's capabilities by feature name. For example `\"teams\"`.\n\nAn ability may be available to your account based on things like your pricing plan or account state.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#abilities)\n",
         "summary": "Test an ability",
         "parameters": [
           {
@@ -10452,7 +10452,7 @@
           "Add-ons"
         ],
         "operationId": "listAddon",
-        "description": "List all of the Add-ons installed on your account.\n\nAddon's are pieces of functionality that developers can write to insert new functionality into PagerDuty's UI.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#add-ons)\n",
+        "description": "List all of the Add-ons installed on your account.\n\nAddon's are pieces of functionality that developers can write to insert new functionality into PagerDuty's UI.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#add-ons)\n",
         "summary": "List installed Add-ons",
         "parameters": [
           {
@@ -10550,7 +10550,7 @@
           "Add-ons"
         ],
         "operationId": "createAddon",
-        "description": "Install an Add-on for your account.\n\nAddon's are pieces of functionality that developers can write to insert new functionality into PagerDuty's UI.\n\nGiven a configuration containing a `src` parameter, that URL will be embedded in an `iframe` on a page that's available to users from a drop-down menu.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#add-ons)\n",
+        "description": "Install an Add-on for your account.\n\nAddon's are pieces of functionality that developers can write to insert new functionality into PagerDuty's UI.\n\nGiven a configuration containing a `src` parameter, that URL will be embedded in an `iframe` on a page that's available to users from a drop-down menu.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#add-ons)\n",
         "summary": "Install an Add-on",
         "parameters": [
           {
@@ -10647,7 +10647,7 @@
           "Add-ons"
         ],
         "operationId": "getAddon",
-        "description": "Get details about an existing Add-on.\n\nAddon's are pieces of functionality that developers can write to insert new functionality into PagerDuty's UI.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#add-ons)\n",
+        "description": "Get details about an existing Add-on.\n\nAddon's are pieces of functionality that developers can write to insert new functionality into PagerDuty's UI.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#add-ons)\n",
         "summary": "Get an Add-on",
         "parameters": [
           {
@@ -10723,7 +10723,7 @@
           "Add-ons"
         ],
         "operationId": "deleteAddon",
-        "description": "Remove an existing Add-on.\n\nAddon's are pieces of functionality that developers can write to insert new functionality into PagerDuty's UI.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#add-ons)\n",
+        "description": "Remove an existing Add-on.\n\nAddon's are pieces of functionality that developers can write to insert new functionality into PagerDuty's UI.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#add-ons)\n",
         "summary": "Delete an Add-on",
         "parameters": [
           {
@@ -10759,7 +10759,7 @@
           "Add-ons"
         ],
         "operationId": "updateAddon",
-        "description": "Update an existing Add-on.\n\nAddon's are pieces of functionality that developers can write to insert new functionality into PagerDuty's UI.\n\nGiven a configuration containing a `src` parameter, that URL will be embedded in an `iframe` on a page that's available to users from a drop-down menu.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#add-ons)\n",
+        "description": "Update an existing Add-on.\n\nAddon's are pieces of functionality that developers can write to insert new functionality into PagerDuty's UI.\n\nGiven a configuration containing a `src` parameter, that URL will be embedded in an `iframe` on a page that's available to users from a drop-down menu.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#add-ons)\n",
         "summary": "Update an Add-on",
         "parameters": [
           {
@@ -11823,7 +11823,7 @@
           "Business Services"
         ],
         "operationId": "listBusinessServices",
-        "description": "List existing Business Services.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#business-services)\n",
+        "description": "List existing Business Services.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#business-services)\n",
         "summary": "List Business Services",
         "parameters": [
           {
@@ -11925,7 +11925,7 @@
           "Business Services"
         ],
         "operationId": "createBusinessService",
-        "description": "Create a new Business Service.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#business-services)\n",
+        "description": "Create a new Business Service.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#business-services)\n",
         "summary": "Create a Business Service",
         "parameters": [
           {
@@ -12053,7 +12053,7 @@
           "Business Services"
         ],
         "operationId": "getBusinessService",
-        "description": "Get details about an existing Business Service.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#business-services)\n",
+        "description": "Get details about an existing Business Service.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#business-services)\n",
         "summary": "Get a Business Service",
         "parameters": [
           {
@@ -12126,7 +12126,7 @@
           "Business Services"
         ],
         "operationId": "deleteBusinessService",
-        "description": "Delete an existing Business Service.\n\nOnce the service is deleted, it will not be accessible from the web UI and new incidents won't be able to be created for this service.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#business-services)\n",
+        "description": "Delete an existing Business Service.\n\nOnce the service is deleted, it will not be accessible from the web UI and new incidents won't be able to be created for this service.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#business-services)\n",
         "summary": "Delete a Business Service",
         "parameters": [
           {
@@ -12159,7 +12159,7 @@
           "Business Services"
         ],
         "operationId": "updateBusinessService",
-        "description": "Update an existing Business Service. NOTE that this endpoint also accepts the PATCH verb.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#business-services)\n",
+        "description": "Update an existing Business Service. NOTE that this endpoint also accepts the PATCH verb.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#business-services)\n",
         "summary": "Update a Business Service",
         "parameters": [
           {
@@ -13599,7 +13599,7 @@
           "Escalation Policies"
         ],
         "operationId": "listEscalationPolicies",
-        "description": "List all of the existing escalation policies.\n\nEscalation policies define which user should be alerted at which time.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#escalation-policies)\n",
+        "description": "List all of the existing escalation policies.\n\nEscalation policies define which user should be alerted at which time.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#escalation-policies)\n",
         "summary": "List escalation policies",
         "parameters": [
           {
@@ -13744,7 +13744,7 @@
           "Escalation Policies"
         ],
         "operationId": "createEscalationPolicy",
-        "description": "Creates a new escalation policy. At least one escalation rule must be provided.\n\nEscalation policies define which user should be alerted at which time.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#escalation-policies)\n",
+        "description": "Creates a new escalation policy. At least one escalation rule must be provided.\n\nEscalation policies define which user should be alerted at which time.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#escalation-policies)\n",
         "summary": "Create an escalation policy",
         "parameters": [
           {
@@ -13913,7 +13913,7 @@
           "Escalation Policies"
         ],
         "operationId": "getEscalationPolicy",
-        "description": "Get information about an existing escalation policy and its rules.\n\nEscalation policies define which user should be alerted at which time.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#escalation-policies)\n",
+        "description": "Get information about an existing escalation policy and its rules.\n\nEscalation policies define which user should be alerted at which time.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#escalation-policies)\n",
         "summary": "Get an escalation policy",
         "parameters": [
           {
@@ -14022,7 +14022,7 @@
           "Escalation Policies"
         ],
         "operationId": "deleteEscalationPolicy",
-        "description": "Deletes an existing escalation policy and rules. The escalation policy must not be in use by any services.\n\nEscalation policies define which user should be alerted at which time.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#escalation-policies)\n",
+        "description": "Deletes an existing escalation policy and rules. The escalation policy must not be in use by any services.\n\nEscalation policies define which user should be alerted at which time.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#escalation-policies)\n",
         "summary": "Delete an escalation policy",
         "parameters": [
           {
@@ -14058,7 +14058,7 @@
           "Escalation Policies"
         ],
         "operationId": "updateEscalationPolicy",
-        "description": "Updates an existing escalation policy and rules.\n\nEscalation policies define which user should be alerted at which time.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#escalation-policies)\n",
+        "description": "Updates an existing escalation policy and rules.\n\nEscalation policies define which user should be alerted at which time.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#escalation-policies)\n",
         "summary": "Update an escalation policy",
         "parameters": [
           {
@@ -14300,7 +14300,7 @@
           "Event Orchestrations"
         ],
         "operationId": "listEventOrchestrations",
-        "description": "List all Global Event Orchestrations on an Account.\n\nGlobal Event Orchestrations allow you define a set of Event Rules, so that when you ingest events using the Orchestration's Routing Key your events will be routed to the correct Service, based on the event's content.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#event-orchestrations)\n",
+        "description": "List all Global Event Orchestrations on an Account.\n\nGlobal Event Orchestrations allow you define a set of Event Rules, so that when you ingest events using the Orchestration's Routing Key your events will be routed to the correct Service, based on the event's content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n",
         "summary": "List Event Orchestrations",
         "parameters": [
           {
@@ -14411,7 +14411,7 @@
           "Event Orchestrations"
         ],
         "operationId": "getOrchestration",
-        "description": "Get a Global Event Orchestration.\n\nGlobal Event Orchestrations allow you define a set of Event Rules, so that when you ingest events using the Orchestration's Routing Key your events will be routed to the correct Service, based on the event's content.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#event-orchestrations)\n",
+        "description": "Get a Global Event Orchestration.\n\nGlobal Event Orchestrations allow you define a set of Event Rules, so that when you ingest events using the Orchestration's Routing Key your events will be routed to the correct Service, based on the event's content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n",
         "summary": "Get an Orchestration",
         "parameters": [
           {
@@ -14500,7 +14500,7 @@
           "Event Orchestrations"
         ],
         "operationId": "updateOrchestration",
-        "description": "Update a Global Event Orchestration.\n\nGlobal Event Orchestrations allow you define a set of Event Rules, so that when you ingest events using the Orchestration's Routing Key your events will be routed to the correct Service, based on the event's content.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#event-orchestrations)\n",
+        "description": "Update a Global Event Orchestration.\n\nGlobal Event Orchestrations allow you define a set of Event Rules, so that when you ingest events using the Orchestration's Routing Key your events will be routed to the correct Service, based on the event's content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n",
         "summary": "Update an Orchestration",
         "parameters": [
           {
@@ -14641,7 +14641,7 @@
           "Event Orchestrations"
         ],
         "operationId": "deleteOrchestration",
-        "description": "Delete a Global Event Orchestration.\n\nOnce deleted, you will no longer be able to ingest events into PagerDuty using this Orchestration's routing key.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#event-orchestrations)\n",
+        "description": "Delete a Global Event Orchestration.\n\nOnce deleted, you will no longer be able to ingest events into PagerDuty using this Orchestration's routing key.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n",
         "summary": "Delete an Orchestration",
         "parameters": [
           {
@@ -14682,7 +14682,7 @@
         "tags": [
           "Event Orchestrations"
         ],
-        "description": "Create a Global Event Orchestration.\n\nGlobal Event Orchestrations allow you define a set of Event Rules, so that when you ingest events using the Orchestration's Routing Key your events will be routed to the correct Service, based on the event's content.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#event-orchestrations)\n",
+        "description": "Create a Global Event Orchestration.\n\nGlobal Event Orchestrations allow you define a set of Event Rules, so that when you ingest events using the Orchestration's Routing Key your events will be routed to the correct Service, based on the event's content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n",
         "summary": "Create an Orchestration",
         "operationId": "postOrchestration",
         "requestBody": {
@@ -14813,7 +14813,7 @@
         ],
         "operationId": "getOrchPathRouter",
         "summary": "Get the Router for a Global Event Orchestration",
-        "description": "Get a Global Event Orchestration's Routing Rules.\n\nAn Orchestration Router allows you to create a set of Event Rules. The Router evaluates Events you send to this Orchestration against each of its rules, one at a time, and routes the event to a specific Service based on the first rule that matches. If an event doesn't match any rules, it'll be sent to service specified in as the `catch_all` or the \"Unrouted\" Orchestration if no service is specified.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#event-orchestrations)\n",
+        "description": "Get a Global Event Orchestration's Routing Rules.\n\nAn Orchestration Router allows you to create a set of Event Rules. The Router evaluates Events you send to this Orchestration against each of its rules, one at a time, and routes the event to a specific Service based on the first rule that matches. If an event doesn't match any rules, it'll be sent to service specified in as the `catch_all` or the \"Unrouted\" Orchestration if no service is specified.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -14849,7 +14849,7 @@
         ],
         "operationId": "updateOrchPathRouter",
         "summary": "Update the Router for a Global Event Orchestration",
-        "description": "Update an Orchestration's Routing Rules.\n\nAn Orchestration Router allows you to create a set of Event Rules. The Router evaluates Events you send to this Orchestration against each of its rules, one at a time, and routes the event to a specific Service based on the first rule that matches. If an event doesn't match any rules, it'll be sent to service specified in as the `catch_all` or the \"Unrouted\" Orchestration if no service is specified.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#event-orchestrations)\n",
+        "description": "Update an Orchestration's Routing Rules.\n\nAn Orchestration Router allows you to create a set of Event Rules. The Router evaluates Events you send to this Orchestration against each of its rules, one at a time, and routes the event to a specific Service based on the first rule that matches. If an event doesn't match any rules, it'll be sent to service specified in as the `catch_all` or the \"Unrouted\" Orchestration if no service is specified.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -14947,7 +14947,7 @@
         ],
         "operationId": "getOrchPathUnrouted",
         "summary": "Get the Unrouted Orchestration for a Global Event Orchestration",
-        "description": "Get a Global Event Orchestration's Rules for Unrouted events.\n\nAn Unrouted Orchestration allows you to create a set of Event Rules that will be evaluated against all events that don't match any rules in the Orchestration's Router.\n\nThe Unrouted Orchestration evaluates Events sent to it against each of its rules, beginning with the rules in the \"start\" set. When a matching rule is found, it can modify and enhance the event and can route the event to another set of rules within this Unrouted Orchestration for further processing.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#event-orchestrations)\n",
+        "description": "Get a Global Event Orchestration's Rules for Unrouted events.\n\nAn Unrouted Orchestration allows you to create a set of Event Rules that will be evaluated against all events that don't match any rules in the Orchestration's Router.\n\nThe Unrouted Orchestration evaluates Events sent to it against each of its rules, beginning with the rules in the \"start\" set. When a matching rule is found, it can modify and enhance the event and can route the event to another set of rules within this Unrouted Orchestration for further processing.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -14983,7 +14983,7 @@
         ],
         "operationId": "updateOrchPathUnrouted",
         "summary": "Update the Unrouted Orchestration for a Global Event Orchestration",
-        "description": "Update a Global Event Orchestration's Rules for Unrouted events.\n\nAn Unrouted Orchestration allows you to create a set of Event Rules that will be evaluated against all events that don't match any rules in the Orchestration's Router.\n\nThe Unrouted Orchestration evaluates Events sent to it against each of its rules, beginning with the rules in the \"start\" set. When a matching rule is found, it can modify and enhance the event and can route the event to another set of rules within this Unrouted Orchestration for further processing.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#event-orchestrations)\n",
+        "description": "Update a Global Event Orchestration's Rules for Unrouted events.\n\nAn Unrouted Orchestration allows you to create a set of Event Rules that will be evaluated against all events that don't match any rules in the Orchestration's Router.\n\nThe Unrouted Orchestration evaluates Events sent to it against each of its rules, beginning with the rules in the \"start\" set. When a matching rule is found, it can modify and enhance the event and can route the event to another set of rules within this Unrouted Orchestration for further processing.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -15084,7 +15084,7 @@
         ],
         "operationId": "getOrchPathService",
         "summary": "Get the Service Orchestration for a Service",
-        "description": "Get a Service Orchestration.\n\nA Service Orchestration allows you to create a set of Event Rules. The Service Orchestration evaluates Events sent to this Service against each of its rules, beginning with the rules in the \"start\" set. When a matching rule is found, it can modify and enhance the event and can route the event to another set of rules within this Service Orchestration for further processing.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#event-orchestrations)\n",
+        "description": "Get a Service Orchestration.\n\nA Service Orchestration allows you to create a set of Event Rules. The Service Orchestration evaluates Events sent to this Service against each of its rules, beginning with the rules in the \"start\" set. When a matching rule is found, it can modify and enhance the event and can route the event to another set of rules within this Service Orchestration for further processing.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -15120,7 +15120,7 @@
         ],
         "operationId": "updateOrchPathService",
         "summary": "Update the Service Orchestration for a Service",
-        "description": "Update a Service Orchestration.\n\nA Service Orchestration allows you to create a set of Event Rules. The Service Orchestration evaluates Events sent to this Service against each of its rules, beginning with the rules in the \"start\" set. When a matching rule is found, it can modify and enhance the event and can route the event to another set of rules within this Service Orchestration for further processing.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#event-orchestrations)\n",
+        "description": "Update a Service Orchestration.\n\nA Service Orchestration allows you to create a set of Event Rules. The Service Orchestration evaluates Events sent to this Service against each of its rules, beginning with the rules in the \"start\" set. When a matching rule is found, it can modify and enhance the event and can route the event to another set of rules within this Service Orchestration for further processing.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -15287,7 +15287,7 @@
           "Extension Schemas"
         ],
         "operationId": "listExtensionSchemas",
-        "description": "List all extension schemas.\n\nA PagerDuty extension vendor represents a specific type of outbound extension such as Generic Webhook, Slack, ServiceNow.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#extension-schemas)\n",
+        "description": "List all extension schemas.\n\nA PagerDuty extension vendor represents a specific type of outbound extension such as Generic Webhook, Slack, ServiceNow.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#extension-schemas)\n",
         "summary": "List extension schemas",
         "parameters": [
           {
@@ -15392,7 +15392,7 @@
           "Extension Schemas"
         ],
         "operationId": "getExtensionSchema",
-        "description": "Get details about one specific extension vendor.\n\nA PagerDuty extension vendor represents a specific type of outbound extension such as Generic Webhook, Slack, ServiceNow.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#extension-schemas)\n",
+        "description": "Get details about one specific extension vendor.\n\nA PagerDuty extension vendor represents a specific type of outbound extension such as Generic Webhook, Slack, ServiceNow.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#extension-schemas)\n",
         "summary": "Get an extension vendor",
         "parameters": [
           {
@@ -15478,7 +15478,7 @@
           "Extensions"
         ],
         "operationId": "listExtensions",
-        "description": "List existing extensions.\n\nExtensions are representations of Extension Schema objects that are attached to Services.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#extensions)\n",
+        "description": "List existing extensions.\n\nExtensions are representations of Extension Schema objects that are attached to Services.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#extensions)\n",
         "summary": "List extensions",
         "parameters": [
           {
@@ -15590,7 +15590,7 @@
           "Extensions"
         ],
         "operationId": "createExtension",
-        "description": "Create a new Extension.\n\nExtensions are representations of Extension Schema objects that are attached to Services.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#extensions)\n",
+        "description": "Create a new Extension.\n\nExtensions are representations of Extension Schema objects that are attached to Services.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#extensions)\n",
         "summary": "Create an extension",
         "parameters": [
           {
@@ -15806,7 +15806,7 @@
           "Extensions"
         ],
         "operationId": "getExtension",
-        "description": "Get details about an existing extension.\n\nExtensions are representations of Extension Schema objects that are attached to Services.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#extensions)\n",
+        "description": "Get details about an existing extension.\n\nExtensions are representations of Extension Schema objects that are attached to Services.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#extensions)\n",
         "summary": "Get an extension",
         "parameters": [
           {
@@ -15891,7 +15891,7 @@
           "Extensions"
         ],
         "operationId": "deleteExtension",
-        "description": "Delete an existing extension.\n\nOnce the extension is deleted, it will not be accessible from the web UI and new incidents won't be able to be created for this extension.\n\nExtensions are representations of Extension Schema objects that are attached to Services.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#extensions)\n",
+        "description": "Delete an existing extension.\n\nOnce the extension is deleted, it will not be accessible from the web UI and new incidents won't be able to be created for this extension.\n\nExtensions are representations of Extension Schema objects that are attached to Services.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#extensions)\n",
         "summary": "Delete an extension",
         "parameters": [
           {
@@ -15924,7 +15924,7 @@
           "Extensions"
         ],
         "operationId": "updateExtension",
-        "description": "Update an existing extension.\n\nExtensions are representations of Extension Schema objects that are attached to Services.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#extensions)\n",
+        "description": "Update an existing extension.\n\nExtensions are representations of Extension Schema objects that are attached to Services.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#extensions)\n",
         "summary": "Update an extension",
         "parameters": [
           {
@@ -16074,7 +16074,7 @@
           "Extensions"
         ],
         "operationId": "enableExtension",
-        "description": "Enable an extension that is temporarily disabled. (This API does not require a request body.)\n\nExtensions are representations of Extension Schema objects that are attached to Services.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#extensions)\n",
+        "description": "Enable an extension that is temporarily disabled. (This API does not require a request body.)\n\nExtensions are representations of Extension Schema objects that are attached to Services.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#extensions)\n",
         "summary": "Enable an extension",
         "parameters": [
           {
@@ -16158,7 +16158,7 @@
           "Incidents"
         ],
         "operationId": "listIncidents",
-        "description": "List existing incidents.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#incidents)\n",
+        "description": "List existing incidents.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n",
         "summary": "List incidents",
         "parameters": [
           {
@@ -16340,7 +16340,7 @@
           "Incidents"
         ],
         "operationId": "updateIncidents",
-        "description": "Acknowledge, resolve, escalate or reassign one or more incidents.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nA maximum of 500 incidents may be updated at a time. If more than this number of incidents are given, the API will respond with status 413 (Request Entity Too Large).\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#incidents)\n",
+        "description": "Acknowledge, resolve, escalate or reassign one or more incidents.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nA maximum of 500 incidents may be updated at a time. If more than this number of incidents are given, the API will respond with status 413 (Request Entity Too Large).\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n",
         "summary": "Manage incidents",
         "parameters": [
           {
@@ -16630,7 +16630,7 @@
           "Incidents"
         ],
         "operationId": "createIncident",
-        "description": "Create an incident synchronously without a corresponding event from a monitoring service.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#incidents)\n",
+        "description": "Create an incident synchronously without a corresponding event from a monitoring service.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n",
         "summary": "Create an Incident",
         "parameters": [
           {
@@ -16863,7 +16863,7 @@
           "Incidents"
         ],
         "operationId": "getIncident",
-        "description": "Show detailed information about an incident. Accepts either an incident id, or an incident number.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#incidents)\n",
+        "description": "Show detailed information about an incident. Accepts either an incident id, or an incident number.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n",
         "summary": "Get an incident",
         "parameters": [
           {
@@ -17111,7 +17111,7 @@
           "Incidents"
         ],
         "operationId": "updateIncident",
-        "description": "Acknowledge, resolve, escalate or reassign an incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#incidents)\n",
+        "description": "Acknowledge, resolve, escalate or reassign an incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n",
         "summary": "Update an incident",
         "parameters": [
           {
@@ -17361,7 +17361,7 @@
           "Incidents"
         ],
         "operationId": "listIncidentAlerts",
-        "description": "List alerts for the specified incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#incidents)\n",
+        "description": "List alerts for the specified incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n",
         "summary": "List alerts for an incident",
         "parameters": [
           {
@@ -17497,7 +17497,7 @@
           "Incidents"
         ],
         "operationId": "updateIncidentAlerts",
-        "description": "Resolve multiple alerts or associate them with different incidents.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved. An alert represents a digital signal that was emitted to PagerDuty by the monitoring systems that detected or identified the issue.\n\nA maximum of 500 alerts may be updated at a time. If more than this number of alerts are given, the API will respond with status 413 (Request Entity Too Large).\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#incidents)\n",
+        "description": "Resolve multiple alerts or associate them with different incidents.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved. An alert represents a digital signal that was emitted to PagerDuty by the monitoring systems that detected or identified the issue.\n\nA maximum of 500 alerts may be updated at a time. If more than this number of alerts are given, the API will respond with status 413 (Request Entity Too Large).\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n",
         "summary": "Manage alerts",
         "parameters": [
           {
@@ -17666,7 +17666,7 @@
           "Incidents"
         ],
         "operationId": "getIncidentAlert",
-        "description": "Show detailed information about an alert. Accepts an alert id.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nWhen a service sends an event to PagerDuty, an alert and corresponding incident is triggered in PagerDuty.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#incidents)\n",
+        "description": "Show detailed information about an alert. Accepts an alert id.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nWhen a service sends an event to PagerDuty, an alert and corresponding incident is triggered in PagerDuty.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n",
         "summary": "Get an alert",
         "parameters": [
           {
@@ -17763,7 +17763,7 @@
           "Incidents"
         ],
         "operationId": "updateIncidentAlert",
-        "description": "Resolve an alert or associate an alert with a new parent incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nWhen a service sends an event to PagerDuty, an alert and corresponding incident is triggered in PagerDuty.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#incidents)\n",
+        "description": "Resolve an alert or associate an alert with a new parent incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nWhen a service sends an event to PagerDuty, an alert and corresponding incident is triggered in PagerDuty.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n",
         "summary": "Update an alert",
         "parameters": [
           {
@@ -18073,7 +18073,7 @@
           "Incidents"
         ],
         "operationId": "listIncidentLogEntries",
-        "description": "List log entries for the specified incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nA Log Entry are a record of all events on your account.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#incidents)\n",
+        "description": "List log entries for the specified incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nA Log Entry are a record of all events on your account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n",
         "summary": "List log entries for an incident",
         "parameters": [
           {
@@ -18211,7 +18211,7 @@
           "Incidents"
         ],
         "operationId": "mergeIncidents",
-        "description": "Merge a list of source incidents into this incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#incidents)\n",
+        "description": "Merge a list of source incidents into this incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n",
         "summary": "Merge incidents",
         "parameters": [
           {
@@ -18323,7 +18323,7 @@
           "Incidents"
         ],
         "operationId": "listIncidentNotes",
-        "description": "List existing notes for the specified incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#incidents)\n",
+        "description": "List existing notes for the specified incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n",
         "summary": "List notes for an incident",
         "parameters": [
           {
@@ -18423,7 +18423,7 @@
           "Incidents"
         ],
         "operationId": "createIncidentNote",
-        "description": "Create a new note for the specified incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#incidents)\n",
+        "description": "Create a new note for the specified incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n",
         "summary": "Create a note on an incident",
         "parameters": [
           {
@@ -18541,7 +18541,7 @@
           "Incidents"
         ],
         "operationId": "getOutlierIncident",
-        "description": "Gets Outlier Incident information for a given Incident on its Service.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#related_incidents)\n",
+        "description": "Gets Outlier Incident information for a given Incident on its Service.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#related_incidents)\n",
         "summary": "Get Outlier Incident",
         "parameters": [
           {
@@ -18781,7 +18781,7 @@
             "$ref": "#/components/parameters/past_incidents_total"
           }
         ],
-        "description": "Past Incidents returns Incidents within the past 6 months that have similar metadata and were generated on the same Service as the parent Incident. By default, 5 Past Incidents are returned. Note: This feature is currently available as part of the Event Intelligence package or Digital Operations plan only.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#past_incidents)\n"
+        "description": "Past Incidents returns Incidents within the past 6 months that have similar metadata and were generated on the same Service as the parent Incident. By default, 5 Past Incidents are returned. Note: This feature is currently available as part of the Event Intelligence package or Digital Operations plan only.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#past_incidents)\n"
       }
     },
     "/incidents/{id}/related_change_events": {
@@ -18947,7 +18947,7 @@
           "Incidents"
         ],
         "operationId": "getRelatedIncidents",
-        "description": "Returns the 20 most recent Related Incidents that are impacting other Responders and Services. Note: This feature is currently available as part of the Event Intelligence package or Digital Operations plan only.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#related_incidents)\n",
+        "description": "Returns the 20 most recent Related Incidents that are impacting other Responders and Services. Note: This feature is currently available as part of the Event Intelligence package or Digital Operations plan only.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#related_incidents)\n",
         "summary": "Get Related Incidents",
         "parameters": [
           {
@@ -19083,7 +19083,7 @@
           "Incidents"
         ],
         "operationId": "createIncidentResponderRequest",
-        "description": "Send a new responder request for the specified incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#incidents)\n",
+        "description": "Send a new responder request for the specified incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n",
         "summary": "Create a responder request for an incident",
         "parameters": [
           {
@@ -19254,7 +19254,7 @@
           "Incidents"
         ],
         "operationId": "createIncidentSnooze",
-        "description": "Snooze an incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#incidents)\n",
+        "description": "Snooze an incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n",
         "summary": "Snooze an incident",
         "parameters": [
           {
@@ -19432,7 +19432,7 @@
           "Incidents"
         ],
         "operationId": "createIncidentStatusUpdate",
-        "description": "Create a new status update for the specified incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#incidents)\n",
+        "description": "Create a new status update for the specified incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n",
         "summary": "Create a status update on an incident",
         "parameters": [
           {
@@ -19873,7 +19873,7 @@
           "Log Entries"
         ],
         "operationId": "listLogEntries",
-        "description": "List all of the incident log entries across the entire account.\n\nA log of all the events that happen to an Incident, and these are exposed as Log Entries.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#log-entries)\n",
+        "description": "List all of the incident log entries across the entire account.\n\nA log of all the events that happen to an Incident, and these are exposed as Log Entries.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#log-entries)\n",
         "summary": "List log entries",
         "parameters": [
           {
@@ -20011,7 +20011,7 @@
           "Log Entries"
         ],
         "operationId": "getLogEntry",
-        "description": "Get details for a specific incident log entry. This method provides additional information you can use to get at raw event data.\n\nA log of all the events that happen to an Incident, and these are exposed as Log Entries.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#log-entries)\n",
+        "description": "Get details for a specific incident log entry. This method provides additional information you can use to get at raw event data.\n\nA log of all the events that happen to an Incident, and these are exposed as Log Entries.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#log-entries)\n",
         "summary": "Get a log entry",
         "parameters": [
           {
@@ -20119,7 +20119,7 @@
           "Log Entries"
         ],
         "operationId": "updateLogEntryChannel",
-        "description": "Update an existing incident log entry channel.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#log-entries)\n",
+        "description": "Update an existing incident log entry channel.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#log-entries)\n",
         "summary": "Update log entry channel information.",
         "parameters": [
           {
@@ -20212,7 +20212,7 @@
           "Maintenance Windows"
         ],
         "operationId": "listMaintenanceWindows",
-        "description": "List existing maintenance windows, optionally filtered by service and/or team, or whether they are from the past, present or future.\n\nA Maintenance Window is used to temporarily disable one or more Services for a set period of time.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#maintenance-windows)\n",
+        "description": "List existing maintenance windows, optionally filtered by service and/or team, or whether they are from the past, present or future.\n\nA Maintenance Window is used to temporarily disable one or more Services for a set period of time.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#maintenance-windows)\n",
         "summary": "List maintenance windows",
         "parameters": [
           {
@@ -20343,7 +20343,7 @@
           "Maintenance Windows"
         ],
         "operationId": "createMaintenanceWindow",
-        "description": "Create a new maintenance window for the specified services. No new incidents will be created for a service that is in maintenance.\n\nA Maintenance Window is used to temporarily disable one or more Services for a set period of time.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#maintenance-windows)\n",
+        "description": "Create a new maintenance window for the specified services. No new incidents will be created for a service that is in maintenance.\n\nA Maintenance Window is used to temporarily disable one or more Services for a set period of time.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#maintenance-windows)\n",
         "summary": "Create a maintenance window",
         "parameters": [
           {
@@ -20477,7 +20477,7 @@
           "Maintenance Windows"
         ],
         "operationId": "getMaintenanceWindow",
-        "description": "Get an existing maintenance window.\n\nA Maintenance Window is used to temporarily disable one or more Services for a set period of time.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#maintenance-windows)\n",
+        "description": "Get an existing maintenance window.\n\nA Maintenance Window is used to temporarily disable one or more Services for a set period of time.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#maintenance-windows)\n",
         "summary": "Get a maintenance window",
         "parameters": [
           {
@@ -20574,7 +20574,7 @@
           "Maintenance Windows"
         ],
         "operationId": "deleteMaintenanceWindow",
-        "description": "Delete an existing maintenance window if it's in the future, or end it if it's currently on-going. If the maintenance window has already ended it cannot be deleted.\n\nA Maintenance Window is used to temporarily disable one or more Services for a set period of time.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#maintenance-windows)\n",
+        "description": "Delete an existing maintenance window if it's in the future, or end it if it's currently on-going. If the maintenance window has already ended it cannot be deleted.\n\nA Maintenance Window is used to temporarily disable one or more Services for a set period of time.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#maintenance-windows)\n",
         "summary": "Delete or end a maintenance window",
         "parameters": [
           {
@@ -20613,7 +20613,7 @@
           "Maintenance Windows"
         ],
         "operationId": "updateMaintenanceWindow",
-        "description": "Update an existing maintenance window.\n\nA Maintenance Window is used to temporarily disable one or more Services for a set period of time.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#maintenance-windows)\n",
+        "description": "Update an existing maintenance window.\n\nA Maintenance Window is used to temporarily disable one or more Services for a set period of time.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#maintenance-windows)\n",
         "summary": "Update a maintenance window",
         "parameters": [
           {
@@ -20750,7 +20750,7 @@
           "Notifications"
         ],
         "operationId": "listNotifications",
-        "description": "List notifications for a given time range, optionally filtered by type (sms_notification, email_notification, phone_notification, or push_notification).\n\nA Notification is created when an Incident is triggered or escalated.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#notifications)\n",
+        "description": "List notifications for a given time range, optionally filtered by type (sms_notification, email_notification, phone_notification, or push_notification).\n\nA Notification is created when an Incident is triggered or escalated.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#notifications)\n",
         "summary": "List notifications",
         "parameters": [
           {
@@ -20873,7 +20873,7 @@
           "On-Calls"
         ],
         "operationId": "listOnCalls",
-        "description": "List the on-call entries during a given time range.\n\nAn on-call represents a contiguous unit of time for which a User will be on call for a given Escalation Policy and Escalation Rules.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#on-calls)\n",
+        "description": "List the on-call entries during a given time range.\n\nAn on-call represents a contiguous unit of time for which a User will be on call for a given Escalation Policy and Escalation Rules.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#on-calls)\n",
         "summary": "List all of the on-calls",
         "parameters": [
           {
@@ -21006,7 +21006,7 @@
           "Priorities"
         ],
         "operationId": "listPriorities",
-        "description": "List existing priorities, in order (most to least severe).\n\nA priority is a label representing the importance and impact of an incident. This feature is only available on Standard and Enterprise plans.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#priorities)\n",
+        "description": "List existing priorities, in order (most to least severe).\n\nA priority is a label representing the importance and impact of an incident. This feature is only available on Standard and Enterprise plans.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#priorities)\n",
         "summary": "List priorities",
         "parameters": [
           {
@@ -21132,7 +21132,7 @@
           "Response Plays"
         ],
         "operationId": "listResponsePlays",
-        "description": "List all of the existing Response Plays.\n\nResponse Plays allow you to create packages of Incident Actions that can be applied during an Incident's life cycle.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#response-plays)\n\nWhen using a Global API token, the `From` header is required.\n",
+        "description": "List all of the existing Response Plays.\n\nResponse Plays allow you to create packages of Incident Actions that can be applied during an Incident's life cycle.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#response-plays)\n\nWhen using a Global API token, the `From` header is required.\n",
         "summary": "List Response Plays",
         "parameters": [
           {
@@ -21219,7 +21219,7 @@
           "Response Plays"
         ],
         "operationId": "createResponsePlay",
-        "description": "Creates a new Response Plays.\n\nResponse Plays allow you to create packages of Incident Actions that can be applied during an Incident's life cycle.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#response-plays)\n",
+        "description": "Creates a new Response Plays.\n\nResponse Plays allow you to create packages of Incident Actions that can be applied during an Incident's life cycle.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#response-plays)\n",
         "summary": "Create a Response Play",
         "parameters": [
           {
@@ -21373,7 +21373,7 @@
           "Response Plays"
         ],
         "operationId": "getResponsePlay",
-        "description": "Get details about an existing Response Play.\n\nResponse Plays allow you to create packages of Incident Actions that can be applied during an Incident's life cycle.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#response-plays)\n\nWhen using a Global API token, the `From` header is required.",
+        "description": "Get details about an existing Response Play.\n\nResponse Plays allow you to create packages of Incident Actions that can be applied during an Incident's life cycle.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#response-plays)\n\nWhen using a Global API token, the `From` header is required.",
         "summary": "Get a Response Play",
         "parameters": [
           {
@@ -21456,7 +21456,7 @@
           "Response Plays"
         ],
         "operationId": "updateResponsePlay",
-        "description": "Updates an existing Response Play.\n\nResponse Plays allow you to create packages of Incident Actions that can be applied during an Incident's life cycle.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#response-plays)\n",
+        "description": "Updates an existing Response Play.\n\nResponse Plays allow you to create packages of Incident Actions that can be applied during an Incident's life cycle.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#response-plays)\n",
         "summary": "Update a Response Play",
         "parameters": [
           {
@@ -21586,7 +21586,7 @@
           "Response Plays"
         ],
         "operationId": "deleteResponsePlay",
-        "description": "Delete an existing Response Play. Once the Response Play is deleted, the action cannot be undone.\n\nWARNING: When the Response Play is deleted, it is also removed from any Services that were using it.\n\nResponse Plays allow you to create packages of Incident Actions that can be applied to an Incident.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#response-plays)\n",
+        "description": "Delete an existing Response Play. Once the Response Play is deleted, the action cannot be undone.\n\nWARNING: When the Response Play is deleted, it is also removed from any Services that were using it.\n\nResponse Plays allow you to create packages of Incident Actions that can be applied to an Incident.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#response-plays)\n",
         "summary": "Delete a Response Play",
         "parameters": [
           {
@@ -21625,7 +21625,7 @@
           "Response Plays"
         ],
         "operationId": "runResponsePlay",
-        "description": "Run a specified response play on a given incident.\n\nResponse Plays are a package of Incident Actions that can be applied during an Incident's life cycle.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#response-plays)\n",
+        "description": "Run a specified response play on a given incident.\n\nResponse Plays are a package of Incident Actions that can be applied during an Incident's life cycle.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#response-plays)\n",
         "summary": "Run a response play",
         "parameters": [
           {
@@ -21715,7 +21715,7 @@
           "Rulesets"
         ],
         "operationId": "listRulesets",
-        "description": "List all Rulesets.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#rulesets)\n",
+        "description": "List all Rulesets.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#rulesets)\n",
         "summary": "List Rulesets",
         "parameters": [
           {
@@ -21815,7 +21815,7 @@
           "Rulesets"
         ],
         "operationId": "createRuleset",
-        "description": "Create a new Ruleset.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#rulesets)\n",
+        "description": "Create a new Ruleset.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#rulesets)\n",
         "summary": "Create a Ruleset",
         "parameters": [
           {
@@ -21937,7 +21937,7 @@
           "Rulesets"
         ],
         "operationId": "getRuleset",
-        "description": "Get a Ruleset.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#rulesets)\n",
+        "description": "Get a Ruleset.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#rulesets)\n",
         "summary": "Get a Ruleset",
         "parameters": [
           {
@@ -22018,7 +22018,7 @@
           "Rulesets"
         ],
         "operationId": "updateRuleset",
-        "description": "Update a Ruleset.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#rulesets)\n",
+        "description": "Update a Ruleset.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#rulesets)\n",
         "summary": "Update a Ruleset",
         "parameters": [
           {
@@ -22143,7 +22143,7 @@
           "Rulesets"
         ],
         "operationId": "deleteRuleset",
-        "description": "Delete a Ruleset.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#rulesets)\n",
+        "description": "Delete a Ruleset.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#rulesets)\n",
         "summary": "Delete a Ruleset",
         "parameters": [
           {
@@ -22188,7 +22188,7 @@
           "Rulesets"
         ],
         "operationId": "listRulesetEventRules",
-        "description": "List all Event Rules on a Ruleset.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#rulesets)\n\nNote: Create and Update on rules will accept 'description' or 'summary' interchangeably as an extraction action target. Get and List on rules will always return 'summary' as the target. If you are expecting 'description' please change your automation code to expect 'summary' instead.\n",
+        "description": "List all Event Rules on a Ruleset.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#rulesets)\n\nNote: Create and Update on rules will accept 'description' or 'summary' interchangeably as an extraction action target. Get and List on rules will always return 'summary' as the target. If you are expecting 'description' please change your automation code to expect 'summary' instead.\n",
         "summary": "List Event Rules",
         "parameters": [
           {
@@ -22330,7 +22330,7 @@
           "Rulesets"
         ],
         "operationId": "createRulesetEventRule",
-        "description": "Create a new Event Rule.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#rulesets)\n\nNote: Create and Update on rules will accept 'description' or 'summary' interchangeably as an extraction action target. Get and List on rules will always return 'summary' as the target. If you are expecting 'description' please change your automation code to expect 'summary' instead.\n",
+        "description": "Create a new Event Rule.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#rulesets)\n\nNote: Create and Update on rules will accept 'description' or 'summary' interchangeably as an extraction action target. Get and List on rules will always return 'summary' as the target. If you are expecting 'description' please change your automation code to expect 'summary' instead.\n",
         "summary": "Create an Event Rule",
         "parameters": [
           {
@@ -22506,7 +22506,7 @@
           "Rulesets"
         ],
         "operationId": "getRulesetEventRule",
-        "description": "Get an Event Rule.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#rulesets)\n\nNote: Create and Update on rules will accept 'description' or 'summary' interchangeably as an extraction action target. Get and List on rules will always return 'summary' as the target. If you are expecting 'description' please change your automation code to expect 'summary' instead.\n",
+        "description": "Get an Event Rule.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#rulesets)\n\nNote: Create and Update on rules will accept 'description' or 'summary' interchangeably as an extraction action target. Get and List on rules will always return 'summary' as the target. If you are expecting 'description' please change your automation code to expect 'summary' instead.\n",
         "summary": "Get an Event Rule",
         "parameters": [
           {
@@ -22628,7 +22628,7 @@
         ],
         "operationId": "updateRulesetEventRule",
         "summary": "Update an Event Rule",
-        "description": "Update an Event Rule. Note that the endpoint supports partial updates, so any number of the writable fields can be provided.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#rulesets)\n\nNote: Create and Update on rules will accept 'description' or 'summary' interchangeably as an extraction action target. Get and List on rules will always return 'summary' as the target. If you are expecting 'description' please change your automation code to expect 'summary' instead.\n",
+        "description": "Update an Event Rule. Note that the endpoint supports partial updates, so any number of the writable fields can be provided.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#rulesets)\n\nNote: Create and Update on rules will accept 'description' or 'summary' interchangeably as an extraction action target. Get and List on rules will always return 'summary' as the target. If you are expecting 'description' please change your automation code to expect 'summary' instead.\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -22787,7 +22787,7 @@
           "Rulesets"
         ],
         "operationId": "deleteRulesetEventRule",
-        "description": "Delete an Event Rule.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#rulesets)\n",
+        "description": "Delete an Event Rule.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#rulesets)\n",
         "summary": "Delete an Event Rule",
         "parameters": [
           {
@@ -22835,7 +22835,7 @@
           "Schedules"
         ],
         "operationId": "listSchedules",
-        "description": "List the on-call schedules.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#schedules)\n",
+        "description": "List the on-call schedules.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#schedules)\n",
         "summary": "List schedules",
         "parameters": [
           {
@@ -23014,7 +23014,7 @@
           "Schedules"
         ],
         "operationId": "createSchedule",
-        "description": "Create a new on-call schedule.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#schedules)\n",
+        "description": "Create a new on-call schedule.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#schedules)\n",
         "summary": "Create a schedule",
         "parameters": [
           {
@@ -23365,7 +23365,7 @@
           "Schedules"
         ],
         "operationId": "deleteSchedule",
-        "description": "Delete an on-call schedule.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#schedules)\n",
+        "description": "Delete an on-call schedule.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#schedules)\n",
         "summary": "Delete a schedule",
         "parameters": [
           {
@@ -23404,7 +23404,7 @@
           "Schedules"
         ],
         "operationId": "updateSchedule",
-        "description": "Update an existing on-call schedule.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#schedules)\n",
+        "description": "Update an existing on-call schedule.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#schedules)\n",
         "summary": "Update a schedule",
         "parameters": [
           {
@@ -23671,7 +23671,7 @@
           "Schedules"
         ],
         "operationId": "listScheduleOverrides",
-        "description": "List overrides for a given time range.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#schedules)\n",
+        "description": "List overrides for a given time range.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#schedules)\n",
         "summary": "List overrides",
         "parameters": [
           {
@@ -23761,7 +23761,7 @@
           "Schedules"
         ],
         "operationId": "createScheduleOverride",
-        "description": "Create one or more overrides, each for a specific user covering a specified time range. If you create an override on top of an existing override, the last created override will have priority.\n\nA Schedule determines the time periods that users are On-Call.\n\nNote: An older implementation of this endpoint only supported creating a single ocverride per request. That functionality is still supported, but deprecated and may be removed in the future.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#schedules)\n",
+        "description": "Create one or more overrides, each for a specific user covering a specified time range. If you create an override on top of an existing override, the last created override will have priority.\n\nA Schedule determines the time periods that users are On-Call.\n\nNote: An older implementation of this endpoint only supported creating a single ocverride per request. That functionality is still supported, but deprecated and may be removed in the future.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#schedules)\n",
         "summary": "Create one or more overrides",
         "parameters": [
           {
@@ -23936,7 +23936,7 @@
           "Schedules"
         ],
         "operationId": "deleteScheduleOverride",
-        "description": "Remove an override.\n\nYou cannot remove a past override.\n\nIf the override start time is before the current time, but the end time is after the current time, the override will be truncated to the current time.\n\nIf the override is truncated, the status code will be 200 OK, as opposed to a 204 No Content for a successful delete.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#schedules)\n",
+        "description": "Remove an override.\n\nYou cannot remove a past override.\n\nIf the override start time is before the current time, but the end time is after the current time, the override will be truncated to the current time.\n\nIf the override is truncated, the status code will be 200 OK, as opposed to a 204 No Content for a successful delete.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#schedules)\n",
         "summary": "Delete an override",
         "parameters": [
           {
@@ -23981,7 +23981,7 @@
           "Schedules"
         ],
         "operationId": "listScheduleUsers",
-        "description": "List all of the users on call in a given schedule for a given time range.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#schedules)\n",
+        "description": "List all of the users on call in a given schedule for a given time range.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#schedules)\n",
         "summary": "List users on call.",
         "parameters": [
           {
@@ -24141,7 +24141,7 @@
           "Schedules"
         ],
         "operationId": "createSchedulePreview",
-        "description": "Preview what an on-call schedule would look like without saving it.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#schedules)\n",
+        "description": "Preview what an on-call schedule would look like without saving it.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#schedules)\n",
         "summary": "Preview a schedule",
         "parameters": [
           {
@@ -24329,7 +24329,7 @@
         ],
         "operationId": "createServiceDependency",
         "summary": "Associate service dependencies",
-        "description": "Create new dependencies between two services.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#business-services)\n",
+        "description": "Create new dependencies between two services.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#business-services)\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -24519,7 +24519,7 @@
         ],
         "operationId": "getBusinessServiceServiceDependencies",
         "summary": "Get Business Service dependencies",
-        "description": "Get all immediate dependencies of any Business Service.\n\nBusiness Services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#business-services)\n",
+        "description": "Get all immediate dependencies of any Business Service.\n\nBusiness Services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#business-services)\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -24639,7 +24639,7 @@
         ],
         "operationId": "deleteServiceDependency",
         "summary": "Disassociate service dependencies",
-        "description": "Disassociate dependencies between two services.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#business-services)\n",
+        "description": "Disassociate dependencies between two services.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#business-services)\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -24829,7 +24829,7 @@
         ],
         "operationId": "getTechnicalServiceServiceDependencies",
         "summary": "Get technical service dependencies",
-        "description": "Get all immediate dependencies of any technical service.\nTechnical services are also known as `services`.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#services)\n",
+        "description": "Get all immediate dependencies of any technical service.\nTechnical services are also known as `services`.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#services)\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -24948,7 +24948,7 @@
           "Services"
         ],
         "operationId": "listServices",
-        "description": "List existing Services.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#services)\n",
+        "description": "List existing Services.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#services)\n",
         "summary": "List services",
         "parameters": [
           {
@@ -25115,7 +25115,7 @@
           "Services"
         ],
         "operationId": "createService",
-        "description": "Create a new service.\n\nIf `status` is included in the request, it must have a value of `active` when creating a new service. If a different status is required, make a second request to update the service.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#services)\n",
+        "description": "Create a new service.\n\nIf `status` is included in the request, it must have a value of `active` when creating a new service. If a different status is required, make a second request to update the service.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#services)\n",
         "summary": "Create a service",
         "parameters": [
           {
@@ -25323,7 +25323,7 @@
           "Services"
         ],
         "operationId": "getService",
-        "description": "Get details about an existing service.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#services)\n",
+        "description": "Get details about an existing service.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#services)\n",
         "summary": "Get a service",
         "parameters": [
           {
@@ -25456,7 +25456,7 @@
           "Services"
         ],
         "operationId": "deleteService",
-        "description": "Delete an existing service.\n\nOnce the service is deleted, it will not be accessible from the web UI and new incidents won't be able to be created for this service.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#services)\n",
+        "description": "Delete an existing service.\n\nOnce the service is deleted, it will not be accessible from the web UI and new incidents won't be able to be created for this service.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#services)\n",
         "summary": "Delete a service",
         "parameters": [
           {
@@ -25485,7 +25485,7 @@
         "tags": [
           "Services"
         ],
-        "description": "Update an existing service.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#services)\n",
+        "description": "Update an existing service.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#services)\n",
         "summary": "Update a service",
         "parameters": [
           {
@@ -25920,7 +25920,7 @@
         ],
         "operationId": "createServiceIntegration",
         "summary": "Create a new integration",
-        "description": "Create a new integration belonging to a Service.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#services)\n",
+        "description": "Create a new integration belonging to a Service.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#services)\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -26090,7 +26090,7 @@
         ],
         "operationId": "updateServiceIntegration",
         "summary": "Update an existing integration",
-        "description": "Update an integration belonging to a Service.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#services)\n",
+        "description": "Update an integration belonging to a Service.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#services)\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -26212,7 +26212,7 @@
         ],
         "operationId": "getServiceIntegration",
         "summary": "View an integration",
-        "description": "Get details about an integration belonging to a service.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#services)\n",
+        "description": "Get details about an integration belonging to a service.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#services)\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -27324,7 +27324,7 @@
           "Tags"
         ],
         "operationId": "listTags",
-        "description": "List all of your account's tags.\n\nA Tag is applied to EScalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#tags)\n",
+        "description": "List all of your account's tags.\n\nA Tag is applied to EScalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#tags)\n",
         "summary": "List tags",
         "parameters": [
           {
@@ -27412,7 +27412,7 @@
           "Tags"
         ],
         "operationId": "createTags",
-        "description": "Create a Tag.\n\nA Tag is applied to EScalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#tags)\n",
+        "description": "Create a Tag.\n\nA Tag is applied to EScalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#tags)\n",
         "summary": "Create a tag",
         "parameters": [
           {
@@ -27505,7 +27505,7 @@
           "Tags"
         ],
         "operationId": "getTag",
-        "description": "Get details about an existing Tag.\n\nA Tag is applied to EScalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#tags)\n",
+        "description": "Get details about an existing Tag.\n\nA Tag is applied to EScalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#tags)\n",
         "summary": "Get a tag",
         "parameters": [
           {
@@ -27571,7 +27571,7 @@
           "Tags"
         ],
         "operationId": "deleteTag",
-        "description": "Remove an existing Tag.\n\nA Tag is applied to EScalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#tags)\n",
+        "description": "Remove an existing Tag.\n\nA Tag is applied to EScalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#tags)\n",
         "summary": "Delete a tag",
         "parameters": [
           {
@@ -27606,7 +27606,7 @@
           "Tags"
         ],
         "operationId": "getTagsByEntityType",
-        "description": "Get related Users, Teams or Escalation Policies for the Tag.\n\nA Tag is applied to EScalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#tags)\n",
+        "description": "Get related Users, Teams or Escalation Policies for the Tag.\n\nA Tag is applied to EScalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#tags)\n",
         "summary": "Get connected entities",
         "parameters": [
           {
@@ -27709,7 +27709,7 @@
           "Teams"
         ],
         "operationId": "createTeam",
-        "description": "Create a new Team.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#teams)\n",
+        "description": "Create a new Team.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#teams)\n",
         "summary": "Create a team",
         "parameters": [
           {
@@ -27807,7 +27807,7 @@
           "Teams"
         ],
         "operationId": "listTeams",
-        "description": "List teams of your PagerDuty account, optionally filtered by a search query.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#teams)\n",
+        "description": "List teams of your PagerDuty account, optionally filtered by a search query.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#teams)\n",
         "summary": "List teams",
         "parameters": [
           {
@@ -27905,7 +27905,7 @@
           "Teams"
         ],
         "operationId": "getTeam",
-        "description": "Get details about an existing team.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#teams)\n",
+        "description": "Get details about an existing team.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#teams)\n",
         "summary": "Get a team",
         "parameters": [
           {
@@ -27982,7 +27982,7 @@
           "Teams"
         ],
         "operationId": "deleteTeam",
-        "description": "Remove an existing team.\n\nSucceeds only if the team has no associated Escalation Policies, Services, Schedules and Subteams.\n\nAll associated unresovled incidents will be reassigned to another team (if specified) or will loose team association, thus becoming account-level (with visibility implications).\n\nNote that the incidents reassignment process is asynchronous and has no guarantee to complete before the API call return.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#teams)\n",
+        "description": "Remove an existing team.\n\nSucceeds only if the team has no associated Escalation Policies, Services, Schedules and Subteams.\n\nAll associated unresovled incidents will be reassigned to another team (if specified) or will loose team association, thus becoming account-level (with visibility implications).\n\nNote that the incidents reassignment process is asynchronous and has no guarantee to complete before the API call return.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#teams)\n",
         "summary": "Delete a team",
         "parameters": [
           {
@@ -28021,7 +28021,7 @@
           "Teams"
         ],
         "operationId": "updateTeam",
-        "description": "Update an existing team.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#teams)\n",
+        "description": "Update an existing team.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#teams)\n",
         "summary": "Update a team",
         "parameters": [
           {
@@ -28197,7 +28197,7 @@
           "Teams"
         ],
         "operationId": "deleteTeamEscalationPolicy",
-        "description": "Remove an escalation policy from a team.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#teams)\n",
+        "description": "Remove an escalation policy from a team.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#teams)\n",
         "summary": "Remove an escalation policy from a team",
         "parameters": [
           {
@@ -28242,7 +28242,7 @@
           "Teams"
         ],
         "operationId": "updateTeamEscalationPolicy",
-        "description": "Add an escalation policy to a team.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#teams)\n",
+        "description": "Add an escalation policy to a team.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#teams)\n",
         "summary": "Add an escalation policy to a team",
         "parameters": [
           {
@@ -28290,7 +28290,7 @@
           "Teams"
         ],
         "operationId": "listTeamUsers",
-        "description": "Get information about members on a team.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#teams)\n",
+        "description": "Get information about members on a team.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#teams)\n",
         "summary": "List members of a team",
         "parameters": [
           {
@@ -28736,7 +28736,7 @@
           "Teams"
         ],
         "operationId": "deleteTeamUser",
-        "description": "Remove a user from a team.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#teams)\n",
+        "description": "Remove a user from a team.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#teams)\n",
         "summary": "Remove a user from a team",
         "parameters": [
           {
@@ -28781,7 +28781,7 @@
           "Teams"
         ],
         "operationId": "updateTeamUser",
-        "description": "Add a user to a team. Attempting to add a user with the `read_only_user` role will return a 400 error.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#teams)\n",
+        "description": "Add a user to a team. Attempting to add a user with the `read_only_user` role will return a 400 error.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#teams)\n",
         "summary": "Add a user to a team",
         "parameters": [
           {
@@ -28858,7 +28858,7 @@
           "Users"
         ],
         "operationId": "listUsers",
-        "description": "List users of your PagerDuty account, optionally filtered by a search query.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#users)\n",
+        "description": "List users of your PagerDuty account, optionally filtered by a search query.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n",
         "summary": "List users",
         "parameters": [
           {
@@ -29031,7 +29031,7 @@
           "Users"
         ],
         "operationId": "createUser",
-        "description": "Create a new user. \n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#users)\n",
+        "description": "Create a new user. \n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n",
         "summary": "Create a user",
         "parameters": [
           {
@@ -29173,7 +29173,7 @@
           "Users"
         ],
         "operationId": "getUser",
-        "description": "Get details about an existing user.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#users)\n",
+        "description": "Get details about an existing user.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n",
         "summary": "Get a user",
         "parameters": [
           {
@@ -29279,7 +29279,7 @@
           "Users"
         ],
         "operationId": "deleteUser",
-        "description": "Remove an existing user.\n\nReturns 400 if the user has assigned incidents unless your [pricing plan](https://www.pagerduty.com/pricing) has the `offboarding` feature and the account is [configured](https://support.pagerduty.com/docs/offboarding#section-additional-configurations) appropriately.\n\nNote that the incidents reassignment process is asynchronous and has no guarantee to complete before the api call return.\n\n[*Learn more about `offboarding` feature*](https://support.pagerduty.com/docs/offboarding).\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#users)\n",
+        "description": "Remove an existing user.\n\nReturns 400 if the user has assigned incidents unless your [pricing plan](https://www.pagerduty.com/pricing) has the `offboarding` feature and the account is [configured](https://support.pagerduty.com/docs/offboarding#section-additional-configurations) appropriately.\n\nNote that the incidents reassignment process is asynchronous and has no guarantee to complete before the api call return.\n\n[*Learn more about `offboarding` feature*](https://support.pagerduty.com/docs/offboarding).\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n",
         "summary": "Delete a user",
         "parameters": [
           {
@@ -29315,7 +29315,7 @@
           "Users"
         ],
         "operationId": "updateUser",
-        "description": "Update an existing user. Note that you may also supply a `password` property--it will not be returned by any API.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#users)\n",
+        "description": "Update an existing user. Note that you may also supply a `password` property--it will not be returned by any API.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n",
         "summary": "Update a user",
         "parameters": [
           {
@@ -29532,7 +29532,7 @@
           "Users"
         ],
         "operationId": "getUserContactMethods",
-        "description": "List contact methods of your PagerDuty user.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#users)\n",
+        "description": "List contact methods of your PagerDuty user.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n",
         "summary": "List a user's contact methods",
         "parameters": [
           {
@@ -29611,7 +29611,7 @@
           "Users"
         ],
         "operationId": "createUserContactMethod",
-        "description": "Create a new contact method for the User.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#users)\n",
+        "description": "Create a new contact method for the User.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n",
         "summary": "Create a user contact method",
         "parameters": [
           {
@@ -29732,7 +29732,7 @@
           "Users"
         ],
         "operationId": "getUserContactMethod",
-        "description": "Get details about a User's contact method.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#users)\n",
+        "description": "Get details about a User's contact method.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n",
         "summary": "Get a user's contact method",
         "parameters": [
           {
@@ -29812,7 +29812,7 @@
           "Users"
         ],
         "operationId": "deleteUserContactMethod",
-        "description": "Remove a user's contact method.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#users)\n",
+        "description": "Remove a user's contact method.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n",
         "summary": "Delete a user's contact method",
         "parameters": [
           {
@@ -29851,7 +29851,7 @@
           "Users"
         ],
         "operationId": "updateUserContactMethod",
-        "description": "Update a User's contact method.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#users)\n",
+        "description": "Update a User's contact method.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n",
         "summary": "Update a user's contact method",
         "parameters": [
           {
@@ -29978,7 +29978,7 @@
           "Users"
         ],
         "operationId": "getUserNotificationRules",
-        "description": "List notification rules of your PagerDuty user.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#users)\n",
+        "description": "List notification rules of your PagerDuty user.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n",
         "summary": "List a user's notification rules",
         "parameters": [
           {
@@ -30063,7 +30063,7 @@
           "Users"
         ],
         "operationId": "createUserNotificationRule",
-        "description": "Create a new notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#users)\n",
+        "description": "Create a new notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n",
         "summary": "Create a user notification rule",
         "parameters": [
           {
@@ -30177,7 +30177,7 @@
           "Users"
         ],
         "operationId": "getUserNotificationRule",
-        "description": "Get details about a user's notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#users)\n",
+        "description": "Get details about a user's notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n",
         "summary": "Get a user's notification rule",
         "parameters": [
           {
@@ -30259,7 +30259,7 @@
           "Users"
         ],
         "operationId": "deleteUserNotificationRule",
-        "description": "Remove a user's notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#users)\n",
+        "description": "Remove a user's notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n",
         "summary": "Delete a user's notification rule",
         "parameters": [
           {
@@ -30298,7 +30298,7 @@
           "Users"
         ],
         "operationId": "updateUserNotificationRule",
-        "description": "Update a user's notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#users)\n",
+        "description": "Update a user's notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n",
         "summary": "Update a user's notification rule",
         "parameters": [
           {
@@ -30753,7 +30753,7 @@
           "Users"
         ],
         "operationId": "getUserHandoffNotificationRules",
-        "description": "List Handoff Notification Rules of your PagerDuty User.\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#users)\n",
+        "description": "List Handoff Notification Rules of your PagerDuty User.\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n",
         "summary": "List a User's Handoff Notification Rules",
         "parameters": [
           {
@@ -30827,7 +30827,7 @@
           "Users"
         ],
         "operationId": "createUserHandoffNotificationRule",
-        "description": "Create a new Handoff Notification Rule.\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#users)\n",
+        "description": "Create a new Handoff Notification Rule.\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n",
         "summary": "Create a User Handoff Notification Rule",
         "parameters": [
           {
@@ -30936,7 +30936,7 @@
           "Users"
         ],
         "operationId": "getUserHandoffNotifiactionRule",
-        "description": "Get details about a User's Handoff Notification Rule.\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#users)\n",
+        "description": "Get details about a User's Handoff Notification Rule.\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n",
         "summary": "Get a user's handoff notification rule",
         "parameters": [
           {
@@ -31011,7 +31011,7 @@
           "Users"
         ],
         "operationId": "deleteUserHandoffNotificationRule",
-        "description": "Remove a User's Handoff Notification Rule.\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#users)\n",
+        "description": "Remove a User's Handoff Notification Rule.\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n",
         "summary": "Delete a User's Handoff Notification rule",
         "parameters": [
           {
@@ -31050,7 +31050,7 @@
           "Users"
         ],
         "operationId": "updateUserHandoffNotification",
-        "description": "Update a User's Handoff Notification Rule.\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#users)\n",
+        "description": "Update a User's Handoff Notification Rule.\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n",
         "summary": "Update a User's Handoff Notification Rule",
         "parameters": [
           {
@@ -31162,7 +31162,7 @@
           "Users"
         ],
         "operationId": "getUserSessions",
-        "description": "List active sessions of a PagerDuty user.\n\nBeginning November 2021, active sessions no longer includes newly issued OAuth tokens.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#users)\n",
+        "description": "List active sessions of a PagerDuty user.\n\nBeginning November 2021, active sessions no longer includes newly issued OAuth tokens.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n",
         "summary": "List a user's active sessions",
         "parameters": [
           {
@@ -31235,7 +31235,7 @@
           "Users"
         ],
         "operationId": "deleteUserSessions",
-        "description": "Delete all user sessions.\n\nBeginning November 2021, user sessions no longer includes newly issued OAuth tokens.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#users)\n",
+        "description": "Delete all user sessions.\n\nBeginning November 2021, user sessions no longer includes newly issued OAuth tokens.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n",
         "summary": "Delete all user sessions",
         "parameters": [
           {
@@ -31274,7 +31274,7 @@
           "Users"
         ],
         "operationId": "getUserSession",
-        "description": "Get details about a user's session.\n\nBeginning November 2021, user sessions no longer includes newly issued OAuth tokens.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#users)\n",
+        "description": "Get details about a user's session.\n\nBeginning November 2021, user sessions no longer includes newly issued OAuth tokens.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n",
         "summary": "Get a user's session",
         "parameters": [
           {
@@ -31348,7 +31348,7 @@
           "Users"
         ],
         "operationId": "deleteUserSession",
-        "description": "Delete a user's session.\n\nBeginning November 2021, user sessions no longer includes newly issued OAuth tokens.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#users)\n",
+        "description": "Delete a user's session.\n\nBeginning November 2021, user sessions no longer includes newly issued OAuth tokens.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n",
         "summary": "Delete a user's session",
         "parameters": [
           {
@@ -31393,7 +31393,7 @@
           "Users"
         ],
         "operationId": "getUserStatusUpdateNotificationRules",
-        "description": "List status update notification rules of your PagerDuty user.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#users)\n",
+        "description": "List status update notification rules of your PagerDuty user.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n",
         "summary": "List a user's status update notification rules",
         "parameters": [
           {
@@ -31476,7 +31476,7 @@
           "Users"
         ],
         "operationId": "createUserStatusUpdateNotificationRule",
-        "description": "Create a new status update notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#users)\n",
+        "description": "Create a new status update notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n",
         "summary": "Create a user status update notification rule",
         "parameters": [
           {
@@ -31587,7 +31587,7 @@
           "Users"
         ],
         "operationId": "getUserStatusUpdateNotificationRule",
-        "description": "Get details about a user's status update notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#users)\n",
+        "description": "Get details about a user's status update notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n",
         "summary": "Get a user's status update notification rule",
         "parameters": [
           {
@@ -31671,7 +31671,7 @@
           "Users"
         ],
         "operationId": "deleteUserStatusUpdateNotificationRule",
-        "description": "Remove a user's status update notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#users)\n",
+        "description": "Remove a user's status update notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n",
         "summary": "Delete a user's status update notification rule",
         "parameters": [
           {
@@ -31713,7 +31713,7 @@
           "Users"
         ],
         "operationId": "updateUserStatusUpdateNotificationRule",
-        "description": "Update a user's status update notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#users)\n",
+        "description": "Update a user's status update notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n",
         "summary": "Update a user's status update notification rule",
         "parameters": [
           {
@@ -31828,7 +31828,7 @@
           "Users"
         ],
         "operationId": "getCurrentUser",
-        "description": "Get details about the current user.\n\nThis endpoint can only be used with a [user-level API key](https://support.pagerduty.com/docs/using-the-api#section-generating-a-personal-rest-api-key) or a key generated through an OAuth flow. This will not work if the request is made with an account-level access token.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#users)\n",
+        "description": "Get details about the current user.\n\nThis endpoint can only be used with a [user-level API key](https://support.pagerduty.com/docs/using-the-api#section-generating-a-personal-rest-api-key) or a key generated through an OAuth flow. This will not work if the request is made with an account-level access token.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n",
         "summary": "Get the current user",
         "parameters": [
           {
@@ -31926,7 +31926,7 @@
           "Vendors"
         ],
         "operationId": "listVendors",
-        "description": "List all vendors.\n\nA PagerDuty Vendor represents a specific type of integration. AWS Cloudwatch, Splunk, Datadog are all examples of vendors\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#vendors)\n",
+        "description": "List all vendors.\n\nA PagerDuty Vendor represents a specific type of integration. AWS Cloudwatch, Splunk, Datadog are all examples of vendors\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#vendors)\n",
         "summary": "List vendors",
         "parameters": [
           {
@@ -32021,7 +32021,7 @@
           "Vendors"
         ],
         "operationId": "getVendor",
-        "description": "Get details about one specific vendor.\n\nA PagerDuty Vendor represents a specific type of integration. AWS Cloudwatch, Splunk, Datadog are all examples of vendors\n\nFor more information see the [API Concepts Document](../../docs/CONCEPTS.md#vendors)\n",
+        "description": "Get details about one specific vendor.\n\nA PagerDuty Vendor represents a specific type of integration. AWS Cloudwatch, Splunk, Datadog are all examples of vendors\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#vendors)\n",
         "summary": "Get a vendor",
         "parameters": [
           {
