@@ -5,6 +5,12 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 Currently we rarely deprecate, and do not remove any API functionality.
 
 ---
+### 2022-02-11
+- Added documentation for Event Orchestration
+  - `GET /event_orchestrations/services/{service_id}/active`
+  - `PUT /event_orchestrations/services/{service_id}/active`
+
+
 ### 2022-02-09
 - Updated link to the `API Concepts` page across all API Documentation (164 occurances) to point to the correct page, this link has been broken since the migration to the new API Documentation platform.
 
