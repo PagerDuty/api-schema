@@ -3005,6 +3005,30 @@
           }
         }
       },
+      "OrchestrationPathServiceActiveResponse": {
+        "description": "An object with the active status.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "active": {
+                  "type": "boolean",
+                  "description": "The status of the service orchestration."
+                }
+              }
+            },
+            "examples": {
+              "response": {
+                "summary": "Example Response",
+                "value": {
+                  "active": false
+                }
+              }
+            }
+          }
+        }
+      },
       "OrchestrationPathUnroutedTypeResponse": {
         "description": "The Unrouted Orchestration object.",
         "content": {
@@ -15258,6 +15282,105 @@
         "responses": {
           "200": {
             "$ref": "#/components/responses/OrchestrationPathServiceTypeResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "405": {
+            "$ref": "#/components/responses/NotAllowed"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          }
+        }
+      }
+    },
+    "/event_orchestrations/services/{id}/active": {
+      "description": "View and update a Service Orchestration's active status.",
+      "get": {
+        "tags": [
+          "Event Orchestrations"
+        ],
+        "operationId": "getOrchActiveStatus",
+        "summary": "Get the Service Orchestration active status for a Service",
+        "description": "Get a Service Orchestration's active status.\n\nA Service Orchestration allows you to set an active status based on whether an event will be evaluated against a service orchestration path (true) or service ruleset (false).\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/OrchestrationPathServiceActiveResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Event Orchestrations"
+        ],
+        "operationId": "updateOrchActiveStatus",
+        "summary": "Update the Service Orchestration active status for a Service",
+        "description": "Update a Service Orchestration's active status.\n\nA Service Orchestration allows you to set an active status based on whether an event will be evaluated against a service orchestration path (true) or service ruleset (false).\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "requestBody": {
+          "description": "Update Service Orchestration's active status.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/responses/OrchestrationPathServiceActiveResponse/content/application~1json/schema"
+              },
+              "examples": {
+                "request": {
+                  "summary": "Example Request",
+                  "value": {
+                    "active": false
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/OrchestrationPathServiceActiveResponse"
           },
           "400": {
             "$ref": "#/components/responses/ArgumentError"
