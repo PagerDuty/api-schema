@@ -2516,7 +2516,8 @@
           "enum": [
             "escalation_policies",
             "teams",
-            "integrations"
+            "integrations",
+            "auto_pause_notifications_parameters"
           ],
           "uniqueItems": true
         }
@@ -2530,7 +2531,8 @@
           "type": "string",
           "enum": [
             "escalation_policies",
-            "teams"
+            "teams",
+            "auto_pause_notifications_parameters"
           ],
           "uniqueItems": true
         }
@@ -3655,6 +3657,33 @@
               "example": "Message about the result"
             }
           }
+        }
+      },
+      "AutoPauseNotificationsParameters": {
+        "title": "AutoPauseNotificationsParameters",
+        "type": "object",
+        "description": "Defines how alerts on this service are automatically suspended for a period of time before triggering, when identified as likely being transient. Note that automatically pausing notifications is only available on certain plans.",
+        "properties": {
+          "enabled": {
+            "type": "boolean",
+            "default": false,
+            "description": "Indicates whether alerts should be automatically suspended when identified as transient"
+          },
+          "timeout": {
+            "type": "integer",
+            "enum": [
+              120,
+              180,
+              300,
+              600,
+              900
+            ],
+            "description": "Indicates in seconds how long alerts should be suspended before triggering"
+          }
+        },
+        "example": {
+          "enabled": true,
+          "timeout": 300
         }
       },
       "ServiceEventRule": {
@@ -6343,8 +6372,8 @@
               "created_at": {
                 "type": "string",
                 "format": "date-time",
-                "readOnly": true,
-                "description": "The date/time when this service was created"
+                "description": "The date/time when this service was created",
+                "readOnly": true
               },
               "status": {
                 "type": "string",
@@ -6361,8 +6390,8 @@
               "last_incident_timestamp": {
                 "type": "string",
                 "format": "date-time",
-                "readOnly": true,
-                "description": "The date/time when the most recent incident was created for this service."
+                "description": "The date/time when the most recent incident was created for this service.",
+                "readOnly": true
               },
               "escalation_policy": {
                 "$ref": "#/components/schemas/EscalationPolicyReference"
@@ -6387,19 +6416,19 @@
               },
               "teams": {
                 "type": "array",
-                "readOnly": true,
                 "description": "The set of teams associated with this service.",
                 "items": {
                   "$ref": "#/components/schemas/TeamReference"
-                }
+                },
+                "readOnly": true
               },
               "integrations": {
                 "type": "array",
-                "readOnly": true,
                 "description": "An array containing Integration objects that belong to this service. If `integrations` is passed as an argument, these are full objects - otherwise, these are references.",
                 "items": {
                   "$ref": "#/components/schemas/IntegrationReference"
-                }
+                },
+                "readOnly": true
               },
               "incident_urgency_rule": {
                 "$ref": "#/components/schemas/IncidentUrgencyRule"
@@ -6417,10 +6446,10 @@
               "addons": {
                 "type": "array",
                 "description": "The array of Add-ons associated with this service.",
-                "readOnly": true,
                 "items": {
                   "$ref": "#/components/schemas/AddonReference"
-                }
+                },
+                "readOnly": true
               },
               "alert_creation": {
                 "type": "string",
@@ -6446,6 +6475,9 @@
                 "type": "integer",
                 "deprecated": true,
                 "description": "The duration in minutes within which to automatically group incoming alerts. This setting applies only when `alert_grouping` is set to `time`. To continue grouping alerts until the Incident is resolved, set this value to `0`.\n"
+              },
+              "auto_pause_notifications_parameters": {
+                "$ref": "#/components/schemas/AutoPauseNotificationsParameters"
               }
             },
             "required": [
@@ -6454,7 +6486,10 @@
             ],
             "example": {
               "id": "PSI2I2O",
+              "summary": "string",
               "type": "service",
+              "self": "string",
+              "html_url": "string",
               "name": "My Web App",
               "description": "My cool web application that does things.",
               "auto_resolve_timeout": 14400,
@@ -6508,6 +6543,10 @@
                 "config": {
                   "timeout": 2
                 }
+              },
+              "auto_pause_notifications_parameters": {
+                "enabled": true,
+                "timeout": 300
               }
             }
           }
@@ -25479,7 +25518,11 @@
                               },
                               "to_urgency": "high"
                             }
-                          ]
+                          ],
+                          "auto_pause_notifications_parameters": {
+                            "enabled": true,
+                            "timeout": 300
+                          }
                         }
                       ],
                       "limit": 25,
@@ -25587,6 +25630,10 @@
                         "config": {
                           "timeout": 2
                         }
+                      },
+                      "auto_pause_notifications_parameters": {
+                        "enabled": true,
+                        "timeout": 300
                       }
                     }
                   }
@@ -25686,7 +25733,11 @@
                             },
                             "to_urgency": "high"
                           }
-                        ]
+                        ],
+                        "auto_pause_notifications_parameters": {
+                          "enabled": true,
+                          "timeout": 300
+                        }
                       }
                     }
                   }
@@ -25822,7 +25873,11 @@
                             },
                             "to_urgency": "high"
                           }
-                        ]
+                        ],
+                        "auto_pause_notifications_parameters": {
+                          "enabled": true,
+                          "timeout": 300
+                        }
                       }
                     }
                   }
@@ -25961,6 +26016,10 @@
                         "config": {
                           "timeout": 2
                         }
+                      },
+                      "auto_pause_notifications_parameters": {
+                        "enabled": true,
+                        "timeout": 300
                       }
                     }
                   }
@@ -26066,7 +26125,11 @@
                             },
                             "to_urgency": "high"
                           }
-                        ]
+                        ],
+                        "auto_pause_notifications_parameters": {
+                          "enabled": true,
+                          "timeout": 300
+                        }
                       }
                     }
                   }
