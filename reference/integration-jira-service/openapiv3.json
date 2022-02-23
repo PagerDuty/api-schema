@@ -156,6 +156,26 @@
             }
           }
         }
+      },
+      "UnprocessableEntity": {
+        "description": "Unprocessable Entity. Some arguments failed validation checks.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "examples": {
+              "UnprocessableEntity": {
+                "summary": "Unprocessable Entity",
+                "value": {
+                  "error": {
+                    "message": "Unprocessable Entity"
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
     "schemas": {
@@ -1324,7 +1344,7 @@
           }
         ],
         "summary": "Create a rule",
-        "description": "Creates a rule.\n\n> ### Action required!\n>\n>  Make sure that all required PagerDuty and Jira webhooks are present. You can do this by clicking **Check webhooks** button on the *Rules* page of the PagerDuty Jira application\n",
+        "description": "Creates a rule. The maximum number of rules a user could have is 2000. If the limit is reached, API will respond with an error.\n\n> ### Action required!\n>\n>  Make sure that all required PagerDuty and Jira webhooks are present. You can do this by clicking **Check webhooks** button on the *Rules* page of the PagerDuty Jira application\n",
         "operationId": "createRule",
         "requestBody": {
           "content": {
@@ -2457,6 +2477,9 @@
           },
           "403": {
             "$ref": "#/components/responses/Forbidden"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
           }
         }
       }

@@ -5,6 +5,9 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 Currently we rarely deprecate, and do not remove any API functionality.
 
 ---
+### 2022-02-23
+- Updated documentation for JIRA Integration Rules API to indicate the maximum number of rules.
+
 ### 2022-02-17
 - Added new endpoints for reporting counts on Incident Pause usage for a given reporting period for the requesting account or scoped to a service within the account. Can scope paused incidents on `rules` and `auto_pause`
   - `GET /paused_incident_reports/counts`
