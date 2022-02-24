@@ -6,6 +6,13 @@ Currently we rarely deprecate, and do not remove any API functionality.
 
 ---
 ### 2022-02-23
+- Added new fields for configuring Auto-Pause Notifications to Services endpoints
+  - `POST /services`
+  - `PUT /services/{id}`
+  - `GET /services`
+  - `GET /services/{id}`
+  
+### 2022-02-23
 - Updated documentation for JIRA Integration Rules API to indicate the maximum number of rules.
 
 ### 2022-02-17
