@@ -5,6 +5,22 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 Currently we rarely deprecate, and do not remove any API functionality.
 
 ---
+### 2022-02-23
+- Added new fields for configuring Auto-Pause Notifications to Services endpoints
+  - `POST /services`
+  - `PUT /services/{id}`
+  - `GET /services`
+  - `GET /services/{id}`
+  
+### 2022-02-23
+- Updated documentation for JIRA Integration Rules API to indicate the maximum number of rules.
+
+### 2022-02-17
+- Added new endpoints for reporting counts on Incident Pause usage for a given reporting period for the requesting account or scoped to a service within the account. Can scope paused incidents on `rules` and `auto_pause`
+  - `GET /paused_incident_reports/counts`
+- Added new endpoints gettting the 5 most recent alerts that were triggered after being paused and the 5 most recent alerts that were resolved after being paused for a given reporting period for the requesting account or scoped to a service within the account. Can scope paused incidents on `rules` and `auto_pause`
+  - `GET /paused_incident_reports/alerts`
+
 ### 2022-02-11
 - Added documentation for Event Orchestration
   - `GET /event_orchestrations/services/{service_id}/active`
@@ -463,7 +479,7 @@ Currently we rarely deprecate, and do not remove any API functionality.
  - Clarified `POST /escalation_policies` description.
 
 ### 2020-01-10
- - Added `on_call_handoff_notifications` to `EscalationPolicy` model.
-   - The field allow users to set whether they would like on-call handoff notifications for escalation policies that have no attached services.
-   - The field has been added to all `/escalation_policies` endpoints' request and response schema.
-   - The field has two options `always` and `if_has_services`, and defaults to `if_has_services` on `PUT` and `POST`
+- Added `on_call_handoff_notifications` to `EscalationPolicy` model.
+  - The field allow users to set whether they would like on-call handoff notifications for escalation policies that have no attached services.
+  - The field has been added to all `/escalation_policies` endpoints' request and response schema.
+  - The field has two options `always` and `if_has_services`, and defaults to `if_has_services` on `PUT` and `POST`

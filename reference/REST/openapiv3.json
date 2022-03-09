@@ -33,6 +33,10 @@
       "description": "Provides audit record data.\n"
     },
     {
+      "name": "Paused Incident Reports",
+      "description": "Provides paused Incident reporting data on services and accounts that have paused Alerts.\n"
+    },
+    {
       "name": "Business Services",
       "description": "Business services model capabilities that span multiple technical services and that may be owned by several different teams.\n"
     },
@@ -2512,7 +2516,8 @@
           "enum": [
             "escalation_policies",
             "teams",
-            "integrations"
+            "integrations",
+            "auto_pause_notifications_parameters"
           ],
           "uniqueItems": true
         }
@@ -2526,7 +2531,8 @@
           "type": "string",
           "enum": [
             "escalation_policies",
-            "teams"
+            "teams",
+            "auto_pause_notifications_parameters"
           ],
           "uniqueItems": true
         }
@@ -2641,6 +2647,26 @@
         "schema": {
           "type": "string",
           "format": "date-time"
+        }
+      },
+      "paused_incident_reports_service_id": {
+        "name": "service_id",
+        "in": "query",
+        "description": "Specifies a filter to limit the scope of reporting to a particular service",
+        "schema": {
+          "type": "string",
+          "example": "P123456"
+        }
+      },
+      "paused_incident_reports_suspended_by": {
+        "name": "suspended_by",
+        "in": "query",
+        "description": "Specifies a filter to scope the response to either alerts suspended by Auto Pause or Event Rules.",
+        "schema": {
+          "enum": [
+            "auto_pause",
+            "rules"
+          ]
         }
       }
     },
@@ -3631,6 +3657,33 @@
               "example": "Message about the result"
             }
           }
+        }
+      },
+      "AutoPauseNotificationsParameters": {
+        "title": "AutoPauseNotificationsParameters",
+        "type": "object",
+        "description": "Defines how alerts on this service are automatically suspended for a period of time before triggering, when identified as likely being transient. Note that automatically pausing notifications is only available on certain plans.",
+        "properties": {
+          "enabled": {
+            "type": "boolean",
+            "default": false,
+            "description": "Indicates whether alerts should be automatically suspended when identified as transient"
+          },
+          "timeout": {
+            "type": "integer",
+            "enum": [
+              120,
+              180,
+              300,
+              600,
+              900
+            ],
+            "description": "Indicates in seconds how long alerts should be suspended before triggering"
+          }
+        },
+        "example": {
+          "enabled": true,
+          "timeout": 300
         }
       },
       "ServiceEventRule": {
@@ -6319,8 +6372,8 @@
               "created_at": {
                 "type": "string",
                 "format": "date-time",
-                "readOnly": true,
-                "description": "The date/time when this service was created"
+                "description": "The date/time when this service was created",
+                "readOnly": true
               },
               "status": {
                 "type": "string",
@@ -6337,8 +6390,8 @@
               "last_incident_timestamp": {
                 "type": "string",
                 "format": "date-time",
-                "readOnly": true,
-                "description": "The date/time when the most recent incident was created for this service."
+                "description": "The date/time when the most recent incident was created for this service.",
+                "readOnly": true
               },
               "escalation_policy": {
                 "$ref": "#/components/schemas/EscalationPolicyReference"
@@ -6363,19 +6416,19 @@
               },
               "teams": {
                 "type": "array",
-                "readOnly": true,
                 "description": "The set of teams associated with this service.",
                 "items": {
                   "$ref": "#/components/schemas/TeamReference"
-                }
+                },
+                "readOnly": true
               },
               "integrations": {
                 "type": "array",
-                "readOnly": true,
                 "description": "An array containing Integration objects that belong to this service. If `integrations` is passed as an argument, these are full objects - otherwise, these are references.",
                 "items": {
                   "$ref": "#/components/schemas/IntegrationReference"
-                }
+                },
+                "readOnly": true
               },
               "incident_urgency_rule": {
                 "$ref": "#/components/schemas/IncidentUrgencyRule"
@@ -6393,10 +6446,10 @@
               "addons": {
                 "type": "array",
                 "description": "The array of Add-ons associated with this service.",
-                "readOnly": true,
                 "items": {
                   "$ref": "#/components/schemas/AddonReference"
-                }
+                },
+                "readOnly": true
               },
               "alert_creation": {
                 "type": "string",
@@ -6422,6 +6475,9 @@
                 "type": "integer",
                 "deprecated": true,
                 "description": "The duration in minutes within which to automatically group incoming alerts. This setting applies only when `alert_grouping` is set to `time`. To continue grouping alerts until the Incident is resolved, set this value to `0`.\n"
+              },
+              "auto_pause_notifications_parameters": {
+                "$ref": "#/components/schemas/AutoPauseNotificationsParameters"
               }
             },
             "required": [
@@ -6430,7 +6486,10 @@
             ],
             "example": {
               "id": "PSI2I2O",
+              "summary": "string",
               "type": "service",
+              "self": "string",
+              "html_url": "string",
               "name": "My Web App",
               "description": "My cool web application that does things.",
               "auto_resolve_timeout": 14400,
@@ -6484,6 +6543,10 @@
                 "config": {
                   "timeout": 2
                 }
+              },
+              "auto_pause_notifications_parameters": {
+                "enabled": true,
+                "timeout": 300
               }
             }
           }
@@ -21122,6 +21185,252 @@
         }
       }
     },
+    "/paused_incident_reports/alerts": {
+      "description": "Get reporting on Alerts for paused Incident usage",
+      "get": {
+        "tags": [
+          "Paused Incident Reports"
+        ],
+        "operationId": "getPausedIncidentReportAlerts",
+        "description": "Returns the 5 most recent alerts that were triggered after being paused and the 5 most recent alerts that were resolved after being paused for a given reporting period (maximum 6 months lookback period).  Note: This feature is currently available as part of the Event Intelligence package or Digital Operations plan only.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#paused-incident-reports)\n",
+        "summary": "Get Paused Incident Reporting on Alerts",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/since"
+          },
+          {
+            "$ref": "#/components/parameters/until"
+          },
+          {
+            "$ref": "#/components/parameters/paused_incident_reports_service_id"
+          },
+          {
+            "$ref": "#/components/parameters/paused_incident_reports_suspended_by"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Paused Incident Reporting on Alerts for the Account or scoped to a Service.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "paused_incident_reporting_alerts": {
+                      "type": "object",
+                      "description": "A list of the 5 most recent paused Alerts that weere triggered and 5 most recent Alerts that were reesolved before being triggerd.",
+                      "properties": {
+                        "since": {
+                          "type": "string",
+                          "description": "The start of the date range over which the report data is represented."
+                        },
+                        "until": {
+                          "type": "string",
+                          "description": "The end of the date range over which the report data is represented."
+                        },
+                        "triggered_after_pause_alerts": {
+                          "type": "array",
+                          "description": "An array of Alerts that were triggered after being paused.",
+                          "items": {
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "description": "The Alert ID"
+                              },
+                              "service_id": {
+                                "type": "string",
+                                "description": "The Alert's Service ID"
+                              },
+                              "created_at": {
+                                "type": "string",
+                                "description": "The date/time the Alert was created"
+                              }
+                            }
+                          }
+                        },
+                        "resolved_after_pause_alerts": {
+                          "type": "array",
+                          "description": "An array of Alerts that were resolved after being paused.",
+                          "items": {
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "description": "The Alert ID"
+                              },
+                              "service_id": {
+                                "type": "string",
+                                "description": "The Alert's Service ID"
+                              },
+                              "created_at": {
+                                "type": "string",
+                                "description": "The date/time the Alert was created"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "paused_incident_reporting_counts": {
+                        "since": "2021-06-01TT13:08:14Z",
+                        "until": "2021-08-01T13:08:14Z",
+                        "triggered_after_pause_alerts": [
+                          {
+                            "id": "PR2P3RW",
+                            "service_id": "PPSCXAN",
+                            "created_at": "2020-10-18T12:01:11Z"
+                          }
+                        ],
+                        "resolved_after_pause_alerts": [
+                          {
+                            "id": "PS2R1RZ",
+                            "service_id": "PRS12XW",
+                            "created_at": "2020-10-17T02:02:10Z"
+                          },
+                          {
+                            "id": "PS1S1SX",
+                            "service_id": "PRS12XW",
+                            "created_at": "2020-10-16T15:02:19Z"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/paused_incident_reports/counts": {
+      "description": "Get reporting on counts for paused Incident usage",
+      "get": {
+        "tags": [
+          "Paused Incident Reports"
+        ],
+        "operationId": "getPausedIncidentReportCounts",
+        "description": "Returns reporting counts for paused Incident usage for a given reporting period (maximum 6 months lookback period).  Note: This feature is currently available as part of the Event Intelligence package or Digital Operations plan only.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#paused-incident-reports)\n",
+        "summary": "Get Paused Incident Reporting counts",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/since"
+          },
+          {
+            "$ref": "#/components/parameters/until"
+          },
+          {
+            "$ref": "#/components/parameters/paused_incident_reports_service_id"
+          },
+          {
+            "$ref": "#/components/parameters/paused_incident_reports_suspended_by"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Paused Incident Reporting counts for the Account or scoped to a Service.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "paused_incident_reporting_counts": {
+                      "type": "object",
+                      "description": "A representation of Alerts that were paused, triggered after pause, and resolved after pause.",
+                      "properties": {
+                        "since": {
+                          "type": "string",
+                          "description": "The start of the date range over which the report data is represented."
+                        },
+                        "until": {
+                          "type": "string",
+                          "description": "The end of the date range over which the report data is represented."
+                        },
+                        "paused_count": {
+                          "type": "number",
+                          "description": "The total number of paused Alerts for the Account or Servce."
+                        },
+                        "triggered_after_pause_count": {
+                          "type": "number",
+                          "description": "The total number of paused Alerts for the Account or Service that were triggerd after being paused (non-transient Alerts)."
+                        },
+                        "resolved_after_pause_count": {
+                          "type": "number",
+                          "description": "The total number of paused Alerts for the Account or Service that were resolved after being paused and not triggered (transient Alerts)."
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "paused_incident_reporting_counts": {
+                        "since": "2021-06-01TT13:08:14Z",
+                        "until": "2021-08-01T13:08:14Z",
+                        "paused_count": 50,
+                        "triggered_after_pause_count": 12,
+                        "resolved_after_pause_count": 38
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
     "/priorities": {
       "description": "List priorities.",
       "get": {
@@ -25209,7 +25518,11 @@
                               },
                               "to_urgency": "high"
                             }
-                          ]
+                          ],
+                          "auto_pause_notifications_parameters": {
+                            "enabled": true,
+                            "timeout": 300
+                          }
                         }
                       ],
                       "limit": 25,
@@ -25317,6 +25630,10 @@
                         "config": {
                           "timeout": 2
                         }
+                      },
+                      "auto_pause_notifications_parameters": {
+                        "enabled": true,
+                        "timeout": 300
                       }
                     }
                   }
@@ -25416,7 +25733,11 @@
                             },
                             "to_urgency": "high"
                           }
-                        ]
+                        ],
+                        "auto_pause_notifications_parameters": {
+                          "enabled": true,
+                          "timeout": 300
+                        }
                       }
                     }
                   }
@@ -25552,7 +25873,11 @@
                             },
                             "to_urgency": "high"
                           }
-                        ]
+                        ],
+                        "auto_pause_notifications_parameters": {
+                          "enabled": true,
+                          "timeout": 300
+                        }
                       }
                     }
                   }
@@ -25691,6 +26016,10 @@
                         "config": {
                           "timeout": 2
                         }
+                      },
+                      "auto_pause_notifications_parameters": {
+                        "enabled": true,
+                        "timeout": 300
                       }
                     }
                   }
@@ -25796,7 +26125,11 @@
                             },
                             "to_urgency": "high"
                           }
-                        ]
+                        ],
+                        "auto_pause_notifications_parameters": {
+                          "enabled": true,
+                          "timeout": 300
+                        }
                       }
                     }
                   }
