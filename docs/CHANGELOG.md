@@ -5,6 +5,11 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 Currently we rarely deprecate, and do not remove any API functionality.
 
 ---
+
+### 2022-03-17
+- Removed reference to an incorrect statement in the documentation indicating a `password` property is accepted when updating a user.
+  - `PUT /users/{id}`
+
 ### 2022-02-23
 - Added new fields for configuring Auto-Pause Notifications to Services endpoints
   - `POST /services`
