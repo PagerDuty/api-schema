@@ -12012,7 +12012,7 @@
           "Business Services"
         ],
         "operationId": "createBusinessService",
-        "description": "Create a new Business Service.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#business-services)\n",
+        "description": "Create a new Business Service.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nThere is a limit of 5,000 business services per account. If the limit is reached, the API will respond with an error.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#business-services)\n",
         "summary": "Create a Business Service",
         "parameters": [
           {
@@ -24761,7 +24761,7 @@
         ],
         "operationId": "createServiceDependency",
         "summary": "Associate service dependencies",
-        "description": "Create new dependencies between two services.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#business-services)\n",
+        "description": "Create new dependencies between two services.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nA service can have a maximum of 2,000 dependencies with a depth limit of 100. If the limit is reached, the API will respond with an error.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#business-services)\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -25551,7 +25551,7 @@
           "Services"
         ],
         "operationId": "createService",
-        "description": "Create a new service.\n\nIf `status` is included in the request, it must have a value of `active` when creating a new service. If a different status is required, make a second request to update the service.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#services)\n",
+        "description": "Create a new service.\n\nIf `status` is included in the request, it must have a value of `active` when creating a new service. If a different status is required, make a second request to update the service.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nThere is a limit of 25,000 services per account. If the limit is reached, the API will respond with an error.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#services)\n",
         "summary": "Create a service",
         "parameters": [
           {
