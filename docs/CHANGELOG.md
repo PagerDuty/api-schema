@@ -5,6 +5,10 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 Currently we rarely deprecate, and do not remove any API functionality.
 
 ---
+
+### 2022-04-18
+- Updated definitions for Analytics endpoints.
+
 ### 2022-03-21
 - Added product limit documentation for Services, Business Services, and Service Dependencies.
 
