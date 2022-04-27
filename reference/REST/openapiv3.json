@@ -3276,7 +3276,7 @@
         "properties": {
           "mean_assignment_count": {
             "type": "integer",
-            "description": "Mean count of instances where an additional responder, who was not on-call for an incident, is added."
+            "description": "Mean count of instances where responders were assigned an incident (including through reassignment or escalation) or accepted a responder request."
           },
           "mean_engaged_seconds": {
             "type": "integer",
@@ -3358,7 +3358,7 @@
         "properties": {
           "assignment_count": {
             "type": "integer",
-            "description": "Total count of instances where an additional responder, who was not on-call for the incident, is added."
+            "description": "Total count of instances where responders were assigned an incident (including through reassignment or escalation) or accepted a responder request."
           },
           "business_hour_interruptions": {
             "type": "integer",
@@ -11055,21 +11055,17 @@
                 "Example Request": {
                   "value": {
                     "filters": {
-                      "created_at_start": "2020-01-01T00:00:00-05:00",
-                      "created_at_end": "2020-01-01T00:00:00-05:00",
+                      "created_at_start": "2021-01-01T00:00:00-05:00",
+                      "created_at_end": "2021-01-31T00:00:00-05:00",
                       "urgency": "high",
                       "major": true,
                       "team_ids": [
-                        "PK38K12",
+                        "PGVXG6U",
                         "PNVU4U4"
                       ],
                       "service_ids": [
-                        "PJ51L11",
-                        "PU2D9X2"
-                      ],
-                      "priority_names": [
-                        "SEV-1",
-                        "SEV-2"
+                        "PQVUB8D",
+                        "PU2D9X3"
                       ]
                     },
                     "aggregate_unit": "day",
@@ -11202,21 +11198,21 @@
                 "Example Request": {
                   "value": {
                     "filters": {
-                      "created_at_start": "2020-01-01T00:00:00-05:00",
-                      "created_at_end": "2020-01-31T00:00:00-05:00",
+                      "created_at_start": "2021-01-01T00:00:00-05:00",
+                      "created_at_end": "2021-01-31T00:00:00-05:00",
                       "urgency": "high",
                       "major": true,
                       "team_ids": [
-                        "PK38K12",
+                        "PGVXG6U",
                         "PNVU4U4"
                       ],
                       "service_ids": [
-                        "PJ51L11",
+                        "PQVUB8D",
                         "PU2D9X3"
                       ],
                       "priority_ids": [
-                        "PZOZQXA",
-                        "POTCOTX"
+                        "PITMC5Y",
+                        "PEHBBT8"
                       ]
                     },
                     "aggregate_unit": "week",
@@ -11345,21 +11341,21 @@
                 "Example Request": {
                   "value": {
                     "filters": {
-                      "created_at_start": "2020-01-01T00:00:00-05:00",
-                      "created_at_end": "2020-01-31T00:00:00-05:00",
+                      "created_at_start": "2021-01-01T00:00:00-05:00",
+                      "created_at_end": "2021-01-31T00:00:00-05:00",
                       "urgency": "high",
                       "major": true,
                       "team_ids": [
-                        "PK38K12",
+                        "PGVXG6U",
                         "PNVU4U4"
                       ],
                       "service_ids": [
-                        "PJ51L11",
+                        "PQVUB8D",
                         "PU2D9X2"
                       ],
                       "priority_ids": [
-                        "PZOZQXA",
-                        "POTCOTX"
+                        "PITMC5Y",
+                        "PEHBBT8"
                       ]
                     },
                     "aggregate_unit": "week",
@@ -11719,21 +11715,21 @@
                 "Example Request": {
                   "value": {
                     "filters": {
-                      "created_at_start": "2020-01-01T00:00:00-05:00",
-                      "created_at_end": "2020-01-01T00:00:00-05:00",
+                      "created_at_start": "2021-01-01T00:00:00-05:00",
+                      "created_at_end": "2021-01-31T00:00:00-05:00",
                       "urgency": "high",
                       "major": true,
                       "team_ids": [
-                        "PK38K12",
+                        "PGVXG6U",
                         "PNVU4U4"
                       ],
                       "service_ids": [
-                        "PJ51L11",
+                        "PQVUB8D",
                         "PU2D9X3"
                       ],
                       "priority_names": [
-                        "SEV-1",
-                        "SEV-2"
+                        "P1",
+                        "P2"
                       ]
                     },
                     "limit": 20,
