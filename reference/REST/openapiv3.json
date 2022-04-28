@@ -2935,6 +2935,11 @@
                                   "target": "event.source"
                                 }
                               ],
+                              "pagerduty_automation_actions": [
+                                {
+                                  "action_id": "01CSB5SMOKCKVRI5GN0LJG7SMB"
+                                }
+                              ],
                               "route_to": "step-two"
                             }
                           }
@@ -9983,6 +9988,19 @@
                                 "type": "string",
                                 "description": "Add this text as a note on the resulting incident."
                               },
+                              "pagerduty_automation_actions": {
+                                "type": "array",
+                                "description": "Configure an Automation Action associated with the resulting incident.",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "action_id": {
+                                      "type": "string",
+                                      "description": "Automation Action ID"
+                                    }
+                                  }
+                                }
+                              },
                               "automation_actions": {
                                 "type": "array",
                                 "description": "Create a Webhoook associated with the resulting incident.",
@@ -10102,6 +10120,20 @@
                           "annotate": "Please use our P1 runbook: https://docs.test/p1-runbook",
                           "priority": "P0IN2KQ",
                           "suppress": false
+                        }
+                      },
+                      {
+                        "label": "If the API endpoints return HTTP 502 run an Automation Action that restarts the service",
+                        "id": "8a874630",
+                        "conditions": [
+                          "event.custom_details.http_status_code equals '502'"
+                        ],
+                        "actions": {
+                          "pagerduty_automation_actions": [
+                            {
+                              "action_id": "01CSB5SMOKCKVRI5GN0LJG7SMB"
+                            }
+                          ]
                         }
                       },
                       {
@@ -15270,6 +15302,11 @@
                                     "source": "event.source",
                                     "regex": "www (.*) service",
                                     "target": "event.source"
+                                  }
+                                ],
+                                "pagerduty_automation_actions": [
+                                  {
+                                    "action_id": "01CSB5SMOKCKVRI5GN0LJG7SMB"
                                   }
                                 ],
                                 "route_to": "step-two"
