@@ -10,6 +10,9 @@ Currently we rarely deprecate, and do not remove any API functionality.
 - Updated definitions for Event Orchestration endpoints to include Automation Actions:
   - `GET /event_orchestrations/services/{id}`
   - `PUT /event_orchestrations/services/{id}`
+- Added open Incidents limit description to documentation for service creation and update
+  - `POST /services`
+  - `PUT /services/{id}`
 
 ### 2022-04-18
 - Updated definitions for Analytics endpoints.
