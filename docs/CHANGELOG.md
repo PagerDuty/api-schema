@@ -5,6 +5,9 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 Currently we rarely deprecate, and do not remove any API functionality.
 
 ---
+### 2020-05-05
+- Changed description for "Manage incidents" to reflect the lower maximum of changed incidents. Only 250 incidents may be updated at a time.
+  - `PUT /incidents/`
 
 ### 2022-04-29
 - Updated definitions for Event Orchestration endpoints to include Automation Actions:
