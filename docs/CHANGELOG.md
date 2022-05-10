@@ -5,12 +5,22 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 Currently we rarely deprecate, and do not remove any API functionality.
 
 ---
-### 2022-09-05
+
+### 2022-05-10
+- Fixed capitalization in the following routes
+  - `POST /{entity_type}/{id}/change_tags`
+  - `GET /{entity_type}/{id}/tags`
+  - `GET /tags`
+  - `POST /tags`
+  - `GET /tags/{id}`
+  - `DELETE /tags/{id}`
+
+### 2022-05-09
 - Expanded the description for `alerts.body.details` to indicate that this data can also be formatted as a string (not just as a JSON object)
   - `GET /incidents/{id}/alerts`  
 
 
-### 2020-05-05
+### 2022-05-05
 - Changed description for "Manage incidents" to reflect the lower maximum of changed incidents. Only 250 incidents may be updated at a time.
   - `PUT /incidents/`
 
