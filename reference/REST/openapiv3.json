@@ -7689,7 +7689,7 @@
                   "details": {
                     "type": "object",
                     "readOnly": true,
-                    "description": "An arbitrary JSON object containing any data explaining the nature of the alert."
+                    "description": "An arbitrary JSON object or string containing any data explaining the nature of the alert."
                   }
                 }
               }
