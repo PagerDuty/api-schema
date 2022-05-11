@@ -16576,7 +16576,7 @@
           "Incidents"
         ],
         "operationId": "updateIncidents",
-        "description": "Acknowledge, resolve, escalate or reassign one or more incidents.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nA maximum of 250 incidents may be updated at a time. If more than this number of incidents are given, the API will respond with status 413 (Request Entity Too Large).\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n",
+        "description": "Acknowledge, resolve, escalate or reassign one or more incidents.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nA maximum of 250 incidents may be updated at a time. If more than this number of incidents are given, the API will respond with status 413 (Request Entity Too Large).\n\nNote: the manage incidents API endpoint is rate limited to 500 requests per minute.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n",
         "summary": "Manage incidents",
         "parameters": [
           {
@@ -23536,7 +23536,6 @@
                         {
                           "name": "Night Shift",
                           "start": "2015-11-06T20:00:00-05:00",
-                          "end": "2016-11-06T20:00:00-05:00",
                           "rotation_virtual_start": "2015-11-06T20:00:00-05:00",
                           "rotation_turn_length_seconds": 86400,
                           "users": [
