@@ -114,7 +114,7 @@
     },
     {
       "name": "Tags",
-      "description": "A Tag is applied to EScalation Policies, Teams or Users and can be used to filter them.\n"
+      "description": "A Tag is applied to Escalation Policies, Teams or Users and can be used to filter them.\n"
     },
     {
       "name": "Teams",
@@ -10213,7 +10213,7 @@
           "Tags"
         ],
         "operationId": "createEntityTypeByIdChangeTags",
-        "description": "Assign existing or new tags.\n\nA Tag is applied to EScalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#tags)\n",
+        "description": "Assign existing or new tags.\n\nA Tag is applied to Escalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#tags)\n",
         "summary": "Assign tags",
         "parameters": [
           {
@@ -10382,7 +10382,7 @@
           "Tags"
         ],
         "operationId": "getEntityTypeByIdTags",
-        "description": "Get related tags for Users, Teams or Escalation Policies.\n\nA Tag is applied to EScalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#tags)\n",
+        "description": "Get related tags for Users, Teams or Escalation Policies.\n\nA Tag is applied to Escalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#tags)\n",
         "summary": "Get tags for entities",
         "parameters": [
           {
@@ -27830,7 +27830,7 @@
           "Tags"
         ],
         "operationId": "listTags",
-        "description": "List all of your account's tags.\n\nA Tag is applied to EScalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#tags)\n",
+        "description": "List all of your account's tags.\n\nA Tag is applied to Escalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#tags)\n",
         "summary": "List tags",
         "parameters": [
           {
@@ -27918,7 +27918,7 @@
           "Tags"
         ],
         "operationId": "createTags",
-        "description": "Create a Tag.\n\nA Tag is applied to EScalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#tags)\n",
+        "description": "Create a Tag.\n\nA Tag is applied to Escalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#tags)\n",
         "summary": "Create a tag",
         "parameters": [
           {
@@ -28011,7 +28011,7 @@
           "Tags"
         ],
         "operationId": "getTag",
-        "description": "Get details about an existing Tag.\n\nA Tag is applied to EScalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#tags)\n",
+        "description": "Get details about an existing Tag.\n\nA Tag is applied to Escalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#tags)\n",
         "summary": "Get a tag",
         "parameters": [
           {
@@ -28077,7 +28077,7 @@
           "Tags"
         ],
         "operationId": "deleteTag",
-        "description": "Remove an existing Tag.\n\nA Tag is applied to EScalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#tags)\n",
+        "description": "Remove an existing Tag.\n\nA Tag is applied to Escalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#tags)\n",
         "summary": "Delete a tag",
         "parameters": [
           {
@@ -28112,7 +28112,7 @@
           "Tags"
         ],
         "operationId": "getTagsByEntityType",
-        "description": "Get related Users, Teams or Escalation Policies for the Tag.\n\nA Tag is applied to EScalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#tags)\n",
+        "description": "Get related Users, Teams or Escalation Policies for the Tag.\n\nA Tag is applied to Escalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#tags)\n",
         "summary": "Get connected entities",
         "parameters": [
           {
