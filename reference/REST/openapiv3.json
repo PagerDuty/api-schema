@@ -18659,7 +18659,7 @@
           "Incidents"
         ],
         "operationId": "createIncidentNote",
-        "description": "Create a new note for the specified incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n",
+        "description": "Create a new note for the specified incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nA maximum of 2000 notes can be added to an incident.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n",
         "summary": "Create a note on an incident",
         "parameters": [
           {
