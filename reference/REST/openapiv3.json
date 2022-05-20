@@ -7789,6 +7789,14 @@
           },
           "sender": {
             "$ref": "#/components/schemas/UserReference"
+          },
+          "subject": {
+            "type": "string",
+            "description": "The subject of the custom html email status update. Present if included in request body."
+          },
+          "html_message": {
+            "type": "string",
+            "description": "The html content of the custom html email status update. Present if included in request body."
           }
         }
       },
@@ -19668,7 +19676,7 @@
           "Incidents"
         ],
         "operationId": "createIncidentStatusUpdate",
-        "description": "Create a new status update for the specified incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n",
+        "description": "Create a new status update for the specified incident. Optionally pass `subject` and `html_message` properties in the request body to override the email notification that gets sent.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n",
         "summary": "Create a status update on an incident",
         "parameters": [
           {
@@ -19693,6 +19701,14 @@
                   "message": {
                     "type": "string",
                     "description": "The message to be posted as a status update."
+                  },
+                  "subject": {
+                    "type": "string",
+                    "description": "The subject to be sent for the custom html email status update. Required if sending custom html email."
+                  },
+                  "html_message": {
+                    "type": "string",
+                    "description": "The html content to be sent for the custom html email status update. Required if sending custom html email."
                   }
                 },
                 "required": [
@@ -19703,7 +19719,9 @@
                 "request": {
                   "summary": "Request Example",
                   "value": {
-                    "message": "The server fire is spreading."
+                    "message": "The server fire is spreading.",
+                    "subject": "Server Fire Update",
+                    "html_message": "<h1>Server is still on fire</h1>"
                   }
                 }
               }
@@ -19740,7 +19758,9 @@
                           "self": "https://api.pagerduty.com/users/PXPGF42",
                           "html_url": "https://subdomain.pagerduty.com/users/PXPGF42"
                         },
-                        "created_at": "2013-03-06T15:28:51-05:00"
+                        "created_at": "2013-03-06T15:28:51-05:00",
+                        "html_message": "<h1>Server is still on fire</h1>",
+                        "subject": "Server Fire Update"
                       }
                     }
                   }

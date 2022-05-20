@@ -5,6 +5,9 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 Currently we rarely deprecate, and do not remove any API functionality.
 
 ---
+### 2022-05-20
+- Added custom html email documentation for Status Updates.
+
 ### 2022-05-12
 - Added product limit documentation for Incident Notes.
 
