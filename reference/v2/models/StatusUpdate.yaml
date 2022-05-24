@@ -1,0 +1,18 @@
+type: object
+properties:
+  id:
+    type: string
+  message:
+    type: string
+    description: The message of the status update.
+  created_at:
+    type: string
+    description: The date/time when this status update was created.
+  sender:
+    $ref: ../models/UserReference.yaml
+  subject:
+    type: string
+    description: The subject of the custom html email status update. Present if included in request body.
+  html_message:
+    type: string
+    description: The html content of the custom html email status update. Present if included in request body.
