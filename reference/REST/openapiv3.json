@@ -2172,7 +2172,7 @@
       "statuses_incidents": {
         "name": "statuses[]",
         "in": "query",
-        "description": "Return only incidents with the given statuses. (More status codes may be introduced in the future.)",
+        "description": "Return only incidents with the given statuses. To query multiple statuses, pass `statuses[]` more than once, for example: `https://api.pagerduty.com/incidents?statuses[]=triggered&statuses[]=acknowledged`. (More status codes may be introduced in the future.)",
         "explode": true,
         "schema": {
           "type": "string",
