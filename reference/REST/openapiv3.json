@@ -2532,7 +2532,8 @@
           "enum": [
             "escalation_policies",
             "teams",
-            "auto_pause_notifications_parameters"
+            "auto_pause_notifications_parameters",
+            "integrations"
           ],
           "uniqueItems": true
         }
