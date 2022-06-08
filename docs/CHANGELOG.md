@@ -5,6 +5,10 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 Currently we rarely deprecate, and do not remove any API functionality.
 
 ---
+### 2022-06-06
+- Updated 'outlier_incident' documentation link to point to new 'Outlier Incident' documentation
+  - `GET /incidents/{id}/outlier_incident`
+
 ### 2022-06-01
 - Added `integrations` as option for `include[]` query parameter to the Get a Service endpoint.
   - `GET /services/{id}?include[]=integrations`
