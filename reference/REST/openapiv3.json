@@ -18786,7 +18786,7 @@
           "Incidents"
         ],
         "operationId": "getOutlierIncident",
-        "description": "Gets Outlier Incident information for a given Incident on its Service.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#related_incidents)\n",
+        "description": "Gets Outlier Incident information for a given Incident on its Service.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#outlier-incident)\n",
         "summary": "Get Outlier Incident",
         "parameters": [
           {
