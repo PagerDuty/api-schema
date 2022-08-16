@@ -4,7 +4,7 @@ This repository contains our OpenAPI defined public APIs.
 
 ## Maintenance
 
-The OpenAPI references in this repository are built by a bot from an internal repository. PagerDuty employees will open Pull Requests here only to update our markdown documentation (such as the [changelog](#docs/CHANGELOG.md).)
+The OpenAPI references in this repository are built by a bot from an internal repository. PagerDuty employees will open Pull Requests here only to update our markdown documentation (such as the [changelog](docs/CHANGELOG.md).)
 
 ## Contributing
 
