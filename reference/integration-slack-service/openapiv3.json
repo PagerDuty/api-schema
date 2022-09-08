@@ -8,7 +8,7 @@
       "url": "http://www.pagerduty.com/support",
       "email": "support@pagerduty.com"
     },
-    "description": "This is API documentation for PagerDuty's integration with Slack. \n\nTo begin the integration, you will need to map your PagerDuty account to your Slack Workspace.\nAfter configuring an Extension on each Service, Incident notifications will be posted in the configured Slack channel.\n\nAdditional integration documentation can be found here: https://support.pagerduty.com/docs/slack-integration-guide.\n\n> ### Important\n>\n>  Ensure you are using a User API Token to make requests to this API. Also, check that your user has necessary\n>  permissions (Owner or Global Admin). See https://developer.pagerduty.com/docs/rest-api-v2/authentication/ for the\n>  details."
+    "description": "This is API documentation for PagerDuty's integration with Slack.\n\nTo begin the integration, you will need to map your PagerDuty account to your Slack Workspace.\nAfter configuring an Extension on each Service, Incident notifications will be posted in the configured Slack channel.\n\nAdditional integration documentation can be found here: https://support.pagerduty.com/docs/slack-integration-guide.\n\n> ### Important\n>\n>  Ensure you are using a User API Token to make requests to this API. Also, check that your user has necessary\n>  permissions (Owner or Global Admin). See https://developer.pagerduty.com/docs/rest-api-v2/authentication/ for the\n>  details."
   },
   "servers": [
     {

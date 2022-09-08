@@ -58,7 +58,7 @@ If all [On-Call](#on-calls) [User](#users) for a given Escalation Rule have been
 
 ## Event Orchestrations
 
-A Global Event Orchestrations allow you define a set of Event Rules, so that when you ingest events using the Orchestration's Routing Key your events will be routed to the correct Service, based on the event's content. 
+A Global Event Orchestrations allow you define a set of Event Rules, so that when you ingest events using the Orchestration's Routing Key your events will be routed to the correct Service, based on the event's content.
 
 A Service Orchestration allows you to create a set of Event Rules specific to a Service. The Service Orchestration evaluates Events sent to this Service against each of its rules, beginning with the rules in the "start" set. When a matching rule is found, it can modify and enhance the event and can route the event to another set of rules within this Service Orchestration for further processing.
 
