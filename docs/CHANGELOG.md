@@ -5,6 +5,11 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 Currently we rarely deprecate, and do not remove any API functionality.
 
 ---
+### 2022-09-02
+- Updated Flex Service API to reflect new changes to allow bulk changes in Fields and Field Schemas
+### 2022-08-18
+- Updated Audit Trails params description with the new restriction of a max duration of 31 days.
+
 ### 2022-06-06
 - Updated 'outlier_incident' documentation link to point to new 'Outlier Incident' documentation
   - `GET /incidents/{id}/outlier_incident`
