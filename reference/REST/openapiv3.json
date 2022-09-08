@@ -1370,7 +1370,7 @@
       "audit_until": {
         "name": "until",
         "in": "query",
-        "description": "The end of the date range over which you want to search. If not specified, defaults to `now()`",
+        "description": "The end of the date range over which you want to search. If not specified, defaults to `now()`. May not be more than 31 days after `since`.",
         "schema": {
           "type": "string",
           "format": "date-time"
@@ -3422,7 +3422,7 @@
           },
           "seconds_to_engage": {
             "type": "integer",
-            "description": "Time between start of an incident, and the first responder to acknowledge, or to accept responder request."
+            "description": "A measure of *people response time*. This metric measures the time from\nthe first user engagement (acknowledge or responder accept) to the last.\nThis metric is only used for incidents with **multiple responders**;\nfor incidents with one or no engaged users, this value is null."
           },
           "seconds_to_first_ack": {
             "type": "integer",
@@ -6014,43 +6014,6 @@
               },
               "body": {
                 "$ref": "#/components/schemas/IncidentBody"
-              },
-              "occurrence": {
-                "type": "object",
-                "properties": {
-                  "count": {
-                    "type": "integer",
-                    "description": "The ID of the Service referenced.",
-                    "readOnly": true
-                  },
-                  "frequency": {
-                    "type": "number",
-                    "readOnly": true,
-                    "description": "The percentage that this kind of Incident has occurred on this Service over the given period of time."
-                  },
-                  "category": {
-                    "type": "string",
-                    "description": "The classifcation of the Outlier Incident. The values can be one of [\"novel\", \"rare\",  \"frequent\", \"other\"].\n\"novel\": It means this Incident hasn't occured.\n\"rare\": It means this Incident occurs with a low frequency.\n\"frequent\": It means this Incident occurs with a high frequency.\n\"other\": It means this Incident occurs with a medium frequency.\n",
-                    "enum": [
-                      "novel",
-                      "rare",
-                      "frequent",
-                      "other"
-                    ]
-                  },
-                  "since": {
-                    "type": "string",
-                    "format": "date-time",
-                    "readOnly": true,
-                    "description": "The start of the date/time range over which Outlier Incident was calculated."
-                  },
-                  "until": {
-                    "type": "string",
-                    "format": "date-time",
-                    "readOnly": true,
-                    "description": "The end of the date/time range over which Outlier Incident was calculated."
-                  }
-                }
               },
               "incidents_responders": {
                 "type": "array",
@@ -20043,7 +20006,7 @@
                   ]
                 },
                 "examples": {
-                  "response": {
+                  "resonse": {
                     "summary": "Response Example",
                     "value": {
                       "deleted_count": 1,
@@ -28970,7 +28933,7 @@
                   ]
                 },
                 "examples": {
-                  "response": {
+                  "resonse": {
                     "summary": "Response Example",
                     "value": {
                       "subscriptions": [
@@ -29149,7 +29112,6 @@
       }
     },
     "/teams/{id}/notification_subscriptions/unsubscribe": {
-      "summary": "Remove Team Notification Subscriptions",
       "post": {
         "tags": [
           "Teams"
