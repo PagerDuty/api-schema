@@ -107,13 +107,13 @@
                               "incident.responder.added",
                               "incident.responder.replied",
                               "incident.status_update_published"
-                            ],
-                            "priorities": [
-                              "ABCDEF1",
-                              "AB1CDE2"
-                            ],
-                            "urgency": null
-                          }
+                            ]
+                          },
+                          "priorities": [
+                            "ABCDEF1",
+                            "AB1CDE2"
+                          ],
+                          "urgency": null
                         }
                       ],
                       "limit": 1,
@@ -186,13 +186,13 @@
                           "incident.responder.added",
                           "incident.responder.replied",
                           "incident.status_update_published"
-                        ],
-                        "priorities": [
-                          "ABCDEF1",
-                          "AB1CDE2"
-                        ],
-                        "urgency": null
-                      }
+                        ]
+                      },
+                      "priorities": [
+                        "ABCDEF1",
+                        "AB1CDE2"
+                      ],
+                      "urgency": null
                     }
                   }
                 }
@@ -242,13 +242,13 @@
                             "incident.responder.added",
                             "incident.responder.replied",
                             "incident.status_update_published"
-                          ],
-                          "priorities": [
-                            "ABCDEF1",
-                            "AB1CDE2"
-                          ],
-                          "urgency": null
-                        }
+                          ]
+                        },
+                        "priorities": [
+                          "ABCDEF1",
+                          "AB1CDE2"
+                        ],
+                        "urgency": null
                       }
                     }
                   }
@@ -337,13 +337,13 @@
                             "incident.responder.added",
                             "incident.responder.replied",
                             "incident.status_update_published"
-                          ],
-                          "priorities": [
-                            "ABCDEF1",
-                            "AB1CDE2"
-                          ],
-                          "urgency": null
-                        }
+                          ]
+                        },
+                        "priorities": [
+                          "ABCDEF1",
+                          "AB1CDE2"
+                        ],
+                        "urgency": null
                       }
                     }
                   }
@@ -414,13 +414,13 @@
                           "incident.responder.added",
                           "incident.responder.replied",
                           "incident.status_update_published"
-                        ],
-                        "priorities": [
-                          "ABCDEF1",
-                          "AB1CDE2"
-                        ],
-                        "urgency": null
-                      }
+                        ]
+                      },
+                      "priorities": [
+                        "ABCDEF1",
+                        "AB1CDE2"
+                      ],
+                      "urgency": null
                     }
                   }
                 }
@@ -470,13 +470,13 @@
                             "incident.responder.added",
                             "incident.responder.replied",
                             "incident.status_update_published"
-                          ],
-                          "priorities": [
-                            "ABCDEF1",
-                            "AB1CDE2"
-                          ],
-                          "urgency": null
-                        }
+                          ]
+                        },
+                        "priorities": [
+                          "ABCDEF1",
+                          "AB1CDE2"
+                        ],
+                        "urgency": null
                       }
                     }
                   }
@@ -555,13 +555,13 @@
                             "incident.responder.added",
                             "incident.responder.replied",
                             "incident.status_update_published"
-                          ],
-                          "priorities": [
-                            "ABCDEF1",
-                            "AB1CDE2"
-                          ],
-                          "urgency": null
-                        }
+                          ]
+                        },
+                        "priorities": [
+                          "ABCDEF1",
+                          "AB1CDE2"
+                        ],
+                        "urgency": null
                       }
                     }
                   }
