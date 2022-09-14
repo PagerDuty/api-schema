@@ -14506,6 +14506,129 @@
             "$ref": "#/components/responses/NotFound"
           }
         }
+      },
+      "post": {
+        "tags": [
+          "Event Orchestrations"
+        ],
+        "description": "Create a Global Event Orchestration.\n\nGlobal Event Orchestrations allow you define a set of Event Rules, so that when you ingest events using the Orchestration's Routing Key your events will be routed to the correct Service, based on the event's content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n",
+        "summary": "Create an Orchestration",
+        "operationId": "postOrchestration",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "orchestration": {
+                    "$ref": "#/components/schemas/Orchestration"
+                  }
+                },
+                "required": [
+                  "orchestration"
+                ]
+              },
+              "examples": {
+                "create_orchestration": {
+                  "summary": "Example: Create Orchestration",
+                  "value": {
+                    "orchestration": {
+                      "name": "New Orchestration",
+                      "description": "This is a newly created orchestration",
+                      "team": {
+                        "id": "PXD0WR8"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "The Orchestration that was created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "orchestration": {
+                      "$ref": "#/components/schemas/Orchestration"
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "orchestration": {
+                        "id": "3aae9a17-8585-4d8c-93d3-99742801cd95",
+                        "self": "https://api.pagerduty.com/event_orchestrations/3aae9a17-8585-4d8c-93d3-99742801cd95",
+                        "name": "New Orchestration",
+                        "description": "This is a newly created orchestration",
+                        "team": {
+                          "id": "PXD0WR8",
+                          "self": "https://api.pagerduty.com/teams/PXD0WR8",
+                          "type": "team_reference"
+                        },
+                        "integrations": [
+                          {
+                            "id": "461cd942-d7cc-43ef-ac7d-86ba2d58fc45",
+                            "parameters": {
+                              "routing_key": "R022XIJR9M266DX570EVE6EXP1AFBN6D",
+                              "type": "global"
+                            }
+                          }
+                        ],
+                        "routes": 0,
+                        "created_at": "2021-12-02T14:21:42Z",
+                        "created_by": {
+                          "id": "P8B9WR8",
+                          "self": "https://api.pagerduty.com/users/P8B9WR8",
+                          "type": "user_reference"
+                        },
+                        "updated_at": "2021-12-02T14:21:42Z",
+                        "updated_by": {
+                          "id": "P8B9WR8",
+                          "self": "https://api.pagerduty.com/users/P8B9WR8",
+                          "type": "user_reference"
+                        },
+                        "version": "oBgzJsGDOz99G.FKZ0c1C6hw35twk_Ib"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "405": {
+            "$ref": "#/components/responses/NotAllowed"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          }
+        }
       }
     },
     "/event_orchestrations/{id}": {
@@ -14761,132 +14884,6 @@
         "responses": {
           "204": {
             "description": "The Orchestration was deleted successfully."
-          },
-          "400": {
-            "$ref": "#/components/responses/ArgumentError"
-          },
-          "401": {
-            "$ref": "#/components/responses/Unauthorized"
-          },
-          "403": {
-            "$ref": "#/components/responses/Forbidden"
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          },
-          "405": {
-            "$ref": "#/components/responses/NotAllowed"
-          },
-          "409": {
-            "$ref": "#/components/responses/Conflict"
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Event Orchestrations"
-        ],
-        "description": "Create a Global Event Orchestration.\n\nGlobal Event Orchestrations allow you define a set of Event Rules, so that when you ingest events using the Orchestration's Routing Key your events will be routed to the correct Service, based on the event's content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n",
-        "summary": "Create an Orchestration",
-        "operationId": "postOrchestration",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "orchestration": {
-                    "$ref": "#/components/schemas/Orchestration"
-                  }
-                },
-                "required": [
-                  "orchestration"
-                ]
-              },
-              "examples": {
-                "create_orchestration": {
-                  "summary": "Example: Create Orchestration",
-                  "value": {
-                    "orchestration": {
-                      "name": "New Orchestration",
-                      "description": "This is a newly created orchestration",
-                      "team": {
-                        "id": "PXD0WR8"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/header_Accept"
-          },
-          {
-            "$ref": "#/components/parameters/header_Content-Type"
-          },
-          {
-            "$ref": "#/components/parameters/id"
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "The Orchestration that was created.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "orchestration": {
-                      "$ref": "#/components/schemas/Orchestration"
-                    }
-                  }
-                },
-                "examples": {
-                  "response": {
-                    "summary": "Response Example",
-                    "value": {
-                      "orchestration": {
-                        "id": "3aae9a17-8585-4d8c-93d3-99742801cd95",
-                        "self": "https://api.pagerduty.com/event_orchestrations/3aae9a17-8585-4d8c-93d3-99742801cd95",
-                        "name": "New Orchestration",
-                        "description": "This is a newly created orchestration",
-                        "team": {
-                          "id": "PXD0WR8",
-                          "self": "https://api.pagerduty.com/teams/PXD0WR8",
-                          "type": "team_reference"
-                        },
-                        "integrations": [
-                          {
-                            "id": "461cd942-d7cc-43ef-ac7d-86ba2d58fc45",
-                            "parameters": {
-                              "routing_key": "R022XIJR9M266DX570EVE6EXP1AFBN6D",
-                              "type": "global"
-                            }
-                          }
-                        ],
-                        "routes": 0,
-                        "created_at": "2021-12-02T14:21:42Z",
-                        "created_by": {
-                          "id": "P8B9WR8",
-                          "self": "https://api.pagerduty.com/users/P8B9WR8",
-                          "type": "user_reference"
-                        },
-                        "updated_at": "2021-12-02T14:21:42Z",
-                        "updated_by": {
-                          "id": "P8B9WR8",
-                          "self": "https://api.pagerduty.com/users/P8B9WR8",
-                          "type": "user_reference"
-                        },
-                        "version": "oBgzJsGDOz99G.FKZ0c1C6hw35twk_Ib"
-                      }
-                    }
-                  }
-                }
-              }
-            }
           },
           "400": {
             "$ref": "#/components/responses/ArgumentError"
