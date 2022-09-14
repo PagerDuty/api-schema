@@ -5,6 +5,8 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 Currently we rarely deprecate, and do not remove any API functionality.
 
 ---
+### 2022-09-13
+- Updated Create Orchestration API to reference the correct endpoint and remove `id` as a required param
 ### 2022-09-02
 - Updated Flex Service API to reflect new changes to allow bulk changes in Fields and Field Schemas
 ### 2022-08-18
