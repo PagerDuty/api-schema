@@ -25410,7 +25410,7 @@
           "Services"
         ],
         "operationId": "listServices",
-        "x-pd-requires-scope": "service.read",
+        "x-pd-requires-scope": "services.read",
         "description": "List existing Services.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#services)\n",
         "summary": "List services",
         "parameters": [
@@ -25798,7 +25798,7 @@
           "Services"
         ],
         "operationId": "getService",
-        "x-pd-requires-scope": "service.read",
+        "x-pd-requires-scope": "services.read",
         "description": "Get details about an existing service.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#services)\n",
         "summary": "Get a service",
         "parameters": [
