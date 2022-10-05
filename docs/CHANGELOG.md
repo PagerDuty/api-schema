@@ -6,6 +6,8 @@ Currently we rarely deprecate, and do not remove any API functionality.
 
 ---
 ### 2022-09-13
+- Updated Alerts definition in API Concepts
+### 2022-09-13
 - Updated Create Orchestration API to reference the correct endpoint and remove `id` as a required param
 ### 2022-09-02
 - Updated Flex Service API to reflect new changes to allow bulk changes in Fields and Field Schemas

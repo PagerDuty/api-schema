@@ -25578,6 +25578,7 @@
         }
       },
       "post": {
+        "x-pd-requires-scope": "services.write",
         "tags": [
           "Services"
         ],
@@ -25932,6 +25933,7 @@
         }
       },
       "delete": {
+        "x-pd-requires-scope": "services.write",
         "tags": [
           "Services"
         ],
@@ -25962,6 +25964,7 @@
         }
       },
       "put": {
+        "x-pd-requires-scope": "services.write",
         "tags": [
           "Services"
         ],
@@ -26403,6 +26406,7 @@
     "/services/{id}/integrations": {
       "description": "Create integrations belonging to a service.",
       "post": {
+        "x-pd-requires-scope": "services.write",
         "tags": [
           "Services"
         ],
@@ -26573,6 +26577,7 @@
     "/services/{id}/integrations/{integration_id}": {
       "description": "View or update integrations belonging to a service.",
       "put": {
+        "x-pd-requires-scope": "services.write",
         "tags": [
           "Services"
         ],
@@ -26695,6 +26700,7 @@
         }
       },
       "get": {
+        "x-pd-requires-scope": "services.read",
         "tags": [
           "Services"
         ],
