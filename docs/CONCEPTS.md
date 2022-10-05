@@ -119,9 +119,8 @@ Status Updates are a updates for stakeholders who are not responding to incident
 ### Snooze
 Snoozing an Incident will re-trigger it after a specified amount of time.
 
-
 ### Alerts
-An Alert is sent to a [User](#user) to have them respond to an Incident. Alerts will follow a User's notification policies.
+When PagerDuty receives a qualifying event (from a monitoring tool, for example), it triggers an alert, which in turn triggers an incident. Multiple alerts can be aggregated into a single incident for triage, which streamlines incident handoff between teams, centralizes critical information, and reduces notification fatigue.
 
 ### Past Incidents
 Past Incidents allow Responders to view past resolved Incidents that have similar metadata and were generated on the same Service as their current active Incident. Past Incidents add helpful context for accurate triage, which can lead to shorter resolution time. Responders can see who was involved in a previous Incident, when these types of Incidents happened, and dive into Incident details to discover the remediation steps that were taken.
