@@ -16359,6 +16359,7 @@
     "/incidents": {
       "description": "List and update incidents.",
       "get": {
+        "x-pd-requires-scope": "incidents.read",
         "tags": [
           "Incidents"
         ],
@@ -17064,6 +17065,7 @@
     "/incidents/{id}": {
       "description": "Get an incident.",
       "get": {
+        "x-pd-requires-scope": "incidents.read",
         "tags": [
           "Incidents"
         ],
@@ -17562,6 +17564,7 @@
     "/incidents/{id}/alerts": {
       "description": "List and update alerts.",
       "get": {
+        "x-pd-requires-scope": "incidents.read",
         "tags": [
           "Incidents"
         ],
@@ -17867,6 +17870,7 @@
     "/incidents/{id}/alerts/{alert_id}": {
       "description": "Get an alert.",
       "get": {
+        "x-pd-requires-scope": "incidents.read",
         "tags": [
           "Incidents"
         ],
@@ -18274,6 +18278,7 @@
     "/incidents/{id}/log_entries": {
       "description": "List incident log entries for an incident.",
       "get": {
+        "x-pd-requires-scope": "incidents.read",
         "tags": [
           "Incidents"
         ],
@@ -18524,6 +18529,7 @@
     "/incidents/{id}/notes": {
       "description": "List and create incident notes.",
       "get": {
+        "x-pd-requires-scope": "incidents.read",
         "tags": [
           "Incidents"
         ],
