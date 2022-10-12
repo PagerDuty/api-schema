@@ -11836,6 +11836,7 @@
     "/audit/records": {
       "description": "List audit records.",
       "get": {
+        "x-pd-requires-scope": "audit_records.read",
         "summary": "List audit records",
         "tags": [
           "Audit"
@@ -26196,6 +26197,7 @@
     "/services/{id}/audit/records": {
       "description": "List audit records for a service.",
       "get": {
+        "x-pd-requires-scope": "services.read",
         "tags": [
           "Services"
         ],
