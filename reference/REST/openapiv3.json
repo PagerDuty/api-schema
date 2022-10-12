@@ -11836,6 +11836,7 @@
     "/audit/records": {
       "description": "List audit records.",
       "get": {
+        "x-pd-requires-scope": "audit_records.read",
         "summary": "List audit records",
         "tags": [
           "Audit"
