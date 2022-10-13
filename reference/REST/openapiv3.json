@@ -11836,6 +11836,7 @@
     "/audit/records": {
       "description": "List audit records.",
       "get": {
+        "x-pd-requires-scope": "audit_records.read",
         "summary": "List audit records",
         "tags": [
           "Audit"
@@ -26196,6 +26197,7 @@
     "/services/{id}/audit/records": {
       "description": "List audit records for a service.",
       "get": {
+        "x-pd-requires-scope": "services.read",
         "tags": [
           "Services"
         ],
@@ -29355,6 +29357,7 @@
     "/users": {
       "description": "List and create users.",
       "get": {
+        "x-pd-requires-scope": "users.read",
         "tags": [
           "Users"
         ],
@@ -29670,6 +29673,7 @@
     "/users/{id}": {
       "description": "Manage a user.",
       "get": {
+        "x-pd-requires-scope": "users.read",
         "tags": [
           "Users"
         ],
@@ -30029,6 +30033,7 @@
     "/users/{id}/contact_methods": {
       "description": "List a user's contact methods.",
       "get": {
+        "x-pd-requires-scope": "users:contact_methods.read",
         "tags": [
           "Users"
         ],
@@ -30229,6 +30234,7 @@
     "/users/{id}/contact_methods/{contact_method_id}": {
       "description": "Manage a user's contact method.",
       "get": {
+        "x-pd-requires-scope": "users:contact_methods.read",
         "tags": [
           "Users"
         ],
@@ -30475,6 +30481,7 @@
     "/users/{id}/notification_rules": {
       "description": "List a user's notification rules.",
       "get": {
+        "x-pd-requires-scope": "users.read",
         "tags": [
           "Users"
         ],
@@ -30674,6 +30681,7 @@
     "/users/{id}/notification_rules/{notification_rule_id}": {
       "description": "Manage a user's notification rule.",
       "get": {
+        "x-pd-requires-scope": "users.read",
         "tags": [
           "Users"
         ],
