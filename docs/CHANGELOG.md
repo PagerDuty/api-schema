@@ -5,6 +5,8 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 Currently we rarely deprecate, and do not remove any API functionality.
 
 ---
+### 2022-10-05
+- Added Templates API documentation
 ### 2022-09-13
 - Updated Alerts definition in API Concepts
 ### 2022-09-13
