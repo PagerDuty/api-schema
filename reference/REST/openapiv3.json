@@ -121,6 +121,10 @@
       "description": "A team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n"
     },
     {
+      "name": "Templates",
+      "description": "Templates is a new feature which will allow customers to create message templates to be leveraged by (but not limited to) status updates. The API will be secured to customers with the status updates entitlements.\n"
+    },
+    {
       "name": "Users",
       "description": "Users are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n"
     },
@@ -2630,6 +2634,14 @@
             "all"
           ],
           "uniqueItems": true
+        }
+      },
+      "template_query": {
+        "name": "query",
+        "description": "Template name or description to search",
+        "in": "query",
+        "schema": {
+          "type": "string"
         }
       },
       "schedule_since": {
@@ -10175,6 +10187,191 @@
             }
           }
         ]
+      },
+      "Template": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/EditableTemplate"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "readOnly": true
+              },
+              "summary": {
+                "type": "string",
+                "nullable": true,
+                "readOnly": true,
+                "description": "A short-form, server-generated string that provides succinct, important information about an object suitable for primary labeling of an entity in a client. In many cases, this will be identical to `name`, though it is not intended to be an identifier."
+              },
+              "self": {
+                "type": "string",
+                "nullable": true,
+                "readOnly": true,
+                "format": "url",
+                "description": "the API show URL at which the object is accessible"
+              },
+              "html_url": {
+                "type": "string",
+                "nullable": true,
+                "readOnly": true,
+                "format": "url",
+                "description": "a URL at which the entity is uniquely displayed in the Web app"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "template"
+                ]
+              },
+              "created_by": {
+                "description": "User/Account object reference of the creator",
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/UserReference"
+                  },
+                  {
+                    "allOf": [
+                      {
+                        "$ref": "#/components/schemas/Reference"
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "account_reference"
+                            ]
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              "updated_by": {
+                "description": "User/Account object reference of the updator",
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/UserReference"
+                  },
+                  {
+                    "$ref": "#/components/schemas/Template/allOf/1/properties/created_by/oneOf/1"
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "RenderedTemplate": {
+        "type": "object",
+        "properties": {
+          "templated_fields": {
+            "type": "object",
+            "properties": {
+              "email_subject": {
+                "type": "string",
+                "description": "The rendered e-mail subject"
+              },
+              "email_body": {
+                "type": "string",
+                "description": "The rendered e-mail body"
+              },
+              "message": {
+                "type": "string",
+                "description": "The rendered short message (SMS, Push, Slack, etc)"
+              }
+            }
+          },
+          "warnings": {
+            "description": "List of render warnings messages for each rendered field.\n(Ex:  [\"{{incident.invalid_field}} does not exist.\"])",
+            "type": "object",
+            "properties": {
+              "email_subject": {
+                "type": "array",
+                "description": "List of warnings for email_subject"
+              },
+              "email_body": {
+                "type": "array",
+                "description": "List of warnings for email_body"
+              },
+              "message": {
+                "type": "array",
+                "description": "List of warnings for message field"
+              }
+            }
+          },
+          "errors": {
+            "description": "List of errors",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "EditableTemplate": {
+        "type": "object",
+        "properties": {
+          "template_type": {
+            "type": "string",
+            "description": "The type of template (`status_update` is the only supported template at this time)",
+            "enum": [
+              "status_update"
+            ]
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the template"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true,
+            "description": "Description of the template"
+          },
+          "templated_fields": {
+            "type": "object",
+            "properties": {
+              "email_subject": {
+                "type": "string",
+                "nullable": true,
+                "description": "The subject of the e-mail"
+              },
+              "email_body": {
+                "type": "string",
+                "nullable": true,
+                "description": "The HTML body of the e-mail message"
+              },
+              "message": {
+                "type": "string",
+                "nullable": true,
+                "description": "The short-message of the template (SMS, Push notification, Slack,\netc)"
+              }
+            }
+          }
+        }
+      },
+      "StatusUpdateTemplateInput": {
+        "type": "object",
+        "properties": {
+          "incident_id": {
+            "type": "string",
+            "description": "The incident id to render the template for"
+          },
+          "status_update": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string",
+                "description": "The status update message that will be sent to the template"
+              }
+            }
+          }
+        }
       }
     }
   },
@@ -29350,6 +29547,531 @@
           },
           "429": {
             "$ref": "#/components/responses/TooManyRequests"
+          }
+        }
+      }
+    },
+    "/templates": {
+      "description": "List and Create Templates",
+      "get": {
+        "tags": [
+          "Templates"
+        ],
+        "operationId": "getTemplates",
+        "description": "Get a list of all the template on an account\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
+        "summary": "List templates",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/offset_limit"
+          },
+          {
+            "$ref": "#/components/parameters/offset_offset"
+          },
+          {
+            "$ref": "#/components/parameters/offset_total"
+          },
+          {
+            "$ref": "#/components/parameters/template_query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A paginated array of templates.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Pagination"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "templates": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Template"
+                          }
+                        }
+                      },
+                      "required": [
+                        "templates"
+                      ]
+                    }
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "limit": 25,
+                      "more": false,
+                      "offset": 0,
+                      "templates": [
+                        {
+                          "created_at": "2022-12-30T16:00:00Z",
+                          "created_by": {
+                            "id": "PDZR4CN",
+                            "self": "https://api.pagerduty.com/users/PDZR4CN",
+                            "type": "user_reference"
+                          },
+                          "description": "Sample template description",
+                          "id": "PBZUP2B",
+                          "name": "Sample Template 160",
+                          "self": "https://api.pagerduty.com/templates/PBZUP2B",
+                          "template_type": "status_update",
+                          "type": "template",
+                          "updated_at": "2022-12-30T16:00:00Z",
+                          "updated_by": {
+                            "id": "PGY287N",
+                            "self": "https://api.pagerduty.com/users/PGY287N",
+                            "type": "user_reference"
+                          }
+                        }
+                      ],
+                      "total": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Templates"
+        ],
+        "operationId": "createTemplate",
+        "description": "Create a new template",
+        "summary": "Create a template",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "template": {
+                    "$ref": "#/components/schemas/EditableTemplate"
+                  }
+                },
+                "required": [
+                  "template"
+                ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "template": {
+                      "description": "Sample template description",
+                      "templated_fields": {
+                        "email_body": "<div> sample </div>",
+                        "email_subject": "Sample email Subject",
+                        "message": "Sample SMS message"
+                      },
+                      "name": "Sample Template",
+                      "template_type": "status_update"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Template successfully created",
+            "content": {
+              "application/json": {
+                "x-type": true,
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "template": {
+                      "$ref": "#/components/schemas/Template"
+                    }
+                  },
+                  "required": [
+                    "template"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "template": {
+                        "created_at": "2022-08-19T13:46:22Z",
+                        "created_by": {
+                          "id": "PF9KMXH",
+                          "self": "https://api.pagerduty.com/users/PF9KMXH",
+                          "type": "user_reference"
+                        },
+                        "description": "Sample template description",
+                        "templated_fields": {
+                          "email_body": "<div> sample </div>",
+                          "email_subject": "Sample email Subject",
+                          "message": "Sample SMS message"
+                        },
+                        "id": "PCCR863",
+                        "name": "Sample Template",
+                        "self": "https://api.pagerduty.com/templates/PCCR863",
+                        "template_type": "status_update",
+                        "type": "template",
+                        "updated_at": "2022-08-19T13:46:22Z",
+                        "updated_by": {
+                          "id": "PF9KMXH",
+                          "self": "https://api.pagerduty.com/users/PF9KMXH",
+                          "type": "user_reference"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/templates/{id}": {
+      "description": "Update and Delete Templates",
+      "get": {
+        "tags": [
+          "Templates"
+        ],
+        "operationId": "getTemplate",
+        "description": "Get a single template on the account\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
+        "summary": "Get a template",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "template": {
+                      "$ref": "#/components/schemas/Template"
+                    }
+                  },
+                  "required": [
+                    "template"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "template": {
+                        "created_at": "2022-12-30T16:00:00Z",
+                        "created_by": {
+                          "id": "PDZR4CN",
+                          "self": "https://api.pagerduty.com/users/PDZR4CN",
+                          "type": "user_reference"
+                        },
+                        "description": "Sample template description",
+                        "templated_fields": {
+                          "email_body": "<div> sample </div>",
+                          "email_subject": "Sample email Subject",
+                          "message": "Sample template message"
+                        },
+                        "id": "PBZUP2B",
+                        "name": "Sample Template 160",
+                        "self": "https://api.pagerduty.com/templates/PBZUP2B",
+                        "template_type": "status_update",
+                        "type": "template",
+                        "updated_at": "2022-12-30T16:00:00Z",
+                        "updated_by": {
+                          "id": "PGY287N",
+                          "self": "https://api.pagerduty.com/users/PGY287N",
+                          "type": "user_reference"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Templates"
+        ],
+        "operationId": "updateTemplate",
+        "description": "Update an existing template",
+        "summary": "Update a template",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "template": {
+                    "$ref": "#/components/schemas/EditableTemplate"
+                  }
+                },
+                "required": [
+                  "template"
+                ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "template": {
+                      "description": "Sample template description",
+                      "templated_fields": {
+                        "email_body": "<div> sample </div>",
+                        "email_subject": "Sample email Subject",
+                        "message": "Sample SMS message"
+                      },
+                      "name": "Sample Template",
+                      "template_type": "status_update"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "template": {
+                      "$ref": "#/components/schemas/Template"
+                    }
+                  },
+                  "required": [
+                    "template"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "template": {
+                        "created_at": "2022-08-19T13:46:22Z",
+                        "created_by": {
+                          "id": "PF9KMXH",
+                          "self": "https://api.pagerduty.com/users/PF9KMXH",
+                          "type": "user_reference"
+                        },
+                        "description": "Sample template description",
+                        "templated_fields": {
+                          "email_body": "<div> sample </div>",
+                          "email_subject": "Sample email Subject",
+                          "message": "Sample SMS message"
+                        },
+                        "id": "PCCR863",
+                        "name": "Sample Template",
+                        "self": "https://api.pagerduty.com/templates/PCCR863",
+                        "template_type": "status_update",
+                        "type": "template",
+                        "updated_at": "2022-08-19T13:46:22Z",
+                        "updated_by": {
+                          "id": "PF9KMXH",
+                          "self": "https://api.pagerduty.com/users/PF9KMXH",
+                          "type": "user_reference"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Templates"
+        ],
+        "operationId": "deleteTemplate",
+        "description": "Delete a specific of templates on the account",
+        "summary": "Delete a template",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/templates/render/{id}": {
+      "post": {
+        "tags": [
+          "Templates"
+        ],
+        "operationId": "renderTemplate",
+        "summary": "Render a template",
+        "description": "Render a template. This endpoint has a variable request body depending on the template type. For the `status_update` template type, the caller will provide the incident id, and a status update message.\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/StatusUpdateTemplateInput"
+                  }
+                ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "incident_id": "QT4KHLK034QWE34",
+                    "status_update": {
+                      "message": "Status update message"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RenderedTemplate"
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "templated_fields": {
+                        "email_subject": "Update: Status update message",
+                        "email_body": "<div class=\"test\">Status update message</div>",
+                        "message": "Update: Status update message"
+                      },
+                      "warnings": [
+                        {
+                          "email_body": [
+                            "{{incident.bad_value}} does not exist."
+                          ]
+                        }
+                      ],
+                      "errors": []
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           }
         }
       }
