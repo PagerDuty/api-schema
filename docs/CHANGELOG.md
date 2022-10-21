@@ -5,6 +5,22 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 Currently we rarely deprecate, and do not remove any API functionality.
 
 ---
+### 2022-10-20
+Added information on upcoming changes to [OAuth token expiries](https://developer.pagerduty.com/docs/f14c5f7a16fd5-o-auth-2-0-authorization-code-grant-flow#token-expiries)
+
+All OAuth clients registered prior to October 30th 2022 will have the following settings:
+
+ - access token expiry of one year
+ - refresh token expiry of one year
+
+After October 30th 2022, all newly registered OAuth clients will have the following settings:
+
+ - access token expiry of 30 days
+ - refresh token expiry of 210 days
+ - rolling refresh window of 3 years
+
+After April 30th 2023, we will apply the new expiry settings to all OAuth clients.
+
 ### 2022-10-05
 - Added Templates API documentation
 ### 2022-09-13
