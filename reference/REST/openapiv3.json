@@ -30683,6 +30683,7 @@
     "/users/{id}/audit/records": {
       "description": "List audit records of changes made to the user.",
       "get": {
+        "x-pd-requires-scope": "users.read",
         "tags": [
           "Users"
         ],
