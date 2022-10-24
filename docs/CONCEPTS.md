@@ -107,6 +107,9 @@ Incidents are triggered through the [Events API](https://developer.pagerduty.com
 
 [*Read more about Incidents in the PagerDuty Knowledge Base*](https://support.pagerduty.com/hc/en-us/articles/202829250-What-Is-an-Incident-).
 
+### Licenses
+A License may be associated to a User as well as a collection of products. The User assigned to a License may be granted access to PagerDuty features and products according to what the License dictates.
+
 ### Responder Requests
 Responder Requests are a request for a specific [User](#user) to respond to the Incident.
 

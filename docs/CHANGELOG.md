@@ -5,6 +5,21 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 Currently we rarely deprecate, and do not remove any API functionality.
 
 ---
+### 2022-10-24
+
+Added documentation of Flexible Licensing within the API to support querying for License and License allocation information along with creating and updating Users with specified Licenses.
+
+This introduces three new API endpoints:
+
+- `GET /licenses` for retrieving the list of Licenses an Account has purchased along with usage and availability counts
+- `GET /license_allocations` for retrieving what Licenses are allocated to what Users
+- `GET /users/:id/license` for retrieiving the License assigned to an individual User
+
+Additionally, two endpoints have been updated to support Licensing behavior:
+
+- `POST /users` for assigning a License to a User when it is first created
+- `PUT /users/:id` for assigning a new License to an existing User
+
 ### 2022-10-20
 Added information on upcoming changes to [OAuth token expiries](https://developer.pagerduty.com/docs/f14c5f7a16fd5-o-auth-2-0-authorization-code-grant-flow#token-expiries)
 
@@ -20,7 +35,6 @@ After October 30th 2022, all newly registered OAuth clients will have the follow
  - rolling refresh window of 3 years
 
 After April 30th 2023, we will apply the new expiry settings to all OAuth clients.
-
 ### 2022-10-05
 - Added Templates API documentation
 ### 2022-09-13
