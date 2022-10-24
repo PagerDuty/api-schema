@@ -65,6 +65,10 @@
       "description": "An incident represents a problem or an issue that needs to be addressed and resolved. Incidents trigger on a service, which prompts notifications to go out to on-call responders per the service's escalation policy.\n"
     },
     {
+      "name": "Licenses",
+      "description": "Licenses are allocated to Users to allow for per-User access to PagerDuty functionality within an Account.\n"
+    },
+    {
       "name": "Log Entries",
       "description": "A log of all the events that happen to an Incident, and these are exposed as Log Entries.\n"
     },
@@ -4727,6 +4731,79 @@
           }
         ]
       },
+      "LicenseWithCounts": {
+        "allOf": [
+          {
+            "type": "object",
+            "required": [
+              "id",
+              "description",
+              "name",
+              "valid_roles"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "Uniquely identifies the resource"
+              },
+              "description": {
+                "type": "string",
+                "description": "Description of the License. May include the names of add-ons associated with\nthe License, if there are any.\n"
+              },
+              "name": {
+                "type": "string",
+                "description": "Name of the License.\n"
+              },
+              "valid_roles": {
+                "type": "array",
+                "description": "The roles a User with this License can have",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "role_group": {
+                "type": "string",
+                "enum": [
+                  "FullUser",
+                  "Stakeholder"
+                ],
+                "description": "Indicates whether this License is assignable to full or stakeholder Users",
+                "example": "FullUser"
+              },
+              "type": {
+                "type": "string",
+                "description": "Type of object"
+              },
+              "self": {
+                "type": "string",
+                "description": "API URL to access the License"
+              },
+              "html_url": {
+                "type": "string",
+                "description": "HTML URL to access the License"
+              },
+              "summary": {
+                "type": "string",
+                "description": "Summary of the License"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "properties": {
+              "current_value": {
+                "type": "integer",
+                "description": "How many of these Licenses are currently allocated to Users"
+              },
+              "allocations_available": {
+                "type": "integer",
+                "nullable": true,
+                "description": "How many of these licenses are available to be allocated to a user. If this\nvalue is \"null\" then there is no limit on the number of allocations allowed.\n"
+              }
+            }
+          }
+        ]
+      },
       "SupportHours": {
         "type": "object",
         "properties": {
@@ -5745,6 +5822,25 @@
                 "items": {
                   "$ref": "#/components/schemas/NotificationRuleReference"
                 }
+              },
+              "license": {
+                "description": "The License assigned to the User",
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Reference"
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "license_reference"
+                        ]
+                      }
+                    }
+                  }
+                ]
               }
             },
             "required": [
@@ -20287,6 +20383,236 @@
     "/incidents/count": {
       "description": "Get a count of incidents matching a set of criteria such as service, status, and time. Counts may be fetched per status."
     },
+    "/license_allocations": {
+      "description": "The Licenses allocated to Users within your Account",
+      "get": {
+        "tags": [
+          "Licenses"
+        ],
+        "operationId": "listLicenseAllocations",
+        "description": "List the Licenses allocated to Users within your Account\n",
+        "summary": "List License Allocations",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/offset_limit"
+          },
+          {
+            "$ref": "#/components/parameters/offset_offset"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "License allocations to Users within your Account",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "license_allocations": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "required": [
+                              "user",
+                              "license",
+                              "allocated_at"
+                            ],
+                            "properties": {
+                              "user": {
+                                "$ref": "#/components/schemas/UserReference"
+                              },
+                              "license": {
+                                "$ref": "#/components/schemas/LicenseWithCounts/allOf/0"
+                              },
+                              "allocated_at": {
+                                "type": "string",
+                                "description": "Indicates the date and time the License was allocated to the User",
+                                "format": "date-time"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "$ref": "#/components/schemas/Pagination"
+                    }
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "license_allocations": [
+                        {
+                          "license": {
+                            "id": "PIP248G",
+                            "name": "Business (Full User)",
+                            "description": "Event Intelligence",
+                            "valid_roles": [
+                              "owner",
+                              "admin",
+                              "user",
+                              "limited_user",
+                              "observer",
+                              "restricted_access"
+                            ],
+                            "role_group": "FullUser",
+                            "summary": "Business (Full User)",
+                            "type": "license",
+                            "self": null,
+                            "html_url": null
+                          },
+                          "user": {
+                            "id": "PIP248H",
+                            "type": "user_reference"
+                          },
+                          "allocated_at": "2021-06-01T00:00:00-05:00"
+                        }
+                      ],
+                      "offset": 0,
+                      "limit": 1,
+                      "more": false,
+                      "total": 2
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/licenses": {
+      "description": "The Licenses associated with your Account",
+      "get": {
+        "tags": [
+          "Licenses"
+        ],
+        "operationId": "listLicenses",
+        "description": "List the Licenses associated with your Account\n",
+        "summary": "List Licenses",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Licenses associated with your Account",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "licenses": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/LicenseWithCounts"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Example Response",
+                    "value": {
+                      "licenses": [
+                        {
+                          "id": "PIP248G",
+                          "name": "Business (Full User)",
+                          "description": "Event Intelligence",
+                          "current_value": 234,
+                          "allocations_available": 4766,
+                          "valid_roles": [
+                            "owner",
+                            "admin",
+                            "user",
+                            "limited_user",
+                            "observer",
+                            "restricted_access"
+                          ],
+                          "role_group": "FullUser",
+                          "summary": "Business (Full User)",
+                          "type": "license",
+                          "self": null,
+                          "html_url": null
+                        },
+                        {
+                          "id": "PTHH1SQ",
+                          "name": "Business (Full User)",
+                          "description": "",
+                          "current_value": 0,
+                          "allocations_available": 4766,
+                          "valid_roles": [
+                            "owner",
+                            "admin",
+                            "user",
+                            "limited_user",
+                            "observer",
+                            "restricted_access"
+                          ],
+                          "role_group": "FullUser",
+                          "summary": "Business (Full User)",
+                          "type": "license",
+                          "self": null,
+                          "html_url": null
+                        },
+                        {
+                          "id": "PQ8W0D0",
+                          "name": "Business (Stakeholder)",
+                          "description": "",
+                          "current_value": 48,
+                          "allocations_available": 4952,
+                          "valid_roles": [
+                            "read_only_user",
+                            "read_only_limited_user"
+                          ],
+                          "role_group": "Stakeholder",
+                          "summary": "Business (Stakeholder)",
+                          "type": "license",
+                          "self": null,
+                          "html_url": null
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
     "/log_entries": {
       "description": "List all of the log entries across your account. These can be filtered (for instance, by time or by team), and the results will be paginated.",
       "get": {
@@ -30297,7 +30623,11 @@
                       "role": "admin",
                       "job_title": "Director of Engineering",
                       "avatar_url": "https://secure.gravatar.com/avatar/1d1a39d4635208d5664082a6c654a73f.png?d=mm&r=PG",
-                      "description": "I'm the boss"
+                      "description": "I'm the boss",
+                      "license": {
+                        "id": "PTDVERC",
+                        "type": "license_reference"
+                      }
                     }
                   }
                 }
@@ -30582,7 +30912,11 @@
                       "role": "admin",
                       "job_title": "Director of Engineering",
                       "avatar_url": "https://secure.gravatar.com/avatar/1d1a39d4635208d5664082a6c654a73f.png?d=mm&r=PG",
-                      "description": "I'm the boss"
+                      "description": "I'm the boss",
+                      "license": {
+                        "id": "PTDVERC",
+                        "type": "license_reference"
+                      }
                     }
                   }
                 }
@@ -31197,6 +31531,82 @@
           },
           "429": {
             "$ref": "#/components/responses/TooManyRequests"
+          }
+        }
+      }
+    },
+    "/users/{id}/license": {
+      "description": "The License allocated to a User",
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "operationId": "getUserLicense",
+        "description": "Get the License allocated to a User\n",
+        "summary": "Get the License allocated to a User",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The License allocated to the User",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "license": {
+                      "$ref": "#/components/schemas/LicenseWithCounts/allOf/0"
+                    }
+                  },
+                  "required": [
+                    "license"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "license": {
+                        "id": "PIP248G",
+                        "name": "Business (Full User)",
+                        "description": "Event Intelligence",
+                        "valid_roles": [
+                          "owner",
+                          "admin",
+                          "user",
+                          "limited_user",
+                          "observer",
+                          "restricted_access"
+                        ],
+                        "role_group": "FullUser",
+                        "summary": "Business (Full User)",
+                        "type": "license",
+                        "self": null,
+                        "html_url": null
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
           }
         }
       }
