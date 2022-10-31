@@ -2068,7 +2068,16 @@
       "query": {
         "name": "query",
         "in": "query",
-        "description": "Filters the result, showing only the tags whose labels match the query.",
+        "description": "Filters the result, showing only the records whose name matches the query.",
+        "required": false,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "tag_query": {
+        "name": "query",
+        "in": "query",
+        "description": "Filters the result, showing only the tags whose label matches the query.",
         "required": false,
         "schema": {
           "type": "string"
@@ -28368,7 +28377,7 @@
             "$ref": "#/components/parameters/offset_total"
           },
           {
-            "$ref": "#/components/parameters/query"
+            "$ref": "#/components/parameters/tag_query"
           }
         ],
         "responses": {
