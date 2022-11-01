@@ -5,6 +5,18 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 Currently we rarely deprecate, and do not remove any API functionality.
 
 ---
+### 2022-10-27
+- Fixed the wording of the `query` query parameter. Previously it said it filtered over tags when it was actually filtering over an object's name field.
+- `GET /schedules`
+- `GET /escalation_policies`
+- `GET /extensions`
+- `GET /users`
+- `GET /teams`
+- `GET /tags`
+- `GET /services`
+- `GET /response_plays`
+- `GET /maintenance_windows`
+
 ### 2022-10-24
 
 Added documentation of Flexible Licensing within the API to support querying for License and License allocation information along with creating and updating Users with specified Licenses.
