@@ -33,6 +33,10 @@
       "description": "Provides audit record data.\n"
     },
     {
+      "name": "Automation Actions",
+      "description": "Automation Actions invoke jobs that are staged in Runbook Automation or Process Automation.\n"
+    },
+    {
       "name": "Paused Incident Reports",
       "description": "Provides paused Incident reporting data on services and accounts that have paused Alerts.\n"
     },
@@ -1485,6 +1489,33 @@
           "type": "boolean"
         }
       },
+      "automation_actions_name": {
+        "name": "name",
+        "description": "Filters results to include the ones matching the name (case insensitive substring matching)",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "nullable": false
+        }
+      },
+      "automation_actions_runners_include": {
+        "name": "include[]",
+        "in": "query",
+        "description": "Includes additional data elements into the response",
+        "explode": true,
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "associated_actions"
+            ],
+            "example": "associated_actions"
+          },
+          "uniqueItems": true
+        }
+      },
       "past_incidents_limit": {
         "name": "limit",
         "in": "query",
@@ -1571,6 +1602,16 @@
         "description": "This header indicates that this API endpoint is __UNDER CONSTRUCTION__ and may change at any time. You __MUST__ pass in this header with the value `status-dashboards`. Do not use this endpoint in production, as it may change!",
         "required": true
       },
+      "early_access_automation_actions": {
+        "schema": {
+          "type": "string",
+          "default": "automation-actions-early-access"
+        },
+        "in": "header",
+        "name": "X-EARLY-ACCESS",
+        "description": "This header indicates that this API endpoint is __UNDER CONSTRUCTION__ and may change at any time. You __MUST__ pass in this header with the value `automation-actions-early-access`. Do not use this endpoint in production, as it may change!",
+        "required": true
+      },
       "webhooks_filter_type": {
         "name": "filter_type",
         "in": "query",
@@ -1629,6 +1670,15 @@
         "name": "business_service_id",
         "in": "path",
         "description": "The business service ID.",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "team_id": {
+        "name": "team_id",
+        "in": "path",
+        "description": "The team ID",
         "required": true,
         "schema": {
           "type": "string"
@@ -3734,6 +3784,215 @@
           "enabled": true,
           "timeout": 300
         }
+      },
+      "AutomationActionsRunnerTypeEnum": {
+        "description": "sidecar -- The runner is backed by an external sidecar that polls for invocations.\nrunbook -- The runner communicates directly with a runbook instance.\n",
+        "type": "string",
+        "enum": [
+          "sidecar",
+          "runbook"
+        ],
+        "example": "runbook"
+      },
+      "AutomationActionsRunbookBaseURI": {
+        "type": "string",
+        "description": "The base URI of the Runbook server to connect to. May only contain alphanumeric characters, periods, underscores and dashes. Applies only to runbook runner_types.",
+        "maxLength": 255,
+        "example": "subdomain"
+      },
+      "AutomationActionsActionReference": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Reference"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "action_reference"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "AutomationActionsActionReferences": {
+        "type": "object",
+        "properties": {
+          "actions": {
+            "nullable": false,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AutomationActionsActionReference"
+            }
+          }
+        },
+        "required": [
+          "actions"
+        ]
+      },
+      "AutomationActionsRunner": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Tag/allOf/0"
+          },
+          {
+            "type": "object",
+            "description": "A remote entity capable of executing work specified by an action. At maximum, an account can have 1000 runners. If runner maximum is exceeded, a 400 response is returned with error message.",
+            "properties": {
+              "runner_type": {
+                "$ref": "#/components/schemas/AutomationActionsRunnerTypeEnum"
+              },
+              "name": {
+                "type": "string",
+                "example": "us-west-2 prod runner"
+              },
+              "description": {
+                "type": "string",
+                "example": "us-west-2 runner provisioned in the production environment by the SRE team"
+              },
+              "last_seen": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "status": {
+                "$ref": "#/components/schemas/AutomationActionsRunnerStatusEnum"
+              },
+              "creation_time": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "runbook_base_uri": {
+                "$ref": "#/components/schemas/AutomationActionsRunbookBaseURI"
+              },
+              "teams": {
+                "type": "array",
+                "readOnly": true,
+                "description": "The list of teams associated with the Runner",
+                "items": {
+                  "$ref": "#/components/schemas/TeamReference"
+                }
+              },
+              "privileges": {
+                "$ref": "#/components/schemas/AutomationActionsUserPermissions"
+              },
+              "associated_actions": {
+                "description": "References to at most 3 actions associated with the Runner. Use appropriate endpoints to retrieve the full list of associated actions.",
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/AutomationActionsActionReferences"
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "more"
+                    ],
+                    "properties": {
+                      "more": {
+                        "type": "boolean",
+                        "description": "Indicates whether more actions exist for the Runner."
+                      }
+                    }
+                  }
+                ]
+              },
+              "metadata": {
+                "type": "object",
+                "description": "Additional metadata"
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "runner_type",
+              "status",
+              "creation_time"
+            ]
+          }
+        ]
+      },
+      "AutomationActionsRunnerBody": {
+        "type": "object",
+        "properties": {
+          "runner_type": {
+            "$ref": "#/components/schemas/AutomationActionsRunnerTypeEnum"
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 255,
+            "example": "us-west-2 prod runner"
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 1024,
+            "example": "us-west-2 runner provisioned in the production environment by the SRE team"
+          },
+          "runbook_base_uri": {
+            "$ref": "#/components/schemas/AutomationActionsRunbookBaseURI"
+          },
+          "runbook_api_key": {
+            "type": "string",
+            "maxLength": 64,
+            "description": "The API key to connect to the Runbook server with. Applies only to runbook runner_types"
+          }
+        },
+        "required": [
+          "name",
+          "description",
+          "runner_type"
+        ]
+      },
+      "AutomationActionsRunnerBodyWithTeams": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/AutomationActionsRunnerBody"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "teams": {
+                "type": "array",
+                "description": "The list of teams associated with the Runner",
+                "items": {
+                  "$ref": "#/components/schemas/TeamReference"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "AutomationActionsRunnerStatusEnum": {
+        "description": "Configured -- Runner has connected to the backend at least once \nNotConfigured -- Runner has never connected to backend\n",
+        "type": "string",
+        "enum": [
+          "Configured",
+          "NotConfigured"
+        ],
+        "example": "Configured"
+      },
+      "AutomationActionsUserPermissions": {
+        "type": "object",
+        "properties": {
+          "permissions": {
+            "nullable": false,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "create",
+                "update",
+                "delete",
+                "invoke"
+              ]
+            }
+          }
+        },
+        "required": [
+          "permissions"
+        ],
+        "example": "create"
       },
       "ServiceEventRule": {
         "allOf": [

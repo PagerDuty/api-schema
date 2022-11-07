@@ -5,6 +5,17 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 Currently we rarely deprecate, and do not remove any API functionality.
 
 ---
+### 2022-11-03
+- Added Automation Action Runner Management endpoints.
+- `GET /automation_actions/runners`
+- `POST /automation_actions/runners`
+- `GET /automation_actions/runners/{id}`
+- `PUT /automation_actions/runners/{id}`
+- `DELETE /automation_actions/runners/{id}`
+- `POST /automation_actions/runners/{id}/teams`
+- `DELETE /automation_actions/runners/{id}/teams/{team_id}`
+
+
 ### 2022-10-27
 - Fixed the wording of the `query` query parameter. Previously it said it filtered over tags when it was actually filtering over an object's name field.
 - `GET /schedules`
