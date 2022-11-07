@@ -5,6 +5,14 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 Currently we rarely deprecate, and do not remove any API functionality.
 
 ---
+### 2022-11-07
+Added new fields within `alert_grouping_settings` for configuring Intelligent Alert Grouping with a flexible time window.
+  - `POST /services`
+  - `PUT /services/{id}`
+  - `GET /services`
+  - `GET /services/{id}`
+
+---
 ### 2022-11-03
 - Added Automation Action Runner Management endpoints.
 - `GET /automation_actions/runners`
