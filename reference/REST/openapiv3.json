@@ -3796,7 +3796,7 @@
       },
       "AutomationActionsRunbookBaseURI": {
         "type": "string",
-        "description": "The base URI of the Runbook server to connect to. May only contain alphanumeric characters, periods, underscores and dashes. Applies only to runbook runner_types.",
+        "description": "The base URI of the Runbook server to connect to. May only contain alphanumeric characters, periods, underscores and dashes.",
         "maxLength": 255,
         "example": "subdomain"
       },
@@ -3905,6 +3905,7 @@
             },
             "required": [
               "id",
+              "type",
               "name",
               "runner_type",
               "status",
@@ -3916,9 +3917,6 @@
       "AutomationActionsRunnerBody": {
         "type": "object",
         "properties": {
-          "runner_type": {
-            "$ref": "#/components/schemas/AutomationActionsRunnerTypeEnum"
-          },
           "name": {
             "type": "string",
             "maxLength": 255,
@@ -3928,23 +3926,14 @@
             "type": "string",
             "maxLength": 1024,
             "example": "us-west-2 runner provisioned in the production environment by the SRE team"
-          },
-          "runbook_base_uri": {
-            "$ref": "#/components/schemas/AutomationActionsRunbookBaseURI"
-          },
-          "runbook_api_key": {
-            "type": "string",
-            "maxLength": 64,
-            "description": "The API key to connect to the Runbook server with. Applies only to runbook runner_types"
           }
         },
         "required": [
           "name",
-          "description",
-          "runner_type"
+          "description"
         ]
       },
-      "AutomationActionsRunnerBodyWithTeams": {
+      "AutomationActionsRunnerRunbookBody": {
         "allOf": [
           {
             "$ref": "#/components/schemas/AutomationActionsRunnerBody"
@@ -3952,6 +3941,32 @@
           {
             "type": "object",
             "properties": {
+              "runbook_base_uri": {
+                "type": "string",
+                "description": "The base URI of the Runbook server to connect to. May only contain alphanumeric characters, periods, underscores and dashes. If omitted, the previously stored value will remain unchanged.",
+                "maxLength": 255,
+                "example": "subdomain"
+              },
+              "runbook_api_key": {
+                "type": "string",
+                "maxLength": 64,
+                "description": "The API key to connect to the Runbook server with. If omitted, the previously stored value will remain unchanged."
+              }
+            }
+          }
+        ]
+      },
+      "AutomationActionsRunnerRunbookPostBody": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/AutomationActionsRunnerRunbookBody"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "runner_type": {
+                "$ref": "#/components/schemas/AutomationActionsRunnerTypeEnum"
+              },
               "teams": {
                 "type": "array",
                 "description": "The list of teams associated with the Runner",
@@ -3959,7 +3974,44 @@
                   "$ref": "#/components/schemas/TeamReference"
                 }
               }
-            }
+            },
+            "required": [
+              "runner_type",
+              "runbook_base_uri",
+              "runbook_api_key"
+            ]
+          }
+        ]
+      },
+      "AutomationActionsRunnerSidecarBody": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/AutomationActionsRunnerBody"
+          }
+        ]
+      },
+      "AutomationActionsRunnerSidecarPostBody": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/AutomationActionsRunnerSidecarBody"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "runner_type": {
+                "$ref": "#/components/schemas/AutomationActionsRunnerTypeEnum"
+              },
+              "teams": {
+                "type": "array",
+                "description": "The list of teams associated with the Runner",
+                "items": {
+                  "$ref": "#/components/schemas/TeamReference"
+                }
+              }
+            },
+            "required": [
+              "runner_type"
+            ]
           }
         ]
       },
@@ -3986,13 +4038,16 @@
                 "delete",
                 "invoke"
               ]
-            }
+            },
+            "example": [
+              "update",
+              "delete"
+            ]
           }
         },
         "required": [
           "permissions"
-        ],
-        "example": "create"
+        ]
       },
       "ServiceEventRule": {
         "allOf": [
