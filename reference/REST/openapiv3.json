@@ -1502,6 +1502,7 @@
       "automation_actions_runners_include": {
         "name": "include[]",
         "in": "query",
+        "required": false,
         "description": "Includes additional data elements into the response",
         "explode": true,
         "schema": {
@@ -1514,6 +1515,36 @@
             "example": "associated_actions"
           },
           "uniqueItems": true
+        }
+      },
+      "automation_actions_invocation_state": {
+        "name": "invocation_state",
+        "description": "Invocation state",
+        "in": "query",
+        "schema": {
+          "type": "string",
+          "description": "prepared -- the invocation exists and can be referenced, but is NOT available to a Runner <br> created -- the invocation exists and is waiting for a Runner <br> sent -- invocation sent to a Runner <br> queued -- invocation queued by a Runner <br> running -- invocation is being ran by a Runner <br> aborted -- invocation was aborted on a Runner <br> completed -- invocation completed on a Runner <br> error -- invocation encountered an error on a Runner",
+          "enum": [
+            "prepared",
+            "created",
+            "sent",
+            "queued",
+            "running",
+            "aborted",
+            "completed",
+            "error"
+          ],
+          "example": "sent"
+        }
+      },
+      "automation_actions_incident_id": {
+        "name": "incident_id",
+        "description": "Incident ID",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "example": "Q2LAR4ADCXC8IB"
         }
       },
       "past_incidents_limit": {
@@ -3800,39 +3831,6 @@
         "maxLength": 255,
         "example": "subdomain"
       },
-      "AutomationActionsActionReference": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/Reference"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "type": {
-                "type": "string",
-                "enum": [
-                  "action_reference"
-                ]
-              }
-            }
-          }
-        ]
-      },
-      "AutomationActionsActionReferences": {
-        "type": "object",
-        "properties": {
-          "actions": {
-            "nullable": false,
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/AutomationActionsActionReference"
-            }
-          }
-        },
-        "required": [
-          "actions"
-        ]
-      },
       "AutomationActionsRunner": {
         "allOf": [
           {
@@ -3882,7 +3880,34 @@
                 "description": "References to at most 3 actions associated with the Runner. Use appropriate endpoints to retrieve the full list of associated actions.",
                 "allOf": [
                   {
-                    "$ref": "#/components/schemas/AutomationActionsActionReferences"
+                    "type": "object",
+                    "properties": {
+                      "actions": {
+                        "nullable": false,
+                        "type": "array",
+                        "items": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/Reference"
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "type": {
+                                  "type": "string",
+                                  "enum": [
+                                    "action_reference"
+                                  ]
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    "required": [
+                      "actions"
+                    ]
                   },
                   {
                     "type": "object",
@@ -4047,6 +4072,173 @@
         },
         "required": [
           "permissions"
+        ]
+      },
+      "AutomationActionsInvocation": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Tag/allOf/0"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "action_snapshot": {
+                "allOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "example": "Restart apache"
+                      },
+                      "action_type": {
+                        "type": "string",
+                        "enum": [
+                          "script",
+                          "process_automation"
+                        ],
+                        "example": "process_automation"
+                      }
+                    },
+                    "required": [
+                      "action_type",
+                      "name"
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "action_data_reference": {
+                        "oneOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "process_automation_job_id": {
+                                "type": "string",
+                                "example": "79c199bba1aff6e519f198457f5ec0fc"
+                              },
+                              "process_automation_job_arguments": {
+                                "type": "string",
+                                "description": "Arguments to pass to the Process Automation job. The maxLength value is specified in bytes.",
+                                "example": "-env production",
+                                "maxLength": 1024
+                              }
+                            },
+                            "required": [
+                              "process_automation_job_id"
+                            ]
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "script": {
+                                "type": "string",
+                                "description": "Body of the script to be executed on the Runner. To execute it, the Runner will write the content of the property into a temp file, make the file executable and execute it. It is assumed that the Runner has a properly configured environment to run the script as an executable file. This behaviour can be altered by providing the `invocation_command` property. The maxLength value is specified in bytes.",
+                                "example": "print(\"Hello from a Python script!\")",
+                                "maxLength": 16777215
+                              },
+                              "invocation_command": {
+                                "type": "string",
+                                "description": "The command to executed a script with. With the body of the script written into a temp file, the Runner will execute the `<invocation_command> <temp_file>` command. The maxLength value is specified in bytes.",
+                                "example": "/usr/local/bin/python3",
+                                "maxLength": 65535
+                              }
+                            },
+                            "required": [
+                              "script"
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              },
+              "runner_id": {
+                "type": "string"
+              },
+              "timing": {
+                "description": "A list of state transitions with timestamps. Only the 'created' transition is guaranteed to exist at any time.",
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "The date/time"
+                    },
+                    "state": {
+                      "$ref": "#/components/parameters/automation_actions_invocation_state/schema"
+                    }
+                  },
+                  "required": [
+                    "timestamp",
+                    "state"
+                  ]
+                }
+              },
+              "duration": {
+                "description": "The duration of the invocation's execution time.",
+                "example": 23,
+                "type": "integer"
+              },
+              "state": {
+                "$ref": "#/components/parameters/automation_actions_invocation_state/schema"
+              },
+              "action_id": {
+                "type": "string"
+              },
+              "metadata": {
+                "type": "object",
+                "properties": {
+                  "agent": {
+                    "oneOf": [
+                      {
+                        "$ref": "#/components/schemas/UserReference"
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "example": "/5471da24-eecd-42e2-ac38-a32b2d907406/service/P000000"
+                          },
+                          "type": {
+                            "type": "string",
+                            "example": "event_orchestration_reference"
+                          }
+                        },
+                        "required": [
+                          "type",
+                          "id"
+                        ]
+                      },
+                      {
+                        "$ref": "#/components/schemas/Template/allOf/1/properties/created_by/oneOf/1"
+                      }
+                    ]
+                  },
+                  "incident": {
+                    "$ref": "#/components/schemas/IncidentReference"
+                  }
+                },
+                "required": [
+                  "agent"
+                ]
+              }
+            },
+            "required": [
+              "id",
+              "type",
+              "action_snapshot",
+              "runner_id",
+              "timing",
+              "state",
+              "action_id",
+              "metadata"
+            ]
+          }
         ]
       },
       "ServiceEventRule": {
