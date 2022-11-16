@@ -33,6 +33,10 @@
       "description": "Provides audit record data.\n"
     },
     {
+      "name": "Automation Actions",
+      "description": "Automation Actions invoke jobs that are staged in Runbook Automation or Process Automation.\n"
+    },
+    {
       "name": "Paused Incident Reports",
       "description": "Provides paused Incident reporting data on services and accounts that have paused Alerts.\n"
     },
@@ -1483,6 +1487,64 @@
         "schema": {
           "default": false,
           "type": "boolean"
+        }
+      },
+      "automation_actions_name": {
+        "name": "name",
+        "description": "Filters results to include the ones matching the name (case insensitive substring matching)",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "nullable": false
+        }
+      },
+      "automation_actions_runners_include": {
+        "name": "include[]",
+        "in": "query",
+        "required": false,
+        "description": "Includes additional data elements into the response",
+        "explode": true,
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "associated_actions"
+            ],
+            "example": "associated_actions"
+          },
+          "uniqueItems": true
+        }
+      },
+      "automation_actions_invocation_state": {
+        "name": "invocation_state",
+        "description": "Invocation state",
+        "in": "query",
+        "schema": {
+          "type": "string",
+          "description": "prepared -- the invocation exists and can be referenced, but is NOT available to a Runner <br> created -- the invocation exists and is waiting for a Runner <br> sent -- invocation sent to a Runner <br> queued -- invocation queued by a Runner <br> running -- invocation is being ran by a Runner <br> aborted -- invocation was aborted on a Runner <br> completed -- invocation completed on a Runner <br> error -- invocation encountered an error on a Runner",
+          "enum": [
+            "prepared",
+            "created",
+            "sent",
+            "queued",
+            "running",
+            "aborted",
+            "completed",
+            "error"
+          ],
+          "example": "sent"
+        }
+      },
+      "automation_actions_incident_id": {
+        "name": "incident_id",
+        "description": "Incident ID",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "example": "Q2LAR4ADCXC8IB"
         }
       },
       "past_incidents_limit": {
@@ -3753,6 +3815,431 @@
           "enabled": true,
           "timeout": 300
         }
+      },
+      "AutomationActionsRunnerTypeEnum": {
+        "description": "sidecar -- The runner is backed by an external sidecar that polls for invocations.\nrunbook -- The runner communicates directly with a runbook instance.\n",
+        "type": "string",
+        "enum": [
+          "sidecar",
+          "runbook"
+        ],
+        "example": "runbook"
+      },
+      "AutomationActionsRunbookBaseURI": {
+        "type": "string",
+        "description": "The base URI of the Runbook server to connect to. May only contain alphanumeric characters, periods, underscores and dashes.",
+        "maxLength": 255,
+        "example": "subdomain"
+      },
+      "AutomationActionsRunner": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Tag/allOf/0"
+          },
+          {
+            "type": "object",
+            "description": "A remote entity capable of executing work specified by an action. At maximum, an account can have 1000 runners. If runner maximum is exceeded, a 400 response is returned with error message.",
+            "properties": {
+              "runner_type": {
+                "$ref": "#/components/schemas/AutomationActionsRunnerTypeEnum"
+              },
+              "name": {
+                "type": "string",
+                "example": "us-west-2 prod runner"
+              },
+              "description": {
+                "type": "string",
+                "example": "us-west-2 runner provisioned in the production environment by the SRE team"
+              },
+              "last_seen": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "status": {
+                "$ref": "#/components/schemas/AutomationActionsRunnerStatusEnum"
+              },
+              "creation_time": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "runbook_base_uri": {
+                "$ref": "#/components/schemas/AutomationActionsRunbookBaseURI"
+              },
+              "teams": {
+                "type": "array",
+                "readOnly": true,
+                "description": "The list of teams associated with the Runner",
+                "items": {
+                  "$ref": "#/components/schemas/TeamReference"
+                }
+              },
+              "privileges": {
+                "$ref": "#/components/schemas/AutomationActionsUserPermissions"
+              },
+              "associated_actions": {
+                "description": "References to at most 3 actions associated with the Runner. Use appropriate endpoints to retrieve the full list of associated actions.",
+                "allOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "actions": {
+                        "nullable": false,
+                        "type": "array",
+                        "items": {
+                          "allOf": [
+                            {
+                              "$ref": "#/components/schemas/Reference"
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "type": {
+                                  "type": "string",
+                                  "enum": [
+                                    "action_reference"
+                                  ]
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    "required": [
+                      "actions"
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "more"
+                    ],
+                    "properties": {
+                      "more": {
+                        "type": "boolean",
+                        "description": "Indicates whether more actions exist for the Runner."
+                      }
+                    }
+                  }
+                ]
+              },
+              "metadata": {
+                "type": "object",
+                "description": "Additional metadata"
+              }
+            },
+            "required": [
+              "id",
+              "type",
+              "name",
+              "runner_type",
+              "status",
+              "creation_time"
+            ]
+          }
+        ]
+      },
+      "AutomationActionsRunnerBody": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 255,
+            "example": "us-west-2 prod runner"
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 1024,
+            "example": "us-west-2 runner provisioned in the production environment by the SRE team"
+          }
+        },
+        "required": [
+          "name",
+          "description"
+        ]
+      },
+      "AutomationActionsRunnerRunbookBody": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/AutomationActionsRunnerBody"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "runbook_base_uri": {
+                "type": "string",
+                "description": "The base URI of the Runbook server to connect to. May only contain alphanumeric characters, periods, underscores and dashes. If omitted, the previously stored value will remain unchanged.",
+                "maxLength": 255,
+                "example": "subdomain"
+              },
+              "runbook_api_key": {
+                "type": "string",
+                "maxLength": 64,
+                "description": "The API key to connect to the Runbook server with. If omitted, the previously stored value will remain unchanged."
+              }
+            }
+          }
+        ]
+      },
+      "AutomationActionsRunnerRunbookPostBody": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/AutomationActionsRunnerRunbookBody"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "runner_type": {
+                "$ref": "#/components/schemas/AutomationActionsRunnerTypeEnum"
+              },
+              "teams": {
+                "type": "array",
+                "description": "The list of teams associated with the Runner",
+                "items": {
+                  "$ref": "#/components/schemas/TeamReference"
+                }
+              }
+            },
+            "required": [
+              "runner_type",
+              "runbook_base_uri",
+              "runbook_api_key"
+            ]
+          }
+        ]
+      },
+      "AutomationActionsRunnerSidecarBody": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/AutomationActionsRunnerBody"
+          }
+        ]
+      },
+      "AutomationActionsRunnerSidecarPostBody": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/AutomationActionsRunnerSidecarBody"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "runner_type": {
+                "$ref": "#/components/schemas/AutomationActionsRunnerTypeEnum"
+              },
+              "teams": {
+                "type": "array",
+                "description": "The list of teams associated with the Runner",
+                "items": {
+                  "$ref": "#/components/schemas/TeamReference"
+                }
+              }
+            },
+            "required": [
+              "runner_type"
+            ]
+          }
+        ]
+      },
+      "AutomationActionsRunnerStatusEnum": {
+        "description": "Configured -- Runner has connected to the backend at least once \nNotConfigured -- Runner has never connected to backend\n",
+        "type": "string",
+        "enum": [
+          "Configured",
+          "NotConfigured"
+        ],
+        "example": "Configured"
+      },
+      "AutomationActionsUserPermissions": {
+        "type": "object",
+        "properties": {
+          "permissions": {
+            "nullable": false,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "create",
+                "update",
+                "delete",
+                "invoke"
+              ]
+            },
+            "example": [
+              "update",
+              "delete"
+            ]
+          }
+        },
+        "required": [
+          "permissions"
+        ]
+      },
+      "AutomationActionsInvocation": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Tag/allOf/0"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "action_snapshot": {
+                "allOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "example": "Restart apache"
+                      },
+                      "action_type": {
+                        "type": "string",
+                        "enum": [
+                          "script",
+                          "process_automation"
+                        ],
+                        "example": "process_automation"
+                      }
+                    },
+                    "required": [
+                      "action_type",
+                      "name"
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "action_data_reference": {
+                        "oneOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "process_automation_job_id": {
+                                "type": "string",
+                                "example": "79c199bba1aff6e519f198457f5ec0fc"
+                              },
+                              "process_automation_job_arguments": {
+                                "type": "string",
+                                "description": "Arguments to pass to the Process Automation job. The maxLength value is specified in bytes.",
+                                "example": "-env production",
+                                "maxLength": 1024
+                              }
+                            },
+                            "required": [
+                              "process_automation_job_id"
+                            ]
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "script": {
+                                "type": "string",
+                                "description": "Body of the script to be executed on the Runner. To execute it, the Runner will write the content of the property into a temp file, make the file executable and execute it. It is assumed that the Runner has a properly configured environment to run the script as an executable file. This behaviour can be altered by providing the `invocation_command` property. The maxLength value is specified in bytes.",
+                                "example": "print(\"Hello from a Python script!\")",
+                                "maxLength": 16777215
+                              },
+                              "invocation_command": {
+                                "type": "string",
+                                "description": "The command to executed a script with. With the body of the script written into a temp file, the Runner will execute the `<invocation_command> <temp_file>` command. The maxLength value is specified in bytes.",
+                                "example": "/usr/local/bin/python3",
+                                "maxLength": 65535
+                              }
+                            },
+                            "required": [
+                              "script"
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              },
+              "runner_id": {
+                "type": "string"
+              },
+              "timing": {
+                "description": "A list of state transitions with timestamps. Only the 'created' transition is guaranteed to exist at any time.",
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "The date/time"
+                    },
+                    "state": {
+                      "$ref": "#/components/parameters/automation_actions_invocation_state/schema"
+                    }
+                  },
+                  "required": [
+                    "timestamp",
+                    "state"
+                  ]
+                }
+              },
+              "duration": {
+                "description": "The duration of the invocation's execution time.",
+                "example": 23,
+                "type": "integer"
+              },
+              "state": {
+                "$ref": "#/components/parameters/automation_actions_invocation_state/schema"
+              },
+              "action_id": {
+                "type": "string"
+              },
+              "metadata": {
+                "type": "object",
+                "properties": {
+                  "agent": {
+                    "oneOf": [
+                      {
+                        "$ref": "#/components/schemas/UserReference"
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "example": "/5471da24-eecd-42e2-ac38-a32b2d907406/service/P000000"
+                          },
+                          "type": {
+                            "type": "string",
+                            "example": "event_orchestration_reference"
+                          }
+                        },
+                        "required": [
+                          "type",
+                          "id"
+                        ]
+                      },
+                      {
+                        "$ref": "#/components/schemas/Template/allOf/1/properties/created_by/oneOf/1"
+                      }
+                    ]
+                  },
+                  "incident": {
+                    "$ref": "#/components/schemas/IncidentReference"
+                  }
+                },
+                "required": [
+                  "agent"
+                ]
+              }
+            },
+            "required": [
+              "id",
+              "type",
+              "action_snapshot",
+              "runner_id",
+              "timing",
+              "state",
+              "action_id",
+              "metadata"
+            ]
+          }
+        ]
       },
       "ServiceEventRule": {
         "allOf": [
@@ -12230,6 +12717,1266 @@
                 "examples": {
                   "response": {
                     "$ref": "#/components/examples/AuditRecordResponse"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/automation_actions/actions/{id}/invocations": {
+      "description": "Create an Invocation",
+      "post": {
+        "summary": "Create an Invocation",
+        "tags": [
+          "Automation Actions"
+        ],
+        "description": "Invokes an Action\n",
+        "operationId": "createAutomationActionInvocation",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_automation_actions"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "invocation": {
+                    "type": "object",
+                    "properties": {
+                      "metadata": {
+                        "type": "object",
+                        "properties": {
+                          "incident_id": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "incident_id"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "metadata"
+                    ]
+                  }
+                },
+                "required": [
+                  "invocation"
+                ]
+              },
+              "examples": {
+                "request": {
+                  "value": {
+                    "metadata": {
+                      "incident_id": "Q2LAR4ADCXC8IB"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created invocation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "invocation": {
+                      "allOf": [
+                        {
+                          "$ref": "#/components/schemas/AutomationActionsInvocation"
+                        },
+                        {
+                          "type": "object"
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "invocation"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "invocation": {
+                        "id": "01DBYD4A25RCXAXQDC9ZX0678V",
+                        "type": "invocation",
+                        "action_snapshot": {
+                          "name": "Restart apache",
+                          "action_type": "script",
+                          "action_data_reference": {
+                            "script": "print(\\Hello from a Python script!\\)",
+                            "invocation_command": "/usr/local/bin/python3"
+                          }
+                        },
+                        "runner_id": "01COQFFNVWIONSLY8C66YTU2O5",
+                        "timing": [
+                          {
+                            "timestamp": "2022-11-08T22:57:14.756Z",
+                            "state": "sent"
+                          }
+                        ],
+                        "duration": 23,
+                        "state": "sent",
+                        "action_id": "01DAW70HK24JZORNE0P9C2V1L9",
+                        "metadata": {
+                          "agent": {
+                            "id": "PT4KHLK",
+                            "type": "user_reference"
+                          },
+                          "incident": {
+                            "id": "Q2LAR4ADCXC8IB",
+                            "type": "incident_reference"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/automation_actions/invocations": {
+      "description": "List Invocations",
+      "get": {
+        "summary": "List Invocations",
+        "tags": [
+          "Automation Actions"
+        ],
+        "description": "List Invocations\n",
+        "operationId": "listAutomationActionInvocations",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_automation_actions"
+          },
+          {
+            "$ref": "#/components/parameters/automation_actions_invocation_state"
+          },
+          {
+            "$ref": "#/components/parameters/automation_actions_incident_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Invocations matching the criteria",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "invocations": {
+                          "type": "array",
+                          "description": "List of invocations sorted by creation_time in reverse chronological order (newest invocations first). At most 25 invocations are returned.",
+                          "items": {
+                            "$ref": "#/components/schemas/AutomationActionsInvocation"
+                          }
+                        }
+                      },
+                      "required": [
+                        "invocations"
+                      ]
+                    }
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "invocations": [
+                        {
+                          "id": "01DBYD4A25RCXAXQDC9ZX0678V",
+                          "type": "invocation",
+                          "action_id": "01DAW70HK24JZORNE0P9C2V1L9",
+                          "action_snapshot": {
+                            "name": "Restart Apache",
+                            "action_type": "process_automation",
+                            "action_data_reference": {
+                              "process_automation_job_arguments": "prod-datapipe",
+                              "process_automation_job_id": "79c199bba1aff6e519f198457f5ec0fc"
+                            }
+                          },
+                          "duration": 5,
+                          "metadata": {
+                            "agent": {
+                              "id": "PRJ94S1",
+                              "type": "user_reference"
+                            },
+                            "incident": {
+                              "id": "Q2LAR4ADCXC8IB",
+                              "type": "incident_reference"
+                            }
+                          },
+                          "runner_id": "01COQFFNVWIONSLY8C66YTU2O5",
+                          "state": "completed",
+                          "timing": [
+                            {
+                              "creation_timestamp": "2022-11-08T06:30:05.018949Z",
+                              "state": "created"
+                            },
+                            {
+                              "creation_timestamp": "2022-11-08T06:30:10.069000Z",
+                              "state": "running"
+                            },
+                            {
+                              "creation_timestamp": "2022-11-08T06:30:10.083000Z",
+                              "state": "completed"
+                            },
+                            {
+                              "creation_timestamp": "2022-11-08T06:30:10.066000Z",
+                              "state": "queued"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/automation_actions/invocations/{id}": {
+      "description": "View an Automation Actions Invocation",
+      "get": {
+        "summary": "Get an Invocation",
+        "tags": [
+          "Automation Actions"
+        ],
+        "operationId": "getAutomationActionsInvocation",
+        "description": "Get an Automation Action Invocation\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_automation_actions"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Invocation information",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "invocation": {
+                      "$ref": "#/components/schemas/AutomationActionsInvocation"
+                    }
+                  },
+                  "required": [
+                    "invocation"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "invocation": {
+                        "id": "01DBYD4A25RCXAXQDC9ZX0678V",
+                        "type": "invocation",
+                        "action_id": "01DAW70HK24JZORNE0P9C2V1L9",
+                        "action_snapshot": {
+                          "name": "Restart Apache",
+                          "action_type": "process_automation",
+                          "action_data_reference": {
+                            "process_automation_job_arguments": "prod-datapipe",
+                            "process_automation_job_id": "79c199bba1aff6e519f198457f5ec0fc"
+                          }
+                        },
+                        "duration": 5,
+                        "metadata": {
+                          "agent": {
+                            "id": "PRJ94S1",
+                            "type": "user_reference"
+                          },
+                          "incident": {
+                            "id": "Q2LAR4ADCXC8IB",
+                            "type": "incident_reference"
+                          }
+                        },
+                        "runner_id": "01COQFFNVWIONSLY8C66YTU2O5",
+                        "state": "completed",
+                        "timing": [
+                          {
+                            "creation_timestamp": "2022-11-08T06:30:05.018949Z",
+                            "state": "created"
+                          },
+                          {
+                            "creation_timestamp": "2022-11-08T06:30:10.069000Z",
+                            "state": "running"
+                          },
+                          {
+                            "creation_timestamp": "2022-11-08T06:30:10.083000Z",
+                            "state": "completed"
+                          },
+                          {
+                            "creation_timestamp": "2022-11-08T06:30:10.066000Z",
+                            "state": "queued"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/automation_actions/runners": {
+      "description": "List and create Automation Action runners.",
+      "post": {
+        "summary": "Create an Automation Action runner.",
+        "tags": [
+          "Automation Actions"
+        ],
+        "description": "Create a Process Automation or a Runbook Automation runner.\n",
+        "operationId": "createAutomationActionsRunner",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_automation_actions"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "runner": {
+                    "oneOf": [
+                      {
+                        "$ref": "#/components/schemas/AutomationActionsRunnerSidecarPostBody"
+                      },
+                      {
+                        "$ref": "#/components/schemas/AutomationActionsRunnerRunbookPostBody"
+                      }
+                    ],
+                    "discriminator": {
+                      "propertyName": "runner_type"
+                    }
+                  }
+                },
+                "required": [
+                  "runner"
+                ]
+              },
+              "examples": {
+                "request": {
+                  "value": {
+                    "runner": {
+                      "name": "us-west-2 prod sidecar runner",
+                      "description": "us-west-2 prod sidecar runner provisioned by SRE",
+                      "runner_type": "sidecar",
+                      "teams": [
+                        {
+                          "id": "PQ9K7I8",
+                          "type": "team_reference"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Runner information",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "runner": {
+                      "allOf": [
+                        {
+                          "$ref": "#/components/schemas/AutomationActionsRunner"
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "secret": {
+                              "description": "Secret used for authentication of sidecar runner_types",
+                              "type": "string"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "runner"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "runner": {
+                        "id": "01DA2MLYN0J5EFC1LKWXUKDDKT",
+                        "name": "us-west-2 prod sidecar runner",
+                        "summary": "us-west-2 prod sidecar runner",
+                        "type": "runner",
+                        "description": "us-west-2 prod sidecar runner provisioned by SRE",
+                        "creation_time": "2022-10-21T19:42:52.127369Z",
+                        "runner_type": "sidecar",
+                        "status": "Configured",
+                        "secret": "01DAZ9ZJ97OE23JUI6WH9XN7BK",
+                        "teams": [
+                          {
+                            "id": "PQ9K7I8",
+                            "type": "team_reference"
+                          }
+                        ],
+                        "privileges": {
+                          "permissions": [
+                            "read",
+                            "update"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "get": {
+        "summary": "List Automation Action runners",
+        "tags": [
+          "Automation Actions"
+        ],
+        "operationId": "getAutomationActionsRunners",
+        "description": "Lists Automation Action runners matching provided query params.\nThe returned records are sorted by runner name in alphabetical order.\n\nSee [`Cursor-based pagination`](https://developer.pagerduty.com/docs/rest-api-v2/pagination/) for instructions on how to paginate through the result set.\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_automation_actions"
+          },
+          {
+            "$ref": "#/components/parameters/cursor_limit"
+          },
+          {
+            "$ref": "#/components/parameters/cursor_cursor"
+          },
+          {
+            "$ref": "#/components/parameters/automation_actions_name"
+          },
+          {
+            "$ref": "#/components/parameters/automation_actions_runners_include"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Runners matching the criteria.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "runners": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/AutomationActionsRunner"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "privileges": {
+                          "$ref": "#/components/schemas/AutomationActionsUserPermissions"
+                        }
+                      }
+                    },
+                    {
+                      "$ref": "#/components/schemas/CursorPagination"
+                    }
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "runners": [
+                        {
+                          "id": "01DACKMP6Q3Y5YG51ENA26CX2I",
+                          "name": "us-west-2 prod runbook runner",
+                          "description": "us-west-2 prod runbook runner provisioned by SRE",
+                          "creation_time": "2022-10-21T19:42:52.127369Z",
+                          "runner_type": "runbook",
+                          "runbook_base_uri": "acme.prod",
+                          "status": "Configured",
+                          "teams": [
+                            {
+                              "id": "PQ9K7I8",
+                              "type": "team_reference"
+                            }
+                          ],
+                          "privileges": {
+                            "permissions": [
+                              "read",
+                              "update",
+                              "delete"
+                            ]
+                          }
+                        },
+                        {
+                          "id": "01DA2MLYN0J5EFC1LKWXUKDDKT",
+                          "name": "us-west-2 prod sidecar runner",
+                          "description": "us-west-2 prod sidecar runner provisioned by SRE",
+                          "creation_time": "2022-10-21T19:42:52.127369Z",
+                          "runner_type": "sidecar",
+                          "status": "Configured",
+                          "privileges": {
+                            "permissions": [
+                              "read",
+                              "update"
+                            ]
+                          }
+                        }
+                      ],
+                      "privileges": {
+                        "permissions": [
+                          "create"
+                        ]
+                      },
+                      "limit": 2,
+                      "next_cursor": "eyJjMiI6IjAxREEyTUxZTjBKNUVGQzFMS1dYVUtEREtUIiwiYzEiOiJSQkEgU2hhcmVkIFN0YWdpbmcgSW5zdGFuY2UifQ=="
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/automation_actions/runners/{id}": {
+      "description": "View, Update and Delete Automation Action runners",
+      "get": {
+        "summary": "Get an Automation Action runner",
+        "tags": [
+          "Automation Actions"
+        ],
+        "operationId": "getAutomationActionsRunner",
+        "description": "Get an Automation Action runner\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_automation_actions"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Runner information",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "runner": {
+                      "$ref": "#/components/schemas/AutomationActionsRunner"
+                    }
+                  },
+                  "required": [
+                    "runner"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "runner": {
+                        "id": "01DA2MLYN0J5EFC1LKWXUKDDKT",
+                        "name": "us-west-2 prod sidecar runner",
+                        "summary": "us-west-2 prod sidecar runner",
+                        "type": "runner",
+                        "description": "us-west-2 prod sidecar runner provisioned by SRE",
+                        "creation_time": "2022-10-21T19:42:52.127369Z",
+                        "runner_type": "sidecar",
+                        "status": "Configured",
+                        "teams": [
+                          {
+                            "id": "PQ9K7I8",
+                            "type": "team_reference"
+                          }
+                        ],
+                        "privileges": {
+                          "permissions": [
+                            "read",
+                            "update"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update an Automation Action runner",
+        "tags": [
+          "Automation Actions"
+        ],
+        "operationId": "updateAutomationActionsRunner",
+        "description": "Update an Automation Action runner\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_automation_actions"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "runner": {
+                    "oneOf": [
+                      {
+                        "$ref": "#/components/schemas/AutomationActionsRunnerSidecarBody"
+                      },
+                      {
+                        "$ref": "#/components/schemas/AutomationActionsRunnerRunbookBody"
+                      }
+                    ],
+                    "discriminator": {
+                      "propertyName": "runner_type"
+                    }
+                  }
+                },
+                "required": [
+                  "runner"
+                ]
+              },
+              "examples": {
+                "request": {
+                  "value": {
+                    "runner": {
+                      "name": "us-west-2 prod sidecar runner",
+                      "description": "us-west-2 prod sidecar runner provisioned by SRE"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Runner information",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "runner": {
+                      "$ref": "#/components/schemas/AutomationActionsRunner"
+                    }
+                  },
+                  "required": [
+                    "runner"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "runner": {
+                        "id": "01DA2MLYN0J5EFC1LKWXUKDDKT",
+                        "name": "us-west-2 prod sidecar runner",
+                        "summary": "us-west-2 prod sidecar runner",
+                        "type": "runner",
+                        "description": "us-west-2 prod sidecar runner provisioned by SRE",
+                        "creation_time": "2022-10-21T19:42:52.127369Z",
+                        "runner_type": "sidecar",
+                        "status": "Configured",
+                        "teams": [
+                          {
+                            "id": "PQ9K7I8",
+                            "type": "team_reference"
+                          }
+                        ],
+                        "privileges": {
+                          "permissions": [
+                            "read",
+                            "update"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete an Automation Action runner",
+        "tags": [
+          "Automation Actions"
+        ],
+        "operationId": "deleteAutomationActionsRunner",
+        "description": "Delete an Automation Action runner\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_automation_actions"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Deleted successfully."
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/automation_actions/runners/{id}/teams": {
+      "description": "Manage Runner-Team associations",
+      "post": {
+        "summary": "Associate a runner with a team",
+        "tags": [
+          "Automation Actions"
+        ],
+        "operationId": "createAutomationActionsRunnerTeamAssociation",
+        "description": "Associate a runner with a team\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_automation_actions"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "team": {
+                    "$ref": "#/components/schemas/TeamReference"
+                  }
+                },
+                "required": [
+                  "team"
+                ]
+              },
+              "examples": {
+                "request": {
+                  "value": {
+                    "team": {
+                      "id": "PQ9K7I8",
+                      "type": "team_reference"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "The runner-team association that was created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "team": {
+                      "$ref": "#/components/schemas/TeamReference"
+                    }
+                  },
+                  "required": [
+                    "team"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "team": {
+                        "id": "PQ9K7I8",
+                        "type": "team_reference"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "get": {
+        "summary": "Get all team references associated with a runner",
+        "tags": [
+          "Automation Actions"
+        ],
+        "operationId": "getAutomationActionsRunnerTeamAssociations",
+        "description": "Gets all team references associated with a runner",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_automation_actions"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "teams": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/TeamReference"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "teams": [
+                        {
+                          "id": "PQ9K7I8",
+                          "type": "team_reference"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/automation_actions/runners/{id}/teams/{team_id}": {
+      "description": "Manage Runner-Team associations",
+      "delete": {
+        "summary": "Disassociate a runner from a team",
+        "tags": [
+          "Automation Actions"
+        ],
+        "operationId": "deleteAutomationActionsRunnerTeamAssociation",
+        "description": "Disassociates a runner from a team\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_automation_actions"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/team_id"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Ok."
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "get": {
+        "summary": "Get the details of a runner / team relation",
+        "tags": [
+          "Automation Actions"
+        ],
+        "operationId": "getAutomationActionsRunnerTeamAssociation",
+        "description": "Gets the details of a runner / team relation",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_automation_actions"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/team_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "team": {
+                      "$ref": "#/components/schemas/TeamReference"
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "team": {
+                        "id": "PQ9K7I8",
+                        "type": "team_reference"
+                      }
+                    }
                   }
                 }
               }
