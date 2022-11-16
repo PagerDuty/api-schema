@@ -26,6 +26,17 @@ Currently we rarely deprecate, and do not remove any API functionality.
 
 ---
 ### 2022-11-07
+- Added Automation Action Management endpoints.
+- `GET /automation_actions/actions`
+- `POST /automation_actions/actions`
+- `GET /automation_actions/actions/{id}`
+- `DELETE /automation_actions/actions/{id}`
+- `PUT /automation_actions/actions/{id}`
+- `POST /automation_actions/actions/{id}/services`
+- `DELETE /automation_actions/actions/{id}/services/{service_id}`
+- `POST /automation_actions/actions/{id}/teams`
+- `DELETE /automation_actions/actions/{id}/teams/{team_id}`
+
 Added new fields within `alert_grouping_settings` for configuring Intelligent Alert Grouping with a flexible time window.
   - `POST /services`
   - `PUT /services/{id}`
