@@ -18,6 +18,13 @@ Currently we rarely deprecate, and do not remove any API functionality.
 - `GET /automation_actions/runners/{id}`
 - `PUT /automation_actions/runners/{id}`
 
+### 2022-11-10
+- Added Automation Action Invocation endpoints.
+- `GET /automation_actions/invocations`
+- `GET /automation_actions/invocations/{id}`
+- `POST /automation_actions/actions/{id}/invocations`
+
+---
 ### 2022-11-07
 Added new fields within `alert_grouping_settings` for configuring Intelligent Alert Grouping with a flexible time window.
   - `POST /services`
