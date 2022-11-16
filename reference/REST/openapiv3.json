@@ -1517,6 +1517,59 @@
           "uniqueItems": true
         }
       },
+      "automation_actions_runner_id": {
+        "name": "runner_id",
+        "description": "Filters results to include the ones linked to the specified runner. \nSpecifying the value `any` filters results to include the ones linked to runners only, \nthus omitting the results not linked to runners.\n",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "nullable": false
+        }
+      },
+      "automation_actions_classification": {
+        "name": "classification",
+        "description": "Filters results to include the ones matching the specified classification (aka category)",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "$ref": "#/components/schemas/AutomationActionsActionClassificationEnum"
+        }
+      },
+      "automation_actions_action_type": {
+        "name": "action_type",
+        "description": "Filters results to include the ones matching the specified action type",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "enum": [
+            "script",
+            "process_automation"
+          ],
+          "example": "process_automation"
+        }
+      },
+      "automation_actions_team_id": {
+        "name": "team_id",
+        "description": "Filters results to include the ones associated with the specified team.",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "nullable": false
+        }
+      },
+      "automation_actions_service_id": {
+        "name": "service_id",
+        "description": "Filters results to include the ones associated with the specified service",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "nullable": false
+        }
+      },
       "automation_actions_invocation_state": {
         "name": "invocation_state",
         "description": "Invocation state",
@@ -1922,6 +1975,15 @@
           "type": "string",
           "format": "tzinfo",
           "default": "UTC"
+        }
+      },
+      "service_id": {
+        "name": "service_id",
+        "in": "path",
+        "description": "The service ID",
+        "required": true,
+        "schema": {
+          "type": "string"
         }
       },
       "services": {
@@ -4091,12 +4153,7 @@
                         "example": "Restart apache"
                       },
                       "action_type": {
-                        "type": "string",
-                        "enum": [
-                          "script",
-                          "process_automation"
-                        ],
-                        "example": "process_automation"
+                        "$ref": "#/components/parameters/automation_actions_action_type/schema"
                       }
                     },
                     "required": [
@@ -4110,42 +4167,10 @@
                       "action_data_reference": {
                         "oneOf": [
                           {
-                            "type": "object",
-                            "properties": {
-                              "process_automation_job_id": {
-                                "type": "string",
-                                "example": "79c199bba1aff6e519f198457f5ec0fc"
-                              },
-                              "process_automation_job_arguments": {
-                                "type": "string",
-                                "description": "Arguments to pass to the Process Automation job. The maxLength value is specified in bytes.",
-                                "example": "-env production",
-                                "maxLength": 1024
-                              }
-                            },
-                            "required": [
-                              "process_automation_job_id"
-                            ]
+                            "$ref": "#/components/schemas/AutomationActionsProcessAutomationJobActionDataReference"
                           },
                           {
-                            "type": "object",
-                            "properties": {
-                              "script": {
-                                "type": "string",
-                                "description": "Body of the script to be executed on the Runner. To execute it, the Runner will write the content of the property into a temp file, make the file executable and execute it. It is assumed that the Runner has a properly configured environment to run the script as an executable file. This behaviour can be altered by providing the `invocation_command` property. The maxLength value is specified in bytes.",
-                                "example": "print(\"Hello from a Python script!\")",
-                                "maxLength": 16777215
-                              },
-                              "invocation_command": {
-                                "type": "string",
-                                "description": "The command to executed a script with. With the body of the script written into a temp file, the Runner will execute the `<invocation_command> <temp_file>` command. The maxLength value is specified in bytes.",
-                                "example": "/usr/local/bin/python3",
-                                "maxLength": 65535
-                              }
-                            },
-                            "required": [
-                              "script"
-                            ]
+                            "$ref": "#/components/schemas/AutomationActionsScriptActionDataReference"
                           }
                         ]
                       }
@@ -4197,21 +4222,7 @@
                         "$ref": "#/components/schemas/UserReference"
                       },
                       {
-                        "type": "object",
-                        "properties": {
-                          "id": {
-                            "type": "string",
-                            "example": "/5471da24-eecd-42e2-ac38-a32b2d907406/service/P000000"
-                          },
-                          "type": {
-                            "type": "string",
-                            "example": "event_orchestration_reference"
-                          }
-                        },
-                        "required": [
-                          "type",
-                          "id"
-                        ]
+                        "$ref": "#/components/schemas/AutomationActionsAbstractAction/allOf/1/properties/last_run_by/oneOf/1"
                       },
                       {
                         "$ref": "#/components/schemas/Template/allOf/1/properties/created_by/oneOf/1"
@@ -4237,6 +4248,368 @@
               "action_id",
               "metadata"
             ]
+          }
+        ]
+      },
+      "AutomationActionsAbstractAction": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Tag/allOf/0"
+          },
+          {
+            "type": "object",
+            "description": "A unit of work to be executed on runner. At most, an account can have 10,000 actions. If action maximum is exceeded, a 400 reponse is returned with error message.",
+            "properties": {
+              "name": {
+                "type": "string",
+                "example": "Restart apache"
+              },
+              "description": {
+                "type": "string",
+                "example": "Restarts apache on the us-west-2-shopping-cart host"
+              },
+              "action_type": {
+                "$ref": "#/components/parameters/automation_actions_action_type/schema"
+              },
+              "action_classification": {
+                "$ref": "#/components/schemas/AutomationActionsActionClassificationEnum"
+              },
+              "runner": {
+                "type": "string",
+                "maxLength": 36
+              },
+              "runner_type": {
+                "$ref": "#/components/schemas/AutomationActionsRunnerTypeEnum"
+              },
+              "services": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ServiceReference"
+                }
+              },
+              "privileges": {
+                "$ref": "#/components/schemas/AutomationActionsUserPermissions"
+              },
+              "metadata": {
+                "type": "object"
+              },
+              "creation_time": {
+                "type": "string",
+                "format": "date-time",
+                "description": "The date/time"
+              },
+              "modify_time": {
+                "type": "string",
+                "format": "date-time",
+                "description": "The date/time"
+              },
+              "last_run": {
+                "type": "string",
+                "format": "date-time",
+                "description": "The date/time"
+              },
+              "last_run_by": {
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/UserReference"
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "example": "/5471da24-eecd-42e2-ac38-a32b2d907406/service/P000000"
+                      },
+                      "type": {
+                        "type": "string",
+                        "example": "event_orchestration_reference"
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "id"
+                    ]
+                  },
+                  {
+                    "$ref": "#/components/schemas/Template/allOf/1/properties/created_by/oneOf/1"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "id",
+              "type",
+              "action_type",
+              "name",
+              "creation_time",
+              "modify_time"
+            ]
+          }
+        ]
+      },
+      "AutomationActionsAbstractActionPostBody": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Restart apache",
+            "maxLength": 255
+          },
+          "description": {
+            "type": "string",
+            "example": "Restarts apache on the us-west-2-shopping-cart host",
+            "maxLength": 1024
+          },
+          "action_classification": {
+            "$ref": "#/components/schemas/AutomationActionsActionClassificationEnum"
+          },
+          "action_type": {
+            "$ref": "#/components/parameters/automation_actions_action_type/schema"
+          },
+          "runner": {
+            "type": "string",
+            "example": "1a6763bd-b1ad-458f-a347-6c8a9bea2d70",
+            "maxLength": 36
+          },
+          "services": {
+            "nullable": false,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ServiceReference"
+            }
+          },
+          "teams": {
+            "nullable": false,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TeamReference"
+            }
+          }
+        },
+        "required": [
+          "name",
+          "description",
+          "action_type"
+        ]
+      },
+      "AutomationActionsAbstractActionPutBody": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Restart apache",
+            "maxLength": 255
+          },
+          "description": {
+            "type": "string",
+            "example": "Restarts apache on the us-west-2-shopping-cart host",
+            "maxLength": 1024
+          },
+          "action_classification": {
+            "$ref": "#/components/schemas/AutomationActionsActionClassificationEnum"
+          },
+          "action_type": {
+            "$ref": "#/components/parameters/automation_actions_action_type/schema"
+          },
+          "runner": {
+            "type": "string",
+            "maxLength": 36
+          }
+        },
+        "required": [
+          "name",
+          "description",
+          "action_type"
+        ]
+      },
+      "AutomationActionsActionClassificationEnum": {
+        "type": "string",
+        "enum": [
+          "diagnostic",
+          "remediation"
+        ],
+        "nullable": true
+      },
+      "AutomationActionsProcessAutomationJobAction": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/AutomationActionsAbstractAction"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "action_data_reference": {
+                "$ref": "#/components/schemas/AutomationActionsProcessAutomationJobActionDataReference"
+              }
+            },
+            "required": [
+              "action_data_reference"
+            ]
+          }
+        ]
+      },
+      "AutomationActionsProcessAutomationJobActionDataReference": {
+        "type": "object",
+        "properties": {
+          "process_automation_job_id": {
+            "type": "string",
+            "example": "79c199bba1aff6e519f198457f5ec0fc",
+            "maxLength": 36
+          },
+          "process_automation_job_arguments": {
+            "type": "string",
+            "description": "Arguments to pass to the Process Automation job. The maxLength value is specified in bytes.",
+            "example": "-env production",
+            "maxLength": 1024
+          }
+        },
+        "required": [
+          "process_automation_job_id"
+        ]
+      },
+      "AutomationActionsProcessAutomationJobActionPostBody": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/AutomationActionsAbstractActionPostBody"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "action_data_reference": {
+                "$ref": "#/components/schemas/AutomationActionsProcessAutomationJobActionDataReference"
+              }
+            },
+            "required": [
+              "action_data_reference"
+            ]
+          }
+        ]
+      },
+      "AutomationActionsProcessAutomationJobActionPutBody": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/AutomationActionsAbstractActionPutBody"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "action_data_reference": {
+                "$ref": "#/components/schemas/AutomationActionsProcessAutomationJobActionDataReference"
+              }
+            },
+            "required": [
+              "action_data_reference"
+            ]
+          }
+        ]
+      },
+      "AutomationActionsProcessAutomationJobActionWithTeams": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/AutomationActionsProcessAutomationJobAction"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "teams": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/TeamReference"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "AutomationActionsScriptAction": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/AutomationActionsAbstractAction"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "action_data_reference": {
+                "$ref": "#/components/schemas/AutomationActionsScriptActionDataReference"
+              }
+            },
+            "required": [
+              "action_data_reference"
+            ]
+          }
+        ]
+      },
+      "AutomationActionsScriptActionDataReference": {
+        "type": "object",
+        "properties": {
+          "script": {
+            "type": "string",
+            "description": "Body of the script to be executed on the Runner. To execute it, the Runner will write the content of the property into a temp file, make the file executable and execute it. It is assumed that the Runner has a properly configured environment to run the script as an executable file. This behaviour can be altered by providing the `invocation_command` property. The maxLength value is specified in bytes.",
+            "example": "print(\"Hello from a Python script!\")",
+            "maxLength": 16777215
+          },
+          "invocation_command": {
+            "type": "string",
+            "description": "The command to executed a script with. With the body of the script written into a temp file, the Runner will execute the `<invocation_command> <temp_file>` command. The maxLength value is specified in bytes.",
+            "example": "/usr/local/bin/python3",
+            "maxLength": 65535
+          }
+        },
+        "required": [
+          "script"
+        ]
+      },
+      "AutomationActionsScriptActionPostBody": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/AutomationActionsAbstractActionPostBody"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "action_data_reference": {
+                "$ref": "#/components/schemas/AutomationActionsScriptActionDataReference"
+              }
+            },
+            "required": [
+              "action_data_reference"
+            ]
+          }
+        ]
+      },
+      "AutomationActionsScriptActionPutBody": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/AutomationActionsAbstractActionPutBody"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "action_data_reference": {
+                "$ref": "#/components/schemas/AutomationActionsScriptActionDataReference"
+              }
+            },
+            "required": [
+              "action_data_reference"
+            ]
+          }
+        ]
+      },
+      "AutomationActionsScriptActionWithTeams": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/AutomationActionsScriptAction"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "teams": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/TeamReference"
+                }
+              }
+            }
           }
         ]
       },
@@ -12745,6 +13118,670 @@
         }
       }
     },
+    "/automation_actions/actions": {
+      "description": "List and create Automation Actions",
+      "post": {
+        "summary": "Create an Automation Action",
+        "tags": [
+          "Automation Actions"
+        ],
+        "description": "Create a Script, Process Automation, or Runbook Automation action\n",
+        "operationId": "createAutomationAction",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_automation_actions"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "action": {
+                    "oneOf": [
+                      {
+                        "$ref": "#/components/schemas/AutomationActionsScriptActionPostBody"
+                      },
+                      {
+                        "$ref": "#/components/schemas/AutomationActionsProcessAutomationJobActionPostBody"
+                      }
+                    ],
+                    "discriminator": {
+                      "propertyName": "action_type",
+                      "mapping": {
+                        "script": "models/automationActions/ScriptActionPostBody.yaml",
+                        "process_automation": "models/automationActions/ProcessAutomationJobActionPostBody.yaml"
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "action"
+                ]
+              },
+              "examples": {
+                "request": {
+                  "value": {
+                    "action": {
+                      "name": "Restart apache",
+                      "description": "Restarts apache on the us-west-2-shopping-cart host",
+                      "action_type": "script",
+                      "action_data_reference": {
+                        "script": "java --version"
+                      },
+                      "teams": [
+                        {
+                          "id": "PQ9K7I8",
+                          "type": "team_reference"
+                        }
+                      ],
+                      "services": [
+                        {
+                          "id": "PRDRWUJ",
+                          "type": "service_reference"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Action information",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "action": {
+                      "oneOf": [
+                        {
+                          "$ref": "#/components/schemas/AutomationActionsScriptActionWithTeams"
+                        },
+                        {
+                          "$ref": "#/components/schemas/AutomationActionsProcessAutomationJobActionWithTeams"
+                        }
+                      ],
+                      "discriminator": {
+                        "propertyName": "action_type",
+                        "mapping": {
+                          "script": "models/automationActions/ScriptActionWithTeams.yaml",
+                          "process_automation": "models/automationActions/ProcessAutomationJobActionWithTeams.yaml"
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "action"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "action": {
+                        "action_data_reference": {
+                          "script": "java --version"
+                        },
+                        "action_type": "script",
+                        "type": "action",
+                        "creation_time": "2022-11-08T14:54:02.267989Z",
+                        "description": "Restarts apache on the us-west-2-shopping-cart host",
+                        "id": "01DA2MLYN0J5EFC1LKWXUKDDKT",
+                        "modify_time": "2022-11-08T14:54:02.267989Z",
+                        "name": "Restart apache",
+                        "privileges": {
+                          "permissions": [
+                            "read",
+                            "update",
+                            "delete",
+                            "invoke"
+                          ]
+                        },
+                        "services": [
+                          {
+                            "id": "PRDRWUJ",
+                            "type": "service_reference"
+                          }
+                        ],
+                        "teams": [
+                          {
+                            "id": "PQ9K7I8",
+                            "type": "team_reference"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "get": {
+        "summary": "List Automation Actions",
+        "tags": [
+          "Automation Actions"
+        ],
+        "operationId": "getAllAutomationActions",
+        "description": "Lists Automation Actions matching provided query params.\n\nThe returned records are sorted by action name in alphabetical order.\n\nSee [`Cursor-based pagination`](https://developer.pagerduty.com/docs/rest-api-v2/pagination/) for instructions on how to paginate through the result set.\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_automation_actions"
+          },
+          {
+            "$ref": "#/components/parameters/cursor_limit"
+          },
+          {
+            "$ref": "#/components/parameters/cursor_cursor"
+          },
+          {
+            "$ref": "#/components/parameters/automation_actions_name"
+          },
+          {
+            "$ref": "#/components/parameters/automation_actions_runner_id"
+          },
+          {
+            "$ref": "#/components/parameters/automation_actions_classification"
+          },
+          {
+            "$ref": "#/components/parameters/automation_actions_team_id"
+          },
+          {
+            "$ref": "#/components/parameters/automation_actions_service_id"
+          },
+          {
+            "$ref": "#/components/parameters/automation_actions_action_type"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of actions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "actions": {
+                          "type": "array",
+                          "items": {
+                            "oneOf": [
+                              {
+                                "$ref": "#/components/schemas/AutomationActionsScriptAction"
+                              },
+                              {
+                                "$ref": "#/components/schemas/AutomationActionsProcessAutomationJobAction"
+                              }
+                            ],
+                            "discriminator": {
+                              "propertyName": "action_type",
+                              "mapping": {
+                                "script": "models/automationActions/ScriptAction.yaml",
+                                "process_automation": "models/automationActions/ProcessAutomationJobAction.yaml"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "required": [
+                        "actions"
+                      ]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "privileges": {
+                          "$ref": "#/components/schemas/AutomationActionsUserPermissions"
+                        }
+                      }
+                    },
+                    {
+                      "$ref": "#/components/schemas/CursorPagination"
+                    }
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "actions": [
+                        {
+                          "action_data_reference": {
+                            "script": "java --version"
+                          },
+                          "action_type": "script",
+                          "type": "action",
+                          "creation_time": "2022-11-08T14:54:02.267989Z",
+                          "description": "Restarts apache on the us-west-2-shopping-cart host",
+                          "id": "01DA2MLYN0J5EFC1LKWXUKDDKT",
+                          "modify_time": "2022-11-08T14:54:02.267989Z",
+                          "name": "Restart apache",
+                          "privileges": {
+                            "permissions": [
+                              "read",
+                              "update",
+                              "delete",
+                              "invoke"
+                            ]
+                          },
+                          "services": [
+                            {
+                              "id": "PRDRWUJ",
+                              "type": "service_reference"
+                            }
+                          ]
+                        },
+                        {
+                          "action_data_reference": {
+                            "script": "java --version"
+                          },
+                          "action_type": "script",
+                          "type": "action",
+                          "creation_time": "2022-11-08T14:54:02.267989Z",
+                          "description": "Restarts apache on the us-west-2-shopping-cart host",
+                          "id": "01DACKMP6Q3Y5YG51ENA26CX2I",
+                          "modify_time": "2022-11-08T14:54:02.267989Z",
+                          "name": "Restart apache",
+                          "privileges": {
+                            "permissions": [
+                              "read",
+                              "update"
+                            ]
+                          }
+                        }
+                      ],
+                      "limit": 2,
+                      "next_cursor": null,
+                      "privileges": {
+                        "permissions": [
+                          "read",
+                          "update"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/automation_actions/actions/{id}": {
+      "description": "View, Update and Delete Automation Actions",
+      "get": {
+        "summary": "Get an Automation Action",
+        "tags": [
+          "Automation Actions"
+        ],
+        "operationId": "getAutomationAction",
+        "description": "Get an Automation Action\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_automation_actions"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Action information",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "action": {
+                      "oneOf": [
+                        {
+                          "$ref": "#/components/schemas/AutomationActionsScriptActionWithTeams"
+                        },
+                        {
+                          "$ref": "#/components/schemas/AutomationActionsProcessAutomationJobActionWithTeams"
+                        }
+                      ],
+                      "discriminator": {
+                        "propertyName": "action_type",
+                        "mapping": {
+                          "script": "models/automationActions/ScriptActionWithTeams.yaml",
+                          "process_automation": "models/automationActions/ProcessAutomationJobActionWithTeams.yaml"
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "action"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "action": {
+                        "action_data_reference": {
+                          "script": "java --version"
+                        },
+                        "action_type": "script",
+                        "type": "action",
+                        "creation_time": "2022-11-08T14:54:02.267989Z",
+                        "description": "Restarts apache on the us-west-2-shopping-cart host",
+                        "id": "01DA2MLYN0J5EFC1LKWXUKDDKT",
+                        "modify_time": "2022-11-08T14:54:02.267989Z",
+                        "name": "Restart apache",
+                        "privileges": {
+                          "permissions": [
+                            "read",
+                            "update",
+                            "delete",
+                            "invoke"
+                          ]
+                        },
+                        "services": [
+                          {
+                            "id": "PRDRWUJ",
+                            "type": "service_reference"
+                          }
+                        ],
+                        "teams": [
+                          {
+                            "id": "PQ9K7I8",
+                            "type": "team_reference"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete an Automation Action",
+        "tags": [
+          "Automation Actions"
+        ],
+        "operationId": "deleteAutomationAction",
+        "description": "Delete an Automation Action\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_automation_actions"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Deleted successfully."
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update an Automation Action",
+        "tags": [
+          "Automation Actions"
+        ],
+        "operationId": "updateAutomationAction",
+        "description": "Updates an Automation Action\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_automation_actions"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "action": {
+                    "oneOf": [
+                      {
+                        "$ref": "#/components/schemas/AutomationActionsScriptActionPutBody"
+                      },
+                      {
+                        "$ref": "#/components/schemas/AutomationActionsProcessAutomationJobActionPutBody"
+                      }
+                    ],
+                    "discriminator": {
+                      "propertyName": "action_type",
+                      "mapping": {
+                        "script": "models/automationActions/ScriptActionPutBody.yaml",
+                        "process_automation": "models/automationActions/ProcessAutomationJobActionPutBody.yaml"
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "action"
+                ]
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Action information",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "action": {
+                      "oneOf": [
+                        {
+                          "$ref": "#/components/schemas/AutomationActionsScriptActionWithTeams"
+                        },
+                        {
+                          "$ref": "#/components/schemas/AutomationActionsProcessAutomationJobActionWithTeams"
+                        }
+                      ],
+                      "discriminator": {
+                        "propertyName": "action_type",
+                        "mapping": {
+                          "script": "models/automationActions/ScriptActionWithTeams.yaml",
+                          "process_automation": "models/automationActions/ProcessAutomationJobActionWithTeams.yaml"
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "action"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "action": {
+                        "action_data_reference": {
+                          "script": "java --version"
+                        },
+                        "action_type": "script",
+                        "type": "action",
+                        "creation_time": "2022-11-08T14:54:02.267989Z",
+                        "description": "Restarts apache on the us-west-2-shopping-cart host",
+                        "id": "01DA2MLYN0J5EFC1LKWXUKDDKT",
+                        "modify_time": "2022-11-08T14:54:02.267989Z",
+                        "name": "Restart apache",
+                        "privileges": {
+                          "permissions": [
+                            "read",
+                            "update",
+                            "delete",
+                            "invoke"
+                          ]
+                        },
+                        "services": [
+                          {
+                            "id": "PRDRWUJ",
+                            "type": "service_reference"
+                          }
+                        ],
+                        "teams": [
+                          {
+                            "id": "PQ9K7I8",
+                            "type": "team_reference"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
     "/automation_actions/actions/{id}/invocations": {
       "description": "Create an Invocation",
       "post": {
@@ -12875,6 +13912,322 @@
                 }
               }
             }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/automation_actions/actions/{id}/services": {
+      "description": "Manage Action-Service associations",
+      "post": {
+        "summary": "Associate an Automation Action with a service",
+        "tags": [
+          "Automation Actions"
+        ],
+        "operationId": "createAutomationActionServiceAssocation",
+        "description": "Associate an Automation Action with a service\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_automation_actions"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "service": {
+                    "$ref": "#/components/schemas/ServiceReference"
+                  }
+                },
+                "required": [
+                  "service"
+                ]
+              },
+              "examples": {
+                "request": {
+                  "value": {
+                    "service": {
+                      "id": "PRDRWUJ",
+                      "type": "service_reference"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "The action-service association was created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "service": {
+                      "$ref": "#/components/schemas/ServiceReference"
+                    }
+                  },
+                  "required": [
+                    "service"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "service": {
+                        "id": "PRDRWUJ",
+                        "type": "service_reference"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/automation_actions/actions/{id}/services/{service_id}": {
+      "description": "Manage Action-Service associations",
+      "delete": {
+        "summary": "Disassociate an Automation Action from a service",
+        "tags": [
+          "Automation Actions"
+        ],
+        "operationId": "deleteAutomationActionServiceAssociation",
+        "description": "Disassociate an Automation Action from a service\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_automation_actions"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/service_id"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Ok."
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/automation_actions/actions/{id}/teams": {
+      "description": "Manage Action-Team associations",
+      "post": {
+        "summary": "Associate an Automation Action with a team",
+        "tags": [
+          "Automation Actions"
+        ],
+        "operationId": "createAutomationActionTeamAssociation",
+        "description": "Associate an Automation Action with a team\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_automation_actions"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "team": {
+                    "$ref": "#/components/schemas/TeamReference"
+                  }
+                },
+                "required": [
+                  "team"
+                ]
+              },
+              "examples": {
+                "request": {
+                  "value": {
+                    "team": {
+                      "id": "PQ9K7I8",
+                      "type": "team_reference"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "The action-team association was created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "team": {
+                      "$ref": "#/components/schemas/TeamReference"
+                    }
+                  },
+                  "required": [
+                    "team"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "team": {
+                        "id": "PQ9K7I8",
+                        "type": "team_reference"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/automation_actions/actions/{id}/teams/{team_id}": {
+      "description": "Manage Action-Team associations",
+      "delete": {
+        "summary": "Disassociate an Automation Action from a team",
+        "tags": [
+          "Automation Actions"
+        ],
+        "operationId": "deleteAutomationActionTeamAssociation",
+        "description": "Disassociate an Automation Action from a team\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_automation_actions"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/team_id"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Ok."
           },
           "400": {
             "$ref": "#/components/responses/ArgumentError"
