@@ -1635,12 +1635,11 @@
       },
       "early_access_automation_actions": {
         "schema": {
-          "type": "string",
-          "default": "automation-actions-early-access"
+          "type": "string"
         },
         "in": "header",
         "name": "X-EARLY-ACCESS",
-        "description": "This header indicates that this API endpoint is __UNDER CONSTRUCTION__ and may change at any time. You __MUST__ pass in this header with the value `automation-actions-early-access`. Do not use this endpoint in production, as it may change!",
+        "description": "This header indicates that this API endpoint is __UNDER CONSTRUCTION__ and may change at any time. Do not use this endpoint in production, as it may change!",
         "required": true
       },
       "webhooks_filter_type": {
