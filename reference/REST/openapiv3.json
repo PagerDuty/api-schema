@@ -22592,6 +22592,7 @@
     "/incidents/{id}/related_incidents": {
       "description": "Get Related Incidents",
       "get": {
+        "x-pd-requires-scope": "incidents.read",
         "tags": [
           "Incidents"
         ],
