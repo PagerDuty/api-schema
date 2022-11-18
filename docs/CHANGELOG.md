@@ -6,6 +6,11 @@ Currently we rarely deprecate, and do not remove any API functionality.
 
 
 ---
+## 2022-11-17
+- Added Automation Action Management endpoints.
+- `GET /automation_actions/actions/{id}/services`
+- `GET /automation_actions/actions/{id}/services/{service_id}`
+
 ## 2022-11-14
 - Added Automation Action Runner Management endpoints.
 - `GET /automation_actions/runners/{id}/teams`

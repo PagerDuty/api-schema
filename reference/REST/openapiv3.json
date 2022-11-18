@@ -13939,6 +13939,81 @@
     },
     "/automation_actions/actions/{id}/services": {
       "description": "Manage Action-Service associations",
+      "get": {
+        "summary": "Get all service references associated with an Automation Action",
+        "tags": [
+          "Automation Actions"
+        ],
+        "operationId": "getAutomationActionsActionServiceAssociations",
+        "description": "Gets all service references associated with an Automation Action",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_automation_actions"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of service references",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "services": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ServiceReference"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "services": [
+                        {
+                          "id": "PQ9K7I8",
+                          "type": "service_reference"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
       "post": {
         "summary": "Associate an Automation Action with a service",
         "tags": [
@@ -14043,6 +14118,79 @@
     },
     "/automation_actions/actions/{id}/services/{service_id}": {
       "description": "Manage Action-Service associations",
+      "get": {
+        "summary": "Get the details of an Automation Action / service relation",
+        "tags": [
+          "Automation Actions"
+        ],
+        "operationId": "getAutomationActionsActionServiceAssociation",
+        "description": "Gets the details of a Automation Action / service relation",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_automation_actions"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/service_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Service reference",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "service": {
+                      "$ref": "#/components/schemas/ServiceReference"
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "service": {
+                        "id": "PQ9K7I8",
+                        "type": "service_reference"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
       "delete": {
         "summary": "Disassociate an Automation Action from a service",
         "tags": [
