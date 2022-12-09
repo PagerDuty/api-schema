@@ -15014,6 +15014,7 @@
                           "name": "us-west-2 prod runbook runner",
                           "description": "us-west-2 prod runbook runner provisioned by SRE",
                           "creation_time": "2022-10-21T19:42:52.127369Z",
+                          "type": "runner",
                           "runner_type": "runbook",
                           "runbook_base_uri": "acme.prod",
                           "status": "Configured",
@@ -15036,6 +15037,7 @@
                           "name": "us-west-2 prod sidecar runner",
                           "description": "us-west-2 prod sidecar runner provisioned by SRE",
                           "creation_time": "2022-10-21T19:42:52.127369Z",
+                          "type": "runner",
                           "runner_type": "sidecar",
                           "status": "Configured",
                           "privileges": {
