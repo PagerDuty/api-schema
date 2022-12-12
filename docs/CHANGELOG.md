@@ -6,6 +6,9 @@ Currently we rarely deprecate, and do not remove any API functionality.
 
 
 ---
+## 2022-12-08
+Clarified for service post/put the null option for alert_grouping_parameters.type will shut grouping off
+
 ## 2022-11-18
  - Added Automation Action Team Management endpoints.
  - `GET /automation_actions/action/{id}/teams`
