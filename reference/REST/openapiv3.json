@@ -13039,7 +13039,7 @@
           "Audit"
         ],
         "operationId": "listAuditRecords",
-        "description": "List audit trail records matching provided query params or default criteria.\n\nThe returned records are sorted by the `execution_time` from newest to oldest.\n\nSee [`Cursor-based pagination`](https://developer.pagerduty.com/docs/rest-api-v2/pagination/) for instructions on how to paginate through the result set.\n\nOnly admins, account owners, or global API tokens on PagerDuty account [pricing plans](https://www.pagerduty.com/pricing) with the \"Audit Trail\" feature can access this endpoint.\n\nFor other role based access to audit records by resource ID, see the resource's API documentation.\n\nFor more information see the [Audit API Document](https://developer.pagerduty.com/docs/rest-api-v2/audit-records-api/).\n",
+        "description": "List audit trail records matching provided query params or default criteria.\n\nThe returned records are sorted by the `execution_time` from newest to oldest.\n\nSee [`Cursor-based pagination`](https://developer.pagerduty.com/docs/rest-api-v2/pagination/) for instructions on how to paginate through the result set.\n\nOnly admins, account owners, or global API tokens on PagerDuty account [pricing plans](https://www.pagerduty.com/pricing) with the \"Audit Trail\" feature can access this endpoint.\n\nFor other role based access to audit records by resource ID, see the resource's API documentation.\n\nFor more information see the [Audit API Document](https://developer.pagerduty.com/docs/rest-api-v2/audit-records-api/).\n\nScoped OAuth requires: `audit_records.read`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -20100,7 +20100,7 @@
           "Incidents"
         ],
         "operationId": "listIncidents",
-        "description": "List existing incidents.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n",
+        "description": "List existing incidents.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n\nScoped OAuth requires: `incidents.read`\n",
         "summary": "List incidents",
         "parameters": [
           {
@@ -20806,7 +20806,7 @@
           "Incidents"
         ],
         "operationId": "getIncident",
-        "description": "Show detailed information about an incident. Accepts either an incident id, or an incident number.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n",
+        "description": "Show detailed information about an incident. Accepts either an incident id, or an incident number.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n\nScoped OAuth requires: `incidents.read`\n",
         "summary": "Get an incident",
         "parameters": [
           {
@@ -21305,7 +21305,7 @@
           "Incidents"
         ],
         "operationId": "listIncidentAlerts",
-        "description": "List alerts for the specified incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n",
+        "description": "List alerts for the specified incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n\nScoped OAuth requires: `incidents.read`\n",
         "summary": "List alerts for an incident",
         "parameters": [
           {
@@ -21611,7 +21611,7 @@
           "Incidents"
         ],
         "operationId": "getIncidentAlert",
-        "description": "Show detailed information about an alert. Accepts an alert id.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nWhen a service sends an event to PagerDuty, an alert and corresponding incident is triggered in PagerDuty.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n",
+        "description": "Show detailed information about an alert. Accepts an alert id.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nWhen a service sends an event to PagerDuty, an alert and corresponding incident is triggered in PagerDuty.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n\nScoped OAuth requires: `incidents.read`\n",
         "summary": "Get an alert",
         "parameters": [
           {
@@ -22019,7 +22019,7 @@
           "Incidents"
         ],
         "operationId": "listIncidentLogEntries",
-        "description": "List log entries for the specified incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nA Log Entry are a record of all events on your account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n",
+        "description": "List log entries for the specified incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nA Log Entry are a record of all events on your account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n\nScoped OAuth requires: `incidents.read`\n",
         "summary": "List log entries for an incident",
         "parameters": [
           {
@@ -22270,7 +22270,7 @@
           "Incidents"
         ],
         "operationId": "listIncidentNotes",
-        "description": "List existing notes for the specified incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n",
+        "description": "List existing notes for the specified incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n\nScoped OAuth requires: `incidents.read`\n",
         "summary": "List notes for an incident",
         "parameters": [
           {
@@ -22489,7 +22489,7 @@
           "Incidents"
         ],
         "operationId": "getOutlierIncident",
-        "description": "Gets Outlier Incident information for a given Incident on its Service.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#outlier-incident)\n",
+        "description": "Gets Outlier Incident information for a given Incident on its Service.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#outlier-incident)\n\nScoped OAuth requires: `incidents.read`\n",
         "summary": "Get Outlier Incident",
         "parameters": [
           {
@@ -22730,7 +22730,7 @@
             "$ref": "#/components/parameters/past_incidents_total"
           }
         ],
-        "description": "Past Incidents returns Incidents within the past 6 months that have similar metadata and were generated on the same Service as the parent Incident. By default, 5 Past Incidents are returned. Note: This feature is currently available as part of the Event Intelligence package or Digital Operations plan only.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#past_incidents)\n"
+        "description": "Past Incidents returns Incidents within the past 6 months that have similar metadata and were generated on the same Service as the parent Incident. By default, 5 Past Incidents are returned. Note: This feature is currently available as part of the Event Intelligence package or Digital Operations plan only.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#past_incidents)\n\nScoped OAuth requires: `incidents.read`\n"
       }
     },
     "/incidents/{id}/related_change_events": {
@@ -22897,7 +22897,7 @@
           "Incidents"
         ],
         "operationId": "getRelatedIncidents",
-        "description": "Returns the 20 most recent Related Incidents that are impacting other Responders and Services. Note: This feature is currently available as part of the Event Intelligence package or Digital Operations plan only.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#related_incidents)\n",
+        "description": "Returns the 20 most recent Related Incidents that are impacting other Responders and Services. Note: This feature is currently available as part of the Event Intelligence package or Digital Operations plan only.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#related_incidents)\n\nScoped OAuth requires: `incidents.read`\n",
         "summary": "Get Related Incidents",
         "parameters": [
           {
@@ -25199,7 +25199,7 @@
           "Paused Incident Reports"
         ],
         "operationId": "getPausedIncidentReportAlerts",
-        "description": "Returns the 5 most recent alerts that were triggered after being paused and the 5 most recent alerts that were resolved after being paused for a given reporting period (maximum 6 months lookback period).  Note: This feature is currently available as part of the Event Intelligence package or Digital Operations plan only.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#paused-incident-reports)\n",
+        "description": "Returns the 5 most recent alerts that were triggered after being paused and the 5 most recent alerts that were resolved after being paused for a given reporting period (maximum 6 months lookback period).  Note: This feature is currently available as part of the Event Intelligence package or Digital Operations plan only.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#paused-incident-reports)\n\nScoped OAuth requires: `incidents.read`\n",
         "summary": "Get Paused Incident Reporting on Alerts",
         "parameters": [
           {
@@ -29387,7 +29387,7 @@
         ],
         "operationId": "listServices",
         "x-pd-requires-scope": "services.read",
-        "description": "List existing Services.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#services)\n",
+        "description": "List existing Services.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#services)\n\nScoped OAuth requires: `services.read`\n",
         "summary": "List services",
         "parameters": [
           {
@@ -29559,7 +29559,7 @@
           "Services"
         ],
         "operationId": "createService",
-        "description": "Create a new service.\n\nIf `status` is included in the request, it must have a value of `active` when creating a new service. If a different status is required, make a second request to update the service.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nThere is a limit of 25,000 services per account. If the limit is reached, the API will respond with an error. There is also a limit of 100,000 open Incidents per Service. If the limit is reached and `auto_resolve_timeout` is disabled (set to 0 or null), the `auto_resolve_timeout` property will automatically be set to  84600 (1 day).\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#services)\n",
+        "description": "Create a new service.\n\nIf `status` is included in the request, it must have a value of `active` when creating a new service. If a different status is required, make a second request to update the service.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nThere is a limit of 25,000 services per account. If the limit is reached, the API will respond with an error. There is also a limit of 100,000 open Incidents per Service. If the limit is reached and `auto_resolve_timeout` is disabled (set to 0 or null), the `auto_resolve_timeout` property will automatically be set to  84600 (1 day).\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#services)\n\nScoped OAuth requires: `services.write`\n",
         "summary": "Create a service",
         "parameters": [
           {
@@ -29776,7 +29776,7 @@
         ],
         "operationId": "getService",
         "x-pd-requires-scope": "services.read",
-        "description": "Get details about an existing service.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#services)\n",
+        "description": "Get details about an existing service.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#services)\n\nScoped OAuth requires: `services.read`\n",
         "summary": "Get a service",
         "parameters": [
           {
@@ -29914,7 +29914,7 @@
           "Services"
         ],
         "operationId": "deleteService",
-        "description": "Delete an existing service.\n\nOnce the service is deleted, it will not be accessible from the web UI and new incidents won't be able to be created for this service.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#services)\n",
+        "description": "Delete an existing service.\n\nOnce the service is deleted, it will not be accessible from the web UI and new incidents won't be able to be created for this service.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#services)\n\nScoped OAuth requires: `services.write`\n",
         "summary": "Delete a service",
         "parameters": [
           {
@@ -29944,7 +29944,7 @@
         "tags": [
           "Services"
         ],
-        "description": "Update an existing service.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nThere is a limit of 100,000 open Incidents per Service. If the limit is reached and you disable `auto_resolve_timeout` (set to 0 or null), the API will respond with an error.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#services)\n",
+        "description": "Update an existing service.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nThere is a limit of 100,000 open Incidents per Service. If the limit is reached and you disable `auto_resolve_timeout` (set to 0 or null), the API will respond with an error.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#services)\n\nScoped OAuth requires: `services.write`\n",
         "summary": "Update a service",
         "parameters": [
           {
@@ -30172,7 +30172,7 @@
         ],
         "operationId": "listServiceAuditRecords",
         "summary": "List audit records for a service",
-        "description": "The returned records are sorted by the `execution_time` from newest to oldest.\n\nSee [`Cursor-based pagination`](https://developer.pagerduty.com/docs/rest-api-v2/pagination/) for instructions on how to paginate through the result set.\n\nFor more information see the [Audit API Document](https://developer.pagerduty.com/docs/rest-api-v2/audit-records-api/).\n",
+        "description": "The returned records are sorted by the `execution_time` from newest to oldest.\n\nSee [`Cursor-based pagination`](https://developer.pagerduty.com/docs/rest-api-v2/pagination/) for instructions on how to paginate through the result set.\n\nFor more information see the [Audit API Document](https://developer.pagerduty.com/docs/rest-api-v2/audit-records-api/).\n\nScoped OAuth requires: `audit_records.read`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -30389,7 +30389,7 @@
         ],
         "operationId": "createServiceIntegration",
         "summary": "Create a new integration",
-        "description": "Create a new integration belonging to a Service.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#services)\n",
+        "description": "Create a new integration belonging to a Service.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#services)\n\nScoped OAuth requires: `services.write`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -30560,7 +30560,7 @@
         ],
         "operationId": "updateServiceIntegration",
         "summary": "Update an existing integration",
-        "description": "Update an integration belonging to a Service.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#services)\n",
+        "description": "Update an integration belonging to a Service.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#services)\n\nScoped OAuth requires: `services.write`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -30683,7 +30683,7 @@
         ],
         "operationId": "getServiceIntegration",
         "summary": "View an integration",
-        "description": "Get details about an integration belonging to a service.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#services)\n",
+        "description": "Get details about an integration belonging to a service.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#services)\n\nScoped OAuth requires: `services.read`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -33856,7 +33856,7 @@
           "Users"
         ],
         "operationId": "listUsers",
-        "description": "List users of your PagerDuty account, optionally filtered by a search query.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n",
+        "description": "List users of your PagerDuty account, optionally filtered by a search query.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users.read`\n",
         "summary": "List users",
         "parameters": [
           {
@@ -34176,7 +34176,7 @@
           "Users"
         ],
         "operationId": "getUser",
-        "description": "Get details about an existing user.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n",
+        "description": "Get details about an existing user.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users.read`\n",
         "summary": "Get a user",
         "parameters": [
           {
@@ -34469,7 +34469,7 @@
         ],
         "operationId": "listUsersAuditRecords",
         "summary": "List audit records for a user",
-        "description": "The response will include audit records with changes that are made to the identified user not changes made by the identified user.\n\n\nThe returned records are sorted by the `execution_time` from newest to oldest.\n\nSee [`Cursor-based pagination`](https://developer.pagerduty.com/docs/rest-api-v2/pagination/) for instructions on how to paginate through the result set.\n\nFor more information see the [Audit API Document](https://developer.pagerduty.com/docs/rest-api-v2/audit-records-api/).\n",
+        "description": "The response will include audit records with changes that are made to the identified user not changes made by the identified user.\n\n\nThe returned records are sorted by the `execution_time` from newest to oldest.\n\nSee [`Cursor-based pagination`](https://developer.pagerduty.com/docs/rest-api-v2/pagination/) for instructions on how to paginate through the result set.\n\nFor more information see the [Audit API Document](https://developer.pagerduty.com/docs/rest-api-v2/audit-records-api/).\n\nScoped OAuth requires: `audit_records.read`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -34541,7 +34541,7 @@
           "Users"
         ],
         "operationId": "getUserContactMethods",
-        "description": "List contact methods of your PagerDuty user.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n",
+        "description": "List contact methods of your PagerDuty user.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users:contact_methods.read`\n",
         "summary": "List a user's contact methods",
         "parameters": [
           {
@@ -34742,7 +34742,7 @@
           "Users"
         ],
         "operationId": "getUserContactMethod",
-        "description": "Get details about a User's contact method.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n",
+        "description": "Get details about a User's contact method.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users:contact_methods.read`\n",
         "summary": "Get a user's contact method",
         "parameters": [
           {
@@ -35065,7 +35065,7 @@
           "Users"
         ],
         "operationId": "getUserNotificationRules",
-        "description": "List notification rules of your PagerDuty user.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n",
+        "description": "List notification rules of your PagerDuty user.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users:contact_methods.read`\n",
         "summary": "List a user's notification rules",
         "parameters": [
           {
@@ -35265,7 +35265,7 @@
           "Users"
         ],
         "operationId": "getUserNotificationRule",
-        "description": "Get details about a user's notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n",
+        "description": "Get details about a user's notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users:contact_methods.read`\n",
         "summary": "Get a user's notification rule",
         "parameters": [
           {
