@@ -9917,7 +9917,7 @@
       },
       "AlertGroupingParameters": {
         "type": "object",
-        "description": "Defines how alerts on this service will be automatically grouped into incidents. Note that the alert grouping features are available only on certain plans.\n",
+        "description": "Defines how alerts on this service will be automatically grouped into incidents. Note that the alert grouping features are available only on certain plans. To turn grouping off set the type to null.\n",
         "properties": {
           "type": {
             "type": "string",
