@@ -1686,15 +1686,6 @@
         "description": "This header indicates that this API endpoint is __UNDER CONSTRUCTION__ and may change at any time. You __MUST__ pass in this header with the value `status-dashboards`. Do not use this endpoint in production, as it may change!",
         "required": true
       },
-      "early_access_automation_actions": {
-        "schema": {
-          "type": "string"
-        },
-        "in": "header",
-        "name": "X-EARLY-ACCESS",
-        "description": "This header indicates that this API endpoint is __UNDER CONSTRUCTION__ and may change at any time. Do not use this endpoint in production, as it may change!",
-        "required": true
-      },
       "webhooks_filter_type": {
         "name": "filter_type",
         "in": "query",
@@ -13133,9 +13124,6 @@
           },
           {
             "$ref": "#/components/parameters/header_Content-Type"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_automation_actions"
           }
         ],
         "requestBody": {
@@ -13304,9 +13292,6 @@
           },
           {
             "$ref": "#/components/parameters/header_Content-Type"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_automation_actions"
           },
           {
             "$ref": "#/components/parameters/cursor_limit"
@@ -13486,9 +13471,6 @@
             "$ref": "#/components/parameters/header_Content-Type"
           },
           {
-            "$ref": "#/components/parameters/early_access_automation_actions"
-          },
-          {
             "$ref": "#/components/parameters/id"
           }
         ],
@@ -13601,9 +13583,6 @@
             "$ref": "#/components/parameters/header_Content-Type"
           },
           {
-            "$ref": "#/components/parameters/early_access_automation_actions"
-          },
-          {
             "$ref": "#/components/parameters/id"
           }
         ],
@@ -13647,9 +13626,6 @@
           },
           {
             "$ref": "#/components/parameters/header_Content-Type"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_automation_actions"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -13800,9 +13776,6 @@
           },
           {
             "$ref": "#/components/parameters/id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_automation_actions"
           }
         ],
         "requestBody": {
@@ -13954,9 +13927,6 @@
             "$ref": "#/components/parameters/header_Content-Type"
           },
           {
-            "$ref": "#/components/parameters/early_access_automation_actions"
-          },
-          {
             "$ref": "#/components/parameters/id"
           }
         ],
@@ -14027,9 +13997,6 @@
           },
           {
             "$ref": "#/components/parameters/header_Content-Type"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_automation_actions"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -14133,9 +14100,6 @@
             "$ref": "#/components/parameters/header_Content-Type"
           },
           {
-            "$ref": "#/components/parameters/early_access_automation_actions"
-          },
-          {
             "$ref": "#/components/parameters/id"
           },
           {
@@ -14206,9 +14170,6 @@
             "$ref": "#/components/parameters/header_Content-Type"
           },
           {
-            "$ref": "#/components/parameters/early_access_automation_actions"
-          },
-          {
             "$ref": "#/components/parameters/id"
           },
           {
@@ -14258,9 +14219,6 @@
           },
           {
             "$ref": "#/components/parameters/header_Content-Type"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_automation_actions"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -14361,9 +14319,6 @@
             "$ref": "#/components/parameters/header_Content-Type"
           },
           {
-            "$ref": "#/components/parameters/early_access_automation_actions"
-          },
-          {
             "$ref": "#/components/parameters/id"
           }
         ],
@@ -14439,9 +14394,6 @@
             "$ref": "#/components/parameters/header_Content-Type"
           },
           {
-            "$ref": "#/components/parameters/early_access_automation_actions"
-          },
-          {
             "$ref": "#/components/parameters/id"
           },
           {
@@ -14488,9 +14440,6 @@
           },
           {
             "$ref": "#/components/parameters/header_Content-Type"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_automation_actions"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -14564,9 +14513,6 @@
           },
           {
             "$ref": "#/components/parameters/header_Content-Type"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_automation_actions"
           },
           {
             "$ref": "#/components/parameters/automation_actions_invocation_state"
@@ -14693,9 +14639,6 @@
             "$ref": "#/components/parameters/header_Content-Type"
           },
           {
-            "$ref": "#/components/parameters/early_access_automation_actions"
-          },
-          {
             "$ref": "#/components/parameters/id"
           }
         ],
@@ -14808,9 +14751,6 @@
           },
           {
             "$ref": "#/components/parameters/header_Content-Type"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_automation_actions"
           }
         ],
         "requestBody": {
@@ -14958,9 +14898,6 @@
             "$ref": "#/components/parameters/header_Content-Type"
           },
           {
-            "$ref": "#/components/parameters/early_access_automation_actions"
-          },
-          {
             "$ref": "#/components/parameters/cursor_limit"
           },
           {
@@ -15093,9 +15030,6 @@
             "$ref": "#/components/parameters/header_Content-Type"
           },
           {
-            "$ref": "#/components/parameters/early_access_automation_actions"
-          },
-          {
             "$ref": "#/components/parameters/id"
           }
         ],
@@ -15183,9 +15117,6 @@
           },
           {
             "$ref": "#/components/parameters/header_Content-Type"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_automation_actions"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -15315,9 +15246,6 @@
             "$ref": "#/components/parameters/header_Content-Type"
           },
           {
-            "$ref": "#/components/parameters/early_access_automation_actions"
-          },
-          {
             "$ref": "#/components/parameters/id"
           }
         ],
@@ -15364,9 +15292,6 @@
           },
           {
             "$ref": "#/components/parameters/header_Content-Type"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_automation_actions"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -15468,9 +15393,6 @@
             "$ref": "#/components/parameters/header_Content-Type"
           },
           {
-            "$ref": "#/components/parameters/early_access_automation_actions"
-          },
-          {
             "$ref": "#/components/parameters/id"
           }
         ],
@@ -15546,9 +15468,6 @@
             "$ref": "#/components/parameters/header_Content-Type"
           },
           {
-            "$ref": "#/components/parameters/early_access_automation_actions"
-          },
-          {
             "$ref": "#/components/parameters/id"
           },
           {
@@ -15595,9 +15514,6 @@
           },
           {
             "$ref": "#/components/parameters/header_Content-Type"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_automation_actions"
           },
           {
             "$ref": "#/components/parameters/id"
