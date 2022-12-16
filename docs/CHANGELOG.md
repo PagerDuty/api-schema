@@ -6,6 +6,10 @@ Currently we rarely deprecate, and do not remove any API functionality.
 
 
 ---
+## 2022-12-16
+- Removed early access parameters from all automation_access endpoints; they are
+  now in GA
+
 ## 2022-12-08
 Clarified for service post/put the null option for alert_grouping_parameters.type will shut grouping off
 
