@@ -10327,40 +10327,6 @@
             "description": "Version of the Orchestration.",
             "readOnly": true
           }
-        },
-        "example": {
-          "id": "b02e973d-9620-4e0a-9edc-00fedf7d4694",
-          "self": "https://api.pagerduty.com/event_orchestrations/b02e973d-9620-4e0a-9edc-00fedf7d4694",
-          "name": "Shopping Cart Orchestration",
-          "description": "Send shopping cart alerts to the right services",
-          "team": {
-            "type": "team_reference",
-            "self": "https://api.pagerduty.com/teams/P3ZQXDF",
-            "id": "P3ZQXDF"
-          },
-          "integrations": [
-            {
-              "id": "9c5ff030-12da-4204-a067-25ee61a8df6c",
-              "parameters": {
-                "routing_key": "R028DIE06SNKNO6V5ACSLRV7Y0TUVG7T",
-                "type": "global"
-              }
-            }
-          ],
-          "routes": 0,
-          "created_at": "2019-12-24T21:18:52Z",
-          "created_by": {
-            "type": "user_reference",
-            "self": "https://api.pagerduty.com/users/PABO808",
-            "id": "PABO808"
-          },
-          "updated_at": "2019-12-25T14:54:23Z",
-          "updated_by": {
-            "type": "user_reference",
-            "self": "https://api.pagerduty.com/users/PABO808",
-            "id": "PABO808"
-          },
-          "version": "BrWLKQBLm8QO2ZYQ0GosHLxdbgWZ0ZR3"
         }
       },
       "OrchestrationRouter": {
@@ -18091,7 +18057,114 @@
                         "orchestrations": {
                           "type": "array",
                           "items": {
-                            "$ref": "#/components/schemas/Orchestration"
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "description": "ID of the Orchestration.",
+                                "readOnly": true
+                              },
+                              "self": {
+                                "type": "string",
+                                "format": "url",
+                                "description": "The API show URL at which the object is accessible",
+                                "readOnly": true
+                              },
+                              "name": {
+                                "type": "string",
+                                "description": "Name of the Orchestration."
+                              },
+                              "description": {
+                                "type": "string",
+                                "description": "A description of this Orchestration's purpose."
+                              },
+                              "team": {
+                                "type": "object",
+                                "description": "Reference to the team that owns the Orchestration. If none is specified, only admins have access.",
+                                "properties": {
+                                  "id": {
+                                    "type": "string"
+                                  },
+                                  "type": {
+                                    "type": "string",
+                                    "description": "A string that determines the schema of the object",
+                                    "readOnly": true
+                                  },
+                                  "self": {
+                                    "type": "string",
+                                    "format": "url",
+                                    "description": "The API show URL at which the object is accessible",
+                                    "readOnly": true
+                                  }
+                                }
+                              },
+                              "routes": {
+                                "type": "integer",
+                                "description": "Number of different Service Orchestration being routed to",
+                                "readOnly": true
+                              },
+                              "created_at": {
+                                "type": "string",
+                                "format": "date-time",
+                                "description": "The date the Orchestration was created at.",
+                                "readOnly": true
+                              },
+                              "created_by": {
+                                "type": "object",
+                                "description": "Reference to the user that has created the Orchestration.",
+                                "properties": {
+                                  "id": {
+                                    "type": "string",
+                                    "readOnly": true
+                                  },
+                                  "type": {
+                                    "type": "string",
+                                    "description": "A string that determines the schema of the object",
+                                    "readOnly": true
+                                  },
+                                  "self": {
+                                    "type": "string",
+                                    "format": "url",
+                                    "description": "The API show URL at which the object is accessible",
+                                    "readOnly": true
+                                  }
+                                },
+                                "readOnly": true
+                              },
+                              "updated_at": {
+                                "type": "string",
+                                "format": "date-time",
+                                "description": "The date the Orchestration was last updated.",
+                                "readOnly": true
+                              },
+                              "updated_by": {
+                                "type": "object",
+                                "description": "Reference to the user that has updated the Orchestration last.",
+                                "properties": {
+                                  "id": {
+                                    "type": "string",
+                                    "readOnly": true
+                                  },
+                                  "type": {
+                                    "type": "string",
+                                    "description": "A string that determines the schema of the object",
+                                    "readOnly": true
+                                  },
+                                  "self": {
+                                    "type": "string",
+                                    "format": "url",
+                                    "description": "The API show URL at which the object is accessible",
+                                    "readOnly": true
+                                  }
+                                },
+                                "readOnly": true
+                              },
+                              "version": {
+                                "type": "string",
+                                "description": "Version of the Orchestration.",
+                                "readOnly": true
+                              }
+                            }
                           }
                         }
                       }
@@ -18113,15 +18186,6 @@
                             "type": "team_reference",
                             "self": "https://api.pagerduty.com/teams/PQYP5MN"
                           },
-                          "integration": [
-                            {
-                              "id": "9c5ff030-12da-4204-a067-25ee61a8df6c",
-                              "parameters": {
-                                "routing_key": "R028DIE06SNKNO6V5ACSLRV7Y0TUVG7T",
-                                "type": "global"
-                              }
-                            }
-                          ],
                           "routes": 0,
                           "created_at": "2021-11-18T16:42:01Z",
                           "created_by": {
@@ -18330,7 +18394,7 @@
                           "type": "team_reference",
                           "self": "https://api.pagerduty.com/teams/PQYP5MN"
                         },
-                        "integration": [
+                        "integrations": [
                           {
                             "id": "9c5ff030-12da-4204-a067-25ee61a8df6c",
                             "parameters": {

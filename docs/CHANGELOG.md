@@ -6,6 +6,10 @@ Currently we rarely deprecate, and do not remove any API functionality.
 
 
 ---
+## 2022-12-20
+- Removed `integrations` key from the example response and response schema of `GET /event_orchestrations/`
+- Replaced `integration` key with `integrations` in the example response of `GET /event_orchestrations/{id}`
+
 ## 2022-12-16
 - Removed early access parameters from all automation_access endpoints; they are
   now in GA
