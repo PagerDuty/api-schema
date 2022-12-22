@@ -6,6 +6,23 @@ Currently we rarely deprecate, and do not remove any API functionality.
 
 
 ---
+## 2022-12-22
+- Added Early Access Incident Workflows endpoints including Triggers and Actions
+- `GET /incident_workflows`
+- `POST /incident_workflows`
+- `GET /incident_workflows/{id}`
+- `PUT /incident_workflows/{id}`
+- `GET /incident_workflows/actions`
+- `GET /incident_workflows/actions/{id}`
+- `POST /incident_workflows/{id}/invoke`
+- `GET /incident_workflows/triggers`
+- `POST /incident_workflows/triggers`
+- `GET /incident_workflows/triggers/{id}`
+- `PUT /incident_workflows/triggers/{id}`
+- `POST /incident_workflows/triggers/{id}/services`
+- `DELETE /incident_workflows/triggers/{trigger_id}/services/{service_id}`
+- `POST /incident_workflows/triggers/{id}/start`
+
 ## 2022-12-20
 - Removed `integrations` key from the example response and response schema of `GET /event_orchestrations/`
 - Replaced `integration` key with `integrations` in the example response of `GET /event_orchestrations/{id}`
