@@ -14,7 +14,6 @@ Currently we rarely deprecate, and do not remove any API functionality.
 - `PUT /incident_workflows/{id}`
 - `GET /incident_workflows/actions`
 - `GET /incident_workflows/actions/{id}`
-- `POST /incident_workflows/{id}/invoke`
 - `GET /incident_workflows/triggers`
 - `POST /incident_workflows/triggers`
 - `GET /incident_workflows/triggers/{id}`
