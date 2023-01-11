@@ -13562,6 +13562,198 @@
         ]
       }
     },
+    "/analytics/raw/incidents/{id}/responses": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/id"
+        }
+      ],
+      "get": {
+        "summary": "Get raw responses from a single incident",
+        "tags": [
+          "Analytics"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "incident_id": {
+                      "type": "string",
+                      "description": "The Incident ID passed in to the request."
+                    },
+                    "limit": {
+                      "type": "integer",
+                      "description": "Number of results to include in the batch."
+                    },
+                    "order": {
+                      "type": "string",
+                      "description": "The order in which the results were sorted; asc for ascending, desc for descending.",
+                      "enum": [
+                        "asc",
+                        "desc"
+                      ]
+                    },
+                    "order_by": {
+                      "type": "string",
+                      "description": "The column that was used for ordering the results.",
+                      "enum": [
+                        "requested_at"
+                      ]
+                    },
+                    "time_zone": {
+                      "type": "string",
+                      "description": "The time zone that the results are in."
+                    },
+                    "responses": {
+                      "type": "array",
+                      "items": {
+                        "title": "Analytics Raw Incident Responses",
+                        "type": "object",
+                        "properties": {
+                          "responder_name": {
+                            "type": "string",
+                            "description": "Name of the user associated with the Incident Response."
+                          },
+                          "responder_id": {
+                            "type": "string",
+                            "description": "ID of the user associated with the Incident Response."
+                          },
+                          "response_status": {
+                            "type": "string",
+                            "description": "Status of the user's interaction with the Incident notification.",
+                            "enum": [
+                              "joined",
+                              "pending",
+                              "declined"
+                            ]
+                          },
+                          "responder_type": {
+                            "type": "string",
+                            "description": "Type of responder, where `assigned` means the user was added to the Incident via Assignment at Incident creation,\n`reassigned` means the user was added to the Incident via Reassignment, `escalated` means the user was added via Escalation,\nand `added_responder` means the user was added via Responder Reqeuest.",
+                            "enum": [
+                              "assigned",
+                              "reassigned",
+                              "escalated",
+                              "added_responder"
+                            ]
+                          },
+                          "requested_at": {
+                            "type": "string",
+                            "description": "Timestamp of when the user was requested."
+                          },
+                          "responded_at": {
+                            "type": "string",
+                            "description": "Timestamp of when the user responded to the request."
+                          },
+                          "time_to_respond_seconds": {
+                            "type": "integer",
+                            "description": "Measures the time it took for the user to respond to the Incident request. In other words, `responded_at - requested_at`."
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Example Response": {
+                    "value": {
+                      "incident_id": "ABCDEFGHIJKLMN",
+                      "limit": 100,
+                      "order": "asc",
+                      "order_by": "requested_at",
+                      "time_zone": "Etc/UTC",
+                      "responses": {
+                        "responder_name": "Earline Greenholt",
+                        "responder_id": "PXPGF42",
+                        "response_status": "accepted",
+                        "responder_type": "added_responder",
+                        "requested_at": "2023-01-05T10:15:00",
+                        "responded_at": "2023-01-05T10:18:00",
+                        "time_to_respond_seconds": 180
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "limit": {
+                    "type": "integer",
+                    "description": "Number of results to include in each batch.\nLimits between 1 to 1000 are accepted.",
+                    "example": 20,
+                    "minimum": 0,
+                    "exclusiveMinimum": true,
+                    "maximum": 1000,
+                    "exclusiveMaximum": false
+                  },
+                  "order": {
+                    "type": "string",
+                    "description": "The order the results; asc for ascending, desc for descending. Defaults to `desc`.",
+                    "enum": [
+                      "asc",
+                      "desc"
+                    ]
+                  },
+                  "order_by": {
+                    "type": "string",
+                    "description": "The column to use for ordering the results.",
+                    "enum": [
+                      "requested_at"
+                    ]
+                  },
+                  "time_zone": {
+                    "type": "string",
+                    "description": "The time zone to use for the results.",
+                    "example": "Etc/UTC"
+                  }
+                }
+              },
+              "examples": {
+                "Example Request": {
+                  "value": {
+                    "limit": 20,
+                    "order": "desc",
+                    "order_by": "requested_at",
+                    "time_zone": "America/Los_Angeles"
+                  }
+                }
+              }
+            }
+          },
+          "description": "Parameters to apply to the dataset."
+        },
+        "operationId": "getAnalyticsIncidentResponsesById",
+        "description": "Provides enriched responder data for a single incident.\n\nExample metrics include Time to Respond, Responder Type, and Response Status. See metric definitions below.\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n<!-- theme: info -->\n> **Note:** Analytics data is updated once per day. It takes up to 24 hours before new incident responses appear in the Analytics API.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_analytics"
+          }
+        ]
+      }
+    },
     "/audit/records": {
       "description": "List audit records.",
       "get": {
@@ -18593,11 +18785,12 @@
     "/event_orchestrations": {
       "description": "Get a list of Event Orchestrations",
       "get": {
+        "x-pd-requires-scope": "event_orchestrations.read",
         "tags": [
           "Event Orchestrations"
         ],
         "operationId": "listEventOrchestrations",
-        "description": "List all Global Event Orchestrations on an Account.\n\nGlobal Event Orchestrations allow you define a set of Event Rules, so that when you ingest events using the Orchestration's Routing Key your events will be routed to the correct Service, based on the event's content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n",
+        "description": "List all Global Event Orchestrations on an Account.\n\nGlobal Event Orchestrations allow you define a set of Event Rules, so that when you ingest events using the Orchestration's Routing Key your events will be routed to the correct Service, based on the event's content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `event_orchestrations.read`\n",
         "summary": "List Event Orchestrations",
         "parameters": [
           {
@@ -18799,10 +18992,11 @@
         }
       },
       "post": {
+        "x-pd-requires-scope": "event_orchestrations.write",
         "tags": [
           "Event Orchestrations"
         ],
-        "description": "Create a Global Event Orchestration.\n\nGlobal Event Orchestrations allow you define a set of Event Rules, so that when you ingest events using the Orchestration's Routing Key your events will be routed to the correct Service, based on the event's content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n",
+        "description": "Create a Global Event Orchestration.\n\nGlobal Event Orchestrations allow you define a set of Event Rules, so that when you ingest events using the Orchestration's Routing Key your events will be routed to the correct Service, based on the event's content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `event_orchestrations.write`\n",
         "summary": "Create an Orchestration",
         "operationId": "postOrchestration",
         "requestBody": {
@@ -18925,11 +19119,12 @@
     "/event_orchestrations/{id}": {
       "description": "Manage Global Orchestrations.",
       "get": {
+        "x-pd-requires-scope": "event_orchestrations.read",
         "tags": [
           "Event Orchestrations"
         ],
         "operationId": "getOrchestration",
-        "description": "Get a Global Event Orchestration.\n\nGlobal Event Orchestrations allow you define a set of Event Rules, so that when you ingest events using the Orchestration's Routing Key your events will be routed to the correct Service, based on the event's content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n",
+        "description": "Get a Global Event Orchestration.\n\nGlobal Event Orchestrations allow you define a set of Event Rules, so that when you ingest events using the Orchestration's Routing Key your events will be routed to the correct Service, based on the event's content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `event_orchestrations.read`\n",
         "summary": "Get an Orchestration",
         "parameters": [
           {
@@ -19014,11 +19209,12 @@
         }
       },
       "put": {
+        "x-pd-requires-scope": "event_orchestrations.write",
         "tags": [
           "Event Orchestrations"
         ],
         "operationId": "updateOrchestration",
-        "description": "Update a Global Event Orchestration.\n\nGlobal Event Orchestrations allow you define a set of Event Rules, so that when you ingest events using the Orchestration's Routing Key your events will be routed to the correct Service, based on the event's content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n",
+        "description": "Update a Global Event Orchestration.\n\nGlobal Event Orchestrations allow you define a set of Event Rules, so that when you ingest events using the Orchestration's Routing Key your events will be routed to the correct Service, based on the event's content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `event_orchestrations.write`\n",
         "summary": "Update an Orchestration",
         "parameters": [
           {
@@ -19155,11 +19351,12 @@
         }
       },
       "delete": {
+        "x-pd-requires-scope": "event_orchestrations.write",
         "tags": [
           "Event Orchestrations"
         ],
         "operationId": "deleteOrchestration",
-        "description": "Delete a Global Event Orchestration.\n\nOnce deleted, you will no longer be able to ingest events into PagerDuty using this Orchestration's routing key.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n",
+        "description": "Delete a Global Event Orchestration.\n\nOnce deleted, you will no longer be able to ingest events into PagerDuty using this Orchestration's routing key.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `event_orchestrations.write`\n",
         "summary": "Delete an Orchestration",
         "parameters": [
           {
@@ -19200,12 +19397,13 @@
     "/event_orchestrations/{id}/router": {
       "description": "View and update an Orchestration Router.",
       "get": {
+        "x-pd-requires-scope": "event_orchestrations.read",
         "tags": [
           "Event Orchestrations"
         ],
         "operationId": "getOrchPathRouter",
         "summary": "Get the Router for a Global Event Orchestration",
-        "description": "Get a Global Event Orchestration's Routing Rules.\n\nAn Orchestration Router allows you to create a set of Event Rules. The Router evaluates Events you send to this Orchestration against each of its rules, one at a time, and routes the event to a specific Service based on the first rule that matches. If an event doesn't match any rules, it'll be sent to service specified in as the `catch_all` or the \"Unrouted\" Orchestration if no service is specified.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n",
+        "description": "Get a Global Event Orchestration's Routing Rules.\n\nAn Orchestration Router allows you to create a set of Event Rules. The Router evaluates Events you send to this Orchestration against each of its rules, one at a time, and routes the event to a specific Service based on the first rule that matches. If an event doesn't match any rules, it'll be sent to service specified in as the `catch_all` or the \"Unrouted\" Orchestration if no service is specified.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `event_orchestrations.read`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -19236,12 +19434,13 @@
         }
       },
       "put": {
+        "x-pd-requires-scope": "event_orchestrations.write",
         "tags": [
           "Event Orchestrations"
         ],
         "operationId": "updateOrchPathRouter",
         "summary": "Update the Router for a Global Event Orchestration",
-        "description": "Update an Orchestration's Routing Rules.\n\nAn Orchestration Router allows you to create a set of Event Rules. The Router evaluates Events you send to this Orchestration against each of its rules, one at a time, and routes the event to a specific Service based on the first rule that matches. If an event doesn't match any rules, it'll be sent to service specified in as the `catch_all` or the \"Unrouted\" Orchestration if no service is specified.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n",
+        "description": "Update an Orchestration's Routing Rules.\n\nAn Orchestration Router allows you to create a set of Event Rules. The Router evaluates Events you send to this Orchestration against each of its rules, one at a time, and routes the event to a specific Service based on the first rule that matches. If an event doesn't match any rules, it'll be sent to service specified in as the `catch_all` or the \"Unrouted\" Orchestration if no service is specified.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `event_orchestrations.write`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -19334,12 +19533,13 @@
     "/event_orchestrations/{id}/unrouted": {
       "description": "View and update an Unrouted Orchestration.",
       "get": {
+        "x-pd-requires-scope": "event_orchestrations.read",
         "tags": [
           "Event Orchestrations"
         ],
         "operationId": "getOrchPathUnrouted",
         "summary": "Get the Unrouted Orchestration for a Global Event Orchestration",
-        "description": "Get a Global Event Orchestration's Rules for Unrouted events.\n\nAn Unrouted Orchestration allows you to create a set of Event Rules that will be evaluated against all events that don't match any rules in the Orchestration's Router.\n\nThe Unrouted Orchestration evaluates Events sent to it against each of its rules, beginning with the rules in the \"start\" set. When a matching rule is found, it can modify and enhance the event and can route the event to another set of rules within this Unrouted Orchestration for further processing.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n",
+        "description": "Get a Global Event Orchestration's Rules for Unrouted events.\n\nAn Unrouted Orchestration allows you to create a set of Event Rules that will be evaluated against all events that don't match any rules in the Orchestration's Router.\n\nThe Unrouted Orchestration evaluates Events sent to it against each of its rules, beginning with the rules in the \"start\" set. When a matching rule is found, it can modify and enhance the event and can route the event to another set of rules within this Unrouted Orchestration for further processing.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `event_orchestrations.read`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -19370,12 +19570,13 @@
         }
       },
       "put": {
+        "x-pd-requires-scope": "event_orchestrations.write",
         "tags": [
           "Event Orchestrations"
         ],
         "operationId": "updateOrchPathUnrouted",
         "summary": "Update the Unrouted Orchestration for a Global Event Orchestration",
-        "description": "Update a Global Event Orchestration's Rules for Unrouted events.\n\nAn Unrouted Orchestration allows you to create a set of Event Rules that will be evaluated against all events that don't match any rules in the Orchestration's Router.\n\nThe Unrouted Orchestration evaluates Events sent to it against each of its rules, beginning with the rules in the \"start\" set. When a matching rule is found, it can modify and enhance the event and can route the event to another set of rules within this Unrouted Orchestration for further processing.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n",
+        "description": "Update a Global Event Orchestration's Rules for Unrouted events.\n\nAn Unrouted Orchestration allows you to create a set of Event Rules that will be evaluated against all events that don't match any rules in the Orchestration's Router.\n\nThe Unrouted Orchestration evaluates Events sent to it against each of its rules, beginning with the rules in the \"start\" set. When a matching rule is found, it can modify and enhance the event and can route the event to another set of rules within this Unrouted Orchestration for further processing.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `event_orchestrations.write`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -19471,12 +19672,13 @@
     "/event_orchestrations/services/{id}": {
       "description": "View and update a Service Orchestration.",
       "get": {
+        "x-pd-requires-scope": "services.read",
         "tags": [
           "Event Orchestrations"
         ],
         "operationId": "getOrchPathService",
         "summary": "Get the Service Orchestration for a Service",
-        "description": "Get a Service Orchestration.\n\nA Service Orchestration allows you to create a set of Event Rules. The Service Orchestration evaluates Events sent to this Service against each of its rules, beginning with the rules in the \"start\" set. When a matching rule is found, it can modify and enhance the event and can route the event to another set of rules within this Service Orchestration for further processing.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n",
+        "description": "Get a Service Orchestration.\n\nA Service Orchestration allows you to create a set of Event Rules. The Service Orchestration evaluates Events sent to this Service against each of its rules, beginning with the rules in the \"start\" set. When a matching rule is found, it can modify and enhance the event and can route the event to another set of rules within this Service Orchestration for further processing.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `services.read`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -19507,12 +19709,13 @@
         }
       },
       "put": {
+        "x-pd-requires-scope": "services.write",
         "tags": [
           "Event Orchestrations"
         ],
         "operationId": "updateOrchPathService",
         "summary": "Update the Service Orchestration for a Service",
-        "description": "Update a Service Orchestration.\n\nA Service Orchestration allows you to create a set of Event Rules. The Service Orchestration evaluates Events sent to this Service against each of its rules, beginning with the rules in the \"start\" set. When a matching rule is found, it can modify and enhance the event and can route the event to another set of rules within this Service Orchestration for further processing.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n",
+        "description": "Update a Service Orchestration.\n\nA Service Orchestration allows you to create a set of Event Rules. The Service Orchestration evaluates Events sent to this Service against each of its rules, beginning with the rules in the \"start\" set. When a matching rule is found, it can modify and enhance the event and can route the event to another set of rules within this Service Orchestration for further processing.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `services.write`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -19680,12 +19883,13 @@
     "/event_orchestrations/services/{id}/active": {
       "description": "View and update a Service Orchestration's active status.",
       "get": {
+        "x-pd-requires-scope": "services.read",
         "tags": [
           "Event Orchestrations"
         ],
         "operationId": "getOrchActiveStatus",
         "summary": "Get the Service Orchestration active status for a Service",
-        "description": "Get a Service Orchestration's active status.\n\nA Service Orchestration allows you to set an active status based on whether an event will be evaluated against a service orchestration path (true) or service ruleset (false).\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n",
+        "description": "Get a Service Orchestration's active status.\n\nA Service Orchestration allows you to set an active status based on whether an event will be evaluated against a service orchestration path (true) or service ruleset (false).\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `services.read`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -19716,12 +19920,13 @@
         }
       },
       "put": {
+        "x-pd-requires-scope": "services.write",
         "tags": [
           "Event Orchestrations"
         ],
         "operationId": "updateOrchActiveStatus",
         "summary": "Update the Service Orchestration active status for a Service",
-        "description": "Update a Service Orchestration's active status.\n\nA Service Orchestration allows you to set an active status based on whether an event will be evaluated against a service orchestration path (true) or service ruleset (false).\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n",
+        "description": "Update a Service Orchestration's active status.\n\nA Service Orchestration allows you to set an active status based on whether an event will be evaluated against a service orchestration path (true) or service ruleset (false).\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `services.write`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -21401,166 +21606,6 @@
           },
           "403": {
             "$ref": "#/components/responses/Forbidden"
-          },
-          "429": {
-            "$ref": "#/components/responses/TooManyRequests"
-          }
-        }
-      }
-    },
-    "/incident_workflows/actions/{id}/invoke": {
-      "description": "Invoke an Incident Workflow Action",
-      "post": {
-        "tags": [
-          "Incident Workflows"
-        ],
-        "operationId": "invokeIncidentWorkflowAction",
-        "description": "Invoke a standalone Incident Workflow Action separate from an Incident Workflow\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
-        "summary": "Invoke an Action",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/header_Accept"
-          },
-          {
-            "$ref": "#/components/parameters/header_Content-Type"
-          },
-          {
-            "$ref": "#/components/parameters/id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_incident_workflows"
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "inputs": {
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "name": {
-                          "type": "string",
-                          "description": "The name of the Input"
-                        },
-                        "value": {
-                          "type": "string",
-                          "description": "The value to pass for the Input"
-                        }
-                      }
-                    }
-                  },
-                  "idempotency_token": {
-                    "type": "string",
-                    "description": "Optional unique value to prevent duplicate execution."
-                  }
-                },
-                "required": [
-                  "incident_id",
-                  "source_name"
-                ]
-              },
-              "examples": {
-                "request": {
-                  "summary": "Request Example",
-                  "value": {
-                    "idempotency_token": "931414ff1-e1c7-498e-b2db-7b126ac150f8",
-                    "inputs": [
-                      {
-                        "name": "Text Input",
-                        "value": "some text"
-                      },
-                      {
-                        "name": "Int Input",
-                        "value": "1234"
-                      }
-                    ]
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "The started Incident Workflow Instance",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "action_invocation": {
-                      "$ref": "#/components/schemas/IncidentWorkflowActionInvocation"
-                    }
-                  }
-                },
-                "examples": {
-                  "response": {
-                    "summary": "Response Example",
-                    "value": {
-                      "action_invocation": {
-                        "id": "1dd69ef5-df8c-4a85-b0b6-24d532556bc5",
-                        "action_id": "pagerduty.com:test:sample-action:1",
-                        "inputs": [
-                          {
-                            "name": "Text Input",
-                            "description": "A text input",
-                            "type": "text",
-                            "default_value_serialized": "",
-                            "is_required": true,
-                            "is_hidden": false,
-                            "advanced": false,
-                            "metadata": "{}",
-                            "connection_type_id": "",
-                            "serialized_value": "some text"
-                          },
-                          {
-                            "name": "Int Input",
-                            "description": "An integer input",
-                            "type": "integer",
-                            "default_value_serialized": "",
-                            "is_required": false,
-                            "is_hidden": false,
-                            "advanced": false,
-                            "metadata": "{}",
-                            "connection_type_id": "",
-                            "serialized_value": "1234"
-                          }
-                        ],
-                        "outputs": [
-                          {
-                            "name": "Text Output",
-                            "description": "A text output",
-                            "type": "text",
-                            "serialized_value": "result"
-                          }
-                        ],
-                        "is_completed": true,
-                        "type": "action_invocation"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/ArgumentError"
-          },
-          "401": {
-            "$ref": "#/components/responses/Unauthorized"
-          },
-          "402": {
-            "$ref": "#/components/responses/PaymentRequired"
-          },
-          "403": {
-            "$ref": "#/components/responses/Forbidden"
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
           },
           "429": {
             "$ref": "#/components/responses/TooManyRequests"
@@ -28571,11 +28616,12 @@
     "/rulesets": {
       "description": "Create, list, update and delete Rulesets.",
       "get": {
+        "x-pd-requires-scope": "event_rules.read",
         "tags": [
           "Rulesets"
         ],
         "operationId": "listRulesets",
-        "description": "List all Rulesets.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#rulesets)\n",
+        "description": "List all Rulesets\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#rulesets)\n\nScoped OAuth requires: `event_rules.read`\n",
         "summary": "List Rulesets",
         "parameters": [
           {
@@ -28671,11 +28717,12 @@
         }
       },
       "post": {
+        "x-pd-requires-scope": "event_rules.write",
         "tags": [
           "Rulesets"
         ],
         "operationId": "createRuleset",
-        "description": "Create a new Ruleset.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#rulesets)\n",
+        "description": "Create a new Ruleset.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#rulesets)\n\nScoped OAuth requires: `event_rules.write`\n",
         "summary": "Create a Ruleset",
         "parameters": [
           {
@@ -28793,11 +28840,12 @@
     "/rulesets/{id}": {
       "description": "Manage Rulesets.",
       "get": {
+        "x-pd-requires-scope": "event_rules.read",
         "tags": [
           "Rulesets"
         ],
         "operationId": "getRuleset",
-        "description": "Get a Ruleset.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#rulesets)\n",
+        "description": "Get a Ruleset.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#rulesets)\n\nScoped OAuth requires: `event_rules.read`\n",
         "summary": "Get a Ruleset",
         "parameters": [
           {
@@ -28874,11 +28922,12 @@
         }
       },
       "put": {
+        "x-pd-requires-scope": "event_rules.write",
         "tags": [
           "Rulesets"
         ],
         "operationId": "updateRuleset",
-        "description": "Update a Ruleset.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#rulesets)\n",
+        "description": "Update a Ruleset.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#rulesets)\n\nScoped OAuth requires: `event_rules.write`\n",
         "summary": "Update a Ruleset",
         "parameters": [
           {
@@ -28999,11 +29048,12 @@
         }
       },
       "delete": {
+        "x-pd-requires-scope": "event_rules.write",
         "tags": [
           "Rulesets"
         ],
         "operationId": "deleteRuleset",
-        "description": "Delete a Ruleset.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#rulesets)\n",
+        "description": "Delete a Ruleset.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#rulesets)\n\nScoped OAuth requires: `event_rules.write`\n",
         "summary": "Delete a Ruleset",
         "parameters": [
           {
@@ -29044,11 +29094,12 @@
     "/rulesets/{id}/rules": {
       "description": "Create, list, update and delete Event Rules.",
       "get": {
+        "x-pd-requires-scope": "event_rules.read",
         "tags": [
           "Rulesets"
         ],
         "operationId": "listRulesetEventRules",
-        "description": "List all Event Rules on a Ruleset.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#rulesets)\n\nNote: Create and Update on rules will accept 'description' or 'summary' interchangeably as an extraction action target. Get and List on rules will always return 'summary' as the target. If you are expecting 'description' please change your automation code to expect 'summary' instead.\n",
+        "description": "List all Event Rules on a Ruleset.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#rulesets)\n\nNote: Create and Update on rules will accept 'description' or 'summary' interchangeably as an extraction action target. Get and List on rules will always return 'summary' as the target. If you are expecting 'description' please change your automation code to expect 'summary' instead.\n\nScoped OAuth requires: `event_rules.read`\n",
         "summary": "List Event Rules",
         "parameters": [
           {
@@ -29186,11 +29237,12 @@
         }
       },
       "post": {
+        "x-pd-requires-scope": "event_rules.write",
         "tags": [
           "Rulesets"
         ],
         "operationId": "createRulesetEventRule",
-        "description": "Create a new Event Rule.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#rulesets)\n\nNote: Create and Update on rules will accept 'description' or 'summary' interchangeably as an extraction action target. Get and List on rules will always return 'summary' as the target. If you are expecting 'description' please change your automation code to expect 'summary' instead.\n",
+        "description": "Create a new Event Rule.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#rulesets)\n\nNote: Create and Update on rules will accept 'description' or 'summary' interchangeably as an extraction action target. Get and List on rules will always return 'summary' as the target. If you are expecting 'description' please change your automation code to expect 'summary' instead.\n\nScoped OAuth requires: `event_rules.write`\n",
         "summary": "Create an Event Rule",
         "parameters": [
           {
@@ -29362,11 +29414,12 @@
     "/rulesets/{id}/rules/{rule_id}": {
       "description": "Manage Event Rules.",
       "get": {
+        "x-pd-requires-scope": "event_rules.read",
         "tags": [
           "Rulesets"
         ],
         "operationId": "getRulesetEventRule",
-        "description": "Get an Event Rule.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#rulesets)\n\nNote: Create and Update on rules will accept 'description' or 'summary' interchangeably as an extraction action target. Get and List on rules will always return 'summary' as the target. If you are expecting 'description' please change your automation code to expect 'summary' instead.\n",
+        "description": "Get an Event Rule.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#rulesets)\n\nNote: Create and Update on rules will accept 'description' or 'summary' interchangeably as an extraction action target. Get and List on rules will always return 'summary' as the target. If you are expecting 'description' please change your automation code to expect 'summary' instead.\n\nScoped OAuth requires: `event_rules.read`\n",
         "summary": "Get an Event Rule",
         "parameters": [
           {
@@ -29483,12 +29536,13 @@
         }
       },
       "put": {
+        "x-pd-requires-scope": "event_rules.write",
         "tags": [
           "Rulesets"
         ],
         "operationId": "updateRulesetEventRule",
         "summary": "Update an Event Rule",
-        "description": "Update an Event Rule. Note that the endpoint supports partial updates, so any number of the writable fields can be provided.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#rulesets)\n\nNote: Create and Update on rules will accept 'description' or 'summary' interchangeably as an extraction action target. Get and List on rules will always return 'summary' as the target. If you are expecting 'description' please change your automation code to expect 'summary' instead.\n",
+        "description": "Update an Event Rule. Note that the endpoint supports partial updates, so any number of the writable fields can be provided.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#rulesets)\n\nNote: Create and Update on rules will accept 'description' or 'summary' interchangeably as an extraction action target. Get and List on rules will always return 'summary' as the target. If you are expecting 'description' please change your automation code to expect 'summary' instead.\n\nScoped OAuth requires: `event_rules.write`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -29643,11 +29697,12 @@
         }
       },
       "delete": {
+        "x-pd-requires-scope": "event_rules.write",
         "tags": [
           "Rulesets"
         ],
         "operationId": "deleteRulesetEventRule",
-        "description": "Delete an Event Rule.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#rulesets)\n",
+        "description": "Delete an Event Rule.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#rulesets)\n\nScoped OAuth requires: `event_rules.write`\n",
         "summary": "Delete an Event Rule",
         "parameters": [
           {
@@ -29870,11 +29925,12 @@
         }
       },
       "post": {
+        "x-pd-requires-scope": "event_rules.read",
         "tags": [
           "Schedules"
         ],
         "operationId": "createSchedule",
-        "description": "Create a new on-call schedule.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#schedules)\n",
+        "description": "Create a new on-call schedule.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#schedules)\n\nScoped OAuth requires: `event_rules.read`\n",
         "summary": "Create a schedule",
         "parameters": [
           {
@@ -33188,11 +33244,12 @@
     },
     "/services/{id}/rules": {
       "get": {
+        "x-pd-requires-scope": "services.read",
         "tags": [
           "Services"
         ],
         "operationId": "listServiceEventRules",
-        "description": "List Event Rules on a Service.\n",
+        "description": "List Event Rules on a Service.\n\nScoped OAuth requires: `services.read`\n",
         "summary": "List Service's Event Rules",
         "parameters": [
           {
@@ -33319,11 +33376,12 @@
         }
       },
       "post": {
+        "x-pd-requires-scope": "services.write",
         "tags": [
           "Services"
         ],
         "operationId": "createServiceEventRule",
-        "description": "Create a new Event Rule on a Service.\n",
+        "description": "Create a new Event Rule on a Service.\n\nScoped OAuth requires: `services.write`\n",
         "summary": "Create an Event Rule on a Service",
         "parameters": [
           {
@@ -33486,11 +33544,12 @@
     },
     "/services/{id}/rules/{rule_id}": {
       "get": {
+        "x-pd-requires-scope": "services.read",
         "tags": [
           "Services"
         ],
         "operationId": "getServiceEventRule",
-        "description": "Get an Event Rule from a Service.\n",
+        "description": "Get an Event Rule from a Service.\n\nScoped OAuth requires: `services.read`\n",
         "summary": "Get an Event Rule from a Service",
         "parameters": [
           {
@@ -33586,12 +33645,13 @@
         }
       },
       "put": {
+        "x-pd-requires-scope": "services.write",
         "tags": [
           "Services"
         ],
         "operationId": "updateServiceEventRule",
         "summary": "Update an Event Rule on a Service",
-        "description": "Update an Event Rule on a Service. Note that the endpoint supports partial updates, so any number of the writable fields can be provided.\n",
+        "description": "Update an Event Rule on a Service. Note that the endpoint supports partial updates, so any number of the writable fields can be provided.\n\nScoped OAuth requires: `services.write`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -33737,11 +33797,12 @@
         }
       },
       "delete": {
+        "x-pd-requires-scope": "services.write",
         "tags": [
           "Services"
         ],
         "operationId": "deleteServiceEventRule",
-        "description": "Delete an Event Rule from a Service.\n",
+        "description": "Delete an Event Rule from a Service.\n\nScoped OAuth requires: `services.write`\n",
         "summary": "Delete an Event Rule from a Service",
         "parameters": [
           {
@@ -35751,7 +35812,7 @@
           "Templates"
         ],
         "operationId": "getTemplates",
-        "description": "Get a list of all the template on an account\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
+        "description": "Get a list of all the template on an account\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
         "summary": "List templates",
         "parameters": [
           {
@@ -35959,7 +36020,7 @@
           "Templates"
         ],
         "operationId": "getTemplate",
-        "description": "Get a single template on the account\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
+        "description": "Get a single template on the account\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
         "summary": "Get a template",
         "parameters": [
           {
@@ -36190,7 +36251,7 @@
         ],
         "operationId": "renderTemplate",
         "summary": "Render a template",
-        "description": "Render a template. This endpoint has a variable request body depending on the template type. For the `status_update` template type, the caller will provide the incident id, and a status update message.\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
+        "description": "Render a template. This endpoint has a variable request body depending on the template type. For the `status_update` template type, the caller will provide the incident id, and a status update message.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
         "parameters": [
           {
             "$ref": "#/components/parameters/id"
