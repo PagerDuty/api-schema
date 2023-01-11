@@ -6,6 +6,9 @@ Currently we rarely deprecate, and do not remove any API functionality.
 
 
 ---
+## 2023-01-09
+- Added `GET /analytics/raw/incidents/{id}/responses` to the Analytics API
+
 ## 2022-12-22
 - Added Early Access Incident Workflows endpoints including Triggers and Actions
 - `GET /incident_workflows`
@@ -14,7 +17,6 @@ Currently we rarely deprecate, and do not remove any API functionality.
 - `PUT /incident_workflows/{id}`
 - `GET /incident_workflows/actions`
 - `GET /incident_workflows/actions/{id}`
-- `POST /incident_workflows/{id}/invoke`
 - `GET /incident_workflows/triggers`
 - `POST /incident_workflows/triggers`
 - `GET /incident_workflows/triggers/{id}`
