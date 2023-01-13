@@ -18713,12 +18713,13 @@
     "/escalation_policies/{id}/audit/records": {
       "description": "List audit records of changes made to the escalation policy.",
       "get": {
+        "x-pd-requires-scope": "audit_records.read",
         "tags": [
           "Escalation Policies"
         ],
         "operationId": "listEscalationPolicyAuditRecords",
         "summary": "List audit records for an escalation policy",
-        "description": "The returned records are sorted by the `execution_time` from newest to oldest.\n\nSee [`Cursor-based pagination`](https://developer.pagerduty.com/docs/rest-api-v2/pagination/) for instructions on how to paginate through the result set.\n\nFor more information see the [Audit API Document](https://developer.pagerduty.com/docs/rest-api-v2/audit-records-api/).\n",
+        "description": "The returned records are sorted by the `execution_time` from newest to oldest.\n\nSee [`Cursor-based pagination`](https://developer.pagerduty.com/docs/rest-api-v2/pagination/) for instructions on how to paginate through the result set.\n\nFor more information see the [Audit API Document](https://developer.pagerduty.com/docs/rest-api-v2/audit-records-api/).\n\nScoped OAuth requires: `audit_records.read`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -30558,12 +30559,13 @@
     "/schedules/{id}/audit/records": {
       "description": "List audit records of changes made to the schedule.",
       "get": {
+        "x-pd-requires-scope": "audit_records.read",
         "tags": [
           "Schedules"
         ],
         "operationId": "listSchedulesAuditRecords",
         "summary": "List audit records for a schedule",
-        "description": "The returned records are sorted by the `execution_time` from newest to oldest.\n\nSee [`Cursor-based pagination`](https://developer.pagerduty.com/docs/rest-api-v2/pagination/) for instructions on how to paginate through the result set.\n\nFor more information see the [Audit API Document](https://developer.pagerduty.com/docs/rest-api-v2/audit-records-api/).\n",
+        "description": "The returned records are sorted by the `execution_time` from newest to oldest.\n\nSee [`Cursor-based pagination`](https://developer.pagerduty.com/docs/rest-api-v2/pagination/) for instructions on how to paginate through the result set.\n\nFor more information see the [Audit API Document](https://developer.pagerduty.com/docs/rest-api-v2/audit-records-api/).\n\nScoped OAuth requires: `audit_records.read`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -35122,12 +35124,13 @@
     "/teams/{id}/audit/records": {
       "description": "List audit records of changes made to the team.",
       "get": {
+        "x-pd-requires-scope": "audit_records.read",
         "tags": [
           "Teams"
         ],
         "operationId": "listTeamsAuditRecords",
         "summary": "List audit records for a team",
-        "description": "The returned records are sorted by the `execution_time` from newest to oldest.\n\nSee [`Cursor-based pagination`](https://developer.pagerduty.com/docs/rest-api-v2/pagination/) for instructions on how to paginate through the result set.\n\nFor more information see the [Audit API Document](https://developer.pagerduty.com/docs/rest-api-v2/audit-records-api/).\n",
+        "description": "The returned records are sorted by the `execution_time` from newest to oldest.\n\nSee [`Cursor-based pagination`](https://developer.pagerduty.com/docs/rest-api-v2/pagination/) for instructions on how to paginate through the result set.\n\nFor more information see the [Audit API Document](https://developer.pagerduty.com/docs/rest-api-v2/audit-records-api/).\n\nScoped OAuth requires: `audit_records.read`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
