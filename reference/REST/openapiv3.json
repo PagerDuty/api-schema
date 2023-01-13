@@ -34712,11 +34712,12 @@
     "/teams": {
       "description": "List or create teams.",
       "post": {
+        "x-pd-requires-scope": "teams.write",
         "tags": [
           "Teams"
         ],
         "operationId": "createTeam",
-        "description": "Create a new Team.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#teams)\n",
+        "description": "Create a new Team.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#teams)\n\nScoped OAuth requires: `teams.write`\n",
         "summary": "Create a team",
         "parameters": [
           {
@@ -34810,11 +34811,12 @@
         }
       },
       "get": {
+        "x-pd-requires-scope": "teams.read",
         "tags": [
           "Teams"
         ],
         "operationId": "listTeams",
-        "description": "List teams of your PagerDuty account, optionally filtered by a search query.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#teams)\n",
+        "description": "List teams of your PagerDuty account, optionally filtered by a search query.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#teams)\n\nScoped OAuth requires: `teams.read`\n",
         "summary": "List teams",
         "parameters": [
           {
@@ -34908,11 +34910,12 @@
     "/teams/{id}": {
       "description": "Manage a team.",
       "get": {
+        "x-pd-requires-scope": "teams.read",
         "tags": [
           "Teams"
         ],
         "operationId": "getTeam",
-        "description": "Get details about an existing team.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#teams)\n",
+        "description": "Get details about an existing team.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#teams)\n\nScoped OAuth requires: `teams.read`\n",
         "summary": "Get a team",
         "parameters": [
           {
@@ -34985,11 +34988,12 @@
         }
       },
       "delete": {
+        "x-pd-requires-scope": "teams.write",
         "tags": [
           "Teams"
         ],
         "operationId": "deleteTeam",
-        "description": "Remove an existing team.\n\nSucceeds only if the team has no associated Escalation Policies, Services, Schedules and Subteams.\n\nAll associated unresovled incidents will be reassigned to another team (if specified) or will loose team association, thus becoming account-level (with visibility implications).\n\nNote that the incidents reassignment process is asynchronous and has no guarantee to complete before the API call return.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#teams)\n",
+        "description": "Remove an existing team.\n\nSucceeds only if the team has no associated Escalation Policies, Services, Schedules and Subteams.\n\nAll associated unresovled incidents will be reassigned to another team (if specified) or will loose team association, thus becoming account-level (with visibility implications).\n\nNote that the incidents reassignment process is asynchronous and has no guarantee to complete before the API call return.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#teams)\n\nScoped OAuth requires: `teams.write`\n",
         "summary": "Delete a team",
         "parameters": [
           {
@@ -35024,11 +35028,12 @@
         }
       },
       "put": {
+        "x-pd-requires-scope": "teams.write",
         "tags": [
           "Teams"
         ],
         "operationId": "updateTeam",
-        "description": "Update an existing team.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#teams)\n",
+        "description": "Update an existing team.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#teams)\n\nScoped OAuth requires: `teams.write`\n",
         "summary": "Update a team",
         "parameters": [
           {
@@ -35294,11 +35299,12 @@
     "/teams/{id}/members": {
       "description": "List information about members within a team.",
       "get": {
+        "x-pd-requires-scope": "teams.read",
         "tags": [
           "Teams"
         ],
         "operationId": "listTeamUsers",
-        "description": "Get information about members on a team.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#teams)\n",
+        "description": "Get information about members on a team.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#teams)\n\nScoped OAuth requires: `teams.read`\n",
         "summary": "List members of a team",
         "parameters": [
           {
@@ -35741,11 +35747,12 @@
     "/teams/{id}/users/{user_id}": {
       "description": "Manage team memberships.",
       "delete": {
+        "x-pd-requires-scope": "teams.write",
         "tags": [
           "Teams"
         ],
         "operationId": "deleteTeamUser",
-        "description": "Remove a user from a team.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#teams)\n",
+        "description": "Remove a user from a team.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#teams)\n\nScoped OAuth requires: `teams.write`\n",
         "summary": "Remove a user from a team",
         "parameters": [
           {
@@ -35786,11 +35793,12 @@
         }
       },
       "put": {
+        "x-pd-requires-scope": "teams.write",
         "tags": [
           "Teams"
         ],
         "operationId": "updateTeamUser",
-        "description": "Add a user to a team. Attempting to add a user with the `read_only_user` role will return a 400 error.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#teams)\n",
+        "description": "Add a user to a team. Attempting to add a user with the `read_only_user` role will return a 400 error.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#teams)\n\nScoped OAuth requires: `teams.write`\n",
         "summary": "Add a user to a team",
         "parameters": [
           {
