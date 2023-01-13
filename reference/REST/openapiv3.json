@@ -12173,11 +12173,12 @@
     "/abilities": {
       "description": "List your account's abilities.",
       "get": {
+        "x-pd-requires-scope": "abilities.read",
         "tags": [
           "Abilities"
         ],
         "operationId": "listAbilities",
-        "description": "List all of your account's abilities, by name.\n\n\"Abilities\" describes your account's capabilities by feature name. For example `\"teams\"`.\n\nAn ability may be available to your account based on things like your pricing plan or account state.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#abilities)\n",
+        "description": "List all of your account's abilities, by name.\n\n\"Abilities\" describes your account's capabilities by feature name. For example `\"teams\"`.\n\nAn ability may be available to your account based on things like your pricing plan or account state.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#abilities)\n\nScoped OAuth requires: `abilities.read`\n",
         "summary": "List abilities",
         "parameters": [
           {
@@ -12244,11 +12245,12 @@
     "/abilities/{id}": {
       "description": "Get an ability.",
       "get": {
+        "x-pd-requires-scope": "abilities.read",
         "tags": [
           "Abilities"
         ],
         "operationId": "getAbility",
-        "description": "Test whether your account has a given ability.\n\n\"Abilities\" describes your account's capabilities by feature name. For example `\"teams\"`.\n\nAn ability may be available to your account based on things like your pricing plan or account state.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#abilities)\n",
+        "description": "Test whether your account has a given ability.\n\n\"Abilities\" describes your account's capabilities by feature name. For example `\"teams\"`.\n\nAn ability may be available to your account based on things like your pricing plan or account state.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#abilities)\n\nScoped OAuth requires: `abilities.read`\n",
         "summary": "Test an ability",
         "parameters": [
           {
