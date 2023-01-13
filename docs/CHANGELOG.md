@@ -5,7 +5,10 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 Currently we rarely deprecate, and do not remove any API functionality.
 
 
----
+## 2023-01-12
+- Added optional `query` querystring parameter to `GET /incident_workflows`
+- Added `DELETE /incident_workflows/{id}` endpoint
+
 ## 2023-01-09
 - Added `GET /analytics/raw/incidents/{id}/responses` to the Analytics API
 

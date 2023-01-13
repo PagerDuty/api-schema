@@ -20859,7 +20859,7 @@
           "Incident Workflows"
         ],
         "operationId": "listIncidentWorkflows",
-        "description": "List existing Incident Workflows.\n\nAn Incident Workflow is a sequence of configurable Steps and associated Triggers that can execute automated Actions for a given Incident.\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
+        "description": "List existing Incident Workflows.\n\nThis is the best method to use to list all Incident Workflows in your account. If your use case requires listing Incident Workflows associated with a particular Service, you can use the \"List Triggers\" method to find Incident Workflows configured to start for Incidents in a given Service.\n\nAn Incident Workflow is a sequence of configurable Steps and associated Triggers that can execute automated Actions for a given Incident.\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
         "summary": "List Incident Workflows",
         "parameters": [
           {
@@ -20876,6 +20876,9 @@
           },
           {
             "$ref": "#/components/parameters/offset_total"
+          },
+          {
+            "$ref": "#/components/parameters/query"
           },
           {
             "$ref": "#/components/parameters/include_incident_workflow_children"
@@ -21099,13 +21102,13 @@
       }
     },
     "/incident_workflows/{id}": {
-      "description": "Create, retrieve, or modify Incident Workflows",
+      "description": "Create, retrieve, modify, or delete Incident Workflows",
       "get": {
         "tags": [
           "Incident Workflows"
         ],
         "operationId": "getIncidentWorkflow",
-        "description": "Get an existing Incident Workflows\n\nAn Incident Workflow is a sequence of configurable Steps and associated Triggers that can execute automated Actions for a given Incident.\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
+        "description": "Get an existing Incident Workflow\nAn Incident Workflow is a sequence of configurable Steps and associated Triggers that can execute automated Actions for a given Incident.\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
         "summary": "Get an Incident Workflow",
         "parameters": [
           {
@@ -21191,6 +21194,51 @@
                 }
               }
             }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Incident Workflows"
+        ],
+        "operationId": "deleteIncidentWorkflow",
+        "description": "Delete an existing Incident Workflow\n\nAn Incident Workflow is a sequence of configurable Steps and associated Triggers that can execute automated Actions for a given Incident.\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
+        "summary": "Delete an Incident Workflow",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_incident_workflows"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The Incident Workflow was deleted successfully"
           },
           "400": {
             "$ref": "#/components/responses/ArgumentError"
