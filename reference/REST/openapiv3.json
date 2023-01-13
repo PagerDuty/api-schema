@@ -26348,11 +26348,12 @@
     "/license_allocations": {
       "description": "The Licenses allocated to Users within your Account",
       "get": {
+        "x-pd-requires-scope": "licenses.read",
         "tags": [
           "Licenses"
         ],
         "operationId": "listLicenseAllocations",
-        "description": "List the Licenses allocated to Users within your Account\n",
+        "description": "List the Licenses allocated to Users within your Account\n\nScoped OAuth requires: `licenses.read`\n",
         "summary": "List License Allocations",
         "parameters": [
           {
@@ -26465,11 +26466,12 @@
     "/licenses": {
       "description": "The Licenses associated with your Account",
       "get": {
+        "x-pd-requires-scope": "licenses.read",
         "tags": [
           "Licenses"
         ],
         "operationId": "listLicenses",
-        "description": "List the Licenses associated with your Account\n",
+        "description": "List the Licenses associated with your Account\n\nScoped OAuth requires: `licenses.read`\n",
         "summary": "List Licenses",
         "parameters": [
           {
@@ -37519,11 +37521,12 @@
     "/users/{id}/license": {
       "description": "The License allocated to a User",
       "get": {
+        "x-pd-requires-scope": "licenses.read",
         "tags": [
           "Users"
         ],
         "operationId": "getUserLicense",
-        "description": "Get the License allocated to a User\n",
+        "description": "Get the License allocated to a User\n\nScoped OAuth requires: `licenses.read`\n",
         "summary": "Get the License allocated to a User",
         "parameters": [
           {
