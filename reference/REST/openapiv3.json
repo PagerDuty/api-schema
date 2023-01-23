@@ -12288,11 +12288,12 @@
     "/addons": {
       "description": "List and add Add-ons to your account.",
       "get": {
+        "x-pd-requires-scope": "addons.read",
         "tags": [
           "Add-ons"
         ],
         "operationId": "listAddon",
-        "description": "List all of the Add-ons installed on your account.\n\nAddon's are pieces of functionality that developers can write to insert new functionality into PagerDuty's UI.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#add-ons)\n",
+        "description": "List all of the Add-ons installed on your account.\n\nAddon's are pieces of functionality that developers can write to insert new functionality into PagerDuty's UI.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#add-ons)\n\nScoped OAuth requires: `addons.read`\n",
         "summary": "List installed Add-ons",
         "parameters": [
           {
@@ -12386,11 +12387,12 @@
         }
       },
       "post": {
+        "x-pd-requires-scope": "addons.write",
         "tags": [
           "Add-ons"
         ],
         "operationId": "createAddon",
-        "description": "Install an Add-on for your account.\n\nAddon's are pieces of functionality that developers can write to insert new functionality into PagerDuty's UI.\n\nGiven a configuration containing a `src` parameter, that URL will be embedded in an `iframe` on a page that's available to users from a drop-down menu.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#add-ons)\n",
+        "description": "Install an Add-on for your account.\n\nAddon's are pieces of functionality that developers can write to insert new functionality into PagerDuty's UI.\n\nGiven a configuration containing a `src` parameter, that URL will be embedded in an `iframe` on a page that's available to users from a drop-down menu.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#add-ons)\n\nScoped OAuth requires: `addons.write`\n",
         "summary": "Install an Add-on",
         "parameters": [
           {
@@ -12483,11 +12485,12 @@
     "/addons/{id}": {
       "description": "Perform actions on the specified Add-on.",
       "get": {
+        "x-pd-requires-scope": "addons.read",
         "tags": [
           "Add-ons"
         ],
         "operationId": "getAddon",
-        "description": "Get details about an existing Add-on.\n\nAddon's are pieces of functionality that developers can write to insert new functionality into PagerDuty's UI.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#add-ons)\n",
+        "description": "Get details about an existing Add-on.\n\nAddon's are pieces of functionality that developers can write to insert new functionality into PagerDuty's UI.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#add-ons)\n\nScoped OAuth requires: `addons.read`\n",
         "summary": "Get an Add-on",
         "parameters": [
           {
@@ -12559,11 +12562,12 @@
         }
       },
       "delete": {
+        "x-pd-requires-scope": "addons.write",
         "tags": [
           "Add-ons"
         ],
         "operationId": "deleteAddon",
-        "description": "Remove an existing Add-on.\n\nAddon's are pieces of functionality that developers can write to insert new functionality into PagerDuty's UI.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#add-ons)\n",
+        "description": "Remove an existing Add-on.\n\nAddon's are pieces of functionality that developers can write to insert new functionality into PagerDuty's UI.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#add-ons)\n\nScoped OAuth requires: `addons.write`\n",
         "summary": "Delete an Add-on",
         "parameters": [
           {
@@ -12595,11 +12599,12 @@
         }
       },
       "put": {
+        "x-pd-requires-scope": "addons.write",
         "tags": [
           "Add-ons"
         ],
         "operationId": "updateAddon",
-        "description": "Update an existing Add-on.\n\nAddon's are pieces of functionality that developers can write to insert new functionality into PagerDuty's UI.\n\nGiven a configuration containing a `src` parameter, that URL will be embedded in an `iframe` on a page that's available to users from a drop-down menu.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#add-ons)\n",
+        "description": "Update an existing Add-on.\n\nAddon's are pieces of functionality that developers can write to insert new functionality into PagerDuty's UI.\n\nGiven a configuration containing a `src` parameter, that URL will be embedded in an `iframe` on a page that's available to users from a drop-down menu.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#add-ons)\n\nScoped OAuth requires: `addons.write`\n",
         "summary": "Update an Add-on",
         "parameters": [
           {
@@ -19987,11 +19992,12 @@
     "/extension_schemas": {
       "description": "List extension schemas.",
       "get": {
+        "x-pd-requires-scope": "extension_schemas.read",
         "tags": [
           "Extension Schemas"
         ],
         "operationId": "listExtensionSchemas",
-        "description": "List all extension schemas.\n\nA PagerDuty extension vendor represents a specific type of outbound extension such as Generic Webhook, Slack, ServiceNow.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#extension-schemas)\n",
+        "description": "List all extension schemas.\n\nA PagerDuty extension vendor represents a specific type of outbound extension such as Generic Webhook, Slack, ServiceNow.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#extension-schemas)\n\nScoped OAuth requires: `extension_schemas.read`\n",
         "summary": "List extension schemas",
         "parameters": [
           {
@@ -20092,11 +20098,12 @@
     "/extension_schemas/{id}": {
       "description": "Get details about one specific extension vendor.",
       "get": {
+        "x-pd-requires-scope": "extension_schemas.read",
         "tags": [
           "Extension Schemas"
         ],
         "operationId": "getExtensionSchema",
-        "description": "Get details about one specific extension vendor.\n\nA PagerDuty extension vendor represents a specific type of outbound extension such as Generic Webhook, Slack, ServiceNow.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#extension-schemas)\n",
+        "description": "Get details about one specific extension vendor.\n\nA PagerDuty extension vendor represents a specific type of outbound extension such as Generic Webhook, Slack, ServiceNow.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#extension-schemas)\n\nScoped OAuth requires: `extension_schemas.read`\n",
         "summary": "Get an extension vendor",
         "parameters": [
           {
@@ -38792,11 +38799,12 @@
     "/users/{id}/sessions": {
       "description": "List a user's active sessions.",
       "get": {
+        "x-pd-requires-scope": "users:sessions.read",
         "tags": [
           "Users"
         ],
         "operationId": "getUserSessions",
-        "description": "List active sessions of a PagerDuty user.\n\nBeginning November 2021, active sessions no longer includes newly issued OAuth tokens.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n",
+        "description": "List active sessions of a PagerDuty user.\n\nBeginning November 2021, active sessions no longer includes newly issued OAuth tokens.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users:sessions.read`\n",
         "summary": "List a user's active sessions",
         "parameters": [
           {
@@ -38865,11 +38873,12 @@
         }
       },
       "delete": {
+        "x-pd-requires-scope": "users:sessions.write",
         "tags": [
           "Users"
         ],
         "operationId": "deleteUserSessions",
-        "description": "Delete all user sessions.\n\nBeginning November 2021, user sessions no longer includes newly issued OAuth tokens.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n",
+        "description": "Delete all user sessions.\n\nBeginning November 2021, user sessions no longer includes newly issued OAuth tokens.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users:sessions.write`\n",
         "summary": "Delete all user sessions",
         "parameters": [
           {
@@ -38904,11 +38913,12 @@
     "/users/{id}/sessions/{type}/{session_id}": {
       "description": "Manage a user's active session.",
       "get": {
+        "x-pd-requires-scope": "users:sessions.read",
         "tags": [
           "Users"
         ],
         "operationId": "getUserSession",
-        "description": "Get details about a user's session.\n\nBeginning November 2021, user sessions no longer includes newly issued OAuth tokens.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n",
+        "description": "Get details about a user's session.\n\nBeginning November 2021, user sessions no longer includes newly issued OAuth tokens.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users:sessions.read`\n",
         "summary": "Get a user's session",
         "parameters": [
           {
@@ -38978,11 +38988,12 @@
         }
       },
       "delete": {
+        "x-pd-requires-scope": "users:sessions.write",
         "tags": [
           "Users"
         ],
         "operationId": "deleteUserSession",
-        "description": "Delete a user's session.\n\nBeginning November 2021, user sessions no longer includes newly issued OAuth tokens.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n",
+        "description": "Delete a user's session.\n\nBeginning November 2021, user sessions no longer includes newly issued OAuth tokens.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users:sessions.write`\n",
         "summary": "Delete a user's session",
         "parameters": [
           {
@@ -39556,11 +39567,12 @@
     "/vendors": {
       "description": "List vendors.",
       "get": {
+        "x-pd-requires-scope": "vendors.read",
         "tags": [
           "Vendors"
         ],
         "operationId": "listVendors",
-        "description": "List all vendors.\n\nA PagerDuty Vendor represents a specific type of integration. AWS Cloudwatch, Splunk, Datadog are all examples of vendors\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#vendors)\n",
+        "description": "List all vendors.\n\nA PagerDuty Vendor represents a specific type of integration. AWS Cloudwatch, Splunk, Datadog are all examples of vendors\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#vendors)\n\nScoped OAuth requires: `vendors.read`\n",
         "summary": "List vendors",
         "parameters": [
           {
@@ -39651,11 +39663,12 @@
     "/vendors/{id}": {
       "description": "Get details about one specific vendor.",
       "get": {
+        "x-pd-requires-scope": "vendors.read",
         "tags": [
           "Vendors"
         ],
         "operationId": "getVendor",
-        "description": "Get details about one specific vendor.\n\nA PagerDuty Vendor represents a specific type of integration. AWS Cloudwatch, Splunk, Datadog are all examples of vendors\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#vendors)\n",
+        "description": "Get details about one specific vendor.\n\nA PagerDuty Vendor represents a specific type of integration. AWS Cloudwatch, Splunk, Datadog are all examples of vendors\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#vendors)\n\nScoped OAuth requires: `vendors.read`\n",
         "summary": "Get a vendor",
         "parameters": [
           {
