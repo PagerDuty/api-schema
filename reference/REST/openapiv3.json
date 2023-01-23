@@ -9071,6 +9071,23 @@
           }
         ]
       },
+      "IncidentWorkflowInstance": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "readOnly": true
+          },
+          "type": {
+            "type": "string",
+            "readOnly": true,
+            "description": "A string that determines the schema of the object. This must be the standard name for the entity, suffixed by `_reference` if the object is a reference."
+          },
+          "incident": {
+            "$ref": "#/components/schemas/Reference"
+          }
+        }
+      },
       "IncidentWorkflowActionInvocation": {
         "type": "object",
         "properties": {
@@ -21276,7 +21293,7 @@
         ],
         "operationId": "putIncidentWorkflow",
         "description": "Update an Incident Workflow\n\nAn Incident Workflow is a sequence of configurable Steps and associated Triggers that can execute automated Actions for a given Incident.\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
-        "summary": "Update an existing Incident Workflow",
+        "summary": "Update an Incident Workflow",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -21395,6 +21412,119 @@
                             }
                           }
                         ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        }
+      }
+    },
+    "/incident_workflows/{id}/instances": {
+      "description": "Start an Instance of an Incident Workflows",
+      "post": {
+        "tags": [
+          "Incident Workflows"
+        ],
+        "operationId": "createIncidentWorkflowInstance",
+        "description": "Start an Instance of an Incident Workflow\n\nAn Incident Workflow is a sequence of configurable Steps and associated Triggers that can execute automated Actions for a given Incident.\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
+        "summary": "Start an Incident Workflow Instance",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_incident_workflows"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "incident_workflow_instance": {
+                    "$ref": "#/components/schemas/IncidentWorkflowInstance"
+                  }
+                },
+                "required": [
+                  "incident_workflow_instance"
+                ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "incident_workflow_instance": {
+                      "id": "P3SNKQS",
+                      "type": "incident_workflow_instance",
+                      "incident": {
+                        "id": "Q1R2DLCB21K7NP",
+                        "type": "incident_reference"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The Incident Workflow Instance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "incident_workflow_instance": {
+                      "$ref": "#/components/schemas/IncidentWorkflowInstance"
+                    }
+                  },
+                  "required": [
+                    "incident_workflow_instance"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "incident_workflow_instance": {
+                        "id": "P3SNKQS",
+                        "type": "incident_workflow_instance",
+                        "incident": {
+                          "id": "Q1R2DLCB21K7NP",
+                          "type": "incident_reference",
+                          "summary": "[#1234] The server is on fire.",
+                          "self": "https://api.pagerduty.com/incidents/PT4KHLK",
+                          "html_url": "https://subdomain.pagerduty.com/incidents/PT4KHLK"
+                        }
                       }
                     }
                   }
@@ -22383,208 +22513,6 @@
                           "description": "This Incident Workflow is an example",
                           "type": "incident_workflow",
                           "created_at": "2022-12-13T19:55:01.171Z",
-                          "self": "https://api.pagerduty.com/incident_workflows/PSFEVL7",
-                          "html_url": "https://mydomain.pagerduty.com/flex-workflows/workflows/PSFEVL7"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/ArgumentError"
-          },
-          "401": {
-            "$ref": "#/components/responses/Unauthorized"
-          },
-          "402": {
-            "$ref": "#/components/responses/PaymentRequired"
-          },
-          "403": {
-            "$ref": "#/components/responses/Forbidden"
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          },
-          "429": {
-            "$ref": "#/components/responses/TooManyRequests"
-          }
-        }
-      }
-    },
-    "/incident_workflows/triggers/{trigger_id}/start": {
-      "description": "Trigger an Incident Workflow",
-      "post": {
-        "tags": [
-          "Incident Workflows"
-        ],
-        "operationId": "startIncidentWorkflowTrigger",
-        "description": "Execute a Trigger to start an Instance of an Incident Workflow\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
-        "summary": "Trigger an Incident Workflow",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/header_Accept"
-          },
-          {
-            "$ref": "#/components/parameters/header_Content-Type"
-          },
-          {
-            "$ref": "#/components/parameters/triggers_path_trigger_id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_incident_workflows"
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "incident_id": {
-                    "type": "string",
-                    "description": "The ID of the incident to start the workflow on",
-                    "example": "J123456"
-                  },
-                  "source_name": {
-                    "type": "string",
-                    "description": "The name of the application that is firing this trigger"
-                  },
-                  "source_id": {
-                    "type": "string",
-                    "description": "Optional ID of the user or other actor within the source application that fired the manual trigger\n\nIf source_id is provided, source_id_type must also be provided\n\nThis MUST NOT contain PII. If no PII-free identifier is available, source_id and source_id_type should not be specified.\n"
-                  },
-                  "source_id_type": {
-                    "type": "string",
-                    "description": "Optional application-defined identifier for the type of value passed in source_id\n\nIf source_id_type is provided, source_id must also be provided\n"
-                  },
-                  "idempotency_token": {
-                    "type": "string",
-                    "description": "Optional unique value to prevent duplicate execution. Requests with the same idempotency_token as a preexisting request will not start the Trigger."
-                  }
-                },
-                "required": [
-                  "incident_id",
-                  "source_name"
-                ]
-              },
-              "examples": {
-                "request": {
-                  "summary": "Request Example",
-                  "value": {
-                    "incident_id": "J123456",
-                    "source_name": "Slack Integration",
-                    "source_id": "U4NND999S",
-                    "source_id_type": "slack_user",
-                    "idempotency_token": "931414ff1-e1c7-498e-b2db-7b126ac150f8"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "The started Incident Workflow Instance",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "workflow_instance": {
-                      "allOf": [
-                        {
-                          "$ref": "#/components/schemas/Tag/allOf/0"
-                        },
-                        {
-                          "type": "object",
-                          "properties": {
-                            "name": {
-                              "type": "string",
-                              "description": "A descriptive name for the Incident Workflow Instance"
-                            },
-                            "description": {
-                              "type": "string",
-                              "description": "A description of what the Incident Workflow does"
-                            },
-                            "status": {
-                              "type": "string",
-                              "description": "The current status of the Incident Workflow Instance",
-                              "enum": [
-                                "completed",
-                                "running",
-                                "queued"
-                              ]
-                            },
-                            "started_at": {
-                              "type": "string",
-                              "format": "date-time",
-                              "description": "The timestamp this Incident Workflow started",
-                              "readOnly": true
-                            },
-                            "ended_at": {
-                              "type": "string",
-                              "format": "date-time",
-                              "description": "The timestamp this Incident Workflow ended",
-                              "readOnly": true
-                            },
-                            "workflow": {
-                              "type": "object",
-                              "description": "A reference to the Incident Workflow of which this is an instance",
-                              "properties": {
-                                "id": {
-                                  "type": "string",
-                                  "readOnly": true
-                                },
-                                "name": {
-                                  "type": "string",
-                                  "nullable": true,
-                                  "readOnly": true
-                                },
-                                "type": {
-                                  "type": "string",
-                                  "readOnly": true,
-                                  "description": "A string that determines the schema of the object. This must be the standard name for the entity, suffixed by `_reference` if the object is a reference."
-                                },
-                                "self": {
-                                  "type": "string",
-                                  "nullable": true,
-                                  "readOnly": true,
-                                  "format": "url",
-                                  "description": "the API show URL at which the object is accessible"
-                                },
-                                "html_url": {
-                                  "type": "string",
-                                  "nullable": true,
-                                  "readOnly": true,
-                                  "format": "url",
-                                  "description": "a URL at which the entity is uniquely displayed in the Web app"
-                                }
-                              }
-                            }
-                          }
-                        }
-                      ]
-                    }
-                  }
-                },
-                "examples": {
-                  "response": {
-                    "summary": "Response Example",
-                    "value": {
-                      "workflow_instance": {
-                        "id": "DJ49C34",
-                        "type": "workflow_instance",
-                        "name": "Example Incident Workflow Instance",
-                        "description": "This workflow is an example",
-                        "self": "https://api.pagerduty.com/incident_workflows/TO38234/instances/DJ49C34",
-                        "status": "running",
-                        "workflow": {
-                          "id": "PSFEVL7",
-                          "name": "Example Incident Workflow",
-                          "type": "incident_workflow",
                           "self": "https://api.pagerduty.com/incident_workflows/PSFEVL7",
                           "html_url": "https://mydomain.pagerduty.com/flex-workflows/workflows/PSFEVL7"
                         }
