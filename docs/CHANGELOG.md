@@ -5,6 +5,9 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 Currently we rarely deprecate, and do not remove any API functionality.
 
 
+## 2023-01-23
+- Added `POST /incident_workflows/{id}/instances` endpoint
+
 ## 2023-01-12
 - Added optional `query` querystring parameter to `GET /incident_workflows`
 - Added `DELETE /incident_workflows/{id}` endpoint
@@ -26,7 +29,6 @@ Currently we rarely deprecate, and do not remove any API functionality.
 - `PUT /incident_workflows/triggers/{id}`
 - `POST /incident_workflows/triggers/{id}/services`
 - `DELETE /incident_workflows/triggers/{trigger_id}/services/{service_id}`
-- `POST /incident_workflows/triggers/{id}/start`
 
 ## 2022-12-20
 - Removed `integrations` key from the example response and response schema of `GET /event_orchestrations/`
