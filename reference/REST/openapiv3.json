@@ -25188,11 +25188,12 @@
     "/incidents/{id}/related_change_events": {
       "description": "List change events related to an incident.",
       "get": {
+        "x-pd-requires-scope": "incidents.read",
         "tags": [
           "Change Events"
         ],
         "operationId": "listIncidentRelatedChangeEvents",
-        "description": "List related Change Events for an Incident, as well as the reason these changes are correlated with the incident.\n\nChange events represent service changes such as deploys, build completion, and configuration changes, providing information that is critical during incident triage or hypercare. For more information on change events, see [Change Events](https://support.pagerduty.com/docs/change-events).\n\nThe Change Correlation feature provides incident responders with recent change events that are most relevant to that incident. Change Correlation informs the responder why a particular change event was surfaced and correlated to an incident based on three key factors which include time, related service, or intelligence (machine learning).",
+        "description": "List related Change Events for an Incident, as well as the reason these changes are correlated with the incident.\n\nChange events represent service changes such as deploys, build completion, and configuration changes, providing information that is critical during incident triage or hypercare. For more information on change events, see [Change Events](https://support.pagerduty.com/docs/change-events).\n\nThe Change Correlation feature provides incident responders with recent change events that are most relevant to that incident. Change Correlation informs the responder why a particular change event was surfaced and correlated to an incident based on three key factors which include time, related service, or intelligence (machine learning).\n\nScoped OAuth requires: `incidents.read`\n",
         "summary": "List related Change Events for an Incident",
         "parameters": [
           {
@@ -32705,11 +32706,12 @@
     "/services/{id}/change_events": {
       "description": "List change events for a service.",
       "get": {
+        "x-pd-requires-scope": "services.read",
         "tags": [
           "Change Events"
         ],
         "operationId": "listServiceChangeEvents",
-        "description": "List all of the existing Change Events for a service.\n",
+        "description": "List all of the existing Change Events for a service.\n\nScoped OAuth requires: `services.read`\n",
         "summary": "List Change Events for a service",
         "parameters": [
           {
