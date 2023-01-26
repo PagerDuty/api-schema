@@ -4,6 +4,15 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+## 2023-01-26
+- Update `GET /incident_workflows/triggers` endpoint to use cursor pagination
+- Update `GET /incident_workflows/triggers` endpoint to include sort_by query parameter
+- Update `GET /incident_workflows/actions` endpoint to use cursor pagination
+- Remove `IncidentWorkflowAction.invoke_url` property
+- Rename `IncidentWorkflowActionInput.default_value_serialized` property to `default_value`
+- Rename `ActionInvocation.Inputs[].serialized_value` property to `value`
+- Remove `IncidentWorkflowTrigger.workflow_id` and `IncidentWorkflowTrigger.workflow_name` properties
+- Update `IncidentWorkflowTrigger.workflow` property to be a proper ResourceReference
 
 ## 2023-01-23
 - Added `POST /incident_workflows/{id}/instances` endpoint
