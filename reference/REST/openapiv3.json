@@ -8835,11 +8835,6 @@
                 "type": "string",
                 "description": "A description of what the Incident Workflow does"
               },
-              "root_workflow_id": {
-                "type": "string",
-                "readOnly": true,
-                "description": "Identifier for the published root version of the workflow, which  may differ from the \"id\" property if working\nwith a draft workflow\n"
-              },
               "created_at": {
                 "type": "string",
                 "format": "date-time",
@@ -9087,6 +9082,81 @@
             "$ref": "#/components/schemas/Reference"
           }
         }
+      },
+      "IncidentWorkflowTriggerInstance": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Tag/allOf/0"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "A descriptive name for the Incident Workflow Instance"
+              },
+              "description": {
+                "type": "string",
+                "description": "A description of what the Incident Workflow does"
+              },
+              "status": {
+                "type": "string",
+                "description": "The current status of the Incident Workflow Instance",
+                "enum": [
+                  "completed",
+                  "running",
+                  "queued"
+                ]
+              },
+              "started_at": {
+                "type": "string",
+                "format": "date-time",
+                "description": "The timestamp this Incident Workflow started",
+                "readOnly": true
+              },
+              "ended_at": {
+                "type": "string",
+                "format": "date-time",
+                "description": "The timestamp this Incident Workflow ended",
+                "readOnly": true
+              },
+              "workflow": {
+                "type": "object",
+                "description": "A reference to the Incident Workflow of which this is an instance",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "readOnly": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "nullable": true,
+                    "readOnly": true
+                  },
+                  "type": {
+                    "type": "string",
+                    "readOnly": true,
+                    "description": "A string that determines the schema of the object. This must be the standard name for the entity, suffixed by `_reference` if the object is a reference."
+                  },
+                  "self": {
+                    "type": "string",
+                    "nullable": true,
+                    "readOnly": true,
+                    "format": "url",
+                    "description": "the API show URL at which the object is accessible"
+                  },
+                  "html_url": {
+                    "type": "string",
+                    "nullable": true,
+                    "readOnly": true,
+                    "format": "url",
+                    "description": "a URL at which the entity is uniquely displayed in the Web app"
+                  }
+                }
+              }
+            }
+          }
+        ]
       },
       "IncidentWorkflowActionInvocation": {
         "type": "object",
