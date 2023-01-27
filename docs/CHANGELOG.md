@@ -4,6 +4,12 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+## 2023-01-27
+- Update Template API Documentation
+  - Change render path to  /template/{id}/render, add `external` to request body and make `status_update.message` optional.
+  - Add `template_type` filter to LIST endpoint
+  - Remove Early Access flags
+
 ## 2023-01-26
 - Update `GET /incident_workflows/triggers` endpoint to use cursor pagination
 - Update `GET /incident_workflows/triggers` endpoint to include sort_by query parameter
@@ -13,12 +19,6 @@ Currently we rarely deprecate, and do not remove any API functionality.
 - Rename `ActionInvocation.Inputs[].serialized_value` property to `value`
 - Remove `IncidentWorkflowTrigger.workflow_id` and `IncidentWorkflowTrigger.workflow_name` properties
 - Update `IncidentWorkflowTrigger.workflow` property to be a proper ResourceReference
-
-## 2023-01-27
-- Update Template API Documentation
-  - Change render path to  /template/{id}/render, add `external` to request body and make `status_update.message` optional.
-  - Add `template_type` filter to LIST endpoint
-  - Remove Early Access flags
 
 ## 2023-01-23
 - Added `POST /incident_workflows/{id}/instances` endpoint
