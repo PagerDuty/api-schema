@@ -2834,6 +2834,15 @@
           "type": "string"
         }
       },
+      "template_type": {
+        "name": "template_type",
+        "description": "Filters templates by type.",
+        "in": "query",
+        "schema": {
+          "type": "string",
+          "default": "status_update"
+        }
+      },
       "schedule_since": {
         "name": "since",
         "in": "query",
@@ -12014,9 +12023,12 @@
             "properties": {
               "message": {
                 "type": "string",
-                "description": "The status update message that will be sent to the template"
+                "description": "An optional status update message that will be sent to the template"
               }
             }
+          },
+          "external": {
+            "description": "An optional object collection that can be referenced in the template."
           }
         }
       }
@@ -35919,7 +35931,7 @@
           "Templates"
         ],
         "operationId": "getTemplates",
-        "description": "Get a list of all the template on an account\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
+        "description": "Get a list of all the template on an account",
         "summary": "List templates",
         "parameters": [
           {
@@ -35933,6 +35945,9 @@
           },
           {
             "$ref": "#/components/parameters/template_query"
+          },
+          {
+            "$ref": "#/components/parameters/template_type"
           }
         ],
         "responses": {
@@ -36127,7 +36142,7 @@
           "Templates"
         ],
         "operationId": "getTemplate",
-        "description": "Get a single template on the account\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
+        "description": "Get a single template on the account",
         "summary": "Get a template",
         "parameters": [
           {
@@ -36351,14 +36366,14 @@
         }
       }
     },
-    "/templates/render/{id}": {
+    "/templates/{id}/render": {
       "post": {
         "tags": [
           "Templates"
         ],
         "operationId": "renderTemplate",
         "summary": "Render a template",
-        "description": "Render a template. This endpoint has a variable request body depending on the template type. For the `status_update` template type, the caller will provide the incident id, and a status update message.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
+        "description": "Render a template. This endpoint has a variable request body depending on the template type. For the `status_update` template type, the caller will provide the incident id, and a status update message.",
         "parameters": [
           {
             "$ref": "#/components/parameters/id"
