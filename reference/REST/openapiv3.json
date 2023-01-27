@@ -17846,11 +17846,12 @@
     "/change_events": {
       "description": "List change events.",
       "get": {
+        "x-pd-requires-scope": "change_events.read",
         "tags": [
           "Change Events"
         ],
         "operationId": "listChangeEvents",
-        "description": "List all of the existing Change Events.\n",
+        "description": "List all of the existing Change Events.\n\nScoped OAuth requires: `change_events.read`\n",
         "summary": "List Change Events",
         "parameters": [
           {
@@ -18005,11 +18006,12 @@
     "/change_events/{id}": {
       "description": "Read and update a Change Event.",
       "get": {
+        "x-pd-requires-scope": "change_events.read",
         "tags": [
           "Change Events"
         ],
         "operationId": "getChangeEvent",
-        "description": "Get details about an existing Change Event.\n",
+        "description": "Get details about an existing Change Event.\n\nScoped OAuth requires: `change_events.read`\n",
         "summary": "Get a Change Event",
         "parameters": [
           {
@@ -18087,8 +18089,9 @@
         }
       },
       "put": {
+        "x-pd-requires-scope": "change_events.write",
         "summary": "Update a Change Event",
-        "description": "Update an existing Change Event\n",
+        "description": "Update an existing Change Event\n\nScoped OAuth requires: `change_events.write`\n",
         "tags": [
           "Change Events"
         ],
