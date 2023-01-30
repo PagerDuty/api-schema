@@ -9417,6 +9417,20 @@
               "is_subscribed_to_all_services": {
                 "type": "boolean",
                 "description": "Indicates that the Trigger should be associated with All Services"
+              },
+              "permissions": {
+                "description": "An object detailing who can start this Trigger. Applicable only to manual Triggers.",
+                "type": "object",
+                "properties": {
+                  "restricted": {
+                    "type": "boolean",
+                    "description": "If true, indicates that the Trigger can only be started by authorized Users. If false, any user can start this Trigger. Applicable only to manual Triggers."
+                  },
+                  "team_ids": {
+                    "type": "array",
+                    "description": "The list of teams who can manually start this Trigger. Required and allowed if and only if permissions.restricted is true."
+                  }
+                }
               }
             }
           }
@@ -22014,6 +22028,10 @@
                             "created_at": "2022-12-13T19:55:01.171Z",
                             "self": "https://api.pagerduty.com/incident_workflows/PSFEVL7",
                             "html_url": "https://pdt-flex-actions.pagerduty.com/flex-workflows/workflows/PSFEVL7"
+                          },
+                          "permissions": {
+                            "restricted": false,
+                            "team_ids": []
                           }
                         }
                       ],
@@ -22218,9 +22236,8 @@
                       "trigger": {
                         "id": "4ad696eb-bb48-422a-8bd0-6efad6befa29",
                         "type": "workflow_trigger",
-                        "trigger_type_name": "Conditional Trigger",
-                        "trigger_type": "conditional",
-                        "condition": "incident.priority matches 'P1'",
+                        "trigger_type_name": "Manual Trigger",
+                        "trigger_type": "manual",
                         "trigger_url": "https://api.pagerduty.com/incident_workflows/triggers/4ad696eb-bb48-422a-8bd0-6efad6befa29/start",
                         "self": "https://api.pagerduty.com/incident_workflows/triggers/4ad696eb-bb48-422a-8bd0-6efad6befa29",
                         "workflow_id": "PSFEVL7",
@@ -22235,6 +22252,13 @@
                           "created_at": "2022-12-13T19:55:01.171Z",
                           "self": "https://api.pagerduty.com/incident_workflows/PSFEVL7",
                           "html_url": "https://pdt-flex-actions.pagerduty.com/flex-workflows/workflows/PSFEVL7"
+                        },
+                        "permissions": {
+                          "restricted": true,
+                          "team_ids": [
+                            "PUOEV7R",
+                            "PK1G2MJ"
+                          ]
                         }
                       }
                     }
