@@ -4,6 +4,9 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+## 2023-01-30
+- Add `permissions` property to `IncidentWorkflowsTrigger` entity schema
+
 ## 2023-01-27
 - Update Template API Documentation
   - Change render path to  /template/{id}/render, add `external` to request body and make `status_update.message` optional.
@@ -22,6 +25,9 @@ Currently we rarely deprecate, and do not remove any API functionality.
 
 ## 2023-01-23
 - Added `POST /incident_workflows/{id}/instances` endpoint
+
+## 2023-01-16
+- Added `POST /integration-ms-teams/incidents/{incident_id}/meeting` endpoint
 
 ## 2023-01-12
 - Added optional `query` querystring parameter to `GET /incident_workflows`
