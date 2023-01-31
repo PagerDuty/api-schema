@@ -1,1 +1,275 @@
-{}
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "PagerDuty MS Teams Integration API",
+    "version": "1.0.0",
+    "contact": {
+      "name": "PagerDuty Support",
+      "url": "http://www.pagerduty.com/support",
+      "email": "support@pagerduty.com"
+    },
+    "description": "This is API documentation for PagerDuty's integration with Microsoft Teams.\n\nTo start using the integration, you will need to install it to your Microsoft Teams team.\nAfter setting up, Incident notifications will be posted in the configured MS Teams channels.\n\nAdditional integration documentation can be found here: https://support.pagerduty.com/docs/microsoft-teams."
+  },
+  "servers": [
+    {
+      "url": "https://api.pagerduty.com/integration-ms-teams"
+    }
+  ],
+  "tags": [
+    {
+      "name": "MS Teams Meetings",
+      "description": "Meetings for PagerDuty Incidents created in Microsoft Teams"
+    }
+  ],
+  "security": [
+    {
+      "apiKey": []
+    }
+  ],
+  "paths": {
+    "/incidents/{incident_id}/meeting": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/incident_id"
+        }
+      ],
+      "post": {
+        "tags": [
+          "MS Teams Meeting"
+        ],
+        "summary": "Create a Meeting",
+        "description": "Creates a meeting in Microsoft Teams and attaches it to the conference bridge details of the Incident.\n\n> ### Important\n>\n>  Make sure that your PagerDuty account is connected to your MS Teams team and your\n>  PagerDuty user is linked to your MS Teams user. You can do this on the MS Teams\n>  add-on page in your PagerDuty account or by interacting with the PagerDuty bot\n>  in Microsoft Teams.\n>\n>  Also, to create meetings you have to be authorized in Microsoft Graph. Type\n>  `graphAuth` in a personal chat with the PagerDuty bot to pass the authorization.\n",
+        "operationId": "createMeeting",
+        "parameters": [
+          {
+            "name": "Accept",
+            "description": "The `Accept` header is used as a versioning header.",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "application/vnd.pagerduty+json;version=2"
+            }
+          },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "application/json",
+              "enum": [
+                "application/json"
+              ]
+            }
+          },
+          {
+            "$ref": "#/components/parameters/incident_id"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "mst_team_id": {
+                    "title": "Microsoft Teams Team Id",
+                    "description": "Id of a Mirosoft Teams team that is connected to PagerDuty",
+                    "type": "string"
+                  },
+                  "meeting": {
+                    "$ref": "#/components/schemas/Meeting"
+                  }
+                },
+                "required": [
+                  "mst_team_id"
+                ]
+              },
+              "examples": {
+                "Request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "mst_team_id": "19:TjtRuEN_HvOh-WspuZRFl6o4SaKgQO_wuA1qGdxQ1VU1@thread.tacv2",
+                    "meeting": {
+                      "name": "Server Room is on Fire"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Returns details of the created MS Teams meeting.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "meeting": {
+                      "$ref": "#/components/schemas/MeetingCreated"
+                    }
+                  },
+                  "required": [
+                    "meeting"
+                  ]
+                },
+                "examples": {
+                  "Response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "meeting": {
+                        "name": "Server Room is on Fire",
+                        "url": "https://teams.microsoft.com/l/meetup-join/19%3ameeting_TllZTMjMyZTk4NWMtMWUyYi00ZTRmLUtMzU2YTg0MTQzNjMz%40thread.v2/0"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "responses": {
+      "Forbidden": {
+        "description": "Caller is not authorized to access the requested resource.\nWhile the authentication is valid, the authenticated user does not have permission to perform this action.\n",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "examples": {
+              "AuthorizationError": {
+                "summary": "Forbidden",
+                "value": {
+                  "error": {
+                    "message": "Forbidden"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "Unauthorized": {
+        "description": "Caller did not supply credentials or did not provide the correct credentials.\nIf you are using an API key, it may be invalid or your Authorization header may be malformed.\n",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "examples": {
+              "AuthorizationError": {
+                "summary": "Unauthorized",
+                "value": {
+                  "error": {
+                    "message": "Unauthorized"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "NotFound": {
+        "description": "The requested resource was not found.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "examples": {
+              "NotFound": {
+                "summary": "Not Found",
+                "value": {
+                  "error": {
+                    "message": "Not Found"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "Meeting": {
+        "title": "Details of a Microsoft Teams meeting to be created.",
+        "type": "object",
+        "properties": {
+          "name": {
+            "default": "Incident title",
+            "type": "string"
+          }
+        }
+      },
+      "MeetingCreated": {
+        "title": "Details of a meeting created in Microsoft Teams.",
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string",
+                "readOnly": true,
+                "description": "Error message string.",
+                "example": "Invalid Input Provided"
+              }
+            },
+            "required": [
+              "message"
+            ]
+          }
+        },
+        "required": [
+          "error"
+        ]
+      }
+    },
+    "securitySchemes": {
+      "apiKey": {
+        "type": "apiKey",
+        "name": "Authorization",
+        "in": "header",
+        "description": "The API Key with format `Token token=<API_KEY>`"
+      }
+    },
+    "parameters": {
+      "incident_id": {
+        "name": "incident_id",
+        "description": "PagerDuty Incident ID",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

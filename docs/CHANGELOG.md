@@ -23,6 +23,9 @@ Currently we rarely deprecate, and do not remove any API functionality.
 ## 2023-01-23
 - Added `POST /incident_workflows/{id}/instances` endpoint
 
+## 2023-01-16
+- Added `POST /integration-ms-teams/incidents/{incident_id}/meeting` endpoint
+
 ## 2023-01-12
 - Added optional `query` querystring parameter to `GET /incident_workflows`
 - Added `DELETE /incident_workflows/{id}` endpoint
