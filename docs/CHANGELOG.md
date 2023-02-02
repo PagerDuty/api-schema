@@ -4,6 +4,46 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+## 2023-02-02
+- Added Early-Access endpoints for Custom Fields
+   - `GET /customfields/fields`
+   - `POST /customfields/fields`
+   - `GET /customfields/fields/{id}`
+   - `PUT /customfields/fields/{id}`
+   - `DELETE /customfields/fields/{id}`
+
+   - `GET /customfields/fields/{id}/schemas`
+
+   - `GET /customfields/fields/{id}/field_options`
+   - `POST /customfields/fields/{id}/field_options`
+   - `GET /customfields/fields/{id}/field_options/{option_id}`
+   - `PUT /customfields/fields/{id}/field_options/{option_id}`
+   - `DELETE /customfields/fields/{id}/field_options/{option_id}`
+
+   - `GET /customfields/schemas`
+   - `POST /customfields/schemas`
+   - `GET /customfields/schemas/{id}`
+   - `PUT /customfields/schemas/{id}`
+   - `DELETE /customfields/schemas/{id}`
+
+   - `GET /customfields/schemas/{id}/field_configurations`
+   - `POST /customfields/schemas/{id}/field_configurations`
+   - `GET /customfields/schemas/{id}/field_configurations/{configuration_id}`
+   - `PUT /customfields/schemas/{id}/field_configurations/{configuration_id}`
+   - `DELETE /customfields/schemas/{id}/field_configurations/{configuration_id}`
+
+   - `POST /customfields/schema_assignments`
+   - `GET /customfields/schema_assignments`
+   - `DELETE /customfields/schema_assignments/:id`
+
+   - `PUT /incidents/:id/field_values`
+   - `GET /incidents/:id/field_values`
+   - `GET /incidents/:id/field_values/schema`
+   - `GET /incidents/:id/?include[]=field_values`
+
+## 2023-01-30
+- Add `permissions` property to `IncidentWorkflowsTrigger` entity schema
+
 ## 2023-01-27
 - Update Template API Documentation
   - Change render path to  /template/{id}/render, add `external` to request body and make `status_update.message` optional.
