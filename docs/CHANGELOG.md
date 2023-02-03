@@ -4,6 +4,10 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+### 2023-02-02
+- Wording changes and typo correction for MS Teams Integration documentation
+- Cleaned up the list of schemas in MS Teams Integration section
+
 ## 2023-02-02
 - Added Early-Access endpoints for Custom Fields
    - `GET /customfields/fields`
