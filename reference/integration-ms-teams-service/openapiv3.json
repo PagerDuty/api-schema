@@ -74,12 +74,19 @@
                 "type": "object",
                 "properties": {
                   "mst_team_id": {
-                    "title": "Microsoft Teams Team Id",
-                    "description": "Id of a Mirosoft Teams team that is connected to PagerDuty",
+                    "title": "Microsoft Teams Team ID",
+                    "description": "ID of a Microsoft Teams team that is connected to PagerDuty.",
                     "type": "string"
                   },
                   "meeting": {
-                    "$ref": "#/components/schemas/Meeting"
+                    "description": "Details of a meeting to be created in Microsoft Teams.",
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "default": "Incident title",
+                        "type": "string"
+                      }
+                    }
                   }
                 },
                 "required": [
@@ -102,14 +109,14 @@
         },
         "responses": {
           "201": {
-            "description": "Returns details of the created MS Teams meeting.",
+            "description": "Returns details of the meeting created in Microsoft Teams.",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
                     "meeting": {
-                      "$ref": "#/components/schemas/MeetingCreated"
+                      "$ref": "#/components/schemas/Meeting"
                     }
                   },
                   "required": [
@@ -208,17 +215,7 @@
     },
     "schemas": {
       "Meeting": {
-        "title": "Details of a Microsoft Teams meeting to be created.",
-        "type": "object",
-        "properties": {
-          "name": {
-            "default": "Incident title",
-            "type": "string"
-          }
-        }
-      },
-      "MeetingCreated": {
-        "title": "Details of a meeting created in Microsoft Teams.",
+        "description": "Microsoft Teams meeting details.",
         "type": "object",
         "properties": {
           "name": {
@@ -263,7 +260,7 @@
     "parameters": {
       "incident_id": {
         "name": "incident_id",
-        "description": "PagerDuty Incident ID",
+        "description": "PagerDuty Incident ID.",
         "in": "path",
         "required": true,
         "schema": {
