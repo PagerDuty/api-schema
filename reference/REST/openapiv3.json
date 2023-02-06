@@ -25102,7 +25102,7 @@
                   "type": "object",
                   "properties": {
                     "next_cursor": {
-                      "type": "integer",
+                      "type": "string",
                       "description": "Value to pass as the \"cursor\" parameter of a subsequent request if more records are available",
                       "readOnly": true
                     },
@@ -25365,7 +25365,7 @@
                   "type": "object",
                   "properties": {
                     "next_cursor": {
-                      "type": "integer",
+                      "type": "string",
                       "description": "Value to pass as the \"cursor\" parameter of a subsequent request if more records are available",
                       "readOnly": true
                     },
