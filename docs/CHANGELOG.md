@@ -4,6 +4,13 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+## 2023-02-08
+- Specify valid `type` property values on `IncidentWorkflow`, `IncidentWorkflowAction`, `IncidentWorkflowInstance`, `IncidentWorkflowStep` and `IncidentWorkflowTrigger`
+- Add description to `steps` proprerty on `IncidentWorkflow`
+- Specify `incident_workflow_instance.incident.id` is a required in `POST /incident_workflows/{id}/instances` request body
+- Update `domain_name` and `name` property descriptions on `IncidentWorkflowAction`
+- Remove currently unused `integration` as allowed enum value on `action_type` property on `IncidentWorkflowAction`
+
 ## 2023-02-03
 - Fix type of `next_cursor` property on List Triggers and List Actions response bodies
 

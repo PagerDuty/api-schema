@@ -9008,6 +9008,12 @@
           {
             "type": "object",
             "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "incident_workflow"
+                ]
+              },
               "name": {
                 "type": "string",
                 "description": "A descriptive name for the Incident Workflow"
@@ -9044,6 +9050,7 @@
               },
               "steps": {
                 "type": "array",
+                "description": "The ordered list of steps that execute sequentially as part of the workflow",
                 "items": {
                   "allOf": [
                     {
@@ -9052,6 +9059,12 @@
                     {
                       "type": "object",
                       "properties": {
+                        "type": {
+                          "type": "string",
+                          "enum": [
+                            "step"
+                          ]
+                        },
                         "name": {
                           "type": "string",
                           "description": "A descriptive name for the Step"
@@ -9154,9 +9167,15 @@
           {
             "type": "object",
             "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "action"
+                ]
+              },
               "domain_name": {
                 "type": "string",
-                "description": "The Verified Domain of the account in which the Action exists"
+                "description": "The Verified Domain of the account that created the action"
               },
               "package_name": {
                 "type": "string",
@@ -9172,7 +9191,7 @@
               },
               "name": {
                 "type": "string",
-                "description": "The descriptive name of the Action. This is what Builders will see when searching for or configuring this action in a Workflow."
+                "description": "The descriptive name of the Action"
               },
               "description": {
                 "type": "string",
@@ -9183,8 +9202,7 @@
                 "description": "The type of Action",
                 "enum": [
                   "action",
-                  "trigger",
-                  "integration"
+                  "trigger"
                 ]
               },
               "trigger_type": {
@@ -9327,7 +9345,10 @@
           "type": {
             "type": "string",
             "readOnly": true,
-            "description": "A string that determines the schema of the object. This must be the standard name for the entity, suffixed by `_reference` if the object is a reference."
+            "description": "A string that determines the schema of the object. This must be the standard name for the entity, suffixed by `_reference` if the object is a reference.",
+            "enum": [
+              "incident_workflow_instance"
+            ]
           },
           "incident": {
             "$ref": "#/components/schemas/Reference"
@@ -9342,6 +9363,12 @@
           {
             "type": "object",
             "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "incident_workflow_instance"
+                ]
+              },
               "name": {
                 "type": "string",
                 "description": "A descriptive name for the Incident Workflow Instance"
@@ -9387,7 +9414,10 @@
                   "type": {
                     "type": "string",
                     "readOnly": true,
-                    "description": "A string that determines the schema of the object. This must be the standard name for the entity, suffixed by `_reference` if the object is a reference."
+                    "description": "A string that determines the schema of the object. This must be the standard name for the entity, suffixed by `_reference` if the object is a reference.",
+                    "enum": [
+                      "workflow_reference"
+                    ]
                   },
                   "self": {
                     "type": "string",
@@ -9414,6 +9444,12 @@
         "properties": {
           "id": {
             "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "action_invocation"
+            ]
           },
           "action_id": {
             "type": "string",
@@ -9465,6 +9501,12 @@
           {
             "type": "object",
             "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "workflow_trigger"
+                ]
+              },
               "trigger_type_name": {
                 "type": "string",
                 "readOnly": true,
@@ -9496,7 +9538,10 @@
                   "type": {
                     "type": "string",
                     "readOnly": true,
-                    "description": "A string that determines the schema of the object. This must be the standard name for the entity, suffixed by `_reference` if the object is a reference."
+                    "description": "A string that determines the schema of the object. This must be the standard name for the entity, suffixed by `_reference` if the object is a reference.",
+                    "enum": [
+                      "workflow_reference"
+                    ]
                   },
                   "name": {
                     "type": "string",
@@ -9537,7 +9582,10 @@
                     "type": {
                       "type": "string",
                       "readOnly": true,
-                      "description": "A string that determines the schema of the object. This must be the standard name for the entity, suffixed by `_reference` if the object is a reference."
+                      "description": "A string that determines the schema of the object. This must be the standard name for the entity, suffixed by `_reference` if the object is a reference.",
+                      "enum": [
+                        "service"
+                      ]
                     },
                     "self": {
                       "type": "string",
@@ -24981,7 +25029,27 @@
                 "type": "object",
                 "properties": {
                   "incident_workflow_instance": {
-                    "$ref": "#/components/schemas/IncidentWorkflowInstance"
+                    "type": "object",
+                    "properties": {
+                      "incident": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "description": "The ID of the Incident with which the Workflow Instance is associated"
+                          },
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "incident_reference"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "id"
+                        ]
+                      }
+                    }
                   }
                 },
                 "required": [
