@@ -4,6 +4,9 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+## 2023-02-09
+- Update `IncidentWorkflowTrigger.permissions.team_ids` (string[]) => `IncidentWorkflowTrigger.permissions.team_id` (string)
+
 ## 2023-02-08
 - Specify valid `type` property values on `IncidentWorkflow`, `IncidentWorkflowAction`, `IncidentWorkflowInstance`, `IncidentWorkflowStep` and `IncidentWorkflowTrigger`
 - Add description to `steps` proprerty on `IncidentWorkflow`

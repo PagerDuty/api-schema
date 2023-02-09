@@ -9616,9 +9616,9 @@
                     "type": "boolean",
                     "description": "If true, indicates that the Trigger can only be started by authorized Users. If false, any user can start this Trigger. Applicable only to manual Triggers."
                   },
-                  "team_ids": {
-                    "type": "array",
-                    "description": "The list of teams who can manually start this Trigger. Required and allowed if and only if permissions.restricted is true."
+                  "team_id": {
+                    "type": "string",
+                    "description": "The ID of the team whose members can manually start this Trigger. Required and allowed if and only if permissions.restricted is true."
                   }
                 }
               }
@@ -25482,8 +25482,7 @@
                             "html_url": "https://pdt-flex-actions.pagerduty.com/flex-workflows/workflows/PSFEVL7"
                           },
                           "permissions": {
-                            "restricted": false,
-                            "team_ids": []
+                            "restricted": false
                           }
                         }
                       ],
@@ -25707,10 +25706,7 @@
                         },
                         "permissions": {
                           "restricted": true,
-                          "team_ids": [
-                            "PUOEV7R",
-                            "PK1G2MJ"
-                          ]
+                          "team_id": "PUOEV7R"
                         }
                       }
                     }
