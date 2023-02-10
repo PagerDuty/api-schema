@@ -12310,9 +12310,6 @@
       "CustomFieldsEditableField": {
         "type": "object",
         "properties": {
-          "name": {
-            "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/name"
-          },
           "display_name": {
             "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/display_name"
           },
@@ -19888,7 +19885,6 @@
                   "summary": "Request Example",
                   "value": {
                     "field": {
-                      "name": "new_name",
                       "display_name": "New Display Name!",
                       "description": "New description!"
                     }
@@ -19921,10 +19917,10 @@
                       "field": {
                         "id": "P5IYCNZ",
                         "type": "field",
-                        "summary": "new_name",
+                        "summary": "old_name",
                         "self": "https://api.pagerduty.com/customfields/fields/P5IYCNZ",
                         "datatype": "string",
-                        "name": "new_name",
+                        "name": "old_name",
                         "display_name": "New Display Name!",
                         "description": "New description!",
                         "multi_value": false,

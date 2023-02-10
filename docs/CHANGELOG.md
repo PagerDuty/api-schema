@@ -4,6 +4,9 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+## 2023-02-10
+- Removed `name` from `PUT /customfields/fields/{id}` request body.
+
 ## 2023-02-09
 - Update `IncidentWorkflowTrigger.permissions.team_ids` (string[]) => `IncidentWorkflowTrigger.permissions.team_id` (string)
 
