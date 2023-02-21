@@ -12635,7 +12635,7 @@
         "properties": {
           "default_value": {
             "type": "object",
-            "description": "The value to use for this field if none is provided. It must be specified if `required` is `true`, and may not be specified otherwise.",
+            "description": "The value to use for this field if none is provided. It must be specified if `required` is `true`.",
             "allOf": [
               {
                 "oneOf": [
