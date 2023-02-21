@@ -4,6 +4,13 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+## 2023-02-14
+- Allow `default_value` when `required` is false for the following endpoints
+   - `POST /customfields/schemas`
+   - `PUT /customfields/schemas/{id}`
+   - `POST /customfields/schemas/{id}/field_configurations`
+   - `PUT /customfields/schemas/{id}/field_configurations/{configuration_id}`
+
 ## 2023-02-13
 - Remove `X-EARLY-ACCESS` header warning from `/incident_workflows` endpoints
 
