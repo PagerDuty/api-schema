@@ -13,6 +13,7 @@ Currently we rarely deprecate, and do not remove any API functionality.
    - `PUT /response_plays/{id}`
    - `DELETE /response_plays/{id}`
    - `POST /response_plays/{id}/run`
+- Add strict OAuth scope enforcement for read/write OAuth apps
 
 ## 2023-02-14
 - Allow `default_value` when `required` is false for the following endpoints
