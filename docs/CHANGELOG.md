@@ -4,6 +4,16 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+
+## 2023-02-22
+- Adding deprecation notice to Response Plays. Because Incident Workflows are a more robust and powerful version of Response Plays, we will be working to upgrade accounts from Response Plays to Incident Workflows, ultimately culminating in a Response Plays end-of-life in late 2023. This affects the following endpoints:
+   - `GET /response_plays`
+   - `POST /response_plays`
+   - `GET /response_plays/{id}`
+   - `PUT /response_plays/{id}`
+   - `DELETE /response_plays/{id}`
+   - `POST /response_plays/{id}/run`
+
 ## 2023-02-14
 - Allow `default_value` when `required` is false for the following endpoints
    - `POST /customfields/schemas`
