@@ -215,6 +215,8 @@ The Incident Actions that a Response Play can consist of include:
 - Publish Status Updates (Send a prepared Status Update to all subscribers attached to the Incident, to keep them aware of the Incident’s progress.)
 - Add a Conference Bridge (View the Conference Bridge details on the Incident details page.)
 
+**Deprecation Notice**: Response Plays are being replaced with Incident Workflows. Read our [FAQ](https://support.pagerduty.com/docs/upgrade-response-plays-to-incident-workflows) for more information.
+
 ## Rulesets
 Rulesets allow you to route events to an endpoint and create collections of event rules, which define sets of actions to take based on event content.
 

@@ -7634,6 +7634,8 @@
                 "$ref": "#/components/schemas/EscalationPolicyReference"
               },
               "response_play": {
+                "deprecated": true,
+                "description": "Response plays associated with this service.",
                 "allOf": [
                   {
                     "$ref": "#/components/schemas/Reference"
@@ -31890,6 +31892,7 @@
     "/response_plays": {
       "description": "List and create response plays.",
       "get": {
+        "deprecated": true,
         "tags": [
           "Response Plays"
         ],
@@ -31977,6 +31980,7 @@
         }
       },
       "post": {
+        "deprecated": true,
         "tags": [
           "Response Plays"
         ],
@@ -32131,6 +32135,7 @@
     "/response_plays/{id}": {
       "description": "Manage a Response Play.",
       "get": {
+        "deprecated": true,
         "tags": [
           "Response Plays"
         ],
@@ -32214,6 +32219,7 @@
         }
       },
       "put": {
+        "deprecated": true,
         "tags": [
           "Response Plays"
         ],
@@ -32344,6 +32350,7 @@
         }
       },
       "delete": {
+        "deprecated": true,
         "tags": [
           "Response Plays"
         ],
@@ -32383,6 +32390,7 @@
     "/response_plays/{response_play_id}/run": {
       "description": "Run response plays.",
       "post": {
+        "deprecated": true,
         "tags": [
           "Response Plays"
         ],
