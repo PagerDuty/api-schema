@@ -21655,8 +21655,9 @@
         "tags": [
           "Escalation Policies"
         ],
+        "x-pd-requires-scope": "escalation_policies.read",
         "operationId": "listEscalationPolicies",
-        "description": "List all of the existing escalation policies.\n\nEscalation policies define which user should be alerted at which time.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#escalation-policies)\n",
+        "description": "List all of the existing escalation policies.\n\nEscalation policies define which user should be alerted at which time.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#escalation-policies)\n\nScoped OAuth requires: `escalation_policies.read`\n",
         "summary": "List escalation policies",
         "parameters": [
           {
@@ -21800,8 +21801,9 @@
         "tags": [
           "Escalation Policies"
         ],
+        "x-pd-requires-scope": "escalation_policies.write",
         "operationId": "createEscalationPolicy",
-        "description": "Creates a new escalation policy. At least one escalation rule must be provided.\n\nEscalation policies define which user should be alerted at which time.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#escalation-policies)\n",
+        "description": "Creates a new escalation policy. At least one escalation rule must be provided.\n\nEscalation policies define which user should be alerted at which time.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#escalation-policies)\n\nScoped OAuth requires: `escalation_policies.write`\n",
         "summary": "Create an escalation policy",
         "parameters": [
           {
@@ -21969,8 +21971,9 @@
         "tags": [
           "Escalation Policies"
         ],
+        "x-pd-requires-scope": "escalation_policies.read",
         "operationId": "getEscalationPolicy",
-        "description": "Get information about an existing escalation policy and its rules.\n\nEscalation policies define which user should be alerted at which time.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#escalation-policies)\n",
+        "description": "Get information about an existing escalation policy and its rules.\n\nEscalation policies define which user should be alerted at which time.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#escalation-policies)\n\nScoped OAuth requires: `escalation_policies.read`\n",
         "summary": "Get an escalation policy",
         "parameters": [
           {
@@ -22078,8 +22081,9 @@
         "tags": [
           "Escalation Policies"
         ],
+        "x-pd-requires-scope": "escalation_policies.write",
         "operationId": "deleteEscalationPolicy",
-        "description": "Deletes an existing escalation policy and rules. The escalation policy must not be in use by any services.\n\nEscalation policies define which user should be alerted at which time.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#escalation-policies)\n",
+        "description": "Deletes an existing escalation policy and rules. The escalation policy must not be in use by any services.\n\nEscalation policies define which user should be alerted at which time.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#escalation-policies)\n\nScoped OAuth requires: `escalation_policies.write`\n",
         "summary": "Delete an escalation policy",
         "parameters": [
           {
@@ -22114,8 +22118,9 @@
         "tags": [
           "Escalation Policies"
         ],
+        "x-pd-requires-scope": "escalation_policies.write",
         "operationId": "updateEscalationPolicy",
-        "description": "Updates an existing escalation policy and rules.\n\nEscalation policies define which user should be alerted at which time.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#escalation-policies)\n",
+        "description": "Updates an existing escalation policy and rules.\n\nEscalation policies define which user should be alerted at which time.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#escalation-policies)\n\nScoped OAuth requires: `escalation_policies.write`\n",
         "summary": "Update an escalation policy",
         "parameters": [
           {
@@ -31388,8 +31393,9 @@
         "tags": [
           "On-Calls"
         ],
+        "x-pd-requires-scope": "oncalls.read",
         "operationId": "listOnCalls",
-        "description": "List the on-call entries during a given time range.\n\nAn on-call represents a contiguous unit of time for which a User will be on call for a given Escalation Policy and Escalation Rules.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#on-calls)\n",
+        "description": "List the on-call entries during a given time range.\n\nAn on-call represents a contiguous unit of time for which a User will be on call for a given Escalation Policy and Escalation Rules.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#on-calls)\n\nScoped OAuth requires: `oncalls.read`\n",
         "summary": "List all of the on-calls",
         "parameters": [
           {
@@ -33614,8 +33620,9 @@
         "tags": [
           "Schedules"
         ],
+        "x-pd-requires-scope": "schedules.read",
         "operationId": "listSchedules",
-        "description": "List the on-call schedules.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#schedules)\n",
+        "description": "List the on-call schedules.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#schedules)\n\nScoped OAuth requires: `schedules.read`\n",
         "summary": "List schedules",
         "parameters": [
           {
@@ -33790,12 +33797,12 @@
         }
       },
       "post": {
-        "x-pd-requires-scope": "event_rules.read",
         "tags": [
           "Schedules"
         ],
+        "x-pd-requires-scope": "schedules.write",
         "operationId": "createSchedule",
-        "description": "Create a new on-call schedule.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#schedules)\n\nScoped OAuth requires: `event_rules.read`\n",
+        "description": "Create a new on-call schedule.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#schedules)\n\nScoped OAuth requires: `schedules.write`\n",
         "summary": "Create a schedule",
         "parameters": [
           {
@@ -33974,8 +33981,9 @@
         "tags": [
           "Schedules"
         ],
+        "x-pd-requires-scope": "schedules.read",
         "operationId": "getSchedule",
-        "description": "Show detailed information about a schedule, including entries for each layer and sub-schedule.",
+        "description": "Show detailed information about a schedule, including entries for each layer and sub-schedule.\nScoped OAuth requires: `schedules.read`\n",
         "summary": "Get a schedule",
         "parameters": [
           {
@@ -34144,8 +34152,9 @@
         "tags": [
           "Schedules"
         ],
+        "x-pd-requires-scope": "schedules.write",
         "operationId": "deleteSchedule",
-        "description": "Delete an on-call schedule.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#schedules)\n",
+        "description": "Delete an on-call schedule.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#schedules)\n\nScoped OAuth requires: `schedules.write`\n",
         "summary": "Delete a schedule",
         "parameters": [
           {
@@ -34183,8 +34192,9 @@
         "tags": [
           "Schedules"
         ],
+        "x-pd-requires-scope": "schedules.write",
         "operationId": "updateSchedule",
-        "description": "Update an existing on-call schedule.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#schedules)\n",
+        "description": "Update an existing on-call schedule.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#schedules)\n\nScoped OAuth requires: `schedules.write`\n",
         "summary": "Update a schedule",
         "parameters": [
           {
@@ -34451,8 +34461,9 @@
         "tags": [
           "Schedules"
         ],
+        "x-pd-requires-scope": "schedules.read",
         "operationId": "listScheduleOverrides",
-        "description": "List overrides for a given time range.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#schedules)\n",
+        "description": "List overrides for a given time range.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#schedules)\n\nScoped OAuth requires: `schedules.read`\n",
         "summary": "List overrides",
         "parameters": [
           {
@@ -34541,8 +34552,9 @@
         "tags": [
           "Schedules"
         ],
+        "x-pd-requires-scope": "schedules.write",
         "operationId": "createScheduleOverride",
-        "description": "Create one or more overrides, each for a specific user covering a specified time range. If you create an override on top of an existing override, the last created override will have priority.\n\nA Schedule determines the time periods that users are On-Call.\n\nNote: An older implementation of this endpoint only supported creating a single ocverride per request. That functionality is still supported, but deprecated and may be removed in the future.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#schedules)\n",
+        "description": "Create one or more overrides, each for a specific user covering a specified time range. If you create an override on top of an existing override, the last created override will have priority.\n\nA Schedule determines the time periods that users are On-Call.\n\nNote: An older implementation of this endpoint only supported creating a single ocverride per request. That functionality is still supported, but deprecated and may be removed in the future.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#schedules)\n\nScoped OAuth requires: `schedules.write`\n",
         "summary": "Create one or more overrides",
         "parameters": [
           {
@@ -34761,8 +34773,9 @@
         "tags": [
           "Schedules"
         ],
+        "x-pd-requires-scope": "users.read",
         "operationId": "listScheduleUsers",
-        "description": "List all of the users on call in a given schedule for a given time range.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#schedules)\n",
+        "description": "List all of the users on call in a given schedule for a given time range.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#schedules)\n\nScoped OAuth requires: `users.read`\n",
         "summary": "List users on call.",
         "parameters": [
           {
