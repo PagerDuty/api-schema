@@ -20007,7 +20007,7 @@
                   "summary": "Request Example",
                   "value": {
                     "field_option": {
-                      "value": {
+                      "data": {
                         "datatype": "string",
                         "value": "production"
                       }

@@ -4,6 +4,8 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+## 2023-03-01
+- Fix example for `POST /customfields/fields/{id}/field_options` endpoint
 
 ## 2023-02-22
 - Adding deprecation notice to Response Plays. Because Incident Workflows are a more robust and powerful version of Response Plays, we will be working to upgrade accounts from Response Plays to Incident Workflows, ultimately culminating in a Response Plays end-of-life in late 2023. This affects the following endpoints:
