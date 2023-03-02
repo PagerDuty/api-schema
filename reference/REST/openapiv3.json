@@ -9510,7 +9510,7 @@
               },
               "condition": {
                 "type": "string",
-                "description": "A PCL condition string which must be satisfied for the trigger to fire.\n\nRequired if trigger_type is “conditional”, not allowed if trigger_type is “manual”\n"
+                "description": "A PCL condition string.\n\nIf specified, the trigger will execute when the condition is met on an incident.\n\nIf unspecified, the trigger will execute on incident creation.\n\nRequired if trigger_type is “conditional”, not allowed if trigger_type is “manual”.\n"
               },
               "trigger_url": {
                 "type": "string",
