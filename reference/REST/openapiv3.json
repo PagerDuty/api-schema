@@ -31775,8 +31775,9 @@
         "tags": [
           "Priorities"
         ],
+        "x-pd-requires-scope": "priorities.read",
         "operationId": "listPriorities",
-        "description": "List existing priorities, in order (most to least severe).\n\nA priority is a label representing the importance and impact of an incident. This feature is only available on Standard and Enterprise plans.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#priorities)\n",
+        "description": "List existing priorities, in order (most to least severe).\n\nA priority is a label representing the importance and impact of an incident. This feature is only available on Standard and Enterprise plans.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#priorities)\n\nScoped OAuth requires: `priorities.read`\n",
         "summary": "List priorities",
         "parameters": [
           {
