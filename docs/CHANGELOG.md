@@ -4,6 +4,9 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+## 2023-03-03
+- Added optional `sort_by` to `GET /templates` query parameters to sort templates by `name` or `created_at` fields in a (`asc`/`desc`) order.
+
 ## 2023-03-02
 - Update description of `IncidentWorkflowTrigger.condition` to more clearly describe the impact around triggers starting either when an incident is created, or when conditions are met
 
