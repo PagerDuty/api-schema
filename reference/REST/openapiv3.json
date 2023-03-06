@@ -5438,6 +5438,429 @@
           }
         }
       },
+      "AcknowledgeLogEntry": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/LogEntry"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "acknowledgement_timeout": {
+                "type": "integer",
+                "description": "Duration for which the acknowledgement lasts, in seconds. Services can contain an `acknowledgement_timeout` property, which specifies the length of time acknowledgements should last for. Each time an incident is acknowledged, this timeout is copied into the acknowledgement log entry. This property is optional, as older log entries may not contain it. It may also be `null`, as acknowledgements can be performed on incidents whose services have no `acknowledgement_timeout` set."
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "acknowledgement_log_entry"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "AnnotateLogEntry": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/LogEntry"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "annotate_log_entry"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "AssignLogEntry": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/LogEntry"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "assignees": {
+                "type": "array",
+                "readOnly": true,
+                "description": "An array of assigned Users for this log entry",
+                "items": {
+                  "$ref": "#/components/schemas/UserReference"
+                }
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "assign_log_entry"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "DelegateLogEntry": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/LogEntry"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "assignees": {
+                "type": "array",
+                "readOnly": true,
+                "description": "An array of assigned Users for this log entry",
+                "items": {
+                  "$ref": "#/components/schemas/UserReference"
+                }
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "delegate_log_entry"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "EscalateLogEntry": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/LogEntry"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "assignees": {
+                "type": "array",
+                "readOnly": true,
+                "description": "An array of assigned Users for this log entry",
+                "items": {
+                  "$ref": "#/components/schemas/UserReference"
+                }
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "escalate_log_entry"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "ExhaustEscalationPathLogEntry": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/LogEntry"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "exhaust_escalation_path_log_entry"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "LogEntryReference": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Reference"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "acknowledge_log_entry_reference",
+                  "annotate_log_entry_reference",
+                  "assign_log_entry_reference",
+                  "escalate_log_entry_reference",
+                  "exhaust_escalation_path_log_entry_reference",
+                  "notify_log_entry_reference",
+                  "reach_trigger_limit_log_entry_reference",
+                  "repeat_escalation_path_log_entry_reference",
+                  "resolve_log_entry_reference",
+                  "snooze_log_entry_reference",
+                  "trigger_log_entry_reference",
+                  "unacknowledge_log_entry_reference"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "LogEntry": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Tag/allOf/0"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "acknowledge_log_entry",
+                  "annotate_log_entry",
+                  "assign_log_entry",
+                  "delegate_log_entry",
+                  "escalate_log_entry",
+                  "exhaust_escalation_path_log_entry",
+                  "notify_log_entry",
+                  "reach_ack_limit_log_entry",
+                  "reach_trigger_limit_log_entry",
+                  "repeat_escalation_path_log_entry",
+                  "resolve_log_entry",
+                  "snooze_log_entry",
+                  "trigger_log_entry",
+                  "unacknowledge_log_entry",
+                  "urgency_change_log_entry"
+                ]
+              },
+              "created_at": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true,
+                "description": "Time at which the log entry was created."
+              },
+              "channel": {
+                "$ref": "#/components/schemas/Channel"
+              },
+              "agent": {
+                "$ref": "#/components/schemas/AgentReference"
+              },
+              "note": {
+                "type": "string",
+                "readOnly": true,
+                "description": "Optional field containing a note, if one was included with the log entry."
+              },
+              "contexts": {
+                "type": "array",
+                "readOnly": true,
+                "description": "Contexts to be included with the trigger such as links to graphs or images.",
+                "items": {
+                  "$ref": "#/components/schemas/Context"
+                }
+              },
+              "service": {
+                "$ref": "#/components/schemas/ServiceReference"
+              },
+              "incident": {
+                "$ref": "#/components/schemas/IncidentReference"
+              },
+              "teams": {
+                "type": "array",
+                "readOnly": true,
+                "description": "Will consist of references unless included",
+                "items": {
+                  "$ref": "#/components/schemas/TeamReference"
+                }
+              },
+              "event_details": {
+                "type": "object",
+                "readOnly": true,
+                "properties": {
+                  "description": {
+                    "type": "string",
+                    "description": "Additional details about the event."
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "NotifyLogEntry": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/LogEntry"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "created_at": {
+                "type": "string",
+                "format": "date-time",
+                "readOnly": true,
+                "description": "Time at which the log entry was created"
+              },
+              "user": {
+                "$ref": "#/components/schemas/UserReference"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "notify_log_entry"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "ReachAckLimitLogEntry": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/LogEntry"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "reach_ack_limit_log_entry"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "ReachTriggerLimitLogEntry": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/LogEntry"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "reach_trigger_limit_log_entry"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "RepeatEscalationPathLogEntry": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/LogEntry"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "repeat_escalation_path_log_entry"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "ResolveLogEntry": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/LogEntry"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "resolve_log_entry"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "SnoozeLogEntry": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/LogEntry"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "changed_actions": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/IncidentAction"
+                }
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "snooze_log_entry"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "TriggerLogEntry": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/LogEntry"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "trigger_log_entry"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "UnacknowledgeLogEntry": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/LogEntry"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "unacknowledge_log_entry"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "UrgencyChangeLogEntry": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/LogEntry"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "urgency_change_log_entry"
+                ]
+              }
+            }
+          }
+        ]
+      },
       "AddonReference": {
         "allOf": [
           {
@@ -6198,33 +6621,6 @@
           "type"
         ]
       },
-      "NotifyLogEntry": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/LogEntry"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "created_at": {
-                "type": "string",
-                "format": "date-time",
-                "readOnly": true,
-                "description": "Time at which the log entry was created"
-              },
-              "user": {
-                "$ref": "#/components/schemas/UserReference"
-              },
-              "type": {
-                "type": "string",
-                "enum": [
-                  "notify_log_entry"
-                ]
-              }
-            }
-          }
-        ]
-      },
       "ScheduledAction": {
         "type": "object",
         "properties": {
@@ -6274,30 +6670,6 @@
           "to_urgency"
         ]
       },
-      "SnoozeLogEntry": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/LogEntry"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "changed_actions": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/IncidentAction"
-                }
-              },
-              "type": {
-                "type": "string",
-                "enum": [
-                  "snooze_log_entry"
-                ]
-              }
-            }
-          }
-        ]
-      },
       "IncidentAction": {
         "description": "An incident action is a pending change to an incident that will automatically happen at some future time.",
         "type": "object",
@@ -6322,168 +6694,6 @@
         "required": [
           "type",
           "at"
-        ]
-      },
-      "AssignLogEntry": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/LogEntry"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "assignees": {
-                "type": "array",
-                "readOnly": true,
-                "description": "An array of assigned Users for this log entry",
-                "items": {
-                  "$ref": "#/components/schemas/UserReference"
-                }
-              },
-              "type": {
-                "type": "string",
-                "enum": [
-                  "assign_log_entry"
-                ]
-              }
-            }
-          }
-        ]
-      },
-      "EscalateLogEntry": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/LogEntry"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "assignees": {
-                "type": "array",
-                "readOnly": true,
-                "description": "An array of assigned Users for this log entry",
-                "items": {
-                  "$ref": "#/components/schemas/UserReference"
-                }
-              },
-              "type": {
-                "type": "string",
-                "enum": [
-                  "escalate_log_entry"
-                ]
-              }
-            }
-          }
-        ]
-      },
-      "LogEntryReference": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/Reference"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "type": {
-                "type": "string",
-                "enum": [
-                  "acknowledge_log_entry_reference",
-                  "annotate_log_entry_reference",
-                  "assign_log_entry_reference",
-                  "escalate_log_entry_reference",
-                  "exhaust_escalation_path_log_entry_reference",
-                  "notify_log_entry_reference",
-                  "reach_trigger_limit_log_entry_reference",
-                  "repeat_escalation_path_log_entry_reference",
-                  "resolve_log_entry_reference",
-                  "snooze_log_entry_reference",
-                  "trigger_log_entry_reference",
-                  "unacknowledge_log_entry_reference"
-                ]
-              }
-            }
-          }
-        ]
-      },
-      "LogEntry": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/Tag/allOf/0"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "type": {
-                "type": "string",
-                "enum": [
-                  "acknowledge_log_entry",
-                  "annotate_log_entry",
-                  "assign_log_entry",
-                  "escalate_log_entry",
-                  "exhaust_escalation_path_log_entry",
-                  "notify_log_entry",
-                  "reach_trigger_limit_log_entry",
-                  "repeat_escalation_path_log_entry",
-                  "resolve_log_entry",
-                  "snooze_log_entry",
-                  "trigger_log_entry",
-                  "unacknowledge_log_entry"
-                ]
-              },
-              "created_at": {
-                "type": "string",
-                "format": "date-time",
-                "readOnly": true,
-                "description": "Time at which the log entry was created."
-              },
-              "channel": {
-                "$ref": "#/components/schemas/Channel"
-              },
-              "agent": {
-                "$ref": "#/components/schemas/AgentReference"
-              },
-              "note": {
-                "type": "string",
-                "readOnly": true,
-                "description": "Optional field containing a note, if one was included with the log entry."
-              },
-              "contexts": {
-                "type": "array",
-                "readOnly": true,
-                "description": "Contexts to be included with the trigger such as links to graphs or images.",
-                "items": {
-                  "$ref": "#/components/schemas/Context"
-                }
-              },
-              "service": {
-                "$ref": "#/components/schemas/ServiceReference"
-              },
-              "user": {
-                "$ref": "#/components/schemas/UserReference"
-              },
-              "incident": {
-                "$ref": "#/components/schemas/IncidentReference"
-              },
-              "teams": {
-                "type": "array",
-                "readOnly": true,
-                "description": "Will consist of references unless included",
-                "items": {
-                  "$ref": "#/components/schemas/TeamReference"
-                }
-              },
-              "event_details": {
-                "type": "object",
-                "readOnly": true,
-                "properties": {
-                  "description": {
-                    "type": "string",
-                    "description": "Additional details about the event."
-                  }
-                }
-              }
-            }
-          }
         ]
       },
       "AgentReference": {
@@ -9804,7 +10014,53 @@
                 "type": "array",
                 "description": "Log Entries that correspond to the action this Webhook is reporting. Includes the channels.",
                 "items": {
-                  "$ref": "#/components/schemas/LogEntry"
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/AcknowledgeLogEntry"
+                    },
+                    {
+                      "$ref": "#/components/schemas/AnnotateLogEntry"
+                    },
+                    {
+                      "$ref": "#/components/schemas/AssignLogEntry"
+                    },
+                    {
+                      "$ref": "#/components/schemas/DelegateLogEntry"
+                    },
+                    {
+                      "$ref": "#/components/schemas/EscalateLogEntry"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ExhaustEscalationPathLogEntry"
+                    },
+                    {
+                      "$ref": "#/components/schemas/NotifyLogEntry"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ReachAckLimitLogEntry"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ReachTriggerLimitLogEntry"
+                    },
+                    {
+                      "$ref": "#/components/schemas/RepeatEscalationPathLogEntry"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ResolveLogEntry"
+                    },
+                    {
+                      "$ref": "#/components/schemas/SnoozeLogEntry"
+                    },
+                    {
+                      "$ref": "#/components/schemas/TriggerLogEntry"
+                    },
+                    {
+                      "$ref": "#/components/schemas/UnacknowledgeLogEntry"
+                    },
+                    {
+                      "$ref": "#/components/schemas/UrgencyChangeLogEntry"
+                    }
+                  ]
                 }
               }
             },
@@ -28432,7 +28688,53 @@
                         "log_entries": {
                           "type": "array",
                           "items": {
-                            "$ref": "#/components/schemas/LogEntry"
+                            "oneOf": [
+                              {
+                                "$ref": "#/components/schemas/AcknowledgeLogEntry"
+                              },
+                              {
+                                "$ref": "#/components/schemas/AnnotateLogEntry"
+                              },
+                              {
+                                "$ref": "#/components/schemas/AssignLogEntry"
+                              },
+                              {
+                                "$ref": "#/components/schemas/DelegateLogEntry"
+                              },
+                              {
+                                "$ref": "#/components/schemas/EscalateLogEntry"
+                              },
+                              {
+                                "$ref": "#/components/schemas/ExhaustEscalationPathLogEntry"
+                              },
+                              {
+                                "$ref": "#/components/schemas/NotifyLogEntry"
+                              },
+                              {
+                                "$ref": "#/components/schemas/ReachAckLimitLogEntry"
+                              },
+                              {
+                                "$ref": "#/components/schemas/ReachTriggerLimitLogEntry"
+                              },
+                              {
+                                "$ref": "#/components/schemas/RepeatEscalationPathLogEntry"
+                              },
+                              {
+                                "$ref": "#/components/schemas/ResolveLogEntry"
+                              },
+                              {
+                                "$ref": "#/components/schemas/SnoozeLogEntry"
+                              },
+                              {
+                                "$ref": "#/components/schemas/TriggerLogEntry"
+                              },
+                              {
+                                "$ref": "#/components/schemas/UnacknowledgeLogEntry"
+                              },
+                              {
+                                "$ref": "#/components/schemas/UrgencyChangeLogEntry"
+                              }
+                            ]
                           }
                         }
                       },
@@ -30432,11 +30734,12 @@
     "/log_entries": {
       "description": "List all of the log entries across your account. These can be filtered (for instance, by time or by team), and the results will be paginated.",
       "get": {
+        "x-pd-requires-scope": "incidents.read",
         "tags": [
           "Log Entries"
         ],
         "operationId": "listLogEntries",
-        "description": "List all of the incident log entries across the entire account.\n\nA log of all the events that happen to an Incident, and these are exposed as Log Entries.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#log-entries)\n",
+        "description": "List all of the incident log entries across the entire account.\n\nA log of all the events that happen to an Incident, and these are exposed as Log Entries.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#log-entries)\n\nScoped OAuth requires: `incidents.read`\n",
         "summary": "List log entries",
         "parameters": [
           {
@@ -30489,7 +30792,53 @@
                         "log_entries": {
                           "type": "array",
                           "items": {
-                            "$ref": "#/components/schemas/LogEntry"
+                            "oneOf": [
+                              {
+                                "$ref": "#/components/schemas/AcknowledgeLogEntry"
+                              },
+                              {
+                                "$ref": "#/components/schemas/AnnotateLogEntry"
+                              },
+                              {
+                                "$ref": "#/components/schemas/AssignLogEntry"
+                              },
+                              {
+                                "$ref": "#/components/schemas/DelegateLogEntry"
+                              },
+                              {
+                                "$ref": "#/components/schemas/EscalateLogEntry"
+                              },
+                              {
+                                "$ref": "#/components/schemas/ExhaustEscalationPathLogEntry"
+                              },
+                              {
+                                "$ref": "#/components/schemas/NotifyLogEntry"
+                              },
+                              {
+                                "$ref": "#/components/schemas/ReachAckLimitLogEntry"
+                              },
+                              {
+                                "$ref": "#/components/schemas/ReachTriggerLimitLogEntry"
+                              },
+                              {
+                                "$ref": "#/components/schemas/RepeatEscalationPathLogEntry"
+                              },
+                              {
+                                "$ref": "#/components/schemas/ResolveLogEntry"
+                              },
+                              {
+                                "$ref": "#/components/schemas/SnoozeLogEntry"
+                              },
+                              {
+                                "$ref": "#/components/schemas/TriggerLogEntry"
+                              },
+                              {
+                                "$ref": "#/components/schemas/UnacknowledgeLogEntry"
+                              },
+                              {
+                                "$ref": "#/components/schemas/UrgencyChangeLogEntry"
+                              }
+                            ]
                           }
                         }
                       },
@@ -30570,11 +30919,12 @@
     "/log_entries/{id}": {
       "description": "Get a single log entry by ID.",
       "get": {
+        "x-pd-requires-scope": "incidents.read",
         "tags": [
           "Log Entries"
         ],
         "operationId": "getLogEntry",
-        "description": "Get details for a specific incident log entry. This method provides additional information you can use to get at raw event data.\n\nA log of all the events that happen to an Incident, and these are exposed as Log Entries.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#log-entries)\n",
+        "description": "Get details for a specific incident log entry. This method provides additional information you can use to get at raw event data.\n\nA log of all the events that happen to an Incident, and these are exposed as Log Entries.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#log-entries)\n\nScoped OAuth requires: `incidents.read`\n",
         "summary": "Get a log entry",
         "parameters": [
           {
@@ -30602,7 +30952,53 @@
                   "type": "object",
                   "properties": {
                     "log_entry": {
-                      "$ref": "#/components/schemas/LogEntry"
+                      "oneOf": [
+                        {
+                          "$ref": "#/components/schemas/AcknowledgeLogEntry"
+                        },
+                        {
+                          "$ref": "#/components/schemas/AnnotateLogEntry"
+                        },
+                        {
+                          "$ref": "#/components/schemas/AssignLogEntry"
+                        },
+                        {
+                          "$ref": "#/components/schemas/DelegateLogEntry"
+                        },
+                        {
+                          "$ref": "#/components/schemas/EscalateLogEntry"
+                        },
+                        {
+                          "$ref": "#/components/schemas/ExhaustEscalationPathLogEntry"
+                        },
+                        {
+                          "$ref": "#/components/schemas/NotifyLogEntry"
+                        },
+                        {
+                          "$ref": "#/components/schemas/ReachAckLimitLogEntry"
+                        },
+                        {
+                          "$ref": "#/components/schemas/ReachTriggerLimitLogEntry"
+                        },
+                        {
+                          "$ref": "#/components/schemas/RepeatEscalationPathLogEntry"
+                        },
+                        {
+                          "$ref": "#/components/schemas/ResolveLogEntry"
+                        },
+                        {
+                          "$ref": "#/components/schemas/SnoozeLogEntry"
+                        },
+                        {
+                          "$ref": "#/components/schemas/TriggerLogEntry"
+                        },
+                        {
+                          "$ref": "#/components/schemas/UnacknowledgeLogEntry"
+                        },
+                        {
+                          "$ref": "#/components/schemas/UrgencyChangeLogEntry"
+                        }
+                      ]
                     }
                   },
                   "required": [
@@ -30678,11 +31074,12 @@
     "/log_entries/{id}/channel": {
       "description": "Log entry channel information.",
       "put": {
+        "x-pd-requires-scope": "incidents.write",
         "tags": [
           "Log Entries"
         ],
         "operationId": "updateLogEntryChannel",
-        "description": "Update an existing incident log entry channel.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#log-entries)\n",
+        "description": "Update an existing incident log entry channel.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#log-entries)\n\nScoped OAuth requires: `incidents.write`\n",
         "summary": "Update log entry channel information.",
         "parameters": [
           {
