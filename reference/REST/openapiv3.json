@@ -17713,11 +17713,12 @@
     "/business_services": {
       "description": "List and create Business Services.",
       "get": {
+        "x-pd-requires-scope": "services.read",
         "tags": [
           "Business Services"
         ],
         "operationId": "listBusinessServices",
-        "description": "List existing Business Services.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#business-services)\n",
+        "description": "List existing Business Services.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#business-services)\n\nScoped OAuth requires: `services.read`\n",
         "summary": "List Business Services",
         "parameters": [
           {
@@ -17815,11 +17816,12 @@
         }
       },
       "post": {
+        "x-pd-requires-scope": "services.write",
         "tags": [
           "Business Services"
         ],
         "operationId": "createBusinessService",
-        "description": "Create a new Business Service.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nThere is a limit of 5,000 business services per account. If the limit is reached, the API will respond with an error.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#business-services)\n",
+        "description": "Create a new Business Service.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nThere is a limit of 5,000 business services per account. If the limit is reached, the API will respond with an error.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#business-services)\n\nScoped OAuth requires: `services.write`\n",
         "summary": "Create a Business Service",
         "parameters": [
           {
@@ -17943,11 +17945,12 @@
     "/business_services/{id}": {
       "description": "Manage a Business Service.",
       "get": {
+        "x-pd-requires-scope": "services.read",
         "tags": [
           "Business Services"
         ],
         "operationId": "getBusinessService",
-        "description": "Get details about an existing Business Service.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#business-services)\n",
+        "description": "Get details about an existing Business Service.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#business-services)\n\nScoped OAuth requires: `services.read`\n",
         "summary": "Get a Business Service",
         "parameters": [
           {
@@ -18016,11 +18019,12 @@
         }
       },
       "delete": {
+        "x-pd-requires-scope": "services.write",
         "tags": [
           "Business Services"
         ],
         "operationId": "deleteBusinessService",
-        "description": "Delete an existing Business Service.\n\nOnce the service is deleted, it will not be accessible from the web UI and new incidents won't be able to be created for this service.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#business-services)\n",
+        "description": "Delete an existing Business Service.\n\nOnce the service is deleted, it will not be accessible from the web UI and new incidents won't be able to be created for this service.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#business-services)\n\nScoped OAuth requires: `services.write`\n",
         "summary": "Delete a Business Service",
         "parameters": [
           {
@@ -18049,11 +18053,12 @@
         }
       },
       "put": {
+        "x-pd-requires-scope": "services.write",
         "tags": [
           "Business Services"
         ],
         "operationId": "updateBusinessService",
-        "description": "Update an existing Business Service. NOTE that this endpoint also accepts the PATCH verb.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#business-services)\n",
+        "description": "Update an existing Business Service. NOTE that this endpoint also accepts the PATCH verb.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#business-services)\n\nScoped OAuth requires: `services.write`\n",
         "summary": "Update a Business Service",
         "parameters": [
           {
@@ -18176,6 +18181,7 @@
     },
     "/business_services/{id}/account_subscription": {
       "post": {
+        "x-pd-requires-scope": "subscribers.write",
         "summary": "Create Business Service Account Subscription",
         "tags": [
           "Business Services"
@@ -18221,7 +18227,7 @@
           }
         },
         "operationId": "createBusinessServiceAccountSubscription",
-        "description": "Subscribe your Account to a Business Service.",
+        "description": "Subscribe your Account to a Business Service.\nScoped OAuth requires: `subscribers.write`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -18232,6 +18238,7 @@
         ]
       },
       "delete": {
+        "x-pd-requires-scope": "subscribers.write",
         "summary": "Delete Business Service Account Subscription",
         "tags": [
           "Business Services"
@@ -18254,7 +18261,7 @@
             "$ref": "#/components/responses/UnprocessableEntity"
           }
         },
-        "description": "Unsubscribe your Account from a Business Service.",
+        "description": "Unsubscribe your Account from a Business Service.\nScoped OAuth requires: `subscribers.write`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -18267,6 +18274,7 @@
     },
     "/business_services/{id}/subscribers": {
       "get": {
+        "x-pd-requires-scope": "subscribers.read",
         "summary": "List Business Service Subscribers",
         "tags": [
           "Business Services"
@@ -18345,7 +18353,7 @@
           }
         },
         "operationId": "getBusinessServiceSubscribers",
-        "description": "Retrieve a list of Notification Subscribers on the Business Service.\n\n<!-- theme: warning -->\n> Users must be added through `POST /business_services/{id}/subscribers` to be returned from this endpoint.",
+        "description": "Retrieve a list of Notification Subscribers on the Business Service.\n\n<!-- theme: warning -->\n> Users must be added through `POST /business_services/{id}/subscribers` to be returned from this endpoint.\nScoped OAuth requires: `subscribers.read`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -18356,6 +18364,7 @@
         ]
       },
       "post": {
+        "x-pd-requires-scope": "subscribers.write",
         "summary": "Create Business Service Subscribers",
         "tags": [
           "Business Services"
@@ -18426,7 +18435,7 @@
             "$ref": "#/components/responses/UnprocessableEntity"
           }
         },
-        "description": "Subscribe the given entities to the given Business Service.",
+        "description": "Subscribe the given entities to the given Business Service.\nScoped OAuth requires: `subscribers.write`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -18600,6 +18609,7 @@
     },
     "/business_services/{id}/unsubscribe": {
       "post": {
+        "x-pd-requires-scope": "subscribers.write",
         "summary": "Remove Business Service Subscribers",
         "tags": [
           "Business Services"
@@ -18655,7 +18665,7 @@
             "$ref": "#/components/responses/UnprocessableEntity"
           }
         },
-        "description": "Unsubscribes the matching Subscribers from a Business Service.",
+        "description": "Unsubscribes the matching Subscribers from a Business Service.\nScoped OAuth requires: `subscribers.write`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -26260,11 +26270,12 @@
         }
       },
       "put": {
+        "x-pd-requires-scope": "incidents.write",
         "tags": [
           "Incidents"
         ],
         "operationId": "updateIncidents",
-        "description": "Acknowledge, resolve, escalate or reassign one or more incidents.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nA maximum of 250 incidents may be updated at a time. If more than this number of incidents are given, the API will respond with status 413 (Request Entity Too Large).\n\nNote: the manage incidents API endpoint is rate limited to 500 requests per minute.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n",
+        "description": "Acknowledge, resolve, escalate or reassign one or more incidents.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nA maximum of 250 incidents may be updated at a time. If more than this number of incidents are given, the API will respond with status 413 (Request Entity Too Large).\n\nNote: the manage incidents API endpoint is rate limited to 500 requests per minute.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n\nScoped OAuth requires: `incidents.write`\n",
         "summary": "Manage incidents",
         "parameters": [
           {
@@ -26550,11 +26561,12 @@
         }
       },
       "post": {
+        "x-pd-requires-scope": "incidents.write",
         "tags": [
           "Incidents"
         ],
         "operationId": "createIncident",
-        "description": "Create an incident synchronously without a corresponding event from a monitoring service.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n",
+        "description": "Create an incident synchronously without a corresponding event from a monitoring service.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n\nScoped OAuth requires: `incidents.write`\n",
         "summary": "Create an Incident",
         "parameters": [
           {
@@ -27051,11 +27063,12 @@
         }
       },
       "put": {
+        "x-pd-requires-scope": "incidents.write",
         "tags": [
           "Incidents"
         ],
         "operationId": "updateIncident",
-        "description": "Acknowledge, resolve, escalate or reassign an incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n",
+        "description": "Acknowledge, resolve, escalate or reassign an incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n\nScoped OAuth requires: `incidents.write`\n",
         "summary": "Update an incident",
         "parameters": [
           {
@@ -27438,11 +27451,12 @@
         }
       },
       "put": {
+        "x-pd-requires-scope": "incidents.write",
         "tags": [
           "Incidents"
         ],
         "operationId": "updateIncidentAlerts",
-        "description": "Resolve multiple alerts or associate them with different incidents.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved. An alert represents a digital signal that was emitted to PagerDuty by the monitoring systems that detected or identified the issue.\n\nA maximum of 500 alerts may be updated at a time. If more than this number of alerts are given, the API will respond with status 413 (Request Entity Too Large).\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n",
+        "description": "Resolve multiple alerts or associate them with different incidents.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved. An alert represents a digital signal that was emitted to PagerDuty by the monitoring systems that detected or identified the issue.\n\nA maximum of 500 alerts may be updated at a time. If more than this number of alerts are given, the API will respond with status 413 (Request Entity Too Large).\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n\nScoped OAuth requires: `incidents.write`\n",
         "summary": "Manage alerts",
         "parameters": [
           {
@@ -27705,11 +27719,12 @@
         }
       },
       "put": {
+        "x-pd-requires-scope": "incidents.write",
         "tags": [
           "Incidents"
         ],
         "operationId": "updateIncidentAlert",
-        "description": "Resolve an alert or associate an alert with a new parent incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nWhen a service sends an event to PagerDuty, an alert and corresponding incident is triggered in PagerDuty.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n",
+        "description": "Resolve an alert or associate an alert with a new parent incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nWhen a service sends an event to PagerDuty, an alert and corresponding incident is triggered in PagerDuty.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n\nScoped OAuth requires: `incidents.write`\n",
         "summary": "Update an alert",
         "parameters": [
           {
@@ -28477,7 +28492,8 @@
       }
     },
     "/incidents/{id}/merge": {
-      "description": "\"Merge\" an array of incidents into a target incident. After the merge is performed the target incident will contain the source incidents's alerts, and the source incidents will be resolved.",
+      "x-pd-requires-scope": "incidents.write",
+      "description": "\"Merge\" an array of incidents into a target incident. After the merge is performed the target incident will contain the source incidents's alerts, and the source incidents will be resolved.\nScoped OAuth requires: `incidents.write`\n",
       "put": {
         "tags": [
           "Incidents"
@@ -28695,8 +28711,9 @@
         "tags": [
           "Incidents"
         ],
+        "x-pd-requires-scope": "incidents.write",
         "operationId": "createIncidentNote",
-        "description": "Create a new note for the specified incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nA maximum of 2000 notes can be added to an incident.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n",
+        "description": "Create a new note for the specified incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nA maximum of 2000 notes can be added to an incident.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n\nScoped OAuth requires: `incidents.write`\n",
         "summary": "Create a note on an incident",
         "parameters": [
           {
@@ -29356,11 +29373,12 @@
     "/incidents/{id}/responder_requests": {
       "description": "Add responders to an incident.",
       "post": {
+        "x-pd-requires-scope": "incidents.write",
         "tags": [
           "Incidents"
         ],
         "operationId": "createIncidentResponderRequest",
-        "description": "Send a new responder request for the specified incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n",
+        "description": "Send a new responder request for the specified incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n\nScoped OAuth requires: `incidents.write`\n",
         "summary": "Create a responder request for an incident",
         "parameters": [
           {
@@ -29525,7 +29543,8 @@
       }
     },
     "/incidents/{id}/snooze": {
-      "description": "\"Snooze\" an incident. This suspends the acknowledgement timeout and auto-resolution for a given amount of time.",
+      "x-pd-requires-scope": "incidents.write",
+      "description": "\"Snooze\" an incident. This suspends the acknowledgement timeout and auto-resolution for a given amount of time.\nScoped OAuth requires: `incidents.write`\n",
       "post": {
         "tags": [
           "Incidents"
@@ -29705,11 +29724,12 @@
     "/incidents/{id}/status_updates": {
       "description": "Create incident status updates.",
       "post": {
+        "x-pd-requires-scope": "incidents.write",
         "tags": [
           "Incidents"
         ],
         "operationId": "createIncidentStatusUpdate",
-        "description": "Create a new status update for the specified incident. Optionally pass `subject` and `html_message` properties in the request body to override the email notification that gets sent.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n",
+        "description": "Create a new status update for the specified incident. Optionally pass `subject` and `html_message` properties in the request body to override the email notification that gets sent.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n\nScoped OAuth requires: `incidents.write`\n",
         "summary": "Create a status update on an incident",
         "parameters": [
           {
@@ -29821,6 +29841,7 @@
     },
     "/incidents/{id}/status_updates/subscribers": {
       "get": {
+        "x-pd-requires-scope": "subscribers.read",
         "summary": "List Notification Subscribers",
         "tags": [
           "Incidents"
@@ -29908,7 +29929,7 @@
           }
         },
         "operationId": "getIncidentNotificationSubscribers",
-        "description": "Retrieve a list of Notification Subscribers on the Incident.\n\n<!-- theme: warning -->\n> Users must be added through `POST /incident/{id}/status_updates/subscribers` to be returned from this endpoint.",
+        "description": "Retrieve a list of Notification Subscribers on the Incident.\n\n<!-- theme: warning -->\n> Users must be added through `POST /incident/{id}/status_updates/subscribers` to be returned from this endpoint.\nScoped OAuth requires: `subscribers.read`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -29919,6 +29940,7 @@
         ]
       },
       "post": {
+        "x-pd-requires-scope": "subscribers.write",
         "summary": "Add Notification Subscribers",
         "operationId": "createIncidentNotificationSubscribers",
         "tags": [
@@ -29989,7 +30011,7 @@
             "$ref": "#/components/responses/UnprocessableEntity"
           }
         },
-        "description": "Subscribe the given entities to Incident Status Update Notifications.",
+        "description": "Subscribe the given entities to Incident Status Update Notifications.\nScoped OAuth requires: `subscribers.write`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -30046,6 +30068,7 @@
     },
     "/incidents/{id}/status_updates/unsubscribe": {
       "post": {
+        "x-pd-requires-scope": "subscribers.write",
         "summary": "Remove Notification Subscriber",
         "tags": [
           "Incidents"
@@ -30101,7 +30124,7 @@
           }
         },
         "operationId": "removeIncidentNotificationSubscribers",
-        "description": "Unsubscribes the matching Subscribers from Incident Status Update Notifications.",
+        "description": "Unsubscribes the matching Subscribers from Incident Status Update Notifications.\nScoped OAuth requires: `subscribers.write`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -30729,11 +30752,12 @@
     "/maintenance_windows": {
       "description": "List and create maintenance windows.",
       "get": {
+        "x-pd-requires-scope": "services.read",
         "tags": [
           "Maintenance Windows"
         ],
         "operationId": "listMaintenanceWindows",
-        "description": "List existing maintenance windows, optionally filtered by service and/or team, or whether they are from the past, present or future.\n\nA Maintenance Window is used to temporarily disable one or more Services for a set period of time.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#maintenance-windows)\n",
+        "description": "List existing maintenance windows, optionally filtered by service and/or team, or whether they are from the past, present or future.\n\nA Maintenance Window is used to temporarily disable one or more Services for a set period of time.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#maintenance-windows)\n\nScoped OAuth requires: `services.read`\n",
         "summary": "List maintenance windows",
         "parameters": [
           {
@@ -30860,11 +30884,12 @@
         }
       },
       "post": {
+        "x-pd-requires-scope": "services.write",
         "tags": [
           "Maintenance Windows"
         ],
         "operationId": "createMaintenanceWindow",
-        "description": "Create a new maintenance window for the specified services. No new incidents will be created for a service that is in maintenance.\n\nA Maintenance Window is used to temporarily disable one or more Services for a set period of time.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#maintenance-windows)\n",
+        "description": "Create a new maintenance window for the specified services. No new incidents will be created for a service that is in maintenance.\n\nA Maintenance Window is used to temporarily disable one or more Services for a set period of time.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#maintenance-windows)\n\nScoped OAuth requires: `services.write`\n",
         "summary": "Create a maintenance window",
         "parameters": [
           {
@@ -30994,11 +31019,12 @@
     "/maintenance_windows/{id}": {
       "description": "Manage a maintenance window.",
       "get": {
+        "x-pd-requires-scope": "services.read",
         "tags": [
           "Maintenance Windows"
         ],
         "operationId": "getMaintenanceWindow",
-        "description": "Get an existing maintenance window.\n\nA Maintenance Window is used to temporarily disable one or more Services for a set period of time.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#maintenance-windows)\n",
+        "description": "Get an existing maintenance window.\n\nA Maintenance Window is used to temporarily disable one or more Services for a set period of time.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#maintenance-windows)\n\nScoped OAuth requires: `services.read`\n",
         "summary": "Get a maintenance window",
         "parameters": [
           {
@@ -31091,11 +31117,12 @@
         }
       },
       "delete": {
+        "x-pd-requires-scope": "services.write",
         "tags": [
           "Maintenance Windows"
         ],
         "operationId": "deleteMaintenanceWindow",
-        "description": "Delete an existing maintenance window if it's in the future, or end it if it's currently on-going. If the maintenance window has already ended it cannot be deleted.\n\nA Maintenance Window is used to temporarily disable one or more Services for a set period of time.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#maintenance-windows)\n",
+        "description": "Delete an existing maintenance window if it's in the future, or end it if it's currently on-going. If the maintenance window has already ended it cannot be deleted.\n\nA Maintenance Window is used to temporarily disable one or more Services for a set period of time.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#maintenance-windows)\n\nScoped OAuth requires: `services.write`\n",
         "summary": "Delete or end a maintenance window",
         "parameters": [
           {
@@ -31130,11 +31157,12 @@
         }
       },
       "put": {
+        "x-pd-requires-scope": "services.write",
         "tags": [
           "Maintenance Windows"
         ],
         "operationId": "updateMaintenanceWindow",
-        "description": "Update an existing maintenance window.\n\nA Maintenance Window is used to temporarily disable one or more Services for a set period of time.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#maintenance-windows)\n",
+        "description": "Update an existing maintenance window.\n\nA Maintenance Window is used to temporarily disable one or more Services for a set period of time.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#maintenance-windows)\n\nScoped OAuth requires: `services.write`\n",
         "summary": "Update a maintenance window",
         "parameters": [
           {
@@ -35119,12 +35147,13 @@
     "/service_dependencies/associate": {
       "description": "Associate dependencies of services.",
       "post": {
+        "x-pd-requires-scope": "services.write",
         "tags": [
           "Service Dependencies"
         ],
         "operationId": "createServiceDependency",
         "summary": "Associate service dependencies",
-        "description": "Create new dependencies between two services.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nA service can have a maximum of 2,000 dependencies with a depth limit of 100. If the limit is reached, the API will respond with an error.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#business-services)\n",
+        "description": "Create new dependencies between two services.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nA service can have a maximum of 2,000 dependencies with a depth limit of 100. If the limit is reached, the API will respond with an error.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#business-services)\n\nScoped OAuth requires: `services.write`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -35309,12 +35338,13 @@
     "/service_dependencies/business_services/{id}": {
       "description": "Get the dependencies of a given Business Service.",
       "get": {
+        "x-pd-requires-scope": "services.read",
         "tags": [
           "Service Dependencies"
         ],
         "operationId": "getBusinessServiceServiceDependencies",
         "summary": "Get Business Service dependencies",
-        "description": "Get all immediate dependencies of any Business Service.\n\nBusiness Services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#business-services)\n",
+        "description": "Get all immediate dependencies of any Business Service.\n\nBusiness Services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#business-services)\n\nScoped OAuth requires: `services.read`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -35429,12 +35459,13 @@
     "/service_dependencies/disassociate": {
       "description": "Disassociate dependencies of services.",
       "post": {
+        "x-pd-requires-scope": "services.write",
         "tags": [
           "Service Dependencies"
         ],
         "operationId": "deleteServiceDependency",
         "summary": "Disassociate service dependencies",
-        "description": "Disassociate dependencies between two services.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#business-services)\n",
+        "description": "Disassociate dependencies between two services.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#business-services)\n\nScoped OAuth requires: `services.write`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -35619,12 +35650,13 @@
     "/service_dependencies/technical_services/{id}": {
       "description": "Get the dependencies of a given technical service.",
       "get": {
+        "x-pd-requires-scope": "services.read",
         "tags": [
           "Service Dependencies"
         ],
         "operationId": "getTechnicalServiceServiceDependencies",
         "summary": "Get technical service dependencies",
-        "description": "Get all immediate dependencies of any technical service.\nTechnical services are also known as `services`.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#services)\n",
+        "description": "Get all immediate dependencies of any technical service.\nTechnical services are also known as `services`.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#services)\n\nScoped OAuth requires: `services.read`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -39234,12 +39266,13 @@
     },
     "/teams/{id}/notification_subscriptions": {
       "get": {
+        "x-pd-requires-scope": "subscribers.read",
         "summary": "List Team Notification Subscriptions",
         "tags": [
           "Teams"
         ],
         "operationId": "getTeamNotificationSubscriptions",
-        "description": "Retrieve a list of Notification Subscriptions the given Team has.\n\n<!-- theme: warning -->\n> Teams must be added through `POST /teams/{id}/notification_subscriptions` to be returned from this endpoint.\n",
+        "description": "Retrieve a list of Notification Subscriptions the given Team has.\n\n<!-- theme: warning -->\n> Teams must be added through `POST /teams/{id}/notification_subscriptions` to be returned from this endpoint.\n\nScoped OAuth requires: `subscribers.read`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -39338,6 +39371,7 @@
         }
       },
       "post": {
+        "x-pd-requires-scope": "subscribers.write",
         "summary": "Create Team Notification Subscriptions",
         "tags": [
           "Teams"
@@ -39408,7 +39442,7 @@
             "$ref": "#/components/responses/UnprocessableEntity"
           }
         },
-        "description": "Create new Notification Subscriptions for the given Team.",
+        "description": "Create new Notification Subscriptions for the given Team.\nScoped OAuth requires: `subscribers.write`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -39466,6 +39500,7 @@
     "/teams/{id}/notification_subscriptions/unsubscribe": {
       "summary": "Remove Team Notification Subscriptions",
       "post": {
+        "x-pd-requires-scope": "subscribers.write",
         "tags": [
           "Teams"
         ],
@@ -39520,7 +39555,7 @@
             "$ref": "#/components/responses/UnprocessableEntity"
           }
         },
-        "description": "Unsubscribe the given Team from Notifications on the matching Subscribable entities.",
+        "description": "Unsubscribe the given Team from Notifications on the matching Subscribable entities.\nScoped OAuth requires: `subscribers.write`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -40994,11 +41029,12 @@
         }
       },
       "post": {
+        "x-pd-requires-scope": "users:contact_methods.write",
         "tags": [
           "Users"
         ],
         "operationId": "createUserContactMethod",
-        "description": "Create a new contact method for the User.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n",
+        "description": "Create a new contact method for the User.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users:contact_methods.write`\n",
         "summary": "Create a user contact method",
         "parameters": [
           {
@@ -41196,11 +41232,12 @@
         }
       },
       "delete": {
+        "x-pd-requires-scope": "users:contact_methods.write",
         "tags": [
           "Users"
         ],
         "operationId": "deleteUserContactMethod",
-        "description": "Remove a user's contact method.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n",
+        "description": "Remove a user's contact method.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users:contact_methods.write`\n",
         "summary": "Delete a user's contact method",
         "parameters": [
           {
@@ -41235,11 +41272,12 @@
         }
       },
       "put": {
+        "x-pd-requires-scope": "users:contact_methods.write",
         "tags": [
           "Users"
         ],
         "operationId": "updateUserContactMethod",
-        "description": "Update a User's contact method.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n",
+        "description": "Update a User's contact method.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users:contact_methods.write`\n",
         "summary": "Update a user's contact method",
         "parameters": [
           {
@@ -41525,11 +41563,12 @@
         }
       },
       "post": {
+        "x-pd-requires-scope": "users:contact_methods.write",
         "tags": [
           "Users"
         ],
         "operationId": "createUserNotificationRule",
-        "description": "Create a new notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n",
+        "description": "Create a new notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users:contact_methods.write`\n",
         "summary": "Create a user notification rule",
         "parameters": [
           {
@@ -41722,11 +41761,12 @@
         }
       },
       "delete": {
+        "x-pd-requires-scope": "users:contact_methods.write",
         "tags": [
           "Users"
         ],
         "operationId": "deleteUserNotificationRule",
-        "description": "Remove a user's notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n",
+        "description": "Remove a user's notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users:contact_methods.write`\n",
         "summary": "Delete a user's notification rule",
         "parameters": [
           {
@@ -41761,11 +41801,12 @@
         }
       },
       "put": {
+        "x-pd-requires-scope": "users:contact_methods.write",
         "tags": [
           "Users"
         ],
         "operationId": "updateUserNotificationRule",
-        "description": "Update a user's notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n",
+        "description": "Update a user's notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users:contact_methods.write`\n",
         "summary": "Update a user's notification rule",
         "parameters": [
           {
@@ -41876,11 +41917,12 @@
     },
     "/users/{id}/notification_subscriptions": {
       "get": {
+        "x-pd-requires-scope": "subscribers.read",
         "tags": [
           "Users"
         ],
         "operationId": "getUserNotificationSubscriptions",
-        "description": "Retrieve a list of Notification Subscriptions the given User has.\n\n<!-- theme: warning -->\n> Users must be added through `POST /users/{id}/notification_subscriptions` to be returned from this endpoint.\n",
+        "description": "Retrieve a list of Notification Subscriptions the given User has.\n\n<!-- theme: warning -->\n> Users must be added through `POST /users/{id}/notification_subscriptions` to be returned from this endpoint.\n\nScoped OAuth requires: `subscribers.read`\n",
         "summary": "List Notification Subscriptions",
         "parameters": [
           {
@@ -41980,6 +42022,7 @@
         }
       },
       "post": {
+        "x-pd-requires-scope": "subscribers.write",
         "summary": "Create Notification Subcriptions",
         "operationId": "createUserNotificationSubscriptions",
         "tags": [
@@ -42050,7 +42093,7 @@
             "$ref": "#/components/responses/UnprocessableEntity"
           }
         },
-        "description": "Create new Notification Subscriptions for the given User.",
+        "description": "Create new Notification Subscriptions for the given User.\nScoped OAuth requires: `subscribers.write`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -42107,6 +42150,7 @@
     },
     "/users/{id}/notification_subscriptions/unsubscribe": {
       "post": {
+        "x-pd-requires-scope": "subscribers.write",
         "summary": "Remove Notification Subscriptions",
         "tags": [
           "Users"
@@ -42162,7 +42206,7 @@
           }
         },
         "operationId": "unsubscribeUserNotificationSubscriptions",
-        "description": "Unsubscribe the given User from Notifications on the matching Subscribable entities.",
+        "description": "Unsubscribe the given User from Notifications on the matching Subscribable entities.\nScoped OAuth requires: `subscribers.write`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -42860,11 +42904,12 @@
     "/users/{id}/status_update_notification_rules": {
       "description": "List a user's status update notification rules.",
       "get": {
+        "x-pd-requires-scope": "users.read",
         "tags": [
           "Users"
         ],
         "operationId": "getUserStatusUpdateNotificationRules",
-        "description": "List status update notification rules of your PagerDuty user.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n",
+        "description": "List status update notification rules of your PagerDuty user.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users.read`\n",
         "summary": "List a user's status update notification rules",
         "parameters": [
           {
@@ -42943,11 +42988,12 @@
         }
       },
       "post": {
+        "x-pd-requires-scope": "users.write",
         "tags": [
           "Users"
         ],
         "operationId": "createUserStatusUpdateNotificationRule",
-        "description": "Create a new status update notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n",
+        "description": "Create a new status update notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users.write`\n",
         "summary": "Create a user status update notification rule",
         "parameters": [
           {
@@ -43054,11 +43100,12 @@
     "/users/{id}/status_update_notification_rules/{status_update_notification_rule_id}": {
       "description": "Manage a user's status update notification rule.",
       "get": {
+        "x-pd-requires-scope": "users.read",
         "tags": [
           "Users"
         ],
         "operationId": "getUserStatusUpdateNotificationRule",
-        "description": "Get details about a user's status update notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n",
+        "description": "Get details about a user's status update notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users.read`\n",
         "summary": "Get a user's status update notification rule",
         "parameters": [
           {
@@ -43138,11 +43185,12 @@
         }
       },
       "delete": {
+        "x-pd-requires-scope": "users.write",
         "tags": [
           "Users"
         ],
         "operationId": "deleteUserStatusUpdateNotificationRule",
-        "description": "Remove a user's status update notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n",
+        "description": "Remove a user's status update notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users.write`\n",
         "summary": "Delete a user's status update notification rule",
         "parameters": [
           {
@@ -43180,11 +43228,12 @@
         }
       },
       "put": {
+        "x-pd-requires-scope": "users.write",
         "tags": [
           "Users"
         ],
         "operationId": "updateUserStatusUpdateNotificationRule",
-        "description": "Update a user's status update notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n",
+        "description": "Update a user's status update notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users.write`\n",
         "summary": "Update a user's status update notification rule",
         "parameters": [
           {
