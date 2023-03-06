@@ -3,6 +3,11 @@
 PagerDuty aims to have no breaking changes to our API, we do fix bugs and add new functionality continously. This document serves as a reference for any bug fixes or additions to our API.
 
 Currently we rarely deprecate, and do not remove any API functionality.
+## 2023-03-06
+- Log entry types are now explicity listed as their attributes may differ. The list will now show on the following endpoints:
+  - `GET /log_entries`
+  - `GET /log_entries/{id}`
+  - `GET /incidents/{incident_id}/log_entries`
 
 ## 2023-03-03
 - Added optional `sort_by` to `GET /templates` query parameters to sort templates by `name` or `created_at` fields in a (`asc`/`desc`) order.
