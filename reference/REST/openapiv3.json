@@ -4735,6 +4735,12 @@
             "description": "Arguments to pass to the Process Automation job. The maxLength value is specified in bytes.",
             "example": "-env production",
             "maxLength": 1024
+          },
+          "process_automation_node_filter": {
+            "type": "string",
+            "description": "Node filter for the Process Automation job. The maxLength value is specified in bytes. Filter syntax: https://docs.rundeck.com/docs/manual/11-node-filters.html#node-filter-syntax",
+            "example": "mynode1 !nodename: mynode2",
+            "maxLength": 1024
           }
         },
         "required": [
@@ -16972,6 +16978,7 @@
                             "action_type": "process_automation",
                             "action_data_reference": {
                               "process_automation_job_arguments": "prod-datapipe",
+                              "process_automation_node_filter": "mynode1 !nodename: mynode2",
                               "process_automation_job_id": "79c199bba1aff6e519f198457f5ec0fc"
                             }
                           },
@@ -17084,6 +17091,7 @@
                           "action_type": "process_automation",
                           "action_data_reference": {
                             "process_automation_job_arguments": "prod-datapipe",
+                            "process_automation_node_filter": "mynode1 !nodename: mynode2",
                             "process_automation_job_id": "79c199bba1aff6e519f198457f5ec0fc"
                           }
                         },

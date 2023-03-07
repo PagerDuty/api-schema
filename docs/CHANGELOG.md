@@ -3,6 +3,17 @@
 PagerDuty aims to have no breaking changes to our API, we do fix bugs and add new functionality continously. This document serves as a reference for any bug fixes or additions to our API.
 
 Currently we rarely deprecate, and do not remove any API functionality.
+
+## 2023-03-07
+- Added optional `process_automation_node_filter` property to:
+   - `POST /automation_actions/actions`
+   - `PUT /automation_actions/actions/{id}`
+   - `GET /automation_actions/actions`
+   - `GET /automation_actions/actions/{id}`
+   - `POST /automation_actions/actions/{id}/invocations`
+   - `GET /automation_actions/invocations`
+   - `GET /automation_actions/invocations/{id}`
+
 ## 2023-03-06
 - Log entry types are now explicity listed as their attributes may differ. The list will now show on the following endpoints:
   - `GET /log_entries`
