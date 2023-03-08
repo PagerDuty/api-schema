@@ -2632,7 +2632,7 @@
       "since_oncalls": {
         "name": "since",
         "in": "query",
-        "description": "The start of the time range over which you want to search. If an on-call period overlaps with the range, it will be included in the result. Defaults to current time. The search range cannot exceed 3 months.",
+        "description": "The start of the time range over which you want to search. If an on-call period overlaps with the range, it will be included in the result. Defaults to current time. On-call shifts are limited to 90 days in the future.",
         "schema": {
           "type": "string",
           "format": "date-time"
@@ -2641,7 +2641,7 @@
       "until_oncalls": {
         "name": "until",
         "in": "query",
-        "description": "The end of the time range over which you want to search. If an on-call period overlaps with the range, it will be included in the result. Defaults to current time. The search range cannot exceed 3 months, and the `until` time cannot be before the `since` time.",
+        "description": "The end of the time range over which you want to search. If an on-call period overlaps with the range, it will be included in the result. Defaults to current time. On-call shifts are limited to 90 days in the future, and the `until` time cannot be before the `since` time.",
         "schema": {
           "type": "string",
           "format": "date-time"
