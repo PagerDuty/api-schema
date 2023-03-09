@@ -2632,7 +2632,7 @@
       "since_oncalls": {
         "name": "since",
         "in": "query",
-        "description": "The start of the time range over which you want to search. If an on-call period overlaps with the range, it will be included in the result. Defaults to current time. The search range cannot exceed 3 months.",
+        "description": "The start of the time range over which you want to search. If an on-call period overlaps with the range, it will be included in the result. Defaults to current time. On-call shifts are limited to 90 days in the future.",
         "schema": {
           "type": "string",
           "format": "date-time"
@@ -2641,7 +2641,7 @@
       "until_oncalls": {
         "name": "until",
         "in": "query",
-        "description": "The end of the time range over which you want to search. If an on-call period overlaps with the range, it will be included in the result. Defaults to current time. The search range cannot exceed 3 months, and the `until` time cannot be before the `since` time.",
+        "description": "The end of the time range over which you want to search. If an on-call period overlaps with the range, it will be included in the result. Defaults to current time. On-call shifts are limited to 90 days in the future, and the `until` time cannot be before the `since` time.",
         "schema": {
           "type": "string",
           "format": "date-time"
@@ -32351,12 +32351,13 @@
     "/response_plays": {
       "description": "List and create response plays.",
       "get": {
+        "x-pd-requires-scope": "response_plays.read",
         "deprecated": true,
         "tags": [
           "Response Plays"
         ],
         "operationId": "listResponsePlays",
-        "description": "List all of the existing Response Plays.\n\nResponse Plays allow you to create packages of Incident Actions that can be applied during an Incident's life cycle.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#response-plays)\n\nWhen using a Global API token, the `From` header is required.\n",
+        "description": "List all of the existing Response Plays.\n\nResponse Plays allow you to create packages of Incident Actions that can be applied during an Incident's life cycle.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#response-plays)\n\nWhen using a Global API token, the `From` header is required.\n\nScoped OAuth requires: `response_plays.read`\n",
         "summary": "List Response Plays",
         "parameters": [
           {
@@ -32440,11 +32441,12 @@
       },
       "post": {
         "deprecated": true,
+        "x-pd-requires-scope": "response_plays.write",
         "tags": [
           "Response Plays"
         ],
         "operationId": "createResponsePlay",
-        "description": "Creates a new Response Plays.\n\nResponse Plays allow you to create packages of Incident Actions that can be applied during an Incident's life cycle.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#response-plays)\n",
+        "description": "Creates a new Response Plays.\n\nResponse Plays allow you to create packages of Incident Actions that can be applied during an Incident's life cycle.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#response-plays)\n\nScoped OAuth requires: `response_plays.write`\n",
         "summary": "Create a Response Play",
         "parameters": [
           {
@@ -32595,11 +32597,12 @@
       "description": "Manage a Response Play.",
       "get": {
         "deprecated": true,
+        "x-pd-requires-scope": "response_plays.read",
         "tags": [
           "Response Plays"
         ],
         "operationId": "getResponsePlay",
-        "description": "Get details about an existing Response Play.\n\nResponse Plays allow you to create packages of Incident Actions that can be applied during an Incident's life cycle.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#response-plays)\n\nWhen using a Global API token, the `From` header is required.",
+        "description": "Get details about an existing Response Play.\n\nResponse Plays allow you to create packages of Incident Actions that can be applied during an Incident's life cycle.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#response-plays)\n\nWhen using a Global API token, the `From` header is required.\nScoped OAuth requires: `response_plays.read`\n",
         "summary": "Get a Response Play",
         "parameters": [
           {
@@ -32679,11 +32682,12 @@
       },
       "put": {
         "deprecated": true,
+        "x-pd-requires-scope": "response_plays.write",
         "tags": [
           "Response Plays"
         ],
         "operationId": "updateResponsePlay",
-        "description": "Updates an existing Response Play.\n\nResponse Plays allow you to create packages of Incident Actions that can be applied during an Incident's life cycle.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#response-plays)\n",
+        "description": "Updates an existing Response Play.\n\nResponse Plays allow you to create packages of Incident Actions that can be applied during an Incident's life cycle.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#response-plays)\n\nScoped OAuth requires: `response_plays.write`\n",
         "summary": "Update a Response Play",
         "parameters": [
           {
@@ -32810,11 +32814,12 @@
       },
       "delete": {
         "deprecated": true,
+        "x-pd-requires-scope": "response_plays.write",
         "tags": [
           "Response Plays"
         ],
         "operationId": "deleteResponsePlay",
-        "description": "Delete an existing Response Play. Once the Response Play is deleted, the action cannot be undone.\n\nWARNING: When the Response Play is deleted, it is also removed from any Services that were using it.\n\nResponse Plays allow you to create packages of Incident Actions that can be applied to an Incident.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#response-plays)\n",
+        "description": "Delete an existing Response Play. Once the Response Play is deleted, the action cannot be undone.\n\nWARNING: When the Response Play is deleted, it is also removed from any Services that were using it.\n\nResponse Plays allow you to create packages of Incident Actions that can be applied to an Incident.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#response-plays)\n\nScoped OAuth requires: `response_plays.write`\n",
         "summary": "Delete a Response Play",
         "parameters": [
           {
@@ -32849,12 +32854,13 @@
     "/response_plays/{response_play_id}/run": {
       "description": "Run response plays.",
       "post": {
+        "x-pd-requires-scope": "response_plays.write",
         "deprecated": true,
         "tags": [
           "Response Plays"
         ],
         "operationId": "runResponsePlay",
-        "description": "Run a specified response play on a given incident.\n\nResponse Plays are a package of Incident Actions that can be applied during an Incident's life cycle.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#response-plays)\n",
+        "description": "Run a specified response play on a given incident.\n\nResponse Plays are a package of Incident Actions that can be applied during an Incident's life cycle.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#response-plays)\n\nScoped OAuth requires: `response_plays.write`\n",
         "summary": "Run a response play",
         "parameters": [
           {

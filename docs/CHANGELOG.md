@@ -4,6 +4,9 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+## 2023-03-08
+- Clarified the wording around the limits of `since` and `until` parameters for the oncall API.
+
 ## 2023-03-07
 - Added optional `process_automation_node_filter` property to:
    - `POST /automation_actions/actions`
