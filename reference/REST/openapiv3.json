@@ -24047,8 +24047,9 @@
         "tags": [
           "Extensions"
         ],
+        "x-pd-requires-scope": "extensions.read",
         "operationId": "listExtensions",
-        "description": "List existing extensions.\n\nExtensions are representations of Extension Schema objects that are attached to Services.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#extensions)\n",
+        "description": "List existing extensions.\n\nExtensions are representations of Extension Schema objects that are attached to Services.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#extensions)\n\nScoped OAuth requires: `extensions.read`\n",
         "summary": "List extensions",
         "parameters": [
           {
@@ -24159,8 +24160,9 @@
         "tags": [
           "Extensions"
         ],
+        "x-pd-requires-scope": "extensions.write",
         "operationId": "createExtension",
-        "description": "Create a new Extension.\n\nExtensions are representations of Extension Schema objects that are attached to Services.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#extensions)\n",
+        "description": "Create a new Extension.\n\nExtensions are representations of Extension Schema objects that are attached to Services.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#extensions)\n\nScoped OAuth requires: `extensions.write`\n",
         "summary": "Create an extension",
         "parameters": [
           {
@@ -24375,8 +24377,9 @@
         "tags": [
           "Extensions"
         ],
+        "x-pd-requires-scope": "extensions.read",
         "operationId": "getExtension",
-        "description": "Get details about an existing extension.\n\nExtensions are representations of Extension Schema objects that are attached to Services.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#extensions)\n",
+        "description": "Get details about an existing extension.\n\nExtensions are representations of Extension Schema objects that are attached to Services.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#extensions)\n\nScoped OAuth requires: `extensions.read`\n",
         "summary": "Get an extension",
         "parameters": [
           {
@@ -24460,8 +24463,9 @@
         "tags": [
           "Extensions"
         ],
+        "x-pd-requires-scope": "extensions.write",
         "operationId": "deleteExtension",
-        "description": "Delete an existing extension.\n\nOnce the extension is deleted, it will not be accessible from the web UI and new incidents won't be able to be created for this extension.\n\nExtensions are representations of Extension Schema objects that are attached to Services.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#extensions)\n",
+        "description": "Delete an existing extension.\n\nOnce the extension is deleted, it will not be accessible from the web UI and new incidents won't be able to be created for this extension.\n\nExtensions are representations of Extension Schema objects that are attached to Services.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#extensions)\n\nScoped OAuth requires: `extensions.write`\n",
         "summary": "Delete an extension",
         "parameters": [
           {
@@ -24493,8 +24497,9 @@
         "tags": [
           "Extensions"
         ],
+        "x-pd-requires-scope": "extensions.write",
         "operationId": "updateExtension",
-        "description": "Update an existing extension.\n\nExtensions are representations of Extension Schema objects that are attached to Services.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#extensions)\n",
+        "description": "Update an existing extension.\n\nExtensions are representations of Extension Schema objects that are attached to Services.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#extensions)\n\nScoped OAuth requires: `extensions.write`\n",
         "summary": "Update an extension",
         "parameters": [
           {
@@ -24643,8 +24648,9 @@
         "tags": [
           "Extensions"
         ],
+        "x-pd-requires-scope": "extensions.write",
         "operationId": "enableExtension",
-        "description": "Enable an extension that is temporarily disabled. (This API does not require a request body.)\n\nExtensions are representations of Extension Schema objects that are attached to Services.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#extensions)\n",
+        "description": "Enable an extension that is temporarily disabled. (This API does not require a request body.)\n\nExtensions are representations of Extension Schema objects that are attached to Services.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#extensions)\n\nScoped OAuth requires: `extensions.write`\n",
         "summary": "Enable an extension",
         "parameters": [
           {
