@@ -40163,11 +40163,12 @@
     "/templates": {
       "description": "List and Create Templates",
       "get": {
+        "x-pd-requires-scope": "templates.read",
         "tags": [
           "Templates"
         ],
         "operationId": "getTemplates",
-        "description": "Get a list of all the template on an account",
+        "description": "Get a list of all the template on an account\n\nScoped OAuth requires: `templates.read`\n",
         "summary": "List templates",
         "parameters": [
           {
@@ -40266,11 +40267,12 @@
         }
       },
       "post": {
+        "x-pd-requires-scope": "templates.write",
         "tags": [
           "Templates"
         ],
         "operationId": "createTemplate",
-        "description": "Create a new template",
+        "description": "Create a new template\n\nScoped OAuth requires: `templates.write`\n",
         "summary": "Create a template",
         "requestBody": {
           "content": {
@@ -40377,11 +40379,12 @@
     "/templates/{id}": {
       "description": "Update and Delete Templates",
       "get": {
+        "x-pd-requires-scope": "templates.read",
         "tags": [
           "Templates"
         ],
         "operationId": "getTemplate",
-        "description": "Get a single template on the account",
+        "description": "Get a single template on the account\n\nScoped OAuth requires: `templates.read`\n",
         "summary": "Get a template",
         "parameters": [
           {
@@ -40457,11 +40460,12 @@
         }
       },
       "put": {
+        "x-pd-requires-scope": "templates.write",
         "tags": [
           "Templates"
         ],
         "operationId": "updateTemplate",
-        "description": "Update an existing template",
+        "description": "Update an existing template\n\nScoped OAuth requires: `templates.write`\n",
         "summary": "Update a template",
         "parameters": [
           {
@@ -40572,11 +40576,12 @@
         }
       },
       "delete": {
+        "x-pd-requires-scope": "templates.write",
         "tags": [
           "Templates"
         ],
         "operationId": "deleteTemplate",
-        "description": "Delete a specific of templates on the account",
+        "description": "Delete a specific of templates on the account\n\nScoped OAuth requires: `templates.write`\n",
         "summary": "Delete a template",
         "parameters": [
           {
@@ -40607,12 +40612,13 @@
     },
     "/templates/{id}/render": {
       "post": {
+        "x-pd-requires-scope": "templates.read",
         "tags": [
           "Templates"
         ],
         "operationId": "renderTemplate",
         "summary": "Render a template",
-        "description": "Render a template. This endpoint has a variable request body depending on the template type. For the `status_update` template type, the caller will provide the incident id, and a status update message.",
+        "description": "Render a template. This endpoint has a variable request body depending on the template type. For the `status_update` template type, the caller will provide the incident id, and a status update message.\n\nScoped OAuth requires: `templates.read`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/id"
