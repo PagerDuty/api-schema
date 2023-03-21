@@ -7590,7 +7590,7 @@
               },
               "teams": {
                 "type": "array",
-                "description": "Teams associated with the policy. Account must have the `teams` ability to use this parameter.",
+                "description": "Team associated with the policy. Account must have the `teams` ability to use this parameter. Only one team may be associated with the policy.",
                 "items": {
                   "$ref": "#/components/schemas/TeamReference"
                 },
@@ -35193,8 +35193,9 @@
         "tags": [
           "Schedules"
         ],
+        "x-pd-requires-scope": "schedules.write",
         "operationId": "deleteScheduleOverride",
-        "description": "Remove an override.\n\nYou cannot remove a past override.\n\nIf the override start time is before the current time, but the end time is after the current time, the override will be truncated to the current time.\n\nIf the override is truncated, the status code will be 200 OK, as opposed to a 204 No Content for a successful delete.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#schedules)\n",
+        "description": "Remove an override.\n\nYou cannot remove a past override.\n\nIf the override start time is before the current time, but the end time is after the current time, the override will be truncated to the current time.\n\nIf the override is truncated, the status code will be 200 OK, as opposed to a 204 No Content for a successful delete.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#schedules)\n\nScoped OAuth requires: `schedules.write`\n",
         "summary": "Delete an override",
         "parameters": [
           {
@@ -35399,8 +35400,9 @@
         "tags": [
           "Schedules"
         ],
+        "x-pd-requires-scope": "schedules.write",
         "operationId": "createSchedulePreview",
-        "description": "Preview what an on-call schedule would look like without saving it.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#schedules)\n",
+        "description": "Preview what an on-call schedule would look like without saving it.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#schedules)\n\nScoped OAuth requires: `schedules.write`\n",
         "summary": "Preview a schedule",
         "parameters": [
           {
@@ -39504,8 +39506,9 @@
         "tags": [
           "Teams"
         ],
+        "x-pd-requires-scope": "teams.write",
         "operationId": "deleteTeamEscalationPolicy",
-        "description": "Remove an escalation policy from a team.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#teams)\n",
+        "description": "Remove an escalation policy from a team.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#teams)\n\nScoped OAuth requires: `teams.write`\n",
         "summary": "Remove an escalation policy from a team",
         "parameters": [
           {
@@ -39549,8 +39552,9 @@
         "tags": [
           "Teams"
         ],
+        "x-pd-requires-scope": "teams.write",
         "operationId": "updateTeamEscalationPolicy",
-        "description": "Add an escalation policy to a team.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#teams)\n",
+        "description": "Add an escalation policy to a team.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#teams)\n\nScoped OAuth requires: `teams.write`\n",
         "summary": "Add an escalation policy to a team",
         "parameters": [
           {
@@ -42708,8 +42712,9 @@
         "tags": [
           "Users"
         ],
+        "x-pd-requires-scope": "users.read",
         "operationId": "getUserHandoffNotificationRules",
-        "description": "List Handoff Notification Rules of your PagerDuty User.\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n",
+        "description": "List Handoff Notification Rules of your PagerDuty User.\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users.read`\n",
         "summary": "List a User's Handoff Notification Rules",
         "parameters": [
           {
@@ -42782,8 +42787,9 @@
         "tags": [
           "Users"
         ],
+        "x-pd-requires-scope": "users.write",
         "operationId": "createUserHandoffNotificationRule",
-        "description": "Create a new Handoff Notification Rule.\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n",
+        "description": "Create a new Handoff Notification Rule.\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users.write`\n",
         "summary": "Create a User Handoff Notification Rule",
         "parameters": [
           {
@@ -42891,8 +42897,9 @@
         "tags": [
           "Users"
         ],
+        "x-pd-requires-scope": "users.read",
         "operationId": "getUserHandoffNotifiactionRule",
-        "description": "Get details about a User's Handoff Notification Rule.\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n",
+        "description": "Get details about a User's Handoff Notification Rule.\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users.read`\n",
         "summary": "Get a user's handoff notification rule",
         "parameters": [
           {
@@ -42966,8 +42973,9 @@
         "tags": [
           "Users"
         ],
+        "x-pd-requires-scope": "users.write",
         "operationId": "deleteUserHandoffNotificationRule",
-        "description": "Remove a User's Handoff Notification Rule.\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n",
+        "description": "Remove a User's Handoff Notification Rule.\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users.write`\n",
         "summary": "Delete a User's Handoff Notification rule",
         "parameters": [
           {
@@ -43005,8 +43013,9 @@
         "tags": [
           "Users"
         ],
+        "x-pd-requires-scope": "users.write",
         "operationId": "updateUserHandoffNotification",
-        "description": "Update a User's Handoff Notification Rule.\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n",
+        "description": "Update a User's Handoff Notification Rule.\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users.write`\n",
         "summary": "Update a User's Handoff Notification Rule",
         "parameters": [
           {
