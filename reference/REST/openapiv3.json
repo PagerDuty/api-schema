@@ -7590,7 +7590,7 @@
               },
               "teams": {
                 "type": "array",
-                "description": "Teams associated with the policy. Account must have the `teams` ability to use this parameter.",
+                "description": "Team associated with the policy. Account must have the `teams` ability to use this parameter. Only one team may be associated with the policy.",
                 "items": {
                   "$ref": "#/components/schemas/TeamReference"
                 },
@@ -14387,6 +14387,7 @@
     },
     "/analytics/metrics/incidents/all": {
       "post": {
+        "x-pd-requires-scope": "analytics.read",
         "summary": "Get aggregated incident data",
         "operationId": "getAnalyticsMetricsIncidentsAll",
         "responses": {
@@ -14496,7 +14497,7 @@
           },
           "description": "Parameters and filters to apply to the dataset."
         },
-        "description": "Provides aggregated enriched metrics for incidents.\n\nThe provided metrics are aggregated by day, week, month using the aggregate_unit parameter, or for the entire period if no aggregate_unit is provided.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n<!-- theme: info -->\n> A `team_ids` or `service_ids` filter is required for [user-level API keys](https://support.pagerduty.com/docs/using-the-api#section-generating-a-personal-rest-api-key) or keys generated through an OAuth flow. Account-level API keys do not have this requirement.\n<!-- theme: info -->\n> **Note:** Analytics data is updated once per day. It takes up to 24 hours before new incidents appear in the Analytics API.\n",
+        "description": "Provides aggregated enriched metrics for incidents.\n\nThe provided metrics are aggregated by day, week, month using the aggregate_unit parameter, or for the entire period if no aggregate_unit is provided.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n<!-- theme: info -->\n> A `team_ids` or `service_ids` filter is required for [user-level API keys](https://support.pagerduty.com/docs/using-the-api#section-generating-a-personal-rest-api-key) or keys generated through an OAuth flow. Account-level API keys do not have this requirement.\n<!-- theme: info -->\n> **Note:** Analytics data is updated once per day. It takes up to 24 hours before new incidents appear in the Analytics API.\n\nScoped OAuth requires: `analytics.read`\n",
         "tags": [
           "Analytics"
         ]
@@ -14505,6 +14506,7 @@
     },
     "/analytics/metrics/incidents/services": {
       "post": {
+        "x-pd-requires-scope": "analytics.read",
         "summary": "Get aggregated service data",
         "operationId": "getAnalyticsMetricsIncidentsService",
         "responses": {
@@ -14643,7 +14645,7 @@
           },
           "description": "Parameters and filters to apply to the dataset."
         },
-        "description": "Provides aggregated metrics for incidents aggregated into units of time by service.\n\nExample metrics include Seconds to Resolve, Seconds to Engage, Snoozed Seconds, and Sleep Hour Interruptions. Some metric definitions can be found in our [Knowledge Base](https://support.pagerduty.com/docs/pagerduty-analytics).\nData can be aggregated by day, week or month in addition to by service, or provided just as a collection of aggregates for each service in the dataset for the entire period.  If a unit is provided, each row in the returned dataset will include a 'range_start' timestamp.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n<!-- theme: info -->\n> A `team_ids` or `service_ids` filter is required for [user-level API keys](https://support.pagerduty.com/docs/using-the-api#section-generating-a-personal-rest-api-key) or keys generated through an OAuth flow. Account-level API keys do not have this requirement.\n<!-- theme: info -->\n> **Note:** Analytics data is updated once per day. It takes up to 24 hours before new incidents appear in the Analytics API.\n",
+        "description": "Provides aggregated metrics for incidents aggregated into units of time by service.\n\nExample metrics include Seconds to Resolve, Seconds to Engage, Snoozed Seconds, and Sleep Hour Interruptions. Some metric definitions can be found in our [Knowledge Base](https://support.pagerduty.com/docs/pagerduty-analytics).\nData can be aggregated by day, week or month in addition to by service, or provided just as a collection of aggregates for each service in the dataset for the entire period.  If a unit is provided, each row in the returned dataset will include a 'range_start' timestamp.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n<!-- theme: info -->\n> A `team_ids` or `service_ids` filter is required for [user-level API keys](https://support.pagerduty.com/docs/using-the-api#section-generating-a-personal-rest-api-key) or keys generated through an OAuth flow. Account-level API keys do not have this requirement.\n<!-- theme: info -->\n> **Note:** Analytics data is updated once per day. It takes up to 24 hours before new incidents appear in the Analytics API.\n\nScoped OAuth requires: `analytics.read`\n",
         "tags": [
           "Analytics"
         ]
@@ -14652,6 +14654,7 @@
     },
     "/analytics/metrics/incidents/teams": {
       "post": {
+        "x-pd-requires-scope": "analytics.read",
         "summary": "Get aggregated team data",
         "operationId": "getAnalyticsMetricsIncidentsTeam",
         "responses": {
@@ -14786,7 +14789,7 @@
           },
           "description": "Parameters and filters to apply to the dataset."
         },
-        "description": "Provides aggregated metrics for incidents aggregated into units of time by team.\n\nExample metrics include Seconds to Resolve, Seconds to Engage, Snoozed Seconds, and Sleep Hour Interruptions. Some metric definitions can be found in our [Knowledge Base](https://support.pagerduty.com/docs/pagerduty-analytics).\nData can be aggregated by day, week or month in addition to by team, or provided just as a collection of aggregates for each team in the dataset for the entire period.  If a unit is provided, each row in the returned dataset will include a 'range_start' timestamp.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n<!-- theme: info -->\n> A `team_ids` or `service_ids` filter is required for [user-level API keys](https://support.pagerduty.com/docs/using-the-api#section-generating-a-personal-rest-api-key) or keys generated through an OAuth flow. Account-level API keys do not have this requirement.\n<!-- theme: info -->\n> **Note:** Analytics data is updated once per day. It takes up to 24 hours before new incidents appear in the Analytics API.\n",
+        "description": "Provides aggregated metrics for incidents aggregated into units of time by team.\n\nExample metrics include Seconds to Resolve, Seconds to Engage, Snoozed Seconds, and Sleep Hour Interruptions. Some metric definitions can be found in our [Knowledge Base](https://support.pagerduty.com/docs/pagerduty-analytics).\nData can be aggregated by day, week or month in addition to by team, or provided just as a collection of aggregates for each team in the dataset for the entire period.  If a unit is provided, each row in the returned dataset will include a 'range_start' timestamp.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n<!-- theme: info -->\n> A `team_ids` or `service_ids` filter is required for [user-level API keys](https://support.pagerduty.com/docs/using-the-api#section-generating-a-personal-rest-api-key) or keys generated through an OAuth flow. Account-level API keys do not have this requirement.\n<!-- theme: info -->\n> **Note:** Analytics data is updated once per day. It takes up to 24 hours before new incidents appear in the Analytics API.\n\nScoped OAuth requires: `analytics.read`\n",
         "tags": [
           "Analytics"
         ]
@@ -14795,6 +14798,7 @@
     },
     "/analytics/raw/incidents": {
       "post": {
+        "x-pd-requires-scope": "analytics.read",
         "summary": "Get raw data - multiple incidents",
         "operationId": "getAnalyticsIncidents",
         "responses": {
@@ -15162,7 +15166,7 @@
           },
           "description": "Parameters and filters to apply to the dataset."
         },
-        "description": "Provides enriched incident data and metrics for multiple incidents.\n\nExample metrics include Seconds to Resolve, Seconds to Engage, Snoozed Seconds, and Sleep Hour Interruptions. Some metric definitions can be found in our [Knowledge Base](https://support.pagerduty.com/docs/pagerduty-analytics).\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n<!-- theme: info -->\n> A `team_ids` or `service_ids` filter is required for [user-level API keys](https://support.pagerduty.com/docs/using-the-api#section-generating-a-personal-rest-api-key) or keys generated through an OAuth flow. Account-level API keys do not have this requirement.\n<!-- theme: info -->\n> **Note:** Analytics data is updated once per day. It takes up to 24 hours before new incidents appear in the Analytics API.\n",
+        "description": "Provides enriched incident data and metrics for multiple incidents.\n\nExample metrics include Seconds to Resolve, Seconds to Engage, Snoozed Seconds, and Sleep Hour Interruptions. Some metric definitions can be found in our [Knowledge Base](https://support.pagerduty.com/docs/pagerduty-analytics).\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n<!-- theme: info -->\n> A `team_ids` or `service_ids` filter is required for [user-level API keys](https://support.pagerduty.com/docs/using-the-api#section-generating-a-personal-rest-api-key) or keys generated through an OAuth flow. Account-level API keys do not have this requirement.\n<!-- theme: info -->\n> **Note:** Analytics data is updated once per day. It takes up to 24 hours before new incidents appear in the Analytics API.\n\nScoped OAuth requires: `analytics.read`\n",
         "tags": [
           "Analytics"
         ]
@@ -15176,6 +15180,7 @@
         }
       ],
       "get": {
+        "x-pd-requires-scope": "analytics.read",
         "summary": "Get raw data - single incident",
         "tags": [
           "Analytics"
@@ -15234,7 +15239,7 @@
           }
         },
         "operationId": "getAnalyticsIncidentsById",
-        "description": "Provides enriched incident data and metrics for a single incident.\n\nExample metrics include Seconds to Resolve, Seconds to Engage, Snoozed Seconds, and Sleep Hour Interruptions. Some metric definitions can be found in our [Knowledge Base](https://support.pagerduty.com/docs/pagerduty-analytics).\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n<!-- theme: info -->\n> **Note:** Analytics data is updated once per day. It takes up to 24 hours before new incidents appear in the Analytics API.\n",
+        "description": "Provides enriched incident data and metrics for a single incident.\n\nExample metrics include Seconds to Resolve, Seconds to Engage, Snoozed Seconds, and Sleep Hour Interruptions. Some metric definitions can be found in our [Knowledge Base](https://support.pagerduty.com/docs/pagerduty-analytics).\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n<!-- theme: info -->\n> **Note:** Analytics data is updated once per day. It takes up to 24 hours before new incidents appear in the Analytics API.\n\nScoped OAuth requires: `analytics.read`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -15255,6 +15260,7 @@
         }
       ],
       "get": {
+        "x-pd-requires-scope": "analytics.read",
         "summary": "Get raw responses from a single incident",
         "tags": [
           "Analytics"
@@ -15426,7 +15432,7 @@
           "description": "Parameters to apply to the dataset."
         },
         "operationId": "getAnalyticsIncidentResponsesById",
-        "description": "Provides enriched responder data for a single incident.\n\nExample metrics include Time to Respond, Responder Type, and Response Status. See metric definitions below.\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n<!-- theme: info -->\n> **Note:** Analytics data is updated once per day. It takes up to 24 hours before new incident responses appear in the Analytics API.",
+        "description": "Provides enriched responder data for a single incident.\n\nExample metrics include Time to Respond, Responder Type, and Response Status. See metric definitions below.\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n<!-- theme: info -->\n> **Note:** Analytics data is updated once per day. It takes up to 24 hours before new incident responses appear in the Analytics API.\nScoped OAuth requires: `analytics.read`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -35193,8 +35199,9 @@
         "tags": [
           "Schedules"
         ],
+        "x-pd-requires-scope": "schedules.write",
         "operationId": "deleteScheduleOverride",
-        "description": "Remove an override.\n\nYou cannot remove a past override.\n\nIf the override start time is before the current time, but the end time is after the current time, the override will be truncated to the current time.\n\nIf the override is truncated, the status code will be 200 OK, as opposed to a 204 No Content for a successful delete.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#schedules)\n",
+        "description": "Remove an override.\n\nYou cannot remove a past override.\n\nIf the override start time is before the current time, but the end time is after the current time, the override will be truncated to the current time.\n\nIf the override is truncated, the status code will be 200 OK, as opposed to a 204 No Content for a successful delete.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#schedules)\n\nScoped OAuth requires: `schedules.write`\n",
         "summary": "Delete an override",
         "parameters": [
           {
@@ -35399,8 +35406,9 @@
         "tags": [
           "Schedules"
         ],
+        "x-pd-requires-scope": "schedules.write",
         "operationId": "createSchedulePreview",
-        "description": "Preview what an on-call schedule would look like without saving it.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#schedules)\n",
+        "description": "Preview what an on-call schedule would look like without saving it.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#schedules)\n\nScoped OAuth requires: `schedules.write`\n",
         "summary": "Preview a schedule",
         "parameters": [
           {
@@ -39504,8 +39512,9 @@
         "tags": [
           "Teams"
         ],
+        "x-pd-requires-scope": "teams.write",
         "operationId": "deleteTeamEscalationPolicy",
-        "description": "Remove an escalation policy from a team.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#teams)\n",
+        "description": "Remove an escalation policy from a team.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#teams)\n\nScoped OAuth requires: `teams.write`\n",
         "summary": "Remove an escalation policy from a team",
         "parameters": [
           {
@@ -39549,8 +39558,9 @@
         "tags": [
           "Teams"
         ],
+        "x-pd-requires-scope": "teams.write",
         "operationId": "updateTeamEscalationPolicy",
-        "description": "Add an escalation policy to a team.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#teams)\n",
+        "description": "Add an escalation policy to a team.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#teams)\n\nScoped OAuth requires: `teams.write`\n",
         "summary": "Add an escalation policy to a team",
         "parameters": [
           {
@@ -42708,8 +42718,9 @@
         "tags": [
           "Users"
         ],
+        "x-pd-requires-scope": "users.read",
         "operationId": "getUserHandoffNotificationRules",
-        "description": "List Handoff Notification Rules of your PagerDuty User.\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n",
+        "description": "List Handoff Notification Rules of your PagerDuty User.\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users.read`\n",
         "summary": "List a User's Handoff Notification Rules",
         "parameters": [
           {
@@ -42782,8 +42793,9 @@
         "tags": [
           "Users"
         ],
+        "x-pd-requires-scope": "users.write",
         "operationId": "createUserHandoffNotificationRule",
-        "description": "Create a new Handoff Notification Rule.\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n",
+        "description": "Create a new Handoff Notification Rule.\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users.write`\n",
         "summary": "Create a User Handoff Notification Rule",
         "parameters": [
           {
@@ -42891,8 +42903,9 @@
         "tags": [
           "Users"
         ],
+        "x-pd-requires-scope": "users.read",
         "operationId": "getUserHandoffNotifiactionRule",
-        "description": "Get details about a User's Handoff Notification Rule.\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n",
+        "description": "Get details about a User's Handoff Notification Rule.\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users.read`\n",
         "summary": "Get a user's handoff notification rule",
         "parameters": [
           {
@@ -42966,8 +42979,9 @@
         "tags": [
           "Users"
         ],
+        "x-pd-requires-scope": "users.write",
         "operationId": "deleteUserHandoffNotificationRule",
-        "description": "Remove a User's Handoff Notification Rule.\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n",
+        "description": "Remove a User's Handoff Notification Rule.\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users.write`\n",
         "summary": "Delete a User's Handoff Notification rule",
         "parameters": [
           {
@@ -43005,8 +43019,9 @@
         "tags": [
           "Users"
         ],
+        "x-pd-requires-scope": "users.write",
         "operationId": "updateUserHandoffNotification",
-        "description": "Update a User's Handoff Notification Rule.\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n",
+        "description": "Update a User's Handoff Notification Rule.\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users.write`\n",
         "summary": "Update a User's Handoff Notification Rule",
         "parameters": [
           {
