@@ -4,6 +4,16 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+## 2023-03-21
+- `/tags` endpoint now supports oauth authentication. 
+  - `POST /tags`
+  - `GET /tags`
+  - `GET /tags/{id}`
+  - `DELETE /tags/{id}`
+  - `GET /tags/{id}/{users || escalation_policy || teams}`
+  - `GET {users || escalation_policy || teams}/{id}/tags`
+  - `POST {users || escalation_policy || teams}/{id}/change_tags`
+
 ## 2023-03-20
 - Updated description of Escalation Policy teams field to include the limit (1) team per Escalation Policy.
 
