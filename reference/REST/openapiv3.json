@@ -13589,11 +13589,12 @@
   "paths": {
     "/{entity_type}/{id}/change_tags": {
       "post": {
+        "x-pd-requires-scope": "tags.write",
         "tags": [
           "Tags"
         ],
         "operationId": "createEntityTypeByIdChangeTags",
-        "description": "Assign existing or new tags.\n\nA Tag is applied to Escalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#tags)\n",
+        "description": "Assign existing or new tags.\n\nA Tag is applied to Escalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#tags)\n\nScoped OAuth requires: `tags.write`\n",
         "summary": "Assign tags",
         "parameters": [
           {
@@ -13758,11 +13759,12 @@
     },
     "/{entity_type}/{id}/tags": {
       "get": {
+        "x-pd-requires-scope": "tags.read",
         "tags": [
           "Tags"
         ],
         "operationId": "getEntityTypeByIdTags",
-        "description": "Get related tags for Users, Teams or Escalation Policies.\n\nA Tag is applied to Escalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#tags)\n",
+        "description": "Get related tags for Users, Teams or Escalation Policies.\n\nA Tag is applied to Escalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#tags)\n\nScoped OAuth requires: `tags.read`\n",
         "summary": "Get tags for entities",
         "parameters": [
           {
@@ -24868,18 +24870,20 @@
                     "incident_workflow": {
                       "name": "Example Incident Workflow",
                       "description": "This Incident Workflow is an example",
-                      "steps": {
-                        "name": "Send Status Update",
-                        "action_configuration": {
-                          "action_id": "pagerduty.com:incident-workflows:send-status-update:1",
-                          "inputs": [
-                            {
-                              "name": "Message",
-                              "value": "Example status message sent on {{current_date}}"
-                            }
-                          ]
+                      "steps": [
+                        {
+                          "name": "Send Status Update",
+                          "action_configuration": {
+                            "action_id": "pagerduty.com:incident-workflows:send-status-update:1",
+                            "inputs": [
+                              {
+                                "name": "Message",
+                                "value": "Example status message sent on {{current_date}}"
+                              }
+                            ]
+                          }
                         }
-                      }
+                      ]
                     }
                   }
                 }
@@ -25168,18 +25172,20 @@
                     "incident_workflow": {
                       "name": "Example Incident Workflow",
                       "description": "This Incident Workflow is an example",
-                      "steps": {
-                        "name": "Send Status Update",
-                        "action_configuration": {
-                          "action_id": "pagerduty.com:incident-workflows:send-status-update:1",
-                          "inputs": [
-                            {
-                              "name": "Message",
-                              "value": "Example status message sent on {{current_date}}"
-                            }
-                          ]
+                      "steps": [
+                        {
+                          "name": "Send Status Update",
+                          "action_configuration": {
+                            "action_id": "pagerduty.com:incident-workflows:send-status-update:1",
+                            "inputs": [
+                              {
+                                "name": "Message",
+                                "value": "Example status message sent on {{current_date}}"
+                              }
+                            ]
+                          }
                         }
-                      }
+                      ]
                     }
                   }
                 }
@@ -25311,10 +25317,6 @@
                       "incident": {
                         "type": "object",
                         "properties": {
-                          "id": {
-                            "type": "string",
-                            "description": "The ID of the Incident with which the Workflow Instance is associated"
-                          },
                           "type": {
                             "type": "string",
                             "enum": [
@@ -28833,14 +28835,14 @@
       }
     },
     "/incidents/{id}/merge": {
-      "x-pd-requires-scope": "incidents.write",
-      "description": "\"Merge\" an array of incidents into a target incident. After the merge is performed the target incident will contain the source incidents's alerts, and the source incidents will be resolved.\nScoped OAuth requires: `incidents.write`\n",
+      "description": "\"Merge\" an array of incidents into a target incident. After the merge is performed the target incident will contain the source incidents's alerts, and the source incidents will be resolved.",
       "put": {
         "tags": [
           "Incidents"
         ],
+        "x-pd-requires-scope": "incidents.write",
         "operationId": "mergeIncidents",
-        "description": "Merge a list of source incidents into this incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n",
+        "description": "Merge a list of source incidents into this incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n\nScoped OAuth requires: `incidents.write`\n",
         "summary": "Merge incidents",
         "parameters": [
           {
@@ -29884,14 +29886,14 @@
       }
     },
     "/incidents/{id}/snooze": {
-      "x-pd-requires-scope": "incidents.write",
-      "description": "\"Snooze\" an incident. This suspends the acknowledgement timeout and auto-resolution for a given amount of time.\nScoped OAuth requires: `incidents.write`\n",
+      "description": "\"Snooze\" an incident. This suspends the acknowledgement timeout and auto-resolution for a given amount of time.",
       "post": {
         "tags": [
           "Incidents"
         ],
+        "x-pd-requires-scope": "incidents.write",
         "operationId": "createIncidentSnooze",
-        "description": "Snooze an incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n",
+        "description": "Snooze an incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n\nScoped OAuth requires: `incidents.write`\n",
         "summary": "Snooze an incident",
         "parameters": [
           {
@@ -38630,11 +38632,12 @@
     },
     "/tags": {
       "get": {
+        "x-pd-requires-scope": "tags.read",
         "tags": [
           "Tags"
         ],
         "operationId": "listTags",
-        "description": "List all of your account's tags.\n\nA Tag is applied to Escalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#tags)\n",
+        "description": "List all of your account's tags.\n\nA Tag is applied to Escalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#tags)\n\nScoped OAuth requires: `tags.read`\n",
         "summary": "List tags",
         "parameters": [
           {
@@ -38718,11 +38721,12 @@
         }
       },
       "post": {
+        "x-pd-requires-scope": "tags.write",
         "tags": [
           "Tags"
         ],
         "operationId": "createTags",
-        "description": "Create a Tag.\n\nA Tag is applied to Escalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#tags)\n",
+        "description": "Create a Tag.\n\nA Tag is applied to Escalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#tags)\n\nScoped OAuth requires: `tags.write`\n",
         "summary": "Create a tag",
         "parameters": [
           {
@@ -38811,11 +38815,12 @@
     },
     "/tags/{id}": {
       "get": {
+        "x-pd-requires-scope": "tags.read",
         "tags": [
           "Tags"
         ],
         "operationId": "getTag",
-        "description": "Get details about an existing Tag.\n\nA Tag is applied to Escalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#tags)\n",
+        "description": "Get details about an existing Tag.\n\nA Tag is applied to Escalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#tags)\n\nScoped OAuth requires: `tags.read`\n",
         "summary": "Get a tag",
         "parameters": [
           {
@@ -38877,11 +38882,12 @@
         }
       },
       "delete": {
+        "x-pd-requires-scope": "tags.write",
         "tags": [
           "Tags"
         ],
         "operationId": "deleteTag",
-        "description": "Remove an existing Tag.\n\nA Tag is applied to Escalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#tags)\n",
+        "description": "Remove an existing Tag.\n\nA Tag is applied to Escalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#tags)\n\nScoped OAuth requires: `tags.write`\n",
         "summary": "Delete a tag",
         "parameters": [
           {
@@ -38912,11 +38918,12 @@
     },
     "/tags/{id}/{entity_type}": {
       "get": {
+        "x-pd-requires-scope": "tags.read",
         "tags": [
           "Tags"
         ],
         "operationId": "getTagsByEntityType",
-        "description": "Get related Users, Teams or Escalation Policies for the Tag.\n\nA Tag is applied to Escalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#tags)\n",
+        "description": "Get related Users, Teams or Escalation Policies for the Tag.\n\nA Tag is applied to Escalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#tags)\n\nScoped OAuth requires: `tags.read`\n",
         "summary": "Get connected entities",
         "parameters": [
           {
