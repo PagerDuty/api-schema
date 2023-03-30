@@ -24738,11 +24738,12 @@
     "/incident_workflows": {
       "description": "Create, retrieve, or modify Incident Workflows",
       "get": {
+        "x-pd-requires-scope": "incident_workflows.read",
         "tags": [
           "Incident Workflows"
         ],
         "operationId": "listIncidentWorkflows",
-        "description": "List existing Incident Workflows.\n\nThis is the best method to use to list all Incident Workflows in your account. If your use case requires listing Incident Workflows associated with a particular Service, you can use the \"listIncidentWorkflowsByService\" endpoint.\n\nAn Incident Workflow is a sequence of configurable Steps and associated Triggers that can execute automated Actions for a given Incident.\n",
+        "description": "List existing Incident Workflows.\n\nThis is the best method to use to list all Incident Workflows in your account. If your use case requires listing Incident Workflows associated with a particular Service, you can use the \"listIncidentWorkflowsByService\" endpoint.\n\nAn Incident Workflow is a sequence of configurable Steps and associated Triggers that can execute automated Actions for a given Incident.\n\nScoped OAuth requires: `incident_workflows.read`\n",
         "summary": "List Incident Workflows",
         "parameters": [
           {
@@ -24835,11 +24836,12 @@
         }
       },
       "post": {
+        "x-pd-requires-scope": "incident_workflows.write",
         "tags": [
           "Incident Workflows"
         ],
         "operationId": "postIncidentWorkflow",
-        "description": "Create a new Incident Workflow\n\nAn Incident Workflow is a sequence of configurable Steps and associated Triggers that can execute automated Actions for a given Incident.\n",
+        "description": "Create a new Incident Workflow\n\nAn Incident Workflow is a sequence of configurable Steps and associated Triggers that can execute automated Actions for a given Incident.\n\nScoped OAuth requires: `incident_workflows.write`\n",
         "summary": "Create an Incident Workflow",
         "parameters": [
           {
@@ -24983,11 +24985,12 @@
     "/incident_workflows/{id}": {
       "description": "Create, retrieve, modify, or delete Incident Workflows",
       "get": {
+        "x-pd-requires-scope": "incident_workflows.read",
         "tags": [
           "Incident Workflows"
         ],
         "operationId": "getIncidentWorkflow",
-        "description": "Get an existing Incident Workflow\nAn Incident Workflow is a sequence of configurable Steps and associated Triggers that can execute automated Actions for a given Incident.\n",
+        "description": "Get an existing Incident Workflow\nAn Incident Workflow is a sequence of configurable Steps and associated Triggers that can execute automated Actions for a given Incident.\n\nScoped OAuth requires: `incident_workflows.read`\n",
         "summary": "Get an Incident Workflow",
         "parameters": [
           {
@@ -25092,11 +25095,12 @@
         }
       },
       "delete": {
+        "x-pd-requires-scope": "incident_workflows.write",
         "tags": [
           "Incident Workflows"
         ],
         "operationId": "deleteIncidentWorkflow",
-        "description": "Delete an existing Incident Workflow\n\nAn Incident Workflow is a sequence of configurable Steps and associated Triggers that can execute automated Actions for a given Incident.\n",
+        "description": "Delete an existing Incident Workflow\n\nAn Incident Workflow is a sequence of configurable Steps and associated Triggers that can execute automated Actions for a given Incident.\n\nScoped OAuth requires: `incident_workflows.write`\n",
         "summary": "Delete an Incident Workflow",
         "parameters": [
           {
@@ -25134,11 +25138,12 @@
         }
       },
       "put": {
+        "x-pd-requires-scope": "incident_workflows.write",
         "tags": [
           "Incident Workflows"
         ],
         "operationId": "putIncidentWorkflow",
-        "description": "Update an Incident Workflow\n\nAn Incident Workflow is a sequence of configurable Steps and associated Triggers that can execute automated Actions for a given Incident.\n",
+        "description": "Update an Incident Workflow\n\nAn Incident Workflow is a sequence of configurable Steps and associated Triggers that can execute automated Actions for a given Incident.\n\nScoped OAuth requires: `incident_workflows.write`\n",
         "summary": "Update an Incident Workflow",
         "parameters": [
           {
@@ -25288,11 +25293,12 @@
     "/incident_workflows/{id}/instances": {
       "description": "Start an Instance of an Incident Workflows",
       "post": {
+        "x-pd-requires-scope": "incident_workflows:instances.write",
         "tags": [
           "Incident Workflows"
         ],
         "operationId": "createIncidentWorkflowInstance",
-        "description": "Start an Instance of an Incident Workflow\n\nAn Incident Workflow is a sequence of configurable Steps and associated Triggers that can execute automated Actions for a given Incident.\n",
+        "description": "Start an Instance of an Incident Workflow\n\nAn Incident Workflow is a sequence of configurable Steps and associated Triggers that can execute automated Actions for a given Incident.\n\nScoped OAuth requires: `incident_workflows:instances.write`\n",
         "summary": "Start an Incident Workflow Instance",
         "parameters": [
           {
@@ -25414,11 +25420,12 @@
     "/incident_workflows/actions": {
       "description": "Retrieve Incident Workflow Actions",
       "get": {
+        "x-pd-requires-scope": "incident_workflows.read",
         "tags": [
           "Incident Workflows"
         ],
         "operationId": "listIncidentWorkflowActions",
-        "description": "List Incident Workflow Actions\n",
+        "description": "List Incident Workflow Actions\n\nScoped OAuth requires: `incident_workflows.read`\n",
         "summary": "List Actions",
         "parameters": [
           {
@@ -25548,11 +25555,12 @@
     "/incident_workflows/actions/{id}": {
       "description": "Retrieve Incident Workflow Actions",
       "get": {
+        "x-pd-requires-scope": "incident_workflows.read",
         "tags": [
           "Incident Workflows"
         ],
         "operationId": "getIncidentWorkflowAction",
-        "description": "Get an Incident Workflow Action\n",
+        "description": "Get an Incident Workflow Action\n\nScoped OAuth requires: `incident_workflows.read`\n",
         "summary": "Get an Action",
         "parameters": [
           {
@@ -25656,11 +25664,12 @@
     "/incident_workflows/triggers": {
       "description": "Create, retrieve, or modify Incident Workflow Triggers",
       "get": {
+        "x-pd-requires-scope": "incident_workflows.read",
         "tags": [
           "Incident Workflows"
         ],
         "operationId": "listIncidentWorkflowTriggers",
-        "description": "List existing Incident Workflow Triggers\n",
+        "description": "List existing Incident Workflow Triggers\n\nScoped OAuth requires: `incident_workflows.read`\n",
         "summary": "List Triggers",
         "parameters": [
           {
@@ -25777,11 +25786,12 @@
         }
       },
       "post": {
+        "x-pd-requires-scope": "incident_workflows.write",
         "tags": [
           "Incident Workflows"
         ],
         "operationId": "createIncidentWorkflowTrigger",
-        "description": "Create new Incident Workflow Trigger\n",
+        "description": "Create new Incident Workflow Trigger\n\nScoped OAuth requires: `incident_workflows.write`\n",
         "summary": "Create a Trigger",
         "parameters": [
           {
@@ -25908,11 +25918,12 @@
     "/incident_workflows/triggers/{id}": {
       "description": "Create, retrieve, or modify Incident Workflow Triggers",
       "get": {
+        "x-pd-requires-scope": "incident_workflows.read",
         "tags": [
           "Incident Workflows"
         ],
         "operationId": "getIncidentWorkflowTrigger",
-        "description": "Retrieve an existing Incident Workflows Trigger\n",
+        "description": "Retrieve an existing Incident Workflows Trigger\n\nScoped OAuth requires: `incident_workflows.read`\n",
         "summary": "Get a Trigger",
         "parameters": [
           {
@@ -25991,11 +26002,12 @@
         }
       },
       "put": {
+        "x-pd-requires-scope": "incident_workflows.write",
         "tags": [
           "Incident Workflows"
         ],
         "operationId": "updateIncidentWorkflowTrigger",
-        "description": "Update an existing Incident Workflow Trigger\n",
+        "description": "Update an existing Incident Workflow Trigger\n\nScoped OAuth requires: `incident_workflows.write`\n",
         "summary": "Update a Trigger",
         "parameters": [
           {
@@ -26118,11 +26130,12 @@
         }
       },
       "delete": {
+        "x-pd-requires-scope": "incident_workflows.write",
         "tags": [
           "Incident Workflows"
         ],
         "operationId": "deleteIncidentWorkflowTrigger",
-        "description": "Delete an existing Incident Workflow Trigger\n",
+        "description": "Delete an existing Incident Workflow Trigger\n\nScoped OAuth requires: `incident_workflows.write`\n",
         "summary": "Delete a Trigger",
         "parameters": [
           {
@@ -26163,11 +26176,12 @@
     "/incident_workflows/triggers/{id}/services": {
       "description": "Manipulate Services attached to an Incident Workflow Trigger",
       "post": {
+        "x-pd-requires-scope": "incident_workflows.write",
         "tags": [
           "Incident Workflows"
         ],
         "operationId": "associateServiceToIncidentWorkflowTrigger",
-        "description": "Associate a Service with an existing Incident Workflow Trigger\n",
+        "description": "Associate a Service with an existing Incident Workflow Trigger\n\nScoped OAuth requires: `incident_workflows.write`\n",
         "summary": "Associate a Trigger and Service",
         "parameters": [
           {
@@ -26292,11 +26306,12 @@
     "/incident_workflows/triggers/{trigger_id}/services/{service_id}": {
       "description": "Manipulate Services attached to an Incident Workflow Trigger",
       "delete": {
+        "x-pd-requires-scope": "incident_workflows.write",
         "tags": [
           "Incident Workflows"
         ],
         "operationId": "deleteServiceFromIncidentWorkflowTrigger",
-        "description": "Remove a an existing Service from an Incident Workflow Trigger\n",
+        "description": "Remove a an existing Service from an Incident Workflow Trigger\n\nScoped OAuth requires: `incident_workflows.write`\n",
         "summary": "Dissociate a Trigger and Service",
         "parameters": [
           {
