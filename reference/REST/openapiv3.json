@@ -34642,7 +34642,7 @@
           "Rulesets"
         ],
         "operationId": "listRulesets",
-        "description": "List all Rulesets\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#rulesets)\n\nScoped OAuth requires: `event_rules.read`\n",
+        "description": "List all Rulesets\n<!-- theme: warning -->\n> ### End-of-life\n> Rulesets and Event Rules will end-of-life soon. We highly recommend that you [migrate to Event Orchestration](https://support.pagerduty.com/docs/migrate-to-event-orchestration) as soon as possible so you can take advantage of the new functionality, such as improved UI, rule creation, APIs and Terraform support, advanced conditions, and rule nesting.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#rulesets)\n\nScoped OAuth requires: `event_rules.read`\n",
         "summary": "List Rulesets",
         "parameters": [
           {
@@ -34743,7 +34743,7 @@
           "Rulesets"
         ],
         "operationId": "createRuleset",
-        "description": "Create a new Ruleset.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#rulesets)\n\nScoped OAuth requires: `event_rules.write`\n",
+        "description": "Create a new Ruleset.\n<!-- theme: warning -->\n> ### End-of-life\n> Rulesets and Event Rules will end-of-life soon. We highly recommend that you [migrate to Event Orchestration](https://support.pagerduty.com/docs/migrate-to-event-orchestration) as soon as possible so you can take advantage of the new functionality, such as improved UI, rule creation, APIs and Terraform support, advanced conditions, and rule nesting.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#rulesets)\n\nScoped OAuth requires: `event_rules.write`\n",
         "summary": "Create a Ruleset",
         "parameters": [
           {
@@ -34866,7 +34866,7 @@
           "Rulesets"
         ],
         "operationId": "getRuleset",
-        "description": "Get a Ruleset.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#rulesets)\n\nScoped OAuth requires: `event_rules.read`\n",
+        "description": "Get a Ruleset.\n<!-- theme: warning -->\n> ### End-of-life\n> Rulesets and Event Rules will end-of-life soon. We highly recommend that you [migrate to Event Orchestration](https://support.pagerduty.com/docs/migrate-to-event-orchestration) as soon as possible so you can take advantage of the new functionality, such as improved UI, rule creation, APIs and Terraform support, advanced conditions, and rule nesting.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#rulesets)\n\nScoped OAuth requires: `event_rules.read`\n",
         "summary": "Get a Ruleset",
         "parameters": [
           {
@@ -34948,7 +34948,7 @@
           "Rulesets"
         ],
         "operationId": "updateRuleset",
-        "description": "Update a Ruleset.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#rulesets)\n\nScoped OAuth requires: `event_rules.write`\n",
+        "description": "Update a Ruleset.\n<!-- theme: warning -->\n> ### End-of-life\n> Rulesets and Event Rules will end-of-life soon. We highly recommend that you [migrate to Event Orchestration](https://support.pagerduty.com/docs/migrate-to-event-orchestration) as soon as possible so you can take advantage of the new functionality, such as improved UI, rule creation, APIs and Terraform support, advanced conditions, and rule nesting.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#rulesets)\n\nScoped OAuth requires: `event_rules.write`\n",
         "summary": "Update a Ruleset",
         "parameters": [
           {
@@ -35074,7 +35074,7 @@
           "Rulesets"
         ],
         "operationId": "deleteRuleset",
-        "description": "Delete a Ruleset.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#rulesets)\n\nScoped OAuth requires: `event_rules.write`\n",
+        "description": "Delete a Ruleset.\n<!-- theme: warning -->\n> ### End-of-life\n> Rulesets and Event Rules will end-of-life soon. We highly recommend that you [migrate to Event Orchestration](https://support.pagerduty.com/docs/migrate-to-event-orchestration) as soon as possible so you can take advantage of the new functionality, such as improved UI, rule creation, APIs and Terraform support, advanced conditions, and rule nesting.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#rulesets)\n\nScoped OAuth requires: `event_rules.write`\n",
         "summary": "Delete a Ruleset",
         "parameters": [
           {
@@ -35120,7 +35120,7 @@
           "Rulesets"
         ],
         "operationId": "listRulesetEventRules",
-        "description": "List all Event Rules on a Ruleset.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#rulesets)\n\nNote: Create and Update on rules will accept 'description' or 'summary' interchangeably as an extraction action target. Get and List on rules will always return 'summary' as the target. If you are expecting 'description' please change your automation code to expect 'summary' instead.\n\nScoped OAuth requires: `event_rules.read`\n",
+        "description": "List all Event Rules on a Ruleset.\n<!-- theme: warning -->\n> ### End-of-life\n> Rulesets and Event Rules will end-of-life soon. We highly recommend that you [migrate to Event Orchestration](https://support.pagerduty.com/docs/migrate-to-event-orchestration) as soon as possible so you can take advantage of the new functionality, such as improved UI, rule creation, APIs and Terraform support, advanced conditions, and rule nesting.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#rulesets)\n\nNote: Create and Update on rules will accept 'description' or 'summary' interchangeably as an extraction action target. Get and List on rules will always return 'summary' as the target. If you are expecting 'description' please change your automation code to expect 'summary' instead.\n\nScoped OAuth requires: `event_rules.read`\n",
         "summary": "List Event Rules",
         "parameters": [
           {
@@ -35263,7 +35263,7 @@
           "Rulesets"
         ],
         "operationId": "createRulesetEventRule",
-        "description": "Create a new Event Rule.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#rulesets)\n\nNote: Create and Update on rules will accept 'description' or 'summary' interchangeably as an extraction action target. Get and List on rules will always return 'summary' as the target. If you are expecting 'description' please change your automation code to expect 'summary' instead.\n\nScoped OAuth requires: `event_rules.write`\n",
+        "description": "Create a new Event Rule.\n<!-- theme: warning -->\n> ### End-of-life\n> Rulesets and Event Rules will end-of-life soon. We highly recommend that you [migrate to Event Orchestration](https://support.pagerduty.com/docs/migrate-to-event-orchestration) as soon as possible so you can take advantage of the new functionality, such as improved UI, rule creation, APIs and Terraform support, advanced conditions, and rule nesting.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#rulesets)\n\nNote: Create and Update on rules will accept 'description' or 'summary' interchangeably as an extraction action target. Get and List on rules will always return 'summary' as the target. If you are expecting 'description' please change your automation code to expect 'summary' instead.\n\nScoped OAuth requires: `event_rules.write`\n",
         "summary": "Create an Event Rule",
         "parameters": [
           {
@@ -35440,7 +35440,7 @@
           "Rulesets"
         ],
         "operationId": "getRulesetEventRule",
-        "description": "Get an Event Rule.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#rulesets)\n\nNote: Create and Update on rules will accept 'description' or 'summary' interchangeably as an extraction action target. Get and List on rules will always return 'summary' as the target. If you are expecting 'description' please change your automation code to expect 'summary' instead.\n\nScoped OAuth requires: `event_rules.read`\n",
+        "description": "Get an Event Rule.\n<!-- theme: warning -->\n> ### End-of-life\n> Rulesets and Event Rules will end-of-life soon. We highly recommend that you [migrate to Event Orchestration](https://support.pagerduty.com/docs/migrate-to-event-orchestration) as soon as possible so you can take advantage of the new functionality, such as improved UI, rule creation, APIs and Terraform support, advanced conditions, and rule nesting.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#rulesets)\n\nNote: Create and Update on rules will accept 'description' or 'summary' interchangeably as an extraction action target. Get and List on rules will always return 'summary' as the target. If you are expecting 'description' please change your automation code to expect 'summary' instead.\n\nScoped OAuth requires: `event_rules.read`\n",
         "summary": "Get an Event Rule",
         "parameters": [
           {
@@ -35563,7 +35563,7 @@
         ],
         "operationId": "updateRulesetEventRule",
         "summary": "Update an Event Rule",
-        "description": "Update an Event Rule. Note that the endpoint supports partial updates, so any number of the writable fields can be provided.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#rulesets)\n\nNote: Create and Update on rules will accept 'description' or 'summary' interchangeably as an extraction action target. Get and List on rules will always return 'summary' as the target. If you are expecting 'description' please change your automation code to expect 'summary' instead.\n\nScoped OAuth requires: `event_rules.write`\n",
+        "description": "Update an Event Rule. Note that the endpoint supports partial updates, so any number of the writable fields can be provided.\n<!-- theme: warning -->\n> ### End-of-life\n> Rulesets and Event Rules will end-of-life soon. We highly recommend that you [migrate to Event Orchestration](https://support.pagerduty.com/docs/migrate-to-event-orchestration) as soon as possible so you can take advantage of the new functionality, such as improved UI, rule creation, APIs and Terraform support, advanced conditions, and rule nesting.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#rulesets)\n\nNote: Create and Update on rules will accept 'description' or 'summary' interchangeably as an extraction action target. Get and List on rules will always return 'summary' as the target. If you are expecting 'description' please change your automation code to expect 'summary' instead.\n\nScoped OAuth requires: `event_rules.write`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -35723,7 +35723,7 @@
           "Rulesets"
         ],
         "operationId": "deleteRulesetEventRule",
-        "description": "Delete an Event Rule.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#rulesets)\n\nScoped OAuth requires: `event_rules.write`\n",
+        "description": "Delete an Event Rule.\n<!-- theme: warning -->\n> ### End-of-life\n> Rulesets and Event Rules will end-of-life soon. We highly recommend that you [migrate to Event Orchestration](https://support.pagerduty.com/docs/migrate-to-event-orchestration) as soon as possible so you can take advantage of the new functionality, such as improved UI, rule creation, APIs and Terraform support, advanced conditions, and rule nesting.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#rulesets)\n\nScoped OAuth requires: `event_rules.write`\n",
         "summary": "Delete an Event Rule",
         "parameters": [
           {
@@ -39285,7 +39285,7 @@
           "Services"
         ],
         "operationId": "listServiceEventRules",
-        "description": "List Event Rules on a Service.\n\nScoped OAuth requires: `services.read`\n",
+        "description": "List Event Rules on a Service.\n<!-- theme: warning -->\n> ### End-of-life\n> Rulesets and Event Rules will end-of-life soon. We highly recommend that you [migrate to Event Orchestration](https://support.pagerduty.com/docs/migrate-to-event-orchestration) as soon as possible so you can take advantage of the new functionality, such as improved UI, rule creation, APIs and Terraform support, advanced conditions, and rule nesting.\n\nScoped OAuth requires: `services.read`\n",
         "summary": "List Service's Event Rules",
         "parameters": [
           {
@@ -39417,7 +39417,7 @@
           "Services"
         ],
         "operationId": "createServiceEventRule",
-        "description": "Create a new Event Rule on a Service.\n\nScoped OAuth requires: `services.write`\n",
+        "description": "Create a new Event Rule on a Service.\n<!-- theme: warning -->\n> ### End-of-life\n> Rulesets and Event Rules will end-of-life soon. We highly recommend that you [migrate to Event Orchestration](https://support.pagerduty.com/docs/migrate-to-event-orchestration) as soon as possible so you can take advantage of the new functionality, such as improved UI, rule creation, APIs and Terraform support, advanced conditions, and rule nesting.\n\nScoped OAuth requires: `services.write`\n",
         "summary": "Create an Event Rule on a Service",
         "parameters": [
           {
@@ -39585,7 +39585,7 @@
           "Services"
         ],
         "operationId": "getServiceEventRule",
-        "description": "Get an Event Rule from a Service.\n\nScoped OAuth requires: `services.read`\n",
+        "description": "Get an Event Rule from a Service.\n<!-- theme: warning -->\n> ### End-of-life\n> Rulesets and Event Rules will end-of-life soon. We highly recommend that you [migrate to Event Orchestration](https://support.pagerduty.com/docs/migrate-to-event-orchestration) as soon as possible so you can take advantage of the new functionality, such as improved UI, rule creation, APIs and Terraform support, advanced conditions, and rule nesting.\n\nScoped OAuth requires: `services.read`\n",
         "summary": "Get an Event Rule from a Service",
         "parameters": [
           {
@@ -39687,7 +39687,7 @@
         ],
         "operationId": "updateServiceEventRule",
         "summary": "Update an Event Rule on a Service",
-        "description": "Update an Event Rule on a Service. Note that the endpoint supports partial updates, so any number of the writable fields can be provided.\n\nScoped OAuth requires: `services.write`\n",
+        "description": "Update an Event Rule on a Service. Note that the endpoint supports partial updates, so any number of the writable fields can be provided.\n<!-- theme: warning -->\n> ### End-of-life\n> Rulesets and Event Rules will end-of-life soon. We highly recommend that you [migrate to Event Orchestration](https://support.pagerduty.com/docs/migrate-to-event-orchestration) as soon as possible so you can take advantage of the new functionality, such as improved UI, rule creation, APIs and Terraform support, advanced conditions, and rule nesting.\n\nScoped OAuth requires: `services.write`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -39838,7 +39838,7 @@
           "Services"
         ],
         "operationId": "deleteServiceEventRule",
-        "description": "Delete an Event Rule from a Service.\n\nScoped OAuth requires: `services.write`\n",
+        "description": "Delete an Event Rule from a Service.\n<!-- theme: warning -->\n> ### End-of-life\n> Rulesets and Event Rules will end-of-life soon. We highly recommend that you [migrate to Event Orchestration](https://support.pagerduty.com/docs/migrate-to-event-orchestration) as soon as possible so you can take advantage of the new functionality, such as improved UI, rule creation, APIs and Terraform support, advanced conditions, and rule nesting.\n\nScoped OAuth requires: `services.write`\n",
         "summary": "Delete an Event Rule from a Service",
         "parameters": [
           {
