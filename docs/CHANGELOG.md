@@ -21,6 +21,7 @@ Currently we rarely deprecate, and do not remove any API functionality.
     - `PUT /event_orchestrations/{orchestration_id}/router`
     - `PUT /event_orchestrations/{orchestration_id}/unrouted`
     - `PUT /event_orchestrations/services/{service_id}`
+- Restored OAuth scope enforcement for Classic User OAuth apps
 
 ## 2023-03-30
 - Added required scopes when using Incident Workflows endpoints with scoped OAuth tokens
