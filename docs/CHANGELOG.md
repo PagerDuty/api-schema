@@ -4,6 +4,24 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+## 2023-04-11
+- Added Event Orchestration Global Rules APIs:
+  - `GET /event_orchestrations/{orchestration_id}/global`
+  - `PUT /event_orchestrations/{orchestration_id}/global`
+- Added Event Orchestration Integration APIs:
+  - `GET /event_orchestrations/{orchestration_id}/integrations`
+  - `POST /event_orchestrations/{orchestration_id}/integrations`
+  - `GET /event_orchestrations/{orchestration_id}/integrations/{integration_id}`
+  - `PUT /event_orchestrations/{orchestration_id}/integrations/{integration_id}`
+  - `DELETE /event_orchestrations/{orchestration_id}/integrations/{integration_id}`
+  - `POST /event_orchestrations/{orchestration_id}/integrations/migration`
+- Updated Event Orchestrations APIs so that requests using features the account is ineligible for return a 200 OK instead of 403 Forbidden
+  - `warnings` added to response payload of:
+    - `PUT /event_orchestrations/{orchestration_id}/global`
+    - `PUT /event_orchestrations/{orchestration_id}/router`
+    - `PUT /event_orchestrations/{orchestration_id}/unrouted`
+    - `PUT /event_orchestrations/services/{service_id}`
+
 ## 2023-03-30
 - Added required scopes when using Incident Workflows endpoints with scoped OAuth tokens
 
