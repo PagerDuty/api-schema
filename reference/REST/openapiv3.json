@@ -33410,11 +33410,12 @@
     "/notifications": {
       "description": "List notifications that have been delivered to responders.",
       "get": {
+        "x-pd-requires-scope": "users:notifications.read",
         "tags": [
           "Notifications"
         ],
         "operationId": "listNotifications",
-        "description": "List notifications for a given time range, optionally filtered by type (sms_notification, email_notification, phone_notification, or push_notification).\n\nA Notification is created when an Incident is triggered or escalated.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#notifications)\n",
+        "description": "List notifications for a given time range, optionally filtered by type (sms_notification, email_notification, phone_notification, or push_notification).\n\nA Notification is created when an Incident is triggered or escalated.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#notifications)\n\nScoped OAuth requires: `users:notifications.read`\n",
         "summary": "List notifications",
         "parameters": [
           {
