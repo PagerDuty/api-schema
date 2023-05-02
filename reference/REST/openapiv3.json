@@ -1530,6 +1530,11 @@
         "description": "Actor type filter.",
         "schema": {
           "type": "string",
+          "enum": [
+            "user_reference",
+            "api_key_reference",
+            "app_reference"
+          ],
           "example": "user_reference"
         }
       },

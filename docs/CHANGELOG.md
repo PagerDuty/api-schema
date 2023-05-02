@@ -4,8 +4,8 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
-## 2023-04-14
-- Added required scopes when using `GET /notifications` endpoint with scoped OAuth tokens.
+## 2023-04-19
+- Audit records can be published with new actor types: `app_reference` and `api_key_reference`
 
 ## 2023-04-11
 - Added Event Orchestration Global Rules APIs:
@@ -28,9 +28,6 @@ Currently we rarely deprecate, and do not remove any API functionality.
 
 ## 2023-04-04
 - Added EOL warning message on each of `/rulesets/` and `/services/{id}/rules` endpoints
-
-## 2023-03-30
-- Added required scopes when using Incident Workflows endpoints with scoped OAuth tokens
 
 ## 2023-03-20
 - Updated description of Escalation Policy teams field to include the limit (1) team per Escalation Policy.
