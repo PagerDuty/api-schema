@@ -7530,8 +7530,9 @@
               "created_at": {
                 "type": "string",
                 "format": "date-time",
-                "readOnly": true,
-                "description": "The date/time the incident was first triggered."
+                "description": "The time the incident was first triggered.",
+                "example": "2019-12-01T20:00:00Z",
+                "readOnly": true
               },
               "status": {
                 "type": "string",
@@ -7589,8 +7590,9 @@
               "last_status_change_at": {
                 "type": "string",
                 "format": "date-time",
-                "readOnly": true,
-                "description": "The time at which the status of the incident last changed."
+                "description": "The time the status of the incident last changed. If the incident is not currently acknowledged or resolved, this will be the incident's `updated_at`.",
+                "example": "2019-12-01T21:01:00Z",
+                "readOnly": true
               },
               "last_status_change_by": {
                 "$ref": "#/components/schemas/AgentReference"
@@ -7644,6 +7646,18 @@
                 "items": {
                   "$ref": "#/components/schemas/ResponderRequest"
                 }
+              },
+              "resolved_at": {
+                "type": "string",
+                "format": "date-time",
+                "example": "2019-12-01T21:01:00Z",
+                "description": "The time the incident became \"resolved\" or `null` if the incident is not resolved."
+              },
+              "updated_at": {
+                "type": "string",
+                "format": "date-time",
+                "example": "2019-12-01T21:02:00Z",
+                "description": "The time the incident was last modified."
               }
             }
           }
@@ -28165,6 +28179,7 @@
                           "html_url": "https://subdomain.pagerduty.com/incidents/PT4KHLK",
                           "incident_number": 1234,
                           "created_at": "2015-10-06T21:30:42Z",
+                          "updated_at": "2015-10-06T21:40:23Z",
                           "status": "resolved",
                           "title": "The server is on fire.",
                           "incident_key": "baf7cf21b1da41b4b0221008339ff357",
@@ -28184,6 +28199,7 @@
                           "assigned_via": "escalation_policy",
                           "assignments": [],
                           "acknowledgements": [],
+                          "resolved_at": "2015-10-06T21:38:23Z",
                           "last_status_change_at": "2015-10-06T21:38:23Z",
                           "last_status_change_by": {
                             "id": "PXPGF42",
@@ -28432,6 +28448,7 @@
                           "html_url": "https://subdomain.pagerduty.com/incidents/PT4KHLK",
                           "incident_number": 1234,
                           "created_at": "2015-10-06T21:30:42Z",
+                          "updated_at": "2015-10-06T21:40:23Z",
                           "status": "resolved",
                           "title": "The server is on fire.",
                           "alert_counts": {
@@ -28482,6 +28499,7 @@
                               }
                             }
                           ],
+                          "resolved_at": "2015-10-06T21:38:23Z",
                           "last_status_change_at": "2015-10-06T21:38:23Z",
                           "last_status_change_by": {
                             "id": "PXPGF42",
@@ -28689,6 +28707,7 @@
                         "html_url": "https://subdomain.pagerduty.com/incidents/PT4KHLK",
                         "incident_number": 1234,
                         "created_at": "2015-10-06T21:30:42Z",
+                        "updated_at": "2015-10-06T21:40:23Z",
                         "status": "triggered",
                         "incident_key": "baf7cf21b1da41b4b0221008339ff357",
                         "service": {
@@ -28717,6 +28736,7 @@
                             }
                           }
                         ],
+                        "resolved_at": null,
                         "last_status_change_at": "2015-10-06T21:38:23Z",
                         "last_status_change_by": {
                           "id": "PXPGF42",
@@ -28826,6 +28846,7 @@
                         "html_url": "https://subdomain.pagerduty.com/incidents/PT4KHLK",
                         "incident_number": 1234,
                         "created_at": "2015-10-06T21:30:42Z",
+                        "updated_at": "2015-10-06T21:40:23Z",
                         "status": "acknowledged",
                         "title": "The server is on fire.",
                         "alert_counts": {
@@ -28882,6 +28903,7 @@
                             }
                           }
                         ],
+                        "resolved_at": null,
                         "last_status_change_at": "2015-10-06T21:38:23Z",
                         "last_status_change_by": {
                           "id": "PXPGF42",
@@ -29185,6 +29207,7 @@
                         "html_url": "https://subdomain.pagerduty.com/incidents/PT4KHLK",
                         "incident_number": 1234,
                         "created_at": "2015-10-06T21:30:42Z",
+                        "updated_at": "2015-10-06T21:40:23Z",
                         "status": "resolved",
                         "title": "The server is on fire.",
                         "pending_actions": [
@@ -29236,6 +29259,7 @@
                             }
                           }
                         ],
+                        "resolved_at": "2015-10-06T21:38:23Z",
                         "last_status_change_at": "2015-10-06T21:38:23Z",
                         "last_status_change_by": {
                           "id": "PXPGF42",
@@ -31645,6 +31669,7 @@
                         "html_url": "https://subdomain.pagerduty.com/incidents/PT4KHLK",
                         "incident_number": 1234,
                         "created_at": "2015-10-06T21:30:42Z",
+                        "updated_at": "2015-10-06T21:40:23Z",
                         "status": "resolved",
                         "pending_actions": [
                           {
@@ -31689,6 +31714,7 @@
                             }
                           }
                         ],
+                        "resolved_at": "2015-10-06T21:38:23Z",
                         "last_status_change_at": "2015-10-06T21:38:23Z",
                         "last_status_change_by": {
                           "id": "PXPGF42",
