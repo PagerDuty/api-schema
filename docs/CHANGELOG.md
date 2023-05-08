@@ -4,6 +4,20 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+## 2023-05-08
+- `resolved_at` and `updated_at` fields added to the Incident model in response payloads. Affects the following endpoints:
+  - `GET /incidents`
+  - `POST /incidents`
+  - `PUT /incidents`
+  - `GET /incidents/:incident_id`
+  - `PUT /incidents/:incident_id`
+  - `POST /incidents/:incident_id/snooze`
+  - `PUT /incidents/:incident_id/merge`
+  - `GET /incidents/:incident_id/alerts?include[]=incidents`
+  - `GET /incidents/:incident_id/log_entries?include[]=incidents`
+  - `GET /log_entries?include[]=incidents`
+  - `GET /log_entries/:log_entry_id?include[]=incidents`
+
 ## 2023-04-19
 - Audit records can be published with new actor types: `app_reference` and `api_key_reference`
 
