@@ -3048,6 +3048,15 @@
           "example": "P4RG7YW"
         }
       },
+      "triggers_filter_workflow_name_contains": {
+        "name": "workflow_name_contains",
+        "description": "If provided, only show triggers configured to start workflows whose name contain the provided value.",
+        "in": "query",
+        "schema": {
+          "type": "string",
+          "example": "High Priority"
+        }
+      },
       "triggers_filter_incident_id": {
         "name": "incident_id",
         "description": "If provided, only show triggers configured on the service of the given incident. Useful for finding manual triggers that are configured on the service for a specific incident. Cannot be specified if `service_id` is provided.",
@@ -3094,6 +3103,19 @@
         "in": "path",
         "schema": {
           "type": "string"
+        }
+      },
+      "triggers_path_trigger_type": {
+        "name": "trigger_type",
+        "description": "The type of trigger the request is targeting",
+        "required": true,
+        "in": "path",
+        "schema": {
+          "type": "string",
+          "enum": [
+            "manual",
+            "conditional"
+          ]
         }
       },
       "triggers_sort_by": {
@@ -27370,6 +27392,9 @@
           },
           {
             "$ref": "#/components/parameters/triggers_filter_trigger_type"
+          },
+          {
+            "$ref": "#/components/parameters/triggers_filter_workflow_name_contains"
           },
           {
             "$ref": "#/components/parameters/triggers_sort_by"
