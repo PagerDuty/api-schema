@@ -4,6 +4,9 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+## 2023-05-10
+- Add `workflow_name_contains` query parameter to `GET /incident_workflows/triggers`
+
 ## 2023-05-08
 - `resolved_at` and `updated_at` fields added to the Incident model in response payloads. Affects the following endpoints:
   - `GET /incidents`
