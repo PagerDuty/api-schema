@@ -4,6 +4,23 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+## 2023-05-15
+- Refactored Early-Access endpoints for Custom Fields based on customer feedback
+   - `GET /custom_fields`
+   - `POST /custom_fields`
+   - `GET /custom_fields/{id}`
+   - `PUT /custom_fields/{id}`
+   - `DELETE /custom_fields/{id}`
+
+   - `GET /custom_fields/{id}/field_options`
+   - `POST /custom_fields/{id}/field_options`
+   - `PUT /custom_fields/{id}/field_options/{option_id}`
+   - `DELETE /custom_fields/{id}/field_options/{option_id}`
+
+   - `PUT /incidents/:id/custom_fields/values`
+   - `GET /incidents/:id/custom_fields/values`
+   - `GET /incidents/:id/?include[]=field_values`
+
 ## 2023-05-10
 - Add `workflow_name_contains` query parameter to `GET /incident_workflows/triggers`
 
