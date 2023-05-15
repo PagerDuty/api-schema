@@ -2530,7 +2530,7 @@
         "schema": {
           "type": "string",
           "enum": [
-            "field_values"
+            "custom_fields"
           ],
           "uniqueItems": true
         }
@@ -3156,19 +3156,6 @@
           "uniqueItems": true
         }
       },
-      "include_customfields_schema": {
-        "name": "include[]",
-        "description": "Array of additional details to include. Including `field_configurations` will also include full field details.",
-        "in": "query",
-        "explode": true,
-        "schema": {
-          "type": "string",
-          "enum": [
-            "field_configurations"
-          ],
-          "uniqueItems": true
-        }
-      },
       "include_customfields_field_configuration": {
         "name": "include[]",
         "description": "Array of additional details to include.",
@@ -3178,19 +3165,6 @@
           "type": "string",
           "enum": [
             "fields"
-          ],
-          "uniqueItems": true
-        }
-      },
-      "include_customfields_incident_schema": {
-        "name": "include[]",
-        "description": "Array of additional details to include. Including `field_options` will also include field options.",
-        "in": "query",
-        "explode": true,
-        "schema": {
-          "type": "string",
-          "enum": [
-            "field_options"
           ],
           "uniqueItems": true
         }
@@ -3213,15 +3187,6 @@
           "type": "string"
         }
       },
-      "schema_id": {
-        "name": "schema_id",
-        "description": "The ID of the schema.",
-        "in": "path",
-        "required": true,
-        "schema": {
-          "type": "string"
-        }
-      },
       "field_configuration_id": {
         "name": "field_configuration_id",
         "description": "The ID of the field configuration.",
@@ -3229,26 +3194,6 @@
         "required": true,
         "schema": {
           "type": "string"
-        }
-      },
-      "customfields_query_schema_assignments_filter": {
-        "name": "filter",
-        "description": "One of service_id or schema_id is required.",
-        "in": "query",
-        "required": true,
-        "explode": true,
-        "schema": {
-          "type": "object",
-          "properties": {
-            "service_id": {
-              "type": "string"
-            },
-            "schema_id": {
-              "type": "string"
-            }
-          },
-          "minProperties": 1,
-          "maxProperties": 1
         }
       },
       "early_access_customfields": {
@@ -12907,14 +12852,11 @@
                 "description": "The date/time the object was last updated.",
                 "readOnly": true
               },
-              "datatype": {
-                "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/datatype"
+              "data_type": {
+                "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/data_type"
               },
-              "multi_value": {
-                "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/multi_value"
-              },
-              "fixed_options": {
-                "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/fixed_options"
+              "field_type": {
+                "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/field_type"
               }
             }
           }
@@ -12926,12 +12868,11 @@
           "type",
           "created_at",
           "updated_at",
-          "datatype",
+          "data_type",
           "namespace",
           "name",
           "display_name",
-          "multi_value",
-          "fixed_options"
+          "field_type"
         ]
       },
       "CustomFieldsEditableField": {
@@ -12942,6 +12883,32 @@
           },
           "description": {
             "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/description"
+          },
+          "default_value": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/value/oneOf/0"
+              },
+              {
+                "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/value/oneOf/2"
+              },
+              {
+                "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/value/oneOf/1"
+              },
+              {
+                "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/value/oneOf/3"
+              },
+              {
+                "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/value/oneOf/4"
+              },
+              {
+                "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/value/oneOf/5"
+              }
+            ],
+            "nullable": true
+          },
+          "name": {
+            "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/name"
           }
         }
       },
@@ -12993,47 +12960,9 @@
               {
                 "type": "object",
                 "properties": {
-                  "datatype": {
+                  "data_type": {
                     "type": "string",
-                    "description": "The kind of data represented by this option. Must match the Field's `datatype`.",
-                    "enum": [
-                      "integer"
-                    ]
-                  },
-                  "value": {
-                    "type": "integer"
-                  }
-                },
-                "required": [
-                  "datatype",
-                  "value"
-                ]
-              },
-              {
-                "type": "object",
-                "properties": {
-                  "datatype": {
-                    "type": "string",
-                    "description": "The kind of data represented by this option. Must match the Field's `datatype`.",
-                    "enum": [
-                      "float"
-                    ]
-                  },
-                  "value": {
-                    "type": "number"
-                  }
-                },
-                "required": [
-                  "datatype",
-                  "value"
-                ]
-              },
-              {
-                "type": "object",
-                "properties": {
-                  "datatype": {
-                    "type": "string",
-                    "description": "The kind of data represented by this option. Must match the Field's `datatype`.",
+                    "description": "The kind of data represented by this option. Must match the Field's `data_type`.",
                     "enum": [
                       "string"
                     ]
@@ -13044,16 +12973,14 @@
                   }
                 },
                 "required": [
-                  "datatype",
+                  "data_type",
                   "value"
                 ]
               }
             ],
             "discriminator": {
-              "propertyName": "datatype",
+              "propertyName": "data_type",
               "mapping": {
-                "integer": "./IntegerFixedOptionValue.yaml",
-                "float": "./FloatFixedOptionValue.yaml",
                 "string": "./StringFixedOptionValue.yaml"
               }
             }
@@ -13087,560 +13014,6 @@
           }
         ]
       },
-      "CustomFieldsSchemaWithTimestamps": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/CustomFieldsIncidentSchema/allOf/0"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "created_at": {
-                "type": "string",
-                "format": "date-time",
-                "description": "The date/time the object was created at.",
-                "readOnly": true
-              },
-              "updated_at": {
-                "type": "string",
-                "format": "date-time",
-                "description": "The date/time the object was last updated.",
-                "readOnly": true
-              }
-            }
-          }
-        ],
-        "required": [
-          "created_at",
-          "updated_at"
-        ]
-      },
-      "CustomFieldsCreatableSchema": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/CustomFieldsEditableSchema"
-          }
-        ],
-        "required": [
-          "title"
-        ]
-      },
-      "CustomFieldsSchemaWithConfigurations": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/CustomFieldsSchemaWithTimestamps"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "field_configurations": {
-                "type": "array",
-                "readOnly": true,
-                "items": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/CustomFieldsFieldConfigurationWithFieldReference/allOf/0"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "field": {
-                          "description": "The Field to be included in this schema. Each Field may only be used in one Field Configuration per schema.",
-                          "allOf": [
-                            {
-                              "$ref": "#/components/schemas/CustomFieldsField"
-                            }
-                          ]
-                        }
-                      }
-                    }
-                  ]
-                },
-                "maxItems": 20,
-                "uniqueItems": true
-              }
-            },
-            "required": [
-              "title",
-              "description"
-            ]
-          }
-        ]
-      },
-      "CustomFieldsEditableSchema": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/CustomFieldsSchemaWithTimestamps"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "field_configurations": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/CustomFieldsFieldConfigurationWithFieldReference"
-                },
-                "maxItems": 20,
-                "uniqueItems": true
-              }
-            }
-          }
-        ]
-      },
-      "CustomFieldsFieldConfigurationWithFieldReference": {
-        "allOf": [
-          {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/CustomFieldsEditableFieldConfiguration"
-              },
-              {
-                "type": "object",
-                "properties": {
-                  "type": {
-                    "type": "string",
-                    "enum": [
-                      "field_configuration"
-                    ]
-                  }
-                },
-                "required": [
-                  "id",
-                  "type",
-                  "created_at",
-                  "updated_at",
-                  "field",
-                  "required"
-                ]
-              }
-            ]
-          },
-          {
-            "type": "object",
-            "properties": {
-              "field": {
-                "description": "The Field to be included in this schema. Each Field may only be used in one Field Configuration per schema.",
-                "allOf": [
-                  {
-                    "type": "object",
-                    "properties": {
-                      "type": {
-                        "type": "string",
-                        "description": "A string that determines the type of the reference. This must be the standard name for the entity, suffixed by `_reference`.",
-                        "enum": [
-                          "field_reference"
-                        ]
-                      },
-                      "id": {
-                        "type": "string",
-                        "description": "The ID of the resource."
-                      }
-                    },
-                    "required": [
-                      "type",
-                      "id"
-                    ]
-                  }
-                ]
-              }
-            }
-          }
-        ]
-      },
-      "CustomFieldsFieldConfigurationWithFieldOrFieldReference": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/CustomFieldsFieldConfigurationWithFieldReference/allOf/0"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "field": {
-                "description": "The Field to be included in this schema. Each Field may only be used in one Field Configuration per schema.",
-                "oneOf": [
-                  {
-                    "$ref": "#/components/schemas/CustomFieldsField"
-                  },
-                  {
-                    "$ref": "#/components/schemas/CustomFieldsFieldConfigurationWithFieldReference/allOf/1/properties/field/allOf/0"
-                  }
-                ]
-              }
-            }
-          }
-        ]
-      },
-      "CustomFieldsEditableFieldConfiguration": {
-        "type": "object",
-        "properties": {
-          "default_value": {
-            "type": "object",
-            "description": "The value to use for this field if none is provided. It must be specified if `required` is `true`.",
-            "allOf": [
-              {
-                "oneOf": [
-                  {
-                    "allOf": [
-                      {
-                        "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/value/oneOf/0"
-                      },
-                      {
-                        "type": "object",
-                        "properties": {
-                          "datatype": {
-                            "type": "string",
-                            "enum": [
-                              "boolean"
-                            ]
-                          }
-                        }
-                      }
-                    ],
-                    "required": [
-                      "datatype",
-                      "value"
-                    ]
-                  },
-                  {
-                    "allOf": [
-                      {
-                        "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/value/oneOf/2"
-                      },
-                      {
-                        "type": "object",
-                        "properties": {
-                          "datatype": {
-                            "type": "string",
-                            "enum": [
-                              "integer"
-                            ]
-                          }
-                        }
-                      }
-                    ],
-                    "required": [
-                      "datatype",
-                      "value"
-                    ]
-                  },
-                  {
-                    "allOf": [
-                      {
-                        "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/value/oneOf/1"
-                      },
-                      {
-                        "type": "object",
-                        "properties": {
-                          "datatype": {
-                            "type": "string",
-                            "enum": [
-                              "float"
-                            ]
-                          }
-                        }
-                      }
-                    ],
-                    "required": [
-                      "datatype",
-                      "value"
-                    ]
-                  },
-                  {
-                    "allOf": [
-                      {
-                        "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/value/oneOf/3"
-                      },
-                      {
-                        "type": "object",
-                        "properties": {
-                          "datatype": {
-                            "type": "string",
-                            "enum": [
-                              "string"
-                            ]
-                          }
-                        }
-                      }
-                    ],
-                    "required": [
-                      "datatype",
-                      "value"
-                    ]
-                  },
-                  {
-                    "allOf": [
-                      {
-                        "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/value/oneOf/4"
-                      },
-                      {
-                        "type": "object",
-                        "properties": {
-                          "datatype": {
-                            "type": "string",
-                            "enum": [
-                              "datetime"
-                            ]
-                          }
-                        }
-                      }
-                    ],
-                    "required": [
-                      "datatype",
-                      "value"
-                    ]
-                  },
-                  {
-                    "allOf": [
-                      {
-                        "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/value/oneOf/5"
-                      },
-                      {
-                        "type": "object",
-                        "properties": {
-                          "datatype": {
-                            "type": "string",
-                            "enum": [
-                              "url"
-                            ]
-                          }
-                        }
-                      }
-                    ],
-                    "required": [
-                      "datatype",
-                      "value"
-                    ]
-                  },
-                  {
-                    "type": "object",
-                    "properties": {
-                      "datatype": {
-                        "type": "string",
-                        "enum": [
-                          "field_option"
-                        ]
-                      },
-                      "value": {
-                        "oneOf": [
-                          {
-                            "type": "object",
-                            "properties": {
-                              "type": {
-                                "type": "string",
-                                "enum": [
-                                  "field_option_reference"
-                                ]
-                              },
-                              "id": {
-                                "type": "string",
-                                "description": "The ID of the field option. If value is not provided, an ID must be provided."
-                              },
-                              "value": {
-                                "type": "string",
-                                "description": "The value of the field option. If ID is not provided, an value must be provided."
-                              }
-                            },
-                            "required": [
-                              "type",
-                              "id",
-                              "value"
-                            ]
-                          },
-                          {
-                            "type": "array",
-                            "items": {
-                              "type": "object",
-                              "properties": {
-                                "type": {
-                                  "type": "string",
-                                  "enum": [
-                                    "field_option_reference"
-                                  ]
-                                },
-                                "id": {
-                                  "type": "string",
-                                  "description": "The ID of the field option. If value is not provided, an ID must be provided."
-                                },
-                                "value": {
-                                  "type": "string",
-                                  "description": "The value of the field option. If ID is not provided, an value must be provided."
-                                }
-                              },
-                              "required": [
-                                "type",
-                                "id",
-                                "value"
-                              ]
-                            },
-                            "maxItems": 10,
-                            "uniqueItems": true,
-                            "nullable": true
-                          }
-                        ]
-                      }
-                    },
-                    "required": [
-                      "datatype",
-                      "value"
-                    ]
-                  }
-                ],
-                "discriminator": {
-                  "propertyName": "datatype",
-                  "mapping": {
-                    "boolean": "./BooleanFieldValue.yaml",
-                    "integer": "./IntegerFieldValue.yaml",
-                    "float": "./FloatFieldValue.yaml",
-                    "string": "./StringFieldValue.yaml",
-                    "datetime": "./DatetimeFieldValue.yaml",
-                    "url": "./UrlFieldValue.yaml",
-                    "field_option": "./FieldOptionFieldValue.yaml"
-                  }
-                }
-              },
-              {
-                "type": "object",
-                "properties": {
-                  "multi_value": {
-                    "type": "boolean",
-                    "description": "If `true`, allows the custom field to store a set of values. Must match the Field's `multi_value` setting."
-                  }
-                }
-              }
-            ],
-            "required": [
-              "multi_value"
-            ]
-          },
-          "id": {
-            "type": "string",
-            "readOnly": true,
-            "description": "The ID of the resource."
-          },
-          "type": {
-            "type": "string",
-            "readOnly": true,
-            "description": "A string that determines the schema of the object. This must be the standard name for the entity, suffixed by `_reference` if the object is a reference."
-          },
-          "created_at": {
-            "type": "string",
-            "format": "date-time",
-            "description": "The date/time the object was created at.",
-            "readOnly": true
-          },
-          "updated_at": {
-            "type": "string",
-            "format": "date-time",
-            "description": "The date/time the object was last updated.",
-            "readOnly": true
-          },
-          "required": {
-            "description": "If `true`, this Field must always have a value set for objects using this schema.",
-            "type": "boolean"
-          }
-        }
-      },
-      "CustomFieldsEditableSchemaAssignment": {
-        "type": "object",
-        "properties": {
-          "schema": {
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "string",
-                "description": "The schema ID"
-              },
-              "summary": {
-                "type": "string",
-                "nullable": true,
-                "readOnly": true,
-                "description": "A short-form, server-generated string that provides succinct, important information about an object suitable for primary labeling of an entity in a client. In many cases, this will be identical to `name`, though it is not intended to be an identifier."
-              },
-              "type": {
-                "type": "string",
-                "description": "A string that determines the type of the reference. This must be the standard name for the entity, suffixed by `_reference`.",
-                "enum": [
-                  "schema_reference"
-                ]
-              },
-              "self": {
-                "type": "string",
-                "nullable": true,
-                "readOnly": true,
-                "format": "url",
-                "description": "The API show URL at which the object is accessible"
-              }
-            },
-            "required": [
-              "id",
-              "type"
-            ]
-          },
-          "service": {
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "string",
-                "description": "The service ID"
-              },
-              "type": {
-                "type": "string",
-                "description": "A string that determines the type of the reference. This must be the standard name for the entity, suffixed by `_reference`.",
-                "enum": [
-                  "service_reference"
-                ]
-              }
-            },
-            "required": [
-              "id",
-              "type"
-            ]
-          }
-        }
-      },
-      "CustomFieldsSchemaAssignment": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/CustomFieldsEditableSchemaAssignment"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "string",
-                "readOnly": true,
-                "description": "The ID of the resource."
-              },
-              "type": {
-                "type": "string",
-                "readOnly": true,
-                "description": "A string that determines the schema of the object. This must be the standard name for the entity, suffixed by `_reference` if the object is a reference.",
-                "enum": [
-                  "schema_assignment"
-                ]
-              },
-              "created_at": {
-                "type": "string",
-                "format": "date-time",
-                "description": "The date/time the object was created at.",
-                "readOnly": true
-              },
-              "updated_at": {
-                "type": "string",
-                "format": "date-time",
-                "description": "The date/time the object was last updated.",
-                "readOnly": true
-              }
-            },
-            "required": [
-              "id",
-              "type",
-              "created_at",
-              "updated_at"
-            ]
-          }
-        ]
-      },
       "CustomFieldsFieldValue": {
         "type": "object",
         "properties": {
@@ -13665,11 +13038,17 @@
             "description": "The human-readable name of the field. This must be unique across an account.",
             "maxLength": 50
           },
-          "multi_value": {
-            "type": "boolean",
-            "description": "If `true`, allows the custom field to store a set of multiple values. Must be `false` if `datatype` is not \"string\" or \"url\""
+          "field_type": {
+            "type": "string",
+            "description": "The type of data this field contains. In combination with the `data_type` field.",
+            "enum": [
+              "single_value",
+              "single_value_fixed",
+              "multi_value",
+              "multi_value_fixed"
+            ]
           },
-          "datatype": {
+          "data_type": {
             "type": "string",
             "description": "The kind of data the custom field is allowed to contain.",
             "enum": [
@@ -13686,10 +13065,6 @@
             "nullable": true,
             "description": "A description of the data this field contains.",
             "maxLength": 1000
-          },
-          "fixed_options": {
-            "type": "boolean",
-            "description": "If `true`, restricts the values allowed to be stored in the custom field to a limited set of options (configured via the Field Option sub-resource). Must be `false` if `datatype` is \"boolean\", \"url\", or \"datetime\""
           },
           "value": {
             "oneOf": [
@@ -13758,25 +13133,10 @@
                 "type": "object",
                 "properties": {
                   "value": {
-                    "oneOf": [
-                      {
-                        "type": "string",
-                        "format": "uri",
-                        "maxLength": 200,
-                        "nullable": true
-                      },
-                      {
-                        "type": "array",
-                        "items": {
-                          "type": "string",
-                          "format": "uri",
-                          "maxLength": 200
-                        },
-                        "maxItems": 10,
-                        "uniqueItems": true,
-                        "nullable": true
-                      }
-                    ]
+                    "type": "string",
+                    "format": "uri",
+                    "maxLength": 200,
+                    "nullable": true
                   }
                 }
               }
@@ -13789,10 +13149,9 @@
           "name",
           "value",
           "display_name",
-          "datatype",
-          "multi_value",
-          "description",
-          "fixed_options"
+          "data_type",
+          "field_type",
+          "description"
         ]
       },
       "CustomFieldsEditableFieldValue": {
@@ -13857,87 +13216,6 @@
                 ]
               }
             }
-          }
-        ]
-      },
-      "CustomFieldsIncidentSchema": {
-        "allOf": [
-          {
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "string",
-                "readOnly": true,
-                "description": "The ID of the resource."
-              },
-              "summary": {
-                "type": "string",
-                "nullable": true,
-                "readOnly": true,
-                "description": "A short-form, server-generated string that provides succinct, important information about an object suitable for primary labeling of an entity in a client. In many cases, this will be identical to `name`, though it is not intended to be an identifier."
-              },
-              "self": {
-                "type": "string",
-                "nullable": true,
-                "readOnly": true,
-                "format": "url",
-                "description": "The API show URL at which the object is accessible"
-              },
-              "type": {
-                "type": "string",
-                "readOnly": true,
-                "enum": [
-                  "schema"
-                ]
-              },
-              "title": {
-                "description": "The name of the schema.",
-                "type": "string",
-                "maxLength": 100
-              },
-              "description": {
-                "description": "A description of this schema.",
-                "type": "string",
-                "nullable": true,
-                "maxLength": 1000
-              }
-            },
-            "required": [
-              "id",
-              "type",
-              "summary",
-              "self"
-            ]
-          },
-          {
-            "type": "object",
-            "properties": {
-              "field_configurations": {
-                "type": "array",
-                "readOnly": true,
-                "items": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/CustomFieldsFieldConfigurationWithFieldReference/allOf/0"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "field": {
-                          "$ref": "#/components/schemas/CustomFieldsFieldWithOptions"
-                        }
-                      }
-                    }
-                  ]
-                },
-                "maxItems": 20,
-                "uniqueItems": true
-              }
-            },
-            "required": [
-              "title",
-              "description"
-            ]
           }
         ]
       }
@@ -20143,2166 +19421,6 @@
           },
           "404": {
             "$ref": "#/components/responses/NotFound"
-          }
-        }
-      }
-    },
-    "/customfields/fields": {
-      "description": "Create and list Fields",
-      "post": {
-        "tags": [
-          "Custom Fields"
-        ],
-        "operationId": "createCustomFieldsField",
-        "description": "Create a new Field, along with the Field Options if provided. An account may have up to 1000 Fields.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
-        "summary": "Create a Field",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/early_access_customfields"
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "field": {
-                    "$ref": "#/components/schemas/CustomFieldsFieldWithOptions"
-                  }
-                },
-                "required": [
-                  "field"
-                ]
-              },
-              "examples": {
-                "request1": {
-                  "summary": "Example: With field_options",
-                  "value": {
-                    "field": {
-                      "datatype": "string",
-                      "name": "environment",
-                      "display_name": "Environment",
-                      "fixed_options": true,
-                      "multi_value": false,
-                      "description": "The environment that the issue occurred in",
-                      "field_options": [
-                        {
-                          "data": {
-                            "datatype": "string",
-                            "value": "production"
-                          }
-                        }
-                      ]
-                    }
-                  }
-                },
-                "request2": {
-                  "summary": "Example: Without field_options",
-                  "value": {
-                    "field": {
-                      "datatype": "string",
-                      "name": "environment",
-                      "display_name": "Environment",
-                      "fixed_options": true,
-                      "multi_value": false,
-                      "description": "The environment that the issue occurred in"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "The field object created, along with the Field Options if provided.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "field": {
-                      "$ref": "#/components/schemas/CustomFieldsFieldWithOptions"
-                    }
-                  },
-                  "required": [
-                    "field"
-                  ]
-                },
-                "examples": {
-                  "response1": {
-                    "summary": "Example: With field_options",
-                    "value": {
-                      "field": {
-                        "id": "P5IYCNZ",
-                        "type": "field",
-                        "summary": "environment",
-                        "self": "https://api.pagerduty.com/customfields/fields/P5IYCNZ",
-                        "datatype": "string",
-                        "name": "environment",
-                        "display_name": "Environment",
-                        "multi_value": false,
-                        "fixed_options": true,
-                        "description": "The environment that the issue occurred in",
-                        "created_at": "2021-06-01T21:30:42Z",
-                        "updated_at": "2021-06-01T21:30:42Z",
-                        "field_options": [
-                          {
-                            "id": "PT4KHEE",
-                            "type": "field_option",
-                            "data": {
-                              "datatype": "string",
-                              "value": "production"
-                            },
-                            "created_at": "2021-06-01T21:30:42Z",
-                            "updated_at": "2021-06-01T21:30:42Z"
-                          }
-                        ]
-                      }
-                    }
-                  },
-                  "response2": {
-                    "summary": "Example: Without field_options",
-                    "value": {
-                      "field": {
-                        "id": "P5IYCNZ",
-                        "type": "field",
-                        "summary": "environment",
-                        "self": "https://api.pagerduty.com/customfields/fields/P5IYCNZ",
-                        "datatype": "string",
-                        "name": "environment",
-                        "display_name": "Environment",
-                        "multi_value": false,
-                        "fixed_options": false,
-                        "description": "The environment that the issue occurred in",
-                        "created_at": "2021-06-01T21:30:42Z",
-                        "updated_at": "2021-06-01T21:30:42Z"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/ArgumentError"
-          },
-          "403": {
-            "$ref": "#/components/responses/Forbidden"
-          },
-          "500": {
-            "$ref": "#/components/responses/InternalServerError"
-          }
-        }
-      },
-      "get": {
-        "tags": [
-          "Custom Fields"
-        ],
-        "operationId": "listCustomFieldsFields",
-        "description": "List fields.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
-        "summary": "List Fields",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/offset_limit"
-          },
-          {
-            "$ref": "#/components/parameters/offset_offset"
-          },
-          {
-            "$ref": "#/components/parameters/offset_total"
-          },
-          {
-            "$ref": "#/components/parameters/include_customfields_field"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_customfields"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "A paginated list of fields.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/Pagination"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "fields": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/CustomFieldsFieldWithOptions"
-                          }
-                        }
-                      },
-                      "required": [
-                        "fields"
-                      ]
-                    }
-                  ]
-                },
-                "examples": {
-                  "response": {
-                    "summary": "Response Example",
-                    "value": {
-                      "fields": [
-                        {
-                          "id": "P5IYCNZ",
-                          "type": "field",
-                          "summary": "environment",
-                          "self": "https://api.pagerduty.com/customfields/fields/P5IYCNZ",
-                          "datatype": "string",
-                          "name": "environment",
-                          "display_name": "Environment",
-                          "description": "The environment that the issue occurred in",
-                          "multi_value": false,
-                          "fixed_options": true,
-                          "created_at": "2021-06-01T21:30:42Z",
-                          "updated_at": "2021-06-01T21:30:42Z",
-                          "field_options": [
-                            {
-                              "id": "PT4KHEE",
-                              "type": "field_option",
-                              "data": {
-                                "datatype": "string",
-                                "value": "abc"
-                              },
-                              "created_at": "2021-06-01T21:30:42Z",
-                              "updated_at": "2021-06-01T21:30:42Z"
-                            }
-                          ]
-                        }
-                      ],
-                      "limit": 1,
-                      "offset": 0,
-                      "more": true
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/ArgumentError"
-          },
-          "500": {
-            "$ref": "#/components/responses/InternalServerError"
-          }
-        }
-      }
-    },
-    "/customfields/fields/{field_id}": {
-      "description": "Get, update and delete a field.",
-      "get": {
-        "tags": [
-          "Custom Fields"
-        ],
-        "operationId": "getCustomFieldsField",
-        "description": "Show detailed information about a field.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
-        "summary": "Get a Field",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/field_id"
-          },
-          {
-            "$ref": "#/components/parameters/include_customfields_field"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_customfields"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "The field requested.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "field": {
-                      "$ref": "#/components/schemas/CustomFieldsFieldWithOptions"
-                    }
-                  },
-                  "required": [
-                    "field"
-                  ]
-                },
-                "examples": {
-                  "response1": {
-                    "summary": "Example: No query parameters",
-                    "value": {
-                      "field": {
-                        "id": "P5IYCNZ",
-                        "type": "field",
-                        "summary": "environment",
-                        "self": "https://api.pagerduty.com/customfields/fields/P5IYCNZ",
-                        "datatype": "string",
-                        "name": "environment",
-                        "display_name": "Environment",
-                        "description": "The environment that the issue occurred in",
-                        "multi_value": false,
-                        "fixed_options": true,
-                        "created_at": "2021-06-01T21:30:42Z",
-                        "updated_at": "2021-06-01T21:30:42Z"
-                      }
-                    }
-                  },
-                  "response2": {
-                    "summary": "Example: Using include[]=field_options",
-                    "value": {
-                      "field": {
-                        "id": "P5IYCNZ",
-                        "type": "field",
-                        "summary": "environment",
-                        "self": "https://api.pagerduty.com/customfields/fields/P5IYCNZ",
-                        "datatype": "string",
-                        "name": "environment",
-                        "display_name": "Environment",
-                        "description": "The environment that the issue occurred in",
-                        "multi_value": false,
-                        "fixed_options": true,
-                        "created_at": "2021-06-01T21:30:42Z",
-                        "updated_at": "2021-06-01T21:30:42Z",
-                        "field_options": [
-                          {
-                            "id": "PT4KHEE",
-                            "type": "field_option",
-                            "data": {
-                              "datatype": "string",
-                              "value": "abc"
-                            },
-                            "created_at": "2021-06-01T21:30:42Z",
-                            "updated_at": "2021-06-01T21:30:42Z"
-                          }
-                        ]
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "$ref": "#/components/responses/Forbidden"
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          },
-          "500": {
-            "$ref": "#/components/responses/InternalServerError"
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Custom Fields"
-        ],
-        "operationId": "updateCustomFieldsField",
-        "description": "Update a field.\n\n<!-- theme: warning -->\n\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
-        "summary": "Update a Field",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/field_id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_customfields"
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "field": {
-                    "$ref": "#/components/schemas/CustomFieldsEditableField"
-                  }
-                },
-                "required": [
-                  "field"
-                ]
-              },
-              "examples": {
-                "request": {
-                  "summary": "Request Example",
-                  "value": {
-                    "field": {
-                      "display_name": "New Display Name!",
-                      "description": "New description!"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "The field object updated.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "field": {
-                      "$ref": "#/components/schemas/CustomFieldsField"
-                    }
-                  },
-                  "required": [
-                    "field"
-                  ]
-                },
-                "examples": {
-                  "response": {
-                    "summary": "Response Example",
-                    "value": {
-                      "field": {
-                        "id": "P5IYCNZ",
-                        "type": "field",
-                        "summary": "old_name",
-                        "self": "https://api.pagerduty.com/customfields/fields/P5IYCNZ",
-                        "datatype": "string",
-                        "name": "old_name",
-                        "display_name": "New Display Name!",
-                        "description": "New description!",
-                        "multi_value": false,
-                        "fixed_options": false,
-                        "created_at": "2021-06-01T21:30:42Z",
-                        "updated_at": "2021-06-01T21:30:42Z"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/ArgumentError"
-          },
-          "403": {
-            "$ref": "#/components/responses/Forbidden"
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          },
-          "500": {
-            "$ref": "#/components/responses/InternalServerError"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Custom Fields"
-        ],
-        "operationId": "deleteCustomFieldsField",
-        "description": "Delete a Field. Fields may not be deleted if they are used by a Field Schema.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
-        "summary": "Delete a Field",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/field_id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_customfields"
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "The field was deleted successfully."
-          },
-          "400": {
-            "$ref": "#/components/responses/ArgumentError"
-          },
-          "403": {
-            "$ref": "#/components/responses/Forbidden"
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          },
-          "500": {
-            "$ref": "#/components/responses/InternalServerError"
-          }
-        }
-      }
-    },
-    "/customfields/fields/{field_id}/field_options": {
-      "description": "Create new option for the given fixed_options (e.g., enum) field and list all options for the given field.",
-      "post": {
-        "tags": [
-          "Custom Fields"
-        ],
-        "operationId": "createCustomFieldsFieldOption",
-        "description": "Create a new Field Option. Field Options may only be created for Fields where `fixed_options` is `true`. A Field may have no more than 10 enabled options.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
-        "summary": "Create a Field Option",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/field_id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_customfields"
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "field_option": {
-                    "$ref": "#/components/schemas/CustomFieldsFieldOption"
-                  }
-                },
-                "required": [
-                  "field_option"
-                ]
-              },
-              "examples": {
-                "request": {
-                  "summary": "Request Example",
-                  "value": {
-                    "field_option": {
-                      "data": {
-                        "datatype": "string",
-                        "value": "production"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "The field option created.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "field_option": {
-                      "$ref": "#/components/schemas/CustomFieldsFieldOption"
-                    }
-                  },
-                  "required": [
-                    "field_option"
-                  ]
-                },
-                "examples": {
-                  "response": {
-                    "summary": "Response Example",
-                    "value": {
-                      "field_option": {
-                        "id": "PQ9K7I8",
-                        "type": "field_option",
-                        "data": {
-                          "datatype": "string",
-                          "value": "production"
-                        },
-                        "created_at": "2021-06-01T21:30:42Z",
-                        "updated_at": "2021-06-01T21:30:42Z"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/ArgumentError"
-          },
-          "403": {
-            "$ref": "#/components/responses/Forbidden"
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          },
-          "500": {
-            "$ref": "#/components/responses/InternalServerError"
-          }
-        }
-      },
-      "get": {
-        "tags": [
-          "Custom Fields"
-        ],
-        "operationId": "listCustomFieldsFieldOptions",
-        "description": "List all enabled Field Options for a Field.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
-        "summary": "List Field Options",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/field_id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_customfields"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "A list of field options.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "field_options": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/CustomFieldsFieldOption"
-                      }
-                    }
-                  },
-                  "required": [
-                    "field_options"
-                  ]
-                },
-                "examples": {
-                  "response": {
-                    "summary": "Response Example",
-                    "value": {
-                      "field_options": [
-                        {
-                          "id": "PQ9K7I8",
-                          "type": "field_option",
-                          "data": {
-                            "datatype": "string",
-                            "value": "production"
-                          },
-                          "created_at": "2021-06-01T21:30:42Z",
-                          "updated_at": "2021-06-01T21:30:42Z"
-                        }
-                      ]
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          },
-          "500": {
-            "$ref": "#/components/responses/InternalServerError"
-          }
-        }
-      }
-    },
-    "/customfields/fields/{field_id}/field_options/{field_option_id}": {
-      "description": "Get and update field option.",
-      "get": {
-        "tags": [
-          "Custom Fields"
-        ],
-        "operationId": "getCustomFieldsFieldOption",
-        "description": "Get a Field Option.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
-        "summary": "Get Field Option",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/field_id"
-          },
-          {
-            "$ref": "#/components/parameters/field_option_id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_customfields"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "The field option requested.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "field_option": {
-                      "$ref": "#/components/schemas/CustomFieldsFieldOption"
-                    }
-                  },
-                  "required": [
-                    "field_option"
-                  ]
-                },
-                "examples": {
-                  "response": {
-                    "summary": "Response Example",
-                    "value": {
-                      "field_option": {
-                        "id": "PQ9K7I8",
-                        "type": "field_option",
-                        "data": {
-                          "datatype": "string",
-                          "value": "prod"
-                        },
-                        "created_at": "2021-06-01T21:30:42Z",
-                        "updated_at": "2021-06-01T21:30:42Z"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "$ref": "#/components/responses/Forbidden"
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          },
-          "500": {
-            "$ref": "#/components/responses/InternalServerError"
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Custom Fields"
-        ],
-        "operationId": "updateCustomFieldsFieldOption",
-        "description": "Update Field Option for a Field.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
-        "summary": "Update a Field Option",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/field_id"
-          },
-          {
-            "$ref": "#/components/parameters/field_option_id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_customfields"
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "field_option": {
-                    "$ref": "#/components/schemas/CustomFieldsEditableFieldOption"
-                  }
-                },
-                "required": [
-                  "field_option"
-                ]
-              },
-              "examples": {
-                "request": {
-                  "summary": "Request Example",
-                  "value": {
-                    "field_option": {
-                      "data": {
-                        "datatype": "string",
-                        "value": "prod"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "The field option object updated.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "field_option": {
-                      "$ref": "#/components/schemas/CustomFieldsFieldOption"
-                    }
-                  },
-                  "required": [
-                    "field_option"
-                  ]
-                },
-                "examples": {
-                  "response": {
-                    "summary": "Response Example",
-                    "value": {
-                      "field_option": {
-                        "id": "PQ9K7I8",
-                        "type": "field_option",
-                        "data": {
-                          "datatype": "string",
-                          "value": "prod"
-                        },
-                        "created_at": "2021-06-01T21:30:42Z",
-                        "updated_at": "2021-06-01T21:30:42Z"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/ArgumentError"
-          },
-          "403": {
-            "$ref": "#/components/responses/Forbidden"
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          },
-          "500": {
-            "$ref": "#/components/responses/InternalServerError"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Custom Fields"
-        ],
-        "operationId": "deleteCustomFieldsFieldOption",
-        "description": "Delete a Field Option.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
-        "summary": "Delete a Field Option",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/field_id"
-          },
-          {
-            "$ref": "#/components/parameters/field_option_id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_customfields"
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "The field option was deleted successfully."
-          },
-          "400": {
-            "$ref": "#/components/responses/ArgumentError"
-          },
-          "403": {
-            "$ref": "#/components/responses/Forbidden"
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          },
-          "500": {
-            "$ref": "#/components/responses/InternalServerError"
-          }
-        }
-      }
-    },
-    "/customfields/fields/{field_id}/schemas": {
-      "description": "List all Schemas using the Field.",
-      "get": {
-        "tags": [
-          "Custom Fields"
-        ],
-        "operationId": "listCustomFieldsSchemasUsingField",
-        "description": "List all Schemas using the Field.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
-        "summary": "List Schemas using Field",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/offset_limit"
-          },
-          {
-            "$ref": "#/components/parameters/offset_offset"
-          },
-          {
-            "$ref": "#/components/parameters/offset_total"
-          },
-          {
-            "$ref": "#/components/parameters/field_id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_customfields"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "A paginated list of schemas using the field.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/Pagination"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "schemas": {
-                          "type": "array",
-                          "readOnly": true,
-                          "items": {
-                            "$ref": "#/components/schemas/CustomFieldsSchemaWithTimestamps"
-                          }
-                        }
-                      },
-                      "required": [
-                        "schemas"
-                      ]
-                    }
-                  ]
-                },
-                "examples": {
-                  "response": {
-                    "summary": "Response Example",
-                    "value": {
-                      "schemas": [
-                        {
-                          "id": "PT20YPA",
-                          "type": "schema",
-                          "self": "https://api.pagerduty.com/customfields/schemas/PT20YPA",
-                          "summary": "Security Incident",
-                          "title": "Security Incident",
-                          "description": "Default schema to use for security incidents",
-                          "created_at": "2021-06-01T21:30:42Z",
-                          "updated_at": "2021-07-01T21:30:42Z"
-                        }
-                      ],
-                      "limit": 1,
-                      "offset": 0,
-                      "more": true
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/ArgumentError"
-          },
-          "403": {
-            "$ref": "#/components/responses/Forbidden"
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          },
-          "500": {
-            "$ref": "#/components/responses/InternalServerError"
-          }
-        }
-      }
-    },
-    "/customfields/schema_assignments": {
-      "description": "Assign a schema to a service",
-      "post": {
-        "tags": [
-          "Custom Fields"
-        ],
-        "operationId": "createCustomFieldsSchemaAssignment",
-        "description": "Assign a new Schema to a service\n\n<!-- theme: warning -->\n\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
-        "summary": "Create a Schema Assignment",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/early_access_customfields"
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "schema_assignment": {
-                    "$ref": "#/components/schemas/CustomFieldsEditableSchemaAssignment"
-                  }
-                },
-                "required": [
-                  "schema_assignment"
-                ]
-              },
-              "examples": {
-                "request": {
-                  "summary": "Request Example",
-                  "value": {
-                    "schema_assignment": {
-                      "service": {
-                        "id": "PT4KHLX",
-                        "type": "service_reference"
-                      },
-                      "schema": {
-                        "id": "PT4KHEE",
-                        "type": "schema_reference"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "The schema assignment created.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "schema_assignment": {
-                      "$ref": "#/components/schemas/CustomFieldsSchemaAssignment"
-                    }
-                  },
-                  "required": [
-                    "schema_assignment"
-                  ]
-                },
-                "examples": {
-                  "response": {
-                    "summary": "Response Example",
-                    "value": {
-                      "schema_assignment": {
-                        "id": "P9CBJS2",
-                        "type": "schema_assignment",
-                        "service": {
-                          "id": "PT4KHLX",
-                          "type": "service_refence"
-                        },
-                        "schema": {
-                          "id": "PT4KHEE",
-                          "type": "schema_reference",
-                          "summary": "The schema summary",
-                          "self": "https://api.pagerduty.com/customfields/schemas/PT20YPA"
-                        },
-                        "created_at": "2021-06-01T21:30:42Z",
-                        "updated_at": "2021-06-01T21:30:42Z"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/ArgumentError"
-          },
-          "403": {
-            "$ref": "#/components/responses/Forbidden"
-          },
-          "500": {
-            "$ref": "#/components/responses/InternalServerError"
-          }
-        }
-      },
-      "get": {
-        "tags": [
-          "Custom Fields"
-        ],
-        "operationId": "listSchemaAssignments",
-        "description": "List Schema Assignments by `service_id` or `schema_id`\n\n<!-- theme: warning -->\n\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
-        "summary": "List Schema Assignments",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/customfields_query_schema_assignments_filter"
-          },
-          {
-            "$ref": "#/components/parameters/offset_limit"
-          },
-          {
-            "$ref": "#/components/parameters/offset_offset"
-          },
-          {
-            "$ref": "#/components/parameters/offset_total"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_customfields"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "The list of Assignments",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/Pagination"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "schema_assignments": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/CustomFieldsSchemaAssignment"
-                          }
-                        }
-                      },
-                      "required": [
-                        "schema_assignments"
-                      ]
-                    }
-                  ]
-                },
-                "examples": {
-                  "response": {
-                    "summary": "Response Example",
-                    "value": {
-                      "schema_assignments": [
-                        {
-                          "id": "P9CBJS2",
-                          "type": "schema_assignment",
-                          "service": {
-                            "id": "PT4KHLX",
-                            "type": "service_reference"
-                          },
-                          "schema": {
-                            "id": "PT4KHEE",
-                            "type": "schema_reference",
-                            "summary": "The schema summary",
-                            "self": "https://api.pagerduty.com/customfields/schemas/PT20YPA"
-                          },
-                          "created_at": "2021-06-01T21:30:42Z",
-                          "updated_at": "2021-06-01T21:30:42Z"
-                        }
-                      ],
-                      "limit": 1,
-                      "offset": 0,
-                      "more": true
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "$ref": "#/components/responses/Forbidden"
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          },
-          "500": {
-            "$ref": "#/components/responses/InternalServerError"
-          }
-        }
-      }
-    },
-    "/customfields/schema_assignments/{id}": {
-      "description": "Delete a Schema Assignment",
-      "delete": {
-        "tags": [
-          "Custom Fields"
-        ],
-        "operationId": "deleteSchemaAssignment",
-        "description": "Remove the Schema assigned to a service\n\n<!-- theme: warning -->\n\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
-        "summary": "Remove a Schema Assignment",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_customfields"
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "The schema assignment was deleted successfully."
-          },
-          "400": {
-            "$ref": "#/components/responses/ArgumentError"
-          },
-          "403": {
-            "$ref": "#/components/responses/Forbidden"
-          },
-          "500": {
-            "$ref": "#/components/responses/InternalServerError"
-          }
-        }
-      }
-    },
-    "/customfields/schemas": {
-      "description": "Create and list schemas.",
-      "post": {
-        "tags": [
-          "Custom Fields"
-        ],
-        "operationId": "createCustomFieldsSchema",
-        "description": "Create a new Schema, along with the Field Configurations if provided. An account may have up to 100 Schemas.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
-        "summary": "Create a Schema",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/early_access_customfields"
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "schema": {
-                    "$ref": "#/components/schemas/CustomFieldsCreatableSchema"
-                  }
-                },
-                "required": [
-                  "schema"
-                ]
-              },
-              "examples": {
-                "request1": {
-                  "summary": "Example: With field_configurations",
-                  "value": {
-                    "schema": {
-                      "title": "Security Incident",
-                      "description": "Default schema to use for security incidents",
-                      "field_configurations": [
-                        {
-                          "field": {
-                            "id": "PT4KZZZ",
-                            "type": "field_reference"
-                          },
-                          "required": false
-                        }
-                      ]
-                    }
-                  }
-                },
-                "request2": {
-                  "summary": "Example: Without field_configurations",
-                  "value": {
-                    "schema": {
-                      "title": "Security Incident",
-                      "description": "Default schema to use for security incidents"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "The schema object created, along with the Field Configurations if provided.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "schema": {
-                      "$ref": "#/components/schemas/CustomFieldsSchemaWithConfigurations"
-                    }
-                  },
-                  "required": [
-                    "schema"
-                  ]
-                },
-                "examples": {
-                  "response1": {
-                    "summary": "Example: With field_configurations",
-                    "value": {
-                      "schema": {
-                        "id": "PT20YPA",
-                        "type": "schema",
-                        "summary": "Security Incident",
-                        "self": "https://api.pagerduty.com/customfields/schemas/PT20YPA",
-                        "title": "Security Incident",
-                        "description": "Default schema to use for security incidents",
-                        "created_at": "2021-06-01T21:30:42Z",
-                        "updated_at": "2021-06-01T21:30:42Z",
-                        "field_configurations": [
-                          {
-                            "id": "PT4KHEE",
-                            "type": "field_configuration",
-                            "required": false,
-                            "default_value": null,
-                            "created_at": "2021-06-01T21:30:42Z",
-                            "updated_at": "2021-06-01T21:30:42Z",
-                            "field": {
-                              "id": "PT4KZZZ",
-                              "type": "field",
-                              "self": "https://api.pagerduty.com/customfields/fields/PT4KZZZ",
-                              "summary": "environment",
-                              "name": "environment",
-                              "display_name": "Environment",
-                              "description": null,
-                              "datatype": "string",
-                              "multi_value": true,
-                              "fixed_options": false,
-                              "created_at": "2021-06-01T21:30:42Z",
-                              "updated_at": "2021-07-01T21:30:42Z"
-                            }
-                          }
-                        ]
-                      }
-                    }
-                  },
-                  "response2": {
-                    "summary": "Example: Without field_configurations",
-                    "value": {
-                      "schema": {
-                        "id": "PT20YPA",
-                        "type": "schema",
-                        "summary": "Security Incident",
-                        "self": "https://api.pagerduty.com/customfields/schemas/PT20YPA",
-                        "title": "Security Incident",
-                        "description": "Default schema to use for security incidents",
-                        "created_at": "2021-06-01T21:30:42Z",
-                        "updated_at": "2021-06-01T21:30:42Z"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/ArgumentError"
-          },
-          "403": {
-            "$ref": "#/components/responses/Forbidden"
-          },
-          "500": {
-            "$ref": "#/components/responses/InternalServerError"
-          }
-        }
-      },
-      "get": {
-        "tags": [
-          "Custom Fields"
-        ],
-        "operationId": "listCustomFieldsSchemas",
-        "description": "List all Schemas.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
-        "summary": "List Schemas",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/offset_limit"
-          },
-          {
-            "$ref": "#/components/parameters/offset_offset"
-          },
-          {
-            "$ref": "#/components/parameters/offset_total"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_customfields"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "A paginated list of schemas.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/Pagination"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "schemas": {
-                          "type": "array",
-                          "readOnly": true,
-                          "items": {
-                            "$ref": "#/components/schemas/CustomFieldsSchemaWithTimestamps"
-                          }
-                        }
-                      },
-                      "required": [
-                        "schemas"
-                      ]
-                    }
-                  ]
-                },
-                "examples": {
-                  "response": {
-                    "summary": "Response Example",
-                    "value": {
-                      "schemas": [
-                        {
-                          "id": "PT20YPA",
-                          "type": "schema",
-                          "self": "https://api.pagerduty.com/customfields/schemas/PT20YPA",
-                          "summary": "Security Incident",
-                          "title": "Security Incident",
-                          "description": "Default schema to use for security incidents",
-                          "created_at": "2021-06-01T21:30:42Z",
-                          "updated_at": "2021-07-01T21:30:42Z"
-                        }
-                      ],
-                      "limit": 1,
-                      "offset": 0,
-                      "more": true
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/ArgumentError"
-          },
-          "500": {
-            "$ref": "#/components/responses/InternalServerError"
-          }
-        }
-      }
-    },
-    "/customfields/schemas/{schema_id}": {
-      "description": "Get, update and delete a schema.",
-      "get": {
-        "tags": [
-          "Custom Fields"
-        ],
-        "operationId": "getCustomFieldsSchema",
-        "description": "Get detailed information about a Schema.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
-        "summary": "Get a Schema",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/schema_id"
-          },
-          {
-            "$ref": "#/components/parameters/include_customfields_schema"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_customfields"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "The schema requested.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "schema": {
-                      "$ref": "#/components/schemas/CustomFieldsSchemaWithConfigurations"
-                    }
-                  },
-                  "required": [
-                    "schema"
-                  ]
-                },
-                "examples": {
-                  "response1": {
-                    "summary": "Example: No query parameters",
-                    "value": {
-                      "schema": {
-                        "id": "PT20YPA",
-                        "type": "schema",
-                        "self": "https://api.pagerduty.com/customfields/schemas/PT20YPA",
-                        "summary": "Security Incident",
-                        "title": "Security Incident",
-                        "description": "Default schema to use for security incidents",
-                        "created_at": "2021-06-01T21:30:42Z",
-                        "updated_at": "2021-07-01T21:30:42Z"
-                      }
-                    }
-                  },
-                  "response2": {
-                    "summary": "Example: Using include[]=field_configurations",
-                    "value": {
-                      "schema": {
-                        "id": "PT20YPA",
-                        "type": "schema",
-                        "self": "https://api.pagerduty.com/customfields/schemas/PT20YPA",
-                        "summary": "Security Incident",
-                        "title": "Security Incident",
-                        "description": "Default schema to use for security incidents",
-                        "created_at": "2021-06-01T21:30:42Z",
-                        "updated_at": "2021-07-01T21:30:42Z",
-                        "field_configurations": [
-                          {
-                            "id": "PT4KHEE",
-                            "type": "field_configuration",
-                            "field": {
-                              "id": "PT4KZZZ",
-                              "type": "field",
-                              "self": "https://api.pagerduty.com/customfields/fields/PT4KZZZ",
-                              "summary": "environment",
-                              "name": "environment",
-                              "description": null,
-                              "display_name": "Environment",
-                              "datatype": "string",
-                              "multi_value": true,
-                              "fixed_options": false,
-                              "created_at": "2021-06-01T21:30:42Z",
-                              "updated_at": "2021-07-01T21:30:42Z"
-                            },
-                            "required": true,
-                            "default_value": {
-                              "datatype": "string",
-                              "multi_value": true,
-                              "value": [
-                                "prod",
-                                "stg"
-                              ]
-                            },
-                            "created_at": "2021-06-01T21:30:42Z",
-                            "updated_at": "2021-06-01T21:30:42Z"
-                          }
-                        ]
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "$ref": "#/components/responses/Forbidden"
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          },
-          "500": {
-            "$ref": "#/components/responses/InternalServerError"
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Custom Fields"
-        ],
-        "operationId": "updateCustomFieldsSchema",
-        "description": "Update a Schema, along with the Field Configurations if provided.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
-        "summary": "Update a Schema",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/schema_id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_customfields"
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "schema": {
-                    "$ref": "#/components/schemas/CustomFieldsEditableSchema"
-                  }
-                },
-                "required": [
-                  "schema"
-                ]
-              },
-              "examples": {
-                "request1": {
-                  "summary": "Example: With field_configurations",
-                  "value": {
-                    "schema": {
-                      "title": "New title!",
-                      "field_configurations": [
-                        {
-                          "field": {
-                            "id": "PT4KZZZ",
-                            "type": "field_reference"
-                          },
-                          "required": false
-                        }
-                      ]
-                    }
-                  }
-                },
-                "request2": {
-                  "summary": "Example: Without field_configurations",
-                  "value": {
-                    "schema": {
-                      "title": "New title!"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "The schema object updated, along with the Field Configurations if provided.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "schema": {
-                      "$ref": "#/components/schemas/CustomFieldsSchemaWithConfigurations"
-                    }
-                  },
-                  "required": [
-                    "schema"
-                  ]
-                },
-                "examples": {
-                  "response1": {
-                    "summary": "Example: With field_configurations",
-                    "value": {
-                      "schema": {
-                        "id": "PT20YPA",
-                        "type": "schema",
-                        "self": "https://api.pagerduty.com/customfields/schemas/PT20YPA",
-                        "summary": "Security Incident",
-                        "title": "New title!",
-                        "description": "Default schema to use for security incidents",
-                        "created_at": "2021-06-01T21:30:42Z",
-                        "updated_at": "2021-07-01T21:30:42Z",
-                        "field_configurations": [
-                          {
-                            "id": "PT4KHEE",
-                            "type": "field_configuration",
-                            "required": false,
-                            "default_value": null,
-                            "created_at": "2021-06-01T21:30:42Z",
-                            "updated_at": "2021-07-01T21:30:42Z",
-                            "field": {
-                              "id": "PT4KZZZ",
-                              "type": "field",
-                              "self": "https://api.pagerduty.com/customfields/fields/PT4KZZZ",
-                              "summary": "environment",
-                              "name": "environment",
-                              "display_name": "Environment",
-                              "description": null,
-                              "datatype": "string",
-                              "multi_value": true,
-                              "fixed_options": false,
-                              "created_at": "2021-06-01T21:30:42Z",
-                              "updated_at": "2021-07-01T21:30:42Z"
-                            }
-                          }
-                        ]
-                      }
-                    }
-                  },
-                  "response2": {
-                    "summary": "Example: Without field_configurations",
-                    "value": {
-                      "schema": {
-                        "id": "PT20YPA",
-                        "type": "schema",
-                        "self": "https://api.pagerduty.com/customfields/schemas/PT20YPA",
-                        "summary": "Security Incident",
-                        "title": "New title!",
-                        "description": "Default schema to use for security incidents",
-                        "created_at": "2021-06-01T21:30:42Z",
-                        "updated_at": "2021-07-01T21:30:42Z"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/ArgumentError"
-          },
-          "403": {
-            "$ref": "#/components/responses/Forbidden"
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          },
-          "500": {
-            "$ref": "#/components/responses/InternalServerError"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Custom Fields"
-        ],
-        "operationId": "deleteCustomFieldsSchema",
-        "description": "Delete a Schema. Schemas may not be deleted if they are in use by any Service.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
-        "summary": "Delete a Schema",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/schema_id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_customfields"
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "The schema was deleted successfully."
-          },
-          "403": {
-            "$ref": "#/components/responses/Forbidden"
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          },
-          "409": {
-            "$ref": "#/components/responses/Conflict"
-          },
-          "500": {
-            "$ref": "#/components/responses/InternalServerError"
-          }
-        }
-      }
-    },
-    "/customfields/schemas/{schema_id}/field_configurations": {
-      "description": "Field Configurations",
-      "post": {
-        "tags": [
-          "Custom Fields"
-        ],
-        "operationId": "createCustomFieldsFieldConfiguration",
-        "description": "Add a new Field Configuration to an existing Schema. A Schema may use at most 20 Fields, and so may have at most 20 Field Configurations.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
-        "summary": "Create a Field Configuration",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/schema_id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_customfields"
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "field_configuration": {
-                    "$ref": "#/components/schemas/CustomFieldsFieldConfigurationWithFieldReference"
-                  }
-                },
-                "required": [
-                  "field_configuration"
-                ]
-              },
-              "examples": {
-                "request": {
-                  "summary": "Request Example",
-                  "value": {
-                    "field_configuration": {
-                      "field": {
-                        "id": "PT20YPA",
-                        "type": "field_reference"
-                      },
-                      "required": true,
-                      "default_value": {
-                        "datatype": "string",
-                        "multi_value": true,
-                        "value": [
-                          "prod",
-                          "stg"
-                        ]
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "The field configuration object created.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "field_configuration": {
-                      "$ref": "#/components/schemas/CustomFieldsFieldConfigurationWithFieldReference"
-                    }
-                  },
-                  "required": [
-                    "field_configuration"
-                  ]
-                },
-                "examples": {
-                  "response": {
-                    "summary": "Response Example",
-                    "value": {
-                      "id": "PT4KHEE",
-                      "type": "field_configuration",
-                      "field": {
-                        "id": "PT20YPA",
-                        "type": "field_reference"
-                      },
-                      "required": true,
-                      "default_value": {
-                        "datatype": "string",
-                        "multi_value": true,
-                        "value": [
-                          "prod",
-                          "stg"
-                        ]
-                      },
-                      "created_at": "2021-06-01T21:30:42Z",
-                      "updated_at": "2021-07-01T21:30:42Z"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/ArgumentError"
-          },
-          "403": {
-            "$ref": "#/components/responses/Forbidden"
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          },
-          "500": {
-            "$ref": "#/components/responses/InternalServerError"
-          }
-        }
-      },
-      "get": {
-        "tags": [
-          "Custom Fields"
-        ],
-        "operationId": "listCustomFieldsFieldConfigurations",
-        "description": "List all Field Configurations for the given Schema.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
-        "summary": "List Field Configurations",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/schema_id"
-          },
-          {
-            "$ref": "#/components/parameters/include_customfields_field_configuration"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_customfields"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "A list of field configurations in the schema.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "field_configurations": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/CustomFieldsFieldConfigurationWithFieldOrFieldReference"
-                      }
-                    }
-                  },
-                  "required": [
-                    "field_configurations"
-                  ]
-                },
-                "examples": {
-                  "response1": {
-                    "summary": "Example: No query parameters",
-                    "value": {
-                      "field_configurations": [
-                        {
-                          "id": "PT4KHEE",
-                          "type": "field_configuration",
-                          "field": {
-                            "id": "PT20YPA",
-                            "type": "field_reference"
-                          },
-                          "required": true,
-                          "default_value": {
-                            "datatype": "string",
-                            "multi_value": true,
-                            "value": [
-                              "prod",
-                              "stg"
-                            ]
-                          },
-                          "created_at": "2021-06-01T21:30:42Z",
-                          "updated_at": "2021-07-01T21:30:42Z"
-                        }
-                      ]
-                    }
-                  },
-                  "response2": {
-                    "summary": "Example: Using include[]=fields",
-                    "value": {
-                      "field_configurations": [
-                        {
-                          "id": "PT4KHEE",
-                          "type": "field_configuration",
-                          "field": {
-                            "id": "PT20YPA",
-                            "type": "field",
-                            "self": "https://api.pagerduty.com/customfields/fields/PT4KZZZ",
-                            "summary": "environment",
-                            "name": "environment",
-                            "display_name": "Environment",
-                            "description": null,
-                            "datatype": "string",
-                            "multi_value": true,
-                            "fixed_options": false,
-                            "created_at": "2021-06-01T21:30:42Z",
-                            "updated_at": "2021-07-01T21:30:42Z"
-                          },
-                          "required": true,
-                          "default_value": {
-                            "datatype": "string",
-                            "multi_value": true,
-                            "value": [
-                              "prod",
-                              "stg"
-                            ]
-                          },
-                          "created_at": "2021-06-01T21:30:42Z",
-                          "updated_at": "2021-07-01T21:30:42Z"
-                        }
-                      ]
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          },
-          "500": {
-            "$ref": "#/components/responses/InternalServerError"
-          }
-        }
-      }
-    },
-    "/customfields/schemas/{schema_id}/field_configurations/{field_configuration_id}": {
-      "description": "Field configurations",
-      "get": {
-        "tags": [
-          "Custom Fields"
-        ],
-        "operationId": "getCustomFieldsFieldConfiguration",
-        "description": "Show detailed information about a Field Configuration.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
-        "summary": "Get a Field Configuration",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/schema_id"
-          },
-          {
-            "$ref": "#/components/parameters/field_configuration_id"
-          },
-          {
-            "$ref": "#/components/parameters/include_customfields_field_configuration"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_customfields"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "The field configuration requested.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "field_configuration": {
-                      "$ref": "#/components/schemas/CustomFieldsFieldConfigurationWithFieldOrFieldReference"
-                    }
-                  },
-                  "required": [
-                    "field_configuration"
-                  ]
-                },
-                "examples": {
-                  "response1": {
-                    "summary": "Example: No query parameters",
-                    "value": {
-                      "field_configuration": {
-                        "id": "PT4KHEE",
-                        "type": "field_configuration",
-                        "field": {
-                          "id": "PT20YPA",
-                          "type": "field_reference"
-                        },
-                        "required": true,
-                        "default_value": {
-                          "datatype": "string",
-                          "multi_value": true,
-                          "value": [
-                            "prod",
-                            "stg"
-                          ]
-                        },
-                        "created_at": "2021-06-01T21:30:42Z",
-                        "updated_at": "2021-07-01T21:30:42Z"
-                      }
-                    }
-                  },
-                  "response2": {
-                    "summary": "Example: Using include[]=fields",
-                    "value": {
-                      "field_configuration": {
-                        "id": "PT4KHEE",
-                        "type": "field_configuration",
-                        "field": {
-                          "id": "PT20YPA",
-                          "type": "field",
-                          "self": "https://api.pagerduty.com/customfields/fields/PT4KZZZ",
-                          "summary": "environment",
-                          "name": "environment",
-                          "display_name": "Environment",
-                          "description": null,
-                          "datatype": "string",
-                          "multi_value": true,
-                          "fixed_options": false,
-                          "created_at": "2021-06-01T21:30:42Z",
-                          "updated_at": "2021-07-01T21:30:42Z"
-                        },
-                        "required": true,
-                        "default_value": {
-                          "datatype": "string",
-                          "multi_value": true,
-                          "value": [
-                            "prod",
-                            "stg"
-                          ]
-                        },
-                        "created_at": "2021-06-01T21:30:42Z",
-                        "updated_at": "2021-07-01T21:30:42Z"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "$ref": "#/components/responses/Forbidden"
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          },
-          "500": {
-            "$ref": "#/components/responses/InternalServerError"
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Custom Fields"
-        ],
-        "operationId": "updateCustomFieldsFieldConfiguration",
-        "description": "Update settings for Field Configuration in Schema.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
-        "summary": "Update a Field Configuration",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/schema_id"
-          },
-          {
-            "$ref": "#/components/parameters/field_configuration_id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_customfields"
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "field_configuration": {
-                    "$ref": "#/components/schemas/CustomFieldsEditableFieldConfiguration"
-                  }
-                },
-                "required": [
-                  "field_configuration"
-                ]
-              },
-              "examples": {
-                "request": {
-                  "summary": "Request Example",
-                  "value": {
-                    "field_configuration": {
-                      "required": false,
-                      "default_value": null
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "The field configuration that was updated.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "field_configuration": {
-                      "$ref": "#/components/schemas/CustomFieldsFieldConfigurationWithFieldReference"
-                    }
-                  },
-                  "required": [
-                    "field_configuration"
-                  ]
-                },
-                "examples": {
-                  "response": {
-                    "summary": "Response Example",
-                    "value": {
-                      "field_configuration": {
-                        "id": "PT4KHEE",
-                        "type": "field_configuration",
-                        "field": {
-                          "id": "PT20YPA",
-                          "type": "field_reference"
-                        },
-                        "required": false,
-                        "default_value": null,
-                        "created_at": "2021-06-01T21:30:42Z",
-                        "updated_at": "2021-07-01T21:30:42Z"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/ArgumentError"
-          },
-          "403": {
-            "$ref": "#/components/responses/Forbidden"
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          },
-          "500": {
-            "$ref": "#/components/responses/InternalServerError"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Custom Fields"
-        ],
-        "operationId": "deleteCustomFieldsFieldConfiguration",
-        "description": "Remove a Field Configuration and its associated Field from a Schema.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
-        "summary": "Delete a Field Configuration",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/schema_id"
-          },
-          {
-            "$ref": "#/components/parameters/field_configuration_id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_customfields"
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "The field configuration was deleted successfully from the schema."
-          },
-          "403": {
-            "$ref": "#/components/responses/Forbidden"
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          },
-          "500": {
-            "$ref": "#/components/responses/InternalServerError"
           }
         }
       }
@@ -28824,7 +25942,7 @@
           "Incidents"
         ],
         "operationId": "getIncident",
-        "description": "Show detailed information about an incident. Accepts either an incident id, or an incident number.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n\n<!-- theme: warning -->\n> ### Early Access\n> The `include[]=field_values` part of this endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nScoped OAuth requires: `incidents.read`\n",
+        "description": "Show detailed information about an incident. Accepts either an incident id, or an incident number.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n\n<!-- theme: warning -->\n> ### Early Access\n> The `include[]=custom_fields` part of this endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nScoped OAuth requires: `incidents.read`\n",
         "summary": "Get an incident",
         "parameters": [
           {
@@ -29051,16 +26169,15 @@
                             "requested_at": "2018-08-09T21:40:49Z"
                           }
                         ],
-                        "field_values": [
+                        "custom_fields": [
                           {
                             "id": "PT4KHEE",
                             "type": "field_value",
                             "name": "environment",
                             "display_name": "Runtime Environment",
                             "description": "environment where incident occurred",
-                            "fixed_options": true,
-                            "datatype": "string",
-                            "multi_value": false,
+                            "data_type": "string",
+                            "field_type": "single_value_fixed",
                             "value": "production"
                           }
                         ]
@@ -30055,15 +27172,15 @@
         ]
       }
     },
-    "/incidents/{id}/field_values": {
-      "description": "Retrieve and update incident field values.",
+    "/incidents/{id}/custom_fields/values": {
+      "description": "Retrieve and update incident custom fields.",
       "get": {
         "tags": [
           "Incidents"
         ],
         "operationId": "getIncidentFieldValues",
-        "description": "Get field values for an incident\n\n<!-- theme: warning -->\n\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
-        "summary": "Get Incident Field Values",
+        "description": "Get custom field values for an incident.\n\n<!-- theme: warning -->\n\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
+        "summary": "Get Custom Field Values",
         "parameters": [
           {
             "$ref": "#/components/parameters/id"
@@ -30074,13 +27191,13 @@
         ],
         "responses": {
           "200": {
-            "description": "The list of field values",
+            "description": "The list of custom field values.",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "field_values": {
+                    "custom_fields": {
                       "type": "array",
                       "items": {
                         "$ref": "#/components/schemas/CustomFieldsFieldValue"
@@ -30088,24 +27205,43 @@
                     }
                   },
                   "required": [
-                    "field_values"
+                    "custom_fields"
                   ]
                 },
                 "examples": {
-                  "response": {
+                  "response1": {
                     "summary": "Response Example",
                     "value": {
-                      "field_values": [
+                      "custom_fields": [
                         {
                           "id": "PT4KHEE",
                           "type": "field_value",
                           "name": "environment",
                           "display_name": "Runtime Environment",
                           "description": "environment where incident occurred",
-                          "fixed_options": true,
-                          "datatype": "string",
-                          "multi_value": false,
+                          "data_type": "string",
+                          "field_type": "single_value_fixed",
                           "value": "production"
+                        }
+                      ]
+                    }
+                  },
+                  "response2": {
+                    "summary": "Response Example",
+                    "value": {
+                      "custom_fields": [
+                        {
+                          "id": "PT4KHEE",
+                          "type": "field_value",
+                          "name": "environment",
+                          "display_name": "Runtime Environment",
+                          "description": "environment where incident occurred",
+                          "data_type": "string",
+                          "field_type": "multi_value_fixed",
+                          "value": [
+                            "production",
+                            "staging"
+                          ]
                         }
                       ]
                     }
@@ -30130,8 +27266,8 @@
           "Incidents"
         ],
         "operationId": "setIncidentFieldValues",
-        "description": "Set field values for an incident\n\n<!-- theme: warning -->\n\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
-        "summary": "Set Incident Field Values",
+        "description": "Set custom field values for an incident.\n\n<!-- theme: warning -->\n\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
+        "summary": "Update Custom Field Values",
         "parameters": [
           {
             "$ref": "#/components/parameters/id"
@@ -30143,7 +27279,7 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "field_values": {
+                  "custom_fields": {
                     "type": "array",
                     "items": {
                       "$ref": "#/components/schemas/CustomFieldsEditableFieldValue"
@@ -30151,17 +27287,42 @@
                   }
                 },
                 "required": [
-                  "field_values"
+                  "custom_fields"
                 ]
               },
               "examples": {
-                "request": {
+                "request1": {
                   "summary": "Request Example",
                   "value": {
-                    "field_values": [
+                    "custom_fields": [
                       {
                         "name": "environment",
                         "value": "production"
+                      }
+                    ]
+                  }
+                },
+                "request2": {
+                  "summary": "Request Example",
+                  "value": {
+                    "custom_fields": [
+                      {
+                        "id": "PT4KHEE",
+                        "value": "production"
+                      }
+                    ]
+                  }
+                },
+                "request3": {
+                  "summary": "Request Example",
+                  "value": {
+                    "custom_fields": [
+                      {
+                        "id": "PT4KHEE",
+                        "value": [
+                          "production",
+                          "staging"
+                        ]
                       }
                     ]
                   }
@@ -30172,13 +27333,13 @@
         },
         "responses": {
           "201": {
-            "description": "Field values were updated",
+            "description": "Custom field values were updated.",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "field_values": {
+                    "custom_fields": {
                       "type": "array",
                       "items": {
                         "$ref": "#/components/schemas/CustomFieldsFieldValue"
@@ -30186,182 +27347,62 @@
                     }
                   },
                   "required": [
-                    "field_values"
+                    "custom_fields"
                   ]
                 },
                 "examples": {
-                  "response": {
+                  "response1": {
                     "summary": "Response Example",
                     "value": {
-                      "field_values": [
+                      "custom_fields": [
                         {
                           "id": "PT4KHEE",
                           "type": "field_value",
                           "name": "environment",
                           "display_name": "Runtime Environment",
                           "description": "environment where incident occurred",
-                          "fixed_options": true,
-                          "datatype": "string",
-                          "multi_value": false,
+                          "data_type": "string",
+                          "field_type": "single_value_fixed",
                           "value": "production"
                         }
                       ]
                     }
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "$ref": "#/components/responses/Forbidden"
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          },
-          "500": {
-            "$ref": "#/components/responses/InternalServerError"
-          }
-        }
-      }
-    },
-    "/incidents/{id}/field_values/schema": {
-      "description": "Retrieve the schema for a particular incident.",
-      "get": {
-        "tags": [
-          "Incidents"
-        ],
-        "operationId": "getSchemaForIncident",
-        "description": "Get detailed information about a Schema for an incident.\n\n<!-- theme: warning -->\n\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
-        "summary": "Get Incident's Schema",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/id"
-          },
-          {
-            "$ref": "#/components/parameters/include_customfields_incident_schema"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_customfields"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "The schema requested.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "schema": {
-                      "$ref": "#/components/schemas/CustomFieldsIncidentSchema"
-                    }
-                  },
-                  "required": [
-                    "schema"
-                  ]
-                },
-                "examples": {
-                  "response1": {
-                    "summary": "Example: No query parameters",
-                    "value": {
-                      "schema": {
-                        "id": "PT20YPA",
-                        "type": "schema",
-                        "self": "https://api.pagerduty.com/customfields/schemas/PT20YPA",
-                        "summary": "Security Incident",
-                        "title": "Security Incident",
-                        "description": "Default schema to use for security incidents",
-                        "field_configurations": [
-                          {
-                            "id": "PT4KHEE",
-                            "type": "field_configuration",
-                            "field": {
-                              "id": "PT4KZZZ",
-                              "type": "field",
-                              "self": "https://api.pagerduty.com/customfields/fields/PT4KZZZ",
-                              "summary": "environment",
-                              "name": "environment",
-                              "display_name": "Environment",
-                              "description": null,
-                              "datatype": "string",
-                              "multi_value": true,
-                              "fixed_options": true,
-                              "created_at": "2021-06-01T21:30:42Z",
-                              "updated_at": "2021-07-01T21:30:42Z"
-                            },
-                            "required": true,
-                            "default_value": {
-                              "datatype": "string",
-                              "multi_value": true,
-                              "value": [
-                                "prod",
-                                "stg"
-                              ]
-                            },
-                            "created_at": "2021-06-01T21:30:42Z",
-                            "updated_at": "2021-06-01T21:30:42Z"
-                          }
-                        ]
-                      }
-                    }
                   },
                   "response2": {
-                    "summary": "Example: Using include[]=field_options",
+                    "summary": "Response Example",
                     "value": {
-                      "schema": {
-                        "id": "PT20YPA",
-                        "type": "schema",
-                        "self": "https://api.pagerduty.com/customfields/schemas/PT20YPA",
-                        "summary": "Security Incident",
-                        "title": "Security Incident",
-                        "description": "Default schema to use for security incidents'",
-                        "field_configurations": [
-                          {
-                            "id": "PT4KHEE",
-                            "type": "field_configuration",
-                            "field": {
-                              "id": "PT4KZZZ",
-                              "type": "field",
-                              "self": "https://api.pagerduty.com/customfields/fields/PT4KZZZ",
-                              "summary": "environment",
-                              "name": "environment",
-                              "display_name": "Environment",
-                              "description": null,
-                              "datatype": "string",
-                              "multi_value": true,
-                              "fixed_options": true,
-                              "created_at": "2021-06-01T21:30:42Z",
-                              "updated_at": "2021-07-01T21:30:42Z",
-                              "field_options": [
-                                {
-                                  "id": "PT4KHEE",
-                                  "type": "field_option",
-                                  "data": {
-                                    "datatype": "string",
-                                    "value": [
-                                      "prod",
-                                      "stg"
-                                    ]
-                                  },
-                                  "created_at": "2021-06-01T21:30:42Z",
-                                  "updated_at": "2021-06-01T21:30:42Z"
-                                }
-                              ]
-                            },
-                            "required": true,
-                            "default_value": {
-                              "datatype": "string",
-                              "multi_value": true,
-                              "value": [
-                                "prod",
-                                "stg"
-                              ]
-                            },
-                            "created_at": "2021-06-01T21:30:42Z",
-                            "updated_at": "2021-06-01T21:30:42Z"
-                          }
-                        ]
-                      }
+                      "custom_fields": [
+                        {
+                          "id": "PT4KHEE",
+                          "type": "field_value",
+                          "name": "environment",
+                          "display_name": "Runtime Environment",
+                          "description": "environment where incident occurred",
+                          "data_type": "string",
+                          "field_type": "single_value_fixed",
+                          "value": "production"
+                        }
+                      ]
+                    }
+                  },
+                  "response3": {
+                    "summary": "Response Example",
+                    "value": {
+                      "custom_fields": [
+                        {
+                          "id": "PT4KHEE",
+                          "type": "field_value",
+                          "name": "environment",
+                          "display_name": "Runtime Environment",
+                          "description": "environment where incident occurred",
+                          "data_type": "string",
+                          "field_type": "multi_value_fixed",
+                          "value": [
+                            "production",
+                            "staging"
+                          ]
+                        }
+                      ]
                     }
                   }
                 }
@@ -32253,6 +29294,872 @@
     },
     "/incidents/count": {
       "description": "Get a count of incidents matching a set of criteria such as service, status, and time. Counts may be fetched per status."
+    },
+    "/incidents/custom_fields": {
+      "description": "Create and list Fields on Incidents",
+      "post": {
+        "tags": [
+          "Custom Fields"
+        ],
+        "operationId": "createCustomFieldsField",
+        "description": "Create a new Field, along with the Field Options if provided. An account may have up to 10 Fields.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
+        "summary": "Create a Field",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/early_access_customfields"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "field": {
+                    "$ref": "#/components/schemas/CustomFieldsFieldWithOptions"
+                  }
+                },
+                "required": [
+                  "field"
+                ]
+              },
+              "examples": {
+                "request1": {
+                  "summary": "Example: With field_options and single-value",
+                  "value": {
+                    "field": {
+                      "data_type": "string",
+                      "name": "environment",
+                      "display_name": "Environment",
+                      "description": "The environment that the issue occurred in",
+                      "field_type": "single_value_fixed",
+                      "default_value": "production",
+                      "field_options": [
+                        {
+                          "data": {
+                            "data_type": "string",
+                            "value": "production"
+                          }
+                        },
+                        {
+                          "data": {
+                            "data_type": "string",
+                            "value": "staging"
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                "request2": {
+                  "summary": "Example: With field_options and multi-value",
+                  "value": {
+                    "field": {
+                      "data_type": "string",
+                      "name": "environment",
+                      "display_name": "Environment",
+                      "description": "The environment that the issue occurred in",
+                      "field_type": "multi_value_fixed",
+                      "default_value": [
+                        "production",
+                        "staging"
+                      ],
+                      "field_options": [
+                        {
+                          "data": {
+                            "data_type": "string",
+                            "value": "production"
+                          }
+                        },
+                        {
+                          "data": {
+                            "data_type": "string",
+                            "value": "staging"
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                "request3": {
+                  "summary": "Example: Without field_options",
+                  "value": {
+                    "field": {
+                      "data_type": "string",
+                      "name": "environment",
+                      "display_name": "Environment",
+                      "description": "The environment that the issue occurred in",
+                      "field_type": "single_value",
+                      "default_value": "production"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The field object created, along with the Field Options if provided.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "field": {
+                      "$ref": "#/components/schemas/CustomFieldsFieldWithOptions"
+                    }
+                  },
+                  "required": [
+                    "field"
+                  ]
+                },
+                "examples": {
+                  "response1": {
+                    "summary": "Example: With field_options and single-value",
+                    "value": {
+                      "field": {
+                        "id": "P5IYCNZ",
+                        "type": "field",
+                        "summary": "environment",
+                        "self": "https://api.pagerduty.com/incidents/custom_fields/P5IYCNZ",
+                        "data_type": "string",
+                        "name": "environment",
+                        "display_name": "Environment",
+                        "field_type": "single_value_fixed",
+                        "description": "The environment that the issue occurred in",
+                        "created_at": "2021-06-01T21:30:42Z",
+                        "updated_at": "2021-06-01T21:30:42Z",
+                        "default_value": "staging",
+                        "field_options": [
+                          {
+                            "id": "PT4KHEE",
+                            "type": "field_option",
+                            "data": {
+                              "data_type": "string",
+                              "value": "production"
+                            },
+                            "created_at": "2021-06-01T21:30:42Z",
+                            "updated_at": "2021-06-01T21:30:42Z"
+                          },
+                          {
+                            "id": "P5IYCNZ",
+                            "type": "field_option",
+                            "data": {
+                              "data_type": "string",
+                              "value": "staging"
+                            },
+                            "created_at": "2021-06-01T21:30:42Z",
+                            "updated_at": "2021-06-01T21:30:42Z"
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "response2": {
+                    "summary": "Example: With field_options and multi-value",
+                    "value": {
+                      "field": {
+                        "id": "P5IYCNZ",
+                        "type": "field",
+                        "summary": "environment",
+                        "self": "https://api.pagerduty.com/incidents/custom_fields/P5IYCNZ",
+                        "data_type": "string",
+                        "name": "environment",
+                        "display_name": "Environment",
+                        "field_type": "multi_value_fixed",
+                        "description": "The environment that the issue occurred in",
+                        "created_at": "2021-06-01T21:30:42Z",
+                        "updated_at": "2021-06-01T21:30:42Z",
+                        "default_value": [
+                          "production",
+                          "staging"
+                        ],
+                        "field_options": [
+                          {
+                            "id": "PT4KHEE",
+                            "type": "field_option",
+                            "data": {
+                              "data_type": "string",
+                              "value": "production"
+                            },
+                            "created_at": "2021-06-01T21:30:42Z",
+                            "updated_at": "2021-06-01T21:30:42Z"
+                          },
+                          {
+                            "id": "P5IYCNZ",
+                            "type": "field_option",
+                            "data": {
+                              "data_type": "string",
+                              "value": "staging"
+                            },
+                            "created_at": "2021-06-01T21:30:42Z",
+                            "updated_at": "2021-06-01T21:30:42Z"
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "response3": {
+                    "summary": "Example: Without field_options",
+                    "value": {
+                      "field": {
+                        "id": "P5IYCNZ",
+                        "type": "field",
+                        "summary": "environment",
+                        "self": "https://api.pagerduty.com/incidents/custom_fields/P5IYCNZ",
+                        "data_type": "string",
+                        "field_type": "single_value",
+                        "name": "environment",
+                        "display_name": "Environment",
+                        "description": "The environment that the issue occurred in",
+                        "default_value": "production",
+                        "created_at": "2021-06-01T21:30:42Z",
+                        "updated_at": "2021-06-01T21:30:42Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Custom Fields"
+        ],
+        "operationId": "listCustomFieldsFields",
+        "description": "List fields.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
+        "summary": "List Fields",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/include_customfields_field"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_customfields"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of fields.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "fields": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/CustomFieldsFieldWithOptions"
+                          }
+                        }
+                      },
+                      "required": [
+                        "fields"
+                      ]
+                    }
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "fields": [
+                        {
+                          "id": "P5IYCNZ",
+                          "type": "field",
+                          "summary": "environment",
+                          "self": "https://api.pagerduty.com/incidents/custom_fields/P5IYCNZ",
+                          "data_type": "string",
+                          "name": "environment",
+                          "display_name": "Environment",
+                          "description": "The environment that the issue occurred in",
+                          "field_type": "single_value_fixed",
+                          "created_at": "2021-06-01T21:30:42Z",
+                          "updated_at": "2021-06-01T21:30:42Z",
+                          "default_value": null,
+                          "field_options": [
+                            {
+                              "id": "PT4KHEE",
+                              "type": "field_option",
+                              "data": {
+                                "data_type": "string",
+                                "value": "abc"
+                              },
+                              "created_at": "2021-06-01T21:30:42Z",
+                              "updated_at": "2021-06-01T21:30:42Z"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/incidents/custom_fields/{field_id}": {
+      "description": "Get, update and delete a field.",
+      "get": {
+        "tags": [
+          "Custom Fields"
+        ],
+        "operationId": "getCustomFieldsField",
+        "description": "Show detailed information about a field.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
+        "summary": "Get a Field",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/field_id"
+          },
+          {
+            "$ref": "#/components/parameters/include_customfields_field"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_customfields"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The field requested.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "field": {
+                      "$ref": "#/components/schemas/CustomFieldsFieldWithOptions"
+                    }
+                  },
+                  "required": [
+                    "field"
+                  ]
+                },
+                "examples": {
+                  "response1": {
+                    "summary": "Example: No query parameters",
+                    "value": {
+                      "field": {
+                        "id": "P5IYCNZ",
+                        "type": "field",
+                        "summary": "environment",
+                        "self": "https://api.pagerduty.com/incidents/custom_fields/P5IYCNZ",
+                        "data_type": "string",
+                        "name": "environment",
+                        "display_name": "Environment",
+                        "description": "The environment that the issue occurred in",
+                        "field_type": "multi_value",
+                        "default_value": null,
+                        "created_at": "2021-06-01T21:30:42Z",
+                        "updated_at": "2021-06-01T21:30:42Z"
+                      }
+                    }
+                  },
+                  "response2": {
+                    "summary": "Example: Using include[]=field_options",
+                    "value": {
+                      "field": {
+                        "id": "P5IYCNZ",
+                        "type": "field",
+                        "summary": "environment",
+                        "self": "https://api.pagerduty.com/incidents/custom_fields/P5IYCNZ",
+                        "data_type": "string",
+                        "name": "environment",
+                        "display_name": "Environment",
+                        "description": "The environment that the issue occurred in",
+                        "field_type": "single_value_fixed",
+                        "created_at": "2021-06-01T21:30:42Z",
+                        "updated_at": "2021-06-01T21:30:42Z",
+                        "default_value": null,
+                        "field_options": [
+                          {
+                            "id": "PT4KHEE",
+                            "type": "field_option",
+                            "data": {
+                              "data_type": "string",
+                              "value": "production"
+                            },
+                            "created_at": "2021-06-01T21:30:42Z",
+                            "updated_at": "2021-06-01T21:30:42Z"
+                          },
+                          {
+                            "id": "P5IYCNZ",
+                            "type": "field_option",
+                            "data": {
+                              "data_type": "string",
+                              "value": "staging"
+                            },
+                            "created_at": "2021-06-01T21:30:42Z",
+                            "updated_at": "2021-06-01T21:30:42Z"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Custom Fields"
+        ],
+        "operationId": "updateCustomFieldsField",
+        "description": "Update a field.\n\n<!-- theme: warning -->\n\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
+        "summary": "Update a Field",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/field_id"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_customfields"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "field": {
+                    "$ref": "#/components/schemas/CustomFieldsEditableField"
+                  }
+                },
+                "required": [
+                  "field"
+                ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "field": {
+                      "display_name": "New Display Name!",
+                      "description": "New description!"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The field object updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "field": {
+                      "$ref": "#/components/schemas/CustomFieldsField"
+                    }
+                  },
+                  "required": [
+                    "field"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "field": {
+                        "id": "P5IYCNZ",
+                        "type": "field",
+                        "summary": "old_name",
+                        "self": "https://api.pagerduty.com/incidents/custom_fields/P5IYCNZ",
+                        "data_type": "string",
+                        "name": "old_name",
+                        "display_name": "New Display Name!",
+                        "description": "New description!",
+                        "field_type": "single_value",
+                        "default_value": null,
+                        "created_at": "2021-06-01T21:30:42Z",
+                        "updated_at": "2021-06-01T21:30:42Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Custom Fields"
+        ],
+        "operationId": "deleteCustomFieldsField",
+        "description": "Delete a Field. Fields may not be deleted if they are used by a Field Schema.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
+        "summary": "Delete a Field",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/field_id"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_customfields"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The field was deleted successfully."
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/incidents/custom_fields/{field_id}/field_options": {
+      "description": "Create new option for the given field_options (e.g., enum) field and list all options for the given field.",
+      "post": {
+        "tags": [
+          "Custom Fields"
+        ],
+        "operationId": "createCustomFieldsFieldOption",
+        "description": "Create a new Field Option. Field Options may only be created for Fields that have `field_options`. A Field may have no more than 10 enabled options.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
+        "summary": "Create a Field Option",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/field_id"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_customfields"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "field_option": {
+                    "$ref": "#/components/schemas/CustomFieldsFieldOption"
+                  }
+                },
+                "required": [
+                  "field_option"
+                ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "field_option": {
+                      "data": {
+                        "data_type": "string",
+                        "value": "production"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The field option created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "field_option": {
+                      "$ref": "#/components/schemas/CustomFieldsFieldOption"
+                    }
+                  },
+                  "required": [
+                    "field_option"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "field_option": {
+                        "id": "PQ9K7I8",
+                        "type": "field_option",
+                        "data": {
+                          "data_type": "string",
+                          "value": "production"
+                        },
+                        "created_at": "2021-06-01T21:30:42Z",
+                        "updated_at": "2021-06-01T21:30:42Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Custom Fields"
+        ],
+        "operationId": "listCustomFieldsFieldOptions",
+        "description": "List all enabled Field Options for a Field.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
+        "summary": "List Field Options",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/field_id"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_customfields"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of field options.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "field_options": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/CustomFieldsFieldOption"
+                      }
+                    }
+                  },
+                  "required": [
+                    "field_options"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "field_options": [
+                        {
+                          "id": "PQ9K7I8",
+                          "type": "field_option",
+                          "data": {
+                            "data_type": "string",
+                            "value": "production"
+                          },
+                          "created_at": "2021-06-01T21:30:42Z",
+                          "updated_at": "2021-06-01T21:30:42Z"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/incidents/custom_fields/{field_id}/field_options/{field_option_id}": {
+      "description": "Update field option.",
+      "put": {
+        "tags": [
+          "Custom Fields"
+        ],
+        "operationId": "updateCustomFieldsFieldOption",
+        "description": "Update Field Option for a Field.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
+        "summary": "Update a Field Option",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/field_id"
+          },
+          {
+            "$ref": "#/components/parameters/field_option_id"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_customfields"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "field_option": {
+                    "$ref": "#/components/schemas/CustomFieldsEditableFieldOption"
+                  }
+                },
+                "required": [
+                  "field_option"
+                ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "field_option": {
+                      "data": {
+                        "data_type": "string",
+                        "value": "prod"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The field option object updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "field_option": {
+                      "$ref": "#/components/schemas/CustomFieldsFieldOption"
+                    }
+                  },
+                  "required": [
+                    "field_option"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "field_option": {
+                        "id": "PQ9K7I8",
+                        "type": "field_option",
+                        "data": {
+                          "data_type": "string",
+                          "value": "prod"
+                        },
+                        "created_at": "2021-06-01T21:30:42Z",
+                        "updated_at": "2021-06-01T21:30:42Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Custom Fields"
+        ],
+        "operationId": "deleteCustomFieldsFieldOption",
+        "description": "Delete a Field Option.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
+        "summary": "Delete a Field Option",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/field_id"
+          },
+          {
+            "$ref": "#/components/parameters/field_option_id"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_customfields"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The field option was deleted successfully."
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
     },
     "/license_allocations": {
       "description": "The Licenses allocated to Users within your Account",
