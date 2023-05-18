@@ -4,6 +4,11 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+## 2023-05-16
+- Updated automation actions runner API update endpoint to make previously mandatory fields be optional
+- Added description details for runbook_base_uri parameter
+- Refactored runner documentation to make the above changes possible
+
 ## 2023-05-15
 - Refactored Early-Access endpoints for Custom Fields based on customer feedback
    - `GET /custom_fields`

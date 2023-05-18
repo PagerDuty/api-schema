@@ -4260,7 +4260,7 @@
       },
       "AutomationActionsRunbookBaseURI": {
         "type": "string",
-        "description": "The base URI of the Runbook server to connect to. May only contain alphanumeric characters, periods, underscores and dashes.",
+        "description": "The base URI of the Runbook server to connect to. May only contain alphanumeric characters, periods, underscores and dashes. Specified as the subdomain portion of an RBA host, as in <runbook_base_uri>.runbook.pagerduty.cloud",
         "maxLength": 255,
         "example": "subdomain"
       },
@@ -4372,8 +4372,74 @@
           }
         ]
       },
-      "AutomationActionsRunnerBody": {
+      "AutomationActionsRunnerRunbookBody": {
         "type": "object",
+        "title": "RunnerRunbookBody",
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 255,
+            "example": "us-west-2 prod runner"
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 1024,
+            "example": "us-west-2 runner provisioned in the production environment by the SRE team"
+          },
+          "runbook_base_uri": {
+            "$ref": "#/components/schemas/AutomationActionsRunbookBaseURI"
+          },
+          "runbook_api_key": {
+            "type": "string",
+            "maxLength": 64,
+            "description": "The API key to connect to the Runbook server with. If omitted, the previously stored value will remain unchanged"
+          }
+        }
+      },
+      "AutomationActionsRunnerRunbookPostBody": {
+        "type": "object",
+        "title": "RunnerRunbookPostBody",
+        "properties": {
+          "runner_type": {
+            "$ref": "#/components/schemas/AutomationActionsRunnerTypeEnum"
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 255,
+            "example": "us-west-2 prod runner"
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 1024,
+            "example": "us-west-2 runner provisioned in the production environment by the SRE team"
+          },
+          "runbook_base_uri": {
+            "$ref": "#/components/schemas/AutomationActionsRunbookBaseURI"
+          },
+          "runbook_api_key": {
+            "type": "string",
+            "maxLength": 64,
+            "description": "The API key to connect to the Runbook server with. If omitted, the previously stored value will remain unchanged"
+          },
+          "teams": {
+            "type": "array",
+            "description": "The list of teams associated with the Runner",
+            "items": {
+              "$ref": "#/components/schemas/TeamReference"
+            }
+          }
+        },
+        "required": [
+          "runner_type",
+          "name",
+          "description",
+          "runbook_base_uri",
+          "runbook_api_key"
+        ]
+      },
+      "AutomationActionsRunnerSidecarBody": {
+        "type": "object",
+        "title": "RunnerSidecarBody",
         "properties": {
           "name": {
             "type": "string",
@@ -4385,92 +4451,37 @@
             "maxLength": 1024,
             "example": "us-west-2 runner provisioned in the production environment by the SRE team"
           }
-        },
-        "required": [
-          "name",
-          "description"
-        ]
-      },
-      "AutomationActionsRunnerRunbookBody": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/AutomationActionsRunnerBody"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "runbook_base_uri": {
-                "type": "string",
-                "description": "The base URI of the Runbook server to connect to. May only contain alphanumeric characters, periods, underscores and dashes. If omitted, the previously stored value will remain unchanged.",
-                "maxLength": 255,
-                "example": "subdomain"
-              },
-              "runbook_api_key": {
-                "type": "string",
-                "maxLength": 64,
-                "description": "The API key to connect to the Runbook server with. If omitted, the previously stored value will remain unchanged."
-              }
-            }
-          }
-        ]
-      },
-      "AutomationActionsRunnerRunbookPostBody": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/AutomationActionsRunnerRunbookBody"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "runner_type": {
-                "$ref": "#/components/schemas/AutomationActionsRunnerTypeEnum"
-              },
-              "teams": {
-                "type": "array",
-                "description": "The list of teams associated with the Runner",
-                "items": {
-                  "$ref": "#/components/schemas/TeamReference"
-                }
-              }
-            },
-            "required": [
-              "runner_type",
-              "runbook_base_uri",
-              "runbook_api_key"
-            ]
-          }
-        ]
-      },
-      "AutomationActionsRunnerSidecarBody": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/AutomationActionsRunnerBody"
-          }
-        ]
+        }
       },
       "AutomationActionsRunnerSidecarPostBody": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/AutomationActionsRunnerSidecarBody"
+        "type": "object",
+        "title": "RunnerSidecarPostBody",
+        "properties": {
+          "runner_type": {
+            "$ref": "#/components/schemas/AutomationActionsRunnerTypeEnum"
           },
-          {
-            "type": "object",
-            "properties": {
-              "runner_type": {
-                "$ref": "#/components/schemas/AutomationActionsRunnerTypeEnum"
-              },
-              "teams": {
-                "type": "array",
-                "description": "The list of teams associated with the Runner",
-                "items": {
-                  "$ref": "#/components/schemas/TeamReference"
-                }
-              }
-            },
-            "required": [
-              "runner_type"
-            ]
+          "name": {
+            "type": "string",
+            "maxLength": 255,
+            "example": "us-west-2 prod runner"
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 1024,
+            "example": "us-west-2 runner provisioned in the production environment by the SRE team"
+          },
+          "teams": {
+            "type": "array",
+            "description": "The list of teams associated with the Runner",
+            "items": {
+              "$ref": "#/components/schemas/TeamReference"
+            }
           }
+        },
+        "required": [
+          "runner_type",
+          "name",
+          "description"
         ]
       },
       "AutomationActionsRunnerStatusEnum": {
