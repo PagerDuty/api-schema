@@ -293,7 +293,7 @@ Depending on a User's role, they may have access to different parts of the accou
 [*Read more about Users in the PagerDuty Knowledge Base*](https://support.pagerduty.com/hc/en-us/sections/200550780-Users).
 
 ## Vendors
-A Vendor represents a specific type of [Integration](#integration). AWS Cloudwatch, Skacj, Datadog, are all examples of Vendors that can be integrated into PagerDuty by making an [Integration](#!/Services/get_Services_id_Integrations_Integration_id).
+A Vendor represents a specific type of [Integration](#integration). AWS CloudWatch, Slack, Datadog, are all examples of Vendors that can be integrated into PagerDuty by making an [Integration](#!/Services/get_Services_id_Integrations_Integration_id).
 
 
 Vendor Integrations (when compared to generic email and API Integrations) are automatically configured with the right API or email filtering settings for inbound events from that Vendor. Some Vendors also have associated [Integration Guides](https://support.pagerduty.com/docs/aws-cloudwatch-integration-guide) on the PagerDuty support site.
