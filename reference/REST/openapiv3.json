@@ -12832,6 +12832,9 @@
                 "readOnly": true,
                 "description": "The ID of the resource."
               },
+              "name": {
+                "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/name"
+              },
               "summary": {
                 "type": "string",
                 "nullable": true,
@@ -12917,9 +12920,6 @@
               }
             ],
             "nullable": true
-          },
-          "name": {
-            "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/name"
           }
         }
       },
