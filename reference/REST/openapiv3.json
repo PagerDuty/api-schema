@@ -37856,10 +37856,12 @@
     },
     "/status_dashboards": {
       "get": {
+        "x-pd-requires-scope": "status_dashboards.read",
         "tags": [
           "Status Dashboards"
         ],
         "operationId": "listStatusDashboards",
+        "description": "Get all your account's custom Status Dashboard views.\n\nScoped OAuth requires: `status_dashboards.read`\n",
         "summary": "List Status Dashboards",
         "responses": {
           "200": {
@@ -37913,23 +37915,21 @@
             "$ref": "#/components/responses/TooManyRequests"
           }
         },
-        "description": "Get all your account's custom Status Dashboard views\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_status_dashboards"
           }
         ]
       }
     },
     "/status_dashboards/{id}": {
       "get": {
+        "x-pd-requires-scope": "status_dashboards.read",
         "tags": [
           "Status Dashboards"
         ],
         "operationId": "getStatusDashboardById",
+        "description": "Get a Status Dashboard by its PagerDuty `id`.\n\nScoped OAuth requires: `status_dashboards.read`\n",
         "summary": "Get a single Status Dashboard by `id`",
         "responses": {
           "200": {
@@ -37975,26 +37975,24 @@
             "$ref": "#/components/responses/TooManyRequests"
           }
         },
-        "description": "Get a Status Dashboard by its PagerDuty `id`.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
           },
           {
             "$ref": "#/components/parameters/id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_status_dashboards"
           }
         ]
       }
     },
     "/status_dashboards/{id}/service_impacts": {
       "get": {
+        "x-pd-requires-scope": "status_dashboards.read",
         "tags": [
           "Status Dashboards"
         ],
         "operationId": "getStatusDashboardServiceImpactsById",
+        "description": "Get impacted Business Services for a Status Dashboard by `id`\n\nThis endpoint does not return an exhaustive list of Business Services but rather provides access to the most impacted on the specified Status Dashboard up to the limit of 200.\n\nThe returned Business Services are sorted first by Impact, secondarily by most recently impacted, and finally by name.\n\nTo get Impact information about a specific Business Service on the Status Dashboard that does not appear in the Impact-sorted response, use the `ids[]` parameter on the `/business_services/impacts` endpoint.\n\nScoped OAuth requires: `status_dashboards.read`\n",
         "summary": "Get impacted Business Services for a Status Dashboard by `id`.",
         "responses": {
           "200": {
@@ -38086,7 +38084,6 @@
             "$ref": "#/components/responses/TooManyRequests"
           }
         },
-        "description": "Get impacted Business Services for a Status Dashboard by `id`\n\nThis endpoint does not return an exhaustive list of Business Services but rather provides access to the most impacted on the specified Status Dashboard up to the limit of 200.\n\nThe returned Business Services are sorted first by Impact, secondarily by most recently impacted, and finally by name.\n\nTo get Impact information about a specific Business Service on the Status Dashboard that does not appear in the Impact-sorted response, use the `ids[]` parameter on the `/business_services/impacts` endpoint.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -38096,19 +38093,18 @@
           },
           {
             "$ref": "#/components/parameters/impacts_additional_fields"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_status_dashboards"
           }
         ]
       }
     },
     "/status_dashboards/url_slugs/{url_slug}": {
       "get": {
+        "x-pd-requires-scope": "status_dashboards.read",
         "tags": [
           "Status Dashboards"
         ],
         "operationId": "getStatusDashboardByUrlSlug",
+        "description": "Get a Status Dashboard by its PagerDuty `url_slug`.  A `url_slug` is a human-readable reference\nfor a custom Status Dashboard that may be created or changed in the UI. It will generally be a `dash-separated-string-like-this`.\n\nScoped OAuth requires: `status_dashboards.read`\n",
         "summary": "Get a single Status Dashboard by `url_slug`",
         "responses": {
           "200": {
@@ -38154,26 +38150,24 @@
             "$ref": "#/components/responses/TooManyRequests"
           }
         },
-        "description": "Get a Status Dashboard by its PagerDuty `url_slug`.  A `url_slug` is a human-readable reference\nfor a custom Status Dashboard that may be created or changed in the UI. It will generally be a `dash-separated-string-like-this`.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
           },
           {
             "$ref": "#/components/parameters/url_slug"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_status_dashboards"
           }
         ]
       }
     },
     "/status_dashboards/url_slugs/{url_slug}/service_impacts": {
       "get": {
+        "x-pd-requires-scope": "status_dashboards.read",
         "tags": [
           "Status Dashboards"
         ],
         "operationId": "getStatusDashboardServiceImpactsByUrlSlug",
+        "description": "Get Business Service Impacts for the Business Services on a Status Dashboard by its `url_slug`. A `url_slug` is a human-readable reference\nfor a custom Status Dashboard that may be created or changed in the UI. It will generally be a `dash-separated-string-like-this`.\n\nThis endpoint does not return an exhaustive list of Business Services but rather provides access to the most impacted on the Status Dashboard up to the limit of 200.\n\nThe returned Business Services are sorted first by Impact, secondarily by most recently impacted, and finally by name.\n\nTo get impact information about a specific Business Service on the Status Dashboard that does not appear in the Impact-sored response, use the `ids[]` parameter on the `/business_services/impacts` endpoint.\n\nScoped OAuth requires: `status_dashboards.read`\n",
         "summary": "Get impacted Business Services for a  Status Dashboard by `url_slug`",
         "responses": {
           "200": {
@@ -38265,7 +38259,6 @@
             "$ref": "#/components/responses/TooManyRequests"
           }
         },
-        "description": "Get Business Service Impacts for the Business Services on a Status Dashboard by its `url_slug`. A `url_slug` is a human-readable reference\nfor a custom Status Dashboard that may be created or changed in the UI. It will generally be a `dash-separated-string-like-this`.\n\nThis endpoint does not return an exhaustive list of Business Services but rather provides access to the most impacted on the Status Dashboard up to the limit of 200.\n\nThe returned Business Services are sorted first by Impact, secondarily by most recently impacted, and finally by name.\n\nTo get impact information about a specific Business Service on the Status Dashboard that does not appear in the Impact-sored response, use the `ids[]` parameter on the `/business_services/impacts` endpoint.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -38275,9 +38268,6 @@
           },
           {
             "$ref": "#/components/parameters/impacts_additional_fields"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_status_dashboards"
           }
         ]
       }

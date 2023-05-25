@@ -4,6 +4,14 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+
+### 2023-05-22
+- Added status_dashboards.read scope to `GET /status_dashboards`
+- Added status_dashboards.read scope to `GET /status_dashboards/{id}`
+- Added status_dashboards.read scope to `GET /status_dashboards/{id}/service_impacts`
+- Added status_dashboards.read scope to `GET /status_dashboards/url_slugs/{url_slug}`
+- Added status_dashboards.read scope to `GET /status_dashboards/url_slugs/{url_slug}/service_impacts`
+
 ## 2023-05-16
 - Updated automation actions runner API update endpoint to make previously mandatory fields be optional
 - Added description details for runbook_base_uri parameter
