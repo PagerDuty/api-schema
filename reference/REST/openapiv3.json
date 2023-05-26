@@ -2099,11 +2099,10 @@
       "time_zone": {
         "name": "time_zone",
         "in": "query",
-        "description": "Time zone in which dates in the result will be rendered.",
+        "description": "Time zone in which results will be rendered. This will default to the account time zone.",
         "schema": {
           "type": "string",
-          "format": "tzinfo",
-          "default": "UTC"
+          "format": "tzinfo"
         }
       },
       "service_id": {
