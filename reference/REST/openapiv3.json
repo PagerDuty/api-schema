@@ -18654,6 +18654,7 @@
     },
     "/business_services/impactors": {
       "get": {
+        "x-pd-requires-scope": "services.read",
         "summary": "List Impactors affecting Business Services",
         "tags": [
           "Business Services"
@@ -18720,7 +18721,7 @@
           }
         },
         "operationId": "getBusinessServiceTopLevelImpactors",
-        "description": "Retrieve a list of Impactors for the top-level Business Services on the account. Impactors are currently limited to Incidents.\n\nThis endpoint does not return an exhaustive list of Impactors but rather provides access to the highest priority Impactors for the Business Services in question up to the limit of 200.\n\nTo get Impactors for a specific set of Business Services, use the `ids[]` parameter.\n\nThe returned Impactors are sorted first by priority and secondarily by their creation date.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
+        "description": "Retrieve a list of Impactors for the top-level Business Services on the account. Impactors are currently limited to Incidents.\n\nThis endpoint does not return an exhaustive list of Impactors but rather provides access to the highest priority Impactors for the Business Services in question up to the limit of 200.\n\nTo get Impactors for a specific set of Business Services, use the `ids[]` parameter.\n\nThe returned Impactors are sorted first by priority and secondarily by their creation date.\nScoped OAuth requires: `services.read`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -18736,6 +18737,7 @@
     },
     "/business_services/impacts": {
       "get": {
+        "x-pd-requires-scope": "services.read",
         "summary": "List Business Services sorted by impacted status",
         "tags": [
           "Business Services"
@@ -18831,7 +18833,7 @@
           }
         },
         "operationId": "getBusinessServiceImpacts",
-        "description": "Retrieve a list top-level Business Services sorted by highest Impact with `status` included.\nWhen called without the `ids[]` parameter, this endpoint does not return an exhaustive list of Business Services but rather provides access to the most impacted up to the limit of 200.\n\nThe returned Business Services are sorted first by Impact, secondarily by most recently impacted, and finally by name.\n\nTo get impact information about a specific set of Business Services, use the `ids[]` parameter.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
+        "description": "Retrieve a list top-level Business Services sorted by highest Impact with `status` included.\nWhen called without the `ids[]` parameter, this endpoint does not return an exhaustive list of Business Services but rather provides access to the most impacted up to the limit of 200.\n\nThe returned Business Services are sorted first by Impact, secondarily by most recently impacted, and finally by name.\n\nTo get impact information about a specific set of Business Services, use the `ids[]` parameter.\nScoped OAuth requires: `services.read`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -18850,6 +18852,7 @@
     },
     "/business_services/priority_thresholds": {
       "get": {
+        "x-pd-requires-scope": "services.read",
         "summary": "Get the global priority threshold for a Business Service to be considered impacted by an Incident",
         "tags": [
           "Business Services"
@@ -18911,7 +18914,7 @@
           }
         },
         "operationId": "getBusinessServicePriorityThresholds",
-        "description": "Retrieves the priority threshold information for an account.  Currently, there is a `global_threshold` that can be set for the account.  Incidents that have a priority meeting or exceeding this threshold will be considered impacting on any Business Service that depends on the Service to which the Incident belongs.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
+        "description": "Retrieves the priority threshold information for an account.  Currently, there is a `global_threshold` that can be set for the account.  Incidents that have a priority meeting or exceeding this threshold will be considered impacting on any Business Service that depends on the Service to which the Incident belongs.\nScoped OAuth requires: `services.read`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -18922,6 +18925,7 @@
         ]
       },
       "delete": {
+        "x-pd-requires-scope": "services.write",
         "summary": "Deletes the account-level priority threshold for Business Service impact",
         "tags": [
           "Business Services"
@@ -18941,7 +18945,7 @@
           }
         },
         "operationId": "deleteBusinessServicePriorityThresholds",
-        "description": "Clears the Priority Threshold for the account.  If the priority threshold is cleared, any Incident with a Priority set will be able to impact Business Services.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
+        "description": "Clears the Priority Threshold for the account.  If the priority threshold is cleared, any Incident with a Priority set will be able to impact Business Services.\nScoped OAuth requires: `services.write`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -18952,6 +18956,7 @@
         ]
       },
       "put": {
+        "x-pd-requires-scope": "services.write",
         "summary": "Set the Account-level priority threshold for Business Service impact.",
         "tags": [
           "Business Services"
@@ -19019,7 +19024,7 @@
           }
         },
         "operationId": "putBusinessServicePriorityThresholds",
-        "description": "Set the Account-level priority threshold for Business Service.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
+        "description": "Set the Account-level priority threshold for Business Service.\nScoped OAuth requires: `services.write`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -27006,6 +27011,7 @@
     },
     "/incidents/{id}/business_services/{business_service_id}/impacts": {
       "put": {
+        "x-pd-requires-scope": "incidents.write",
         "summary": "Manually change an Incident's Impact on a Business Service.",
         "tags": [
           "Incidents"
@@ -27056,7 +27062,7 @@
           }
         },
         "operationId": "putIncidentManualBusinessServiceAssociation",
-        "description": "Change Impact of an Incident on a Business Service.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
+        "description": "Change Impact of an Incident on a Business Service.\nScoped OAuth requires: `incidents.write`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -27098,6 +27104,7 @@
     },
     "/incidents/{id}/business_services/impacts": {
       "get": {
+        "x-pd-requires-scope": "incidents.read",
         "summary": "List Business Services impacted by the given Incident",
         "tags": [
           "Incidents"
@@ -27168,7 +27175,7 @@
           }
         },
         "operationId": "getIncidentImpactedBusinessServices",
-        "description": "Retrieve a list of Business Services that are being impacted by the given Incident.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.",
+        "description": "Retrieve a list of Business Services that are being impacted by the given Incident.\nScoped OAuth requires: `incidents.read`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
