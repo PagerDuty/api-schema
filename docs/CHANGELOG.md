@@ -4,6 +4,8 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+### 2023-05-31
+- Added services.read scope to `GET /business_services/:id/supporting_services/impacts`
 
 ### 2023-05-25
 - Added services.read scope to `GET /business_services/priority_thresholds`
@@ -13,7 +15,6 @@ Currently we rarely deprecate, and do not remove any API functionality.
 - Added services.read scope to `GET /business_services/impactors`
 - Added incidents.read scope to `GET /incidents/{id}/business_services/impacts`
 - Added incidents.write scope to `PUT /incidents/{id}/business_services/impacts`
-
 
 ### 2023-05-22
 - Added status_dashboards.read scope to `GET /status_dashboards`
