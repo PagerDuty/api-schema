@@ -4797,12 +4797,7 @@
             "type": "string",
             "maxLength": 36
           }
-        },
-        "required": [
-          "name",
-          "description",
-          "action_type"
-        ]
+        }
       },
       "AutomationActionsActionClassificationEnum": {
         "type": "string",
@@ -4884,10 +4879,7 @@
               "action_data_reference": {
                 "$ref": "#/components/schemas/AutomationActionsProcessAutomationJobActionDataReference"
               }
-            },
-            "required": [
-              "action_data_reference"
-            ]
+            }
           }
         ]
       },
@@ -4976,10 +4968,7 @@
               "action_data_reference": {
                 "$ref": "#/components/schemas/AutomationActionsScriptActionDataReference"
               }
-            },
-            "required": [
-              "action_data_reference"
-            ]
+            }
           }
         ]
       },
