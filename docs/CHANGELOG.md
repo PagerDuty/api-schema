@@ -4,6 +4,9 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+## 2023-06-12
+- Updated automation actions action API update endpoint to make previously mandatory fields be optional
+
 ### 2023-05-31
 - Added services.read scope to `GET /business_services/:id/supporting_services/impacts`
 
