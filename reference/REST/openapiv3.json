@@ -37561,6 +37561,158 @@
         }
       }
     },
+    "/services/{id}/rules/convert": {
+      "description": "Convert a Service's Event Rules into Event Orchestration Rules",
+      "post": {
+        "x-pd-requires-scope": "services.write",
+        "tags": [
+          "Services"
+        ],
+        "operationId": "convertServiceEventRulesToEventOrchestration",
+        "summary": "Convert a Service's Event Rules into Event Orchestration Rules",
+        "description": "Convert this Service's Event Rules into functionally equivalent Event Orchestration Rules.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time.\n\nSending a request to this API endpoint has several effects:\n\n1. Automatically creates Event Orchestration Rules for this Service that will behave identically as this Service's currently configured Event Rules.\n2. Makes all existing Event Rules for this Service read-only. All future updates need to be made via the newly created Event Orchestration rules.\n\nSending a request to this API endpoint will **not** change how future events will be processed. If past events for this Service have been evaluated via Event Rules then new events sent to this Service will also continue to be evaluated via the (now read-only) Event Rules. To change this Service so that new events start being evaluated via the newly created Event Orchestration Rules use the \"Orchestration > Update the Service Orchestration active status for a Service\" API.\n\n<!-- theme: warning -->\n> ### End-of-life\n> Event Rules will end-of-life soon. We highly recommend that you use this API to [migrate to Event Orchestration](https://support.pagerduty.com/docs/migrate-to-event-orchestration) as soon as possible so you can take advantage of the new functionality, such as improved UI, rule creation, APIs and Terraform support, advanced conditions, and rule nesting.\n\nScoped OAuth requires: `services.write`\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The Event Orchestration Rules were successfully created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "convert_status": {
+                      "type": "string",
+                      "readOnly": true,
+                      "description": "Did PagerDuty successfully create equivalent Event Orchestration rules"
+                    },
+                    "converted_to": {
+                      "type": "string",
+                      "format": "url",
+                      "readOnly": true,
+                      "description": "the API URL at which the newly created Event Orchestration rules are accessible"
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "convert_status": "completed",
+                      "converted_to": "https://api.pagerduty.com/event_orchestrations/service/PC2D9ML"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Could not create equivalent Event Orchestration Rules based on the Service's current Event Rules",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "readOnly": true,
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "readOnly": true,
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "readOnly": true,
+                          "description": "Error message string"
+                        },
+                        "errors": {
+                          "type": "array",
+                          "readOnly": true,
+                          "items": {
+                            "type": "object",
+                            "readOnly": true,
+                            "description": "Convertion error Details",
+                            "properties": {
+                              "rule_id": {
+                                "type": "string",
+                                "readOnly": true,
+                                "description": "The ID of the Service Event Rule that couldn't be successfully converted."
+                              },
+                              "position": {
+                                "type": "integer",
+                                "readOnly": true,
+                                "description": "The position of the Service Event Rule that couldn't be successfully converted."
+                              },
+                              "messages": {
+                                "type": "array",
+                                "readOnly": true,
+                                "description": "Human friendly explanations of why this Event Rule couldn't be converted into an equivalent Event Orchestration Rule.",
+                                "items": {
+                                  "type": "string",
+                                  "readOnly": true
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "error": {
+                        "message": "Unable to convert given Ruleset to an Event Orchestration",
+                        "errors": [
+                          {
+                            "rule_id": "693cdcd1-ecfd-4064-a834-5cb28a74c060",
+                            "position": 0,
+                            "messages": [
+                              "Unable to convert a rule that has a `time_frame` with both `active_between` and `scheduled_weekly` settings."
+                            ]
+                          },
+                          {
+                            "rule_id": "9f6896c0-b435-401f-b25f-62e145d9ccf4",
+                            "position": 5,
+                            "messages": [
+                              "Unable to convert `actions.extractions`; Should have a most 25 extractions but this rule has 42 extractions."
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "405": {
+            "$ref": "#/components/responses/NotAllowed"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          }
+        }
+      }
+    },
     "/services/{id}/rules/{rule_id}": {
       "get": {
         "x-pd-requires-scope": "services.read",
