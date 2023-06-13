@@ -7380,8 +7380,14 @@
                 "description": "The description of the team.",
                 "maxLength": 1024
               },
-              "parent": {
-                "$ref": "#/components/schemas/TeamReference"
+              "default_role": {
+                "type": "string",
+                "description": "The team is private if the value is \"none\", or public if it is \"manager\" (the default permissions for a non-member of the team are either \"none\", or their base role up until \"manager\").",
+                "default": "manager",
+                "enum": [
+                  "manager",
+                  "none"
+                ]
               }
             },
             "required": [

@@ -4,6 +4,10 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+### 2023-06-13
+- Added documentation for the Team `default_role` attribute, for public/private teams.
+- Removed documentation for the Team `parent` attribute, since that is part of the team hierarchy feature which is still in EA.
+
 ## 2023-06-13
 - Added an API to convert a Service's Event Rules into equivalent Service Event Orchestration rules:
   - `POST /services/{id}/rules/convert`
