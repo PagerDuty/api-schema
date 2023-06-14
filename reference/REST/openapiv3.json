@@ -3194,19 +3194,6 @@
         "schema": {
           "type": "string"
         }
-      },
-      "early_access_customfields": {
-        "name": "X-EARLY-ACCESS",
-        "in": "header",
-        "description": "This header indicates that this API endpoint is __UNDER CONSTRUCTION__ and may change at any time. You __MUST__ pass in this header and the above value. Do not use this endpoint in production, as it may change!\n",
-        "required": true,
-        "schema": {
-          "type": "string",
-          "default": "flex-service-early-access",
-          "enum": [
-            "flex-service-early-access"
-          ]
-        }
       }
     },
     "responses": {
@@ -14688,7 +14675,7 @@
                       },
                       "team_ids": {
                         "type": "array",
-                        "description": "An array of team IDs. Only results related to these teams will be returned. Account must have the teams ability to use this parameter.",
+                        "description": "An array of team IDs. Only incidents that are assigned to a member of these teams will be returned. Account must have the teams ability to use this parameter.",
                         "items": {
                           "type": "string"
                         },
@@ -25953,7 +25940,7 @@
           "Incidents"
         ],
         "operationId": "getIncident",
-        "description": "Show detailed information about an incident. Accepts either an incident id, or an incident number.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n\n<!-- theme: warning -->\n> ### Early Access\n> The `include[]=custom_fields` part of this endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nScoped OAuth requires: `incidents.read`\n",
+        "description": "Show detailed information about an incident. Accepts either an incident id, or an incident number.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n\nScoped OAuth requires: `incidents.read`\n",
         "summary": "Get an incident",
         "parameters": [
           {
@@ -25967,9 +25954,6 @@
           },
           {
             "$ref": "#/components/parameters/include_incident"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_customfields"
           }
         ],
         "responses": {
@@ -27191,15 +27175,13 @@
         "tags": [
           "Incidents"
         ],
+        "x-pd-requires-scope": "incidents.read",
         "operationId": "getIncidentFieldValues",
-        "description": "Get custom field values for an incident.\n\n<!-- theme: warning -->\n\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
+        "description": "Get custom field values for an incident.\n\n<!-- theme: warning -->\n\nScoped OAuth requires: `incidents.read`\n",
         "summary": "Get Custom Field Values",
         "parameters": [
           {
             "$ref": "#/components/parameters/id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_customfields"
           }
         ],
         "responses": {
@@ -27278,15 +27260,13 @@
         "tags": [
           "Incidents"
         ],
+        "x-pd-requires-scope": "incidents.write",
         "operationId": "setIncidentFieldValues",
-        "description": "Set custom field values for an incident.\n\n<!-- theme: warning -->\n\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n",
+        "description": "Set custom field values for an incident.\n\nScoped OAuth requires: `incidents.write`\n",
         "summary": "Update Custom Field Values",
         "parameters": [
           {
             "$ref": "#/components/parameters/id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_customfields"
           }
         ],
         "requestBody": {
@@ -29319,13 +29299,8 @@
         ],
         "x-pd-requires-scope": "custom_fields.write",
         "operationId": "createCustomFieldsField",
-        "description": "Create a new Field, along with the Field Options if provided. An account may have up to 10 Fields.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nScoped OAuth requires: `custom_fields.write`\n",
+        "description": "Create a new Field, along with the Field Options if provided. An account may have up to 10 Fields.\n\nScoped OAuth requires: `custom_fields.write`\n",
         "summary": "Create a Field",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/early_access_customfields"
-          }
-        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -29557,14 +29532,11 @@
         ],
         "x-pd-requires-scope": "custom_fields.read",
         "operationId": "listCustomFieldsFields",
-        "description": "List fields.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nScoped OAuth requires: `custom_fields.read`\n",
+        "description": "List fields.\n\nScoped OAuth requires: `custom_fields.read`\n",
         "summary": "List Fields",
         "parameters": [
           {
             "$ref": "#/components/parameters/include_customfields_field"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_customfields"
           }
         ],
         "responses": {
@@ -29645,7 +29617,7 @@
         ],
         "x-pd-requires-scope": "custom_fields.read",
         "operationId": "getCustomFieldsField",
-        "description": "Show detailed information about a field.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nScoped OAuth requires: `custom_fields.read`\n",
+        "description": "Show detailed information about a field.\n\nScoped OAuth requires: `custom_fields.read`\n",
         "summary": "Get a Field",
         "parameters": [
           {
@@ -29653,9 +29625,6 @@
           },
           {
             "$ref": "#/components/parameters/include_customfields_field"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_customfields"
           }
         ],
         "responses": {
@@ -29756,14 +29725,11 @@
         ],
         "x-pd-requires-scope": "custom_fields.write",
         "operationId": "updateCustomFieldsField",
-        "description": "Update a field.\n\n<!-- theme: warning -->\n\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nScoped OAuth requires: `custom_fields.write`\n",
+        "description": "Update a field.\n\nScoped OAuth requires: `custom_fields.write`\n",
         "summary": "Update a Field",
         "parameters": [
           {
             "$ref": "#/components/parameters/field_id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_customfields"
           }
         ],
         "requestBody": {
@@ -29854,14 +29820,11 @@
         ],
         "x-pd-requires-scope": "custom_fields.write",
         "operationId": "deleteCustomFieldsField",
-        "description": "Delete a Field. Fields may not be deleted if they are used by a Field Schema.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nScoped OAuth requires: `custom_fields.write`\n",
+        "description": "Delete a Field. Fields may not be deleted if they are used by a Field Schema.\n\nScoped OAuth requires: `custom_fields.write`\n",
         "summary": "Delete a Field",
         "parameters": [
           {
             "$ref": "#/components/parameters/field_id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_customfields"
           }
         ],
         "responses": {
@@ -29891,14 +29854,11 @@
         ],
         "x-pd-requires-scope": "custom_fields.write",
         "operationId": "createCustomFieldsFieldOption",
-        "description": "Create a new Field Option. Field Options may only be created for Fields that have `field_options`. A Field may have no more than 10 enabled options.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nScoped OAuth requires: `custom_fields.write`\n",
+        "description": "Create a new Field Option. Field Options may only be created for Fields that have `field_options`. A Field may have no more than 10 enabled options.\n\nScoped OAuth requires: `custom_fields.write`\n",
         "summary": "Create a Field Option",
         "parameters": [
           {
             "$ref": "#/components/parameters/field_id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_customfields"
           }
         ],
         "requestBody": {
@@ -29987,14 +29947,11 @@
         ],
         "x-pd-requires-scope": "custom_fields.read",
         "operationId": "listCustomFieldsFieldOptions",
-        "description": "List all enabled Field Options for a Field.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nScoped OAuth requires: `custom_fields.read`\n",
+        "description": "List all enabled Field Options for a Field.\n\nScoped OAuth requires: `custom_fields.read`\n",
         "summary": "List Field Options",
         "parameters": [
           {
             "$ref": "#/components/parameters/field_id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_customfields"
           }
         ],
         "responses": {
@@ -30055,7 +30012,7 @@
         ],
         "x-pd-requires-scope": "custom_fields.write",
         "operationId": "updateCustomFieldsFieldOption",
-        "description": "Update Field Option for a Field.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nScoped OAuth requires: `custom_fields.write`\n",
+        "description": "Update Field Option for a Field.\n\nScoped OAuth requires: `custom_fields.write`\n",
         "summary": "Update a Field Option",
         "parameters": [
           {
@@ -30063,9 +30020,6 @@
           },
           {
             "$ref": "#/components/parameters/field_option_id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_customfields"
           }
         ],
         "requestBody": {
@@ -30154,7 +30108,7 @@
         ],
         "x-pd-requires-scope": "custom_fields.write",
         "operationId": "deleteCustomFieldsFieldOption",
-        "description": "Delete a Field Option.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nScoped OAuth requires: `custom_fields.write`\n",
+        "description": "Delete a Field Option.\n\nScoped OAuth requires: `custom_fields.write`\n",
         "summary": "Delete a Field Option",
         "parameters": [
           {
@@ -30162,9 +30116,6 @@
           },
           {
             "$ref": "#/components/parameters/field_option_id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_customfields"
           }
         ],
         "responses": {
