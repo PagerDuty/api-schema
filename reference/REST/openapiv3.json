@@ -3194,6 +3194,19 @@
         "schema": {
           "type": "string"
         }
+      },
+      "include_ruleset_migrated_metadata": {
+        "name": "include[]",
+        "in": "query",
+        "description": "Array of additional Models to include in response.",
+        "explode": true,
+        "schema": {
+          "type": "string",
+          "enum": [
+            "migrated_metadata"
+          ],
+          "uniqueItems": true
+        }
       }
     },
     "responses": {
@@ -3554,6 +3567,19 @@
                       "self": "https://api.pagerduty.com/users/P8B9WR8",
                       "type": "user_reference"
                     },
+                    "migrated_at": "2023-06-14T13:51:31Z",
+                    "migrated_by": {
+                      "id": "P8B9WR8",
+                      "self": "https://api.pagerduty.com/users/P8B9WR8",
+                      "type": "user_reference"
+                    },
+                    "migrated_from": {
+                      "id": "PC2D9ML",
+                      "self": "https://api.pagerduty.com/services/PC2D9ML/rules",
+                      "type": "service_event_rules_reference"
+                    },
+                    "migrated_status": "completed",
+                    "migrated_via": "UI",
                     "version": "rn1Mja13T1HBdmPChqFilSQXUW2fWXM_"
                   }
                 }
@@ -12319,112 +12345,189 @@
             "type": "object",
             "properties": {
               "orchestration_path": {
-                "properties": {
-                  "type": {
-                    "description": "Indicates that these are sets of rules belonging to a service.",
-                    "default": "service"
-                  },
-                  "parent": {
+                "allOf": [
+                  {
+                    "type": "object",
                     "properties": {
-                      "id": {
-                        "description": "The ID of the Service this Orchestration belongs to."
+                      "migrated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "The date/time the service's Event Rules were converted to this Service Orchestration. This property is only included if the `migrated_metadata` query parameter is provided.",
+                        "readOnly": true
                       },
-                      "type": {
+                      "migrated_by": {
+                        "type": "object",
+                        "description": "Reference to the user that converted the service's Event Rules to this Service Orchestration. This property is only included if the `migrated_metadata` query parameter is provided.",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "readOnly": true
+                          },
+                          "type": {
+                            "type": "string",
+                            "description": "A string that determines the schema of the object. This must be the standard name for the entity, suffixed by `_reference` if the object is a reference.",
+                            "readOnly": true
+                          },
+                          "self": {
+                            "type": "string",
+                            "format": "url",
+                            "description": "The API show URL at which the object is accessible",
+                            "readOnly": true
+                          }
+                        },
+                        "readOnly": true
+                      },
+                      "migrated_from": {
+                        "type": "object",
+                        "description": "Reference to the Service Event Rules that were converted to this Service Orchestration. This property is only included if the `migrated_metadata` query parameter is provided.",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "readOnly": true
+                          },
+                          "type": {
+                            "type": "string",
+                            "description": "A string that determines the schema of the object. This must be the standard name for the entity, suffixed by `_reference` if the object is a reference.",
+                            "readOnly": true
+                          },
+                          "self": {
+                            "type": "string",
+                            "format": "url",
+                            "description": "The API show URL at which the object is accessible",
+                            "readOnly": true
+                          }
+                        },
+                        "readOnly": true
+                      },
+                      "migrated_status": {
+                        "type": "string",
+                        "description": "The status indicating whether the service's Event Rules were successfully converted to this Service Orchestration. This property is only included if the `migrated_metadata` query parameter is provided.",
                         "enum": [
-                          "service_reference"
-                        ]
+                          "completed"
+                        ],
+                        "readOnly": true
+                      },
+                      "migrated_via": {
+                        "type": "string",
+                        "description": "Indicates whether the conversion was performed via the PagerDuty API or PagerDuty website. This property is only included if the `migrated_metadata` query parameter is provided.",
+                        "enum": [
+                          "API",
+                          "UI"
+                        ],
+                        "readOnly": true
                       }
                     }
                   },
-                  "sets": {
-                    "description": "A Service Orchestration must contain at least a \"start\" set, but can contain any number of additional sets that are routed to by other rules to form a directional graph.",
-                    "items": {
-                      "properties": {
-                        "rules": {
-                          "items": {
-                            "properties": {
-                              "actions": {
-                                "allOf": [
-                                  {
-                                    "properties": {
-                                      "route_to": {
-                                        "type": "string",
-                                        "description": "The ID of a Set from this Service Orchestration whose rules you also want to use with event that match this rule."
-                                      }
-                                    }
-                                  },
-                                  {
-                                    "$ref": "#/components/schemas/ServiceOrchestration/allOf/1/properties/orchestration_path/properties/catch_all/properties/actions/allOf/0"
-                                  },
-                                  {
-                                    "$ref": "#/components/schemas/OrchestrationGlobal/allOf/1/properties/orchestration_path/properties/catch_all/properties/actions/allOf/1"
-                                  },
-                                  {
-                                    "$ref": "#/components/schemas/OrchestrationUnrouted/allOf/1/properties/orchestration_path/properties/catch_all/properties/actions"
-                                  },
-                                  {
-                                    "$ref": "#/components/schemas/ServiceOrchestration/allOf/1/properties/orchestration_path/properties/catch_all/properties/actions/allOf/3"
-                                  },
-                                  {
-                                    "$ref": "#/components/schemas/OrchestrationGlobal/allOf/1/properties/orchestration_path/properties/catch_all/properties/actions/allOf/3"
-                                  }
-                                ]
-                              }
-                            }
+                  {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "description": "Indicates that these are sets of rules belonging to a service.",
+                        "default": "service"
+                      },
+                      "parent": {
+                        "properties": {
+                          "id": {
+                            "description": "The ID of the Service this Orchestration belongs to."
+                          },
+                          "type": {
+                            "enum": [
+                              "service_reference"
+                            ]
                           }
                         }
-                      }
-                    }
-                  },
-                  "catch_all": {
-                    "properties": {
-                      "actions": {
-                        "allOf": [
-                          {
-                            "type": "object",
-                            "properties": {
-                              "suppress": {
-                                "type": "boolean",
-                                "description": "If true, the resulting alert is suppressed. Suppressed alerts will not trigger an incident."
-                              },
-                              "suspend": {
-                                "type": "integer",
-                                "description": "The number of seconds to suspend the resulting alert before triggering. This effectively pauses incident notifications. If a resolve event arrives before the alert triggers then PagerDuty won't create an incident for this the resulting alert."
-                              }
-                            }
-                          },
-                          {
-                            "$ref": "#/components/schemas/OrchestrationGlobal/allOf/1/properties/orchestration_path/properties/catch_all/properties/actions/allOf/1"
-                          },
-                          {
-                            "$ref": "#/components/schemas/OrchestrationUnrouted/allOf/1/properties/orchestration_path/properties/catch_all/properties/actions"
-                          },
-                          {
-                            "type": "object",
-                            "properties": {
-                              "pagerduty_automation_actions": {
-                                "type": "array",
-                                "description": "Configure an Automation Action associated with the resulting incident.",
-                                "items": {
-                                  "type": "object",
-                                  "properties": {
-                                    "action_id": {
-                                      "type": "string",
-                                      "description": "Automation Action ID"
-                                    }
+                      },
+                      "sets": {
+                        "description": "A Service Orchestration must contain at least a \"start\" set, but can contain any number of additional sets that are routed to by other rules to form a directional graph.",
+                        "items": {
+                          "properties": {
+                            "rules": {
+                              "items": {
+                                "properties": {
+                                  "actions": {
+                                    "allOf": [
+                                      {
+                                        "properties": {
+                                          "route_to": {
+                                            "type": "string",
+                                            "description": "The ID of a Set from this Service Orchestration whose rules you also want to use with event that match this rule."
+                                          }
+                                        }
+                                      },
+                                      {
+                                        "$ref": "#/components/schemas/ServiceOrchestration/allOf/1/properties/orchestration_path/allOf/1/properties/catch_all/properties/actions/allOf/0"
+                                      },
+                                      {
+                                        "$ref": "#/components/schemas/OrchestrationGlobal/allOf/1/properties/orchestration_path/properties/catch_all/properties/actions/allOf/1"
+                                      },
+                                      {
+                                        "$ref": "#/components/schemas/OrchestrationUnrouted/allOf/1/properties/orchestration_path/properties/catch_all/properties/actions"
+                                      },
+                                      {
+                                        "$ref": "#/components/schemas/ServiceOrchestration/allOf/1/properties/orchestration_path/allOf/1/properties/catch_all/properties/actions/allOf/3"
+                                      },
+                                      {
+                                        "$ref": "#/components/schemas/OrchestrationGlobal/allOf/1/properties/orchestration_path/properties/catch_all/properties/actions/allOf/3"
+                                      }
+                                    ]
                                   }
                                 }
                               }
                             }
-                          },
-                          {
-                            "$ref": "#/components/schemas/OrchestrationGlobal/allOf/1/properties/orchestration_path/properties/catch_all/properties/actions/allOf/3"
                           }
-                        ]
+                        }
+                      },
+                      "catch_all": {
+                        "properties": {
+                          "actions": {
+                            "allOf": [
+                              {
+                                "type": "object",
+                                "properties": {
+                                  "suppress": {
+                                    "type": "boolean",
+                                    "description": "If true, the resulting alert is suppressed. Suppressed alerts will not trigger an incident."
+                                  },
+                                  "suspend": {
+                                    "type": "integer",
+                                    "description": "The number of seconds to suspend the resulting alert before triggering. This effectively pauses incident notifications. If a resolve event arrives before the alert triggers then PagerDuty won't create an incident for this the resulting alert."
+                                  }
+                                }
+                              },
+                              {
+                                "$ref": "#/components/schemas/OrchestrationGlobal/allOf/1/properties/orchestration_path/properties/catch_all/properties/actions/allOf/1"
+                              },
+                              {
+                                "$ref": "#/components/schemas/OrchestrationUnrouted/allOf/1/properties/orchestration_path/properties/catch_all/properties/actions"
+                              },
+                              {
+                                "type": "object",
+                                "properties": {
+                                  "pagerduty_automation_actions": {
+                                    "type": "array",
+                                    "description": "Configure an Automation Action associated with the resulting incident.",
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "action_id": {
+                                          "type": "string",
+                                          "description": "Automation Action ID"
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              {
+                                "$ref": "#/components/schemas/OrchestrationGlobal/allOf/1/properties/orchestration_path/properties/catch_all/properties/actions/allOf/3"
+                              }
+                            ]
+                          }
+                        }
                       }
                     }
                   }
-                }
+                ]
               }
             },
             "example": {
@@ -12560,6 +12663,19 @@
                   "self": "https://api.pagerduty.com/users/P8B9WR8",
                   "type": "user_reference"
                 },
+                "migrated_at": "2023-06-14T13:51:31Z",
+                "migrated_by": {
+                  "id": "P8B9WR8",
+                  "self": "https://api.pagerduty.com/users/P8B9WR8",
+                  "type": "user_reference"
+                },
+                "migrated_from": {
+                  "id": "PC2D9ML",
+                  "self": "https://api.pagerduty.com/services/PC2D9ML/rules",
+                  "type": "service_event_rules_reference"
+                },
+                "migrated_status": "completed",
+                "migrated_via": "UI",
                 "version": "rn1Mja13T1HBdmPChqFilSQXUW2fWXM_"
               }
             }
@@ -22173,6 +22289,9 @@
           },
           {
             "$ref": "#/components/parameters/service_id"
+          },
+          {
+            "$ref": "#/components/parameters/include_ruleset_migrated_metadata"
           }
         ],
         "responses": {
@@ -37245,6 +37364,9 @@
           },
           {
             "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/include_ruleset_migrated_metadata"
           }
         ],
         "responses": {
@@ -37256,6 +37378,78 @@
                   "allOf": [
                     {
                       "$ref": "#/components/schemas/Pagination"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "migrated_at": {
+                          "type": "string",
+                          "format": "date-time",
+                          "description": "The date/time the service's Event Rules were converted to a Service Orchestration. This property is only included if the `migrated_metadata` query parameter is provided.",
+                          "readOnly": true
+                        },
+                        "migrated_by": {
+                          "type": "object",
+                          "description": "Reference to the user that converted the service's Event Rules to a Service Orchestration. This property is only included if the `migrated_metadata` query parameter is provided.",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "readOnly": true
+                            },
+                            "type": {
+                              "type": "string",
+                              "description": "A string that determines the schema of the object. This must be the standard name for the entity, suffixed by `_reference` if the object is a reference.",
+                              "readOnly": true
+                            },
+                            "self": {
+                              "type": "string",
+                              "format": "url",
+                              "description": "The API show URL at which the object is accessible",
+                              "readOnly": true
+                            }
+                          },
+                          "readOnly": true
+                        },
+                        "migrated_status": {
+                          "type": "string",
+                          "description": "The status indicating whether the service's Event Rules were successfully converted to a Service Orchestration. This property is only included if the `migrated_metadata` query parameter is provided.",
+                          "enum": [
+                            "completed"
+                          ],
+                          "readOnly": true
+                        },
+                        "migrated_to": {
+                          "type": "object",
+                          "description": "Reference to the Service Orchestration that the service's Event Rules were converted to. This property is only included if the `migrated_metadata` query parameter is provided.",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "readOnly": true
+                            },
+                            "type": {
+                              "type": "string",
+                              "description": "A string that determines the schema of the object. This must be the standard name for the entity, suffixed by `_reference` if the object is a reference.",
+                              "readOnly": true
+                            },
+                            "self": {
+                              "type": "string",
+                              "format": "url",
+                              "description": "The API show URL at which the object is accessible",
+                              "readOnly": true
+                            }
+                          },
+                          "readOnly": true
+                        },
+                        "migrated_via": {
+                          "type": "string",
+                          "description": "Indicates whether the conversion was performed via the PagerDuty API or PagerDuty website. This property is only included if the `migrated_metadata` query parameter is provided.",
+                          "enum": [
+                            "API",
+                            "UI"
+                          ],
+                          "readOnly": true
+                        }
+                      }
                     },
                     {
                       "type": "object",
@@ -37331,6 +37525,19 @@
                         }
                       ],
                       "limit": 25,
+                      "migrated_at": "2023-06-14T13:51:31Z",
+                      "migrated_by": {
+                        "id": "P8B9WR8",
+                        "self": "https://api.pagerduty.com/users/P8B9WR8",
+                        "type": "user_reference"
+                      },
+                      "migrated_status": "completed",
+                      "migrated_to": {
+                        "id": "PI2KBWI",
+                        "self": "https://api.pagerduty.com/event_orchestrations/services/PI2KBWI",
+                        "type": "event_orchestration_reference"
+                      },
+                      "migrated_via": "API",
                       "offset": 0,
                       "more": false,
                       "total": null

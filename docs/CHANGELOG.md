@@ -4,6 +4,10 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+## 2023-06-20
+- Added documentation for including the `migrated_*` properties into the List Service's Event Rules endpoint response
+- Added documentation for including the `migrated_*` properties into the Get the Service Orchestration for a Service endpoint response
+
 ## 2023-06-13
 - Remove `X-EARLY-ACCESS` header for `/incidents/custom_fields` and `/incidents/:id/custom_fields` endpoints
 - Added documentation for the Team `default_role` attribute, for public/private teams.
