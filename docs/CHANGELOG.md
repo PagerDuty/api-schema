@@ -4,6 +4,13 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+## 2023-08-29
+- Added Standards endpoints:
+  - `GET /standards`
+  - `PUT /standards/:id`
+  - `GET /standards/scores/{resource_type}`
+  - `GET /standards/scores/{resource_type}/{id}`
+
 ## 2023-06-20
 - Added documentation for including the `migrated_*` properties into the List Service's Event Rules endpoint response
 - Added documentation for including the `migrated_*` properties into the Get the Service Orchestration for a Service endpoint response

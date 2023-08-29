@@ -129,6 +129,10 @@
       "description": "A webhook is a way to receive events that occur on the PagerDuty platform via an HTTP POST request.\nV3 webhooks are set up by creating a webhook subscription.\n"
     },
     {
+      "name": "Standards",
+      "description": "Standards help provide a clear understanding of what a good service configuration looks like, allowing to share and enforce organization guidelines across services to ensure adherence to best practices.\n"
+    },
+    {
       "name": "Status Dashboards",
       "description": "Status Dashboards represent user-defined views for the Status Dashboard product that are limited to specific Business Services rather than the whole set of top-level Business Services (those with no dependent Services).\n"
     },
@@ -3217,6 +3221,65 @@
             "migrated_metadata"
           ],
           "uniqueItems": true
+        }
+      },
+      "active_standard": {
+        "in": "query",
+        "name": "active",
+        "required": false,
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      "resource_id_standard": {
+        "in": "path",
+        "name": "id",
+        "required": true,
+        "description": "Id of the resource to apply the standards.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "resource_type_standard": {
+        "in": "path",
+        "name": "resource_type",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "enum": [
+            "technical_services"
+          ]
+        }
+      },
+      "resource_ids_standard": {
+        "in": "query",
+        "name": "ids",
+        "required": true,
+        "description": "Ids of resources to apply the standards. Maximum of 100 items",
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "id_standard": {
+        "in": "path",
+        "name": "id",
+        "required": true,
+        "description": "Id of the standard",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "query_resource_type_standard": {
+        "in": "query",
+        "name": "resource_type",
+        "schema": {
+          "type": "string",
+          "enum": [
+            "technical_service"
+          ]
         }
       }
     },
@@ -8806,6 +8869,45 @@
           "user"
         ]
       },
+      "Standard": {
+        "title": "Standard",
+        "type": "object",
+        "properties": {
+          "active": {
+            "type": "boolean"
+          },
+          "description": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "resource_type": {
+            "type": "string",
+            "enum": [
+              "technical_service"
+            ]
+          },
+          "exclusions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StandardInclusionExclusion"
+            }
+          },
+          "inclusions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StandardInclusionExclusion"
+            }
+          }
+        }
+      },
       "StatusDashboard": {
         "title": "StatusDashboard",
         "type": "object",
@@ -13481,6 +13583,73 @@
             }
           }
         ]
+      },
+      "StandardApplied": {
+        "title": "StandardApplied",
+        "type": "object",
+        "properties": {
+          "resource_id": {
+            "type": "string"
+          },
+          "resource_type": {
+            "type": "string",
+            "enum": [
+              "technical_service"
+            ]
+          },
+          "score": {
+            "type": "object",
+            "properties": {
+              "passing": {
+                "type": "integer"
+              },
+              "total": {
+                "type": "integer"
+              }
+            }
+          },
+          "standards": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "active": {
+                  "type": "boolean"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "type": {
+                  "type": "string"
+                },
+                "pass": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      },
+      "StandardInclusionExclusion": {
+        "title": "StandardInclusionExclusion",
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "technical_service_reference"
+            ]
+          },
+          "id": {
+            "type": "string"
+          }
+        }
       }
     }
   },
@@ -38357,6 +38526,363 @@
           },
           "409": {
             "$ref": "#/components/responses/Conflict"
+          }
+        }
+      }
+    },
+    "/standards": {
+      "get": {
+        "x-pd-requires-scope": "standards.read",
+        "tags": [
+          "Standards"
+        ],
+        "operationId": "listStandards",
+        "summary": "List Standards",
+        "description": "Get all standards of an account.\n\nScoped OAuth requires: `standards.read`\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/active_standard"
+          },
+          {
+            "$ref": "#/components/parameters/query_resource_type_standard"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "standards": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Standard"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "standards": [
+                        {
+                          "active": true,
+                          "description": "A description provides critical context about what a service represents or is used for to inform team members and responders. The description should be kept concise and understandable by those without deep knowledge of the service.",
+                          "exclusions": [],
+                          "id": "01CXX38Q0U8XKHO4LNKXUJTBFG",
+                          "inclusions": [
+                            {
+                              "type": "technical_service_reference",
+                              "id": "P0CPWBO"
+                            }
+                          ],
+                          "name": "Service has a description",
+                          "resource_type": "technical_service",
+                          "type": "has_technical_service_description"
+                        },
+                        {
+                          "active": true,
+                          "description": "Ensure that no incident goes unaddressed, even if the on-call responder on the first level of the escalation policy is unavailable.",
+                          "exclusions": [],
+                          "id": "01CXX38Q0Y8D9IYFAEDCH5F53L",
+                          "inclusions": [],
+                          "name": "Service has an escalation policy with 2 or more unique levels",
+                          "resource_type": "technical_service",
+                          "type": "minimum_escalation_policy_rule_depth"
+                        },
+                        {
+                          "active": true,
+                          "description": "Extensions or add-ons streamline incident response and communication processes by connecting PagerDuty services to other tools that matter to your incident management workflow.",
+                          "exclusions": [],
+                          "id": "01CXX38Q11T19P0K1GFKHUZJ35",
+                          "inclusions": [],
+                          "name": "Service has an extension or add-on (e.g. Slack, etc.)",
+                          "resource_type": "technical_service",
+                          "type": "minimum_outbound_integrations"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        }
+      }
+    },
+    "/standards/{id}": {
+      "put": {
+        "x-pd-requires-scope": "standards.write",
+        "tags": [
+          "Standards"
+        ],
+        "summary": "Update a standard",
+        "operationId": "updateStandard",
+        "description": "Updates a standard\n\nScoped OAuth requires: `standards.write`\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/id_standard"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "active": {
+                        "type": "boolean"
+                      },
+                      "values": {
+                        "type": "object",
+                        "properties": {
+                          "regex": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "inclusions": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/components/schemas/StandardInclusionExclusion"
+                        }
+                      },
+                      "exclusions": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/components/schemas/StandardInclusionExclusion"
+                        }
+                      }
+                    }
+                  }
+                ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "active": false
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Standard"
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "active": false,
+                      "description": "A description provides critical context about what a service represents or is used for to inform team members and responders. The description should be kept concise and understandable by those without deep knowledge of the service.",
+                      "exclusions": [],
+                      "id": "01CXX38Q0U8XKHO4LNKXUJTBFG",
+                      "inclusions": [],
+                      "name": "Service has a description",
+                      "resource_type": "technical_service",
+                      "type": "has_technical_service_description"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/UnprocessableEntity"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        }
+      }
+    },
+    "/standards/scores/{resource_type}": {
+      "get": {
+        "x-pd-requires-scope": "standards.read",
+        "tags": [
+          "Standards"
+        ],
+        "summary": "List resources' standards scores",
+        "operationId": "listResourceStandardsManyServices",
+        "description": "List standards applied to a set of resources\n\nScoped OAuth requires: `standards.read`\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/resource_ids_standard"
+          },
+          {
+            "$ref": "#/components/parameters/resource_type_standard"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "resources": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/StandardApplied"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "resources": [
+                        {
+                          "resource_id": "P0CPWBO",
+                          "resource_type": "technical_service",
+                          "score": {
+                            "passing": 1,
+                            "total": 1
+                          },
+                          "standards": [
+                            {
+                              "active": true,
+                              "description": "A description provides critical context about what a service represents or is used for to inform team members and responders. The description should be kept concise and understandable by those without deep knowledge of the service.",
+                              "id": "01CXX38Q0U8XKHO4LNKXUJTBFG",
+                              "pass": true,
+                              "name": "Service has a description",
+                              "type": "has_technical_service_description"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        }
+      }
+    },
+    "/standards/scores/{resource_type}/{id}": {
+      "get": {
+        "x-pd-requires-scope": "standards.read",
+        "tags": [
+          "Standards"
+        ],
+        "summary": "List a resource's standards scores",
+        "operationId": "listResourceStandards",
+        "description": "List standards applied to a specific resource\n\nScoped OAuth requires: `standards.read`\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/resource_id_standard"
+          },
+          {
+            "$ref": "#/components/parameters/resource_type_standard"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardApplied"
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "resource_id": "P0CPWBO",
+                      "resource_type": "technical_service",
+                      "score": {
+                        "passing": 1,
+                        "total": 1
+                      },
+                      "standards": [
+                        {
+                          "active": true,
+                          "description": "A description provides critical context about what a service represents or is used for to inform team members and responders. The description should be kept concise and understandable by those without deep knowledge of the service.",
+                          "id": "01CXX38Q0U8XKHO4LNKXUJTBFG",
+                          "pass": true,
+                          "name": "Service has a description",
+                          "type": "has_technical_service_description"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
           }
         }
       }
