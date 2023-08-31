@@ -3885,7 +3885,7 @@
           },
           "time_zone": {
             "type": "string",
-            "description": "The time zone to use for the results and grouping.",
+            "description": "The time zone to use for the results and grouping. Must be in tzdata format. See list of accepted values [here](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).",
             "example": "Etc/UTC"
           },
           "aggregate_unit": {
