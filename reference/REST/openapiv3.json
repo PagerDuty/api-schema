@@ -4651,7 +4651,7 @@
                 "type": "string"
               },
               "timing": {
-                "description": "A list of state transitions with timestamps. Only the 'created' transition is guaranteed to exist at any time.",
+                "description": "A list of state transitions with timestamps, sorted in ascending order by timestamp. Only the 'created' transition is guaranteed to exist at any time.",
                 "type": "array",
                 "items": {
                   "type": "object",

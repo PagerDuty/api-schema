@@ -4,6 +4,9 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+## 2023-09-01
+-  Clarify sort order of timings attribute on automation action invocations
+
 ## 2023-08-231
 - Added documentation to all Analytics endpoints for supported time zone formats
 
