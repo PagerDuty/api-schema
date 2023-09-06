@@ -7,7 +7,7 @@ Currently we rarely deprecate, and do not remove any API functionality.
 ## 2023-09-01
 -  Clarify sort order of timings attribute on automation action invocations
 
-## 2023-08-231
+## 2023-08-23
 - Added documentation to all Analytics endpoints for supported time zone formats
 
 ## 2023-08-29
