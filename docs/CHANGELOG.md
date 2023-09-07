@@ -4,10 +4,14 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+## 2020-09-06
+- Updated `service.html_url` field from `/services/{id}` to `/service-directory/{id}`.
+- Updated `maintenance_window.html_url` field from `/maintenance_windows#/show/{id}` to `/service-directory/maintenance-windows/{id}`.
+
 ## 2023-09-01
 -  Clarify sort order of timings attribute on automation action invocations
 
-## 2023-08-231
+## 2023-08-23
 - Added documentation to all Analytics endpoints for supported time zone formats
 
 ## 2023-08-29

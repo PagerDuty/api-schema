@@ -6458,7 +6458,7 @@
               "type": "service",
               "summary": "My Application Service",
               "self": "https://api.pagerduty.com/services/PIJ90N7",
-              "html_url": "https://subdomain.pagerduty.com/services/PIJ90N7"
+              "html_url": "https://subdomain.pagerduty.com/service-directory/PIJ90N7"
             }
           ]
         }
@@ -10495,7 +10495,7 @@
                     "type": "service_reference",
                     "summary": "Cool Service",
                     "self": "https://api.pagerduty.com/services/PNTDJ30",
-                    "html_url": "https://subdomain.pagerduty.com/services/PNTDJ30"
+                    "html_url": "https://subdomain.pagerduty.com/service-directory/PNTDJ30"
                   },
                   "incident": {
                     "id": "PVO5OB2",
@@ -10565,7 +10565,7 @@
                   "type": "service_reference",
                   "summary": "My Application Service",
                   "self": "https://api.pagerduty.com/services/PIJ90N7",
-                  "html_url": "https://subdomain.pagerduty.com/services/PIJ90N7",
+                  "html_url": "https://subdomain.pagerduty.com/service-directory/PIJ90N7",
                   "name": "My Application Service",
                   "description": "null",
                   "auto_resolve_timeout": 14400,
@@ -14282,7 +14282,7 @@
                             "type": "service",
                             "summary": "My Application Service",
                             "self": "https://api.pagerduty.com/services/PIJ90N7",
-                            "html_url": "https://subdomain.pagerduty.com/services/PIJ90N7"
+                            "html_url": "https://subdomain.pagerduty.com/service-directory/PIJ90N7"
                           }
                         ]
                       }
@@ -14426,7 +14426,7 @@
                             "type": "service",
                             "summary": "My Application Service",
                             "self": "https://api.pagerduty.com/services/PIJ90N7",
-                            "html_url": "https://subdomain.pagerduty.com/services/PIJ90N7"
+                            "html_url": "https://subdomain.pagerduty.com/service-directory/PIJ90N7"
                           }
                         ]
                       }
@@ -19972,7 +19972,7 @@
                               "type": "service_reference",
                               "summary": "My Mail Service",
                               "self": "https://api.pagerduty.com/services/PIJ90N7",
-                              "html_url": "https://subdomain.pagerduty.com/services/PIJ90N7"
+                              "html_url": "https://subdomain.pagerduty.com/service-directory/PIJ90N7"
                             }
                           ],
                           "num_loops": 0,
@@ -20141,7 +20141,7 @@
                             "type": "service_reference",
                             "summary": "My Mail Service",
                             "self": "https://api.pagerduty.com/services/PIJ90N7",
-                            "html_url": "https://subdomain.pagerduty.com/services/PIJ90N7"
+                            "html_url": "https://subdomain.pagerduty.com/service-directory/PIJ90N7"
                           }
                         ],
                         "num_loops": 2,
@@ -20259,7 +20259,7 @@
                             "type": "service_reference",
                             "summary": "My Mail Service",
                             "self": "https://api.pagerduty.com/services/PIJ90N7",
-                            "html_url": "https://subdomain.pagerduty.com/services/PIJ90N7"
+                            "html_url": "https://subdomain.pagerduty.com/service-directory/PIJ90N7"
                           }
                         ],
                         "num_loops": 2,
@@ -20458,7 +20458,7 @@
                             "type": "service_reference",
                             "summary": "My Mail Service",
                             "self": "https://api.pagerduty.com/services/PIJ90N7",
-                            "html_url": "https://subdomain.pagerduty.com/services/PIJ90N7"
+                            "html_url": "https://subdomain.pagerduty.com/service-directory/PIJ90N7"
                           }
                         ],
                         "num_loops": 2,
@@ -23400,7 +23400,7 @@
                               "type": "service_reference",
                               "summary": "My Application Service",
                               "self": "https://api.pagerduty.com/services/PIJ90N7",
-                              "html_url": "https://subdomain.pagerduty.com/services/PIJ90N7"
+                              "html_url": "https://subdomain.pagerduty.com/service-directory/PIJ90N7"
                             }
                           ]
                         }
@@ -23547,7 +23547,7 @@
                             "type": "service_reference",
                             "summary": "My Application Service",
                             "self": "https://api.pagerduty.com/services/PIJ90N7",
-                            "html_url": "https://subdomain.pagerduty.com/services/PIJ90N7"
+                            "html_url": "https://subdomain.pagerduty.com/service-directory/PIJ90N7"
                           }
                         ]
                       }
@@ -23704,7 +23704,7 @@
                             "type": "service_reference",
                             "summary": "My Application Service",
                             "self": "https://api.pagerduty.com/services/PIJ90N7",
-                            "html_url": "https://subdomain.pagerduty.com/services/PIJ90N7"
+                            "html_url": "https://subdomain.pagerduty.com/service-directory/PIJ90N7"
                           }
                         ],
                         "temporarily_disabled": false
@@ -23887,7 +23887,7 @@
                             "type": "service_reference",
                             "summary": "My Application Service",
                             "self": "https://api.pagerduty.com/services/PIJ90N7",
-                            "html_url": "https://subdomain.pagerduty.com/services/PIJ90N7"
+                            "html_url": "https://subdomain.pagerduty.com/service-directory/PIJ90N7"
                           }
                         ]
                       }
@@ -23972,7 +23972,7 @@
                             "type": "service_reference",
                             "summary": "My Application Service",
                             "self": "https://api.pagerduty.com/services/PIJ90N7",
-                            "html_url": "https://subdomain.pagerduty.com/services/PIJ90N7"
+                            "html_url": "https://subdomain.pagerduty.com/service-directory/PIJ90N7"
                           }
                         ]
                       }
@@ -25772,7 +25772,7 @@
                             "type": "service_reference",
                             "summary": "My Mail Service",
                             "self": "https://api.pagerduty.com/services/PIJ90N7",
-                            "html_url": "https://subdomain.pagerduty.com/services/PIJ90N7"
+                            "html_url": "https://subdomain.pagerduty.com/service-directory/PIJ90N7"
                           },
                           "assignments": [],
                           "assigned_via": "escalation_policy",
@@ -26072,7 +26072,7 @@
                             "type": "service_reference",
                             "summary": "My Mail Service",
                             "self": "https://api.pagerduty.com/services/PIJ90N7",
-                            "html_url": "https://subdomain.pagerduty.com/services/PIJ90N7"
+                            "html_url": "https://subdomain.pagerduty.com/service-directory/PIJ90N7"
                           },
                           "assigned_via": "escalation_policy",
                           "assignments": [
@@ -26315,7 +26315,7 @@
                           "type": "service_reference",
                           "summary": "My Mail Service",
                           "self": "https://api.pagerduty.com/services/PWIXJZS",
-                          "html_url": "https://subdomain.pagerduty.com/services/PWIXJZS"
+                          "html_url": "https://subdomain.pagerduty.com/service-directory/PWIXJZS"
                         },
                         "priority": {
                           "id": "P53ZZH5",
@@ -26452,7 +26452,7 @@
                           "type": "service_reference",
                           "summary": "My Mail Service",
                           "self": "https://api.pagerduty.com/services/PIJ90N7",
-                          "html_url": "https://subdomain.pagerduty.com/services/PIJ90N7"
+                          "html_url": "https://subdomain.pagerduty.com/service-directory/PIJ90N7"
                         },
                         "assignments": [
                           {
@@ -26834,7 +26834,7 @@
                           "type": "service_reference",
                           "summary": "My Mail Service",
                           "self": "https://api.pagerduty.com/services/PIJ90N7",
-                          "html_url": "https://subdomain.pagerduty.com/services/PIJ90N7"
+                          "html_url": "https://subdomain.pagerduty.com/service-directory/PIJ90N7"
                         },
                         "priority": {
                           "id": "P53ZZH5",
@@ -27009,7 +27009,7 @@
                             "type": "service_reference",
                             "summary": "My Mail Service",
                             "self": "https://api.pagerduty.com/services/PIJ90N7",
-                            "html_url": "https://subdomain.pagerduty.com/services/PIJ90N7"
+                            "html_url": "https://subdomain.pagerduty.com/service-directory/PIJ90N7"
                           },
                           "body": {
                             "type": "alert_body",
@@ -27180,7 +27180,7 @@
                             "type": "service_reference",
                             "summary": "My Mail Service",
                             "self": "https://api.pagerduty.com/services/PIJ90N7",
-                            "html_url": "https://subdomain.pagerduty.com/services/PIJ90N7"
+                            "html_url": "https://subdomain.pagerduty.com/service-directory/PIJ90N7"
                           },
                           "body": {
                             "type": "alert_body",
@@ -27287,7 +27287,7 @@
                           "type": "service_reference",
                           "summary": "My Mail Service",
                           "self": "https://api.pagerduty.com/services/PIJ90N7",
-                          "html_url": "https://subdomain.pagerduty.com/services/PIJ90N7"
+                          "html_url": "https://subdomain.pagerduty.com/service-directory/PIJ90N7"
                         },
                         "incident": {
                           "id": "PT4KHLX",
@@ -28022,7 +28022,7 @@
                             "type": "service_reference",
                             "summary": "My Mail Service",
                             "self": "https://api.pagerduty.com/services/PIJ90N7",
-                            "html_url": "https://subdomain.pagerduty.com/services/PIJ90N7"
+                            "html_url": "https://subdomain.pagerduty.com/service-directory/PIJ90N7"
                           },
                           "channel": {
                             "type": "api"
@@ -29222,7 +29222,7 @@
                           "type": "service_reference",
                           "summary": "My Mail Service",
                           "self": "https://api.pagerduty.com/services/PIJ90N7",
-                          "html_url": "https://subdomain.pagerduty.com/services/PIJ90N7"
+                          "html_url": "https://subdomain.pagerduty.com/service-directory/PIJ90N7"
                         },
                         "assigned_via": "escalation_policy",
                         "assignments": [
@@ -30976,7 +30976,7 @@
                             "type": "service_reference",
                             "summary": "My Mail Service",
                             "self": "https://api.pagerduty.com/services/PIJ90N7",
-                            "html_url": "https://subdomain.pagerduty.com/services/PIJ90N7"
+                            "html_url": "https://subdomain.pagerduty.com/service-directory/PIJ90N7"
                           },
                           "channel": {
                             "type": "api"
@@ -31132,7 +31132,7 @@
                           "type": "service_reference",
                           "summary": "My Mail Service",
                           "self": "https://api.pagerduty.com/services/PIJ90N7",
-                          "html_url": "https://subdomain.pagerduty.com/services/PIJ90N7"
+                          "html_url": "https://subdomain.pagerduty.com/service-directory/PIJ90N7"
                         },
                         "channel": {
                           "type": "api"
@@ -31354,7 +31354,7 @@
                           "type": "maintenance_window",
                           "summary": "Immanentizing the eschaton",
                           "self": "https://api.pagerduty.com/maintenance_windows/PW98YIO",
-                          "html_url": "https://subdomain.pagerduty.com/maintenance_windows#/show/PW98YIO",
+                          "html_url": "https://subdomain.pagerduty.com/service-directory/maintenance-windows/PW98YIO",
                           "sequence_number": 1,
                           "start_time": "2015-11-09T20:00:00-05:00",
                           "end_time": "2015-11-09T22:00:00-05:00",
@@ -31365,7 +31365,7 @@
                               "type": "service_reference",
                               "summary": "My Mail Service",
                               "self": "https://api.pagerduty.com/services/PIJ90N7",
-                              "html_url": "https://subdomain.pagerduty.com/services/PIJ90N7"
+                              "html_url": "https://subdomain.pagerduty.com/service-directory/PIJ90N7"
                             }
                           ],
                           "teams": [
@@ -31491,7 +31491,7 @@
                         "type": "maintenance_window",
                         "summary": "Immanentizing the eschaton",
                         "self": "https://api.pagerduty.com/maintenance_windows/PW98YIO",
-                        "html_url": "https://subdomain.pagerduty.com/maintenance_windows#/show/PW98YIO",
+                        "html_url": "https://subdomain.pagerduty.com/service-directory/maintenance-windows/PW98YIO",
                         "sequence_number": 1,
                         "start_time": "2015-11-09T20:00:00-05:00",
                         "end_time": "2015-11-09T22:00:00-05:00",
@@ -31502,7 +31502,7 @@
                             "type": "service_reference",
                             "summary": "My Mail Service",
                             "self": "https://api.pagerduty.com/services/PIJ90N7",
-                            "html_url": "https://subdomain.pagerduty.com/services/PIJ90N7"
+                            "html_url": "https://subdomain.pagerduty.com/service-directory/PIJ90N7"
                           }
                         ],
                         "teams": [
@@ -31592,7 +31592,7 @@
                         "type": "maintenance_window",
                         "summary": "Immanentizing the eschaton",
                         "self": "https://api.pagerduty.com/maintenance_windows/PW98YIO",
-                        "html_url": "https://subdomain.pagerduty.com/maintenance_windows#/show/PW98YIO",
+                        "html_url": "https://subdomain.pagerduty.com/service-directory/maintenance-windows/PW98YIO",
                         "sequence_number": 1,
                         "start_time": "2015-11-09T20:00:00-05:00",
                         "end_time": "2015-11-09T22:00:00-05:00",
@@ -31603,7 +31603,7 @@
                             "type": "service_reference",
                             "summary": "My Mail Service",
                             "self": "https://api.pagerduty.com/services/PIJ90N7",
-                            "html_url": "https://subdomain.pagerduty.com/services/PIJ90N7"
+                            "html_url": "https://subdomain.pagerduty.com/service-directory/PIJ90N7"
                           }
                         ],
                         "teams": [
@@ -31764,7 +31764,7 @@
                         "type": "maintenance_window",
                         "summary": "Immanentizing the eschaton",
                         "self": "https://api.pagerduty.com/maintenance_windows/PW98YIO",
-                        "html_url": "https://subdomain.pagerduty.com/maintenance_windows#/show/PW98YIO",
+                        "html_url": "https://subdomain.pagerduty.com/service-directory/maintenance-windows/PW98YIO",
                         "sequence_number": 1,
                         "start_time": "2015-11-09T20:00:00-05:00",
                         "end_time": "2015-11-09T22:00:00-05:00",
@@ -31775,7 +31775,7 @@
                             "type": "service_reference",
                             "summary": "My Mail Service",
                             "self": "https://api.pagerduty.com/services/PIJ90N7",
-                            "html_url": "https://subdomain.pagerduty.com/services/PIJ90N7"
+                            "html_url": "https://subdomain.pagerduty.com/service-directory/PIJ90N7"
                           }
                         ],
                         "teams": [
@@ -36382,7 +36382,7 @@
                           "summary": "My Application Service",
                           "type": "service",
                           "self": "https://api.pagerduty.com/services/PIJ90N7",
-                          "html_url": "https://subdomain.pagerduty.com/services/PIJ90N7",
+                          "html_url": "https://subdomain.pagerduty.com/service-directory/PIJ90N7",
                           "name": "My Application Service",
                           "auto_resolve_timeout": 14400,
                           "acknowledgement_timeout": 600,
@@ -36601,7 +36601,7 @@
                         "summary": "My Application Service",
                         "type": "service",
                         "self": "https://api.pagerduty.com/services/PIJ90N7",
-                        "html_url": "https://subdomain.pagerduty.com/services/PIJ90N7",
+                        "html_url": "https://subdomain.pagerduty.com/service-directory/PIJ90N7",
                         "name": "My Application Service",
                         "auto_resolve_timeout": 14400,
                         "acknowledgement_timeout": 600,
@@ -36742,7 +36742,7 @@
                         "type": "service",
                         "summary": "My Application Service",
                         "self": "https://api.pagerduty.com/services/PIJ90N7",
-                        "html_url": "https://subdomain.pagerduty.com/services/PIJ90N7",
+                        "html_url": "https://subdomain.pagerduty.com/service-directory/PIJ90N7",
                         "name": "My Application Service",
                         "auto_resolve_timeout": 14400,
                         "acknowledgement_timeout": 600,
@@ -36990,7 +36990,7 @@
                         "type": "service",
                         "summary": "My Application Service",
                         "self": "https://api.pagerduty.com/services/PIJ90N7",
-                        "html_url": "https://subdomain.pagerduty.com/services/PIJ90N7",
+                        "html_url": "https://subdomain.pagerduty.com/service-directory/PIJ90N7",
                         "name": "My Application Service",
                         "auto_resolve_timeout": 14400,
                         "acknowledgement_timeout": 600,
@@ -37451,7 +37451,7 @@
                           "type": "service_reference",
                           "summary": "My Email-Based Integration",
                           "self": "https://api.pagerduty.com/services/PQL78HM",
-                          "html_url": "https://subdomain.pagerduty.com/services/PQL78HM"
+                          "html_url": "https://subdomain.pagerduty.com/service-directory/PQL78HM"
                         },
                         "created_at": "2015-10-14T13:33:02-07:00",
                         "integration_email": "my-email-based-integration@subdomain.pagerduty.com"
@@ -37527,7 +37527,7 @@
                         "type": "service_reference",
                         "summary": "My Email-Based Integration",
                         "self": "https://api.pagerduty.com/services/PQL78HM",
-                        "html_url": "https://subdomain.pagerduty.com/services/PQL78HM"
+                        "html_url": "https://subdomain.pagerduty.com/service-directory/PQL78HM"
                       },
                       "integration_email": "my-email-based-integration@subdomain.pagerduty.com",
                       "vendor": {
@@ -37574,7 +37574,7 @@
                           "type": "service_reference",
                           "summary": "My Email-Based Integration",
                           "self": "https://api.pagerduty.com/services/PQL78HM",
-                          "html_url": "https://subdomain.pagerduty.com/services/PQL78HM"
+                          "html_url": "https://subdomain.pagerduty.com/service-directory/PQL78HM"
                         },
                         "created_at": "2015-10-14T13:33:02-07:00",
                         "integration_email": "my-email-based-integration@subdomain.pagerduty.com"
@@ -37659,7 +37659,7 @@
                           "type": "service_reference",
                           "summary": "My Email-Based Integration",
                           "self": "https://api.pagerduty.com/services/PQL78HM",
-                          "html_url": "https://subdomain.pagerduty.com/services/PQL78HM"
+                          "html_url": "https://subdomain.pagerduty.com/service-directory/PQL78HM"
                         },
                         "created_at": "2015-10-14T13:33:02-07:00",
                         "vendor": {
@@ -37828,7 +37828,7 @@
                           "id": "14e56445-ebab-4dd0-ba9d-fc28a41b7e7b",
                           "position": 0,
                           "disabled": false,
-                          "self": "https://api.pagerduty.com/services/PI2KBWI/rules/14e56445-ebab-4dd0-ba9d-fc28a41b7e7b",
+                          "self": "https://api.pagerduty.com/service-directory/PI2KBWI/rules/14e56445-ebab-4dd0-ba9d-fc28a41b7e7b",
                           "conditions": {
                             "operator": "and",
                             "subconditions": [
