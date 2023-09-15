@@ -21884,11 +21884,11 @@
                             }
                           ]
                         }
-                      ]
-                    },
-                    "catch_all": {
-                      "actions": {
-                        "suppress": true
+                      ],
+                      "catch_all": {
+                        "actions": {
+                          "suppress": true
+                        }
                       }
                     }
                   }
@@ -22452,14 +22452,14 @@
                                 "severity": "info"
                               }
                             }
-                          ],
-                          "catch_all": {
-                            "actions": {
-                              "suppress": true
-                            }
-                          }
+                          ]
                         }
-                      ]
+                      ],
+                      "catch_all": {
+                        "actions": {
+                          "suppress": true
+                        }
+                      }
                     }
                   }
                 }
@@ -22770,11 +22770,11 @@
                             }
                           ]
                         }
-                      ]
-                    },
-                    "catch_all": {
-                      "actions": {
-                        "suppress": true
+                      ],
+                      "catch_all": {
+                        "actions": {
+                          "suppress": true
+                        }
                       }
                     }
                   }
