@@ -4,6 +4,9 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+## 2023-09-18
+- Removed Early Access warning from `POST /services/{id}/rules/convert` 
+
 ## 2023-09-06
 - Updated `service.html_url` field from `/services/{id}` to `/service-directory/{id}`.
 - Updated `maintenance_window.html_url` field from `/maintenance_windows#/show/{id}` to `/service-directory/maintenance-windows/{id}`.
