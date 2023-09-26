@@ -4,6 +4,9 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+## 2023-09-20
+- Added `incident_workflow_reference` as possible agent type for Automation Action Invocation resources.
+
 ## 2023-09-18
 - Removed Early Access warning from `POST /services/{id}/rules/convert` 
 
