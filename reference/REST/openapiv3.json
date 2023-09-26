@@ -4695,6 +4695,23 @@
                       },
                       {
                         "$ref": "#/components/schemas/Template/allOf/1/properties/created_by/oneOf/1"
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "example": "PT4KHRS"
+                          },
+                          "type": {
+                            "type": "string",
+                            "example": "incident_workflow_reference"
+                          }
+                        },
+                        "required": [
+                          "type",
+                          "id"
+                        ]
                       }
                     ]
                   },
