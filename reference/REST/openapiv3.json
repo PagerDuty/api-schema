@@ -24577,7 +24577,7 @@
           "Incident Workflows"
         ],
         "operationId": "createIncidentWorkflowInstance",
-        "description": "Start an Instance of an Incident Workflow\n\nAn Incident Workflow is a sequence of configurable Steps and associated Triggers that can execute automated Actions for a given Incident.\n\nScoped OAuth requires: `incident_workflows:instances.write`\n",
+        "description": "Start an Instance of an Incident Workflow. Sometimes referred to as \"triggering a workflow on an incident.\"\n\nAn Incident Workflow is a sequence of configurable Steps and associated Triggers that can execute automated Actions for a given Incident.\n\nScoped OAuth requires: `incident_workflows:instances.write`\n",
         "summary": "Start an Incident Workflow Instance",
         "parameters": [
           {
