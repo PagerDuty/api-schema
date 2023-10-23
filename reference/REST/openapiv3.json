@@ -13381,7 +13381,7 @@
             "discriminator": {
               "propertyName": "data_type",
               "mapping": {
-                "string": "./StringFixedOptionValue.yaml"
+                "string": "#/paths/~1incidents~1custom_fields/get/responses/200/content/application~1json/schema/allOf/0/properties/fields/items/allOf/1/properties/field_options/items/allOf/0/properties/data/oneOf/0"
               }
             }
           }
@@ -15673,8 +15673,8 @@
                     "discriminator": {
                       "propertyName": "action_type",
                       "mapping": {
-                        "script": "models/automationActions/ScriptActionPostBody.yaml",
-                        "process_automation": "models/automationActions/ProcessAutomationJobActionPostBody.yaml"
+                        "script": "#/components/schemas/AutomationActionsScriptActionPostBody",
+                        "process_automation": "#/components/schemas/AutomationActionsProcessAutomationJobActionPostBody"
                       }
                     }
                   }
@@ -15733,8 +15733,8 @@
                       "discriminator": {
                         "propertyName": "action_type",
                         "mapping": {
-                          "script": "models/automationActions/ScriptActionWithTeams.yaml",
-                          "process_automation": "models/automationActions/ProcessAutomationJobActionWithTeams.yaml"
+                          "script": "#/components/schemas/AutomationActionsScriptActionWithTeams",
+                          "process_automation": "#/components/schemas/AutomationActionsProcessAutomationJobActionWithTeams"
                         }
                       }
                     }
@@ -15871,8 +15871,8 @@
                             "discriminator": {
                               "propertyName": "action_type",
                               "mapping": {
-                                "script": "models/automationActions/ScriptAction.yaml",
-                                "process_automation": "models/automationActions/ProcessAutomationJobAction.yaml"
+                                "script": "#/components/schemas/AutomationActionsScriptAction",
+                                "process_automation": "#/components/schemas/AutomationActionsProcessAutomationJobAction"
                               }
                             }
                           }
@@ -16023,8 +16023,8 @@
                       "discriminator": {
                         "propertyName": "action_type",
                         "mapping": {
-                          "script": "models/automationActions/ScriptActionWithTeams.yaml",
-                          "process_automation": "models/automationActions/ProcessAutomationJobActionWithTeams.yaml"
+                          "script": "#/components/schemas/AutomationActionsScriptActionWithTeams",
+                          "process_automation": "#/components/schemas/AutomationActionsProcessAutomationJobActionWithTeams"
                         }
                       }
                     }
@@ -16178,8 +16178,8 @@
                     "discriminator": {
                       "propertyName": "action_type",
                       "mapping": {
-                        "script": "models/automationActions/ScriptActionPutBody.yaml",
-                        "process_automation": "models/automationActions/ProcessAutomationJobActionPutBody.yaml"
+                        "script": "#/components/schemas/AutomationActionsScriptActionPutBody",
+                        "process_automation": "#/components/schemas/AutomationActionsProcessAutomationJobActionPutBody"
                       }
                     }
                   }
@@ -16212,8 +16212,8 @@
                       "discriminator": {
                         "propertyName": "action_type",
                         "mapping": {
-                          "script": "models/automationActions/ScriptActionWithTeams.yaml",
-                          "process_automation": "models/automationActions/ProcessAutomationJobActionWithTeams.yaml"
+                          "script": "#/components/schemas/AutomationActionsScriptActionWithTeams",
+                          "process_automation": "#/components/schemas/AutomationActionsProcessAutomationJobActionWithTeams"
                         }
                       }
                     }
