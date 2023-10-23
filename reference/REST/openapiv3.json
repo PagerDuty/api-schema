@@ -2109,6 +2109,24 @@
           "format": "tzinfo"
         }
       },
+      "schedule_time_zone": {
+        "name": "time_zone",
+        "in": "query",
+        "description": "Time zone in which results will be rendered. This will default to the schedule's time zone.",
+        "schema": {
+          "type": "string",
+          "format": "tzinfo"
+        }
+      },
+      "schedule_list_time_zone": {
+        "name": "time_zone",
+        "in": "query",
+        "description": "Time zone in which results will be rendered. This will default to the current user's time zone and then the account's time zone.",
+        "schema": {
+          "type": "string",
+          "format": "tzinfo"
+        }
+      },
       "service_id": {
         "name": "service_id",
         "in": "path",
@@ -8812,7 +8830,7 @@
           },
           "restrictions": {
             "type": "array",
-            "description": "An array of restrictions for the layer. A restriction is a limit on which period of the day or week the schedule layer can accept assignments.",
+            "description": "An array of restrictions for the layer. A restriction is a limit on which period of the day or week the schedule layer can accept assignments. Restrictions respect the `time_zone` parameter of the request.",
             "items": {
               "$ref": "#/components/schemas/Restriction"
             }
@@ -34202,7 +34220,7 @@
         ],
         "x-pd-requires-scope": "schedules.read",
         "operationId": "listSchedules",
-        "description": "List the on-call schedules.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#schedules)\n\nScoped OAuth requires: `schedules.read`\n",
+        "description": "List the on-call schedules.\n\nA Schedule determines the time periods that users are On-Call. \n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#schedules)\n\nScoped OAuth requires: `schedules.read`\n",
         "summary": "List schedules",
         "parameters": [
           {
@@ -34225,6 +34243,9 @@
           },
           {
             "$ref": "#/components/parameters/include_schedules"
+          },
+          {
+            "$ref": "#/components/parameters/schedule_list_time_zone"
           }
         ],
         "responses": {
@@ -34573,7 +34594,7 @@
             "$ref": "#/components/parameters/header_Content-Type"
           },
           {
-            "$ref": "#/components/parameters/time_zone"
+            "$ref": "#/components/parameters/schedule_time_zone"
           },
           {
             "$ref": "#/components/parameters/schedule_since"
