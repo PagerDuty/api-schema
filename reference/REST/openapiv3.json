@@ -34584,7 +34584,7 @@
         ],
         "x-pd-requires-scope": "schedules.read",
         "operationId": "getSchedule",
-        "description": "Show detailed information about a schedule, including entries for each layer and sub-schedule.\nScoped OAuth requires: `schedules.read`\n",
+        "description": "Show detailed information about a schedule, including entries for each layer.\nScoped OAuth requires: `schedules.read`\n",
         "summary": "Get a schedule",
         "parameters": [
           {
