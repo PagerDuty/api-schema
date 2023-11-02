@@ -2223,7 +2223,8 @@
         "in": "query",
         "description": "Incident de-duplication key. Incidents with child alerts do not have an incident key; querying by incident key will return incidents whose alerts have alert_key matching the given incident key.",
         "schema": {
-          "type": "string"
+          "type": "string",
+          "nullable": true
         }
       },
       "incident_services": {
