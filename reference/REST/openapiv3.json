@@ -1855,6 +1855,15 @@
           "type": "string"
         }
       },
+      "responder_id": {
+        "name": "responder_id",
+        "description": "The ID of the responder.",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
       "entity_type": {
         "name": "entity_type",
         "in": "path",
@@ -3829,13 +3838,13 @@
             "properties": {
               "created_at_start": {
                 "type": "string",
-                "description": "Accepts an ISO8601 DateTime string.  Any incidents with a created_at less than this value will be omitted from the results.  The maximum supported time range in conjunction with created_at_end is one year.",
-                "example": "2020-01-01T00:00:00+05:00"
+                "description": "Accepts an ISO8601 DateTime string. Any incidents with a created_at less than this value will be omitted from the results. The maximum supported time range in conjunction with created_at_end is one year.",
+                "example": "2023-01-01T00:00:00+05:00"
               },
               "created_at_end": {
                 "type": "string",
-                "description": "Accepts an ISO8601 DateTime string.  Any incidents with a created_at greater than or equal to this value will be omitted from the results.  The maximum supported time range in conjunction with created_at_start is one year.",
-                "example": "2020-02-01T00:00:00Z"
+                "description": "Accepts an ISO8601 DateTime string. Any incidents with a created_at greater than or equal to this value will be omitted from the results. The maximum supported time range in conjunction with created_at_start is one year.",
+                "example": "2023-02-01T00:00:00Z"
               },
               "urgency": {
                 "type": "string",
@@ -3850,6 +3859,21 @@
                 "type": "boolean",
                 "description": "A boolean flag including whether results should contain *only* [major incidents](https://support.pagerduty.com/docs/operational-reviews#major-incidents), or exclude major incidents. If no value is provided all incidents will be included.",
                 "example": true
+              },
+              "min_ackowledgements": {
+                "type": "integer",
+                "description": "An integer that sets the requirement for the minimum number of acknowledgements to occur on an incident. For example, setting this to 1 will return only incidents that have at least 1 acknowledgement. If no value is provided, all incidents will be included.",
+                "example": 1
+              },
+              "min_timeout_escalations": {
+                "type": "integer",
+                "description": "An integer that sets the requirement for the minimum number of timeout escalations to occur on an incident. For example, setting this to 1 will return only incidents that have at least 1 timeout escalation. If no value is provided, all incidents will be included.",
+                "example": 1
+              },
+              "min_manual_escalations": {
+                "type": "integer",
+                "description": "An integer that sets the requirement for the minimum number of manual escalations to occur on an incident. For example, setting this to 1 will return only incidents that have at least 1 manual escalation. If no value is provided, all incidents will be included.",
+                "example": 1
               },
               "team_ids": {
                 "type": "array",
@@ -3875,9 +3899,20 @@
                   "PT4KHLX"
                 ]
               },
+              "escalation_policy_ids": {
+                "type": "array",
+                "description": "An array of escalation policy IDs. Only incidents related to these escalation policies will be included in the results. If omitted, all escalation policies the requestor has access to will be included in the results.",
+                "items": {
+                  "type": "string"
+                },
+                "example": [
+                  "PDJXDF3",
+                  "PG4EHNS"
+                ]
+              },
               "priority_ids": {
                 "type": "array",
-                "description": "An array of priority IDs. Only incidents with these priorities will be included in the results. If omitted, all services the requestor has access to will be included in the results.",
+                "description": "An array of priority IDs. Only incidents with these priorities will be included in the results. If omitted, all priorities will be included in the results.",
                 "items": {
                   "type": "string"
                 },
@@ -3889,7 +3924,7 @@
               },
               "priority_names": {
                 "type": "array",
-                "description": "An array of user-defined priority names. Only incidents with these priorities will be included in the results. If omitted, all services the requestor has access to will be included in the results.",
+                "description": "An array of user-defined priority names. Only incidents with these priorities will be included in the results. If omitted, all priorities will be included in the results.",
                 "items": {
                   "type": "string"
                 },
@@ -3905,6 +3940,19 @@
             "type": "string",
             "description": "The time zone to use for the results and grouping. Must be in tzdata format. See list of accepted values [here](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).",
             "example": "Etc/UTC"
+          },
+          "order": {
+            "type": "string",
+            "description": "The order in which the results were sorted; asc for ascending, desc for descending.",
+            "enum": [
+              "asc",
+              "desc"
+            ]
+          },
+          "order_by": {
+            "type": "string",
+            "description": "The column that was used for ordering the results.",
+            "example": "created_at"
           },
           "aggregate_unit": {
             "type": "string",
@@ -3929,7 +3977,7 @@
           },
           "mean_engaged_seconds": {
             "type": "integer",
-            "description": "Mean engaged time across all responders for incidents that match the given filters.\nEngaged time is measured from the time a user engages with an incident (by\nacknowledging or accepting a responder request) until the incident is resolved.\nThis may include periods in which the incidents was snoozed."
+            "description": "Mean engaged time across all responders for incidents that match the given filters.\nEngaged time is measured from the time a user engages with an incident (by\nacknowledging or accepting a responder request) until the incident is resolved.\nThis may include periods in which the incidents were snoozed."
           },
           "mean_engaged_user_count": {
             "type": "integer",
@@ -3951,29 +3999,33 @@
             "type": "integer",
             "description": "Mean time from when an incident was triggered until it was resolved."
           },
+          "range_start": {
+            "type": "string",
+            "description": "Start of the date range for which the metrics were calculated. Only included when an aggregate unit is specified in the request."
+          },
           "service_id": {
             "type": "string",
-            "description": "ID of the service. Only included when aggregating by service."
+            "description": "ID of the service. Only included when aggregating by service. Not included when aggregating by all."
           },
           "service_name": {
             "type": "string",
-            "description": "Name of the service. Only included when aggregating by service."
+            "description": "Name of the service. Only included when aggregating by service. Not included when aggregating by all."
           },
           "team_id": {
             "type": "string",
-            "description": "ID of the team the incident was assigned to."
+            "description": "ID of the team to which the incident was assigned. Not included when aggregating by all."
           },
           "team_name": {
             "type": "string",
-            "description": "Name of the team the incident was assigned to."
+            "description": "Name of the team to which the incident was assigned. Not included when aggregating by all."
           },
           "total_business_hour_interruptions": {
             "type": "integer",
-            "description": "Total number of unique interruptions during business hours.\nBusiness hour: 8am-6pm Mon-Fri, based on the user’s time zone. "
+            "description": "Total number of unique interruptions during business hours; 8am-6pm Mon-Fri, based on the user’s time zone."
           },
           "total_engaged_seconds": {
             "type": "integer",
-            "description": "Total engaged time across all responders for incidents. Engaged time is measured from\nthe time a user engages with an incident (by acknowledging or accepting a responder request)\nuntil the incident is resolved. This may include periods in which the incidents was snoozed."
+            "description": "Total engaged time across all responders for incidents. Engaged time is measured from\nthe time a user engages with an incident (by acknowledging or accepting a responder request)\nuntil the incident is resolved. This may include periods in which the incidents were snoozed."
           },
           "total_escalation_count": {
             "type": "integer",
@@ -3983,13 +4035,40 @@
             "type": "integer",
             "description": "The total number of incidents that were created."
           },
+          "total_incidents_acknowledged": {
+            "type": "integer",
+            "description": "The total count of assigned incidents acknowledged. \nOnly explicit incident acknowledgment counts; reassign, resolve, and escalation actions do not imply acknowledgement."
+          },
+          "total_incidents_auto_resolved": {
+            "description": "The total count of incidents that were resolved automatically. \nThis count includes incidents resolved via an integration and those that were [auto-resolved in PagerDuty](https://support.pagerduty.com/docs/configurable-service-settings#auto-resolution)."
+          },
+          "total_incidents_manual_escalated": {
+            "type": "integer",
+            "description": "The total count of incidents that were manually escalated."
+          },
+          "total_incidents_reassigned": {
+            "type": "integer",
+            "description": "The total count of incidents that were reassigned."
+          },
+          "total_incidents_timeout_escalated": {
+            "type": "integer",
+            "description": "The total count of incidents that were escalated due to timeouts."
+          },
+          "total_interruptions": {
+            "type": "integer",
+            "description": "Total number of unique interruptions."
+          },
+          "total_notifications": {
+            "type": "integer",
+            "description": "The total count of incident notifications sent via email, SMS, phone call and push."
+          },
           "total_off_hour_interruptions": {
             "type": "integer",
-            "description": "Total number of unique interruptions during off hours.\nOff hour: 6pm-10pm Mon-Fri and all day Sat-Sun, based on the user’s time zone."
+            "description": "Total number of unique interruptions during off hours; 6pm-10pm Mon-Fri and all day Sat-Sun, based on the user’s time zone."
           },
           "total_sleep_hour_interruptions": {
             "type": "integer",
-            "description": "Total number of unique interruptions during sleep hours.\nSleep hour: 10pm-8am every day, based on the user’s time zone."
+            "description": "Total number of unique interruptions during sleep hours.\nSleep hours: 10pm-8am every day, based on the user’s time zone."
           },
           "total_snoozed_seconds": {
             "type": "integer",
@@ -3997,7 +4076,317 @@
           },
           "up_time_pct": {
             "type": "number",
-            "description": "The percentage of time in the defined date range that the service was not interrupted\nby a [major incident](https://support.pagerduty.com/docs/operational-reviews#major-incidents)."
+            "description": "The percentage of time in the defined date range that the service was not interrupted\nby a [major incident](https://support.pagerduty.com/docs/operational-reviews#major-incidents).\nOnly included when aggregating by team, escalation policy, service, or all services."
+          }
+        }
+      },
+      "AnalyticsIncidentMetricsEscalationPolicy": {
+        "title": "Analytics Incident Metrics Escalation Policy",
+        "type": "object",
+        "properties": {
+          "distinct_responder_count": {
+            "type": "integer",
+            "description": "Distinct count of responders who engaged in incidents on the escalation policy"
+          },
+          "escalation_policy_id": {
+            "type": "string",
+            "description": "ID of the escalation policy the incident was occurred on. Not included when aggregating by all."
+          },
+          "escalation_policy_name": {
+            "type": "string",
+            "description": "Name of the escalation policy the incident was occurred on. Not included when aggregating by all."
+          },
+          "mean_assignment_count": {
+            "type": "integer",
+            "description": "Mean count of instances where responders were assigned an incident (including through reassignment or escalation) or accepted a responder request."
+          },
+          "mean_engaged_seconds": {
+            "type": "integer",
+            "description": "Mean engaged time across all responders for incidents that match the given filters.\nEngaged time is measured from the time a user engages with an incident (by\nacknowledging or accepting a responder request) until the incident is resolved.\nThis may include periods in which the incidents were snoozed."
+          },
+          "mean_engaged_user_count": {
+            "type": "integer",
+            "description": "Mean number of users who engaged with an incident. *Engaged* is defined as\nacknowledging an incident or accepting a responder request in it."
+          },
+          "mean_seconds_to_engage": {
+            "type": "integer",
+            "description": "A measure of *people response time*. This metric measures the time from\nthe first user engagement (acknowledge or responder accept) to the last.\nThis metric is only used for incidents with **multiple responders**;\nfor incidents with one or no engaged users, this value is null."
+          },
+          "mean_seconds_to_first_ack": {
+            "type": "integer",
+            "description": "Mean time between the start of an incident, and the first responder to acknowledge."
+          },
+          "mean_seconds_to_mobilize": {
+            "type": "integer",
+            "description": "Mean time between the start of an incident, and the last additional responder\nto acknowledge. For incidents with one or no engaged users, this value is null."
+          },
+          "mean_seconds_to_resolve": {
+            "type": "integer",
+            "description": "Mean time from when an incident was triggered until it was resolved."
+          },
+          "range_start": {
+            "type": "string",
+            "description": "Start of the date range that the metrics were calculated for. Only included when an aggregate unit is specified in the request."
+          },
+          "team_id": {
+            "type": "string",
+            "description": "ID of the team the incident was assigned to. Not included when aggregating by all."
+          },
+          "team_name": {
+            "type": "string",
+            "description": "Name of the team the incident was assigned to. Not included when aggregating by all."
+          },
+          "total_business_hour_interruptions": {
+            "type": "integer",
+            "description": "Total number of unique interruptions during business hours; 8am-6pm Mon-Fri, based on the user’s time zone."
+          },
+          "total_engaged_seconds": {
+            "type": "integer",
+            "description": "Total engaged time across all responders for incidents. Engaged time is measured from\nthe time a user engages with an incident (by acknowledging or accepting a responder request)\nuntil the incident is resolved. This may include periods in which the incidents were snoozed."
+          },
+          "total_escalation_count": {
+            "type": "integer",
+            "description": "Total count of instances where an incident is escalated between responders\nassigned to an escalation policy."
+          },
+          "total_incident_count": {
+            "type": "integer",
+            "description": "The total number of incidents that were created."
+          },
+          "total_incidents_acknowledged": {
+            "type": "integer",
+            "description": "The total count of assigned incidents acknowledged. \nOnly explicit incident acknowledgment counts; reassign, resolve, and escalation actions do not imply acknowledgement."
+          },
+          "total_incidents_auto_resolved": {
+            "description": "The total count of incidents that were resolved automatically. \nThis count includes incidents resolved via an integration and those that were [auto-resolved in PagerDuty](https://support.pagerduty.com/docs/configurable-service-settings#auto-resolution)."
+          },
+          "total_incidents_manual_escalated": {
+            "type": "integer",
+            "description": "The total count of incidents that were manually escalated."
+          },
+          "total_incidents_reassigned": {
+            "type": "integer",
+            "description": "The total count of incidents that were reassigned."
+          },
+          "total_incidents_timeout_escalated": {
+            "type": "integer",
+            "description": "The total count of incidents that were escalated due to timeouts."
+          },
+          "total_interruptions": {
+            "type": "integer",
+            "description": "Total number of unique interruptions."
+          },
+          "total_notifications": {
+            "type": "integer",
+            "description": "The total count of incident notifications sent via email, SMS, phone call and push."
+          },
+          "total_off_hour_interruptions": {
+            "type": "integer",
+            "description": "Total number of unique interruptions during off hours; 6pm-10pm Mon-Fri and all day Sat-Sun, based on the user’s time zone."
+          },
+          "total_sleep_hour_interruptions": {
+            "type": "integer",
+            "description": "Total number of unique interruptions during sleep hours; 10pm-8am every day, based on the user’s time zone."
+          },
+          "total_snoozed_seconds": {
+            "type": "integer",
+            "description": "Total number of seconds incidents were snoozed."
+          },
+          "up_time_pct": {
+            "type": "number",
+            "description": "The percentage of time in the defined date range that the service was not interrupted\nby a [major incident](https://support.pagerduty.com/docs/operational-reviews#major-incidents). Not included when aggregating by all."
+          }
+        }
+      },
+      "AnalyticsResponderFilter": {
+        "type": "object",
+        "properties": {
+          "filters": {
+            "type": "object",
+            "description": "Accepts a set of filters to apply to the Incidents before aggregating.  Any incidents that do not match the included filters will be omitted from the results",
+            "properties": {
+              "date_range_start": {
+                "type": "string",
+                "description": "Accepts an ISO8601 DateTime string. Any incidents with a created_at less than this value will be omitted from the results. The maximum supported time range in conjunction with date_range_end is one year.",
+                "example": "2023-10-01T00:00:00+05:00"
+              },
+              "date_range_end": {
+                "type": "string",
+                "description": "Accepts an ISO8601 DateTime string. Any incidents with a created_at greater than or equal to this value will be omitted from the results. The maximum supported time range in conjunction with date_range_start is one year.",
+                "example": "2023-10-01T00:00:00Z"
+              },
+              "urgency": {
+                "type": "string",
+                "description": "Any incidents whose urgency does not match the provided string will be omitted from the results.",
+                "example": "high",
+                "enum": [
+                  "high",
+                  "low"
+                ]
+              },
+              "team_ids": {
+                "type": "array",
+                "description": "An array of team IDs. Only incidents related to these teams will be included in the results. If omitted, all teams the requestor has access to will be included in the results.",
+                "items": {
+                  "type": "string"
+                },
+                "example": [
+                  "P373JQQ",
+                  "PAECHJV",
+                  "P7SYGW6"
+                ]
+              },
+              "responder_ids": {
+                "type": "array",
+                "description": "An array of responder IDs. Only incidents related to these responders will be included in the results. If omitted, all responders the requestor has access to will be included in the results.",
+                "items": {
+                  "type": "string"
+                },
+                "example": [
+                  "PDJXDF3",
+                  "PG4EHNS"
+                ]
+              },
+              "priority_ids": {
+                "type": "array",
+                "description": "An array of priority IDs. Only incidents with these priorities will be included in the results. If omitted, all priorities will be included in the results.",
+                "items": {
+                  "type": "string"
+                },
+                "example": [
+                  "PC8O0L3",
+                  "PX01HJD",
+                  "P5FK83M"
+                ]
+              },
+              "priority_names": {
+                "type": "array",
+                "description": "An array of user-defined priority names. Only incidents with these priorities will be included in the results. If omitted, all priorities will be included in the results.",
+                "items": {
+                  "type": "string"
+                },
+                "example": [
+                  "P1",
+                  "P2",
+                  "P3"
+                ]
+              }
+            }
+          },
+          "time_zone": {
+            "type": "string",
+            "description": "The time zone to use for the results and grouping.",
+            "example": "Etc/UTC"
+          },
+          "order": {
+            "type": "string",
+            "description": "The order in which the results were sorted; asc for ascending, desc for descending.",
+            "enum": [
+              "asc",
+              "desc"
+            ]
+          },
+          "order_by": {
+            "type": "string",
+            "description": "The column that was used for ordering the results.",
+            "example": "user_id"
+          }
+        }
+      },
+      "AnalyticsResponderMetrics": {
+        "title": "Analytics Responder Metrics",
+        "type": "object",
+        "properties": {
+          "mean_engaged_seconds": {
+            "type": "integer",
+            "description": "Mean engaged time across all responders for incidents that match the given filters.\nEngaged time is measured from the time a user engages with an incident (by\nacknowledging or accepting a responder request) until the incident is resolved.\nThis may include periods in which the incidents were snoozed."
+          },
+          "mean_time_to_acknowledge_seconds": {
+            "type": "integer",
+            "description": "The average time between when an incident is first assigned to a user and when the incident is first acknowledged by that user.\nReassign, resolve, and escalation actions do not imply acknowledgement."
+          },
+          "responder_id": {
+            "type": "integer",
+            "description": "ID of the responder (user). Not included when aggregating by all responders."
+          },
+          "responder_name": {
+            "type": "string",
+            "description": "Name of the responder (user). Not included when aggregating by all responders."
+          },
+          "team_id": {
+            "type": "string",
+            "description": "ID of the team associated with the responder. Not included when aggregating by all responders."
+          },
+          "team_name": {
+            "type": "string",
+            "description": "Name of the team associated with the responder. Not included when aggregating by all responders."
+          },
+          "total_business_hour_interruptions": {
+            "type": "integer",
+            "description": "Total number of unique interruptions during business hours; 8am-6pm Mon-Fri, based on the user’s time zone."
+          },
+          "total_engaged_seconds": {
+            "type": "integer",
+            "description": "Total engaged time across all responders for incidents. Engaged time is measured from\nthe time a user engages with an incident (by acknowledging or accepting a responder request)\nuntil the incident is resolved. This may include periods in which the incidents were snoozed."
+          },
+          "total_incident_count": {
+            "type": "integer",
+            "description": "The total number of incidents that were created."
+          },
+          "total_incidents_acknowledged": {
+            "type": "integer",
+            "description": "The total count of assigned incidents acknowledged by the user. \nOnly explicit incident acknowledgment counts; reassign, resolve, and escalation actions do not imply acknowledgement."
+          },
+          "total_incidents_manual_escalated_from": {
+            "type": "integer",
+            "description": "The total count of the user’s assigned incidents that were manually escalated away from a user without acknowledgement."
+          },
+          "total_incidents_manual_escalated_to": {
+            "type": "integer",
+            "description": "The total count of incidents the user was manually escalated to."
+          },
+          "total_incidents_reassigned_from": {
+            "type": "integer",
+            "description": "The total count of a user's assigned incidents that were reassigned away from the user to another user or escalation policy."
+          },
+          "total_incidents_reassigned_to": {
+            "type": "integer",
+            "description": "The total count of incidents the user was reassigned to."
+          },
+          "total_incidents_timeout_escalated_from": {
+            "type": "integer",
+            "description": "The total count of the user’s assigned incidents that were escalated due to timeouts."
+          },
+          "total_incidents_timeout_escalated_to": {
+            "type": "integer",
+            "description": "The total count of incidents the user was escalated to due to timeouts."
+          },
+          "total_interruptions": {
+            "type": "integer",
+            "description": "Total number of unique interruptions."
+          },
+          "total_notifications": {
+            "type": "integer",
+            "description": "The total count of incident notifications sent via email, SMS, phone call and push."
+          },
+          "total_off_hour_interruptions": {
+            "type": "integer",
+            "description": "Total number of unique interruptions during off hours; 6pm-10pm Mon-Fri and all day Sat-Sun, based on the user’s time zone."
+          },
+          "total_seconds_on_call": {
+            "type": "integer",
+            "description": "Total seconds the responder was on call."
+          },
+          "total_seconds_on_call_level_1": {
+            "type": "integer",
+            "description": "Total seconds the responder was on call at level 1 of their escalation policy."
+          },
+          "total_seconds_on_call_level_2_plus": {
+            "type": "integer",
+            "description": "Total seconds the responder was on call at level 2 or higher of their escalation policy."
+          },
+          "total_sleep_hour_interruptions": {
+            "type": "integer",
+            "description": "Total number of unique interruptions during sleep hours; 10pm-8am every day, based on the user’s time zone."
           }
         }
       },
@@ -4009,9 +4398,13 @@
             "type": "integer",
             "description": "Total count of instances where responders were assigned an incident (including through reassignment or escalation) or accepted a responder request."
           },
+          "auto_resolved": {
+            "type": "boolean",
+            "description": "Whether or not the incident resolved automatically, either via an integration \nor [auto-resolved in PagerDuty](https://support.pagerduty.com/docs/configurable-service-settings#auto-resolution)."
+          },
           "business_hour_interruptions": {
             "type": "integer",
-            "description": "Total number of unique interruptions during business hour.\nBusiness hour: 8am-6pm Mon-Fri, based on the user’s time zone.  "
+            "description": "Total number of unique interruptions during business hours; 8am-6pm Mon-Fri, based on the user’s time zone."
           },
           "created_at": {
             "type": "string",
@@ -4023,7 +4416,7 @@
           },
           "engaged_seconds": {
             "type": "integer",
-            "description": "Total engaged time across all responders for this incident.  Engaged time is measured from the time a user engages with an incident (by acknowledging or accepting a responder request) until the incident is resolved.  This may include periods in which the incident was snoozed."
+            "description": "Total engaged time across all responders for this incident.  Engaged time is measured from the time a user engages with an incident (by acknowledging or accepting a responder request) until the incident is resolved.  This may include periods in which the incidents were snoozed."
           },
           "engaged_user_count": {
             "type": "integer",
@@ -4033,21 +4426,33 @@
             "type": "integer",
             "description": "Total count of instances where an incident is escalated between responders assigned to an escalation policy."
           },
+          "escalation_policy_id": {
+            "type": "string",
+            "description": "ID of the escalation policy the incident was assigned to."
+          },
+          "escalation_policy_name": {
+            "type": "string",
+            "description": "Name of the escalation policy the incident was assigned to."
+          },
           "id": {
             "type": "string",
             "description": "Incident ID"
           },
           "incident_number": {
             "type": "integer",
-            "description": "The PagerDuty incident number"
+            "description": "The PagerDuty incident number."
           },
           "major": {
             "type": "boolean",
             "description": "An incident is classified as a [major incident](https://support.pagerduty.com/docs/operational-reviews#major-incidents) if it has one of the two highest priorities, or if multiple responders are added and acknowledge the incident."
           },
+          "manual_escalation_count": {
+            "type": "integer",
+            "description": "Total count of manual escalations in the incident."
+          },
           "off_hour_interruptions": {
             "type": "integer",
-            "description": "Total number of unique interruptions during off hour.\nOff hour: 6pm-10pm Mon-Fri and all day Sat-Sun, based on the user’s time zone.      "
+            "description": "Total number of unique interruptions during off hours; 6pm-10pm Mon-Fri and all day Sat-Sun, based on the user’s time zone."
           },
           "priority_id": {
             "type": "string",
@@ -4059,9 +4464,26 @@
             "nullable": true,
             "description": "The user-provided short name of the priority."
           },
+          "priority_order": {
+            "type": "integer",
+            "nullable": true,
+            "description": "The numerical value used to sort priorities. Higher values are higher priority."
+          },
+          "reassignment_count": {
+            "type": "integer",
+            "description": "Total count of reassignments in the incident."
+          },
           "resolved_at": {
             "type": "string",
             "description": "Timestamp of when the incident was resolved."
+          },
+          "resolved_by_user_id": {
+            "type": "string",
+            "description": "ID of the user who resolved the incident."
+          },
+          "resolved_by_user_name": {
+            "type": "string",
+            "description": "Name of the user who resolved the incident."
           },
           "seconds_to_engage": {
             "type": "integer",
@@ -4069,15 +4491,15 @@
           },
           "seconds_to_first_ack": {
             "type": "integer",
-            "description": "Time between start of an incident, and the first responder to acknowledge."
+            "description": "Time between the start of an incident, and the first responder to acknowledge."
           },
           "seconds_to_mobilize": {
             "type": "integer",
-            "description": "Time between start of an incident, and the last additional responder to acknowledge.  If an incident has one or less responders, the value will be null."
+            "description": "Time between the start of an incident, and the last additional responder to acknowledge. If an incident has one or no responders, the value will be null."
           },
           "seconds_to_resolve": {
             "type": "integer",
-            "description": "Time from when incident triggered until it was resolved."
+            "description": "Time from when an incident was triggered until it was resolved."
           },
           "service_id": {
             "type": "string",
@@ -4089,11 +4511,15 @@
           },
           "sleep_hour_interruptions": {
             "type": "integer",
-            "description": "Total number of unique interruptions during sleep hour.\nSleep hour: 10pm-8am every day, based on the user’s time zone."
+            "description": "Total number of unique interruptions during sleep hours; 10pm-8am every day, based on the user’s time zone."
           },
           "snoozed_seconds": {
             "type": "integer",
             "description": "Total seconds the incident has been snoozed for."
+          },
+          "status": {
+            "type": "string",
+            "description": "The incident status. Can be one of `triggered`, `acknowledged`, or `resolved`."
           },
           "team_id": {
             "type": "string",
@@ -4105,6 +4531,18 @@
             "nullable": true,
             "description": "Name of the team the incident was assigned to."
           },
+          "timeout_escalation_count": {
+            "type": "integer",
+            "description": "Total count of timeout escalations in the incident."
+          },
+          "total_interruptions": {
+            "type": "integer",
+            "description": "Total number of unique interruptions in the incident."
+          },
+          "total_notifications": {
+            "type": "integer",
+            "description": "Total number of notifications sent for the incident."
+          },
           "urgency": {
             "type": "string",
             "description": "Notification level"
@@ -4113,6 +4551,170 @@
             "type": "integer",
             "description": "The total response effort in seconds,\n[as defined by the user](https://support.pagerduty.com/docs/editing-incidents#edit-incident-duration).",
             "nullable": true
+          }
+        }
+      },
+      "AnalyticsRawIncidentResponses": {
+        "title": "Analytics Raw Incident Responses",
+        "type": "object",
+        "properties": {
+          "responder_name": {
+            "type": "string",
+            "description": "Name of the user associated with the Incident Response."
+          },
+          "responder_id": {
+            "type": "string",
+            "description": "ID of the user associated with the Incident Response."
+          },
+          "response_status": {
+            "type": "string",
+            "description": "Status of the user's interaction with the Incident notification.",
+            "enum": [
+              "joined",
+              "pending",
+              "declined"
+            ]
+          },
+          "responder_type": {
+            "type": "string",
+            "description": "Type of responder, where `assigned` means the user was added to the Incident via Assignment at Incident creation,\n`reassigned` means the user was added to the Incident via Reassignment, `escalated` means the user was added via Escalation,\nand `added_responder` means the user was added via Responder Reqeuest.",
+            "enum": [
+              "assigned",
+              "reassigned",
+              "escalated",
+              "added_responder"
+            ]
+          },
+          "requested_at": {
+            "type": "string",
+            "description": "Timestamp of when the user was requested."
+          },
+          "responded_at": {
+            "type": "string",
+            "description": "Timestamp of when the user responded to the request."
+          },
+          "time_to_respond_seconds": {
+            "type": "integer",
+            "description": "Measures the time it took for the user to respond to the Incident request. In other words, `responded_at - requested_at`."
+          }
+        }
+      },
+      "AnalyticsRawResponderIncidents": {
+        "title": "Analytics Raw Responder Incidents",
+        "type": "object",
+        "properties": {
+          "incident_created_at": {
+            "type": "string",
+            "description": "Timestamp of when the incident was created."
+          },
+          "incident_description": {
+            "type": "string",
+            "description": "The incident description."
+          },
+          "incident_id": {
+            "type": "string",
+            "description": "Incident ID"
+          },
+          "incident_number": {
+            "type": "integer",
+            "description": "The PagerDuty incident number."
+          },
+          "incident_priority_id": {
+            "type": "string",
+            "nullable": true,
+            "description": "ID of the incident's priority level."
+          },
+          "incident_priority_name": {
+            "type": "string",
+            "nullable": true,
+            "description": "The user-provided short name of the priority."
+          },
+          "incident_priority_order": {
+            "type": "integer",
+            "nullable": true,
+            "description": "The numerical value used to sort priorities. Higher values are higher priority."
+          },
+          "incident_urgency": {
+            "type": "string",
+            "description": "Notification level"
+          },
+          "mean_time_to_acknowledge_seconds": {
+            "type": "integer",
+            "description": "Mean time from this user being assigned to an incident until this user acknowledges the incident."
+          },
+          "responder_id": {
+            "type": "string",
+            "description": "ID of the responder."
+          },
+          "responder_name": {
+            "type": "string",
+            "description": "Name of the responder."
+          },
+          "service_id": {
+            "type": "string",
+            "description": "ID of the service that the incident triggered on."
+          },
+          "service_name": {
+            "type": "string",
+            "description": "Name of the service that the incident triggered on."
+          },
+          "service_team_id": {
+            "type": "string",
+            "nullable": true,
+            "description": "ID of the team that owns the related service."
+          },
+          "service_team_name": {
+            "type": "string",
+            "nullable": true,
+            "description": "Name of the team that owns the related service."
+          },
+          "total_acknowledgements": {
+            "type": "integer",
+            "description": "Total acknowledgements from the responder on the incident."
+          },
+          "total_business_hour_interruptions": {
+            "type": "integer",
+            "description": "Total number of unique interruptions during business hours; 8am-6pm Mon-Fri, based on the user’s time zone."
+          },
+          "total_engaged_seconds": {
+            "type": "integer",
+            "description": "Total engaged time across all responders for incidents. Engaged time is measured from\nthe time a user engages with an incident (by acknowledging or accepting a responder request)\nuntil the incident is resolved. This may include periods in which the incidents were snoozed."
+          },
+          "total_interruptions": {
+            "type": "integer",
+            "description": "Total number of unique interruptions for the responder during the incident."
+          },
+          "total_manual_escalations_from": {
+            "type": "integer",
+            "description": "Total times the responder was manually escalated away from the incident."
+          },
+          "total_manual_escalations_to": {
+            "type": "integer",
+            "description": "Total times the responder was manually escalated to the incident."
+          },
+          "total_off_hour_interruptions": {
+            "type": "string",
+            "description": "Total number of unique interruptions during off hours; 6pm-10pm Mon-Fri and all day Sat-Sun, based on the user’s time zone."
+          },
+          "total_reassignments_from": {
+            "type": "integer",
+            "description": "Total times the responder was reassigned away from the incident."
+          },
+          "total_reassignments_to": {
+            "type": "integer",
+            "description": "Total times the responder was reassigned to the incident."
+          },
+          "total_sleep_hour_interruptions": {
+            "type": "integer",
+            "description": "Total number of unique interruptions during sleep hours; 10pm-8am every day, based on the user’s time zone."
+          },
+          "total_timeout_escalations_from": {
+            "type": "integer",
+            "description": "Total times the responder was escalated away from the incident due to timeout."
+          },
+          "total_timeout_escalations_to": {
+            "type": "integer",
+            "description": "Total times the responder was escalated to the incident due to timeout."
           }
         }
       },
@@ -14530,19 +15132,36 @@
                           "mean_seconds_to_first_ack": 63,
                           "mean_seconds_to_mobilize": 41,
                           "mean_seconds_to_resolve": 380,
-                          "range_start": "2020-01-01T00:00:00.000000",
+                          "range_start": "2023-01-01T00:00:00",
                           "total_business_hour_interruptions": 81,
                           "total_engaged_seconds": 3591,
                           "total_escalation_count": 5,
                           "total_incident_count": 124,
+                          "total_incidents_acknowledged": 0,
+                          "total_incidents_auto_resolved": 0,
+                          "total_incidents_manual_escalated": 0,
+                          "total_incidents_reassigned": 0,
+                          "total_incidents_timeout_escalated": 0,
+                          "total_interruptions": 2,
+                          "total_notifications": 2,
                           "total_off_hour_interruptions": 20,
                           "total_sleep_hour_interruptions": 21,
                           "total_snoozed_seconds": 78
                         }
                       ],
                       "filters": {
-                        "create_range_start": "2020-01-01T00:00:00Z",
-                        "create_range_end": "2020-02-01T00:00:00Z"
+                        "create_range_start": "2023-01-01T00:00:00Z",
+                        "create_range_end": "2023-02-01T00:00:00Z",
+                        "urgency": "high",
+                        "major": true,
+                        "team_ids": [
+                          "PGVXG6U",
+                          "PNVU4U4"
+                        ],
+                        "service_ids": [
+                          "PQVUB8D",
+                          "PU2D9X3"
+                        ]
                       },
                       "time_zone": "Etc/UTC"
                     }
@@ -14559,9 +15178,6 @@
           }
         },
         "parameters": [
-          {
-            "$ref": "#/components/parameters/early_access_analytics"
-          },
           {
             "$ref": "#/components/parameters/header_Accept"
           },
@@ -14601,7 +15217,284 @@
           },
           "description": "Parameters and filters to apply to the dataset."
         },
-        "description": "Provides aggregated enriched metrics for incidents.\n\nThe provided metrics are aggregated by day, week, month using the aggregate_unit parameter, or for the entire period if no aggregate_unit is provided.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n<!-- theme: info -->\n> A `team_ids` or `service_ids` filter is required for [user-level API keys](https://support.pagerduty.com/docs/using-the-api#section-generating-a-personal-rest-api-key) or keys generated through an OAuth flow. Account-level API keys do not have this requirement.\n<!-- theme: info -->\n> **Note:** Analytics data is updated once per day. It takes up to 24 hours before new incidents appear in the Analytics API.\n\nScoped OAuth requires: `analytics.read`\n",
+        "description": "Provides aggregated enriched metrics for incidents.\n\nThe provided metrics are aggregated by day, week, month using the aggregate_unit parameter, or for the entire period if no aggregate_unit is provided.\n\n<!-- theme: info -->\n> A `team_ids` or `service_ids` filter is required for [user-level API keys](https://support.pagerduty.com/docs/using-the-api#section-generating-a-personal-rest-api-key) or keys generated through an OAuth flow. Account-level API keys do not have this requirement.\n<!-- theme: info -->\n> **Note:** Analytics data is updated once per day. It takes up to 24 hours before new incidents appear in the Analytics API.\n\nScoped OAuth requires: `analytics.read`\n",
+        "tags": [
+          "Analytics"
+        ]
+      },
+      "parameters": []
+    },
+    "/analytics/metrics/incidents/escalation_policies": {
+      "post": {
+        "x-pd-requires-scope": "analytics.read",
+        "summary": "Get aggregated escalation policy data",
+        "operationId": "getAnalyticsMetricsIncidentsEscalationPolicy",
+        "responses": {
+          "200": {
+            "description": "Only returns data for escalation policies that match the filters and have data.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/AnalyticsIncidentMetricsEscalationPolicy"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "$ref": "#/components/schemas/AnalyticsModel"
+                    }
+                  ]
+                },
+                "examples": {
+                  "Example Response": {
+                    "value": {
+                      "data": [
+                        {
+                          "distinct_responder_count": 1,
+                          "escalation_policy_id": "PDESCP1",
+                          "escalation_policy_name": "Escalation Policy 1",
+                          "mean_assignment_count": 1,
+                          "mean_engaged_seconds": 81,
+                          "mean_engaged_user_count": 63,
+                          "mean_seconds_to_engage": 41,
+                          "mean_seconds_to_first_ack": 380,
+                          "mean_seconds_to_mobilize": 81,
+                          "mean_seconds_to_resolve": 3591,
+                          "team_id": "PDTEAM1",
+                          "team_name": "Team 1",
+                          "total_business_hour_interruptions": 5,
+                          "total_engaged_seconds": 124,
+                          "total_escalation_count": 20,
+                          "total_incident_count": 21,
+                          "total_incidents_acknowledged": 78,
+                          "total_incidents_auto_resolved": 3,
+                          "total_incidents_manual_escalated": 3,
+                          "total_incidents_reassigned": 4,
+                          "total_incidents_timeout_escalated": 1,
+                          "total_interruptions": 1,
+                          "total_notifications": 23,
+                          "total_off_hour_interruptions": 3,
+                          "total_sleep_hour_interruptions": 1,
+                          "total_snoozed_seconds": 341,
+                          "up_time_pct": 9.124123
+                        },
+                        {
+                          "distinct_responder_count": 1,
+                          "escalation_policy_id": "PDESCP2",
+                          "escalation_policy_name": "Escalation Policy 2",
+                          "mean_assignment_count": 1,
+                          "mean_engaged_seconds": 81,
+                          "mean_engaged_user_count": 63,
+                          "mean_seconds_to_engage": 41,
+                          "mean_seconds_to_first_ack": 380,
+                          "mean_seconds_to_mobilize": 81,
+                          "mean_seconds_to_resolve": 3591,
+                          "team_id": "PDTEAM1",
+                          "team_name": "Team 1",
+                          "total_business_hour_interruptions": 5,
+                          "total_engaged_seconds": 124,
+                          "total_escalation_count": 20,
+                          "total_incident_count": 21,
+                          "total_incidents_acknowledged": 78,
+                          "total_incidents_auto_resolved": 3,
+                          "total_incidents_manual_escalated": 3,
+                          "total_incidents_reassigned": 4,
+                          "total_incidents_timeout_escalated": 1,
+                          "total_interruptions": 1,
+                          "total_notifications": 23,
+                          "total_off_hour_interruptions": 3,
+                          "total_sleep_hour_interruptions": 1,
+                          "total_snoozed_seconds": 341,
+                          "up_time_pct": 9.124123
+                        }
+                      ],
+                      "filters": {
+                        "created_at_start": "2023-06-10T00:00:00Z",
+                        "created_at_end": "2023-06-12T00:00:00Z",
+                        "urgency": "high",
+                        "major": true,
+                        "escalation_policy_ids": [
+                          "PDESCP1",
+                          "PDESCP2"
+                        ]
+                      },
+                      "time_zone": "Etc/UTC"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AnalyticsModel"
+              },
+              "examples": {
+                "Example Request": {
+                  "value": {
+                    "filters": {
+                      "created_at_start": "2023-06-10T00:00:00-07:00",
+                      "created_at_end": "2023-06-11T23:59:59-07:00",
+                      "urgency": "high",
+                      "major": true,
+                      "escalation_policy_ids": [
+                        "PDESCP1",
+                        "PDESCP2"
+                      ]
+                    },
+                    "time_zone": "Etc/UTC"
+                  }
+                }
+              }
+            }
+          },
+          "description": "Parameters and filters to apply to the dataset."
+        },
+        "description": "Provides aggregated metrics for incidents aggregated into units of time by escalation policy.\n\nExample metrics include Seconds to Resolve, Seconds to Engage, Snoozed Seconds, and Sleep Hour Interruptions. Metric definitions can be found in our [Knowledge Base](https://support.pagerduty.com/docs/insights#escalation-policy-list).\n\n<!-- theme: info -->\n> **Note:** Analytics data is updated once per day. It takes up to 24 hours before new incidents appear in the Analytics API.\n\nScoped OAuth requires: `analytics.read`\n",
+        "tags": [
+          "Analytics"
+        ]
+      },
+      "parameters": []
+    },
+    "/analytics/metrics/incidents/escalation_policies/all": {
+      "post": {
+        "x-pd-requires-scope": "analytics.read",
+        "summary": "Get aggregated metrics for all escalation policies",
+        "operationId": "getAnalyticsMetricsIncidentsEscalationPolicyAll",
+        "responses": {
+          "200": {
+            "description": "Only returns data for escalation policies that match the filters and have data.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/AnalyticsIncidentMetricsEscalationPolicy"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "$ref": "#/components/schemas/AnalyticsModel"
+                    }
+                  ]
+                },
+                "examples": {
+                  "Example Response": {
+                    "value": {
+                      "data": [
+                        {
+                          "distinct_responder_count": 1,
+                          "mean_assignment_count": 1,
+                          "mean_engaged_seconds": 81,
+                          "mean_engaged_user_count": 63,
+                          "mean_seconds_to_engage": 41,
+                          "mean_seconds_to_first_ack": 380,
+                          "mean_seconds_to_mobilize": 81,
+                          "mean_seconds_to_resolve": 3591,
+                          "total_business_hour_interruptions": 5,
+                          "total_engaged_seconds": 124,
+                          "total_escalation_count": 20,
+                          "total_incident_count": 21,
+                          "total_incidents_acknowledged": 78,
+                          "total_incidents_auto_resolved": 3,
+                          "total_incidents_manual_escalated": 3,
+                          "total_incidents_reassigned": 4,
+                          "total_incidents_timeout_escalated": 1,
+                          "total_interruptions": 1,
+                          "total_notifications": 23,
+                          "total_off_hour_interruptions": 3,
+                          "total_sleep_hour_interruptions": 1,
+                          "total_snoozed_seconds": 341,
+                          "up_time_pct": 9.124123
+                        }
+                      ],
+                      "filters": {
+                        "created_at_start": "2023-06-17T07:00:00Z",
+                        "created_at_end": "2023-07-02T06:59:59Z",
+                        "escalation_policy_ids": [
+                          "PDESCP1",
+                          "PDESCP2"
+                        ]
+                      },
+                      "time_zone": "Etc/UTC"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AnalyticsModel"
+              },
+              "examples": {
+                "Example Request": {
+                  "value": {
+                    "filters": {
+                      "created_at_start": "2023-06-17T00:00:00-07:00",
+                      "created_at_end": "2023-07-01T23:59:59-07:00",
+                      "escalation_policy_ids": [
+                        "PDESCP1",
+                        "PDESCP2"
+                      ]
+                    },
+                    "time_zone": "Etc/UTC"
+                  }
+                }
+              }
+            }
+          },
+          "description": "Parameters and filters to apply to the dataset."
+        },
+        "description": "Provides aggregated metrics across all escalation policies.\n\nExample metrics include Seconds to Resolve, Seconds to Engage, Snoozed Seconds, and Sleep Hour Interruptions. Metric definitions can be found in our [Knowledge Base](https://support.pagerduty.com/docs/insights#escalation-policy-list).\n\n<!-- theme: info -->\n> **Note:** Analytics data is updated once per day. It takes up to 24 hours before new incidents appear in the Analytics API.\n\nScoped OAuth requires: `analytics.read`\n",
         "tags": [
           "Analytics"
         ]
@@ -14615,7 +15508,7 @@
         "operationId": "getAnalyticsMetricsIncidentsService",
         "responses": {
           "200": {
-            "description": "Currently the response only returns data for services that match the filters and have data.",
+            "description": "Only returns data for services that match the filters and have data.",
             "content": {
               "application/json": {
                 "schema": {
@@ -14639,7 +15532,7 @@
                 "examples": {
                   "Example Response": {
                     "value": {
-                      "aggregate_unit": "week",
+                      "aggregate_unit": "day",
                       "data": [
                         {
                           "mean_assignment_count": 1,
@@ -14649,6 +15542,7 @@
                           "mean_seconds_to_first_ack": 63,
                           "mean_seconds_to_mobilize": 41,
                           "mean_seconds_to_resolve": 380,
+                          "range_start": "2023-06-11T00:00:00",
                           "service_id": "PPSCXAN",
                           "service_name": "Critical Prod Service 1",
                           "team_id": "P3XUQ75",
@@ -14657,36 +15551,57 @@
                           "total_engaged_seconds": 3591,
                           "total_escalation_count": 5,
                           "total_incident_count": 124,
+                          "total_incidents_acknowledged": 1,
+                          "total_incidents_auto_resolved": 12,
+                          "total_incidents_manual_escalated": 9,
+                          "total_incidents_reassigned": 1,
+                          "total_incidents_timeout_escalated": 4,
+                          "total_interruptions": 1,
+                          "total_notifications": 342,
                           "total_off_hour_interruptions": 20,
                           "total_sleep_hour_interruptions": 21,
                           "total_snoozed_seconds": 78,
                           "up_time_pct": 99.92677595628416
                         },
                         {
-                          "mean_assignment_count": 1,
-                          "mean_engaged_seconds": 366,
+                          "mean_assignment_count": 12,
+                          "mean_engaged_seconds": 432,
                           "mean_engaged_user_count": 1,
-                          "mean_seconds_to_engage": 81,
-                          "mean_seconds_to_first_ack": 63,
-                          "mean_seconds_to_mobilize": 41,
-                          "mean_seconds_to_resolve": 380,
+                          "mean_seconds_to_engage": 77,
+                          "mean_seconds_to_first_ack": 32,
+                          "mean_seconds_to_mobilize": 32,
+                          "mean_seconds_to_resolve": 87,
+                          "range_start": "2023-06-10T00:00:00",
                           "service_id": "PPSCXAN",
-                          "service_name": "Meme Fetcher Bot",
-                          "team_id": "PDN84B1",
-                          "team_name": "Marketing",
-                          "total_business_hour_interruptions": 81,
-                          "total_engaged_seconds": 3591,
+                          "service_name": "Critical Prod Service 1",
+                          "team_id": "P3XUQ75",
+                          "team_name": "Engineering",
+                          "total_business_hour_interruptions": 12,
+                          "total_engaged_seconds": 3645,
                           "total_escalation_count": 5,
                           "total_incident_count": 124,
-                          "total_off_hour_interruptions": 20,
-                          "total_sleep_hour_interruptions": 21,
-                          "total_snoozed_seconds": 78,
-                          "up_time_pct": 99.98747723132969
+                          "total_incidents_acknowledged": 1,
+                          "total_incidents_auto_resolved": 12,
+                          "total_incidents_manual_escalated": 9,
+                          "total_incidents_reassigned": 1,
+                          "total_incidents_timeout_escalated": 4,
+                          "total_interruptions": 1,
+                          "total_notifications": 32,
+                          "total_off_hour_interruptions": 42,
+                          "total_sleep_hour_interruptions": 3,
+                          "total_snoozed_seconds": 123,
+                          "up_time_pct": 99.234416
                         }
                       ],
                       "filters": {
-                        "created_at_start": "2020-06-17T17:27:27Z",
-                        "created_at_end": "2020-06-16T17:27:27Z"
+                        "created_at_start": "2023-06-10T00:00:00Z",
+                        "created_at_end": "2023-06-12T00:00:00Z",
+                        "team_ids": [
+                          "P3XUQ75"
+                        ],
+                        "service_ids": [
+                          "PPSCXAN"
+                        ]
                       },
                       "time_zone": "Etc/UTC"
                     }
@@ -14704,8 +15619,129 @@
         },
         "parameters": [
           {
-            "$ref": "#/components/parameters/early_access_analytics"
+            "$ref": "#/components/parameters/header_Accept"
           },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AnalyticsModel"
+              },
+              "examples": {
+                "Example Request": {
+                  "value": {
+                    "filters": {
+                      "created_at_start": "2023-06-10T00:00:00-07:00",
+                      "created_at_end": "2023-06-11T23:59:59-07:00",
+                      "urgency": "high",
+                      "major": true,
+                      "team_ids": [
+                        "P3XUQ75"
+                      ],
+                      "service_ids": [
+                        "PPSCXAN"
+                      ]
+                    },
+                    "aggregate_unit": "day",
+                    "time_zone": "Etc/UTC"
+                  }
+                }
+              }
+            }
+          },
+          "description": "Parameters and filters to apply to the dataset."
+        },
+        "description": "Provides aggregated metrics for incidents aggregated into units of time by service.\n\nExample metrics include Seconds to Resolve, Seconds to Engage, Snoozed Seconds, and Sleep Hour Interruptions. Metric definitions can be found in our [Knowledge Base](https://support.pagerduty.com/docs/insights#services-list).\nData can be aggregated by day, week or month in addition to by service, or provided just as a collection of aggregates for each service in the dataset for the entire period.  If a unit is provided, each row in the returned dataset will include a 'range_start' timestamp.\n\n<!-- theme: info -->\n> **Note:** Analytics data is updated once per day. It takes up to 24 hours before new incidents appear in the Analytics API.\n\nScoped OAuth requires: `analytics.read`\n",
+        "tags": [
+          "Analytics"
+        ]
+      },
+      "parameters": []
+    },
+    "/analytics/metrics/incidents/services/all": {
+      "post": {
+        "x-pd-requires-scope": "analytics.read",
+        "summary": "Get aggregated metrics for all services",
+        "operationId": "getAnalyticsMetricsIncidentsServiceAll",
+        "responses": {
+          "200": {
+            "description": "Only returns data for services that match the filters and have data.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/AnalyticsIncidentMetrics"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "$ref": "#/components/schemas/AnalyticsModel"
+                    }
+                  ]
+                },
+                "examples": {
+                  "Example Response": {
+                    "value": {
+                      "data": [
+                        {
+                          "mean_assignment_count": 1,
+                          "mean_engaged_seconds": 366,
+                          "mean_engaged_user_count": 1,
+                          "mean_seconds_to_engage": 81,
+                          "mean_seconds_to_first_ack": 63,
+                          "mean_seconds_to_mobilize": 41,
+                          "mean_seconds_to_resolve": 380,
+                          "total_business_hour_interruptions": 81,
+                          "total_engaged_seconds": 3591,
+                          "total_escalation_count": 5,
+                          "total_incident_count": 124,
+                          "total_incidents_acknowledged": 1,
+                          "total_incidents_auto_resolved": 12,
+                          "total_incidents_manual_escalated": 9,
+                          "total_incidents_reassigned": 1,
+                          "total_incidents_timeout_escalated": 4,
+                          "total_interruptions": 1,
+                          "total_notifications": 342,
+                          "total_off_hour_interruptions": 20,
+                          "total_sleep_hour_interruptions": 21,
+                          "total_snoozed_seconds": 78,
+                          "up_time_pct": 99.92677595628416
+                        }
+                      ],
+                      "filters": {
+                        "created_at_start": "2023-06-17T07:00:00Z",
+                        "created_at_end": "2023-07-02T06:59:59Z",
+                        "service_ids": [
+                          "PQVUB8D",
+                          "PU2D9X3"
+                        ]
+                      },
+                      "time_zone": "Etc/UTC"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        },
+        "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
           },
@@ -14723,24 +15759,13 @@
                 "Example Request": {
                   "value": {
                     "filters": {
-                      "created_at_start": "2021-01-01T00:00:00-05:00",
-                      "created_at_end": "2021-01-31T00:00:00-05:00",
-                      "urgency": "high",
-                      "major": true,
-                      "team_ids": [
-                        "PGVXG6U",
-                        "PNVU4U4"
-                      ],
+                      "created_at_start": "2023-06-17T00:00:00-07:00",
+                      "created_at_end": "2023-07-01T23:59:59-07:00",
                       "service_ids": [
                         "PQVUB8D",
                         "PU2D9X3"
-                      ],
-                      "priority_ids": [
-                        "PITMC5Y",
-                        "PEHBBT8"
                       ]
                     },
-                    "aggregate_unit": "week",
                     "time_zone": "Etc/UTC"
                   }
                 }
@@ -14749,7 +15774,7 @@
           },
           "description": "Parameters and filters to apply to the dataset."
         },
-        "description": "Provides aggregated metrics for incidents aggregated into units of time by service.\n\nExample metrics include Seconds to Resolve, Seconds to Engage, Snoozed Seconds, and Sleep Hour Interruptions. Some metric definitions can be found in our [Knowledge Base](https://support.pagerduty.com/docs/pagerduty-analytics).\nData can be aggregated by day, week or month in addition to by service, or provided just as a collection of aggregates for each service in the dataset for the entire period.  If a unit is provided, each row in the returned dataset will include a 'range_start' timestamp.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n<!-- theme: info -->\n> A `team_ids` or `service_ids` filter is required for [user-level API keys](https://support.pagerduty.com/docs/using-the-api#section-generating-a-personal-rest-api-key) or keys generated through an OAuth flow. Account-level API keys do not have this requirement.\n<!-- theme: info -->\n> **Note:** Analytics data is updated once per day. It takes up to 24 hours before new incidents appear in the Analytics API.\n\nScoped OAuth requires: `analytics.read`\n",
+        "description": "Provides aggregated metrics across all services.\n\nExample metrics include Seconds to Resolve, Seconds to Engage, Snoozed Seconds, and Sleep Hour Interruptions. Metric definitions can be found in our [Knowledge Base](https://support.pagerduty.com/docs/insights#services-list).\n\n<!-- theme: info -->\n> A `team_ids` or `service_ids` filter is required for [user-level API keys](https://support.pagerduty.com/docs/using-the-api#section-generating-a-personal-rest-api-key) or keys generated through an OAuth flow. Account-level API keys do not have this requirement.\n<!-- theme: info -->\n> **Note:** Analytics data is updated once per day. It takes up to 24 hours before new incidents appear in the Analytics API.\n\nScoped OAuth requires: `analytics.read`\n",
         "tags": [
           "Analytics"
         ]
@@ -14763,7 +15788,160 @@
         "operationId": "getAnalyticsMetricsIncidentsTeam",
         "responses": {
           "200": {
-            "description": "Currently the response only returns data for teams that match the filters and have data.",
+            "description": "Only returns data for teams that match the filters and have data.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/AnalyticsIncidentMetrics"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "$ref": "#/components/schemas/AnalyticsModel"
+                    }
+                  ]
+                },
+                "examples": {
+                  "Example Response": {
+                    "value": {
+                      "aggregate_unit": "day",
+                      "data": [
+                        {
+                          "mean_assignment_count": 1,
+                          "mean_engaged_seconds": 366,
+                          "mean_engaged_user_count": 1,
+                          "mean_seconds_to_engage": 81,
+                          "mean_seconds_to_first_ack": 63,
+                          "mean_seconds_to_mobilize": 41,
+                          "mean_seconds_to_resolve": 380,
+                          "range_start": "2023-06-11T00:00:00",
+                          "team_id": "P3XUQ75",
+                          "team_name": "Engineering",
+                          "total_business_hour_interruptions": 81,
+                          "total_engaged_seconds": 3591,
+                          "total_escalation_count": 5,
+                          "total_incident_count": 124,
+                          "total_incidents_acknowledged": 1,
+                          "total_incidents_auto_resolved": 12,
+                          "total_incidents_manual_escalated": 9,
+                          "total_incidents_reassigned": 1,
+                          "total_incidents_timeout_escalated": 4,
+                          "total_interruptions": 1,
+                          "total_notifications": 342,
+                          "total_off_hour_interruptions": 20,
+                          "total_sleep_hour_interruptions": 21,
+                          "total_snoozed_seconds": 78,
+                          "up_time_pct": 99.92677595628416
+                        },
+                        {
+                          "mean_assignment_count": 12,
+                          "mean_engaged_seconds": 432,
+                          "mean_engaged_user_count": 1,
+                          "mean_seconds_to_engage": 77,
+                          "mean_seconds_to_first_ack": 32,
+                          "mean_seconds_to_mobilize": 32,
+                          "mean_seconds_to_resolve": 87,
+                          "range_start": "2023-06-10T00:00:00",
+                          "team_id": "P3XUQ75",
+                          "team_name": "Engineering",
+                          "total_business_hour_interruptions": 12,
+                          "total_engaged_seconds": 3645,
+                          "total_escalation_count": 5,
+                          "total_incident_count": 124,
+                          "total_incidents_acknowledged": 1,
+                          "total_incidents_auto_resolved": 12,
+                          "total_incidents_manual_escalated": 9,
+                          "total_incidents_reassigned": 1,
+                          "total_incidents_timeout_escalated": 4,
+                          "total_interruptions": 1,
+                          "total_notifications": 32,
+                          "total_off_hour_interruptions": 42,
+                          "total_sleep_hour_interruptions": 3,
+                          "total_snoozed_seconds": 123,
+                          "up_time_pct": 99.234416
+                        }
+                      ],
+                      "filters": {
+                        "created_at_start": "2023-06-10T00:00:00Z",
+                        "created_at_end": "2023-06-12T00:00:00Z",
+                        "urgency": "high",
+                        "major": true,
+                        "team_ids": [
+                          "P3XUQ75"
+                        ]
+                      },
+                      "time_zone": "Etc/UTC"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AnalyticsModel"
+              },
+              "examples": {
+                "Example Request": {
+                  "value": {
+                    "filters": {
+                      "created_at_start": "2023-06-10T00:00:00-07:00",
+                      "created_at_end": "2023-06-11T23:59:59-07:00",
+                      "urgency": "high",
+                      "major": true,
+                      "team_ids": [
+                        "P3XUQ75"
+                      ]
+                    },
+                    "aggregate_unit": "day",
+                    "time_zone": "Etc/UTC"
+                  }
+                }
+              }
+            }
+          },
+          "description": "Parameters and filters to apply to the dataset."
+        },
+        "description": "Provides aggregated metrics for incidents aggregated into units of time by team.\n\nExample metrics include Seconds to Resolve, Seconds to Engage, Snoozed Seconds, and Sleep Hour Interruptions. Metric definitions can be found in our [Knowledge Base](https://support.pagerduty.com/docs/insights#teams-list).\nData can be aggregated by day, week or month in addition to by team, or provided just as a collection of aggregates for each team in the dataset for the entire period.  If a unit is provided, each row in the returned dataset will include a 'range_start' timestamp.\n\n<!-- theme: info -->\n> A `team_ids` or `service_ids` filter is required for [user-level API keys](https://support.pagerduty.com/docs/using-the-api#section-generating-a-personal-rest-api-key) or keys generated through an OAuth flow. Account-level API keys do not have this requirement.\n<!-- theme: info -->\n> **Note:** Analytics data is updated once per day. It takes up to 24 hours before new incidents appear in the Analytics API.\n\nScoped OAuth requires: `analytics.read`\n",
+        "tags": [
+          "Analytics"
+        ]
+      },
+      "parameters": []
+    },
+    "/analytics/metrics/incidents/teams/all": {
+      "post": {
+        "x-pd-requires-scope": "analytics.read",
+        "summary": "Get aggregated metrics for all teams",
+        "operationId": "getAnalyticsMetricsIncidentsTeamAll",
+        "responses": {
+          "200": {
+            "description": "Only returns data for teams that match the filters and have data.",
             "content": {
               "application/json": {
                 "schema": {
@@ -14796,42 +15974,31 @@
                           "mean_seconds_to_first_ack": 63,
                           "mean_seconds_to_mobilize": 41,
                           "mean_seconds_to_resolve": 380,
-                          "team_id": "PPSCXAN",
-                          "team_name": "Best Team A #1",
                           "total_business_hour_interruptions": 81,
                           "total_engaged_seconds": 3591,
                           "total_escalation_count": 5,
                           "total_incident_count": 124,
+                          "total_incidents_acknowledged": 1,
+                          "total_incidents_auto_resolved": 12,
+                          "total_incidents_manual_escalated": 9,
+                          "total_incidents_reassigned": 1,
+                          "total_incidents_timeout_escalated": 4,
+                          "total_interruptions": 1,
+                          "total_notifications": 342,
                           "total_off_hour_interruptions": 20,
                           "total_sleep_hour_interruptions": 21,
-                          "total_snoozed_seconds": 78,
-                          "up_time_pct": 99.98861566484517
-                        },
-                        {
-                          "mean_assignment_count": 1,
-                          "mean_engaged_seconds": 366,
-                          "mean_engaged_user_count": 1,
-                          "mean_seconds_to_engage": 81,
-                          "mean_seconds_to_first_ack": 63,
-                          "mean_seconds_to_mobilize": 41,
-                          "mean_seconds_to_resolve": 380,
-                          "team_id": "PPSCXAN",
-                          "team_name": "Best Team A #2",
-                          "total_business_hour_interruptions": 81,
-                          "total_engaged_seconds": 3591,
-                          "total_escalation_count": 5,
-                          "total_incident_count": 124,
-                          "total_off_hour_interruptions": 20,
-                          "total_sleep_hour_interruptions": 21,
-                          "total_snoozed_seconds": 78,
-                          "up_time_pct": 99.98483728172828
+                          "total_snoozed_seconds": 78
                         }
                       ],
                       "filters": {
-                        "created_at_start": "2020-06-17T17:27:27Z",
-                        "created_at_end": "2020-06-16T17:27:27Z"
+                        "created_at_start": "2023-06-10T00:00:00Z",
+                        "created_at_end": "2023-06-12T00:00:00Z",
+                        "urgency": "high",
+                        "major": true,
+                        "team_ids": [
+                          "P3XUQ75"
+                        ]
                       },
-                      "aggregate_unit": "day",
                       "time_zone": "Etc/UTC"
                     }
                   }
@@ -14847,9 +16014,6 @@
           }
         },
         "parameters": [
-          {
-            "$ref": "#/components/parameters/early_access_analytics"
-          },
           {
             "$ref": "#/components/parameters/header_Accept"
           },
@@ -14867,24 +16031,14 @@
                 "Example Request": {
                   "value": {
                     "filters": {
-                      "created_at_start": "2021-01-01T00:00:00-05:00",
-                      "created_at_end": "2021-01-31T00:00:00-05:00",
+                      "created_at_start": "2023-06-10T00:00:00-07:00",
+                      "created_at_end": "2023-06-11T23:59:59-07:00",
                       "urgency": "high",
                       "major": true,
                       "team_ids": [
-                        "PGVXG6U",
-                        "PNVU4U4"
-                      ],
-                      "service_ids": [
-                        "PQVUB8D",
-                        "PU2D9X2"
-                      ],
-                      "priority_ids": [
-                        "PITMC5Y",
-                        "PEHBBT8"
+                        "P3XUQ75"
                       ]
                     },
-                    "aggregate_unit": "week",
                     "time_zone": "Etc/UTC"
                   }
                 }
@@ -14893,7 +16047,272 @@
           },
           "description": "Parameters and filters to apply to the dataset."
         },
-        "description": "Provides aggregated metrics for incidents aggregated into units of time by team.\n\nExample metrics include Seconds to Resolve, Seconds to Engage, Snoozed Seconds, and Sleep Hour Interruptions. Some metric definitions can be found in our [Knowledge Base](https://support.pagerduty.com/docs/pagerduty-analytics).\nData can be aggregated by day, week or month in addition to by team, or provided just as a collection of aggregates for each team in the dataset for the entire period.  If a unit is provided, each row in the returned dataset will include a 'range_start' timestamp.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n<!-- theme: info -->\n> A `team_ids` or `service_ids` filter is required for [user-level API keys](https://support.pagerduty.com/docs/using-the-api#section-generating-a-personal-rest-api-key) or keys generated through an OAuth flow. Account-level API keys do not have this requirement.\n<!-- theme: info -->\n> **Note:** Analytics data is updated once per day. It takes up to 24 hours before new incidents appear in the Analytics API.\n\nScoped OAuth requires: `analytics.read`\n",
+        "description": "Provides aggregated metrics across all teams.\n\nExample metrics include Seconds to Resolve, Seconds to Engage, Snoozed Seconds, and Sleep Hour Interruptions. Metric definitions can be found in our [Knowledge Base](https://support.pagerduty.com/docs/insights#teams-list).\n\n<!-- theme: info -->\n> A `team_ids` or `service_ids` filter is required for [user-level API keys](https://support.pagerduty.com/docs/using-the-api#section-generating-a-personal-rest-api-key) or keys generated through an OAuth flow. Account-level API keys do not have this requirement.\n<!-- theme: info -->\n> **Note:** Analytics data is updated once per day. It takes up to 24 hours before new incidents appear in the Analytics API.\n\nScoped OAuth requires: `analytics.read`\n",
+        "tags": [
+          "Analytics"
+        ]
+      },
+      "parameters": []
+    },
+    "/analytics/metrics/responders/all": {
+      "post": {
+        "x-pd-requires-scope": "analytics.read",
+        "summary": "Get aggregated metrics for all responders",
+        "operationId": "getAnalyticsMetricsRespondersAll",
+        "responses": {
+          "200": {
+            "description": "Only returns data for responders that match the filters and have data.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/AnalyticsResponderMetrics"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "$ref": "#/components/schemas/AnalyticsResponderFilter"
+                    }
+                  ]
+                },
+                "examples": {
+                  "Example Response": {
+                    "value": {
+                      "data": [
+                        {
+                          "mean_engaged_seconds": 366,
+                          "mean_time_to_acknowledge_seconds": 1,
+                          "total_business_hour_interruptions": 81,
+                          "total_engaged_seconds": 63,
+                          "total_incident_count": 41,
+                          "total_incidents_acknowledged": 380,
+                          "total_incidents_manual_escalated_from": 81,
+                          "total_incidents_manual_escalated_to": 3591,
+                          "total_incidents_reassigned_from": 5,
+                          "total_incidents_reassigned_to": 124,
+                          "total_incidents_timeout_escalated_from": 20,
+                          "total_incidents_timeout_escalated_to": 21,
+                          "total_interruptions": 4,
+                          "total_notifications": 78,
+                          "total_off_hour_interruptions": 23,
+                          "total_seconds_on_call": 604799,
+                          "total_seconds_on_call_level_1": 126000,
+                          "total_seconds_on_call_level_2_plus": 604799,
+                          "total_sleep_hour_interruptions": 0
+                        }
+                      ],
+                      "filters": {
+                        "date_range_start": "2023-06-10T00:00:00Z",
+                        "date_range_end": "2023-06-12T00:00:00Z",
+                        "responder_ids": [
+                          "PDUSER1",
+                          "PDUSER2"
+                        ],
+                        "urgency": "high"
+                      },
+                      "time_zone": "Etc/UTC"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AnalyticsResponderFilter"
+              },
+              "examples": {
+                "Example Request": {
+                  "value": {
+                    "filters": {
+                      "date_range_start": "2023-06-10T00:00:00-07:00",
+                      "date_range_end": "2023-06-11T23:59:59-07:00",
+                      "urgency": "high",
+                      "responder_ids": [
+                        "PDUSER1",
+                        "PDUSER2"
+                      ]
+                    },
+                    "time_zone": "Etc/UTC"
+                  }
+                }
+              }
+            }
+          },
+          "description": "Parameters and filters to apply to the dataset."
+        },
+        "description": "Provides aggregated incident metrics for all selected responders.\n\nExample metrics include Seconds to Resolve, Seconds to Engage, Snoozed Seconds, and Sleep Hour Interruptions. Metric definitions can be found in our [Knowledge Base](https://support.pagerduty.com/docs/insights#responders-list).\n\n<!-- theme: info -->\n> **Note:** Analytics data is updated once per day. It takes up to 24 hours before new incidents appear in the Analytics API.\n\nScoped OAuth requires: `analytics.read`\n",
+        "tags": [
+          "Analytics"
+        ]
+      },
+      "parameters": []
+    },
+    "/analytics/metrics/responders/teams": {
+      "post": {
+        "x-pd-requires-scope": "analytics.read",
+        "summary": "Get responder data aggregated by team",
+        "operationId": "getAnalyticsMetricsRespondersTeam",
+        "responses": {
+          "200": {
+            "description": "Only returns data for responders and teams that match the filters and have data.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/AnalyticsResponderMetrics"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "$ref": "#/components/schemas/AnalyticsResponderFilter"
+                    }
+                  ]
+                },
+                "examples": {
+                  "Example Response": {
+                    "value": {
+                      "data": [
+                        {
+                          "mean_engaged_seconds": 366,
+                          "mean_time_to_acknowledge_seconds": 1,
+                          "responder_id": "PDUSER1",
+                          "responder_name": "User 1",
+                          "team_id": "PPSCXAN",
+                          "team_name": "Best Team A #1",
+                          "total_business_hour_interruptions": 81,
+                          "total_engaged_seconds": 63,
+                          "total_incident_count": 41,
+                          "total_incidents_acknowledged": 380,
+                          "total_incidents_manual_escalated_from": 81,
+                          "total_incidents_manual_escalated_to": 3591,
+                          "total_incidents_reassigned_from": 5,
+                          "total_incidents_reassigned_to": 124,
+                          "total_incidents_timeout_escalated_from": 20,
+                          "total_incidents_timeout_escalated_to": 21,
+                          "total_interruptions": 4,
+                          "total_notifications": 78,
+                          "total_off_hour_interruptions": 23,
+                          "total_seconds_on_call": 604799,
+                          "total_seconds_on_call_level_1": 126000,
+                          "total_seconds_on_call_level_2_plus": 604799,
+                          "total_sleep_hour_interruptions": 0
+                        },
+                        {
+                          "mean_engaged_seconds": 366,
+                          "mean_time_to_acknowledge_seconds": 1,
+                          "responder_id": "PDUSER2",
+                          "responder_name": "User 2",
+                          "team_id": "PPSCXAN",
+                          "team_name": "Best Team A #1",
+                          "total_business_hour_interruptions": 81,
+                          "total_engaged_seconds": 63,
+                          "total_incident_count": 41,
+                          "total_incidents_acknowledged": 380,
+                          "total_incidents_manual_escalated_from": 81,
+                          "total_incidents_manual_escalated_to": 3591,
+                          "total_incidents_reassigned_from": 5,
+                          "total_incidents_reassigned_to": 124,
+                          "total_incidents_timeout_escalated_from": 20,
+                          "total_incidents_timeout_escalated_to": 21,
+                          "total_interruptions": 6,
+                          "total_notifications": 78,
+                          "total_off_hour_interruptions": 23,
+                          "total_seconds_on_call": 120000,
+                          "total_seconds_on_call_level_1": 120000,
+                          "total_seconds_on_call_level_2_plus": 0,
+                          "total_sleep_hour_interruptions": 0
+                        }
+                      ],
+                      "filters": {
+                        "date_range_start": "2023-06-10T00:00:00Z",
+                        "date_range_end": "2023-06-12T00:00:00Z",
+                        "responder_ids": [
+                          "PDUSER1",
+                          "PDUSER2"
+                        ],
+                        "urgency": "high"
+                      },
+                      "time_zone": "Etc/UTC"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AnalyticsResponderFilter"
+              },
+              "examples": {
+                "Example Request": {
+                  "value": {
+                    "filters": {
+                      "date_range_start": "2023-06-10T00:00:00-07:00",
+                      "date_range_end": "2023-06-11T23:59:59-07:00",
+                      "urgency": "high",
+                      "responder_ids": [
+                        "PDUSER1",
+                        "PDUSER2"
+                      ]
+                    },
+                    "time_zone": "Etc/UTC"
+                  }
+                }
+              }
+            }
+          },
+          "description": "Parameters and filters to apply to the dataset."
+        },
+        "description": "Provides incident metrics aggregated by responder.\n\nExample metrics include Seconds to Resolve, Seconds to Engage, Snoozed Seconds, and Sleep Hour Interruptions. Metric definitions can be found in our [Knowledge Base](https://support.pagerduty.com/docs/insights#responders-list).\n\n<!-- theme: info -->\n> **Note:** Analytics data is updated once per day. It takes up to 24 hours before new incidents appear in the Analytics API.\n\nScoped OAuth requires: `analytics.read`\n",
         "tags": [
           "Analytics"
         ]
@@ -15029,19 +16448,27 @@
                       "data": [
                         {
                           "assignment_count": 4,
+                          "auto_resolved": false,
                           "business_hour_interruptions": 5,
-                          "created_at": "2020-05-31T10:05:00",
+                          "created_at": "2023-05-31T10:05:00",
                           "description": "The server is on fire!",
                           "engaged_seconds": 3510,
                           "engaged_user_count": 10,
                           "escalation_count": 1,
+                          "escalation_policy_id": "PDESCP1",
+                          "escalation_policy_name": "Escalation Policy 1",
                           "id": "PYC0H08",
                           "incident_number": 928,
                           "major": false,
+                          "manual_escalation_count": 0,
                           "off_hour_interruptions": 4,
                           "priority_id": null,
                           "priority_name": null,
-                          "resolved_at": "2020-05-31T10:15:00",
+                          "priority_order": null,
+                          "reassignment_count": 0,
+                          "resolved_at": "2023-05-31T10:15:00",
+                          "resolved_by_user_id": "PRJ4208",
+                          "resolved_by_user_name": "John Smith",
                           "seconds_to_engage": 70,
                           "seconds_to_first_ack": 5,
                           "seconds_to_mobilize": 19,
@@ -15050,26 +16477,37 @@
                           "service_name": "Engineering",
                           "sleep_hour_interruptions": 3,
                           "snoozed_seconds": 604,
+                          "status": "resolved",
                           "team_id": null,
                           "team_name": null,
+                          "timeout_escalation_count": 0,
+                          "total_interruptions\"": null,
+                          "total_notifications": 2,
                           "urgency": "low",
                           "user_defined_effort_seconds": null
                         },
                         {
                           "assignment_count": 1,
                           "business_hour_interruptions": 2,
-                          "created_at": "2020-05-31T10:05:00",
+                          "created_at": "2023-05-31T10:00:00",
                           "description": "Reply on social media",
                           "engaged_seconds": 521,
                           "engaged_user_count": 6,
                           "escalation_count": 1,
+                          "escalation_policy_id": "PDESCP1",
+                          "escalation_policy_name": "Escalation Policy 1",
                           "id": "PCOOHCY",
                           "incident_number": 929,
                           "major": false,
+                          "manual_escalation_count": 0,
                           "off_hour_interruptions": 3,
                           "priority_id": "POTCOTX",
                           "priority_name": "SEV-2",
-                          "resolved_at": "2020-05-31T10:15:00",
+                          "priority_order": null,
+                          "reassignment_count": 0,
+                          "resolved_at": "2023-05-30T10:00:05",
+                          "resolved_by_user_id": "PMT4102",
+                          "resolved_by_user_name": "Sally Styles",
                           "seconds_to_engage": 24,
                           "seconds_to_first_ack": 48,
                           "seconds_to_mobilize": 122,
@@ -15078,8 +16516,12 @@
                           "service_name": "Social media tracking",
                           "sleep_hour_interruptions": 1,
                           "snoozed_seconds": 698,
+                          "status": "resolved",
                           "team_id": null,
                           "team_name": "Marketing",
+                          "timeout_escalation_count": 0,
+                          "total_interruptions\"": null,
+                          "total_notifications": 2,
                           "urgency": "low",
                           "user_defined_effort_seconds": null
                         }
@@ -15109,9 +16551,6 @@
         },
         "parameters": [
           {
-            "$ref": "#/components/parameters/early_access_analytics"
-          },
-          {
             "$ref": "#/components/parameters/header_Accept"
           },
           {
@@ -15131,12 +16570,12 @@
                       "created_at_start": {
                         "type": "string",
                         "description": "Filters the result, showing only the incidents where the creation timestamp is greater than the filter value.",
-                        "example": "2020-05-01T00:00:00-04:00"
+                        "example": "2023-05-01T00:00:00-04:00"
                       },
                       "created_at_end": {
                         "type": "string",
                         "description": "Filters the result, showing only the incidents where the creation timestamp is less than the filter value.",
-                        "example": "2020-06-01T00:00:00-04:00"
+                        "example": "2023-06-01T00:00:00-04:00"
                       },
                       "urgency": {
                         "type": "string",
@@ -15270,7 +16709,7 @@
           },
           "description": "Parameters and filters to apply to the dataset."
         },
-        "description": "Provides enriched incident data and metrics for multiple incidents.\n\nExample metrics include Seconds to Resolve, Seconds to Engage, Snoozed Seconds, and Sleep Hour Interruptions. Some metric definitions can be found in our [Knowledge Base](https://support.pagerduty.com/docs/pagerduty-analytics).\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n<!-- theme: info -->\n> A `team_ids` or `service_ids` filter is required for [user-level API keys](https://support.pagerduty.com/docs/using-the-api#section-generating-a-personal-rest-api-key) or keys generated through an OAuth flow. Account-level API keys do not have this requirement.\n<!-- theme: info -->\n> **Note:** Analytics data is updated once per day. It takes up to 24 hours before new incidents appear in the Analytics API.\n\nScoped OAuth requires: `analytics.read`\n",
+        "description": "Provides enriched incident data and metrics for multiple incidents.\n\nExample metrics include Seconds to Resolve, Seconds to Engage, Snoozed Seconds, and Sleep Hour Interruptions. Metric definitions can be found in our [Knowledge Base](https://support.pagerduty.com/docs/insights#incidents-list).\n\n<!-- theme: info -->\n> A `team_ids` or `service_ids` filter is required for [user-level API keys](https://support.pagerduty.com/docs/using-the-api#section-generating-a-personal-rest-api-key) or keys generated through an OAuth flow. Account-level API keys do not have this requirement.\n<!-- theme: info -->\n> **Note:** Analytics data is updated once per day. It takes up to 24 hours before new incidents appear in the Analytics API.\n\nScoped OAuth requires: `analytics.read`\n",
         "tags": [
           "Analytics"
         ]
@@ -15303,19 +16742,27 @@
                       "time_zone": "Etc/UTC",
                       "data": {
                         "assignment_count": 0,
+                        "auto_resolved": false,
                         "business_hour_interruptions": 0,
-                        "created_at": "2019-12-01T21:00:00Z",
+                        "created_at": "2022-12-01T21:00:00Z",
                         "description": "The server is on fire!",
                         "engaged_seconds": 75,
                         "engaged_user_count": 2,
                         "escalation_count": 0,
+                        "escalation_policy_id": "PCI3U5T",
+                        "escalation_policy_name": "Sputnik",
                         "id": "PJASD33",
                         "incident_number": 924,
                         "major": true,
+                        "manual_escalation_count": 0,
                         "off_hour_interruptions": 2,
                         "priority_id": "PZOZQXA",
                         "priority_name": "SEV-1",
-                        "resolved_at": "2019-12-01T21:01:00Z",
+                        "priority_order": 67108864,
+                        "reassignment_count": 0,
+                        "resolved_at": "2022-12-01T21:01:00Z",
+                        "resolved_by_user_id": "PRJ4208",
+                        "resolved_by_user_name": "Santos Dicera",
                         "seconds_to_engage": 30,
                         "seconds_to_first_ack": 15,
                         "seconds_to_mobilize": 15,
@@ -15324,8 +16771,12 @@
                         "service_name": "Engineering",
                         "sleep_hour_interruptions": 0,
                         "snoozed_seconds": 0,
+                        "status": "resolved",
                         "team_id": "PNVU4UR",
                         "team_name": "Engineering team 7",
+                        "timeout_escalation_count": 0,
+                        "total_interruptions": null,
+                        "total_notifications": 2,
                         "urgency": "high",
                         "user_defined_effort_seconds": null
                       }
@@ -15343,16 +16794,13 @@
           }
         },
         "operationId": "getAnalyticsIncidentsById",
-        "description": "Provides enriched incident data and metrics for a single incident.\n\nExample metrics include Seconds to Resolve, Seconds to Engage, Snoozed Seconds, and Sleep Hour Interruptions. Some metric definitions can be found in our [Knowledge Base](https://support.pagerduty.com/docs/pagerduty-analytics).\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n<!-- theme: info -->\n> **Note:** Analytics data is updated once per day. It takes up to 24 hours before new incidents appear in the Analytics API.\n\nScoped OAuth requires: `analytics.read`\n",
+        "description": "Provides enriched incident data and metrics for a single incident.\n\nExample metrics include Seconds to Resolve, Seconds to Engage, Snoozed Seconds, and Sleep Hour Interruptions. Metric definitions can be found in our [Knowledge Base](https://support.pagerduty.com/docs/insights#incidents-list).\n\n<!-- theme: info -->\n> **Note:** Analytics data is updated once per day. It takes up to 24 hours before new incidents appear in the Analytics API.\n\nScoped OAuth requires: `analytics.read`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
           },
           {
             "$ref": "#/components/parameters/header_Content-Type"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_analytics"
           }
         ]
       }
@@ -15379,7 +16827,7 @@
                   "properties": {
                     "incident_id": {
                       "type": "string",
-                      "description": "The Incident ID passed in to the request."
+                      "description": "The Incident ID passed into the request."
                     },
                     "limit": {
                       "type": "integer",
@@ -15407,49 +16855,7 @@
                     "responses": {
                       "type": "array",
                       "items": {
-                        "title": "Analytics Raw Incident Responses",
-                        "type": "object",
-                        "properties": {
-                          "responder_name": {
-                            "type": "string",
-                            "description": "Name of the user associated with the Incident Response."
-                          },
-                          "responder_id": {
-                            "type": "string",
-                            "description": "ID of the user associated with the Incident Response."
-                          },
-                          "response_status": {
-                            "type": "string",
-                            "description": "Status of the user's interaction with the Incident notification.",
-                            "enum": [
-                              "joined",
-                              "pending",
-                              "declined"
-                            ]
-                          },
-                          "responder_type": {
-                            "type": "string",
-                            "description": "Type of responder, where `assigned` means the user was added to the Incident via Assignment at Incident creation,\n`reassigned` means the user was added to the Incident via Reassignment, `escalated` means the user was added via Escalation,\nand `added_responder` means the user was added via Responder Reqeuest.",
-                            "enum": [
-                              "assigned",
-                              "reassigned",
-                              "escalated",
-                              "added_responder"
-                            ]
-                          },
-                          "requested_at": {
-                            "type": "string",
-                            "description": "Timestamp of when the user was requested."
-                          },
-                          "responded_at": {
-                            "type": "string",
-                            "description": "Timestamp of when the user responded to the request."
-                          },
-                          "time_to_respond_seconds": {
-                            "type": "integer",
-                            "description": "Measures the time it took for the user to respond to the Incident request. In other words, `responded_at - requested_at`."
-                          }
-                        }
+                        "$ref": "#/components/schemas/AnalyticsRawIncidentResponses"
                       }
                     }
                   }
@@ -15457,18 +16863,18 @@
                 "examples": {
                   "Example Response": {
                     "value": {
-                      "incident_id": "ABCDEFGHIJKLMN",
+                      "incident_id": "PJASD33",
                       "limit": 100,
                       "order": "asc",
                       "order_by": "requested_at",
                       "time_zone": "Etc/UTC",
                       "responses": {
-                        "responder_name": "Earline Greenholt",
-                        "responder_id": "PXPGF42",
-                        "response_status": "accepted",
-                        "responder_type": "added_responder",
                         "requested_at": "2023-01-05T10:15:00",
                         "responded_at": "2023-01-05T10:18:00",
+                        "responder_id": "PXPGF42",
+                        "responder_name": "Earline Greenholt",
+                        "responder_type": "added_responder",
+                        "response_status": "accepted",
                         "time_to_respond_seconds": 180
                       }
                     }
@@ -15501,7 +16907,7 @@
                   },
                   "order": {
                     "type": "string",
-                    "description": "The order the results; asc for ascending, desc for descending. Defaults to `desc`.",
+                    "description": "The order in which to display the results; asc for ascending, desc for descending. Defaults to `desc`.",
                     "enum": [
                       "asc",
                       "desc"
@@ -15536,18 +16942,365 @@
           "description": "Parameters to apply to the dataset."
         },
         "operationId": "getAnalyticsIncidentResponsesById",
-        "description": "Provides enriched responder data for a single incident.\n\nExample metrics include Time to Respond, Responder Type, and Response Status. See metric definitions below.\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n<!-- theme: info -->\n> **Note:** Analytics data is updated once per day. It takes up to 24 hours before new incident responses appear in the Analytics API.\nScoped OAuth requires: `analytics.read`\n",
+        "description": "Provides enriched responder data for a single incident.\n\nExample metrics include Time to Respond, Responder Type, and Response Status. See metric definitions below.\n\n<!-- theme: info -->\n> **Note:** Analytics data is updated once per day. It takes up to 24 hours before new incident responses appear in the Analytics API.\nScoped OAuth requires: `analytics.read`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
           },
           {
             "$ref": "#/components/parameters/header_Content-Type"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_analytics"
           }
         ]
+      }
+    },
+    "/analytics/raw/responders/{responder_id}/incidents": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/responder_id"
+        }
+      ],
+      "post": {
+        "x-pd-requires-scope": "analytics.read",
+        "summary": "Get raw incidents for a single responder_id",
+        "operationId": "getAnalyticsResponderIncidents",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "first": {
+                      "type": "string",
+                      "description": "Cursor to identify the first object in the response."
+                    },
+                    "last": {
+                      "type": "string",
+                      "description": "Cursor to identify the last object in the response."
+                    },
+                    "responder_id": {
+                      "type": "string",
+                      "description": "The Responder ID passed into the request."
+                    },
+                    "limit": {
+                      "type": "integer",
+                      "description": "Number of results to include in the batch."
+                    },
+                    "order": {
+                      "type": "string",
+                      "description": "The order in which the results were sorted; asc for ascending, desc for descending.",
+                      "enum": [
+                        "asc",
+                        "desc"
+                      ]
+                    },
+                    "order_by": {
+                      "type": "string",
+                      "description": "The column that was used for ordering the results.",
+                      "enum": [
+                        "incident_created_at"
+                      ]
+                    },
+                    "time_zone": {
+                      "type": "string",
+                      "description": "The time zone that the results are in."
+                    },
+                    "filters": {
+                      "type": "object",
+                      "description": "A collection of filters that were applied to the results.",
+                      "properties": {
+                        "created_at_start": {
+                          "type": "string",
+                          "description": "The lower boundary for the created_at range filter applied to the results."
+                        },
+                        "created_at_end": {
+                          "type": "string",
+                          "description": "The upper boundary for the created_at range filter applied to the results."
+                        },
+                        "urgency": {
+                          "type": "string",
+                          "description": "The urgency filter applied to the results.",
+                          "enum": [
+                            "high",
+                            "low"
+                          ]
+                        },
+                        "major": {
+                          "type": "boolean",
+                          "description": "The [major incident](https://support.pagerduty.com/docs/operational-reviews#major-incidents) filter applied to the results."
+                        },
+                        "team_ids": {
+                          "type": "array",
+                          "description": "The team_ids filter applied to the results.",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "service_ids": {
+                          "type": "array",
+                          "description": "The service_ids filter applied to the results.",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "priority_ids": {
+                          "type": "array",
+                          "description": "The priority_ids filter applied to the results.",
+                          "maxItems": 5,
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "priority_names": {
+                          "type": "array",
+                          "description": "The priority_names filter applied to the results.",
+                          "maxItems": 5,
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/AnalyticsRawResponderIncidents"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Example Response": {
+                    "value": {
+                      "responder_id": "PDUSER1",
+                      "limit": 100,
+                      "order": "asc",
+                      "order_by": "incident_created_at",
+                      "time_zone": "Etc/UTC",
+                      "data": [
+                        {
+                          "incident_created_at": "2023-06-10T22:08:35",
+                          "incident_description": 30,
+                          "incident_id": "QPDINCIDENT1",
+                          "incident_number": 123456,
+                          "incident_priority_id": "PZOZQXA",
+                          "incident_priority_name": "P1",
+                          "incident_priority_order": 67108864,
+                          "incident_urgency": 75,
+                          "mean_time_to_acknowledge_seconds": 2,
+                          "responder_id": "PDUSER1",
+                          "responder_name": "User 1",
+                          "service_id": "PDSERV1",
+                          "service_name": "Service 1",
+                          "service_team_id": "PDTEAM1",
+                          "service_team_name": "Team 1",
+                          "total_acknowledgements": 12,
+                          "total_business_hour_interruptions": 3,
+                          "total_engaged_seconds": 244,
+                          "total_interruptions": 2,
+                          "total_manual_escalations_from": 5,
+                          "total_manual_escalations_to": 1,
+                          "total_off_hour_interruptions": 0,
+                          "total_reassignments_from": 0,
+                          "total_reassignments_to": 0,
+                          "total_sleep_hour_interruptions": 0,
+                          "total_timeout_escalations_from": 0,
+                          "total_timeout_escalations_to": 0
+                        },
+                        {
+                          "incident_created_at": "2023-06-11T22:08:35",
+                          "incident_description": 30,
+                          "incident_id": "QPDINCIDENT2",
+                          "incident_number": 123456,
+                          "incident_priority_id": "PZOZQXA",
+                          "incident_priority_name": "P1",
+                          "incident_priority_order": 67108864,
+                          "incident_urgency": 75,
+                          "mean_time_to_acknowledge_seconds": 2,
+                          "responder_id": "PDUSER1",
+                          "responder_name": "User 1",
+                          "service_id": "PDSERV2",
+                          "service_name": "Service 2",
+                          "service_team_id": "PDTEAM1",
+                          "service_team_name": "Team 1",
+                          "total_acknowledgements": 12,
+                          "total_business_hour_interruptions": 3,
+                          "total_engaged_seconds": 945,
+                          "total_interruptions": 2,
+                          "total_manual_escalations_from": 5,
+                          "total_manual_escalations_to": 1,
+                          "total_off_hour_interruptions": 0,
+                          "total_reassignments_from": 0,
+                          "total_reassignments_to": 0,
+                          "total_sleep_hour_interruptions": 0,
+                          "total_timeout_escalations_from": 0,
+                          "total_timeout_escalations_to": 0
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "filters": {
+                    "type": "object",
+                    "description": "Filters the result, only show incidents that match the conditions passed in the filter.",
+                    "properties": {
+                      "created_at_start": {
+                        "type": "string",
+                        "description": "Filters the result, showing only the incidents where the creation timestamp is greater than the filter value.",
+                        "example": "2023-05-01T00:00:00-04:00"
+                      },
+                      "created_at_end": {
+                        "type": "string",
+                        "description": "Filters the result, showing only the incidents where the creation timestamp is less than the filter value.",
+                        "example": "2023-06-01T00:00:00-04:00"
+                      },
+                      "urgency": {
+                        "type": "string",
+                        "description": "Filters the result, showing only the incidents where urgency matches the filter value.",
+                        "example": "high"
+                      },
+                      "major": {
+                        "type": "boolean",
+                        "description": "An incident is classified as a [major incident](https://support.pagerduty.com/docs/operational-reviews#major-incidents) if it has one of the two highest priorities, or if multiple responders are added and acknowledge the incident.",
+                        "example": true
+                      },
+                      "team_ids": {
+                        "type": "array",
+                        "description": "An array of team IDs. Only incidents that are assigned to a member of these teams will be returned. Account must have the teams ability to use this parameter.",
+                        "items": {
+                          "type": "string"
+                        },
+                        "example": [
+                          "P373JQQ",
+                          "PAECHJV",
+                          "P7SYGW6"
+                        ]
+                      },
+                      "service_ids": {
+                        "type": "array",
+                        "description": "An array of service IDs. Only results related to these services will be returned.",
+                        "items": {
+                          "type": "string"
+                        },
+                        "example": [
+                          "PC8O0L3",
+                          "PX01HJD",
+                          "P5FK83M"
+                        ]
+                      },
+                      "priority_ids": {
+                        "type": "array",
+                        "description": "The priority_ids filter applied to the results.",
+                        "items": {
+                          "type": "string"
+                        },
+                        "example": [
+                          "PITMC5Y",
+                          "PEHBBT8",
+                          "PB8QADI"
+                        ]
+                      },
+                      "priority_names": {
+                        "type": "array",
+                        "description": "The priority_names filter applied to the results.",
+                        "items": {
+                          "type": "string"
+                        },
+                        "example": [
+                          "P1",
+                          "P2",
+                          "P3"
+                        ]
+                      }
+                    }
+                  },
+                  "starting_after": {
+                    "type": "string",
+                    "description": "A cursor to indicate the reference point that the results should follow"
+                  },
+                  "ending_before": {
+                    "type": "string",
+                    "description": "A cursor to indicate the reference point that the results should precede"
+                  },
+                  "order": {
+                    "type": "string",
+                    "description": "The order in which to display the results; asc for ascending, desc for descending. Defaults to `desc`.",
+                    "enum": [
+                      "asc",
+                      "desc"
+                    ]
+                  },
+                  "order_by": {
+                    "type": "string",
+                    "description": "The column to use for ordering the results. Defaults to `incident_created_at`.",
+                    "enum": [
+                      "incident_created_at"
+                    ]
+                  },
+                  "limit": {
+                    "type": "integer",
+                    "description": "Number of results to include in each batch.\nLimits between 1 to 1000 are accepted.",
+                    "example": 20,
+                    "minimum": 0,
+                    "exclusiveMinimum": true,
+                    "maximum": 1000,
+                    "exclusiveMaximum": false
+                  },
+                  "time_zone": {
+                    "type": "string",
+                    "description": "The time zone to use for the results.",
+                    "example": "Etc/UTC"
+                  }
+                }
+              },
+              "examples": {
+                "Example Request": {
+                  "value": {
+                    "filters": {
+                      "created_at_start": "2023-06-10T00:00:00-07:00",
+                      "created_at_end": "2023-06-11T23:59:59-07:00"
+                    },
+                    "responder_id": "PDUSER1",
+                    "limit": 100,
+                    "order": "asc",
+                    "order_by": "incident_created_at",
+                    "time_zone": "Etc/UTC"
+                  }
+                }
+              }
+            }
+          },
+          "description": "Parameters and filters to apply to the dataset."
+        },
+        "tags": [
+          "Analytics"
+        ],
+        "description": "Provides enriched incident data and metrics for a specific responder.\n\nExample metrics include Mean Seconds to Resolve, Mean Seconds to Engage, Snoozed Seconds, and Sleep Hour Interruptions. Metric definitions can be found in our [Knowledge Base](https://support.pagerduty.com/docs/insights#incidents-list).\n\n<!-- theme: info -->\n> **Note:** Analytics data is updated once per day. It takes up to 24 hours before new incidents appear in the Analytics API.\n\nScoped OAuth requires: `analytics.read`\n"
       }
     },
     "/audit/records": {

@@ -4,6 +4,18 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+## 2023-11-03
+- Added new Analytics endpoints
+  - `POST /analytics/raw/responders/{responder_id}/incidents`
+  - `POST /analytics/metrics/responders/teams`
+  - `POST /analytics/metrics/responders/all`
+  - `POST /analytics/metrics/incidents/escalation_policies`
+  - `POST /analytics/metrics/incidents/escalation_policies/all`
+  - `POST /analytics/metrics/incidents/services/all`
+  - `POST /analytics/metrics/incidents/teams/all`
+- Added new escalation/reassignment metrics and filters to existing endpoints
+- Removed  `X-EARLY-ACCESS` header requirement for all Analytics endpoints
+
 ## 2023-09-20
 - Added `incident_workflow_reference` as possible agent type for Automation Action Invocation resources.
 
