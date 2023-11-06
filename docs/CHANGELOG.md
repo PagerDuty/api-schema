@@ -4,6 +4,36 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+## 2023-11-06
+**2023 REST API Rate Limiting Refresh**
+
+The PagerDuty REST API uses rate limits to provide a consistent experience for all of our customers. As we have grown up, these limits have grown with us; sometimes in undocumented or difficult to understand ways.
+
+Today we are announcing the upcoming rollout of a [refreshed rate limiting system](https://developer.pagerduty.com/docs/72d3b724589e3-rest-api-rate-limits) for the PagerDuty REST API. The primary goal of this refresh is to provide you with a more predictable and better documented set of rate limits. We are also delivering a new API feature for your application to more easily interact with the rate limits.
+
+**Will my application change?**
+
+In most cases, your application should experience similar or more generous rate limits than it does today. However, rate limiting can be complicated and there will be some exceptions based on your particular usage pattern.
+
+If your application never experiences rate limiting today OR your code already gracefully responds to `429` HTTP response codes, you are likely already prepared.
+
+**How to prepare?**
+
+If your application is mission critical and does not gracefully handle rate limiting today; the most important change you can make is to start responding to `429` response codes by slowing down your request rate.
+
+The refreshed rate limiting system also includes new rate limiting headers on HTTP responses from our REST API. These headers
+will inform clients about their current rate limiting status.
+
+Along with today's announcement we are enabling these new headers on requests that were evaluated by the new rate limiting system in a _passive mode_. You will not see these headers on all of the `429` responses you receive while the old system is still active. You may also see `200` responses where the headers indicate you have `0` remaining requests. These headers may be used to collect client-side telemetry about how close your application is getting to the new rate limiting system.
+
+See the [REST API Rate Limits](https://developer.pagerduty.com/docs/72d3b724589e3-rest-api-rate-limits) page for best practices and more about the new rate limiting headers. 
+
+**When will this happen?**
+
+The new rate limit headers are available for your applications to begin consuming today. Over the coming weeks we will begin enforcing these new limits, retiring the old system, and returning `429` responses when the limits are reached.
+
+See the [REST API Rate Limits](https://developer.pagerduty.com/docs/72d3b724589e3-rest-api-rate-limits) page for more information.
+
 ## 2023-11-03
 - Added new Analytics endpoints
   - `POST /analytics/raw/responders/{responder_id}/incidents`
