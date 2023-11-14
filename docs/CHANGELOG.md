@@ -4,6 +4,9 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+## 2023-11-13
+- Documented `overflow` query parameter in `GET /schedules/{id}`
+
 ## 2023-11-06
 **2023 REST API Rate Limiting Refresh**
 
