@@ -27654,11 +27654,12 @@
       },
       "put": {
         "x-pd-requires-scope": "incidents.write",
+        "x-pd-operation-limit": true,
         "tags": [
           "Incidents"
         ],
         "operationId": "updateIncidents",
-        "description": "Acknowledge, resolve, escalate or reassign one or more incidents.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nA maximum of 250 incidents may be updated at a time. If more than this number of incidents are given, the API will respond with status 413 (Request Entity Too Large).\n\nNote: the manage incidents API endpoint is rate limited to 500 requests per minute.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n\nScoped OAuth requires: `incidents.write`\n",
+        "description": "Acknowledge, resolve, escalate or reassign one or more incidents.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nA maximum of 250 incidents may be updated at a time. If more than this number of incidents are given, the API will respond with status 413 (Request Entity Too Large).\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n\nScoped OAuth requires: `incidents.write`\n\nThis API operation has operation specific rate limits. See the [Rate Limits](https://developer.pagerduty.com/docs/72d3b724589e3-rest-api-rate-limits) page for more information.\n",
         "summary": "Manage incidents",
         "parameters": [
           {
@@ -27947,11 +27948,12 @@
       },
       "post": {
         "x-pd-requires-scope": "incidents.write",
+        "x-pd-operation-limit": true,
         "tags": [
           "Incidents"
         ],
         "operationId": "createIncident",
-        "description": "Create an incident synchronously without a corresponding event from a monitoring service.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n\nScoped OAuth requires: `incidents.write`\n",
+        "description": "Create an incident synchronously without a corresponding event from a monitoring service.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n\nScoped OAuth requires: `incidents.write`\n\nThis API operation has operation specific rate limits. See the [Rate Limits](https://developer.pagerduty.com/docs/72d3b724589e3-rest-api-rate-limits) page for more information.\n",
         "summary": "Create an Incident",
         "parameters": [
           {
@@ -33738,8 +33740,9 @@
           "On-Calls"
         ],
         "x-pd-requires-scope": "oncalls.read",
+        "x-pd-operation-limit": true,
         "operationId": "listOnCalls",
-        "description": "List the on-call entries during a given time range.\n\nAn on-call represents a contiguous unit of time for which a User will be on call for a given Escalation Policy and Escalation Rules.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#on-calls)\n\nScoped OAuth requires: `oncalls.read`\n",
+        "description": "List the on-call entries during a given time range.\n\nAn on-call represents a contiguous unit of time for which a User will be on call for a given Escalation Policy and Escalation Rules.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#on-calls)\n\nScoped OAuth requires: `oncalls.read`\n\nThis API operation has operation specific rate limits. See the [Rate Limits](https://developer.pagerduty.com/docs/72d3b724589e3-rest-api-rate-limits) page for more information.\n",
         "summary": "List all of the on-calls",
         "parameters": [
           {
