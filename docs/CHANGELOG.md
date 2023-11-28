@@ -37,6 +37,14 @@ The new rate limit headers are available for your applications to begin consumin
 
 See the [REST API Rate Limits](https://developer.pagerduty.com/docs/72d3b724589e3-rest-api-rate-limits) page for more information.
 
+## 2023-11-14
+- Added Alert Grouping Settings endpoints:
+  - `GET /alert_grouping_settings`
+  - `POST /alert_grouping_settings`
+  - `GET /alert_grouping_settings/{id}`
+  - `PUT /alert_grouping_settings/{id}`
+  - `DELETE /alert_grouping_settings/{id}`
+
 ## 2023-11-03
 - Added new Analytics endpoints
   - `POST /analytics/raw/responders/{responder_id}/incidents`

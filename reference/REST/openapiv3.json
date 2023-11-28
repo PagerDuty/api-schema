@@ -25,6 +25,10 @@
       "description": "Developers can write their own functionality to insert into PagerDuty's UI.\n"
     },
     {
+      "name": "Alert Grouping Settings",
+      "description": "Alert Grouping Settings allow you to configure how alerts in services are grouped together into incidents.\n"
+    },
+    {
       "name": "Analytics",
       "description": "Provides enriched incident data.\n"
     },
@@ -3307,6 +3311,24 @@
           "enum": [
             "technical_service"
           ]
+        }
+      },
+      "offset_after": {
+        "name": "after",
+        "in": "query",
+        "required": false,
+        "description": "Cursor to retrieve next page; only present if next page exists.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "offset_before": {
+        "name": "before",
+        "in": "query",
+        "required": false,
+        "description": "Cursor to retrieve previous page; only present if not on first page.",
+        "schema": {
+          "type": "string"
         }
       }
     },
@@ -12102,6 +12124,59 @@
           }
         }
       },
+      "AlertGroupingSetting": {
+        "type": "object",
+        "description": "Defines how alerts will be automatically grouped into incidents based on the configurations defined. Note that the Alert Grouping Setting features are available only on certain plans.\n",
+        "properties": {
+          "id": {
+            "type": "string",
+            "readOnly": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true,
+            "description": "An optional short-form string that provides succinct information about an AlertGroupingSetting object suitable for primary labeling of the entity. It is not intended to be an identifier."
+          },
+          "description": {
+            "type": "string",
+            "nullable": true,
+            "description": "An optional description in string that provides more information about an AlertGroupingSetting object."
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "content_based"
+            ]
+          },
+          "config": {
+            "type": "object",
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ContentBasedAlertGroupingConfiguration"
+              }
+            ]
+          },
+          "services": {
+            "type": "array",
+            "description": "The array of one or many Services with just ServiceID/name that the AlertGroupingSetting applies to.",
+            "items": {
+              "$ref": "#/components/schemas/ServiceReference"
+            }
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true,
+            "description": "The ISO8601 date/time an AlertGroupingSetting got created at."
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true,
+            "description": "The ISO8601 date/time an AlertGroupingSetting last got updated at."
+          }
+        }
+      },
       "AlertGroupingParameters": {
         "type": "object",
         "description": "Defines how alerts on this service will be automatically grouped into incidents. Note that the alert grouping features are available only on certain plans. To turn grouping off set the type to null.\n",
@@ -12131,7 +12206,7 @@
                   "recommended_time_window": {
                     "readOnly": true,
                     "type": "integer",
-                    "description": "In order to ensure your Service has the optimal grouping window, we use data science to calculate your Service's average Alert inter-arrival time. We encourage customer's to use this value, please set `time_window` to 0 to use the `recommended_time_window`."
+                    "description": "In order to ensure your Service has the optimal grouping window, we use data science to calculate your Service`s average Alert inter-arrival time. We encourage customer`s to use this value, please set `time_window` to 0 to use the `recommended_time_window`."
                   }
                 }
               },
@@ -12158,7 +12233,18 @@
           },
           "fields": {
             "type": "array",
-            "description": "The fields with which to group against. Depending on the aggregate, Alerts will group if some or all the fields match"
+            "description": "An array of strings which represent the fields with which to group against. Depending on the aggregate, Alerts will group if some or all the fields match."
+          },
+          "time_window": {
+            "type": "integer",
+            "minimum": 300,
+            "maximum": 86400,
+            "description": "The maximum amount of time allowed between Alerts. Any Alerts arriving greater than `time_window` seconds apart will not be grouped together. This is a rolling time window up to 24 hours and is counted from the most recently grouped alert. The window is extended every time a new alert is added to the group, up to 24 hours (24 hours only applies to single-service settings). To use the \"recommended_time_window,\" set the value to 0, otherwise the value must be between 300 <= time_window <= 3600 or 86400(i.e. 24 hours)."
+          },
+          "recommended_time_window": {
+            "readOnly": true,
+            "type": "integer",
+            "description": "In order to ensure your Service has the optimal grouping window, we use data science to calculate your Service`s average Alert inter-arrival time. We encourage customer`s to use this value, please set `time_window` to 0 to use the `recommended_time_window`."
           }
         }
       },
@@ -15087,6 +15173,489 @@
           },
           "429": {
             "$ref": "#/components/responses/TooManyRequests"
+          }
+        }
+      }
+    },
+    "/alert_grouping_settings": {
+      "description": "List",
+      "get": {
+        "x-pd-requires-scope": "services.read",
+        "tags": [
+          "Alert Grouping Settings"
+        ],
+        "operationId": "listAlertGroupingSettings",
+        "description": "List all of your alert grouping settings including both single service settings and global content based settings.\n\nThe settings part of Alert Grouper service allows us to create Alert Grouping Settings and configs that are required to be used during grouping of the alerts.\n\nScoped OAuth requires: `services.read`\n",
+        "summary": "List alert grouping settings",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/offset_after"
+          },
+          {
+            "$ref": "#/components/parameters/offset_before"
+          },
+          {
+            "$ref": "#/components/parameters/offset_total"
+          },
+          {
+            "$ref": "#/components/parameters/offset_limit"
+          },
+          {
+            "$ref": "#/components/parameters/services"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of alert grouping settings.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "alert_grouping_settings": {
+                          "type": "array",
+                          "description": "The list of alert grouping settings your account has.",
+                          "items": {
+                            "$ref": "#/components/schemas/AlertGroupingSetting"
+                          }
+                        }
+                      },
+                      "required": [
+                        "alert_grouping_settings"
+                      ]
+                    }
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "alert_grouping_settings": [
+                        {
+                          "id": "PJWA06X",
+                          "name": "Example of Alert Grouping Setting",
+                          "description": "This is an example of list of Alert Grouping Settings",
+                          "type": "content_based",
+                          "config": {
+                            "time_window": 86400,
+                            "aggregate": "all",
+                            "fields": [
+                              "summary",
+                              "component",
+                              "custom_details.host",
+                              "custom_details.field1.field2"
+                            ]
+                          },
+                          "services": [
+                            {
+                              "id": "P0KJZ0A",
+                              "name": "Payment Service"
+                            },
+                            {
+                              "id": "PA15YRT",
+                              "name": "Checkout Service"
+                            }
+                          ],
+                          "created_at": "2022-12-13T19:55:01.171Z",
+                          "updated_at": "2023-08-24T18:29:35.630Z"
+                        }
+                      ],
+                      "after": "g3QAAAACZAACaWRhB2QAC2luc2VydGVkX2F0dAAAAAlkAApfX3N0cnVjdF9fZAAURWxpeGlyLk5haXZlRGF0ZVRpbWVkAAhjYWxlbmRhcmQAE0VsaXhpci5DYWxlbmRhci5JU09kAANkYXlhA2QABGhvdXJhFGQAC21pY3Jvc2Vjb25kaAJiAAL81WEGZAAGbWludXRlYR5kAAVtb250aGEIZAAGc2Vjb25kYR5kAAR5ZWFyYgAAB",
+                      "before": "g3QAAAACZAACaWRhCGQAC2luc2VydGVkX2F0dAAAAAlkAApfX3N0cnVjdF9fZAAURWxpeGlyLk5haXZlRGF0ZVRpbWVkAAhjYWxlbmRhcmQAE0VsaXhpci5DYWxlbmRhci5JU09kAANkYXlhA2QABGhvdXJhFGQAC21pY3Jvc2Vjb25kaAJiAANYzWEGZAAGbWludXRlYR5kAAVtb250aGEIZAAGc2Vjb25kYR5kAAR5ZWFyYgAAB",
+                      "limit": 25,
+                      "total": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      },
+      "post": {
+        "x-pd-requires-scope": "services.write",
+        "tags": [
+          "Alert Grouping Settings"
+        ],
+        "operationId": "postAlertGroupingSettings",
+        "description": "Create a new Alert Grouping Setting.\n\nThe settings part of Alert Grouper service allows us to create Alert Grouping Settings and configs that are required to be used during grouping of the alerts.\n\nThis endpoint will be used to create an instance of AlertGroupingSettings for either one service or many services that are in the alert group setting.\n\nScoped OAuth requires: `services.write`\n",
+        "summary": "Create an Alert Grouping Setting",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "alert_grouping_setting": {
+                    "$ref": "#/components/schemas/AlertGroupingSetting"
+                  }
+                },
+                "required": [
+                  "alert_grouping_setting"
+                ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "alert_grouping_setting": {
+                      "id": "PZC4OM1",
+                      "name": "Example of Alert Grouping Setting",
+                      "description": "This Alert Grouping Setting is an example",
+                      "type": "content_based",
+                      "config": {
+                        "time_window": 900,
+                        "aggregate": "all",
+                        "fields": [
+                          "summary",
+                          "component",
+                          "custom_details.host",
+                          "custom_details.field1.field2"
+                        ]
+                      },
+                      "services": [
+                        {
+                          "id": "P0KJZ0A"
+                        },
+                        {
+                          "id": "PA15YRT"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The new Alert Grouping Setting.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "alert_grouping_setting": {
+                      "$ref": "#/components/schemas/AlertGroupingSetting"
+                    }
+                  },
+                  "required": [
+                    "alert_grouping_setting"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "alert_grouping_setting": {
+                        "id": "PZC4OM1",
+                        "name": "Example of Alert Grouping Setting",
+                        "description": "This Alert Grouping Setting is an example",
+                        "type": "content_based",
+                        "config": {
+                          "time_window": 900,
+                          "aggregate": "all",
+                          "fields": [
+                            "summary",
+                            "component",
+                            "custom_details.host",
+                            "custom_details.field1.field2"
+                          ]
+                        },
+                        "services": [
+                          {
+                            "id": "P0KJZ0A",
+                            "name": "Payment Service"
+                          },
+                          {
+                            "id": "PA15YRT",
+                            "name": "Checkout Service"
+                          }
+                        ],
+                        "created_at": "2022-12-13T19:55:01.171Z",
+                        "updated_at": "2023-08-24T18:29:35.630Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/alert_grouping_settings/{id}": {
+      "description": "Retrieve, modify, or delete Alert Grouping Settings",
+      "get": {
+        "x-pd-requires-scope": "services.read",
+        "tags": [
+          "Alert Grouping Settings"
+        ],
+        "operationId": "getAlertGroupingSetting",
+        "description": "Get an existing Alert Grouping Setting.\n\nThe settings part of Alert Grouper service allows us to create Alert Grouping Settings and configs that are required to be used during grouping of the alerts.\n\nScoped OAuth requires: `services.read`\n",
+        "summary": "Get an Alert Grouping Setting",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The Alert Grouping Setting.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "alert_grouping_setting": {
+                      "$ref": "#/components/schemas/AlertGroupingSetting"
+                    }
+                  },
+                  "required": [
+                    "alert_grouping_setting"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "alert_grouping_setting": {
+                        "id": "PZC4OM1",
+                        "name": "Example of Alert Grouping Setting",
+                        "description": "This Alert Grouping Setting is an example",
+                        "type": "content_based",
+                        "config": {
+                          "time_window": 900,
+                          "aggregate": "all",
+                          "fields": [
+                            "summary",
+                            "component",
+                            "custom_details.host",
+                            "custom_details.field1.field2"
+                          ]
+                        },
+                        "services": [
+                          {
+                            "id": "P0KJZ0A",
+                            "name": "Payment Service"
+                          },
+                          {
+                            "id": "PA15YRT",
+                            "name": "Checkout Service"
+                          }
+                        ],
+                        "created_at": "2022-12-13T19:55:01.171Z",
+                        "updated_at": "2023-08-24T18:29:35.630Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "delete": {
+        "x-pd-requires-scope": "services.write",
+        "tags": [
+          "Alert Grouping Settings"
+        ],
+        "operationId": "deleteAlertGroupingSetting",
+        "description": "Delete an existing Alert Grouping Setting.\n\nThe settings part of Alert Grouper service allows us to create Alert Grouping Settings and configs that are required to be used during grouping of the alerts.\n\nScoped OAuth requires: `services.write`\n",
+        "summary": "Delete an Alert Grouping Setting",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The Alert Grouping Setting was deleted successfully."
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "put": {
+        "x-pd-requires-scope": "services.write",
+        "tags": [
+          "Alert Grouping Settings"
+        ],
+        "operationId": "putAlertGroupingSetting",
+        "description": "Update an Alert Grouping Setting.\n\nThe settings part of Alert Grouper service allows us to create Alert Grouping Settings and configs that are required to be used during grouping of the alerts.\n\nif `services` are not provided in the request, then the existing services will not be removed from the setting.\n\nScoped OAuth requires: `services.write`\n",
+        "summary": "Update an Alert Grouping Setting",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "alert_grouping_setting": {
+                    "$ref": "#/components/schemas/AlertGroupingSetting"
+                  }
+                },
+                "required": [
+                  "alert_grouping_setting"
+                ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "alert_grouping_setting": {
+                      "id": "PZC4OM1",
+                      "name": "Example of Alert Grouping Setting",
+                      "description": "This Alert Grouping Setting is an example",
+                      "type": "content_based",
+                      "config": {
+                        "time_window": 900,
+                        "aggregate": "all",
+                        "fields": [
+                          "summary",
+                          "component",
+                          "custom_details.host",
+                          "custom_details.field1.field2"
+                        ]
+                      },
+                      "services": [
+                        {
+                          "id": "P0KJZ0A"
+                        },
+                        {
+                          "id": "PA15YRT"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The updated Alert Grouping Setting.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "alert_grouping_setting": {
+                      "$ref": "#/components/schemas/AlertGroupingSetting"
+                    }
+                  },
+                  "required": [
+                    "alert_grouping_setting"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "alert_grouping_setting": {
+                        "id": "PZC4OM1",
+                        "name": "Example of Alert Grouping Setting",
+                        "description": "This Alert Grouping Setting is an example",
+                        "type": "content_based",
+                        "config": {
+                          "time_window": 900,
+                          "aggregate": "all",
+                          "fields": [
+                            "summary",
+                            "component",
+                            "custom_details.host",
+                            "custom_details.field1.field2"
+                          ]
+                        },
+                        "services": [
+                          {
+                            "id": "P0KJZ0A",
+                            "name": "Payment Service"
+                          },
+                          {
+                            "id": "PA15YRT",
+                            "name": "Checkout Service"
+                          }
+                        ],
+                        "created_at": "2022-12-13T19:55:01.171Z",
+                        "updated_at": "2023-08-24T18:29:35.630Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
           }
         }
       }
