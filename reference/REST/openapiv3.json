@@ -10358,6 +10358,7 @@
                             },
                             "inputs": {
                               "type": "array",
+                              "description": "The standard inputs used to configure the Action to execute",
                               "items": {
                                 "type": "object",
                                 "properties": {
@@ -10373,6 +10374,131 @@
                                   "value": {
                                     "type": "string",
                                     "description": "The configured value of the Input"
+                                  }
+                                },
+                                "required": [
+                                  "name",
+                                  "value"
+                                ]
+                              }
+                            },
+                            "inline_steps_inputs": {
+                              "type": "array",
+                              "description": "Specialized inputs used to configure a workflow-within-a-workflow",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string",
+                                    "description": "The name of the Input"
+                                  },
+                                  "value": {
+                                    "type": "object",
+                                    "description": "The configured value of the Inline Steps Input",
+                                    "properties": {
+                                      "steps": {
+                                        "type": "array",
+                                        "items": {
+                                          "allOf": [
+                                            {
+                                              "$ref": "#/components/schemas/Tag/allOf/0"
+                                            },
+                                            {
+                                              "type": "object",
+                                              "properties": {
+                                                "type": {
+                                                  "type": "string",
+                                                  "enum": [
+                                                    "step"
+                                                  ]
+                                                },
+                                                "name": {
+                                                  "type": "string",
+                                                  "description": "A descriptive name for the Step"
+                                                },
+                                                "action_configuration": {
+                                                  "description": "Configuration of automated action executed by this Step",
+                                                  "type": "object",
+                                                  "properties": {
+                                                    "action_id": {
+                                                      "type": "string",
+                                                      "description": "The identifier of the Action to execute"
+                                                    },
+                                                    "description": {
+                                                      "type": "string",
+                                                      "description": "Description of the Action",
+                                                      "readOnly": true
+                                                    },
+                                                    "inputs": {
+                                                      "type": "array",
+                                                      "description": "The standard inputs used to configure the Action to execute",
+                                                      "items": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                          "name": {
+                                                            "type": "string",
+                                                            "description": "The name of the Input"
+                                                          },
+                                                          "parameter_type": {
+                                                            "type": "string",
+                                                            "description": "The data type of this Input",
+                                                            "readOnly": true
+                                                          },
+                                                          "value": {
+                                                            "type": "string",
+                                                            "description": "The configured value of the Input"
+                                                          }
+                                                        },
+                                                        "required": [
+                                                          "name",
+                                                          "value"
+                                                        ]
+                                                      }
+                                                    },
+                                                    "outputs": {
+                                                      "type": "array",
+                                                      "readOnly": true,
+                                                      "items": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                          "name": {
+                                                            "type": "string",
+                                                            "description": "The name of the Output",
+                                                            "readOnly": true
+                                                          },
+                                                          "reference_name": {
+                                                            "type": "string",
+                                                            "description": "The reference name of the Output",
+                                                            "readOnly": true
+                                                          },
+                                                          "parameter_type": {
+                                                            "type": "string",
+                                                            "description": "The data type produced by this Output",
+                                                            "readOnly": true
+                                                          }
+                                                        },
+                                                        "required": [
+                                                          "name",
+                                                          "value"
+                                                        ]
+                                                      }
+                                                    }
+                                                  },
+                                                  "required": [
+                                                    "action_id",
+                                                    "inputs"
+                                                  ]
+                                                }
+                                              },
+                                              "required": [
+                                                "name",
+                                                "action_configuration"
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      }
+                                    }
                                   }
                                 },
                                 "required": [
