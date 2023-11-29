@@ -4,6 +4,9 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+## 2023-11-29
+- Added support for Incident Workflows inline steps inputs
+
 ## 2023-11-13
 - Documented `overflow` query parameter in `GET /schedules/{id}`
 
@@ -29,7 +32,7 @@ will inform clients about their current rate limiting status.
 
 Along with today's announcement we are enabling these new headers on requests that were evaluated by the new rate limiting system in a _passive mode_. You will not see these headers on all of the `429` responses you receive while the old system is still active. You may also see `200` responses where the headers indicate you have `0` remaining requests. These headers may be used to collect client-side telemetry about how close your application is getting to the new rate limiting system.
 
-See the [REST API Rate Limits](https://developer.pagerduty.com/docs/72d3b724589e3-rest-api-rate-limits) page for best practices and more about the new rate limiting headers. 
+See the [REST API Rate Limits](https://developer.pagerduty.com/docs/72d3b724589e3-rest-api-rate-limits) page for best practices and more about the new rate limiting headers.
 
 **When will this happen?**
 
@@ -61,7 +64,7 @@ See the [REST API Rate Limits](https://developer.pagerduty.com/docs/72d3b724589e
 - Added `incident_workflow_reference` as possible agent type for Automation Action Invocation resources.
 
 ## 2023-09-18
-- Removed Early Access warning from `POST /services/{id}/rules/convert` 
+- Removed Early Access warning from `POST /services/{id}/rules/convert`
 
 ## 2023-09-06
 - Updated `service.html_url` field from `/services/{id}` to `/service-directory/{id}`.
