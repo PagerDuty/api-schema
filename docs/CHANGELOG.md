@@ -1,11 +1,17 @@
 # Changelog
 
-PagerDuty aims to have no breaking changes to our API, we do fix bugs and add new functionality continously. This document serves as a reference for any bug fixes or additions to our API.
+PagerDuty aims to have no breaking changes to our API, we do fix bugs and add new functionality continuously. This document serves as a reference for any bug fixes or additions to our API.
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
 ## 2023-11-29
 - Added support for Incident Workflows inline steps inputs
+
+## 2023-11-23
+**Importing PagerDuty OpenAPI Specs into Postman**
+- See Postman's [documentation](https://learning.postman.com/docs/integrations/available-integrations/working-with-openAPI/) on integrating Postman with OpenAPI
+- Use [this URL](https://raw.githubusercontent.com/PagerDuty/api-schema/main/reference/REST/openapiv3.json) in the OpenAPI import tool
+- The "Run in Postman" button was removed in favor of this more concrete workflow.
 
 ## 2023-11-13
 - Documented `overflow` query parameter in `GET /schedules/{id}`
