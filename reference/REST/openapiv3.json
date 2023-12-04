@@ -7237,6 +7237,24 @@
           }
         ]
       },
+      "LicenseReference": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Reference"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "license_reference"
+                ]
+              }
+            }
+          }
+        ]
+      },
       "SupportHours": {
         "type": "object",
         "properties": {
@@ -8049,25 +8067,6 @@
                 "items": {
                   "$ref": "#/components/schemas/NotificationRuleReference"
                 }
-              },
-              "license": {
-                "description": "The License assigned to the User",
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/Reference"
-                  },
-                  {
-                    "type": "object",
-                    "properties": {
-                      "type": {
-                        "type": "string",
-                        "enum": [
-                          "license_reference"
-                        ]
-                      }
-                    }
-                  }
-                ]
               }
             },
             "required": [
@@ -44114,7 +44113,25 @@
                 "type": "object",
                 "properties": {
                   "user": {
-                    "$ref": "#/components/schemas/User"
+                    "allOf": [
+                      {
+                        "$ref": "#/components/schemas/User"
+                      },
+                      {
+                        "properties": {
+                          "license": {
+                            "allOf": [
+                              {
+                                "description": "The License assigned to the User"
+                              },
+                              {
+                                "$ref": "#/components/schemas/LicenseReference"
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    ]
                   }
                 },
                 "required": [
@@ -44405,7 +44422,25 @@
                 "type": "object",
                 "properties": {
                   "user": {
-                    "$ref": "#/components/schemas/User"
+                    "allOf": [
+                      {
+                        "$ref": "#/components/schemas/User"
+                      },
+                      {
+                        "properties": {
+                          "license": {
+                            "allOf": [
+                              {
+                                "description": "The License assigned to the User"
+                              },
+                              {
+                                "$ref": "#/components/schemas/LicenseReference"
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    ]
                   }
                 },
                 "required": [
