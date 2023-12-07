@@ -22555,11 +22555,9 @@
                               "type": "user_reference"
                             }
                           ],
-                          "escalation_rule_assignment_strategy": [
-                            {
-                              "type": "round_robin"
-                            }
-                          ]
+                          "escalation_rule_assignment_strategy": {
+                            "type": "round_robin"
+                          }
                         }
                       ],
                       "services": [
@@ -22877,11 +22875,9 @@
                               "type": "user_reference"
                             }
                           ],
-                          "escalation_rule_assignment_strategy": [
-                            {
-                              "type": "round_robin"
-                            }
-                          ]
+                          "escalation_rule_assignment_strategy": {
+                            "type": "round_robin"
+                          }
                         }
                       ],
                       "services": [
