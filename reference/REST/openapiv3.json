@@ -43907,6 +43907,165 @@
         }
       }
     },
+    "/templates/fields": {
+      "get": {
+        "x-pd-requires-scope": "templates.read",
+        "tags": [
+          "Templates"
+        ],
+        "operationId": "getTemplateFields",
+        "description": "Get a list of fields that can be used on the account templates.\n\nScoped OAuth requires: `templates.read`\n",
+        "summary": "List template fields",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of template fields.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fields": {
+                      "type": "array",
+                      "items": {
+                        "title": "Field",
+                        "type": "object",
+                        "properties": {
+                          "data_type": {
+                            "type": "string",
+                            "description": "The kind of data the template field is allowed to contain.",
+                            "enum": [
+                              "boolean",
+                              "integer",
+                              "float",
+                              "string",
+                              "datetime",
+                              "url"
+                            ]
+                          },
+                          "default_value": {
+                            "type": "string",
+                            "description": "The default value of the template field.",
+                            "nullable": true
+                          },
+                          "description": {
+                            "type": "string",
+                            "description": "A short description of the template field.",
+                            "nullable": true
+                          },
+                          "domain_name": {
+                            "type": "object",
+                            "properties": {
+                              "order": {
+                                "type": "integer"
+                              },
+                              "summary": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "example": {
+                            "type": "string",
+                            "description": "An example value for the template field.",
+                            "nullable": true
+                          },
+                          "keyword": {
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "summary": {
+                            "type": "string",
+                            "description": "A short summary of the template field."
+                          },
+                          "type": {
+                            "type": "string",
+                            "description": "The type of template field.",
+                            "enum": [
+                              "standard_field",
+                              "custom_field"
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "fields"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "fields": [
+                        {
+                          "data_type": "datetime",
+                          "default_value": null,
+                          "description": "The time the incident was created.",
+                          "domain": {
+                            "order": 1,
+                            "summary": "Incident"
+                          },
+                          "example": "2023-11-22T07:12:50Z",
+                          "keyword": null,
+                          "summary": "incident.created_at",
+                          "type": "standard_field"
+                        },
+                        {
+                          "data_type": "string",
+                          "default_value": null,
+                          "description": "The name of the escalation policy attached to the service that the incident is on",
+                          "domain": {
+                            "order": 1,
+                            "summary": "Incident"
+                          },
+                          "example": "Another Escalation Policy",
+                          "keyword": "name",
+                          "summary": "incident.escalation_policy.summary",
+                          "type": "standard_field"
+                        },
+                        {
+                          "data_type": "string",
+                          "default_value": "default value",
+                          "description": "An account defined custom field",
+                          "domain": {
+                            "order": 1,
+                            "summary": "Incident"
+                          },
+                          "example": null,
+                          "keyword": null,
+                          "summary": "incident.custom_field",
+                          "type": "custom_field"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
     "/users": {
       "description": "List and create users.",
       "get": {
