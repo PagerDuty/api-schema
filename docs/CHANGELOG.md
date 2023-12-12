@@ -4,6 +4,10 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+## 2023-12-12
+- Added Templates Fields endpoint:
+  - `GET /templates/fields`
+
 ## 2023-11-29
 - Added support for Incident Workflows inline steps inputs
 
