@@ -1723,6 +1723,14 @@
           "example": "sent"
         }
       },
+      "automation_actions_not_invocation_state": {
+        "name": "not_invocation_state",
+        "description": "Invocation state inverse filter (matches invocations NOT in the specified state)",
+        "in": "query",
+        "schema": {
+          "$ref": "#/components/parameters/automation_actions_invocation_state/schema"
+        }
+      },
       "automation_actions_incident_id": {
         "name": "incident_id",
         "description": "Incident ID",
@@ -19505,6 +19513,9 @@
           },
           {
             "$ref": "#/components/parameters/automation_actions_invocation_state"
+          },
+          {
+            "$ref": "#/components/parameters/automation_actions_not_invocation_state"
           },
           {
             "$ref": "#/components/parameters/automation_actions_incident_id"

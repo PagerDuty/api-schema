@@ -4,6 +4,10 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+## 2023-12-14
+- Added `not_invocation_state` parameter to Automation Actions invocation list
+  endpoint, which filters results based on those NOT in the specified state
+
 ## 2023-12-12
 - Added Templates Fields endpoint:
   - `GET /templates/fields`
