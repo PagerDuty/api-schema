@@ -4,6 +4,13 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+## 2024-01-16
+- Added external status page subscriptions endpoints
+  - `GET /status_pages/{id}/subscriptions`
+  - `POST /status_pages/{id}/subscriptions`
+  - `GET /status_pages/{id}/subscriptions/{subscription_id}`
+  - `DELETE /status_pages/{id}/subscriptions/{susbcription_id}`
+
 ## 2023-12-14
 - Added `not_invocation_state` parameter to Automation Actions invocation list
   endpoint, which filters results based on those NOT in the specified state

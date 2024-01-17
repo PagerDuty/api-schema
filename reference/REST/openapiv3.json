@@ -141,6 +141,10 @@
       "description": "Status Dashboards represent user-defined views for the Status Dashboard product that are limited to specific Business Services rather than the whole set of top-level Business Services (those with no dependent Services).\n"
     },
     {
+      "name": "Status Pages",
+      "description": "Status Pages can be public or private read-only pages, that display the status of some predefined set of services, to be shared with customers or internal stakeholders.\n"
+    },
+    {
       "name": "Tags",
       "description": "A Tag is applied to Escalation Policies, Teams or Users and can be used to filter them.\n"
     },
@@ -1827,6 +1831,16 @@
         "description": "This header indicates that this API endpoint is __UNDER CONSTRUCTION__ and may change at any time. You __MUST__ pass in this header with the value `status-dashboards`. Do not use this endpoint in production, as it may change!",
         "required": true
       },
+      "early_access_status_pages": {
+        "schema": {
+          "type": "string",
+          "default": "status-pages-early-access"
+        },
+        "in": "header",
+        "name": "X-EARLY-ACCESS",
+        "description": "This header indicates that this API endpoint is __UNDER CONSTRUCTION__ and may change at any time. You __MUST__ pass in this header with the value `status-pages-early-access`. Do not use this endpoint in production, as it may change!",
+        "required": true
+      },
       "webhooks_filter_type": {
         "name": "filter_type",
         "in": "query",
@@ -3336,6 +3350,44 @@
         "required": false,
         "description": "Cursor to retrieve previous page; only present if not on first page.",
         "schema": {
+          "type": "string"
+        }
+      },
+      "status_page_subscription_id": {
+        "name": "subscription_id",
+        "description": "The ID of the status page subscription",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "status_page_subscription_status": {
+        "name": "status",
+        "description": "Filter by subscription status.",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "enum": [
+            "active",
+            "pending"
+          ],
+          "nullable": false,
+          "type": "string"
+        }
+      },
+      "status_page_subscription_channel": {
+        "name": "channel",
+        "description": "Filter by subscription channel.",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "enum": [
+            "webhook",
+            "email",
+            "slack"
+          ],
+          "nullable": false,
           "type": "string"
         }
       }
@@ -14516,6 +14568,88 @@
             ]
           },
           "id": {
+            "type": "string"
+          }
+        }
+      },
+      "StatusPageSubscription": {
+        "type": "object",
+        "title": "StatusPageSubscription",
+        "description": "A StatusPageSubscription resource represents a subscription to a specific status page entity.",
+        "properties": {
+          "channel": {
+            "description": "The channel of the subscription.",
+            "enum": [
+              "webhook",
+              "email",
+              "slack"
+            ],
+            "nullable": false,
+            "title": "SubscriptionChannel",
+            "type": "string"
+          },
+          "contact": {
+            "description": "The subscriber's contact - email address, webhook URL, etc...",
+            "type": "string"
+          },
+          "id": {
+            "description": "The ID of the Subscription.",
+            "type": "string"
+          },
+          "self": {
+            "description": "The path in which the Subscription resource is accessible.",
+            "type": "string"
+          },
+          "status": {
+            "description": "The status of the Subscription.",
+            "enum": [
+              "active",
+              "pending"
+            ],
+            "nullable": false,
+            "title": "SubscriptionStatus",
+            "type": "string"
+          },
+          "status_page": {
+            "description": "Status Page",
+            "nullable": false,
+            "properties": {
+              "id": {
+                "description": "Status page unique identifier",
+                "type": "string"
+              },
+              "type": {
+                "description": "A string that determines the schema of the object.",
+                "type": "string"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "type": "object"
+          },
+          "subscribable_object": {
+            "description": "The subscribed entity for a given subscription.",
+            "properties": {
+              "id": {
+                "description": "The ID of the subscribed entity.",
+                "type": "string"
+              },
+              "type": {
+                "description": "The type of the subscribed entity.",
+                "enum": [
+                  "status_page",
+                  "status_page_service",
+                  "status_page_post"
+                ],
+                "type": "string"
+              }
+            },
+            "title": "SubscribableObject",
+            "type": "object"
+          },
+          "type": {
+            "description": "A string that determines the schema of the object.",
             "type": "string"
           }
         }
@@ -41826,6 +41960,394 @@
             "$ref": "#/components/parameters/impacts_additional_fields"
           }
         ]
+      }
+    },
+    "/status_pages/{id}/subscriptions": {
+      "get": {
+        "x-pd-requires-scope": "status_pages.read",
+        "tags": [
+          "Status Pages"
+        ],
+        "operationId": "listStatusPageSubscriptions",
+        "description": "List subscriptions for a Status Page by status page id.\n\nScoped OAuth requires: `status_pages.read`\n",
+        "summary": "List Status Page subscriptions",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_status_pages"
+          },
+          {
+            "$ref": "#/components/parameters/status_page_subscription_status"
+          },
+          {
+            "$ref": "#/components/parameters/status_page_subscription_channel"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Pagination"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "subscriptions": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/StatusPageSubscription"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "limit": 25,
+                      "more": false,
+                      "offset": 0,
+                      "subscriptions": [
+                        {
+                          "channel": "email",
+                          "contact": "address@email.example",
+                          "id": "PWZ0PTR",
+                          "self": "https://api.pagerduty.com/status_pages/PIJ90N7/subscriptions/PWZ0PTR",
+                          "status": "active",
+                          "status_page": {
+                            "id": "PIJ90N7",
+                            "type": "status_page"
+                          },
+                          "subscribable_object": {
+                            "id": "PIJ90N7",
+                            "type": "status_page"
+                          },
+                          "type": "status_page_susbcription"
+                        }
+                      ],
+                      "total": 1
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        }
+      },
+      "post": {
+        "x-pd-requires-scope": "status_pages.write",
+        "tags": [
+          "Status Pages"
+        ],
+        "operationId": "createStatusPageSubscription",
+        "description": "Create a subscription for a Status Page by status page id.\n\nScoped OAuth requires: `status_pages.write`\n",
+        "summary": "Create a status page subscription",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_status_pages"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "subscription": {
+                    "type": "object",
+                    "title": "StatusPageSubscriptionRequest",
+                    "description": "Request schema for creating a StatusPageSubscription.",
+                    "properties": {
+                      "channel": {
+                        "description": "The channel of the Subscription.",
+                        "enum": [
+                          "webhook",
+                          "email"
+                        ],
+                        "nullable": false,
+                        "title": "SubscriptionChannel",
+                        "type": "string"
+                      },
+                      "contact": {
+                        "description": "The subscriber's contact - email address or webhook URL.",
+                        "type": "string",
+                        "nullable": false
+                      },
+                      "status_page": {
+                        "description": "Status Page",
+                        "nullable": false,
+                        "properties": {
+                          "id": {
+                            "description": "The id of the status page.",
+                            "type": "string"
+                          },
+                          "type": {
+                            "description": "A string that determines the schema of the object.",
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id"
+                        ],
+                        "type": "object"
+                      },
+                      "subscribable_object": {
+                        "type": "object",
+                        "title": "SubscribableObject",
+                        "description": "The subscribed entity for a given subscription.",
+                        "properties": {
+                          "id": {
+                            "description": "The ID of the subscribed entity for a given subscription.",
+                            "type": "string",
+                            "nullable": false
+                          },
+                          "type": {
+                            "description": "The type of the subscribed entity for a given subscription.",
+                            "enum": [
+                              "status_page",
+                              "status_page_service",
+                              "status_page_post"
+                            ],
+                            "type": "string",
+                            "nullable": false
+                          }
+                        }
+                      },
+                      "type": {
+                        "description": "A string that determines the schema of the object.",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "channel",
+                      "contact",
+                      "subscribable_object",
+                      "status_page",
+                      "type"
+                    ]
+                  }
+                },
+                "required": [
+                  "subscription"
+                ]
+              },
+              "example": {
+                "subscription": {
+                  "channel": "email",
+                  "contact": "joe@email.example",
+                  "status_page": {
+                    "id": "PIJ90N7",
+                    "type": "status_page"
+                  },
+                  "subscribable_object": {
+                    "id": "PSX4LJI",
+                    "type": "status_page_service"
+                  },
+                  "type": "status_page_subscription"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "subscription": {
+                      "$ref": "#/components/schemas/StatusPageSubscription"
+                    }
+                  }
+                },
+                "example": {
+                  "subscription": {
+                    "channel": "email",
+                    "contact": "address@email.example",
+                    "id": "PWZ0PTR",
+                    "self": "https://api.pagerduty.com/status_pages/PIJ90N7/subscriptions/PWZ0PTR",
+                    "status": "active",
+                    "status_page": {
+                      "id": "PIJ90N7",
+                      "type": "status_page"
+                    },
+                    "subscribable_object": {
+                      "id": "PSX4LJI",
+                      "type": "status_page_service"
+                    },
+                    "type": "status_page_subscription"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        }
+      }
+    },
+    "/status_pages/{id}/subscriptions/{subscription_id}": {
+      "get": {
+        "x-pd-requires-scope": "status_pages.read",
+        "tags": [
+          "Status Pages"
+        ],
+        "operationId": "getStatusPageSubscription",
+        "description": "Get a subscription for a Status Page by status page id and subscription id.\n\nScoped OAuth requires: `status_pages.read`\n",
+        "summary": "Get a status page subscription",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/status_page_subscription_id"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_status_pages"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "subscription": {
+                      "$ref": "#/components/schemas/StatusPageSubscription"
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "subscription": {
+                        "channel": "email",
+                        "contact": "address@email.example",
+                        "id": "PWZ0PTR",
+                        "self": "https://api.pagerduty.com/status_pages/PIJ90N7/subscriptions/PWZ0PTR",
+                        "status": "active",
+                        "status_page": {
+                          "id": "PIJ90N7",
+                          "type": "status_page"
+                        },
+                        "subscribable_object": {
+                          "id": "PSX4LJI",
+                          "type": "status_page_service"
+                        },
+                        "type": "status_page_subscription"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        }
+      },
+      "delete": {
+        "x-pd-requires-scope": "status_pages.write",
+        "tags": [
+          "Status Pages"
+        ],
+        "operationId": "deleteStatusPageSubscription",
+        "description": "Delete a subscription for a Status Page by status page id and subscription id.\n\nScoped OAuth requires: `status_pages.write`\n",
+        "summary": "Delete a status page subscription",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/status_page_subscription_id"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_status_pages"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        }
       }
     },
     "/tags": {
