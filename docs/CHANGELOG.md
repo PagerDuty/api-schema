@@ -4,6 +4,9 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+## 2024-01-19
+- Fixed inconsistencies with the Custom Fields `Field` entity
+
 ## 2024-01-16
 - Added external status page subscriptions endpoints
   - `GET /status_pages/{id}/subscriptions`

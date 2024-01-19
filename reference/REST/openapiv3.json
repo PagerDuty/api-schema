@@ -14127,7 +14127,8 @@
                 "type": "string",
                 "enum": [
                   "field"
-                ]
+                ],
+                "readOnly": true
               },
               "created_at": {
                 "type": "string",
