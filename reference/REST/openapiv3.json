@@ -10430,13 +10430,13 @@
                             },
                             "inputs": {
                               "type": "array",
-                              "description": "The standard inputs used to configure the Action to execute",
+                              "description": "An unordered list of standard inputs used to configure the Action to execute",
                               "items": {
                                 "type": "object",
                                 "properties": {
                                   "name": {
                                     "type": "string",
-                                    "description": "The name of the Input"
+                                    "description": "The name for this Input. Input names are unique per action and should be used to find a specific Input."
                                   },
                                   "parameter_type": {
                                     "type": "string",
@@ -10456,13 +10456,13 @@
                             },
                             "inline_steps_inputs": {
                               "type": "array",
-                              "description": "Specialized inputs used to configure a workflow-within-a-workflow",
+                              "description": "An unordered list of specialized inputs used to configure a workflow-within-a-workflow",
                               "items": {
                                 "type": "object",
                                 "properties": {
                                   "name": {
                                     "type": "string",
-                                    "description": "The name of the Input"
+                                    "description": "The name for this Input. Input names are unique per action and should be used to find a specific Input."
                                   },
                                   "value": {
                                     "type": "object",
@@ -10503,13 +10503,13 @@
                                                     },
                                                     "inputs": {
                                                       "type": "array",
-                                                      "description": "The standard inputs used to configure the Action to execute",
+                                                      "description": "An unordered list of standard inputs used to configure the Action to execute",
                                                       "items": {
                                                         "type": "object",
                                                         "properties": {
                                                           "name": {
                                                             "type": "string",
-                                                            "description": "The name of the Input"
+                                                            "description": "The name for this Input. Input names are unique per action and should be used to find a specific Input."
                                                           },
                                                           "parameter_type": {
                                                             "type": "string",
@@ -10529,13 +10529,14 @@
                                                     },
                                                     "outputs": {
                                                       "type": "array",
+                                                      "description": "An unordered list of outputs this action produces",
                                                       "readOnly": true,
                                                       "items": {
                                                         "type": "object",
                                                         "properties": {
                                                           "name": {
                                                             "type": "string",
-                                                            "description": "The name of the Output",
+                                                            "description": "The name for this Output. Output names are unique per action and should be used to find a specific Output.",
                                                             "readOnly": true
                                                           },
                                                           "reference_name": {
@@ -10581,13 +10582,14 @@
                             },
                             "outputs": {
                               "type": "array",
+                              "description": "An unordered list of outputs this action produces",
                               "readOnly": true,
                               "items": {
                                 "type": "object",
                                 "properties": {
                                   "name": {
                                     "type": "string",
-                                    "description": "The name of the Output",
+                                    "description": "The name for this Output. Output names are unique per action and should be used to find a specific Output.",
                                     "readOnly": true
                                   },
                                   "reference_name": {
