@@ -4,6 +4,11 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+## 2024-01-24
+- Clarified documentation on several Incident Workflows resources
+  - IncidentWorkflowStep inputs, inline_steps_inputs, outputs
+  - IncidentWorkflowInlineStep inputs, inline_steps_inputs, outputs
+
 ## 2024-01-19
 - Fixed inconsistencies with the Custom Fields `Field` entity
 
