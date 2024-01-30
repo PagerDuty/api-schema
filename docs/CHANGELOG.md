@@ -4,6 +4,18 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+## 2024-01-29
+- Added external status page endpoints
+  - `GET /status_pages`
+  - `GET /status_pages/{id}/impacts`
+  - `GET /status_pages/{id}/impacts/{impact_id}`
+  - `GET /status_pages/{id}/services`
+  - `GET /status_pages/{id}/services/{service_id}`
+  - `GET /status_pages/{id}/severities`
+  - `GET /status_pages/{id}/severities/{severity_id}`
+  - `GET /status_pages/{id}/statuses`
+  - `GET /status_pages/{id}/statuses/{status_id}`
+
 ## 2024-01-24
 - Clarified documentation on several Incident Workflows resources
   - IncidentWorkflowStep inputs, inline_steps_inputs, outputs
