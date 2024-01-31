@@ -4,7 +4,7 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
-## 2024-01-29
+## 2024-01-31
 - Added external status page endpoints
   - `GET /status_pages`
   - `GET /status_pages/{id}/impacts`
@@ -15,6 +15,19 @@ Currently we rarely deprecate, and do not remove any API functionality.
   - `GET /status_pages/{id}/severities/{severity_id}`
   - `GET /status_pages/{id}/statuses`
   - `GET /status_pages/{id}/statuses/{status_id}`
+  - `GET /status_pages/{id}/posts`
+  - `POST /status_pages/{id}/posts`
+  - `GET /status_pages/{id}/posts/{post_id}`
+  - `PUT /status_pages/{id}/posts/{post_id}`
+  - `DELETE /status_pages/{id}/posts/{post_id}`
+  - `GET /status_pages/{id}/posts/{post_id}/post_updates`
+  - `POST /status_pages/{id}/posts/{post_id}/post_updates`
+  - `GET /status_pages/{id}/posts/{post_id}/post_updates/{post_update_id}`
+  - `PUT /status_pages/{id}/posts/{post_id}/post_updates/{post_update_id}`
+  - `DELETE /status_pages/{id}/posts/{post_id}/post_updates/{post_update_id}`
+  - `GET /status_pages/{id}/posts/{post_id}/postmortem`
+  - `PUT /status_pages/{id}/posts/{post_id}/postmortem`
+  - `DELETE /status_pages/{id}/posts/{post_id}/postmortem`
 
 ## 2024-01-24
 - Clarified documentation on several Incident Workflows resources
