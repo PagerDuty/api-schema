@@ -26,6 +26,7 @@ Currently we rarely deprecate, and do not remove any API functionality.
   - `PUT /status_pages/{id}/posts/{post_id}/post_updates/{post_update_id}`
   - `DELETE /status_pages/{id}/posts/{post_id}/post_updates/{post_update_id}`
   - `GET /status_pages/{id}/posts/{post_id}/postmortem`
+  - `POST /status_pages/{id}/posts/{post_id}/postmortem`
   - `PUT /status_pages/{id}/posts/{post_id}/postmortem`
   - `DELETE /status_pages/{id}/posts/{post_id}/postmortem`
 
