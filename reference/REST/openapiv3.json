@@ -45157,6 +45157,105 @@
           }
         }
       },
+      "post": {
+        "x-pd-requires-scope": "status_pages.write",
+        "tags": [
+          "Status Pages"
+        ],
+        "operationId": "createStatusPagePostmortem",
+        "description": "Create a Postmortem for a Post by Post ID.\n\nScoped OAuth requires: `status_pages.write`\n",
+        "summary": "Create a Post Postmortem",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/status_page_post_id"
+          },
+          {
+            "$ref": "#/components/parameters/early_access_status_pages"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "postmortem": {
+                    "$ref": "#/components/schemas/StatusPagePostmortemRequest"
+                  }
+                },
+                "required": [
+                  "post_update"
+                ]
+              },
+              "example": {
+                "postmortem": {
+                  "message": "<p>Something wrong happened and this is a postmortem.<p>",
+                  "notify_subscribers": true,
+                  "post": {
+                    "id": "P6F2CJ3",
+                    "self": "https://api.pagerduty.com/status_pages/PR5LMML/posts/P6F2CJ3",
+                    "type": "status_page_post"
+                  },
+                  "type": "status_page_post_postmortem"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "postmortem": {
+                      "$ref": "#/components/schemas/StatusPagePostmortem"
+                    }
+                  }
+                },
+                "example": {
+                  "postmortem": {
+                    "id": "PIJ90N7",
+                    "message": "<p>Something wrong happened and this is a postmortem.<p>",
+                    "notify_subscribers": true,
+                    "post": {
+                      "id": "P6F2CJ3",
+                      "self": "https://api.pagerduty.com/status_pages/PR5LMML/posts/P6F2CJ3",
+                      "type": "status_page_post"
+                    },
+                    "reported_at": "2023-09-13T10:34:04.000Z",
+                    "self": "https://api.pagerduty.com/status_pages/PR5LMML/posts/P6F2CJ3/postmortem",
+                    "type": "status_page_post_postmortem"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        }
+      },
       "put": {
         "x-pd-requires-scope": "status_pages.write",
         "tags": [
