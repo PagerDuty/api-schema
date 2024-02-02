@@ -4250,7 +4250,7 @@
           },
           "mean_engaged_seconds": {
             "type": "integer",
-            "description": "Mean engaged time across all responders for incidents that match the given filters.\nEngaged time is measured from the time a user engages with an incident (by\nacknowledging or accepting a responder request) until the incident is resolved.\nThis may include periods in which the incidents were snoozed."
+            "description": "Mean engaged time across all responders.\nEngaged time is measured from the time a user engages with an incident (by\nacknowledging or accepting a responder request) until the incident is resolved.\nThis may include periods in which the incidents were snoozed."
           },
           "mean_engaged_user_count": {
             "type": "integer",
@@ -4271,6 +4271,10 @@
           "mean_seconds_to_resolve": {
             "type": "integer",
             "description": "Mean time from when an incident was triggered until it was resolved."
+          },
+          "mean_user_defined_engaged_seconds": {
+            "type": "integer",
+            "description": "Mean engaged time across all responders. Engaged time is measured from the time \na user engages with an incident (by acknowledging or accepting a responder request) \nuntil the incident is resolved. This may include periods in which the incidents were snoozed.\nThis metric uses the incident response effort values that \n[users have defined](https://support.pagerduty.com/docs/edit-incidents#edit-incident-duration),\nif they exist."
           },
           "range_start": {
             "type": "string",
@@ -4298,7 +4302,7 @@
           },
           "total_engaged_seconds": {
             "type": "integer",
-            "description": "Total engaged time across all responders for incidents. Engaged time is measured from\nthe time a user engages with an incident (by acknowledging or accepting a responder request)\nuntil the incident is resolved. This may include periods in which the incidents were snoozed."
+            "description": "Total engaged time across all responders. Engaged time is measured from\nthe time a user engages with an incident (by acknowledging or accepting a responder request)\nuntil the incident is resolved. This may include periods in which the incidents were snoozed."
           },
           "total_escalation_count": {
             "type": "integer",
@@ -4347,6 +4351,10 @@
             "type": "integer",
             "description": "Total number of seconds incidents were snoozed."
           },
+          "total_user_defined_engaged_seconds": {
+            "type": "integer",
+            "description": "Total engaged time across all responders. Engaged time is measured from\nthe time a user engages with an incident (by acknowledging or accepting a responder request)\nuntil the incident is resolved. This may include periods in which the incidents were snoozed.\nThis metric uses the edited incident response effort values that \n[users have defined](https://support.pagerduty.com/docs/edit-incidents#edit-incident-duration),\nif they exist."
+          },
           "up_time_pct": {
             "type": "number",
             "description": "The percentage of time in the defined date range that the service was not interrupted\nby a [major incident](https://support.pagerduty.com/docs/operational-reviews#major-incidents).\nOnly included when aggregating by team, escalation policy, service, or all services."
@@ -4375,7 +4383,7 @@
           },
           "mean_engaged_seconds": {
             "type": "integer",
-            "description": "Mean engaged time across all responders for incidents that match the given filters.\nEngaged time is measured from the time a user engages with an incident (by\nacknowledging or accepting a responder request) until the incident is resolved.\nThis may include periods in which the incidents were snoozed."
+            "description": "Mean engaged time across all responders.\nEngaged time is measured from the time a user engages with an incident (by\nacknowledging or accepting a responder request) until the incident is resolved.\nThis may include periods in which the incidents were snoozed."
           },
           "mean_engaged_user_count": {
             "type": "integer",
@@ -4397,6 +4405,10 @@
             "type": "integer",
             "description": "Mean time from when an incident was triggered until it was resolved."
           },
+          "mean_user_defined_engaged_seconds": {
+            "type": "integer",
+            "description": "Mean engaged time across all responders. Engaged time is measured from the time \na user engages with an incident (by acknowledging or accepting a responder request) \nuntil the incident is resolved. This may include periods in which the incidents were snoozed.\nThis metric uses the incident response effort values that \n[users have defined](https://support.pagerduty.com/docs/edit-incidents#edit-incident-duration),\nif they exist."
+          },
           "range_start": {
             "type": "string",
             "description": "Start of the date range that the metrics were calculated for. Only included when an aggregate unit is specified in the request."
@@ -4415,7 +4427,7 @@
           },
           "total_engaged_seconds": {
             "type": "integer",
-            "description": "Total engaged time across all responders for incidents. Engaged time is measured from\nthe time a user engages with an incident (by acknowledging or accepting a responder request)\nuntil the incident is resolved. This may include periods in which the incidents were snoozed."
+            "description": "Total engaged time across all responders. Engaged time is measured from\nthe time a user engages with an incident (by acknowledging or accepting a responder request)\nuntil the incident is resolved. This may include periods in which the incidents were snoozed."
           },
           "total_escalation_count": {
             "type": "integer",
@@ -4463,6 +4475,10 @@
           "total_snoozed_seconds": {
             "type": "integer",
             "description": "Total number of seconds incidents were snoozed."
+          },
+          "total_user_defined_engaged_seconds": {
+            "type": "integer",
+            "description": "Total engaged time across all responders. Engaged time is measured from\nthe time a user engages with an incident (by acknowledging or accepting a responder request)\nuntil the incident is resolved. This may include periods in which the incidents were snoozed.\nThis metric uses the edited incident response effort values that \n[users have defined](https://support.pagerduty.com/docs/edit-incidents#edit-incident-duration),\nif they exist."
           },
           "up_time_pct": {
             "type": "number",
@@ -17051,7 +17067,7 @@
                               },
                               "mean_engaged_seconds": {
                                 "type": "integer",
-                                "description": "Mean engaged time across all responders for incidents that match the given filters.\nEngaged time is measured from the time a user engages with an incident (by\nacknowledging or accepting a responder request) until the incident is resolved.\nThis may include periods in which the incidents were snoozed."
+                                "description": "Mean engaged time across all responders.\nEngaged time is measured from the time a user engages with an incident (by\nacknowledging or accepting a responder request) until the incident is resolved.\nThis may include periods in which the incidents were snoozed."
                               },
                               "mean_engaged_user_count": {
                                 "type": "integer",
@@ -17072,6 +17088,10 @@
                               "mean_seconds_to_resolve": {
                                 "type": "integer",
                                 "description": "Mean time from when an incident was triggered until it was resolved."
+                              },
+                              "mean_user_defined_engaged_seconds": {
+                                "type": "integer",
+                                "description": "Mean engaged time across all responders. Engaged time is measured from the time \na user engages with an incident (by acknowledging or accepting a responder request) \nuntil the incident is resolved. This may include periods in which the incidents were snoozed.\nThis metric uses the incident response effort values that \n[users have defined](https://support.pagerduty.com/docs/edit-incidents#edit-incident-duration),\nif they exist."
                               },
                               "p50_seconds_to_first_ack": {
                                 "type": "integer",
@@ -17131,7 +17151,7 @@
                               },
                               "total_engaged_seconds": {
                                 "type": "integer",
-                                "description": "Total engaged time across all responders for incidents. Engaged time is measured from\nthe time a user engages with an incident (by acknowledging or accepting a responder request)\nuntil the incident is resolved. This may include periods in which the incidents were snoozed."
+                                "description": "Total engaged time across all responders. Engaged time is measured from\nthe time a user engages with an incident (by acknowledging or accepting a responder request)\nuntil the incident is resolved. This may include periods in which the incidents were snoozed."
                               },
                               "total_escalation_count": {
                                 "type": "integer",
@@ -17180,6 +17200,10 @@
                                 "type": "integer",
                                 "description": "Total number of seconds incidents were snoozed."
                               },
+                              "total_user_defined_engaged_seconds": {
+                                "type": "integer",
+                                "description": "Total engaged time across all responders. Engaged time is measured from\nthe time a user engages with an incident (by acknowledging or accepting a responder request)\nuntil the incident is resolved. This may include periods in which the incidents were snoozed.\nThis metric uses the edited incident response effort values that \n[users have defined](https://support.pagerduty.com/docs/edit-incidents#edit-incident-duration),\nif they exist."
+                              },
                               "up_time_pct": {
                                 "type": "number",
                                 "description": "The percentage of time in the defined date range that the service was not interrupted\nby a [major incident](https://support.pagerduty.com/docs/operational-reviews#major-incidents).\nOnly included when aggregating by team, escalation policy, service, or all services."
@@ -17207,6 +17231,7 @@
                           "mean_seconds_to_first_ack": 63,
                           "mean_seconds_to_mobilize": 41,
                           "mean_seconds_to_resolve": 380,
+                          "mean_user_defined_engaged_seconds": 366,
                           "range_start": "2023-01-01T00:00:00",
                           "total_business_hour_interruptions": 81,
                           "total_engaged_seconds": 3591,
@@ -17221,7 +17246,8 @@
                           "total_notifications": 2,
                           "total_off_hour_interruptions": 20,
                           "total_sleep_hour_interruptions": 21,
-                          "total_snoozed_seconds": 78
+                          "total_snoozed_seconds": 78,
+                          "total_user_defined_engaged_seconds": 3591
                         }
                       ],
                       "filters": {
@@ -17342,6 +17368,7 @@
                           "mean_seconds_to_first_ack": 380,
                           "mean_seconds_to_mobilize": 81,
                           "mean_seconds_to_resolve": 3591,
+                          "mean_user_defined_engaged_seconds": 81,
                           "team_id": "PDTEAM1",
                           "team_name": "Team 1",
                           "total_business_hour_interruptions": 5,
@@ -17358,6 +17385,7 @@
                           "total_off_hour_interruptions": 3,
                           "total_sleep_hour_interruptions": 1,
                           "total_snoozed_seconds": 341,
+                          "total_user_defined_engaged_seconds": 124,
                           "up_time_pct": 9.124123
                         },
                         {
@@ -17371,6 +17399,7 @@
                           "mean_seconds_to_first_ack": 380,
                           "mean_seconds_to_mobilize": 81,
                           "mean_seconds_to_resolve": 3591,
+                          "mean_user_defined_engaged_seconds": 81,
                           "team_id": "PDTEAM1",
                           "team_name": "Team 1",
                           "total_business_hour_interruptions": 5,
@@ -17387,6 +17416,7 @@
                           "total_off_hour_interruptions": 3,
                           "total_sleep_hour_interruptions": 1,
                           "total_snoozed_seconds": 341,
+                          "total_user_defined_engaged_seconds": 124,
                           "up_time_pct": 9.124123
                         }
                       ],
@@ -17497,6 +17527,7 @@
                           "mean_seconds_to_first_ack": 380,
                           "mean_seconds_to_mobilize": 81,
                           "mean_seconds_to_resolve": 3591,
+                          "mean_user_defined_engaged_seconds": 81,
                           "total_business_hour_interruptions": 5,
                           "total_engaged_seconds": 124,
                           "total_escalation_count": 20,
@@ -17511,6 +17542,7 @@
                           "total_off_hour_interruptions": 3,
                           "total_sleep_hour_interruptions": 1,
                           "total_snoozed_seconds": 341,
+                          "total_user_defined_engaged_seconds": 124,
                           "up_time_pct": 9.124123
                         }
                       ],
@@ -17617,6 +17649,7 @@
                           "mean_seconds_to_first_ack": 63,
                           "mean_seconds_to_mobilize": 41,
                           "mean_seconds_to_resolve": 380,
+                          "mean_user_defined_engaged_seconds": 366,
                           "range_start": "2023-06-11T00:00:00",
                           "service_id": "PPSCXAN",
                           "service_name": "Critical Prod Service 1",
@@ -17636,6 +17669,7 @@
                           "total_off_hour_interruptions": 20,
                           "total_sleep_hour_interruptions": 21,
                           "total_snoozed_seconds": 78,
+                          "total_user_defined_engaged_seconds": 3591,
                           "up_time_pct": 99.92677595628416
                         },
                         {
@@ -17646,6 +17680,7 @@
                           "mean_seconds_to_first_ack": 32,
                           "mean_seconds_to_mobilize": 32,
                           "mean_seconds_to_resolve": 87,
+                          "mean_user_defined_engaged_seconds": 432,
                           "range_start": "2023-06-10T00:00:00",
                           "service_id": "PPSCXAN",
                           "service_name": "Critical Prod Service 1",
@@ -17665,6 +17700,7 @@
                           "total_off_hour_interruptions": 42,
                           "total_sleep_hour_interruptions": 3,
                           "total_snoozed_seconds": 123,
+                          "total_user_defined_engaged_seconds": 3645,
                           "up_time_pct": 99.234416
                         }
                       ],
@@ -17777,6 +17813,7 @@
                           "mean_seconds_to_first_ack": 63,
                           "mean_seconds_to_mobilize": 41,
                           "mean_seconds_to_resolve": 380,
+                          "mean_user_defined_engaged_seconds": 366,
                           "total_business_hour_interruptions": 81,
                           "total_engaged_seconds": 3591,
                           "total_escalation_count": 5,
@@ -17791,6 +17828,7 @@
                           "total_off_hour_interruptions": 20,
                           "total_sleep_hour_interruptions": 21,
                           "total_snoozed_seconds": 78,
+                          "total_user_defined_engaged_seconds": 3591,
                           "up_time_pct": 99.92677595628416
                         }
                       ],
@@ -17897,6 +17935,7 @@
                           "mean_seconds_to_first_ack": 63,
                           "mean_seconds_to_mobilize": 41,
                           "mean_seconds_to_resolve": 380,
+                          "mean_user_defined_engaged_seconds": 366,
                           "range_start": "2023-06-11T00:00:00",
                           "team_id": "P3XUQ75",
                           "team_name": "Engineering",
@@ -17914,6 +17953,7 @@
                           "total_off_hour_interruptions": 20,
                           "total_sleep_hour_interruptions": 21,
                           "total_snoozed_seconds": 78,
+                          "total_user_defined_engaged_seconds": 3591,
                           "up_time_pct": 99.92677595628416
                         },
                         {
@@ -17924,6 +17964,7 @@
                           "mean_seconds_to_first_ack": 32,
                           "mean_seconds_to_mobilize": 32,
                           "mean_seconds_to_resolve": 87,
+                          "mean_user_defined_engaged_seconds": 432,
                           "range_start": "2023-06-10T00:00:00",
                           "team_id": "P3XUQ75",
                           "team_name": "Engineering",
@@ -17941,6 +17982,7 @@
                           "total_off_hour_interruptions": 42,
                           "total_sleep_hour_interruptions": 3,
                           "total_snoozed_seconds": 123,
+                          "total_user_defined_engaged_seconds": 3645,
                           "up_time_pct": 99.234416
                         }
                       ],
@@ -18049,6 +18091,7 @@
                           "mean_seconds_to_first_ack": 63,
                           "mean_seconds_to_mobilize": 41,
                           "mean_seconds_to_resolve": 380,
+                          "mean_user_defined_engaged_seconds": 366,
                           "total_business_hour_interruptions": 81,
                           "total_engaged_seconds": 3591,
                           "total_escalation_count": 5,
@@ -18062,7 +18105,8 @@
                           "total_notifications": 342,
                           "total_off_hour_interruptions": 20,
                           "total_sleep_hour_interruptions": 21,
-                          "total_snoozed_seconds": 78
+                          "total_snoozed_seconds": 78,
+                          "total_user_defined_engaged_seconds": 3591
                         }
                       ],
                       "filters": {
