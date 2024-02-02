@@ -29,6 +29,17 @@ Currently we rarely deprecate, and do not remove any API functionality.
   - `POST /status_pages/{id}/posts/{post_id}/postmortem`
   - `PUT /status_pages/{id}/posts/{post_id}/postmortem`
   - `DELETE /status_pages/{id}/posts/{post_id}/postmortem`
+- Added `total_user_defined_engaged_seconds` and `mean_user_defined_engaged_seconds` columns to the following analytics endpoints:
+  - `POST analytics/metrics/incidents/incidents/all`
+  - `POST analytics/metrics/incidents/services`
+  - `POST analytics/metrics/incidents/services/all`
+  - `POST analytics/metrics/incidents/teams`
+  - `POST analytics/metrics/incidents/teams/all`
+  - `POST analytics/metrics/incidents/escalation_policies`
+  - `POST analytics/metrics/incidents/escalation_policies/all`
+
+## 2024-01-30
+- Added four percentile metrics each for time to acknowledge and time to resolve to the `POST /analytics/metrics/incidents/all` endpoint.
 
 ## 2024-01-24
 - Clarified documentation on several Incident Workflows resources
