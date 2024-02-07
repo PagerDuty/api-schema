@@ -15253,7 +15253,43 @@
             "type": "array",
             "description": "Impacted services represent the status page services affected by a post update, and its impact.",
             "items": {
-              "$ref": "#/components/schemas/StatusPageImpact"
+              "type": "object",
+              "title": "StatusPagePostUpdateImpact",
+              "description": "Status Page Post Update Impact",
+              "properties": {
+                "service": {
+                  "description": "Status Page Service",
+                  "nullable": false,
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "An unique identifier within Status Page scope that defines a Service entry.",
+                      "nullable": false,
+                      "readOnly": true
+                    },
+                    "type": {
+                      "type": "string",
+                      "description": "The type of the object returned by the API - in this case, a Status Page Service."
+                    }
+                  }
+                },
+                "severity": {
+                  "description": "Status Page Severity",
+                  "nullable": false,
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "An unique identifier within Status Page scope that defines a Status Page Impact entry.",
+                      "nullable": false,
+                      "readOnly": true
+                    },
+                    "type": {
+                      "type": "string",
+                      "description": "The type of the object returned by the API - in this case, a Status Page Severity."
+                    }
+                  }
+                }
+              }
             },
             "minItems": 0
           },
@@ -15353,7 +15389,7 @@
             "type": "array",
             "description": "Impacted services represent the status page services affected by a post update, and its impact.",
             "items": {
-              "$ref": "#/components/schemas/StatusPageImpact"
+              "$ref": "#/components/schemas/StatusPagePostUpdate/properties/impacted_services/items"
             },
             "minItems": 0
           },
@@ -44204,6 +44240,7 @@
                         }
                       ],
                       "message": "<p>Message</p>",
+                      "update_frequency_ms": null,
                       "notify_subscribers": false,
                       "severity": {
                         "id": "PY5OM08",
@@ -44432,6 +44469,7 @@
                         }
                       ],
                       "message": "<p>Message</p>",
+                      "update_frequency_ms": null,
                       "notify_subscribers": false,
                       "severity": {
                         "id": "PY5OM08",
@@ -44491,6 +44529,7 @@
                               }
                             ],
                             "message": "<p>Message</p>",
+                            "update_frequency_ms": null,
                             "notify_subscribers": false,
                             "severity": {
                               "id": "PY5OM08",
