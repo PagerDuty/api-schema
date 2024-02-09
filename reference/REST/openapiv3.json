@@ -14852,7 +14852,7 @@
           },
           "post_type": {
             "type": "string",
-            "description": "The type of post to retrieve Impacts for.",
+            "description": "The type of the Post.",
             "nullable": false,
             "enum": [
               "incident",
@@ -14909,7 +14909,7 @@
           },
           "post_type": {
             "type": "string",
-            "description": "The type of post to retrieve Impacts for.",
+            "description": "The type of the Post.",
             "nullable": false,
             "enum": [
               "incident",
@@ -15027,7 +15027,7 @@
           },
           "post_type": {
             "type": "string",
-            "description": "The type of post to retrieve Impacts for.",
+            "description": "The type of the Post.",
             "nullable": false,
             "enum": [
               "incident",
@@ -15107,7 +15107,7 @@
           },
           "post_type": {
             "type": "string",
-            "description": "The type of post to retrieve Impacts for.",
+            "description": "The type of the Post.",
             "nullable": false,
             "enum": [
               "incident",
@@ -15125,16 +15125,6 @@
             "description": "The date and time the Post intent is concluded - only for maintenance post type.",
             "nullable": true,
             "format": "date-time"
-          },
-          "updates": {
-            "type": "array",
-            "description": "Post Updates to be associated with a Post",
-            "items": {
-              "$ref": "#/components/schemas/StatusPagePostUpdateRequest"
-            },
-            "nullable": false,
-            "minItems": 1,
-            "maxItems": 50
           },
           "status_page": {
             "description": "Status Page",
@@ -15161,7 +15151,7 @@
           "post_type",
           "starts_at",
           "ends_at",
-          "status_pag"
+          "status_page"
         ]
       },
       "StatusPagePostUpdate": {
@@ -15622,7 +15612,7 @@
           },
           "post_type": {
             "type": "string",
-            "description": "The type of post to retrieve Impacts for.",
+            "description": "The type of the Post.",
             "nullable": false,
             "enum": [
               "incident",
@@ -15759,7 +15749,7 @@
           },
           "post_type": {
             "type": "string",
-            "description": "The type of post to retrieve Impacts for.",
+            "description": "The type of the Post.",
             "nullable": false,
             "enum": [
               "incident",
@@ -44453,35 +44443,7 @@
                     "type": "status_page"
                   },
                   "title": "maintenance window for database upgrade",
-                  "type": "status_page_post",
-                  "updates": [
-                    {
-                      "impacted_services": [
-                        {
-                          "impact": {
-                            "id": "PY5OM08",
-                            "type": "status_page_impact"
-                          },
-                          "service": {
-                            "id": "PYHMEI3",
-                            "type": "status_page_service"
-                          }
-                        }
-                      ],
-                      "message": "<p>Message</p>",
-                      "update_frequency_ms": null,
-                      "notify_subscribers": false,
-                      "severity": {
-                        "id": "PY5OM08",
-                        "type": "status_page_severity"
-                      },
-                      "status": {
-                        "id": "P0400H4",
-                        "type": "status_page_status"
-                      },
-                      "type": "status_page_post_update"
-                    }
-                  ]
+                  "type": "status_page_post"
                 }
               }
             }
