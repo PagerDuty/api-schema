@@ -20238,8 +20238,10 @@
               "examples": {
                 "request": {
                   "value": {
-                    "metadata": {
-                      "incident_id": "Q2LAR4ADCXC8IB"
+                    "invocation": {
+                      "metadata": {
+                        "incident_id": "Q2LAR4ADCXC8IB"
+                      }
                     }
                   }
                 }
