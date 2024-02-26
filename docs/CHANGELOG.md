@@ -4,6 +4,10 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+## 2024-02-26
+- Added documentation for adding Incident Custom Field updates to Global Event Orchestration
+- Added documentation for adding Incident Custom Field updates to Service Event Orchestration
+
 ## 2024-01-31
 - Added external status page endpoints
   - `GET /status_pages`
