@@ -1263,6 +1263,16 @@
                           "target": "event.source"
                         }
                       ],
+                      "incident_custom_field_updates": [
+                        {
+                          "id": "PEXCK89",
+                          "value": "#my-team-channel"
+                        },
+                        {
+                          "id": "PN1C4A2",
+                          "value": "{{event.timestamp}}"
+                        }
+                      ],
                       "route_to": "step-two"
                     }
                   }
@@ -1281,7 +1291,13 @@
                     ],
                     "actions": {
                       "priority": "P0IN2KQ",
-                      "suppress": false
+                      "suppress": false,
+                      "incident_custom_field_updates": [
+                        {
+                          "id": "PEXCK89",
+                          "value": "#p1-incident-response"
+                        }
+                      ]
                     }
                   },
                   {
@@ -1313,7 +1329,13 @@
             ],
             "catch_all": {
               "actions": {
-                "suppress": true
+                "suppress": true,
+                "incident_custom_field_updates": [
+                  {
+                    "id": "PEXCK89",
+                    "value": "#general-incident-notifications"
+                  }
+                ]
               }
             },
             "created_at": "2021-11-18T16:42:01Z",
@@ -3853,7 +3875,17 @@
                                   "action_id": "01CSB5SMOKCKVRI5GN0LJG7SMB"
                                 }
                               ],
-                              "route_to": "step-two"
+                              "route_to": "step-two",
+                              "incident_custom_field_updates": [
+                                {
+                                  "id": "PEXCK89",
+                                  "value": "#my-team-channel"
+                                },
+                                {
+                                  "id": "PN1C4A2",
+                                  "value": "{{event.timestamp}}"
+                                }
+                              ]
                             }
                           }
                         ]
@@ -3872,7 +3904,13 @@
                             "actions": {
                               "annotate": "Please use our P1 runbook: https://docs.test/p1-runbook",
                               "priority": "P0IN2KQ",
-                              "suppress": false
+                              "suppress": false,
+                              "incident_custom_field_updates": [
+                                {
+                                  "id": "PEXCK89",
+                                  "value": "#p1-incident-response"
+                                }
+                              ]
                             }
                           },
                           {
@@ -3906,6 +3944,12 @@
                                     }
                                   ]
                                 }
+                              ],
+                              "incident_custom_field_updates": [
+                                {
+                                  "id": "PEXCK89",
+                                  "value": "#my-team-channel"
+                                }
                               ]
                             }
                           },
@@ -3926,7 +3970,13 @@
                     ],
                     "catch_all": {
                       "actions": {
-                        "suppress": true
+                        "suppress": true,
+                        "incident_custom_field_updates": [
+                          {
+                            "id": "PEXCK89",
+                            "value": "#general-incident-notifications"
+                          }
+                        ]
                       }
                     },
                     "created_at": "2021-11-18T16:42:01Z",
@@ -13248,6 +13298,9 @@
                                   },
                                   {
                                     "$ref": "#/components/schemas/OrchestrationGlobal/allOf/1/properties/orchestration_path/properties/catch_all/properties/actions/allOf/3"
+                                  },
+                                  {
+                                    "$ref": "#/components/schemas/OrchestrationGlobal/allOf/1/properties/orchestration_path/properties/catch_all/properties/actions/allOf/4"
                                   }
                                 ]
                               }
@@ -13289,7 +13342,7 @@
                               },
                               "annotate": {
                                 "type": "string",
-                                "description": "Add this text as a note on the resulting incident."
+                                "description": "Add this text as a note on the resulting incident. AIOps users can additionally use the {{event}} variable to include elements of the event payload in the note."
                               }
                             }
                           },
@@ -13328,7 +13381,8 @@
                                             "type": "string"
                                           },
                                           "value": {
-                                            "type": "string"
+                                            "type": "string",
+                                            "description": "AIOps users can additionally use the {{event}} variable to include elements of the event payload in the header value."
                                           }
                                         }
                                       }
@@ -13343,10 +13397,35 @@
                                             "type": "string"
                                           },
                                           "value": {
-                                            "type": "string"
+                                            "type": "string",
+                                            "description": "AIOps users can additionally use the {{event}} variable to include elements of the event payload in the parameter value."
                                           }
                                         }
                                       }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "incident_custom_field_updates": {
+                                "type": "array",
+                                "description": "Configure custom field updates for the incident.",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "id": {
+                                      "type": "string",
+                                      "description": "Unique identifier for the custom field resource. You can find the list of IDs by calling the List Custom Fields endpoint.",
+                                      "example": "PEXCK89"
+                                    },
+                                    "value": {
+                                      "type": "string",
+                                      "description": "A value that will be used to populate the specified Incident Custom Field. AIOps users can additionally use the {{event}} variable to include elements of the event payload in the custom field value.",
+                                      "example": "High CPU on server"
                                     }
                                   }
                                 }
@@ -13855,6 +13934,9 @@
                                       },
                                       {
                                         "$ref": "#/components/schemas/OrchestrationGlobal/allOf/1/properties/orchestration_path/properties/catch_all/properties/actions/allOf/3"
+                                      },
+                                      {
+                                        "$ref": "#/components/schemas/OrchestrationGlobal/allOf/1/properties/orchestration_path/properties/catch_all/properties/actions/allOf/4"
                                       }
                                     ]
                                   }
@@ -13907,6 +13989,9 @@
                               },
                               {
                                 "$ref": "#/components/schemas/OrchestrationGlobal/allOf/1/properties/orchestration_path/properties/catch_all/properties/actions/allOf/3"
+                              },
+                              {
+                                "$ref": "#/components/schemas/OrchestrationGlobal/allOf/1/properties/orchestration_path/properties/catch_all/properties/actions/allOf/4"
                               }
                             ]
                           }
@@ -13954,6 +14039,16 @@
                               "target": "event.source"
                             }
                           ],
+                          "incident_custom_field_updates": [
+                            {
+                              "id": "PEXCK89",
+                              "value": "#my-team-channel"
+                            },
+                            {
+                              "id": "PN1C4A2",
+                              "value": "{{event.timestamp}}"
+                            }
+                          ],
                           "route_to": "step-two"
                         }
                       }
@@ -13971,7 +14066,13 @@
                         "actions": {
                           "annotate": "Please use our P1 runbook: https://docs.test/p1-runbook",
                           "priority": "P0IN2KQ",
-                          "suppress": false
+                          "suppress": false,
+                          "incident_custom_field_updates": [
+                            {
+                              "id": "PEXCK89",
+                              "value": "#p1-incident-response"
+                            }
+                          ]
                         }
                       },
                       {
@@ -14017,6 +14118,12 @@
                                 }
                               ]
                             }
+                          ],
+                          "incident_custom_field_updates": [
+                            {
+                              "id": "PEXCK89",
+                              "value": "#my-team-channel"
+                            }
                           ]
                         }
                       },
@@ -14035,7 +14142,13 @@
                 ],
                 "catch_all": {
                   "actions": {
-                    "suppress": true
+                    "suppress": true,
+                    "incident_custom_field_updates": [
+                      {
+                        "id": "PEXCK89",
+                        "value": "#general-incident-notifications"
+                      }
+                    ]
                   }
                 },
                 "created_at": "2021-11-18T16:42:01Z",
@@ -14094,7 +14207,9 @@
               "pagerduty_automation_actions",
               "extractions",
               "variables",
-              "suppress"
+              "suppress",
+              "incident_custom_field_updates",
+              "global_orchestrations"
             ]
           },
           "feature_type": {
@@ -14103,7 +14218,8 @@
             "enum": [
               "conditions",
               "actions",
-              "nested_rules"
+              "nested_rules",
+              "global_orchestrations"
             ]
           },
           "warning_type": {
@@ -14111,6 +14227,41 @@
             "description": "The type of warning that is being returned for the rule.",
             "enum": [
               "forbidden_feature"
+            ]
+          }
+        }
+      },
+      "OrchestrationWarningInvalidData": {
+        "type": "object",
+        "description": "This rule includes invalid data for a feature item.",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "A description of the warning and any potential side effects."
+          },
+          "rule_id": {
+            "type": "string",
+            "description": "The ID of the rule using the feature."
+          },
+          "feature": {
+            "type": "string",
+            "description": "The feature that includes invalid data.",
+            "enum": [
+              "incident_custom_field_updates"
+            ]
+          },
+          "feature_type": {
+            "type": "string",
+            "description": "Specifies the feature type of the impacted item.",
+            "enum": [
+              "actions"
+            ]
+          },
+          "warning_type": {
+            "type": "string",
+            "description": "The type of warning that is being returned for the rule.",
+            "enum": [
+              "invalid_data"
             ]
           }
         }
@@ -25781,8 +25932,18 @@
                                     "target": "event.source"
                                   }
                                 ],
-                                "route_to": "step-two"
-                              }
+                                "incident_custom_field_updates": [
+                                  {
+                                    "id": "PEXCK89",
+                                    "value": "#my-team-channel"
+                                  },
+                                  {
+                                    "id": "PN1C4A2",
+                                    "value": "{{event.timestamp}}"
+                                  }
+                                ]
+                              },
+                              "route_to": "step-two"
                             }
                           ]
                         },
@@ -25799,7 +25960,13 @@
                               ],
                               "actions": {
                                 "priority": "P0IN2KQ",
-                                "suppress": false
+                                "suppress": false,
+                                "incident_custom_field_updates": [
+                                  {
+                                    "id": "PEXCK89",
+                                    "value": "#p1-incident-response"
+                                  }
+                                ]
                               }
                             },
                             {
@@ -25832,7 +25999,13 @@
                       "catch_all": {
                         "actions": {
                           "suppress": true
-                        }
+                        },
+                        "incident_custom_field_updates": [
+                          {
+                            "id": "PEXCK89",
+                            "value": "#general-incident-notifications"
+                          }
+                        ]
                       }
                     }
                   }
@@ -25856,11 +26029,13 @@
                       "properties": {
                         "warnings": {
                           "type": "array",
-                          "description": "List of applicable warnings messages for each rule using a feature not available on your account plan.",
                           "items": {
                             "anyOf": [
                               {
                                 "$ref": "#/components/schemas/OrchestrationWarningIneligible"
+                              },
+                              {
+                                "$ref": "#/components/schemas/OrchestrationWarningInvalidData"
                               }
                             ]
                           }
@@ -25909,6 +26084,16 @@
                                       "target": "event.source"
                                     }
                                   ],
+                                  "incident_custom_field_updates": [
+                                    {
+                                      "id": "PEXCK89",
+                                      "value": "#my-team-channel"
+                                    },
+                                    {
+                                      "id": "PN1C4A2",
+                                      "value": "{{event.timestamp}}"
+                                    }
+                                  ],
                                   "route_to": "step-two"
                                 }
                               }
@@ -25928,7 +26113,13 @@
                                 "actions": {
                                   "priority": "P0IN2KQ",
                                   "suppress": false
-                                }
+                                },
+                                "incident_custom_field_updates": [
+                                  {
+                                    "id": "PEXCK89",
+                                    "value": "#p1-incident-response"
+                                  }
+                                ]
                               },
                               {
                                 "label": "Drop all events from the very-noisy monitoring tool",
@@ -25959,7 +26150,13 @@
                         ],
                         "catch_all": {
                           "actions": {
-                            "suppress": true
+                            "suppress": true,
+                            "incident_custom_field_updates": [
+                              {
+                                "id": "PEXCK89",
+                                "value": "#general-incident-notifications"
+                              }
+                            ]
                           }
                         },
                         "created_at": "2021-11-18T16:42:01Z",
@@ -26003,6 +26200,13 @@
                           "feature_type": "conditions",
                           "message": "This rule uses Recurring Condition, which is a condition not available on your account plan. The rule will be updated, but it will not be evaluated by events",
                           "rule_id": "cd770384",
+                          "warning_type": "forbidden_feature"
+                        },
+                        {
+                          "feature": "incident_custom_field_updates",
+                          "feature_type": "actions",
+                          "message": "This rule uses Incident Custom Field update, which is an action not available on your account plan. The rule will be updated, but the action will not be fired when the rule is evaluated",
+                          "rule_id": "c91f72f3",
                           "warning_type": "forbidden_feature"
                         }
                       ]
@@ -26644,8 +26848,18 @@
                                     "action_id": "01CSB5SMOKCKVRI5GN0LJG7SMB"
                                   }
                                 ],
-                                "route_to": "step-two"
-                              }
+                                "incident_custom_field_updates": [
+                                  {
+                                    "id": "PEXCK89",
+                                    "value": "#my-team-channel"
+                                  },
+                                  {
+                                    "id": "PN1C4A2",
+                                    "value": "{{event.timestamp}}"
+                                  }
+                                ]
+                              },
+                              "route_to": "step-two"
                             }
                           ]
                         },
@@ -26663,7 +26877,13 @@
                               "actions": {
                                 "annotate": "Please use our P1 runbook: https://docs.test/p1-runbook",
                                 "priority": "P0IN2KQ",
-                                "suppress": false
+                                "suppress": false,
+                                "incident_custom_field_updates": [
+                                  {
+                                    "id": "PEXCK89",
+                                    "value": "#p1-incident-response"
+                                  }
+                                ]
                               }
                             },
                             {
@@ -26697,6 +26917,12 @@
                                       }
                                     ]
                                   }
+                                ],
+                                "incident_custom_field_updates": [
+                                  {
+                                    "id": "PEXCK89",
+                                    "value": "#my-team-channel"
+                                  }
                                 ]
                               }
                             },
@@ -26718,7 +26944,13 @@
                       "catch_all": {
                         "actions": {
                           "suppress": true
-                        }
+                        },
+                        "incident_custom_field_updates": [
+                          {
+                            "id": "PEXCK89",
+                            "value": "#general-incident-notifications"
+                          }
+                        ]
                       }
                     }
                   }
@@ -26742,11 +26974,13 @@
                       "properties": {
                         "warnings": {
                           "type": "array",
-                          "description": "List of applicable warnings messages for each rule using a feature not available on your account plan.",
                           "items": {
                             "anyOf": [
                               {
                                 "$ref": "#/components/schemas/OrchestrationWarningIneligible"
+                              },
+                              {
+                                "$ref": "#/components/schemas/OrchestrationWarningInvalidData"
                               }
                             ]
                           }
@@ -26800,6 +27034,16 @@
                                       "action_id": "01CSB5SMOKCKVRI5GN0LJG7SMB"
                                     }
                                   ],
+                                  "incident_custom_field_updates": [
+                                    {
+                                      "id": "PEXCK89",
+                                      "value": "#my-team-channel"
+                                    },
+                                    {
+                                      "id": "PN1C4A2",
+                                      "value": "{{event.timestamp}}"
+                                    }
+                                  ],
                                   "route_to": "step-two"
                                 }
                               }
@@ -26819,7 +27063,13 @@
                                 "actions": {
                                   "annotate": "Please use our P1 runbook: https://docs.test/p1-runbook",
                                   "priority": "P0IN2KQ",
-                                  "suppress": false
+                                  "suppress": false,
+                                  "incident_custom_field_updates": [
+                                    {
+                                      "id": "PEXCK89",
+                                      "value": "#p1-incident-response"
+                                    }
+                                  ]
                                 }
                               },
                               {
@@ -26873,7 +27123,13 @@
                         ],
                         "catch_all": {
                           "actions": {
-                            "suppress": true
+                            "suppress": true,
+                            "incident_custom_field_updates": [
+                              {
+                                "id": "PEXCK89",
+                                "value": "#general-incident-notifications"
+                              }
+                            ]
                           }
                         },
                         "created_at": "2021-11-18T16:42:01Z",
@@ -26930,7 +27186,14 @@
                           "feature": "recurring_condition",
                           "feature_type": "conditions",
                           "message": "This rule uses Recurring Condition, which is a condition not available on your account plan. The rule will be updated, but it will not be evaluated by events",
-                          "rule_id": "cd770384",
+                          "rule_id": "c91f72f3",
+                          "warning_type": "forbidden_feature"
+                        },
+                        {
+                          "feature": "incident_custom_field_updates",
+                          "feature_type": "actions",
+                          "message": "This rule uses Incident Custom Field update, which is an action not available on your account plan. The rule will be updated, but the action will not be fired when the rule is evaluated",
+                          "rule_id": "4g6d2a901",
                           "warning_type": "forbidden_feature"
                         }
                       ]
