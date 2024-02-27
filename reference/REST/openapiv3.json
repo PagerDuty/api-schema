@@ -15414,8 +15414,8 @@
                     }
                   }
                 },
-                "severity": {
-                  "description": "Status Page Severity",
+                "impact": {
+                  "description": "Status Page Impact",
                   "nullable": false,
                   "properties": {
                     "id": {
@@ -15426,7 +15426,7 @@
                     },
                     "type": {
                       "type": "string",
-                      "description": "The type of the object returned by the API - in this case, a Status Page Severity."
+                      "description": "The type of the object returned by the API - in this case, a Status Page Impact."
                     }
                   }
                 }
