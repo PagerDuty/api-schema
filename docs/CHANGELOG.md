@@ -4,6 +4,9 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+## 2024-03-06
+- Added `acknowledged_user_ids`, `acknowledged_user_names`, `assigned_user_ids`, and `assigned_user_names` columns to `analytics/raw/incidents` and `analytics/raw/incidents/:id`
+
 ## 2024-02-26
 - Added documentation for adding Incident Custom Field updates to Global Event Orchestration
 - Added documentation for adding Incident Custom Field updates to Service Event Orchestration
