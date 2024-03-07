@@ -4747,6 +4747,10 @@
             },
             "description": "The names of the users who acknowledged the incident."
           },
+          "acknowledgement_count": {
+            "type": "integer",
+            "description": "Total count of acknowledgements in the incident."
+          },
           "assigned_user_ids": {
             "type": "array",
             "items": {
@@ -18777,6 +18781,7 @@
                           "acknowledged_user_names": [
                             "John Smith"
                           ],
+                          "acknowledgement_count": 1,
                           "assigned_user_ids": [
                             "PRJ4208",
                             "PA02301"
@@ -18831,6 +18836,7 @@
                           "acknowledged_user_names": [
                             "Sally Styles"
                           ],
+                          "acknowledgement_count": 1,
                           "assigned_user_ids": [
                             "PMT4102"
                           ],
@@ -19097,6 +19103,7 @@
                         "acknowledged_user_names": [
                           "Santos Dicera"
                         ],
+                        "acknowledgement_count": 1,
                         "assigned_user_ids": [
                           "PRJ4208",
                           "PA02301"
