@@ -9242,11 +9242,13 @@
               },
               "alert_creation": {
                 "type": "string",
-                "description": "Whether a service creates only incidents, or both alerts and incidents. A service must create alerts in order to enable incident merging.\n* \"create_incidents\" - The service will create one incident and zero alerts for each incoming event.\n* \"create_alerts_and_incidents\" - The service will create one incident and one associated alert for each incoming event.\n",
+                "deprecated": true,
+                "description": "Whether a service creates only incidents, or both alerts and incidents. A service must create alerts in order to enable incident merging.\n* \"create_incidents\" - The service will create one incident and zero alerts for each incoming event.\n* \"create_alerts_and_incidents\" - The service will create one incident and one associated alert for each incoming event.\nThis attribute has been deprecated as all services will be migrated to use alerts and incidents. Afterward, the incident only service setting will no longer be available. For details, please refer to the knowledge base: https://support.pagerduty.com/docs/alerts#enable-and-disable-alerts-on-a-service.\n",
                 "enum": [
                   "create_incidents",
                   "create_alerts_and_incidents"
-                ]
+                ],
+                "default": "create_alerts_and_incidents"
               },
               "alert_grouping_parameters": {
                 "$ref": "#/components/schemas/AlertGroupingParameters"
