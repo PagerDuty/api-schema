@@ -793,7 +793,7 @@
       },
       "SlackConnectionPriorities": {
         "title": "Slack Connection Priorities",
-        "description": "Configuration item of the Slack connection allows you to filter events by priorities.",
+        "description": "The configuration item of the Slack connection enables you to filter events based on priorities. When set to 'null' or an empty array, the connection permits events with any priority, even those without a specified priority. Alternatively, events are filtered based on the provided priority codes. Notably, the special code 'no_priority' can be transmitted independently or alongside other priority codes.",
         "nullable": true,
         "type": "array",
         "items": {
