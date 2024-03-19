@@ -4,6 +4,9 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+## 2024-03-19
+- Added addtional clarification for the different allowed values of event priorities when configuring Slack service connections.
+
 ## 2024-03-13
 - Marked `alert_creation` within the service model as deprecated and add knowledge base reference for end-of-life documentation.
 
