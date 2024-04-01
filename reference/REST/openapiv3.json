@@ -4751,6 +4751,10 @@
             "type": "integer",
             "description": "Total count of acknowledgements in the incident."
           },
+          "active_user_count": {
+            "type": "integer",
+            "description": "Total number of responders who either acknowledged the incident or accepted a responder request."
+          },
           "assigned_user_ids": {
             "type": "array",
             "items": {
@@ -4767,7 +4771,7 @@
           },
           "assignment_count": {
             "type": "integer",
-            "description": "Total count of instances where responders were assigned an incident (including through reassignment or escalation) or accepted a responder request."
+            "description": "Total count of instances where responders were assigned an incident (including through reassignment or escalation)."
           },
           "auto_resolved": {
             "type": "boolean",
@@ -4812,6 +4816,20 @@
           "incident_number": {
             "type": "integer",
             "description": "The PagerDuty incident number."
+          },
+          "joined_user_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The IDs of the users who either acknowledged the incident or accepted a responder request."
+          },
+          "joined_user_names": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The names of the users who either acknowledged the incident or accepted a responder request."
           },
           "major": {
             "type": "boolean",
@@ -18784,6 +18802,7 @@
                             "John Smith"
                           ],
                           "acknowledgement_count": 1,
+                          "active_user_count": 3,
                           "assigned_user_ids": [
                             "PRJ4208",
                             "PA02301"
@@ -18804,6 +18823,16 @@
                           "escalation_policy_name": "Escalation Policy 1",
                           "id": "PYC0H08",
                           "incident_number": 928,
+                          "joined_user_ids": [
+                            "PRJ4208",
+                            "PA02301",
+                            "P40D0J1"
+                          ],
+                          "joined_user_names": [
+                            "John Smith",
+                            "Jane Doe",
+                            "Wanda Evans"
+                          ],
                           "major": false,
                           "manual_escalation_count": 0,
                           "off_hour_interruptions": 4,
@@ -18839,6 +18868,7 @@
                             "Sally Styles"
                           ],
                           "acknowledgement_count": 1,
+                          "active_user_count": 1,
                           "assigned_user_ids": [
                             "PMT4102"
                           ],
@@ -18856,6 +18886,12 @@
                           "escalation_policy_name": "Escalation Policy 1",
                           "id": "PCOOHCY",
                           "incident_number": 929,
+                          "joined_user_ids": [
+                            "PMT4102"
+                          ],
+                          "joined_user_names": [
+                            "Sally Styles"
+                          ],
                           "major": false,
                           "manual_escalation_count": 0,
                           "off_hour_interruptions": 3,
@@ -19106,6 +19142,7 @@
                           "Santos Dicera"
                         ],
                         "acknowledgement_count": 1,
+                        "active_user_count": 2,
                         "assigned_user_ids": [
                           "PRJ4208",
                           "PA02301"
@@ -19126,6 +19163,14 @@
                         "escalation_policy_name": "Sputnik",
                         "id": "PJASD33",
                         "incident_number": 924,
+                        "joined_user_ids": [
+                          "PRJ4208",
+                          "PA02301"
+                        ],
+                        "joined_user_names": [
+                          "Santos Dicera",
+                          "Jane Doe"
+                        ],
                         "major": true,
                         "manual_escalation_count": 0,
                         "off_hour_interruptions": 2,
