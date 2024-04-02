@@ -3039,6 +3039,15 @@
           "type": "string"
         }
       },
+      "event_orchestration_cache_variable_id": {
+        "name": "cache_variable_id",
+        "description": "The ID of a Cache Variable.",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
       "urgency": {
         "name": "urgency",
         "in": "query",
@@ -3605,6 +3614,113 @@
         }
       }
     },
+    "requestBodies": {
+      "OrchestrationCacheVariablePostRequest": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "cache_variable": {
+                  "$ref": "#/components/schemas/OrchestrationCacheVariable"
+                }
+              },
+              "required": [
+                "cache_variable"
+              ]
+            },
+            "examples": {
+              "recent_value": {
+                "summary": "Request Example: Recent value cache variable",
+                "value": {
+                  "cache_variable": {
+                    "name": "example_1",
+                    "conditions": [
+                      {
+                        "expression": "not event.custom_details.errors exists"
+                      }
+                    ],
+                    "configuration": {
+                      "type": "recent_value",
+                      "source": "event.summary",
+                      "regex": ".*"
+                    }
+                  }
+                }
+              },
+              "trigger_event_count": {
+                "summary": "Request Example: Trigger event count cache variable",
+                "value": {
+                  "cache_variable": {
+                    "name": "example_2",
+                    "configuration": {
+                      "type": "trigger_event_count",
+                      "ttl_seconds": 30
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "OrchestrationCacheVariablePutRequest": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "cache_variable": {
+                  "$ref": "#/components/schemas/OrchestrationCacheVariable"
+                }
+              },
+              "required": [
+                "cache_variable"
+              ]
+            },
+            "examples": {
+              "update_conditions": {
+                "summary": "Request Example: Update conditions",
+                "value": {
+                  "cache_variable": {
+                    "name": "example_1",
+                    "conditions": [
+                      {
+                        "expression": "event.summary matches 'exception'"
+                      },
+                      {
+                        "expression": "event.summary matches 'error'"
+                      }
+                    ]
+                  }
+                }
+              },
+              "update_configuration": {
+                "summary": "Request Example: Update configuration",
+                "value": {
+                  "cache_variable": {
+                    "name": "example_1",
+                    "configuration": {
+                      "type": "trigger_event_count",
+                      "ttl_seconds": 2
+                    }
+                  }
+                }
+              },
+              "update_disabled": {
+                "summary": "Request Example: Update disabled state",
+                "value": {
+                  "cache_variable": {
+                    "name": "example_1",
+                    "disabled": true
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "responses": {
       "ArgumentError": {
         "description": "Caller provided invalid arguments. Please review the response for error details. Retrying with the same arguments will *not* work.",
@@ -3741,6 +3857,332 @@
           "application/json": {
             "schema": {
               "$ref": "#/components/responses/Conflict/content/application~1json/schema"
+            }
+          }
+        }
+      },
+      "OrchestrationCacheVariableListResponse": {
+        "description": "The Cache Variables for this Event Orchestration.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "cache_variables": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OrchestrationCacheVariable"
+                  }
+                }
+              }
+            },
+            "examples": {
+              "response": {
+                "summary": "Response Example",
+                "value": {
+                  "cache_variables": [
+                    {
+                      "id": "294c3ee9-ae83-4da7-828d-107c71dc9316",
+                      "name": "cache_var_1",
+                      "conditions": [
+                        {
+                          "expression": "event.source exists"
+                        },
+                        {
+                          "expression": "event.severity matches 'critical'"
+                        }
+                      ],
+                      "configuration": {
+                        "type": "recent_value",
+                        "source": "event.source",
+                        "regex": "www (.*) service"
+                      },
+                      "created_at": "2021-11-18T16:42:01Z",
+                      "created_by": {
+                        "id": "P8B9WR8",
+                        "self": "https://api.pagerduty.com/users/P8B9WR8",
+                        "type": "user_reference"
+                      },
+                      "updated_at": "2021-11-18T16:42:01Z",
+                      "updated_by": {
+                        "id": "P8B9WR8",
+                        "self": "https://api.pagerduty.com/users/P8B9WR8",
+                        "type": "user_reference"
+                      }
+                    },
+                    {
+                      "id": "2a6d02d5-6365-4326-aaf1-6a719e990245",
+                      "name": "cache_var_2",
+                      "conditions": [],
+                      "configuration": {
+                        "type": "trigger_event_count",
+                        "ttl_seconds": 60
+                      },
+                      "disabled": true,
+                      "created_at": "2021-11-18T16:42:01Z",
+                      "created_by": {
+                        "id": "P8B9WR8",
+                        "self": "https://api.pagerduty.com/users/P8B9WR8",
+                        "type": "user_reference"
+                      },
+                      "updated_at": "2021-11-18T16:42:01Z",
+                      "updated_by": {
+                        "id": "P8B9WR8",
+                        "self": "https://api.pagerduty.com/users/P8B9WR8",
+                        "type": "user_reference"
+                      }
+                    }
+                  ],
+                  "total": 2
+                }
+              }
+            }
+          }
+        }
+      },
+      "OrchestrationCacheVariableGetResponse": {
+        "description": "The fetched Cache Variable for this Event Orchestration.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "cache_variable": {
+                  "$ref": "#/components/schemas/OrchestrationCacheVariable"
+                }
+              }
+            },
+            "examples": {
+              "response": {
+                "summary": "Response Example",
+                "value": {
+                  "cache_variable": [
+                    {
+                      "id": "64122e97-de81-4554-9d7c-c219cef351cd",
+                      "name": "cache_var_1",
+                      "conditions": [
+                        {
+                          "expression": "raw_event.class exists and event.summary matches part 'unstable'"
+                        }
+                      ],
+                      "configuration": {
+                        "type": "recent_value",
+                        "source": "event.custom_details.work_id",
+                        "regex": ".*"
+                      },
+                      "created_at": "2021-11-18T16:42:01Z",
+                      "created_by": {
+                        "id": "P8B9WR8",
+                        "self": "https://api.pagerduty.com/users/P8B9WR8",
+                        "type": "user_reference"
+                      },
+                      "updated_at": "2021-11-18T16:42:01Z",
+                      "updated_by": {
+                        "id": "P8B9WR8",
+                        "self": "https://api.pagerduty.com/users/P8B9WR8",
+                        "type": "user_reference"
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "OrchestrationCacheVariablePostResponse": {
+        "description": "The created Cache Variable for this Event Orchestration.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "cache_variable": {
+                  "$ref": "#/components/schemas/OrchestrationCacheVariable"
+                }
+              }
+            },
+            "examples": {
+              "recent_value": {
+                "summary": "Response Example: Recent value cache variable",
+                "value": {
+                  "cache_variable": [
+                    {
+                      "id": "66bb56c3-2a17-44f3-9193-06b166d759ad",
+                      "name": "example_1",
+                      "conditions": [
+                        {
+                          "expression": "not event.custom_details.errors exists"
+                        }
+                      ],
+                      "configuration": {
+                        "type": "recent_value",
+                        "source": "event.summary",
+                        "regex": ".*"
+                      },
+                      "created_at": "2021-11-18T16:42:01Z",
+                      "created_by": {
+                        "id": "P8B9WR8",
+                        "self": "https://api.pagerduty.com/users/P8B9WR8",
+                        "type": "user_reference"
+                      },
+                      "updated_at": "2021-11-18T16:42:01Z",
+                      "updated_by": {
+                        "id": "P8B9WR8",
+                        "self": "https://api.pagerduty.com/users/P8B9WR8",
+                        "type": "user_reference"
+                      }
+                    }
+                  ]
+                }
+              },
+              "trigger_event_count": {
+                "summary": "Response Example: Trigger event count cache variable",
+                "value": {
+                  "cache_variable": [
+                    {
+                      "id": "f08cdd8d-10a5-4c70-b508-82ab5c365a43",
+                      "name": "example_2",
+                      "conditions": [],
+                      "configuration": {
+                        "type": "trigger_event_count",
+                        "ttl_seconds": 30
+                      },
+                      "created_at": "2021-11-18T16:42:01Z",
+                      "created_by": {
+                        "id": "P8B9WR8",
+                        "self": "https://api.pagerduty.com/users/P8B9WR8",
+                        "type": "user_reference"
+                      },
+                      "updated_at": "2021-11-18T16:42:01Z",
+                      "updated_by": {
+                        "id": "P8B9WR8",
+                        "self": "https://api.pagerduty.com/users/P8B9WR8",
+                        "type": "user_reference"
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "OrchestrationCacheVariablePutResponse": {
+        "description": "The updated Cache Variable for this Event Orchestration.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "cache_variable": {
+                  "$ref": "#/components/schemas/OrchestrationCacheVariable"
+                }
+              }
+            },
+            "examples": {
+              "update_conditions": {
+                "summary": "Response Example: Recent value cache variable",
+                "value": {
+                  "cache_variable": [
+                    {
+                      "id": "66bb56c3-2a17-44f3-9193-06b166d759ad",
+                      "name": "example_1",
+                      "conditions": [
+                        {
+                          "expression": "event.summary matches 'exception'"
+                        },
+                        {
+                          "expression": "event.summary matches 'error'"
+                        }
+                      ],
+                      "configuration": {
+                        "type": "recent_value",
+                        "source": "event.summary",
+                        "regex": ".*"
+                      },
+                      "created_at": "2021-11-18T16:42:01Z",
+                      "created_by": {
+                        "id": "P8B9WR8",
+                        "self": "https://api.pagerduty.com/users/P8B9WR8",
+                        "type": "user_reference"
+                      },
+                      "updated_at": "2021-11-18T16:42:01Z",
+                      "updated_by": {
+                        "id": "P8B9WR8",
+                        "self": "https://api.pagerduty.com/users/P8B9WR8",
+                        "type": "user_reference"
+                      }
+                    }
+                  ]
+                }
+              },
+              "update_configuration": {
+                "summary": "Response Example: Trigger event count cache variable",
+                "value": {
+                  "cache_variable": [
+                    {
+                      "id": "66bb56c3-2a17-44f3-9193-06b166d759ad",
+                      "name": "example_1",
+                      "conditions": [
+                        {
+                          "expression": "not event.custom_details.errors exists"
+                        }
+                      ],
+                      "configuration": {
+                        "type": "trigger_event_count",
+                        "ttl_seconds": 2
+                      },
+                      "created_at": "2021-11-18T16:42:01Z",
+                      "created_by": {
+                        "id": "P8B9WR8",
+                        "self": "https://api.pagerduty.com/users/P8B9WR8",
+                        "type": "user_reference"
+                      },
+                      "updated_at": "2021-11-18T16:42:01Z",
+                      "updated_by": {
+                        "id": "P8B9WR8",
+                        "self": "https://api.pagerduty.com/users/P8B9WR8",
+                        "type": "user_reference"
+                      }
+                    }
+                  ]
+                }
+              },
+              "update_disabled": {
+                "summary": "Response Example: Disabled cache variable",
+                "value": {
+                  "cache_variable": [
+                    {
+                      "id": "66bb56c3-2a17-44f3-9193-06b166d759ad",
+                      "name": "example_1",
+                      "conditions": [
+                        {
+                          "expression": "not event.custom_details.errors exists"
+                        }
+                      ],
+                      "configuration": {
+                        "type": "recent_value",
+                        "source": "event.summary",
+                        "regex": ".*"
+                      },
+                      "disabled": true,
+                      "created_at": "2021-11-18T16:42:01Z",
+                      "created_by": {
+                        "id": "P8B9WR8",
+                        "self": "https://api.pagerduty.com/users/P8B9WR8",
+                        "type": "user_reference"
+                      },
+                      "updated_at": "2021-11-18T16:42:01Z",
+                      "updated_by": {
+                        "id": "P8B9WR8",
+                        "self": "https://api.pagerduty.com/users/P8B9WR8",
+                        "type": "user_reference"
+                      }
+                    }
+                  ]
+                }
+              }
             }
           }
         }
@@ -13132,6 +13574,149 @@
           }
         }
       },
+      "OrchestrationCacheVariable": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "readOnly": true
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the Cache Variable"
+          },
+          "configuration": {
+            "oneOf": [
+              {
+                "type": "object",
+                "description": "Defines how the value of the Cache Variable will be set.\n",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "description": "Cache Variable will be set to the most recent value seen, based on the source event field and the extraction regex specified\n",
+                    "enum": [
+                      "recent_value"
+                    ]
+                  },
+                  "source": {
+                    "type": "string",
+                    "description": "The path to the event field where the regex will be applied to extract a value.",
+                    "example": "event.summary"
+                  },
+                  "regex": {
+                    "type": "string",
+                    "description": "A RE2 regular expression.  If it contains one or more capture groups, their values will be extracted and appended together.  If it contains no capture groups, the whole match is used.\n"
+                  }
+                },
+                "required": [
+                  "type",
+                  "source",
+                  "regex"
+                ]
+              },
+              {
+                "type": "object",
+                "description": "Defines how the value of the Cache Variable will be set.\n",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "description": "Cache Variable will be set to the number of trigger events that have been seen within the TTL range\n",
+                    "enum": [
+                      "trigger_event_count"
+                    ]
+                  },
+                  "ttl_seconds": {
+                    "type": "integer",
+                    "description": "The time to live (in seconds) for how long to count trigger events before resetting back to 0.\n"
+                  }
+                },
+                "required": [
+                  "type",
+                  "ttl_seconds"
+                ]
+              }
+            ]
+          },
+          "conditions": {
+            "type": "array",
+            "description": "Each of these conditions is evaluated to check if an event matches this rule. The rule is considered a match if **any** of these conditions match.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "expression": {
+                  "type": "string",
+                  "example": "event.summary matches part 'my service error'",
+                  "description": "A PCL condition string.\n\nNote: The `trigger_count` and `resetting_trigger_count` operators are unsupported for Cache Variables\n"
+                }
+              }
+            }
+          },
+          "disabled": {
+            "type": "boolean",
+            "description": "Indicates whether the Cache Variable is disabled and would therefore not be evaluated."
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The date/time the object was created.",
+            "readOnly": true
+          },
+          "created_by": {
+            "type": "object",
+            "description": "Reference to the user that created the object.",
+            "properties": {
+              "id": {
+                "type": "string",
+                "readOnly": true
+              },
+              "type": {
+                "type": "string",
+                "description": "A string that determines the schema of the object. This must be the standard name for the entity, suffixed by `_reference` if the object is a reference.",
+                "readOnly": true
+              },
+              "self": {
+                "type": "string",
+                "format": "url",
+                "description": "The API show URL at which the object is accessible",
+                "readOnly": true
+              }
+            },
+            "readOnly": true
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The date/time the object was last updated.",
+            "readOnly": true
+          },
+          "updated_by": {
+            "type": "object",
+            "description": "Reference to the user that last updated the object.",
+            "properties": {
+              "id": {
+                "type": "string",
+                "readOnly": true
+              },
+              "type": {
+                "type": "string",
+                "description": "A string that determines the schema of the object. This must be the standard name for the entity, suffixed by `_reference` if the object is a reference.",
+                "readOnly": true
+              },
+              "self": {
+                "type": "string",
+                "format": "url",
+                "description": "The API show URL at which the object is accessible",
+                "readOnly": true
+              }
+            },
+            "readOnly": true
+          }
+        },
+        "required": [
+          "name",
+          "configuration"
+        ]
+      },
       "OrchestrationIntegration": {
         "type": "object",
         "properties": {
@@ -14276,31 +14861,11 @@
           },
           "feature": {
             "type": "string",
-            "description": "The feature that the current account plan does not have access to.",
-            "enum": [
-              "threshold_condition",
-              "recurring_condition",
-              "scheduled_condition",
-              "nested_rules",
-              "suspend",
-              "automation_actions",
-              "pagerduty_automation_actions",
-              "extractions",
-              "variables",
-              "suppress",
-              "incident_custom_field_updates",
-              "global_orchestrations"
-            ]
+            "description": "The feature that the current account plan does not have access to.\n\nExample values include:\n* `threshold_condition`\n* `nested_rules`\n* `suspend`\n* `automation_actions`\n* `cache_variable:automation_actions`\n* `cache_variable:annotate`\n* `variables`\n* `interpolation:annotate`\n* `interpolation:extractions`\n* `interpolation:incident_custom_field_updates`\n* `suppress`\n* `incident_custom_field_updates`\n"
           },
           "feature_type": {
             "type": "string",
-            "description": "Specifies whether the feature is a part of the rule's conditions, or its actions.",
-            "enum": [
-              "conditions",
-              "actions",
-              "nested_rules",
-              "global_orchestrations"
-            ]
+            "description": "Specifies whether the feature is a part of the rule's conditions, or its actions.\n\nExample values include:\n* `conditions`\n* `actions`\n* `nested_rules`\n* `global_orchestrations`\n"
           },
           "warning_type": {
             "type": "string",
@@ -14325,17 +14890,11 @@
           },
           "feature": {
             "type": "string",
-            "description": "The feature that includes invalid data.",
-            "enum": [
-              "incident_custom_field_updates"
-            ]
+            "description": "The feature that includes invalid data.\n\nExample values include:\n  * `incident_custom_field_updates`\n  * `cache_variable:annotate`\n  * `cache_variable:conditions`\n  * `cache_variable:automation_actions`\n"
           },
           "feature_type": {
             "type": "string",
-            "description": "Specifies the feature type of the impacted item.",
-            "enum": [
-              "actions"
-            ]
+            "description": "Specifies the feature type of the impacted item.\n\nExample values include:\n  * `actions`\n  * `conditions`\n"
           },
           "warning_type": {
             "type": "string",
@@ -27471,6 +28030,430 @@
           },
           "409": {
             "$ref": "#/components/responses/Conflict"
+          }
+        }
+      }
+    },
+    "/event_orchestrations/{id}/cache_variables": {
+      "description": "Manage Cache Variables for a Global Event Orchestration.",
+      "get": {
+        "x-pd-requires-scope": "event_orchestrations.read",
+        "tags": [
+          "Event Orchestrations"
+        ],
+        "operationId": "listCacheVarOnGlobalOrch",
+        "description": "List Cache Variables for a Global Event Orchestration.\n\nCache Variables allow you to store event data on an Event Orchestration, which can then be used in Event Orchestration rules as part of conditions or actions.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `event_orchestrations.read`\n",
+        "summary": "List Cache Variables for a Global Event Orchestration",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/event_orchestration_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/OrchestrationCacheVariableListResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "post": {
+        "x-pd-requires-scope": "event_orchestrations.write",
+        "tags": [
+          "Event Orchestrations"
+        ],
+        "operationId": "createCacheVarOnGlobalOrch",
+        "description": "Create a Cache Variable for a Global Event Orchestration.\n\nCache Variables allow you to store event data on an Event Orchestration, which can then be used in Event Orchestration rules as part of conditions or actions.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `event_orchestrations.write`\n",
+        "summary": "Create a Cache Variable for a Global Event Orchestration",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/event_orchestration_id"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/OrchestrationCacheVariablePostRequest"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/OrchestrationCacheVariablePostResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "405": {
+            "$ref": "#/components/responses/NotAllowed"
+          }
+        }
+      }
+    },
+    "/event_orchestrations/{id}/cache_variables/{cache_variable_id}": {
+      "description": "Manage a Cache Variable for a Global Event Orchestration.",
+      "get": {
+        "x-pd-requires-scope": "event_orchestrations.read",
+        "tags": [
+          "Event Orchestrations"
+        ],
+        "operationId": "getCacheVarOnGlobalOrch",
+        "description": "Get a Cache Variable for a Global Event Orchestration.\n\nCache Variables allow you to store event data on an Event Orchestration, which can then be used in Event Orchestration rules as part of conditions or actions.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `event_orchestrations.read`\n",
+        "summary": "Get a Cache Variable for a Global Event Orchestration",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/event_orchestration_id"
+          },
+          {
+            "$ref": "#/components/parameters/event_orchestration_cache_variable_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/OrchestrationCacheVariableGetResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "put": {
+        "x-pd-requires-scope": "event_orchestrations.write",
+        "tags": [
+          "Event Orchestrations"
+        ],
+        "operationId": "updateCacheVarOnGlobalOrch",
+        "description": "Update a Cache Variable for a Global Event Orchestration.\n\nCache Variables allow you to store event data on an Event Orchestration, which can then be used in Event Orchestration rules as part of conditions or actions.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `event_orchestrations.write`\n",
+        "summary": "Update a Cache Variable for a Global Event Orchestration",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/event_orchestration_id"
+          },
+          {
+            "$ref": "#/components/parameters/event_orchestration_cache_variable_id"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/OrchestrationCacheVariablePutRequest"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/OrchestrationCacheVariablePutResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "405": {
+            "$ref": "#/components/responses/NotAllowed"
+          }
+        }
+      },
+      "delete": {
+        "x-pd-requires-scope": "event_orchestrations.write",
+        "tags": [
+          "Event Orchestrations"
+        ],
+        "operationId": "deleteCacheVarOnGlobalOrch",
+        "description": "Delete a Cache Variable for a Global Event Orchestration.\n\nCache Variables allow you to store event data on an Event Orchestration, which can then be used in Event Orchestration rules as part of conditions or actions.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `event_orchestrations.write`\n",
+        "summary": "Delete a Cache Variable for a Global Event Orchestration",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/event_orchestration_id"
+          },
+          {
+            "$ref": "#/components/parameters/event_orchestration_cache_variable_id"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The Cache Variable was deleted successfully."
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/event_orchestrations/services/{service_id}/cache_variables": {
+      "description": "Manage Cache Variables for a Service Event Orchestration.",
+      "get": {
+        "x-pd-requires-scope": "services.read",
+        "tags": [
+          "Event Orchestrations"
+        ],
+        "operationId": "listCacheVarOnServiceOrch",
+        "description": "List Cache Variables for a Service Event Orchestration.\n\nCache Variables allow you to store event data on an Event Orchestration, which can then be used in Event Orchestration rules as part of conditions or actions.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `services.read`\n",
+        "summary": "List Cache Variables for a Service Event Orchestration",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/service_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/OrchestrationCacheVariableListResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "post": {
+        "x-pd-requires-scope": "services.write",
+        "tags": [
+          "Event Orchestrations"
+        ],
+        "operationId": "createCacheVarOnServiceOrch",
+        "description": "Create a Cache Variable for a Service Event Orchestration.\n\nCache Variables allow you to store event data on an Event Orchestration, which can then be used in Event Orchestration rules as part of conditions or actions.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `services.write`\n",
+        "summary": "Create a Cache Variable for a Service Event Orchestration",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/service_id"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/OrchestrationCacheVariablePostRequest"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/OrchestrationCacheVariablePostResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "405": {
+            "$ref": "#/components/responses/NotAllowed"
+          }
+        }
+      }
+    },
+    "/event_orchestrations/services/{service_id}/cache_variables/{cache_variable_id}": {
+      "description": "Manage a Cache Variable for a Service Event Orchestration.",
+      "get": {
+        "x-pd-requires-scope": "services.read",
+        "tags": [
+          "Event Orchestrations"
+        ],
+        "operationId": "getCacheVarOnServiceOrch",
+        "description": "Get a Cache Variable for a Service Event Orchestration.\n\nCache Variables allow you to store event data on an Event Orchestration, which can then be used in Event Orchestration rules as part of conditions or actions.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `services.read`\n",
+        "summary": "Get a Cache Variable for a Service Event Orchestration",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/service_id"
+          },
+          {
+            "$ref": "#/components/parameters/event_orchestration_cache_variable_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/OrchestrationCacheVariableGetResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "put": {
+        "x-pd-requires-scope": "services.write",
+        "tags": [
+          "Event Orchestrations"
+        ],
+        "operationId": "updateCacheVarOnServiceOrch",
+        "description": "Update a Cache Variable for a Service Event Orchestration.\n\nCache Variables allow you to store event data on an Event Orchestration, which can then be used in Event Orchestration rules as part of conditions or actions.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `services.write`\n",
+        "summary": "Update a Cache Variable for a Service Event Orchestration",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/service_id"
+          },
+          {
+            "$ref": "#/components/parameters/event_orchestration_cache_variable_id"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/OrchestrationCacheVariablePutRequest"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/OrchestrationCacheVariablePutResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "405": {
+            "$ref": "#/components/responses/NotAllowed"
+          }
+        }
+      },
+      "delete": {
+        "x-pd-requires-scope": "services.write",
+        "tags": [
+          "Event Orchestrations"
+        ],
+        "operationId": "deleteCacheVarOnServiceOrch",
+        "description": "Delete a Cache Variable for a Service Event Orchestration.\n\nCache Variables allow you to store event data on an Event Orchestration, which can then be used in Event Orchestration rules as part of conditions or actions.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `services.write`\n",
+        "summary": "Delete a Cache Variable for a Service Event Orchestration",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/service_id"
+          },
+          {
+            "$ref": "#/components/parameters/event_orchestration_cache_variable_id"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The Cache Variable was deleted successfully."
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
           }
         }
       }
