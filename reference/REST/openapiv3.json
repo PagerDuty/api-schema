@@ -4863,11 +4863,11 @@
           },
           "escalation_policy_id": {
             "type": "string",
-            "description": "ID of the escalation policy the incident was occurred on. Not included when aggregating by all."
+            "description": "ID of the escalation policy the incident was last assigned to. Not included when aggregating by all."
           },
           "escalation_policy_name": {
             "type": "string",
-            "description": "Name of the escalation policy the incident was occurred on. Not included when aggregating by all."
+            "description": "Name of the escalation policy the incident was last assigned to. Not included when aggregating by all."
           },
           "mean_assignment_count": {
             "type": "integer",
