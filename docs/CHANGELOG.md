@@ -4,6 +4,15 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+## 2024-04-12
+- Added `webhook_subscriptions.read` scope to `GET /webhook_subscriptions` endpoint
+- Added `webhook_subscriptions.read` scope to `GET /webhook_subscriptions/{id}` endpoint
+- Added `webhook_subscriptions.write` scope to `POST /webhook_subscriptions` endpoint
+- Added `webhook_subscriptions.write` scope to `PUT /webhook_subscriptions/{id}` endpoint
+- Added `webhook_subscriptions.write` scope to `DELETE /webhook_subscriptions/{id}` endpoint
+- Added `webhook_subscriptions.write` scope to `POST /webhook_subscriptions/{id}/enable` endpoint
+- Added `webhook_subscriptions.write` scope to `POST /webhook_subscriptions/{id}/ping` endpoint
+
 ## 2024-04-04
 - Updated the `escalation_policy_id` and `escalation_policy_name` columns at the `analytics/raw/incidents` and `analytics/raw/incidents/:id` endpoints to respect the escalation policy used in the incident as it changes. Previously these values showed the escalation policy associated with the incident's service. This change is also reflected in the aggregate Analytics endpoints.
 
