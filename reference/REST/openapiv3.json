@@ -52893,12 +52893,13 @@
     },
     "/webhook_subscriptions": {
       "get": {
+        "x-pd-requires-scope": "webhook_subscriptions.read",
         "tags": [
           "Webhooks"
         ],
         "operationId": "listWebhookSubscriptions",
         "summary": "List webhook subscriptions",
-        "description": "List existing webhook subscriptions.\n\nThe `filter_type` and `filter_id` query parameters may be used to only show subscriptions\nfor a particular _service_ or _team_.\n\nFor more information on webhook subscriptions and how they are used to configure v3 webhooks\nsee the [Webhooks v3 Developer Documentation](https://developer.pagerduty.com/docs/webhooks/v3-overview/).\n",
+        "description": "List existing webhook subscriptions.\n\nThe `filter_type` and `filter_id` query parameters may be used to only show subscriptions\nfor a particular _service_ or _team_.\n\nFor more information on webhook subscriptions and how they are used to configure v3 webhooks\nsee the [Webhooks v3 Developer Documentation](https://developer.pagerduty.com/docs/webhooks/v3-overview/).\n\nScoped OAuth requires: `webhook_subscriptions.read`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -52965,12 +52966,13 @@
         }
       },
       "post": {
+        "x-pd-requires-scope": "webhook_subscriptions.write",
         "tags": [
           "Webhooks"
         ],
         "operationId": "createWebhookSubscription",
         "summary": "Create a webhook subscription",
-        "description": "Creates a new webhook subscription.\n\nFor more information on webhook subscriptions and how they are used to configure v3 webhooks\nsee the [Webhooks v3 Developer Documentation](https://developer.pagerduty.com/docs/webhooks/v3-overview/).\n",
+        "description": "Creates a new webhook subscription.\n\nFor more information on webhook subscriptions and how they are used to configure v3 webhooks\nsee the [Webhooks v3 Developer Documentation](https://developer.pagerduty.com/docs/webhooks/v3-overview/).\n\nScoped OAuth requires: `webhook_subscriptions.write`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -53039,12 +53041,13 @@
     },
     "/webhook_subscriptions/{id}": {
       "get": {
+        "x-pd-requires-scope": "webhook_subscriptions.read",
         "tags": [
           "Webhooks"
         ],
         "operationId": "getWebhookSubscription",
         "summary": "Get a webhook subscription",
-        "description": "Gets details about an existing webhook subscription.\n",
+        "description": "Gets details about an existing webhook subscription.\n\nScoped OAuth requires: `webhook_subscriptions.read`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -53092,12 +53095,13 @@
         }
       },
       "put": {
+        "x-pd-requires-scope": "webhook_subscriptions.write",
         "tags": [
           "Webhooks"
         ],
         "operationId": "updateWebhookSubscription",
         "summary": "Update a webhook subscription",
-        "description": "Updates an existing webhook subscription.\n\nOnly the fields being updated need to be included on the request.  This operation does not\nsupport updating the `delivery_method` of the webhook subscription.\n",
+        "description": "Updates an existing webhook subscription.\n\nOnly the fields being updated need to be included on the request.  This operation does not\nsupport updating the `delivery_method` of the webhook subscription.\n\nScoped OAuth requires: `webhook_subscriptions.write`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -53162,12 +53166,13 @@
         }
       },
       "delete": {
+        "x-pd-requires-scope": "webhook_subscriptions.write",
         "tags": [
           "Webhooks"
         ],
         "operationId": "deleteWebhookSubscription",
         "summary": "Delete a webhook subscription",
-        "description": "Deletes a webhook subscription.\n",
+        "description": "Deletes a webhook subscription.\n\nScoped OAuth requires: `webhook_subscriptions.write`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -53197,12 +53202,13 @@
     },
     "/webhook_subscriptions/{id}/enable": {
       "post": {
+        "x-pd-requires-scope": "webhook_subscriptions.write",
         "tags": [
           "Webhooks"
         ],
         "operationId": "enableWebhookSubscription",
         "summary": "Enable a webhook subscription",
-        "description": "Enable a webhook subscription that is temporarily disabled. (This API does not require a request body.)\n\nWebhook subscriptions can become temporarily disabled when the subscription's delivery method is repeatedly rejected by the server.\n",
+        "description": "Enable a webhook subscription that is temporarily disabled. (This API does not require a request body.)\n\nWebhook subscriptions can become temporarily disabled when the subscription's delivery method is repeatedly rejected by the server.\n\nScoped OAuth requires: `webhook_subscriptions.write`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -53249,12 +53255,13 @@
     },
     "/webhook_subscriptions/{id}/ping": {
       "post": {
+        "x-pd-requires-scope": "webhook_subscriptions.write",
         "tags": [
           "Webhooks"
         ],
         "operationId": "testWebhookSubscription",
         "summary": "Test a webhook subscription",
-        "description": "Test a webhook subscription.\n\nFires a test event against the webhook subscription.  If properly configured,\nthis will deliver the `pagey.ping` webhook event to the destination.\n",
+        "description": "Test a webhook subscription.\n\nFires a test event against the webhook subscription.  If properly configured,\nthis will deliver the `pagey.ping` webhook event to the destination.\n\nScoped OAuth requires: `webhook_subscriptions.write`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
