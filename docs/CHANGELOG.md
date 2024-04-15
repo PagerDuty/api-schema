@@ -4,6 +4,9 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+## 2024-04-15
+- Removed  `X-EARLY-ACCESS` header requirement for all Status Page endpoints
+
 ## 2024-04-12
 - Added `webhook_subscriptions.read` scope to `GET /webhook_subscriptions` endpoint
 - Added `webhook_subscriptions.read` scope to `GET /webhook_subscriptions/{id}` endpoint

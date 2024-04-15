@@ -1853,16 +1853,6 @@
         "description": "This header indicates that this API endpoint is __UNDER CONSTRUCTION__ and may change at any time. You __MUST__ pass in this header with the value `status-dashboards`. Do not use this endpoint in production, as it may change!",
         "required": true
       },
-      "early_access_status_pages": {
-        "schema": {
-          "type": "string",
-          "default": "status-pages-early-access"
-        },
-        "in": "header",
-        "name": "X-EARLY-ACCESS",
-        "description": "This header indicates that this API endpoint is __UNDER CONSTRUCTION__ and may change at any time. You __MUST__ pass in this header with the value `status-pages-early-access`. Do not use this endpoint in production, as it may change!",
-        "required": true
-      },
       "webhooks_filter_type": {
         "name": "filter_type",
         "in": "query",
@@ -44680,9 +44670,6 @@
             "$ref": "#/components/parameters/header_Accept"
           },
           {
-            "$ref": "#/components/parameters/early_access_status_pages"
-          },
-          {
             "$ref": "#/components/parameters/status_page_type"
           }
         ],
@@ -44765,9 +44752,6 @@
           },
           {
             "$ref": "#/components/parameters/id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_status_pages"
           },
           {
             "$ref": "#/components/parameters/status_page_impact_post_type"
@@ -44880,9 +44864,6 @@
           },
           {
             "$ref": "#/components/parameters/status_page_impact_id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_status_pages"
           }
         ],
         "responses": {
@@ -44949,9 +44930,6 @@
           },
           {
             "$ref": "#/components/parameters/id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_status_pages"
           }
         ],
         "responses": {
@@ -45043,9 +45021,6 @@
           },
           {
             "$ref": "#/components/parameters/status_page_service_id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_status_pages"
           }
         ],
         "responses": {
@@ -45115,9 +45090,6 @@
           },
           {
             "$ref": "#/components/parameters/id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_status_pages"
           },
           {
             "$ref": "#/components/parameters/status_page_severity_post_type"
@@ -45231,9 +45203,6 @@
           },
           {
             "$ref": "#/components/parameters/status_page_severity_id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_status_pages"
           }
         ],
         "responses": {
@@ -45299,9 +45268,6 @@
           },
           {
             "$ref": "#/components/parameters/id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_status_pages"
           },
           {
             "$ref": "#/components/parameters/status_page_status_post_type"
@@ -45415,9 +45381,6 @@
           },
           {
             "$ref": "#/components/parameters/status_page_status_id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_status_pages"
           }
         ],
         "responses": {
@@ -45484,9 +45447,6 @@
           },
           {
             "$ref": "#/components/parameters/id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_status_pages"
           },
           {
             "$ref": "#/components/parameters/status_page_post_type"
@@ -45593,9 +45553,6 @@
           },
           {
             "$ref": "#/components/parameters/id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_status_pages"
           }
         ],
         "requestBody": {
@@ -45738,9 +45695,6 @@
           },
           {
             "$ref": "#/components/parameters/status_page_post_include"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_status_pages"
           }
         ],
         "responses": {
@@ -45822,9 +45776,6 @@
           },
           {
             "$ref": "#/components/parameters/status_page_post_id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_status_pages"
           }
         ],
         "requestBody": {
@@ -45953,9 +45904,6 @@
           },
           {
             "$ref": "#/components/parameters/status_page_post_id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_status_pages"
           }
         ],
         "responses": {
@@ -45995,9 +45943,6 @@
           },
           {
             "$ref": "#/components/parameters/status_page_post_id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_status_pages"
           },
           {
             "$ref": "#/components/parameters/status_page_post_update_reviewed_status"
@@ -46114,9 +46059,6 @@
           },
           {
             "$ref": "#/components/parameters/status_page_post_id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_status_pages"
           }
         ],
         "requestBody": {
@@ -46262,9 +46204,6 @@
           },
           {
             "$ref": "#/components/parameters/status_page_post_update_id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_status_pages"
           }
         ],
         "responses": {
@@ -46362,9 +46301,6 @@
           },
           {
             "$ref": "#/components/parameters/status_page_post_update_id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_status_pages"
           }
         ],
         "requestBody": {
@@ -46513,9 +46449,6 @@
           },
           {
             "$ref": "#/components/parameters/status_page_post_update_id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_status_pages"
           }
         ],
         "responses": {
@@ -46555,9 +46488,6 @@
           },
           {
             "$ref": "#/components/parameters/status_page_post_id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_status_pages"
           }
         ],
         "responses": {
@@ -46627,9 +46557,6 @@
           },
           {
             "$ref": "#/components/parameters/status_page_post_id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_status_pages"
           }
         ],
         "requestBody": {
@@ -46726,9 +46653,6 @@
           },
           {
             "$ref": "#/components/parameters/status_page_post_id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_status_pages"
           }
         ],
         "requestBody": {
@@ -46830,9 +46754,6 @@
           },
           {
             "$ref": "#/components/parameters/status_page_post_id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_status_pages"
           }
         ],
         "responses": {
@@ -46869,9 +46790,6 @@
           },
           {
             "$ref": "#/components/parameters/id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_status_pages"
           },
           {
             "$ref": "#/components/parameters/status_page_subscription_status"
@@ -46966,9 +46884,6 @@
           },
           {
             "$ref": "#/components/parameters/id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_status_pages"
           }
         ],
         "requestBody": {
@@ -47143,9 +47058,6 @@
           },
           {
             "$ref": "#/components/parameters/status_page_subscription_id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_status_pages"
           }
         ],
         "responses": {
@@ -47218,9 +47130,6 @@
           },
           {
             "$ref": "#/components/parameters/status_page_subscription_id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_status_pages"
           }
         ],
         "responses": {
