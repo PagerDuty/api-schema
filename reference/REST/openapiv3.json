@@ -1761,10 +1761,20 @@
         "name": "incident_id",
         "description": "Incident ID",
         "in": "query",
-        "required": true,
+        "required": false,
         "schema": {
           "type": "string",
           "example": "Q2LAR4ADCXC8IB"
+        }
+      },
+      "automation_actions_action_id": {
+        "name": "action_id",
+        "description": "Action ID",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "example": "01DAW70HK24JZORNE0P9C2V1L9"
         }
       },
       "past_incidents_limit": {
@@ -21811,6 +21821,9 @@
           },
           {
             "$ref": "#/components/parameters/automation_actions_incident_id"
+          },
+          {
+            "$ref": "#/components/parameters/automation_actions_action_id"
           }
         ],
         "responses": {
