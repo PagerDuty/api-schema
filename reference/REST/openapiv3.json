@@ -1777,6 +1777,15 @@
           "example": "01DAW70HK24JZORNE0P9C2V1L9"
         }
       },
+      "incident_list_limit": {
+        "name": "limit",
+        "in": "query",
+        "required": false,
+        "description": "The number of results per page. Maximum of 10000.",
+        "schema": {
+          "type": "integer"
+        }
+      },
       "past_incidents_limit": {
         "name": "limit",
         "in": "query",
@@ -15319,6 +15328,7 @@
           },
           "name": {
             "type": "string",
+            "title": "Field Name",
             "description": "The name of the field. May include ASCII characters, specifically lowercase letters, digits, and underescores. The `name` for a Field must be unique.",
             "maxLength": 50
           },
@@ -15366,6 +15376,7 @@
             "oneOf": [
               {
                 "type": "object",
+                "title": "Boolean",
                 "properties": {
                   "value": {
                     "type": "boolean",
@@ -15375,6 +15386,7 @@
               },
               {
                 "type": "object",
+                "title": "Float",
                 "properties": {
                   "value": {
                     "type": "number",
@@ -15384,6 +15396,7 @@
               },
               {
                 "type": "object",
+                "title": "Integer",
                 "properties": {
                   "value": {
                     "type": "integer",
@@ -15393,6 +15406,7 @@
               },
               {
                 "type": "object",
+                "title": "String",
                 "properties": {
                   "value": {
                     "oneOf": [
@@ -15417,6 +15431,7 @@
               },
               {
                 "type": "object",
+                "title": "Datetime",
                 "properties": {
                   "value": {
                     "type": "string",
@@ -15427,6 +15442,7 @@
               },
               {
                 "type": "object",
+                "title": "Url",
                 "properties": {
                   "value": {
                     "type": "string",
@@ -15451,9 +15467,11 @@
         ]
       },
       "CustomFieldsEditableFieldValue": {
+        "title": "Custom Field Value",
         "oneOf": [
           {
             "type": "object",
+            "title": "Value by Field Name",
             "properties": {
               "name": {
                 "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/name"
@@ -15484,6 +15502,7 @@
           },
           {
             "type": "object",
+            "title": "Value by Field ID",
             "properties": {
               "id": {
                 "type": "string",
@@ -31032,7 +31051,7 @@
             "$ref": "#/components/parameters/header_Content-Type"
           },
           {
-            "$ref": "#/components/parameters/offset_limit"
+            "$ref": "#/components/parameters/incident_list_limit"
           },
           {
             "$ref": "#/components/parameters/offset_offset"
@@ -33103,6 +33122,7 @@
                 "properties": {
                   "custom_fields": {
                     "type": "array",
+                    "title": "Array of Custom Field Values",
                     "items": {
                       "$ref": "#/components/schemas/CustomFieldsEditableFieldValue"
                     }
@@ -39541,7 +39561,7 @@
         ],
         "x-pd-requires-scope": "schedules.read",
         "operationId": "listSchedules",
-        "description": "List the on-call schedules.\n\nA Schedule determines the time periods that users are On-Call. \n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#schedules)\n\nScoped OAuth requires: `schedules.read`\n",
+        "description": "List the on-call schedules.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#schedules)\n\nScoped OAuth requires: `schedules.read`\n",
         "summary": "List schedules",
         "parameters": [
           {

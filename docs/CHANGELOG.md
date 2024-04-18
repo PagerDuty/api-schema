@@ -4,11 +4,12 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+## 2024-04-18
+- Specified the maximum `limit` for List Incidents API
+
 ## 2024-04-15
 - Added `action_id` parameter to Automation Actions invocation list
   endpoint, which filters results based on those associated with the specified action.
-
-## 2024-04-15
 - Removed  `X-EARLY-ACCESS` header requirement for all Status Page endpoints
 
 ## 2024-04-12
