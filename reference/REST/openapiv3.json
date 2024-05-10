@@ -2935,6 +2935,14 @@
           "uniqueItems": true
         }
       },
+      "service_name": {
+        "name": "name",
+        "in": "query",
+        "description": "Filters the results, showing only services with the specified name.",
+        "schema": {
+          "type": "string"
+        }
+      },
       "include_services_id": {
         "name": "include[]",
         "in": "query",
@@ -41726,6 +41734,9 @@
           },
           {
             "$ref": "#/components/parameters/include_services"
+          },
+          {
+            "$ref": "#/components/parameters/service_name"
           }
         ],
         "responses": {

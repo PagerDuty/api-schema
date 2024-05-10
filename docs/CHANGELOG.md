@@ -4,6 +4,9 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+## 2024-05-08
+- Added the query parameter `name` to the `GET /services` endpoint
+
 ## 2024-04-18
 - Specified the maximum `limit` for List Incidents API
 
