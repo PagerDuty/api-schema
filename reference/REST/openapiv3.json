@@ -5244,6 +5244,10 @@
             "type": "string",
             "description": "Timestamp of when the incident was created."
           },
+          "updated_at": {
+            "type": "string",
+            "description": "Timestamp of when the incident was last updated by the analytics process.  Does not match the updated_at for an incident returned by the standard REST api incidents endpoint."
+          },
           "description": {
             "type": "string",
             "description": "The incident description"
@@ -19333,7 +19337,8 @@
                       "description": "The column that was used for ordering the results.",
                       "enum": [
                         "created_at",
-                        "seconds_to_resolve"
+                        "seconds_to_resolve",
+                        "updated_at"
                       ]
                     },
                     "filters": {
@@ -19439,6 +19444,7 @@
                           "auto_resolved": false,
                           "business_hour_interruptions": 5,
                           "created_at": "2023-05-31T10:05:00",
+                          "updated_at": "2023-06-04T00:00:00",
                           "description": "The server is on fire!",
                           "engaged_seconds": 3510,
                           "engaged_user_count": 10,
@@ -19502,6 +19508,7 @@
                           "assignment_count": 1,
                           "business_hour_interruptions": 2,
                           "created_at": "2023-05-31T10:00:00",
+                          "updated_at": "2023-06-04T00:00:00",
                           "description": "Reply on social media",
                           "engaged_seconds": 521,
                           "engaged_user_count": 6,
@@ -19587,13 +19594,17 @@
                     "properties": {
                       "created_at_start": {
                         "type": "string",
-                        "description": "Filters the result, showing only the incidents where the creation timestamp is greater than the filter value.",
+                        "description": "Filters the result, showing only the incidents where the creation timestamp is greater than or equal to the filter value.",
                         "example": "2023-05-01T00:00:00-04:00"
                       },
                       "created_at_end": {
                         "type": "string",
                         "description": "Filters the result, showing only the incidents where the creation timestamp is less than the filter value.",
                         "example": "2023-06-01T00:00:00-04:00"
+                      },
+                      "updated_after": {
+                        "type": "string",
+                        "description": "Filters the result, showing only incidents where the updated_at value is greater than the filter value."
                       },
                       "urgency": {
                         "type": "string",
@@ -19701,6 +19712,7 @@
                     "filters": {
                       "created_at_start": "2024-01-01T00:00:00-05:00",
                       "created_at_end": "2024-01-31T00:00:00-05:00",
+                      "updated_after": "2024-05-01T00:00:00-05:00",
                       "urgency": "high",
                       "major": true,
                       "team_ids": [
@@ -19779,6 +19791,7 @@
                         "auto_resolved": false,
                         "business_hour_interruptions": 0,
                         "created_at": "2024-01-01T21:00:00Z",
+                        "updated_at": "2024-06-01T00:00:00Z",
                         "description": "The server is on fire!",
                         "engaged_seconds": 75,
                         "engaged_user_count": 2,

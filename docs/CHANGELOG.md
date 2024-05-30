@@ -4,6 +4,11 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+## 2024-05-29
+- Added `updated_after` filter to `POST /analytics/raw/incidents` endpoint
+- Added `updated_at` column to `GET /analytics/raw/incidents/{id}` endpoint
+- Added `updated_at` column to `GET /analytics/raw/incidents` endpoint
+
 ## 2024-05-08
 - Added the query parameter `name` to the `GET /services` endpoint
 
