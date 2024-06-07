@@ -5,6 +5,9 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 Currently we rarely deprecate, and do not remove any API functionality.
 
 ## 2024-06-06
+- Add a new 'unknown' value to the list of possible automation action invocation states
+
+## 2024-06-06
 - Removed  `X-EARLY-ACCESS` header requirement for all Business Services (BIS) endpoints
 
 ## 2024-05-29
