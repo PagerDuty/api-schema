@@ -1735,7 +1735,7 @@
         "in": "query",
         "schema": {
           "type": "string",
-          "description": "prepared -- the invocation exists and can be referenced, but is NOT available to a Runner <br> created -- the invocation exists and is waiting for a Runner <br> sent -- invocation sent to a Runner <br> queued -- invocation queued by a Runner <br> running -- invocation is being ran by a Runner <br> aborted -- invocation was aborted on a Runner <br> completed -- invocation completed on a Runner <br> error -- invocation encountered an error on a Runner",
+          "description": "prepared -- the invocation exists and can be referenced, but is NOT available to a Runner <br> created -- the invocation exists and is waiting for a Runner <br> sent -- invocation sent to a Runner <br> queued -- invocation queued by a Runner <br> running -- invocation is being ran by a Runner <br> aborted -- invocation was aborted on a Runner <br> completed -- invocation completed on a Runner <br> error -- invocation encountered an error on a Runner unknown -- transient error encountered when fetching invocation state",
           "enum": [
             "prepared",
             "created",
@@ -1744,7 +1744,8 @@
             "running",
             "aborted",
             "completed",
-            "error"
+            "error",
+            "unknown"
           ],
           "example": "sent"
         }
