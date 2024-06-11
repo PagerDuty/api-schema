@@ -1782,7 +1782,7 @@
         "name": "limit",
         "in": "query",
         "required": false,
-        "description": "The number of results per page. Maximum of 10000.",
+        "description": "The number of results per page. Maximum of 100.",
         "schema": {
           "type": "integer"
         }
