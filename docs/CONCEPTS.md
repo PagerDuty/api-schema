@@ -99,7 +99,7 @@ Incidents can be thought of as a problem or an issue within your [Service](#serv
 Incidents can be `triggered`, `acknowledged`, or `resolved`, and are assigned to a [User](#user) based on the [Service](#services)'s [Escalation Policy](#escalation-policies).
 
 
-A triggered Incident prompts a [Notification](#notifications) to be sent to the current [On-Call](#on-calls) [User(s)](#users) as defined in the [Escalation Poicy](#escalation-policy) used by the [Service](#services).
+A triggered Incident prompts a [Notification](#notifications) to be sent to the current [On-Call](#on-calls) [User(s)](#users) as defined in the [Escalation Policy](#escalation-policy) used by the [Service](#services).
 
 
 Incidents are triggered through the [Events API](https://developer.pagerduty.com/docs/events-api) or are created by Integrations.
@@ -281,7 +281,7 @@ Users are members of an Account that have the ability to interact with [Incident
 
 Users are fundamental agents of different types of actions in PagerDuty. A User can, among other things:
 
-- Acknowlege, reassign, snooze, escalate, and resolve [Incidents.](#incidents)
+- Acknowledge, reassign, snooze, escalate, and resolve [Incidents.](#incidents)
 - Configure [Services](#services), [Escalation Policies](#escalation-policies), [Integrations](#integrations), [On-Call Schedules](#schedules), [Teams](#teams), and more.
 - Go [On-Call](#on-calls) for one or more [Schedules](#schedules) or [Escalation Policies.](#escalation-policies)
 - Get [Alerted](#alerts) and receive [Notifications.](#notifications)

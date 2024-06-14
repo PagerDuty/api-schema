@@ -4660,7 +4660,7 @@
               },
               "team_ids": {
                 "type": "array",
-                "description": "An array of team IDs. Only incidents related to these teams will be included in the results. If omitted, all teams the requestor has access to will be included in the results.",
+                "description": "An array of team IDs. Only incidents related to these teams will be included in the results. If omitted, all teams the requester has access to will be included in the results.",
                 "items": {
                   "type": "string"
                 },
@@ -4672,7 +4672,7 @@
               },
               "service_ids": {
                 "type": "array",
-                "description": "An array of service IDs. Only incidents related to these services will be included in the results. If omitted, all services the requestor has access to will be included in the results.",
+                "description": "An array of service IDs. Only incidents related to these services will be included in the results. If omitted, all services the requester has access to will be included in the results.",
                 "items": {
                   "type": "string"
                 },
@@ -4684,7 +4684,7 @@
               },
               "escalation_policy_ids": {
                 "type": "array",
-                "description": "An array of escalation policy IDs. Only incidents related to these escalation policies will be included in the results. If omitted, all escalation policies the requestor has access to will be included in the results.",
+                "description": "An array of escalation policy IDs. Only incidents related to these escalation policies will be included in the results. If omitted, all escalation policies the requester has access to will be included in the results.",
                 "items": {
                   "type": "string"
                 },
@@ -5024,7 +5024,7 @@
               },
               "team_ids": {
                 "type": "array",
-                "description": "An array of team IDs. Only incidents related to these teams will be included in the results. If omitted, all teams the requestor has access to will be included in the results.",
+                "description": "An array of team IDs. Only incidents related to these teams will be included in the results. If omitted, all teams the requester has access to will be included in the results.",
                 "items": {
                   "type": "string"
                 },
@@ -5036,7 +5036,7 @@
               },
               "responder_ids": {
                 "type": "array",
-                "description": "An array of responder IDs. Only incidents related to these responders will be included in the results. If omitted, all responders the requestor has access to will be included in the results.",
+                "description": "An array of responder IDs. Only incidents related to these responders will be included in the results. If omitted, all responders the requester has access to will be included in the results.",
                 "items": {
                   "type": "string"
                 },
@@ -5430,7 +5430,7 @@
           },
           "responder_type": {
             "type": "string",
-            "description": "Type of responder, where `assigned` means the user was added to the Incident via Assignment at Incident creation,\n`reassigned` means the user was added to the Incident via Reassignment, `escalated` means the user was added via Escalation,\nand `added_responder` means the user was added via Responder Reqeuest.",
+            "description": "Type of responder, where `assigned` means the user was added to the Incident via Assignment at Incident creation,\n`reassigned` means the user was added to the Incident via Reassignment, `escalated` means the user was added via Escalation,\nand `added_responder` means the user was added via Responder Request.",
             "enum": [
               "assigned",
               "reassigned",
@@ -6217,7 +6217,7 @@
           },
           {
             "type": "object",
-            "description": "A unit of work to be executed on runner. At most, an account can have 10,000 actions. If action maximum is exceeded, a 400 reponse is returned with error message.",
+            "description": "A unit of work to be executed on runner. At most, an account can have 10,000 actions. If action maximum is exceeded, a 400 response is returned with error message.",
             "properties": {
               "name": {
                 "type": "string",
@@ -6743,7 +6743,7 @@
               },
               "threshold_value": {
                 "type": "integer",
-                "description": "The number of occurences needed during the window of time to trigger the theshold."
+                "description": "The number of occurrences needed during the window of time to trigger the threshold."
               },
               "threshold_time_unit": {
                 "type": "string",
@@ -6833,7 +6833,7 @@
                           "properties": {
                             "path": {
                               "type": "string",
-                              "description": "Path to a field in an event, in dot-notation.  For Event Rules on a serivce, this will have to be a PD-CEF field."
+                              "description": "Path to a field in an event, in dot-notation.  For Event Rules on a service, this will have to be a PD-CEF field."
                             },
                             "value": {
                               "type": "string",
@@ -6892,7 +6892,7 @@
                       "timezone",
                       "weekdays"
                     ],
-                    "description": "A reccuring window of time based on the day of the week, during which the rule is active.",
+                    "description": "A recurring window of time based on the day of the week, during which the rule is active.",
                     "properties": {
                       "start_time": {
                         "type": "integer",
@@ -12944,7 +12944,7 @@
               },
               "conference_type": {
                 "type": "string",
-                "description": "This field has three possible values and indicates how the response play was created.\n  - `none` : The response play had no conference_number or conference_url set at time of creation.\n  - `manual` : The response play had one or both of conference_number and conference_url set at time of creation.\n  - `zoom` : Customers with the Zoom-Integration Entitelment can use this value to dynamicly configure conference number and url for zoom",
+                "description": "This field has three possible values and indicates how the response play was created.\n  - `none` : The response play had no conference_number or conference_url set at time of creation.\n  - `manual` : The response play had one or both of conference_number and conference_url set at time of creation.\n  - `zoom` : Customers with the Zoom-Integration Entitelment can use this value to dynamically configure conference number and url for zoom",
                 "enum": [
                   "none",
                   "manual",
@@ -13002,7 +13002,7 @@
           },
           "has_indirect_subscription": {
             "type": "boolean",
-            "description": "If this subcriber has an indirect subscription to this incident via another object"
+            "description": "If this subscriber has an indirect subscription to this incident via another object"
           },
           "subscribed_via": {
             "nullable": true,
@@ -21329,7 +21329,7 @@
         "tags": [
           "Automation Actions"
         ],
-        "operationId": "createAutomationActionServiceAssocation",
+        "operationId": "createAutomationActionServiceAssociation",
         "description": "Associate an Automation Action with a service\n",
         "parameters": [
           {
@@ -28960,7 +28960,7 @@
                 "security": [],
                 "responses": {
                   "200": {
-                    "description": "Your server implementation should return this if it successfuly received the webhook."
+                    "description": "Your server implementation should return this if it successfully received the webhook."
                   }
                 },
                 "requestBody": {
@@ -28998,7 +28998,7 @@
                 "security": [],
                 "responses": {
                   "200": {
-                    "description": "Your server implementation should return this if it successfuly received the webhook."
+                    "description": "Your server implementation should return this if it successfully received the webhook."
                   }
                 },
                 "requestBody": {
@@ -37492,7 +37492,7 @@
                   "properties": {
                     "paused_incident_reporting_alerts": {
                       "type": "object",
-                      "description": "A list of the 5 most recent paused Alerts that weere triggered and 5 most recent Alerts that were reesolved before being triggerd.",
+                      "description": "A list of the 5 most recent paused Alerts that weere triggered and 5 most recent Alerts that were reesolved before being triggered.",
                       "properties": {
                         "since": {
                           "type": "string",
@@ -37650,11 +37650,11 @@
                         },
                         "paused_count": {
                           "type": "number",
-                          "description": "The total number of paused Alerts for the Account or Servce."
+                          "description": "The total number of paused Alerts for the Account or Service."
                         },
                         "triggered_after_pause_count": {
                           "type": "number",
-                          "description": "The total number of paused Alerts for the Account or Service that were triggerd after being paused (non-transient Alerts)."
+                          "description": "The total number of paused Alerts for the Account or Service that were triggered after being paused (non-transient Alerts)."
                         },
                         "resolved_after_pause_count": {
                           "type": "number",
@@ -43539,7 +43539,7 @@
                           "items": {
                             "type": "object",
                             "readOnly": true,
-                            "description": "Convertion error Details",
+                            "description": "Conversion error Details",
                             "properties": {
                               "rule_id": {
                                 "type": "string",
@@ -46029,7 +46029,7 @@
                               }
                             }
                           ],
-                          "message": "<p>We will be undergoing schedule maitenance at this date and time</p>",
+                          "message": "<p>We will be undergoing schedule maintenance at this date and time</p>",
                           "notify_subscribers": false,
                           "post": {
                             "id": "P6F2CJ3",
@@ -46173,7 +46173,7 @@
                         }
                       }
                     ],
-                    "message": "<p>We will be undergoing schedule maitenance at this date and time</p>",
+                    "message": "<p>We will be undergoing schedule maintenance at this date and time</p>",
                     "notify_subscribers": false,
                     "post": {
                       "id": "P6F2CJ3",
@@ -46273,7 +46273,7 @@
                             }
                           }
                         ],
-                        "message": "<p>We will be undergoing schedule maitenance at this date and time</p>",
+                        "message": "<p>We will be undergoing schedule maintenance at this date and time</p>",
                         "notify_subscribers": false,
                         "post": {
                           "id": "P6F2CJ3",
@@ -46418,7 +46418,7 @@
                             }
                           }
                         ],
-                        "message": "<p>We will be undergoing schedule maitenance at this date and time</p>",
+                        "message": "<p>We will be undergoing schedule maintenance at this date and time</p>",
                         "notify_subscribers": false,
                         "post": {
                           "id": "P6F2CJ3",
@@ -47858,7 +47858,7 @@
           "Teams"
         ],
         "operationId": "deleteTeam",
-        "description": "Remove an existing team.\n\nSucceeds only if the team has no associated Escalation Policies, Services, Schedules and Subteams.\n\nAll associated unresovled incidents will be reassigned to another team (if specified) or will loose team association, thus becoming account-level (with visibility implications).\n\nNote that the incidents reassignment process is asynchronous and has no guarantee to complete before the API call return.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#teams)\n\nScoped OAuth requires: `teams.write`\n",
+        "description": "Remove an existing team.\n\nSucceeds only if the team has no associated Escalation Policies, Services, Schedules and Subteams.\n\nAll associated unresolved incidents will be reassigned to another team (if specified) or will loose team association, thus becoming account-level (with visibility implications).\n\nNote that the incidents reassignment process is asynchronous and has no guarantee to complete before the API call return.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#teams)\n\nScoped OAuth requires: `teams.write`\n",
         "summary": "Delete a team",
         "parameters": [
           {
@@ -51235,7 +51235,7 @@
       },
       "post": {
         "x-pd-requires-scope": "subscribers.write",
-        "summary": "Create Notification Subcriptions",
+        "summary": "Create Notification Subscriptions",
         "operationId": "createUserNotificationSubscriptions",
         "tags": [
           "Users"

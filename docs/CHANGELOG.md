@@ -44,7 +44,7 @@ Currently we rarely deprecate, and do not remove any API functionality.
 - Added `joined_user_ids`, `joined_user_names`, and `active_user_count` columns to `analytics/raw/incidents` and `analytics/raw/incidents/:id`
 
 ## 2024-03-19
-- Added addtional clarification for the different allowed values of event priorities when configuring Slack service connections.
+- Added additional clarification for the different allowed values of event priorities when configuring Slack service connections.
 
 ## 2024-03-13
 - Marked `alert_creation` within the service model as deprecated and add knowledge base reference for end-of-life documentation.
@@ -318,7 +318,7 @@ See the [REST API Rate Limits](https://developer.pagerduty.com/docs/72d3b724589e
    - `GET /automation_actions/invocations/{id}`
 
 ## 2023-03-06
-- Log entry types are now explicity listed as their attributes may differ. The list will now show on the following endpoints:
+- Log entry types are now explicitly listed as their attributes may differ. The list will now show on the following endpoints:
   - `GET /log_entries`
   - `GET /log_entries/{id}`
   - `GET /incidents/{incident_id}/log_entries`
@@ -648,7 +648,7 @@ After April 30th 2023, we will apply the new expiry settings to all OAuth client
 ### 2022-02-17
 - Added new endpoints for reporting counts on Incident Pause usage for a given reporting period for the requesting account or scoped to a service within the account. Can scope paused incidents on `rules` and `auto_pause`
   - `GET /paused_incident_reports/counts`
-- Added new endpoints gettting the 5 most recent alerts that were triggered after being paused and the 5 most recent alerts that were resolved after being paused for a given reporting period for the requesting account or scoped to a service within the account. Can scope paused incidents on `rules` and `auto_pause`
+- Added new endpoints getting the 5 most recent alerts that were triggered after being paused and the 5 most recent alerts that were resolved after being paused for a given reporting period for the requesting account or scoped to a service within the account. Can scope paused incidents on `rules` and `auto_pause`
   - `GET /paused_incident_reports/alerts`
 
 ### 2022-02-11
@@ -658,7 +658,7 @@ After April 30th 2023, we will apply the new expiry settings to all OAuth client
 
 
 ### 2022-02-09
-- Updated link to the `API Concepts` page across all API Documentation (164 occurances) to point to the correct page, this link has been broken since the migration to the new API Documentation platform.
+- Updated link to the `API Concepts` page across all API Documentation (164 occurrences) to point to the correct page, this link has been broken since the migration to the new API Documentation platform.
 
 
 ### 2022-01-31
@@ -772,7 +772,7 @@ After April 30th 2023, we will apply the new expiry settings to all OAuth client
 - Removed Early Access for webhook-v3. `webhooks_early-access`
 
 ### 2021-04-22
-- Added documentation on the new acive field for webhook_subscriptions.
+- Added documentation on the new active field for webhook_subscriptions.
 
 ### 2021-04-20
 - Added includes to list schedules endpoint with an example
