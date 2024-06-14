@@ -4,6 +4,13 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+## 2024-06-13
+- Implemented strict field validation for the `alert_grouping_parameters` object in the following endpoints:
+  - `POST /services`
+  - `PUT /services`
+
+  A 400 error will be returned if extra or incorrect field names are included in this object.
+
 ## 2024-06-06
 - Add a new 'unknown' value to the list of possible automation action invocation states
 - Removed  `X-EARLY-ACCESS` header requirement for all Business Services (BIS) endpoints
