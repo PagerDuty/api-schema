@@ -11108,6 +11108,53 @@
           }
         }
       },
+      "AlertUpdate": {
+        "type": "object",
+        "x-examples": {
+          "Example 1": {
+            "status": "resolved",
+            "incident": {
+              "id": "string",
+              "type": "incident_reference"
+            }
+          }
+        },
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "resolved",
+              "triggered"
+            ]
+          },
+          "incident": {
+            "$ref": "#/components/schemas/AlertUpdateIncidentReference"
+          }
+        }
+      },
+      "AlertUpdateIncidentReference": {
+        "type": "object",
+        "x-examples": {
+          "Example 1": {
+            "id": "string",
+            "type": "incident_reference"
+          }
+        },
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "incident_reference"
+            ]
+          }
+        },
+        "required": [
+          "id"
+        ]
+      },
       "IncidentPrivilege": {
         "type": "object",
         "properties": {
@@ -32480,7 +32527,7 @@
                     "type": "array",
                     "description": "An array of alerts, including the parameters to update for each alert.",
                     "items": {
-                      "$ref": "#/components/schemas/Alert"
+                      "$ref": "#/components/schemas/AlertUpdate"
                     }
                   }
                 },
@@ -32739,7 +32786,7 @@
                 "type": "object",
                 "properties": {
                   "alert": {
-                    "$ref": "#/components/schemas/Alert"
+                    "$ref": "#/components/schemas/AlertUpdate"
                   }
                 },
                 "required": [
@@ -32756,18 +32803,6 @@
                       "incident": {
                         "id": "PEYSGVF",
                         "type": "incident_reference"
-                      },
-                      "body": {
-                        "type": "alert_body",
-                        "contexts": [
-                          {
-                            "type": "link"
-                          }
-                        ],
-                        "details": {
-                          "customKey": "Server is on fire!",
-                          "customKey2": "Other stuff!"
-                        }
                       }
                     }
                   }
