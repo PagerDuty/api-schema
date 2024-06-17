@@ -4,6 +4,10 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+## 2024-06-17
+- Corrected documentation of `PUT /incidents/{id}/alerts` endpoint
+- Corrected documentation of `PUT /incidents/{id}/alerts/{alert_id}` endpoint
+
 ## 2024-06-13
 - Implemented strict field validation for the `alert_grouping_parameters` object in the following endpoints:
   - `POST /services`
