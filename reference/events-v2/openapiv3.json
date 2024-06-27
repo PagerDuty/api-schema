@@ -149,6 +149,7 @@
                   },
                   "event_action": {
                     "description": "The type of event. Can be `trigger`, `acknowledge` or `resolve`.",
+                    "type": "string",
                     "enum": [
                       "trigger",
                       "acknowledge",
@@ -319,6 +320,7 @@
           },
           "severity": {
             "description": "The perceived severity of the status the event is describing withrespect to the affected system.",
+            "type": "string",
             "enum": [
               "critical",
               "warning",
