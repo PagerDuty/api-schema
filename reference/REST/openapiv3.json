@@ -3203,6 +3203,15 @@
           ]
         }
       },
+      "triggers_filter_is_disabled": {
+        "name": "is_disabled",
+        "description": "If provided, filters between disabled and enabled Triggers.\nThis query parameter is deprecated, and will be removed in a future version of this API.\n",
+        "deprecated": true,
+        "in": "query",
+        "schema": {
+          "type": "boolean"
+        }
+      },
       "triggers_path_trigger_id": {
         "name": "trigger_id",
         "description": "Identifier for the Trigger",
@@ -11957,6 +11966,12 @@
                     "description": "The ID of the team whose members can manually start this Trigger. Required and allowed if and only if permissions.restricted is true."
                   }
                 }
+              },
+              "is_disabled": {
+                "type": "boolean",
+                "description": "Indicates whether the Trigger is disabled or not.\nThis attribute is deprecated, and will be removed in a future version of this API.\n",
+                "deprecated": true,
+                "readOnly": true
               }
             }
           }
@@ -30377,6 +30392,9 @@
           },
           {
             "$ref": "#/components/parameters/triggers_filter_workflow_name_contains"
+          },
+          {
+            "$ref": "#/components/parameters/triggers_filter_is_disabled"
           },
           {
             "$ref": "#/components/parameters/triggers_sort_by"

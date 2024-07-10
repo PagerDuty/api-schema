@@ -4,6 +4,11 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+## 2024-07-10
+- Add `is_disabled` query parameter and `is_disabled` response attribute to `GET /incident_workflows/triggers`, directly as _deprecated_.
+These parameters have been returned but were not documented. Both query parameter and response attribute will be removed in later versions
+of the API, and should not be used.
+
 ## 2024-06-17
 - Corrected documentation of `PUT /incidents/{id}/alerts` endpoint
 - Corrected documentation of `PUT /incidents/{id}/alerts/{alert_id}` endpoint
