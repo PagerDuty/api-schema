@@ -1313,6 +1313,18 @@
                     }
                   },
                   {
+                    "label": "Assign all database related incidents to the Database Team's escalation policy",
+                    "id": "4314d9ce",
+                    "conditions": [
+                      {
+                        "expression": "event.source matches 'prod-db'"
+                      }
+                    ],
+                    "actions": {
+                      "escalation_policy": "PEYSGVF"
+                    }
+                  },
+                  {
                     "label": "Never bother the on-call for info-level events outside of work hours",
                     "id": "cd770384",
                     "conditions": [
@@ -14099,6 +14111,11 @@
                                 "description": "The ID of the priority you want to set on resulting incident. You can find the list of priority IDs for your account by calling the priorities endpoint.",
                                 "example": "P53ZZH5"
                               },
+                              "escalation_policy": {
+                                "type": "string",
+                                "description": "The ID of the Escalation Policy you want to assign incidents to. Event rules with this action will override the Escalation Policy already set on a Service's settings, with what is configured by this action.",
+                                "example": "PQOMK4S"
+                              },
                               "annotate": {
                                 "type": "string",
                                 "description": "Add this text as a note on the resulting incident. AIOps users can additionally use the {{event}} variable to include elements of the event payload in the note."
@@ -14245,6 +14262,30 @@
                                     "type": "string",
                                     "description": "The ID of the target Service for the resulting alert. You can find the service you want to route to by calling the services endpoint.",
                                     "example": "PSI2I2O"
+                                  },
+                                  "dynamic_route_to": {
+                                    "type": "object",
+                                    "description": "Use the contents of an event payload to dynamically route an event to the target service. Available to AIOps customers. Note it can only be used once in the Router, and only in the first rule. The dynamic_route_to rule cannot have conditions or a route_to action defined.",
+                                    "properties": {
+                                      "source": {
+                                        "type": "string",
+                                        "description": "The path to a field in an event.",
+                                        "example": "event.summary"
+                                      },
+                                      "regex": {
+                                        "type": "string",
+                                        "description": "A RE2 regular expression, used to extract a value from the source field.",
+                                        "example": "(.*)"
+                                      },
+                                      "lookup_by": {
+                                        "type": "string",
+                                        "description": "Indicates whether the extracted value from the source is a service's name or ID.",
+                                        "enum": [
+                                          "service_name",
+                                          "service_id"
+                                        ]
+                                      }
+                                    }
                                   }
                                 }
                               }
@@ -14955,7 +14996,7 @@
           },
           "feature": {
             "type": "string",
-            "description": "The feature that the current account plan does not have access to.\n\nExample values include:\n* `threshold_condition`\n* `nested_rules`\n* `suspend`\n* `automation_actions`\n* `cache_variable:automation_actions`\n* `cache_variable:annotate`\n* `variables`\n* `interpolation:annotate`\n* `interpolation:extractions`\n* `interpolation:incident_custom_field_updates`\n* `suppress`\n* `incident_custom_field_updates`\n"
+            "description": "The feature that the current account plan does not have access to.\n\nExample values include:\n* `threshold_condition`\n* `nested_rules`\n* `suspend`\n* `automation_actions`\n* `cache_variable:automation_actions`\n* `cache_variable:annotate`\n* `variables`\n* `interpolation:annotate`\n* `interpolation:extractions`\n* `interpolation:incident_custom_field_updates`\n* `suppress`\n* `incident_custom_field_updates`\n* `dynamic_route_to`\n* `escalation_policy`\n"
           },
           "feature_type": {
             "type": "string",
@@ -14984,7 +15025,7 @@
           },
           "feature": {
             "type": "string",
-            "description": "The feature that includes invalid data.\n\nExample values include:\n  * `incident_custom_field_updates`\n  * `cache_variable:annotate`\n  * `cache_variable:conditions`\n  * `cache_variable:automation_actions`\n"
+            "description": "The feature that includes invalid data.\n\nExample values include:\n  * `incident_custom_field_updates`\n  * `escalation_policy`\n  * `cache_variable:annotate`\n  * `cache_variable:conditions`\n  * `cache_variable:automation_actions`\n"
           },
           "feature_type": {
             "type": "string",
@@ -26789,6 +26830,18 @@
                               }
                             },
                             {
+                              "label": "Assign all database related incidents to the Database Team's escalation policy",
+                              "id": "4314d9ce",
+                              "conditions": [
+                                {
+                                  "expression": "event.source matches 'prod-db'"
+                                }
+                              ],
+                              "actions": {
+                                "escalation_policy": "PEYSGVF"
+                              }
+                            },
+                            {
                               "label": "Never bother the on-call for info-level events outside of work hours",
                               "id": "cd770384",
                               "conditions": [
@@ -26919,14 +26972,14 @@
                                 ],
                                 "actions": {
                                   "priority": "P0IN2KQ",
-                                  "suppress": false
-                                },
-                                "incident_custom_field_updates": [
-                                  {
-                                    "id": "PEXCK89",
-                                    "value": "#p1-incident-response"
-                                  }
-                                ]
+                                  "suppress": false,
+                                  "incident_custom_field_updates": [
+                                    {
+                                      "id": "PEXCK89",
+                                      "value": "#p1-incident-response"
+                                    }
+                                  ]
+                                }
                               },
                               {
                                 "label": "Drop all events from the very-noisy monitoring tool",
@@ -26938,6 +26991,18 @@
                                 ],
                                 "actions": {
                                   "drop_event": true
+                                }
+                              },
+                              {
+                                "label": "Assign all database related incidents to the Database Team's escalation policy",
+                                "id": "4314d9ce",
+                                "conditions": [
+                                  {
+                                    "expression": "event.source matches 'prod-db'"
+                                  }
+                                ],
+                                "actions": {
+                                  "escalation_policy": "PEYSGVF"
                                 }
                               },
                               {
@@ -27119,6 +27184,17 @@
                           "id": "start",
                           "rules": [
                             {
+                              "label": "Dynamically route events",
+                              "id": "763110d0",
+                              "actions": {
+                                "dynamic_route_to": {
+                                  "source": "event.custom_details.pd_service",
+                                  "regex": ".*",
+                                  "lookup_by": "service_name"
+                                }
+                              }
+                            },
+                            {
                               "label": "Events relating to our relational database",
                               "id": "1c26698b",
                               "conditions": [
@@ -27212,6 +27288,17 @@
                             "id": "start",
                             "rules": [
                               {
+                                "label": "Dynamically route events",
+                                "id": "763110d0",
+                                "actions": {
+                                  "dynamic_route_to": {
+                                    "source": "event.custom_details.pd_service",
+                                    "regex": ".*",
+                                    "lookup_by": "service_name"
+                                  }
+                                }
+                              },
+                              {
                                 "label": "Events relating to our relational database",
                                 "id": "1c26698b",
                                 "conditions": [
@@ -27273,6 +27360,13 @@
                         "version": "9co0z4b152oICsoV91_PW2.ww8ip_xap"
                       },
                       "warnings": [
+                        {
+                          "feature": "dynamic_route_to,",
+                          "feature_type": "actions,",
+                          "message": "This rule uses Dynamic Routing, which is an action not available on your account plan. The rule will be updated, but it will not be evaluated by events,",
+                          "rule_id": "763110d0,",
+                          "warning_type": "forbidden_feature"
+                        },
                         {
                           "feature": "threshold_condition",
                           "feature_type": "conditions",
