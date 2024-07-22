@@ -4,6 +4,10 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+## 2024-07-22
+- Added support for `dynamic_route_to` parameter to `/event_orchestrations/{orchestration_id}/router` endpoint
+- Added support for `escalation_policy` parameter to `/event_orchestrations/{orchestration_id}/global` and `/event_orchestrations/services/{service_id}` endpoints
+
 ## 2024-07-10
 - Add `is_disabled` query parameter and `is_disabled` response attribute to `GET /incident_workflows/triggers`, directly as _deprecated_.
 These parameters have been returned but were not documented. Both query parameter and response attribute will be removed in later versions
