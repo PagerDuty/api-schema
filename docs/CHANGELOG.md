@@ -4,6 +4,13 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+## 2024-08-09
+- Adding deprecation notice for alert grouping configuration via the Service resource. Alert Grouping Settings power a more robust version of alert grouping. All new alert grouping features will only be available via Alert Grouping Settings. This affects the following fields on the Service endpoints:
+
+- `alert_grouping`
+- `alert_grouping_parameters`
+- `alert_grouping_timeout`
+
 ## 2024-07-22
 - Added support for `dynamic_route_to` parameter to `/event_orchestrations/{orchestration_id}/router` endpoint
 - Added support for `escalation_policy` parameter to `/event_orchestrations/{orchestration_id}/global` and `/event_orchestrations/services/{service_id}` endpoints
