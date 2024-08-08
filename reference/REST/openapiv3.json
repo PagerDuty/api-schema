@@ -6613,7 +6613,7 @@
           "recommended_time_window": {
             "readOnly": true,
             "type": "integer",
-            "description": "In order to ensure your Service has the optimal grouping window, we use data science to calculate your Service`s average Alert inter-arrival time. We encourage customer`s to use this value, please set `time_window` to 0 to use the `recommended_time_window`."
+            "description": "In order to ensure your Service has the optimal grouping window, we use data science to calculate your Service's average Alert inter-arrival time. We encourage customer's to use this value, please set `time_window` to 0 to use the `recommended_time_window`."
           }
         }
       },
@@ -9806,7 +9806,7 @@
               "alert_grouping": {
                 "type": "string",
                 "deprecated": true,
-                "description": "Defines how alerts on this service will be automatically grouped into incidents. Note that the alert grouping features are available only on certain plans. There are three available options:\n* null - No alert grouping on the service. Each alert will create a separate incident;\n* \"time\" - All alerts within a specified duration will be grouped into the same incident. This duration is set in the `alert_grouping_timeout` setting (described below). Available on Standard, Enterprise, and Event Intelligence plans;\n* \"intelligent\" - Alerts will be intelligently grouped based on a machine learning model that looks at the alert summary, timing, and the history of grouped alerts. Available on Enterprise and Event Intelligence plans\n",
+                "description": "Defines how alerts on this service will be automatically grouped into incidents. Note that the alert grouping features are available only on certain plans. There are three available options:\n* null - No alert grouping on the service. Each alert will create a separate incident;\n* \"time\" - All alerts within a specified duration will be grouped into the same incident. This duration is set in the `alert_grouping_timeout` setting (described below). Available on Standard, Enterprise, and Event Intelligence plans;\n* \"intelligent\" - Alerts will be intelligently grouped based on a machine learning model that looks at the alert summary, timing, and the history of grouped alerts. Available on Enterprise and Event Intelligence plans\n\nThis attribute has been deprecated and configuration via [Alert Grouping Settings](https://developer.pagerduty.com/api-reference/587edbc8ff416-create-an-alert-grouping-setting) resource is encouraged.\n",
                 "enum": [
                   "time",
                   "intelligent"
@@ -9815,7 +9815,7 @@
               "alert_grouping_timeout": {
                 "type": "integer",
                 "deprecated": true,
-                "description": "The duration in minutes within which to automatically group incoming alerts. This setting applies only when `alert_grouping` is set to `time`. To continue grouping alerts until the Incident is resolved, set this value to `0`.\n"
+                "description": "The duration in minutes within which to automatically group incoming alerts. This setting applies only when `alert_grouping` is set to `time`. To continue grouping alerts until the Incident is resolved, set this value to `0`.\n\nThis attribute has been deprecated and configuration via [Alert Grouping Settings](https://developer.pagerduty.com/api-reference/587edbc8ff416-create-an-alert-grouping-setting) resource is encouraged.\n"
               },
               "auto_pause_notifications_parameters": {
                 "$ref": "#/components/schemas/AutoPauseNotificationsParameters"
@@ -9879,12 +9879,6 @@
                 }
               ],
               "alert_creation": "create_alerts_and_incidents",
-              "alert_grouping_parameters": {
-                "type": "time",
-                "config": {
-                  "timeout": 2
-                }
-              },
               "auto_pause_notifications_parameters": {
                 "enabled": true,
                 "timeout": 300
@@ -13240,7 +13234,9 @@
             "type": "string",
             "enum": [
               "content_based",
-              "content_based_intelligent"
+              "content_based_intelligent",
+              "intelligent",
+              "time"
             ]
           },
           "config": {
@@ -13250,6 +13246,37 @@
               },
               {
                 "$ref": "#/components/schemas/ContentBasedIntelligentAlertGroupingConfiguration"
+              },
+              {
+                "type": "object",
+                "title": "Time Grouping",
+                "description": "The configuration for Time Based Alert Grouping",
+                "properties": {
+                  "timeout": {
+                    "type": "integer",
+                    "minimum": 60,
+                    "maximum": 86400,
+                    "description": "The duration in seconds within which to automatically group incoming Alerts. To continue grouping Alerts until the Incident is resolved, set this value to 0."
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "title": "Intelligent Grouping",
+                "description": "The configuration for Intelligent Alert Grouping",
+                "properties": {
+                  "time_window": {
+                    "type": "integer",
+                    "minimum": 300,
+                    "maximum": 3600,
+                    "description": "The maximum amount of time allowed between Alerts. Any Alerts arriving greater than `time_window` seconds apart will not be grouped together. This is a rolling time window up to 24 hours and is counted from the most recently grouped alert. The window is extended every time a new alert is added to the group, up to 24 hours (24 hours only applies to single-service settings). To use the \"recommended_time_window,\" set the value to 0, otherwise the value must be between 300 <= time_window <= 3600."
+                  },
+                  "recommended_time_window": {
+                    "readOnly": true,
+                    "type": "integer",
+                    "description": "In order to ensure your Service has the optimal grouping window, we use data science to calculate your Service's average Alert inter-arrival time. We encourage customer's to use this value, please set `time_window` to 0 to use the `recommended_time_window`."
+                  }
+                }
               }
             ]
           },
@@ -13276,7 +13303,8 @@
       },
       "AlertGroupingParameters": {
         "type": "object",
-        "description": "Defines how alerts on this service will be automatically grouped into incidents. Note that the alert grouping features are available only on certain plans. To turn grouping off set the type to null.\n",
+        "deprecated": true,
+        "description": "Defines how alerts on this service will be automatically grouped into incidents. Note that the alert grouping features are available only on certain plans. To turn grouping off set the type to null.\nThis attribute has been deprecated and configuration via [Alert Grouping Settings](https://developer.pagerduty.com/api-reference/587edbc8ff416-create-an-alert-grouping-setting) resource is encouraged.\n",
         "properties": {
           "type": {
             "type": "string",
@@ -13328,7 +13356,7 @@
           "recommended_time_window": {
             "readOnly": true,
             "type": "integer",
-            "description": "In order to ensure your Service has the optimal grouping window, we use data science to calculate your Service`s average Alert inter-arrival time. We encourage customer`s to use this value, please set `time_window` to 0 to use the `recommended_time_window`."
+            "description": "In order to ensure your Service has the optimal grouping window, we use data science to calculate your Service's average Alert inter-arrival time. We encourage customer's to use this value, please set `time_window` to 0 to use the `recommended_time_window`."
           }
         }
       },
@@ -13339,7 +13367,9 @@
         "properties": {
           "timeout": {
             "type": "integer",
-            "description": "The duration in minutes within which to automatically group incoming Alerts.  To continue grouping Alerts until the Incident is resolved, set this value to 0."
+            "minimum": 1,
+            "maximum": 1440,
+            "description": "The duration in minutes within which to automatically group incoming Alerts. To continue grouping Alerts until the Incident is resolved, set this value to 0."
           }
         }
       },
