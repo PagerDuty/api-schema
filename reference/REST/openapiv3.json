@@ -6602,7 +6602,10 @@
           },
           "fields": {
             "type": "array",
-            "description": "An array of strings which represent the fields with which to group against. Depending on the aggregate, Alerts will group if some or all the fields match."
+            "description": "An array of strings which represent the fields with which to group against. Depending on the aggregate, Alerts will group if some or all the fields match.",
+            "items": {
+              "type": "string"
+            }
           },
           "time_window": {
             "type": "integer",
@@ -12593,7 +12596,20 @@
               },
               "custom_headers": {
                 "type": "array",
-                "description": "Optional headers to be set on this webhook subscription when sent. The header values are redacted in GET requests, but are not redacted on the webhook when delivered to the webhook's endpoint."
+                "description": "Optional headers to be set on this webhook subscription when sent. The header values are redacted in GET requests, but are not redacted on the webhook when delivered to the webhook's endpoint.",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "The header name"
+                    },
+                    "value": {
+                      "type": "string",
+                      "description": "The header value"
+                    }
+                  }
+                }
               }
             },
             "required": [
@@ -13345,7 +13361,10 @@
           },
           "fields": {
             "type": "array",
-            "description": "An array of strings which represent the fields with which to group against. Depending on the aggregate, Alerts will group if some or all the fields match."
+            "description": "An array of strings which represent the fields with which to group against. Depending on the aggregate, Alerts will group if some or all the fields match.",
+            "items": {
+              "type": "string"
+            }
           },
           "time_window": {
             "type": "integer",
@@ -15175,15 +15194,24 @@
             "properties": {
               "email_subject": {
                 "type": "array",
-                "description": "List of warnings for email_subject"
+                "description": "List of warnings for email_subject",
+                "items": {
+                  "type": "string"
+                }
               },
               "email_body": {
                 "type": "array",
-                "description": "List of warnings for email_body"
+                "description": "List of warnings for email_body",
+                "items": {
+                  "type": "string"
+                }
               },
               "message": {
                 "type": "array",
-                "description": "List of warnings for message field"
+                "description": "List of warnings for message field",
+                "items": {
+                  "type": "string"
+                }
               }
             }
           },
@@ -30023,8 +30051,8 @@
           }
         },
         "responses": {
-          "201": {
-            "description": "The new Incident Workflow",
+          "200": {
+            "description": "The changed Incident Workflow",
             "content": {
               "application/json": {
                 "schema": {
