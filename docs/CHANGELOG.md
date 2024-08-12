@@ -4,6 +4,17 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+## 2024-08-12
+- Added endpoints for Workflow Integrations and Connections
+  - `GET /workflows/integrations`
+  - `GET /workflows/integrations/{id}`
+  - `GET /workflows/integrations/connections`
+  - `GET /workflows/integrations/{id}/connections`
+  - `POST /workflows/integrations/{id}/connections`
+  - `GET /workflows/integrations/{id}/connections/{id}`
+  - `PATCH /workflows/integrations/{id}/connections/{id}`
+  - `DELETE /workflows/integrations/{id}/connections/{id}`
+
 ## 2024-08-09
 - Add OpenAPI array items' type specifications to response schema definitions
 - Fix update Incident Workflow status code response
@@ -23,6 +34,7 @@ Currently we rarely deprecate, and do not remove any API functionality.
 - Add `is_disabled` query parameter and `is_disabled` response attribute to `GET /incident_workflows/triggers`, directly as _deprecated_.
 These parameters have been returned but were not documented. Both query parameter and response attribute will be removed in later versions
 of the API, and should not be used.
+
 
 ## 2024-06-17
 - Corrected documentation of `PUT /incidents/{id}/alerts` endpoint
