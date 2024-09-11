@@ -4,6 +4,9 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+## 2024-09-11
+- Updated the [incident event webhook](https://developer.pagerduty.com/docs/db0fa8c8984fc-overview) to include the new Incident Type attribute.
+
 ## 2024-08-12
 - Added endpoints for Workflow Integrations and Connections
   - `GET /workflows/integrations`
@@ -18,8 +21,6 @@ Currently we rarely deprecate, and do not remove any API functionality.
 ## 2024-08-09
 - Add OpenAPI array items' type specifications to response schema definitions
 - Fix update Incident Workflow status code response
-
-## 2024-08-09
 - Adding deprecation notice for alert grouping configuration via the Service resource. Alert Grouping Settings power a more robust version of alert grouping. All new alert grouping features will only be available via Alert Grouping Settings. This affects the following fields on the Service endpoints:
 
 - `alert_grouping`
@@ -34,7 +35,6 @@ Currently we rarely deprecate, and do not remove any API functionality.
 - Add `is_disabled` query parameter and `is_disabled` response attribute to `GET /incident_workflows/triggers`, directly as _deprecated_.
 These parameters have been returned but were not documented. Both query parameter and response attribute will be removed in later versions
 of the API, and should not be used.
-
 
 ## 2024-06-17
 - Corrected documentation of `PUT /incidents/{id}/alerts` endpoint
