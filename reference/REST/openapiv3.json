@@ -53,10 +53,6 @@
       "description": "Business services model capabilities that span multiple technical services and that may be owned by several different teams.\n"
     },
     {
-      "name": "Custom Fields",
-      "description": "Custom fields allow you to enrich PagerDuty incidents with critical and helpful metadata throughout the incident lifecycle.\n"
-    },
-    {
       "name": "Change Events",
       "description": "Change Events enable you to send informational events about recent changes such as code deploys and system config changes from any system that can make an outbound HTTP connection. These events do not create incidents and do not send notifications; they are shown in context with incidents on the same PagerDuty service.\n"
     },
@@ -79,6 +75,14 @@
     {
       "name": "Incidents",
       "description": "An incident represents a problem or an issue that needs to be addressed and resolved. Incidents trigger on a service, which prompts notifications to go out to on-call responders per the service's escalation policy.\n"
+    },
+    {
+      "name": "Incident Custom Fields",
+      "description": "Custom fields allow you to enrich PagerDuty incidents with critical and helpful metadata throughout the incident lifecycle.\n"
+    },
+    {
+      "name": "Incident Types",
+      "description": "Incident Types are a feature which will allow customers to categorize incidents, such as a security incident, a major incident, or a fraud incident.\n"
     },
     {
       "name": "Incident Workflows",
@@ -1991,6 +1995,24 @@
         "description": "The number of results per page. Maximum of 100.",
         "schema": {
           "type": "integer"
+        }
+      },
+      "incident_type_id_or_name": {
+        "name": "type_id_or_name",
+        "in": "path",
+        "required": true,
+        "description": "The ID or name of the Incident Type.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "incident_type_id_or_name_dub": {
+        "name": "other_type_id_or_name",
+        "in": "path",
+        "required": true,
+        "description": "The ID or name of the Incident Type.",
+        "schema": {
+          "type": "string"
         }
       },
       "past_incidents_limit": {
@@ -9594,6 +9616,180 @@
           }
         ]
       },
+      "IncidentType": {
+        "type": "object",
+        "properties": {
+          "enabled": {
+            "type": "boolean",
+            "description": "State of this Incident Type object."
+          },
+          "id": {
+            "type": "string",
+            "readOnly": true
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the Incident Type."
+          },
+          "parent": {
+            "type": "object",
+            "description": "The parent Incident Type (id/name). If omitted, type is created under top level (incident_default)",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string",
+                "example": "incident_type_reference"
+              }
+            }
+          },
+          "type": {
+            "type": "string",
+            "readOnly": true,
+            "description": "A string that determines the schema of the object. This must be the standard name for the entity, suffixed by `_reference` if the object is a reference."
+          },
+          "description": {
+            "type": "string",
+            "readOnly": false,
+            "description": "A succinct description of the Incident Type."
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The time the Incident Type was created.",
+            "example": "2019-12-01T20:00:00Z",
+            "readOnly": true
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2019-12-01T21:02:00Z",
+            "description": "The time the Incident Type was last modified."
+          },
+          "display_name": {
+            "type": "string",
+            "readOnly": false,
+            "description": "The display name of the Incident Type. The first character must be alphanumeric. Max length: 50, Min Length : 1. The `display_name` for a Field must be unique."
+          }
+        }
+      },
+      "IncidentTypeCustomFields": {
+        "type": "object",
+        "properties": {
+          "enabled": {
+            "type": "boolean",
+            "description": "Whether the custom field is enabled.",
+            "readOnly": true
+          },
+          "id": {
+            "type": "string",
+            "readOnly": true,
+            "description": "The ID of the resource."
+          },
+          "name": {
+            "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/name"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "field"
+            ],
+            "readOnly": true
+          },
+          "self": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true,
+            "format": "url",
+            "description": "The API show URL at which the object is accessible"
+          },
+          "description": {
+            "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/description"
+          },
+          "field_type": {
+            "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/field_type"
+          },
+          "data_type": {
+            "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/data_type"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The date/time the object was last updated.",
+            "readOnly": true
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The date/time the object was created at.",
+            "readOnly": true
+          },
+          "display_name": {
+            "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/display_name"
+          },
+          "default_value": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/value/oneOf/0"
+              },
+              {
+                "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/value/oneOf/2"
+              },
+              {
+                "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/value/oneOf/1"
+              },
+              {
+                "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/value/oneOf/3"
+              },
+              {
+                "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/value/oneOf/4"
+              },
+              {
+                "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/value/oneOf/5"
+              }
+            ],
+            "nullable": true
+          },
+          "incident_type": {
+            "type": "string",
+            "description": "The id of the incident type the custom field is associated with.",
+            "readOnly": true
+          },
+          "summary": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true,
+            "description": "A short-form, server-generated string that provides succinct, important information about an object suitable for primary labeling of an entity in a client. In many cases, this will be identical to `name`, though it is not intended to be an identifier."
+          }
+        },
+        "required": [
+          "id",
+          "summary",
+          "self",
+          "type",
+          "created_at",
+          "updated_at",
+          "data_type",
+          "namespace",
+          "name",
+          "display_name",
+          "field_type"
+        ]
+      },
+      "IncidentTypeReference": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "readOnly": true
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the Incident Type."
+          }
+        }
+      },
       "Incident": {
         "allOf": [
           {
@@ -9697,6 +9893,16 @@
                 "type": "boolean",
                 "description": "Whether the incident is mergeable. Only incidents that have alerts, or that are manually created can be merged.",
                 "readOnly": true
+              },
+              "incident_type": {
+                "description": "The incident type of the incident.",
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "The name of the Incident Type."
+                  }
+                }
               },
               "escalation_policy": {
                 "description": "The escalation policy attached to the service that the incident is on. If the `include[]=escalation_policies` query parameter is provided, the full escalation policy definition will be returned.",
@@ -15743,11 +15949,29 @@
       "CustomFieldsField": {
         "allOf": [
           {
-            "$ref": "#/components/schemas/CustomFieldsEditableField"
-          },
-          {
             "type": "object",
             "properties": {
+              "created_at": {
+                "type": "string",
+                "format": "date-time",
+                "description": "The date/time the object was created at.",
+                "readOnly": true
+              },
+              "data_type": {
+                "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/data_type"
+              },
+              "default_value": {
+                "$ref": "#/components/schemas/IncidentTypeCustomFields/properties/default_value"
+              },
+              "description": {
+                "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/description"
+              },
+              "display_name": {
+                "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/display_name"
+              },
+              "field_type": {
+                "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/field_type"
+              },
               "id": {
                 "type": "string",
                 "readOnly": true,
@@ -15756,18 +15980,18 @@
               "name": {
                 "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/name"
               },
-              "summary": {
-                "type": "string",
-                "nullable": true,
-                "readOnly": true,
-                "description": "A short-form, server-generated string that provides succinct, important information about an object suitable for primary labeling of an entity in a client. In many cases, this will be identical to `name`, though it is not intended to be an identifier."
-              },
               "self": {
                 "type": "string",
                 "nullable": true,
                 "readOnly": true,
                 "format": "url",
                 "description": "The API show URL at which the object is accessible"
+              },
+              "summary": {
+                "type": "string",
+                "nullable": true,
+                "readOnly": true,
+                "description": "A short-form, server-generated string that provides succinct, important information about an object suitable for primary labeling of an entity in a client. In many cases, this will be identical to `name`, though it is not intended to be an identifier."
               },
               "type": {
                 "type": "string",
@@ -15776,23 +16000,11 @@
                 ],
                 "readOnly": true
               },
-              "created_at": {
-                "type": "string",
-                "format": "date-time",
-                "description": "The date/time the object was created at.",
-                "readOnly": true
-              },
               "updated_at": {
                 "type": "string",
                 "format": "date-time",
                 "description": "The date/time the object was last updated.",
                 "readOnly": true
-              },
-              "data_type": {
-                "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/data_type"
-              },
-              "field_type": {
-                "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/field_type"
               }
             }
           }
@@ -15821,27 +16033,7 @@
             "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/description"
           },
           "default_value": {
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/value/oneOf/0"
-              },
-              {
-                "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/value/oneOf/2"
-              },
-              {
-                "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/value/oneOf/1"
-              },
-              {
-                "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/value/oneOf/3"
-              },
-              {
-                "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/value/oneOf/4"
-              },
-              {
-                "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/value/oneOf/5"
-              }
-            ],
-            "nullable": true
+            "$ref": "#/components/schemas/IncidentTypeCustomFields/properties/default_value"
           }
         }
       },
@@ -15865,29 +16057,6 @@
       "CustomFieldsEditableFieldOption": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "readOnly": true,
-            "description": "The ID of the resource."
-          },
-          "type": {
-            "type": "string",
-            "enum": [
-              "field_option"
-            ]
-          },
-          "created_at": {
-            "type": "string",
-            "format": "date-time",
-            "description": "The date/time the object was created at.",
-            "readOnly": true
-          },
-          "updated_at": {
-            "type": "string",
-            "format": "date-time",
-            "description": "The date/time the object was last updated.",
-            "readOnly": true
-          },
           "data": {
             "oneOf": [
               {
@@ -15914,9 +16083,32 @@
             "discriminator": {
               "propertyName": "data_type",
               "mapping": {
-                "string": "#/paths/~1incidents~1custom_fields/get/responses/200/content/application~1json/schema/allOf/0/properties/fields/items/allOf/1/properties/field_options/items/allOf/0/properties/data/oneOf/0"
+                "string": "#/paths/~1incidents~1custom_fields/get/responses/200/content/application~1json/schema/allOf/0/properties/fields/items/allOf/0/properties/field_options/items/allOf/0/properties/data/oneOf/0"
               }
             }
+          },
+          "id": {
+            "type": "string",
+            "readOnly": true,
+            "description": "The ID of the resource."
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "field_option"
+            ]
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The date/time the object was last updated.",
+            "readOnly": true
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The date/time the object was created at.",
+            "readOnly": true
           }
         },
         "required": [
@@ -15930,11 +16122,26 @@
       "CustomFieldsFieldWithOptions": {
         "allOf": [
           {
-            "$ref": "#/components/schemas/CustomFieldsField"
-          },
-          {
             "type": "object",
             "properties": {
+              "created_at": {
+                "type": "string",
+                "format": "date-time",
+                "description": "The date/time the object was created at.",
+                "readOnly": true
+              },
+              "data_type": {
+                "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/data_type"
+              },
+              "default_value": {
+                "$ref": "#/components/schemas/IncidentTypeCustomFields/properties/default_value"
+              },
+              "description": {
+                "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/description"
+              },
+              "display_name": {
+                "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/display_name"
+              },
               "field_options": {
                 "type": "array",
                 "description": "The fixed list of value options that may be stored in this field.",
@@ -15942,9 +16149,59 @@
                   "$ref": "#/components/schemas/CustomFieldsFieldOption"
                 },
                 "nullable": true
+              },
+              "field_type": {
+                "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/field_type"
+              },
+              "id": {
+                "type": "string",
+                "readOnly": true,
+                "description": "The ID of the resource."
+              },
+              "name": {
+                "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/name"
+              },
+              "self": {
+                "type": "string",
+                "nullable": true,
+                "readOnly": true,
+                "format": "url",
+                "description": "The API show URL at which the object is accessible"
+              },
+              "summary": {
+                "type": "string",
+                "nullable": true,
+                "readOnly": true,
+                "description": "A short-form, server-generated string that provides succinct, important information about an object suitable for primary labeling of an entity in a client. In many cases, this will be identical to `name`, though it is not intended to be an identifier."
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "field"
+                ],
+                "readOnly": true
+              },
+              "updated_at": {
+                "type": "string",
+                "format": "date-time",
+                "description": "The date/time the object was last updated.",
+                "readOnly": true
               }
             }
           }
+        ],
+        "required": [
+          "id",
+          "summary",
+          "self",
+          "type",
+          "created_at",
+          "updated_at",
+          "data_type",
+          "namespace",
+          "name",
+          "display_name",
+          "field_type"
         ]
       },
       "CustomFieldsFieldValue": {
@@ -32099,6 +32356,9 @@
                             "resolved": 2
                           },
                           "is_mergeable": true,
+                          "incident_type": {
+                            "name": "incident_default"
+                          },
                           "escalation_policy": {
                             "id": "PT20YPA",
                             "type": "escalation_policy_reference",
@@ -32258,6 +32518,9 @@
                             }
                           }
                         },
+                        "incident_type": {
+                          "$ref": "#/components/schemas/IncidentTypeReference"
+                        },
                         "escalation_policy": {
                           "$ref": "#/components/schemas/EscalationPolicyReference"
                         },
@@ -32310,6 +32573,14 @@
                             }
                           }
                         ]
+                      },
+                      {
+                        "id": "PYJ9K7I",
+                        "type": "incident_reference",
+                        "incident_type": {
+                          "name": "major_incident",
+                          "id": "P8YUJZS"
+                        }
                       }
                     ]
                   }
@@ -32423,6 +32694,9 @@
                             "summary": "Triggered through the API",
                             "self": "https://api.pagerduty.com/log_entries/Q02JTSNZWHSEKV?incident_id=PT4KHLK",
                             "html_url": "https://subdomain.pagerduty.com/incidents/PT4KHLK/log_entries/Q02JTSNZWHSEKV"
+                          },
+                          "incident_type": {
+                            "name": "major_incident"
                           },
                           "escalation_policy": {
                             "id": "PT20YPA",
@@ -32538,6 +32812,9 @@
                           }
                         }
                       },
+                      "incident_type": {
+                        "$ref": "#/components/schemas/IncidentTypeReference"
+                      },
                       "escalation_policy": {
                         "$ref": "#/components/schemas/EscalationPolicyReference"
                       },
@@ -32576,6 +32853,10 @@
                       "body": {
                         "type": "incident_body",
                         "details": "A disk is getting full on this machine. You should investigate what is causing the disk to fill, and ensure that there is an automated process in place for ensuring data is rotated (eg. logs should have logrotate around them). If data is expected to stay on this disk forever, you should start planning to scale up to a larger disk."
+                      },
+                      "incident_type": {
+                        "name": "major_incident",
+                        "id": "P8YUJZS"
                       },
                       "escalation_policy": {
                         "id": "PT20YPA",
@@ -32661,6 +32942,9 @@
                           "summary": "Triggered through the API",
                           "self": "https://api.pagerduty.com/log_entries/Q02JTSNZWHSEKV?incident_id=PT4KHLK",
                           "html_url": "https://subdomain.pagerduty.com/incidents/PT4KHLK/log_entries/Q02JTSNZWHSEKV"
+                        },
+                        "incident_type": {
+                          "name": "major_incident"
                         },
                         "escalation_policy": {
                           "id": "PT20YPA",
@@ -32792,6 +33076,9 @@
                           "resolved": 1
                         },
                         "is_mergeable": true,
+                        "incident_type": {
+                          "name": "incident_default"
+                        },
                         "escalation_policy": {
                           "id": "PT20YPA",
                           "type": "escalation_policy_reference",
@@ -33055,6 +33342,9 @@
                           }
                         }
                       },
+                      "incident_type": {
+                        "$ref": "#/components/schemas/IncidentTypeReference"
+                      },
                       "escalation_policy": {
                         "$ref": "#/components/schemas/EscalationPolicyReference"
                       },
@@ -33192,6 +33482,9 @@
                           "summary": "Triggered through the API",
                           "self": "https://api.pagerduty.com/log_entries/Q02JTSNZWHSEKV?incident_id=PT4KHLK",
                           "html_url": "https://subdomain.pagerduty.com/incidents/PT4KHLK/log_entries/Q02JTSNZWHSEKV"
+                        },
+                        "incident_type": {
+                          "name": "major_incident"
                         },
                         "escalation_policy": {
                           "id": "PT20YPA",
@@ -35558,6 +35851,9 @@
                           "self": "https://api.pagerduty.com/log_entries/Q02JTSNZWHSEKV?incident_id=PT4KHLK",
                           "html_url": "https://subdomain.pagerduty.com/incidents/PT4KHLK/log_entries/Q02JTSNZWHSEKV"
                         },
+                        "incident_type": {
+                          "name": "incident_default"
+                        },
                         "escalation_policy": {
                           "id": "PT20YPA",
                           "type": "escalation_policy_reference",
@@ -36057,11 +36353,1401 @@
     "/incidents/count": {
       "description": "Get a count of incidents matching a set of criteria such as service, status, and time. Counts may be fetched per status."
     },
+    "/incidents/types": {
+      "description": "List and create incident types.",
+      "get": {
+        "x-pd-requires-scope": "incident_types.read",
+        "tags": [
+          "Incident Types"
+        ],
+        "operationId": "listIncidentTypes",
+        "description": "List the available incident types\n\nIncident Types are a feature which will allow customers to categorize incidents, such as a security incident, a major incident, or a fraud incident.\nThese can be filtered by enabled or disabled types.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidentType)\n\nScoped OAuth requires: `incident_types.read`\n",
+        "summary": "List incident types",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of all types for the account. The default incident type will automatically return on this list.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "incident_types": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/IncidentType"
+                          }
+                        }
+                      },
+                      "required": [
+                        "incident_types"
+                      ]
+                    }
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "incident_types": [
+                        {
+                          "type": "incident_type",
+                          "name": "incident_default",
+                          "id": "P1234",
+                          "created_at": "2023-05-31T13:40:47.000Z",
+                          "updated_at": "2023-07-31T13:40:47.000Z",
+                          "description": null,
+                          "display_name": "Base Incident",
+                          "enabled": true,
+                          "parent": null
+                        },
+                        {
+                          "type": "incident_type",
+                          "name": "security",
+                          "id": "P5678",
+                          "created_at": "2023-05-31T13:41:47.000Z",
+                          "updated_at": "2023-07-31T13:40:47.000Z",
+                          "description": "Security related incidents",
+                          "display_name": "Security",
+                          "enabled": true,
+                          "parent": {
+                            "id": "P1234",
+                            "type": "incident_type_reference"
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "post": {
+        "x-pd-requires-scope": "incident_types.write",
+        "tags": [
+          "Incident Types"
+        ],
+        "operationId": "createIncidentType",
+        "description": "Create a new incident type.\n\nIncident Types are a feature which will allow customers to categorize incidents, such as a security incident, a major incident, or a fraud incident.\nThese can be filtered by enabled or disabled types.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidentType)\n\nScoped OAuth requires: `incident_types.write`\n",
+        "summary": "Create an Incident Type",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "incident_type": {
+                    "type": "object",
+                    "description": "Details of the incident type to be created.",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "display_name": {
+                        "type": "string",
+                        "description": "The display name of the Incident Type."
+                      },
+                      "parent_type": {
+                        "type": "string",
+                        "description": "The parent type of the Incident Type."
+                      }
+                    },
+                    "required": [
+                      "name",
+                      "display_name"
+                    ]
+                  }
+                },
+                "required": [
+                  "incident_type"
+                ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "incident_type": {
+                      "name": "security",
+                      "display_name": "Securty Incidents",
+                      "parent_type": "incident_default"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The incident type object created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "incident_type": {
+                      "$ref": "#/components/schemas/IncidentType"
+                    }
+                  },
+                  "required": [
+                    "incident_type"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "incident_types": [
+                        {
+                          "enabled": true,
+                          "id": "P5678",
+                          "parent": {
+                            "id": "P1234",
+                            "type": "incident_type_reference"
+                          },
+                          "name": "major_incident",
+                          "type": "incident_type",
+                          "description": "Major incidents",
+                          "created_at": "2023-05-31T13:41:47Z",
+                          "updated_at": "2023-07-31T13:41:47Z",
+                          "display_name": "Major Incident"
+                        },
+                        {
+                          "enabled": true,
+                          "id": "P6789",
+                          "name": "security_incident",
+                          "parent": {
+                            "id": "P1234",
+                            "type": "incident_type_reference"
+                          },
+                          "type": "incident_type",
+                          "description": "Security incidents",
+                          "created_at": "2023-05-31T13:41:47Z",
+                          "updated_at": "2023-07-31T13:41:47Z",
+                          "display_name": "Security Incident"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/incidents/types/{type_id_or_name}": {
+      "description": "List and update incident types.",
+      "get": {
+        "x-pd-requires-scope": "incident_types.read",
+        "tags": [
+          "Incident Types"
+        ],
+        "operationId": "getIncidentType",
+        "description": "Get detailed information about a single incident type. Accepts either an incident type id, or an incident type name.\n\nIncident Types are a feature which will allow customers to categorize incidents, such as a security incident, a major incident, or a fraud incident.\nThese can be filtered by enabled or disabled types.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incident)\n\nScoped OAuth requires: `incident_types.read`\n",
+        "summary": "Get an Incident Type",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/incident_type_id_or_name"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The incident type requested.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "incident_type": {
+                      "$ref": "#/components/schemas/IncidentType"
+                    }
+                  },
+                  "required": [
+                    "incident_type"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "incident_type": {
+                        "enabled": true,
+                        "id": "P5678",
+                        "parent": {
+                          "id": "P1234",
+                          "type": "incident_type_reference"
+                        },
+                        "name": "major_incident",
+                        "type": "incident_type",
+                        "description": "Major incidents",
+                        "created_at": "2023-05-31T13:41:47Z",
+                        "updated_at": "2023-07-31T13:41:47Z",
+                        "display_name": "Major Incident"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "put": {
+        "x-pd-requires-scope": "incident_types.write",
+        "tags": [
+          "Incident Types"
+        ],
+        "operationId": "updateIncidentType",
+        "description": "Update an Incident Type.\n\nIncident Types are a feature which will allow customers to categorize incidents, such as a security incident, a major incident, or a fraud incident.\nThese can be filtered by enabled or disabled types.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incident)\n\nScoped OAuth requires: `incident_types.write`\n",
+        "summary": "Update an Incident Type",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/incident_type_id_or_name"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "incident_type": {
+                    "type": "object",
+                    "description": "Details of the incident type to be created.",
+                    "properties": {
+                      "display_name": {
+                        "type": "string",
+                        "description": "The display name of the Incident Type."
+                      }
+                    },
+                    "required": [
+                      "display_name"
+                    ]
+                  }
+                },
+                "required": [
+                  "incident_type"
+                ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "incident_type": {
+                      "display_name": "Major Incident"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The incident type object updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "incident_type": {
+                      "$ref": "#/components/schemas/IncidentType"
+                    }
+                  },
+                  "required": [
+                    "incident_type"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "incident_type": {
+                        "name": "major_incident",
+                        "id": "P5678",
+                        "created_at": "2023-05-31T13:41:47Z",
+                        "updated_at": "2023-07-31T13:41:47Z",
+                        "description": "Major incidents",
+                        "display_name": "Major Incident",
+                        "enabled": true,
+                        "parent": {
+                          "id": "P1234",
+                          "type": "incident_type_reference"
+                        },
+                        "type": "incident_type"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/incidents/types/{type_id_or_name}/custom_fields": {
+      "description": "List and update the custom fields for an incident type.",
+      "get": {
+        "x-pd-requires-scope": "custom_fields.read",
+        "tags": [
+          "Incident Types"
+        ],
+        "operationId": "listIncidentTypeCustomFields",
+        "description": "List the custom fields for an incident type.\n\nCustom Fields (CF) are a feature which will allow customers to extend Incidents with their own custom data,\nto provide additional context and support features such as customized filtering, search and analytics.\nCustom Fields can be applied to different incident types.\n      \n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nScoped OAuth requires: `custom_fields.read`\n",
+        "summary": "List Incident Type Custom Fields",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/incident_type_id_or_name"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The custom fields for the incident type requested.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fields": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/IncidentTypeCustomFields"
+                      }
+                    }
+                  },
+                  "required": [
+                    "fields"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "fields": [
+                        {
+                          "enabled": true,
+                          "id": "P5678",
+                          "name": "incident_commander",
+                          "type": "field",
+                          "self": "https://api.pagerduty.com/incidents/types/P1234/custom_fields/P5678",
+                          "description": "field description",
+                          "field_type": "single_value",
+                          "data_type": "string",
+                          "created_at": "2023-05-31T13:41:47Z",
+                          "updated_at": "2023-07-31T13:41:47Z",
+                          "display_name": "Incident Commander",
+                          "default_value": "John Doe"
+                        },
+                        {
+                          "enabled": true,
+                          "id": "P6789",
+                          "name": "due_date",
+                          "type": "field",
+                          "self": "https://api.pagerduty.com/incidents/types/P1234/custom_fields/P6789",
+                          "description": "field description",
+                          "field_type": "single_value",
+                          "data_type": "string",
+                          "created_at": "2024-05-31T13:41:47Z",
+                          "updated_at": "2024-07-31T13:41:47Z",
+                          "display_name": "Due Date",
+                          "default_value": "2025-07-31T13:41:47Z"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "post": {
+        "x-pd-requires-scope": "custom_fields.write",
+        "tags": [
+          "Incident Types"
+        ],
+        "operationId": "createIncidentTypeCustomField",
+        "description": "Create a Custom Field for an Incident Type.\n\nCustom Fields (CF) are a feature which will allow customers to extend Incidents with their own custom data,\nto provide additional context and support features such as customized filtering, search and analytics.\nCustom Fields can be applied to different incident types.\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nScoped OAuth requires: `custom_fields.write`\n",
+        "summary": "Create a Custom Field for an Incident Type.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/incident_type_id_or_name"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "field": {
+                    "type": "object",
+                    "description": "Details of the custom field to be created.",
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "description": "The name of the custom field."
+                      },
+                      "display_name": {
+                        "type": "string",
+                        "description": "The display name of the Incident Type."
+                      },
+                      "data_type": {
+                        "type": "string",
+                        "description": "The data type of the custom field."
+                      },
+                      "field_type": {
+                        "type": "string",
+                        "description": "The field type of the custom field.",
+                        "enum": [
+                          "single_value",
+                          "single_value_fixed",
+                          "multiple_value",
+                          "multiple_value_fixed"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "name",
+                      "display_name",
+                      "data_type",
+                      "field_type"
+                    ]
+                  }
+                },
+                "required": [
+                  "field"
+                ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "field": {
+                      "name": "custom_field_1",
+                      "display_name": "Custom Field 1",
+                      "data_type": "string",
+                      "field_type": "single_value"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The custom field object created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "field": {
+                      "$ref": "#/components/schemas/IncidentTypeCustomFields"
+                    }
+                  },
+                  "required": [
+                    "field"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "field": {
+                        "enabled": true,
+                        "id": "P1234",
+                        "name": "custom_field_1",
+                        "type": "field",
+                        "self": "https://api.pagerduty.com/incidents/types/P5678/custom_fields/P1234",
+                        "description": "The environment that the issue occurred in",
+                        "field_type": "single_value",
+                        "data_type": "string",
+                        "updated_at": "2021-06-01T21:30:42Z",
+                        "created_at": "2021-06-01T21:30:42Z",
+                        "display_name": "Custom Field 1",
+                        "default_value": null,
+                        "incident_type": "P5678",
+                        "summary": "environment"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/incidents/types/{type_id_or_name}/custom_fields/{field_id}": {
+      "description": "Get update and delete the custom fields for an incident type.",
+      "get": {
+        "x-pd-requires-scope": "custom_fields.read",
+        "tags": [
+          "Incident Types"
+        ],
+        "operationId": "getIncidentTypeCustomField",
+        "description": "Get a custom field for an incident type.\n\nCustom Fields (CF) are a feature which will allow customers to extend Incidents with their own custom data,\nto provide additional context and support features such as customized filtering, search and analytics.\nCustom Fields can be applied to different incident types.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nScoped OAuth requires: `custom_fields.read`\n",
+        "summary": "Get an Incident Type Custom Field",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/incident_type_id_or_name"
+          },
+          {
+            "$ref": "#/components/parameters/field_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The incident type custom field requested.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "field": {
+                      "$ref": "#/components/schemas/IncidentTypeCustomFields"
+                    }
+                  },
+                  "required": [
+                    "field"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "field": {
+                        "enabled": true,
+                        "id": "P1234",
+                        "name": "custom_field_1",
+                        "type": "field",
+                        "self": "https://api.pagerduty.com/incidents/types/P5678/custom_fields/P1234",
+                        "description": "The environment that the issue occurred in",
+                        "field_type": "single_value_fixed",
+                        "data_type": "string",
+                        "updated_at": "2021-06-01T21:30:42Z",
+                        "created_at": "2021-06-01T21:30:42Z",
+                        "display_name": "Custom Field 1",
+                        "default_value": null,
+                        "incident_type": "P5678",
+                        "summary": "environment"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "put": {
+        "x-pd-requires-scope": "custom_fields.write",
+        "tags": [
+          "Incident Types"
+        ],
+        "operationId": "updateIncidentTypeCustomField",
+        "description": "Update a custom field for an incident type.\n\nCustom Fields (CF) are a feature which will allow customers to extend Incidents with their own custom data,\nto provide additional context and support features such as customized filtering, search and analytics.\nCustom Fields can be applied to different incident types.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nScoped OAuth requires: `custom_fields.write`\n",
+        "summary": "Update a Custom Field for an Incident Type",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/incident_type_id_or_name"
+          },
+          {
+            "$ref": "#/components/parameters/field_id"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "field": {
+                    "type": "object",
+                    "description": "Details of the custom field to be updated.",
+                    "properties": {
+                      "display_name": {
+                        "type": "string",
+                        "description": "The display name of the Incident Type."
+                      }
+                    },
+                    "required": [
+                      "display_name"
+                    ]
+                  }
+                },
+                "required": [
+                  "field"
+                ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "field": {
+                      "display_name": "Custom Field 1"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The custom field object created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "field": {
+                      "$ref": "#/components/schemas/IncidentTypeCustomFields"
+                    }
+                  },
+                  "required": [
+                    "field"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "field": {
+                        "enabled": true,
+                        "id": "P1234",
+                        "name": "custom_field_1",
+                        "type": "field",
+                        "self": "https://api.pagerduty.com/incidents/types/P5678/custom_fields/P1234",
+                        "description": "The environment that the issue occurred in",
+                        "field_type": "single_value_fixed",
+                        "data_type": "string",
+                        "updated_at": "2021-06-01T21:30:42Z",
+                        "created_at": "2021-06-01T21:30:42Z",
+                        "display_name": "Custom Field 1",
+                        "default_value": null,
+                        "incident_type": "P5678",
+                        "summary": "environment"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "delete": {
+        "x-pd-requires-scope": "custom_fields.write",
+        "tags": [
+          "Incident Types"
+        ],
+        "operationId": "deleteIncidentTypeCustomField",
+        "description": "Delete a custom field for an incident type.\n\nCustom Fields (CF) are a feature which will allow customers to extend Incidents with their own custom data,\nto provide additional context and support features such as customized filtering, search and analytics.\nCustom Fields can be applied to different incident types.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nScoped OAuth requires: `custom_fields.write`\n",
+        "summary": "Delete a Custom Field for an Incident Type",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/incident_type_id_or_name"
+          },
+          {
+            "$ref": "#/components/parameters/field_id"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The field was deleted successfully."
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/incidents/types/{type_id_or_name}/custom_fields/{field_id}/field_options": {
+      "description": "List and create the custom field options for an incident type custom field.",
+      "get": {
+        "x-pd-requires-scope": "custom_fields.read",
+        "tags": [
+          "Incident Types"
+        ],
+        "operationId": "listIncidentTypeCustomField",
+        "description": "List a custom field field options for an incident type.\n\nCustom Fields (CF) are a feature which will allow customers to extend Incidents with their own custom data,\nto provide additional context and support features such as customized filtering, search and analytics.\nCustom Fields can be applied to different incident types.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nScoped OAuth requires: `custom_fields.read`\n",
+        "summary": "List the Custom Field Field Options for an Incident Type.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/incident_type_id_or_name"
+          },
+          {
+            "$ref": "#/components/parameters/field_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The incident type custom field requested.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "field_options": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/CustomFieldsFieldOption"
+                      }
+                    }
+                  },
+                  "required": [
+                    "field_options"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "field_options": [
+                        {
+                          "data": {
+                            "data_type": "string",
+                            "value": "option1"
+                          },
+                          "id": "PQ9K7I8",
+                          "type": "field_option",
+                          "updated_at": "2021-06-01T21:30:42Z",
+                          "created_at": "2021-06-01T21:30:42Z"
+                        },
+                        {
+                          "data": {
+                            "data_type": "string",
+                            "value": "option2"
+                          },
+                          "id": "PZ9K7I9",
+                          "type": "field_option",
+                          "updated_at": "2021-06-01T21:30:42Z",
+                          "created_at": "2021-06-01T21:30:42Z"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "post": {
+        "x-pd-requires-scope": "custom_fields.write",
+        "tags": [
+          "Incident Types"
+        ],
+        "operationId": "createIncidentTypeCustomFieldFieldOptions",
+        "description": "Create a custom field for an incident type.\n\nCustom Fields (CF) are a feature which will allow customers to extend Incidents with their own custom data,\nto provide additional context and support features such as customized filtering, search and analytics.\nCustom Fields can be applied to different incident types.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nScoped OAuth requires: `custom_fields.write`\n",
+        "summary": "Create a Custom Field Field Option for an Incident Type.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/incident_type_id_or_name"
+          },
+          {
+            "$ref": "#/components/parameters/field_id"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "field_option": {
+                    "type": "object",
+                    "description": "Details of the custom field field option to be created.",
+                    "properties": {
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "data_type": {
+                            "type": "string",
+                            "description": "The display name of the Custom Field Field Option."
+                          },
+                          "value": {
+                            "type": "string",
+                            "description": "The value of the Custom Field Field Option."
+                          }
+                        }
+                      },
+                      "type": {
+                        "type": "string",
+                        "description": "The type of the custom field option."
+                      }
+                    },
+                    "required": [
+                      "data",
+                      "type"
+                    ]
+                  }
+                },
+                "required": [
+                  "field_option"
+                ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "field_option": {
+                      "data": "data_type 'string' value 'option_1'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The custom field field option object created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "field_option": {
+                      "$ref": "#/components/schemas/CustomFieldsEditableFieldOption"
+                    }
+                  },
+                  "required": [
+                    "field_option"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "field_option": {
+                        "id": "P1234",
+                        "data": {
+                          "data_type": "string",
+                          "value": "option_1"
+                        },
+                        "type": "field_option",
+                        "created_at": "2021-06-01T21:30:42Z",
+                        "updated_at": "2021-06-01T21:30:42Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/incidents/types/{type_id_or_name}/custom_fields/{field_id}/field_options/{field_option_id}": {
+      "description": "Get update and delete a custom field option for an incident type custom field.",
+      "get": {
+        "x-pd-requires-scope": "custom_fields.read",
+        "tags": [
+          "Incident Types"
+        ],
+        "operationId": "getIncidentTypeCustomFieldFieldOptions",
+        "description": "Get a single incident type custom field option\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nScoped OAuth requires: `custom_fields.read`\n",
+        "summary": "Get a Single Incident Type Custom Field Option",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/incident_type_id_or_name"
+          },
+          {
+            "$ref": "#/components/parameters/field_option_id"
+          },
+          {
+            "$ref": "#/components/parameters/field_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The field option of the incident type custom field requested.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "field_option": {
+                      "$ref": "#/components/schemas/CustomFieldsEditableFieldOption"
+                    }
+                  },
+                  "required": [
+                    "field_option"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "field_option": [
+                        {
+                          "data": {
+                            "data_type": "string",
+                            "value": "option1"
+                          },
+                          "id": "PQ9K7I8",
+                          "type": "field_option",
+                          "updated_at": "2021-06-01T21:30:42Z",
+                          "created_at": "2021-06-01T21:30:42Z"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "put": {
+        "x-pd-requires-scope": "custom_fields.write",
+        "tags": [
+          "Incident Types"
+        ],
+        "operationId": "updateIncidentTypeCustomFieldFieldOption",
+        "description": "Update a custom field field option for an incident type.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nScoped OAuth requires: `custom_fields.write`\n",
+        "summary": "Update a Custom Field Field Option for an Incident Type.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/incident_type_id_or_name"
+          },
+          {
+            "$ref": "#/components/parameters/field_option_id"
+          },
+          {
+            "$ref": "#/components/parameters/field_id"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "field_option": {
+                    "type": "object",
+                    "description": "Details of the custom field field option to be updated.",
+                    "properties": {
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "data_type": {
+                            "type": "string",
+                            "description": "The display name of the Custom Field Field Option."
+                          },
+                          "value": {
+                            "type": "string",
+                            "description": "The value of the Custom Field Field Option."
+                          }
+                        }
+                      },
+                      "type": {
+                        "type": "string",
+                        "description": "The type of the custom field option."
+                      }
+                    },
+                    "required": [
+                      "data",
+                      "type"
+                    ]
+                  }
+                },
+                "required": [
+                  "field_option"
+                ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "field_option": {
+                      "data": "data_type 'string' value 'option_1'",
+                      "type": "field_option"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The custom field field option object updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "field_option": {
+                      "$ref": "#/components/schemas/CustomFieldsEditableField"
+                    }
+                  },
+                  "required": [
+                    "field_option"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "field_option": {
+                        "data": {
+                          "data_type": "string",
+                          "value": "option_1"
+                        },
+                        "id": "P1234",
+                        "type": "field_option",
+                        "created_at": "2021-06-01T21:30:42Z",
+                        "updated_at": "2021-06-01T21:30:42Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "delete": {
+        "x-pd-requires-scope": "custom_fields.write",
+        "tags": [
+          "Incident Types"
+        ],
+        "operationId": "deleteIncidentTypeCustomFieldFieldOption",
+        "description": "Delete a Custom Field Field Option for an Incident Type.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nScoped OAuth requires: `custom_fields.write`\n",
+        "summary": "Delete a custom field field option for an incident type.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/incident_type_id_or_name"
+          },
+          {
+            "$ref": "#/components/parameters/field_option_id"
+          },
+          {
+            "$ref": "#/components/parameters/field_id"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The field was deleted successfully."
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
     "/incidents/custom_fields": {
       "description": "Create and list Fields on Incidents",
       "post": {
         "tags": [
-          "Custom Fields"
+          "Incident Custom Fields"
         ],
         "x-pd-requires-scope": "custom_fields.write",
         "operationId": "createCustomFieldsField",
@@ -36294,7 +37980,7 @@
       },
       "get": {
         "tags": [
-          "Custom Fields"
+          "Incident Custom Fields"
         ],
         "x-pd-requires-scope": "custom_fields.read",
         "operationId": "listCustomFieldsFields",
@@ -36379,7 +38065,7 @@
       "description": "Get, update and delete a field.",
       "get": {
         "tags": [
-          "Custom Fields"
+          "Incident Custom Fields"
         ],
         "x-pd-requires-scope": "custom_fields.read",
         "operationId": "getCustomFieldsField",
@@ -36487,7 +38173,7 @@
       },
       "put": {
         "tags": [
-          "Custom Fields"
+          "Incident Custom Fields"
         ],
         "x-pd-requires-scope": "custom_fields.write",
         "operationId": "updateCustomFieldsField",
@@ -36582,7 +38268,7 @@
       },
       "delete": {
         "tags": [
-          "Custom Fields"
+          "Incident Custom Fields"
         ],
         "x-pd-requires-scope": "custom_fields.write",
         "operationId": "deleteCustomFieldsField",
@@ -36616,7 +38302,7 @@
       "description": "Create new option for the given field_options (e.g., enum) field and list all options for the given field.",
       "post": {
         "tags": [
-          "Custom Fields"
+          "Incident Custom Fields"
         ],
         "x-pd-requires-scope": "custom_fields.write",
         "operationId": "createCustomFieldsFieldOption",
@@ -36709,7 +38395,7 @@
       },
       "get": {
         "tags": [
-          "Custom Fields"
+          "Incident Custom Fields"
         ],
         "x-pd-requires-scope": "custom_fields.read",
         "operationId": "listCustomFieldsFieldOptions",
@@ -36774,7 +38460,7 @@
       "description": "Update field option.",
       "put": {
         "tags": [
-          "Custom Fields"
+          "Incident Custom Fields"
         ],
         "x-pd-requires-scope": "custom_fields.write",
         "operationId": "updateCustomFieldsFieldOption",
@@ -36870,7 +38556,7 @@
       },
       "delete": {
         "tags": [
-          "Custom Fields"
+          "Incident Custom Fields"
         ],
         "x-pd-requires-scope": "custom_fields.write",
         "operationId": "deleteCustomFieldsFieldOption",
