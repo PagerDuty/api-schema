@@ -32578,8 +32578,7 @@
                         "id": "PYJ9K7I",
                         "type": "incident_reference",
                         "incident_type": {
-                          "name": "major_incident",
-                          "id": "P8YUJZS"
+                          "name": "major_incident"
                         }
                       }
                     ]
@@ -32855,8 +32854,7 @@
                         "details": "A disk is getting full on this machine. You should investigate what is causing the disk to fill, and ensure that there is an automated process in place for ensuring data is rotated (eg. logs should have logrotate around them). If data is expected to stay on this disk forever, you should start planning to scale up to a larger disk."
                       },
                       "incident_type": {
-                        "name": "major_incident",
-                        "id": "P8YUJZS"
+                        "name": "major_incident"
                       },
                       "escalation_policy": {
                         "id": "PT20YPA",

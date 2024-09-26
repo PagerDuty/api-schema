@@ -4,6 +4,9 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+## 2024-09-26
+- Updated Incident endpoints to support Incident Types
+
 ## 2024-09-11
 - Updated the [incident event webhook](https://developer.pagerduty.com/docs/db0fa8c8984fc-overview) to include the new Incident Type attribute.
 
