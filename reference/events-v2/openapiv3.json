@@ -84,7 +84,7 @@
                   }
                 },
                 "git-change-event": {
-                  "summary": "Commited example Change Event Body",
+                  "summary": "Committed example Change Event Body",
                   "value": {
                     "routing_key": "737ea619db564d41bd9824063e1f8au1",
                     "payload": {
