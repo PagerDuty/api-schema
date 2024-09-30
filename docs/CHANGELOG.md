@@ -4,6 +4,16 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+## 2024-09-30
+- Added endpoints for the configuration of the Jira Cloud Integration
+  - `GET /integration-jira-cloud/accounts_mappings`
+  - `GET /integration-jira-cloud/accounts_mappings/{id}`
+  - `GET /integration-jira-cloud/accounts_mappings/{id}/rules`
+  - `GET /integration-jira-cloud/accounts_mappings/{id}/rules/{rule_id}`
+  - `POST /integration-jira-cloud/accounts_mappings/{id}/rules`
+  - `PUT /integration-jira-cloud/accounts_mappings/{id}/rules/{rule_id}`
+  - `DELETE /integration-jira-cloud/accounts_mappings/{id}/rules/{rule_id}`
+
 ## 2024-09-26
 - Updated Incident endpoints to support Incident Types
 
