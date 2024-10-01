@@ -34658,14 +34658,13 @@
       }
     },
     "/incidents/{id}/merge": {
-      "description": "\"Merge\" an array of incidents into a target incident. After the merge is performed the target incident will contain the source incidents's alerts, and the source incidents will be resolved.",
       "put": {
         "tags": [
           "Incidents"
         ],
         "x-pd-requires-scope": "incidents.write",
         "operationId": "mergeIncidents",
-        "description": "Merge a list of source incidents into this incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n\nScoped OAuth requires: `incidents.write`\n",
+        "description": "Merge a list of source incidents into the target [incident](https://developer.pagerduty.com/api-reference/a47605517c19a-api-concepts#incidents). \n\nAfter the merge is performed the target incident will contain the source incidents' [alerts](https://developer.pagerduty.com/api-reference/a47605517c19a-api-concepts#alerts), \nand the source incidents will be resolved.\n\nOnly incidents that have alerts or incidents that were created manually in the UI can be merged.\n\nOpen incidents cannot be merged into a resolved incident.\n\nAn incident cannot have more than 1000 alerts. The server will return an error if merging the source incidents \nwill result in the target incident having more than 1000 alerts.\n\nScoped OAuth requires: `incidents.write`\n",
         "summary": "Merge incidents",
         "parameters": [
           {
