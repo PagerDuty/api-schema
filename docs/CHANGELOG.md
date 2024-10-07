@@ -4,6 +4,9 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+## 2024-10-07
+- Added `incident_type_name` and `incident_type_id` to `analytics/raw/incidents` and `analytics/raw/incidents/:id`
+
 ## 2024-09-30
 - Added endpoints for the configuration of the Jira Cloud Integration
   - `GET /integration-jira-cloud/accounts_mappings`

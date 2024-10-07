@@ -5778,6 +5778,14 @@
             "type": "integer",
             "description": "The PagerDuty incident number."
           },
+          "incident_type_id": {
+            "type": "string",
+            "description": "ID of the Incident Type."
+          },
+          "incident_type_name": {
+            "type": "string",
+            "description": "The name of the Incident Type."
+          },
           "joined_user_ids": {
             "type": "array",
             "items": {
@@ -20587,6 +20595,8 @@
                           "escalation_policy_name": "Escalation Policy 1",
                           "id": "PYC0H08",
                           "incident_number": 928,
+                          "incident_type_id": "PIJ90N7",
+                          "incident_type_name": "incident_default",
                           "joined_user_ids": [
                             "PRJ4208",
                             "PA02301",
@@ -20651,6 +20661,8 @@
                           "escalation_policy_name": "Escalation Policy 1",
                           "id": "PCOOHCY",
                           "incident_number": 929,
+                          "incident_type_id": "PIJ90N7",
+                          "incident_type_name": "incident_default",
                           "joined_user_ids": [
                             "PMT4102"
                           ],
@@ -20934,6 +20946,8 @@
                         "escalation_policy_name": "Sputnik",
                         "id": "PJASD33",
                         "incident_number": 924,
+                        "incident_type_id": "PIJ90N7",
+                        "incident_type_name": "incident_default",
                         "joined_user_ids": [
                           "PRJ4208",
                           "PA02301"
