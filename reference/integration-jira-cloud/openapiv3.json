@@ -1,6 +1,23 @@
 {
   "components": {
     "parameters": {
+      "Content-Type": {
+        "description": "Content-Type Header",
+        "in": "header",
+        "name": "Content-Type",
+        "required": true,
+        "schema": {
+          "default": "application/json",
+          "description": "Content-Type Header",
+          "enum": [
+            "application/json"
+          ],
+          "nullable": false,
+          "title": "Content-Type",
+          "type": "string",
+          "x-struct": "Elixir.IntegrationService.Api.Common.OpenApi.ContentTypeSchema"
+        }
+      },
       "account_mapping_id": {
         "description": "The ID of the account mapping.",
         "in": "path",
@@ -601,6 +618,8 @@
           },
           "name": {
             "description": "The name of the rule.",
+            "maxLength": 100,
+            "pattern": "^[^\\x00-\\x1F\\x7F<>]+$",
             "type": "string"
           },
           "updated_at": {
@@ -936,7 +955,8 @@
           },
           "name": {
             "description": "The name of the rule.",
-            "pattern": "^[^[:cntrl:]<>]+$",
+            "maxLength": 100,
+            "pattern": "^[^\\x00-\\x1F\\x7F<>]+$",
             "type": "string"
           }
         },
@@ -1194,7 +1214,8 @@
           },
           "name": {
             "description": "The name of the rule.",
-            "pattern": "^[^[:cntrl:]<>]+$",
+            "maxLength": 100,
+            "pattern": "^[^\\x00-\\x1F\\x7F<>]+$",
             "type": "string"
           }
         },
@@ -1257,6 +1278,9 @@
           },
           {
             "$ref": "#/components/parameters/total"
+          },
+          {
+            "$ref": "#/components/parameters/Content-Type"
           }
         ],
         "responses": {
@@ -1302,6 +1326,7 @@
                     "summary": "Response Example",
                     "value": {
                       "error": {
+                        "code": 2001,
                         "errors": [
                           "Invalid value for field 'name'"
                         ],
@@ -1384,6 +1409,14 @@
             "description": "Internal server error."
           }
         },
+        "security": [
+          {
+            "apiKey": []
+          },
+          {
+            "bearerAuth": []
+          }
+        ],
         "summary": "List account mappings",
         "tags": [
           "Account Mappings"
@@ -1400,6 +1433,9 @@
         "parameters": [
           {
             "$ref": "#/components/parameters/account_mapping_id"
+          },
+          {
+            "$ref": "#/components/parameters/Content-Type"
           }
         ],
         "responses": {
@@ -1437,6 +1473,7 @@
                     "summary": "Response Example",
                     "value": {
                       "error": {
+                        "code": 2001,
                         "errors": [
                           "Invalid value for field 'name'"
                         ],
@@ -1519,6 +1556,14 @@
             "description": "Internal server error."
           }
         },
+        "security": [
+          {
+            "apiKey": []
+          },
+          {
+            "bearerAuth": []
+          }
+        ],
         "summary": "Get an account mapping",
         "tags": [
           "Account Mappings"
@@ -1544,6 +1589,9 @@
           },
           {
             "$ref": "#/components/parameters/total"
+          },
+          {
+            "$ref": "#/components/parameters/Content-Type"
           }
         ],
         "responses": {
@@ -1652,6 +1700,7 @@
                     "summary": "Response Example",
                     "value": {
                       "error": {
+                        "code": 2001,
                         "errors": [
                           "Invalid value for field 'name'"
                         ],
@@ -1734,6 +1783,14 @@
             "description": "Internal server error."
           }
         },
+        "security": [
+          {
+            "apiKey": []
+          },
+          {
+            "bearerAuth": []
+          }
+        ],
         "summary": "List rules",
         "tags": [
           "Rules"
@@ -1748,6 +1805,9 @@
         "parameters": [
           {
             "$ref": "#/components/parameters/account_mapping_id"
+          },
+          {
+            "$ref": "#/components/parameters/Content-Type"
           }
         ],
         "requestBody": {
@@ -1972,6 +2032,7 @@
                     "summary": "Response Example",
                     "value": {
                       "error": {
+                        "code": 2001,
                         "errors": [
                           "Invalid value for field 'name'"
                         ],
@@ -2054,6 +2115,14 @@
             "description": "Internal server error."
           }
         },
+        "security": [
+          {
+            "apiKey": []
+          },
+          {
+            "bearerAuth": []
+          }
+        ],
         "summary": "Create a rule",
         "tags": [
           "Rules"
@@ -2073,6 +2142,9 @@
           },
           {
             "$ref": "#/components/parameters/rule_id"
+          },
+          {
+            "$ref": "#/components/parameters/Content-Type"
           }
         ],
         "responses": {
@@ -2087,6 +2159,7 @@
                     "summary": "Response Example",
                     "value": {
                       "error": {
+                        "code": 2001,
                         "errors": [
                           "Invalid value for field 'name'"
                         ],
@@ -2169,6 +2242,14 @@
             "description": "Internal server error."
           }
         },
+        "security": [
+          {
+            "apiKey": []
+          },
+          {
+            "bearerAuth": []
+          }
+        ],
         "summary": "Delete a rule",
         "tags": [
           "Rules"
@@ -2186,6 +2267,9 @@
           },
           {
             "$ref": "#/components/parameters/rule_id"
+          },
+          {
+            "$ref": "#/components/parameters/Content-Type"
           }
         ],
         "responses": {
@@ -2286,6 +2370,7 @@
                     "summary": "Response Example",
                     "value": {
                       "error": {
+                        "code": 2001,
                         "errors": [
                           "Invalid value for field 'name'"
                         ],
@@ -2368,6 +2453,14 @@
             "description": "Internal server error."
           }
         },
+        "security": [
+          {
+            "apiKey": []
+          },
+          {
+            "bearerAuth": []
+          }
+        ],
         "summary": "Get a rule",
         "tags": [
           "Rules"
@@ -2385,6 +2478,9 @@
           },
           {
             "$ref": "#/components/parameters/rule_id"
+          },
+          {
+            "$ref": "#/components/parameters/Content-Type"
           }
         ],
         "requestBody": {
@@ -2588,6 +2684,7 @@
                     "summary": "Response Example",
                     "value": {
                       "error": {
+                        "code": 2001,
                         "errors": [
                           "Invalid value for field 'name'"
                         ],
@@ -2670,6 +2767,14 @@
             "description": "Internal server error."
           }
         },
+        "security": [
+          {
+            "apiKey": []
+          },
+          {
+            "bearerAuth": []
+          }
+        ],
         "summary": "Update a rule",
         "tags": [
           "Rules"
