@@ -6063,6 +6063,42 @@
           }
         }
       },
+      "FieldValueChangeLogEntry": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/LogEntry"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "field_value_change_log_entry"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "CustomFieldValueChangeLogEntry": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/LogEntry"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "custom_field_value_change_log_entry"
+                ]
+              }
+            }
+          }
+        ]
+      },
       "AuditRecord": {
         "type": "object",
         "readOnly": true,
@@ -7850,7 +7886,9 @@
                   "snooze_log_entry",
                   "trigger_log_entry",
                   "unacknowledge_log_entry",
-                  "urgency_change_log_entry"
+                  "urgency_change_log_entry",
+                  "field_value_change_log_entry",
+                  "custom_field_value_change_log_entry"
                 ]
               },
               "created_at": {
@@ -7901,6 +7939,17 @@
                     "description": "Additional details about the event."
                   }
                 }
+              },
+              "changeset": {
+                "type": "array",
+                "description": "String record of custom field updates",
+                "items": {
+                  "type": "string"
+                },
+                "example": [
+                  "Updated serial_number to 123",
+                  "Updated affected_room to [\"Queen West\"]"
+                ]
               }
             }
           }
@@ -8855,6 +8904,112 @@
           "channel": {
             "type": "object",
             "description": "channel"
+          },
+          "changeset": {
+            "type": "object",
+            "description": "Changeset present in CustomFieldsValueChange and FieldValueChange log entries.",
+            "properties": {
+              "customer_fields": {
+                "type": "array",
+                "description": "Customer Fields present in CustomFieldsValueChange and FieldValueChange log entries.",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "example": "PDB5RLI"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "serial_number_hardware"
+                    },
+                    "value": {
+                      "oneOf": [
+                        {
+                          "type": "integer"
+                        },
+                        {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      ]
+                    },
+                    "namespace": {
+                      "type": "string",
+                      "example": "incidents"
+                    },
+                    "old_value": {
+                      "type": "string",
+                      "nullable": true,
+                      "example": null
+                    }
+                  }
+                }
+              },
+              "application_fields": {
+                "type": "array",
+                "description": "Application Fields present in CustomFieldsValueChange and FieldValueChange log entries.",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "example": "PIJ90N7"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "service"
+                    },
+                    "value": {
+                      "oneOf": [
+                        {
+                          "type": "string",
+                          "example": "PIZW265"
+                        },
+                        {
+                          "type": "integer",
+                          "example": 130
+                        },
+                        {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      ]
+                    },
+                    "namespace": {
+                      "type": "string",
+                      "example": "incidents"
+                    },
+                    "old_value": {
+                      "type": "string",
+                      "nullable": true,
+                      "example": null
+                    }
+                  }
+                }
+              },
+              "custom_attributes": {
+                "type": "object",
+                "description": "Custom attributes for the changeset.",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              },
+              "customer_schema": {
+                "type": "object",
+                "properties": {
+                  "old_value": {
+                    "type": "string",
+                    "nullable": true,
+                    "example": null
+                  }
+                }
+              }
+            }
           }
         },
         "required": [
@@ -34579,6 +34734,12 @@
                               },
                               {
                                 "$ref": "#/components/schemas/UrgencyChangeLogEntry"
+                              },
+                              {
+                                "$ref": "#/components/schemas/FieldValueChangeLogEntry"
+                              },
+                              {
+                                "$ref": "#/components/schemas/CustomFieldValueChangeLogEntry"
                               }
                             ]
                           }
