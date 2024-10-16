@@ -2068,19 +2068,6 @@
         "name": "X-EARLY-ACCESS",
         "required": true
       },
-      "early_access_status-update-notification-rules": {
-        "name": "X-EARLY-ACCESS",
-        "in": "header",
-        "description": "This header indicates that this API endpoint is __UNDER CONSTRUCTION__ and may change at any time. You __MUST__ pass in this header and the above value. Do not use this endpoint in production, as it may change!\n",
-        "required": true,
-        "schema": {
-          "type": "string",
-          "default": "status-update-notification-rules",
-          "enum": [
-            "status-update-notification-rules"
-          ]
-        }
-      },
       "early_access_bis": {
         "schema": {
           "type": "string",
@@ -5778,6 +5765,14 @@
             "type": "integer",
             "description": "The PagerDuty incident number."
           },
+          "incident_type_id": {
+            "type": "string",
+            "description": "ID of the Incident Type."
+          },
+          "incident_type_name": {
+            "type": "string",
+            "description": "The name of the Incident Type."
+          },
           "joined_user_ids": {
             "type": "array",
             "items": {
@@ -6067,6 +6062,42 @@
             "description": "Total times the responder was escalated to the incident due to timeout."
           }
         }
+      },
+      "FieldValueChangeLogEntry": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/LogEntry"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "field_value_change_log_entry"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "CustomFieldValueChangeLogEntry": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/LogEntry"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "custom_field_value_change_log_entry"
+                ]
+              }
+            }
+          }
+        ]
       },
       "AuditRecord": {
         "type": "object",
@@ -7855,7 +7886,9 @@
                   "snooze_log_entry",
                   "trigger_log_entry",
                   "unacknowledge_log_entry",
-                  "urgency_change_log_entry"
+                  "urgency_change_log_entry",
+                  "field_value_change_log_entry",
+                  "custom_field_value_change_log_entry"
                 ]
               },
               "created_at": {
@@ -7906,6 +7939,17 @@
                     "description": "Additional details about the event."
                   }
                 }
+              },
+              "changeset": {
+                "type": "array",
+                "description": "String record of custom field updates",
+                "items": {
+                  "type": "string"
+                },
+                "example": [
+                  "Updated serial_number to 123",
+                  "Updated affected_room to [\"Queen West\"]"
+                ]
               }
             }
           }
@@ -8860,6 +8904,112 @@
           "channel": {
             "type": "object",
             "description": "channel"
+          },
+          "changeset": {
+            "type": "object",
+            "description": "Changeset present in CustomFieldsValueChange and FieldValueChange log entries.",
+            "properties": {
+              "customer_fields": {
+                "type": "array",
+                "description": "Customer Fields present in CustomFieldsValueChange and FieldValueChange log entries.",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "example": "PDB5RLI"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "serial_number_hardware"
+                    },
+                    "value": {
+                      "oneOf": [
+                        {
+                          "type": "integer"
+                        },
+                        {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      ]
+                    },
+                    "namespace": {
+                      "type": "string",
+                      "example": "incidents"
+                    },
+                    "old_value": {
+                      "type": "string",
+                      "nullable": true,
+                      "example": null
+                    }
+                  }
+                }
+              },
+              "application_fields": {
+                "type": "array",
+                "description": "Application Fields present in CustomFieldsValueChange and FieldValueChange log entries.",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "example": "PIJ90N7"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "service"
+                    },
+                    "value": {
+                      "oneOf": [
+                        {
+                          "type": "string",
+                          "example": "PIZW265"
+                        },
+                        {
+                          "type": "integer",
+                          "example": 130
+                        },
+                        {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      ]
+                    },
+                    "namespace": {
+                      "type": "string",
+                      "example": "incidents"
+                    },
+                    "old_value": {
+                      "type": "string",
+                      "nullable": true,
+                      "example": null
+                    }
+                  }
+                }
+              },
+              "custom_attributes": {
+                "type": "object",
+                "description": "Custom attributes for the changeset.",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              },
+              "customer_schema": {
+                "type": "object",
+                "properties": {
+                  "old_value": {
+                    "type": "string",
+                    "nullable": true,
+                    "example": null
+                  }
+                }
+              }
+            }
           }
         },
         "required": [
@@ -20587,6 +20737,8 @@
                           "escalation_policy_name": "Escalation Policy 1",
                           "id": "PYC0H08",
                           "incident_number": 928,
+                          "incident_type_id": "PIJ90N7",
+                          "incident_type_name": "incident_default",
                           "joined_user_ids": [
                             "PRJ4208",
                             "PA02301",
@@ -20651,6 +20803,8 @@
                           "escalation_policy_name": "Escalation Policy 1",
                           "id": "PCOOHCY",
                           "incident_number": 929,
+                          "incident_type_id": "PIJ90N7",
+                          "incident_type_name": "incident_default",
                           "joined_user_ids": [
                             "PMT4102"
                           ],
@@ -20934,6 +21088,8 @@
                         "escalation_policy_name": "Sputnik",
                         "id": "PJASD33",
                         "incident_number": 924,
+                        "incident_type_id": "PIJ90N7",
+                        "incident_type_name": "incident_default",
                         "joined_user_ids": [
                           "PRJ4208",
                           "PA02301"
@@ -34578,6 +34734,12 @@
                               },
                               {
                                 "$ref": "#/components/schemas/UrgencyChangeLogEntry"
+                              },
+                              {
+                                "$ref": "#/components/schemas/FieldValueChangeLogEntry"
+                              },
+                              {
+                                "$ref": "#/components/schemas/CustomFieldValueChangeLogEntry"
                               }
                             ]
                           }
@@ -34658,14 +34820,13 @@
       }
     },
     "/incidents/{id}/merge": {
-      "description": "\"Merge\" an array of incidents into a target incident. After the merge is performed the target incident will contain the source incidents's alerts, and the source incidents will be resolved.",
       "put": {
         "tags": [
           "Incidents"
         ],
         "x-pd-requires-scope": "incidents.write",
         "operationId": "mergeIncidents",
-        "description": "Merge a list of source incidents into this incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n\nScoped OAuth requires: `incidents.write`\n",
+        "description": "Merge a list of source incidents into the target [incident](https://developer.pagerduty.com/api-reference/a47605517c19a-api-concepts#incidents). \n\nAfter the merge is performed the target incident will contain the source incidents' [alerts](https://developer.pagerduty.com/api-reference/a47605517c19a-api-concepts#alerts), \nand the source incidents will be resolved.\n\nOnly incidents that have alerts or incidents that were created manually in the UI can be merged.\n\nOpen incidents cannot be merged into a resolved incident.\n\nAn incident cannot have more than 1000 alerts. The server will return an error if merging the source incidents \nwill result in the target incident having more than 1000 alerts.\n\nScoped OAuth requires: `incidents.write`\n",
         "summary": "Merge incidents",
         "parameters": [
           {
@@ -54730,7 +54891,7 @@
           "Users"
         ],
         "operationId": "getUserStatusUpdateNotificationRules",
-        "description": "List status update notification rules of your PagerDuty user.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users.read`\n",
+        "description": "List status update notification rules of your PagerDuty user.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users.read`\n",
         "summary": "List a user's status update notification rules",
         "parameters": [
           {
@@ -54741,9 +54902,6 @@
           },
           {
             "$ref": "#/components/parameters/id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_status-update-notification-rules"
           },
           {
             "$ref": "#/components/parameters/include_notification_rules"
@@ -54814,7 +54972,7 @@
           "Users"
         ],
         "operationId": "createUserStatusUpdateNotificationRule",
-        "description": "Create a new status update notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users.write`\n",
+        "description": "Create a new status update notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users.write`\n",
         "summary": "Create a user status update notification rule",
         "parameters": [
           {
@@ -54822,9 +54980,6 @@
           },
           {
             "$ref": "#/components/parameters/header_Content-Type"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_status-update-notification-rules"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -54926,7 +55081,7 @@
           "Users"
         ],
         "operationId": "getUserStatusUpdateNotificationRule",
-        "description": "Get details about a user's status update notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users.read`\n",
+        "description": "Get details about a user's status update notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users.read`\n",
         "summary": "Get a user's status update notification rule",
         "parameters": [
           {
@@ -54934,9 +55089,6 @@
           },
           {
             "$ref": "#/components/parameters/header_Content-Type"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_status-update-notification-rules"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -55011,7 +55163,7 @@
           "Users"
         ],
         "operationId": "deleteUserStatusUpdateNotificationRule",
-        "description": "Remove a user's status update notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users.write`\n",
+        "description": "Remove a user's status update notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users.write`\n",
         "summary": "Delete a user's status update notification rule",
         "parameters": [
           {
@@ -55019,9 +55171,6 @@
           },
           {
             "$ref": "#/components/parameters/header_Content-Type"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_status-update-notification-rules"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -55054,7 +55203,7 @@
           "Users"
         ],
         "operationId": "updateUserStatusUpdateNotificationRule",
-        "description": "Update a user's status update notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users.write`\n",
+        "description": "Update a user's status update notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users.write`\n",
         "summary": "Update a user's status update notification rule",
         "parameters": [
           {
@@ -55062,9 +55211,6 @@
           },
           {
             "$ref": "#/components/parameters/header_Content-Type"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_status-update-notification-rules"
           },
           {
             "$ref": "#/components/parameters/id"
