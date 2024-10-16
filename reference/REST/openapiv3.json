@@ -2068,19 +2068,6 @@
         "name": "X-EARLY-ACCESS",
         "required": true
       },
-      "early_access_status-update-notification-rules": {
-        "name": "X-EARLY-ACCESS",
-        "in": "header",
-        "description": "This header indicates that this API endpoint is __UNDER CONSTRUCTION__ and may change at any time. You __MUST__ pass in this header and the above value. Do not use this endpoint in production, as it may change!\n",
-        "required": true,
-        "schema": {
-          "type": "string",
-          "default": "status-update-notification-rules",
-          "enum": [
-            "status-update-notification-rules"
-          ]
-        }
-      },
       "early_access_bis": {
         "schema": {
           "type": "string",
@@ -54743,7 +54730,7 @@
           "Users"
         ],
         "operationId": "getUserStatusUpdateNotificationRules",
-        "description": "List status update notification rules of your PagerDuty user.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users.read`\n",
+        "description": "List status update notification rules of your PagerDuty user.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users.read`\n",
         "summary": "List a user's status update notification rules",
         "parameters": [
           {
@@ -54754,9 +54741,6 @@
           },
           {
             "$ref": "#/components/parameters/id"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_status-update-notification-rules"
           },
           {
             "$ref": "#/components/parameters/include_notification_rules"
@@ -54827,7 +54811,7 @@
           "Users"
         ],
         "operationId": "createUserStatusUpdateNotificationRule",
-        "description": "Create a new status update notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users.write`\n",
+        "description": "Create a new status update notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users.write`\n",
         "summary": "Create a user status update notification rule",
         "parameters": [
           {
@@ -54835,9 +54819,6 @@
           },
           {
             "$ref": "#/components/parameters/header_Content-Type"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_status-update-notification-rules"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -54939,7 +54920,7 @@
           "Users"
         ],
         "operationId": "getUserStatusUpdateNotificationRule",
-        "description": "Get details about a user's status update notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users.read`\n",
+        "description": "Get details about a user's status update notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users.read`\n",
         "summary": "Get a user's status update notification rule",
         "parameters": [
           {
@@ -54947,9 +54928,6 @@
           },
           {
             "$ref": "#/components/parameters/header_Content-Type"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_status-update-notification-rules"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -55024,7 +55002,7 @@
           "Users"
         ],
         "operationId": "deleteUserStatusUpdateNotificationRule",
-        "description": "Remove a user's status update notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users.write`\n",
+        "description": "Remove a user's status update notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users.write`\n",
         "summary": "Delete a user's status update notification rule",
         "parameters": [
           {
@@ -55032,9 +55010,6 @@
           },
           {
             "$ref": "#/components/parameters/header_Content-Type"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_status-update-notification-rules"
           },
           {
             "$ref": "#/components/parameters/id"
@@ -55067,7 +55042,7 @@
           "Users"
         ],
         "operationId": "updateUserStatusUpdateNotificationRule",
-        "description": "Update a user's status update notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users.write`\n",
+        "description": "Update a user's status update notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users.write`\n",
         "summary": "Update a user's status update notification rule",
         "parameters": [
           {
@@ -55075,9 +55050,6 @@
           },
           {
             "$ref": "#/components/parameters/header_Content-Type"
-          },
-          {
-            "$ref": "#/components/parameters/early_access_status-update-notification-rules"
           },
           {
             "$ref": "#/components/parameters/id"
