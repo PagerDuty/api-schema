@@ -6821,6 +6821,12 @@
                     "$ref": "#/components/schemas/Template/allOf/1/properties/created_by/oneOf/1"
                   }
                 ]
+              },
+              "only_invocable_on_unresolved_incidents": {
+                "type": "boolean",
+                "description": "If true, the action can only be invoked against an unresolved incident.",
+                "default": false,
+                "example": false
               }
             },
             "required": [
@@ -6871,6 +6877,12 @@
             "items": {
               "$ref": "#/components/schemas/TeamReference"
             }
+          },
+          "only_invocable_on_unresolved_incidents": {
+            "type": "boolean",
+            "description": "If true, the action can only be invoked against an unresolved incident.",
+            "default": false,
+            "example": false
           }
         },
         "required": [
@@ -6901,6 +6913,12 @@
           "runner": {
             "type": "string",
             "maxLength": 36
+          },
+          "only_invocable_on_unresolved_incidents": {
+            "type": "boolean",
+            "description": "If true, the action can only be invoked against an unresolved incident.",
+            "default": false,
+            "example": false
           }
         }
       },
@@ -21856,6 +21874,7 @@
                         "id": "01DA2MLYN0J5EFC1LKWXUKDDKT",
                         "modify_time": "2022-11-08T14:54:02.267989Z",
                         "name": "Restart apache",
+                        "only_invocable_on_unresolved_incidents": false,
                         "privileges": {
                           "permissions": [
                             "read",
@@ -22009,6 +22028,7 @@
                           "id": "01DA2MLYN0J5EFC1LKWXUKDDKT",
                           "modify_time": "2022-11-08T14:54:02.267989Z",
                           "name": "Restart apache",
+                          "only_invocable_on_unresolved_incidents": false,
                           "privileges": {
                             "permissions": [
                               "read",
@@ -22035,6 +22055,7 @@
                           "id": "01DACKMP6Q3Y5YG51ENA26CX2I",
                           "modify_time": "2022-11-08T14:54:02.267989Z",
                           "name": "Restart apache",
+                          "only_invocable_on_unresolved_incidents": false,
                           "privileges": {
                             "permissions": [
                               "read",
@@ -22145,6 +22166,7 @@
                         "id": "01DA2MLYN0J5EFC1LKWXUKDDKT",
                         "modify_time": "2022-11-08T14:54:02.267989Z",
                         "name": "Restart apache",
+                        "only_invocable_on_unresolved_incidents": false,
                         "privileges": {
                           "permissions": [
                             "read",
@@ -22334,6 +22356,7 @@
                         "id": "01DA2MLYN0J5EFC1LKWXUKDDKT",
                         "modify_time": "2022-11-08T14:54:02.267989Z",
                         "name": "Restart apache",
+                        "only_invocable_on_unresolved_incidents": false,
                         "privileges": {
                           "permissions": [
                             "read",
