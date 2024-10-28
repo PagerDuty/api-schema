@@ -4,6 +4,10 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+## 2024-10-25
+
+- Update the multi-update item limit in the Manage Alerts endpoint
+
 ## 2024-10-24
 - Added `only_invocable_on_unresolved_incidents` field to Automation Actions endpoints.
 
