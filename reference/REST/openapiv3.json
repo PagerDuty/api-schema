@@ -33847,7 +33847,7 @@
           "Incidents"
         ],
         "operationId": "updateIncidentAlerts",
-        "description": "Resolve multiple alerts or associate them with different incidents.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved. An alert represents a digital signal that was emitted to PagerDuty by the monitoring systems that detected or identified the issue.\n\nA maximum of 500 alerts may be updated at a time. If more than this number of alerts are given, the API will respond with status 413 (Request Entity Too Large).\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n\nScoped OAuth requires: `incidents.write`\n",
+        "description": "Resolve multiple alerts or associate them with different incidents.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved. An alert represents a digital signal that was emitted to PagerDuty by the monitoring systems that detected or identified the issue.\n\nA maximum of 250 alerts may be updated at a time. If more than this number of alerts are given, the API will respond with status 413 (Request Entity Too Large).\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n\nScoped OAuth requires: `incidents.write`\n",
         "summary": "Manage alerts",
         "parameters": [
           {
@@ -37579,7 +37579,7 @@
                         "properties": {
                           "data_type": {
                             "type": "string",
-                            "description": "The display name of the Custom Field Field Option."
+                            "description": "The data type of the Custom Field Field Option."
                           },
                           "value": {
                             "type": "string",
@@ -37788,7 +37788,7 @@
                         "properties": {
                           "data_type": {
                             "type": "string",
-                            "description": "The display name of the Custom Field Field Option."
+                            "description": "The data type of the Custom Field Field Option."
                           },
                           "value": {
                             "type": "string",
