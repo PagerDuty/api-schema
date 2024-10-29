@@ -4,6 +4,14 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+## 2024-10-28
+
+- Fixed descriptions for `POST /incidents/types/{type_id_or_name}/custom_fields/{field_id}/field_options` and `PUT /incidents/types/{type_id_or_name}/custom_fields/{field_id}/field_options/{field_option_id}`
+
+## 2024-10-25
+
+- Update the multi-update item limit in the Manage Alerts endpoint
+
 ## 2024-10-24
 - Added `only_invocable_on_unresolved_incidents` field to Automation Actions endpoints.
 
