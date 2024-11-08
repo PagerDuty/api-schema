@@ -4,6 +4,11 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+## 2024-11-08
+- Introduced two new endpoints for managing OAuth delegations. In this initial release, this new functionality allows you to revoke a user's access to the mobile app
+  - `DELETE /oauth_delegations`
+  - `GET /oauth_delegations/revocation_requests/status`
+
 ## 2024-11-06
 - Add `is_default` property to Workflow Integration Connection
 

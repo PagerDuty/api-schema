@@ -2112,6 +2112,37 @@
           "type": "string"
         }
       },
+      "oauth_delegation_type": {
+        "name": "type",
+        "in": "query",
+        "description": "The type of OAuth delegations this request should target.",
+        "schema": {
+          "type": "string",
+          "enum": [
+            "mobile"
+          ]
+        },
+        "required": true
+      },
+      "oauth_delegation_user_id": {
+        "name": "user_id",
+        "in": "query",
+        "description": "The ID of the user for whom this request is applicable.",
+        "schema": {
+          "type": "string"
+        },
+        "required": true
+      },
+      "oauth_delegation_requested_at_end": {
+        "name": "requested_at_end",
+        "in": "query",
+        "description": "The end of the date range over which you want to search. If not specified, this will default to current time.",
+        "schema": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "required": false
+      },
       "id": {
         "name": "id",
         "description": "The ID of the resource.",
@@ -34863,7 +34894,7 @@
         ],
         "x-pd-requires-scope": "incidents.write",
         "operationId": "mergeIncidents",
-        "description": "Merge a list of source incidents into the target [incident](https://developer.pagerduty.com/api-reference/a47605517c19a-api-concepts#incidents). \n\nAfter the merge is performed the target incident will contain the source incidents' [alerts](https://developer.pagerduty.com/api-reference/a47605517c19a-api-concepts#alerts), \nand the source incidents will be resolved.\n\nOnly incidents that have alerts or incidents that were created manually in the UI can be merged.\n\nOpen incidents cannot be merged into a resolved incident.\n\nAn incident cannot have more than 1000 alerts. The server will return an error if merging the source incidents \nwill result in the target incident having more than 1000 alerts.\n\nScoped OAuth requires: `incidents.write`\n",
+        "description": "Merge a list of source incidents into the target [incident](https://developer.pagerduty.com/api-reference/a47605517c19a-api-concepts#incidents).\n\nAfter the merge is performed the target incident will contain the source incidents' [alerts](https://developer.pagerduty.com/api-reference/a47605517c19a-api-concepts#alerts),\nand the source incidents will be resolved.\n\nOnly incidents that have alerts or incidents that were created manually in the UI can be merged.\n\nOpen incidents cannot be merged into a resolved incident.\n\nAn incident cannot have more than 1000 alerts. The server will return an error if merging the source incidents\nwill result in the target incident having more than 1000 alerts.\n\nScoped OAuth requires: `incidents.write`\n",
         "summary": "Merge incidents",
         "parameters": [
           {
@@ -36987,7 +37018,7 @@
           "Incident Types"
         ],
         "operationId": "listIncidentTypeCustomFields",
-        "description": "List the custom fields for an incident type.\n\nCustom Fields (CF) are a feature which will allow customers to extend Incidents with their own custom data,\nto provide additional context and support features such as customized filtering, search and analytics.\nCustom Fields can be applied to different incident types.\n      \n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nScoped OAuth requires: `custom_fields.read`\n",
+        "description": "List the custom fields for an incident type.\n\nCustom Fields (CF) are a feature which will allow customers to extend Incidents with their own custom data,\nto provide additional context and support features such as customized filtering, search and analytics.\nCustom Fields can be applied to different incident types.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nScoped OAuth requires: `custom_fields.read`\n",
         "summary": "List Incident Type Custom Fields",
         "parameters": [
           {
@@ -40097,6 +40128,140 @@
                       "offset": 0,
                       "more": false,
                       "total": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        }
+      }
+    },
+    "/oauth_delegations": {
+      "delete": {
+        "x-pd-requires-scope": "oauth_delegations.write",
+        "tags": [
+          "OAuth Delegations"
+        ],
+        "operationId": "deleteOauthDelegations",
+        "description": "Delete all OAuth delegations as per provided query parameters.\n\nAn OAuth delegation represents an instance of a user or account's authorization to an app (via OAuth) to access their PagerDuty account.\nCommon apps include the PagerDuty mobile app, Slack, Microsoft Teams, as well as any third-party apps.\n\nDeleting an OAuth delegation will revoke that instance of an app's access to that user or account.\nTo grant access again, reauthorization/reauthentication may be required.\n\nAt this time, this endpoint only supports deleting mobile app OAuth delegations for a given user.\nThis is equivalent to signing users out of the mobile app.\n\nThis is an asynchronous API, the deletion request itself will be processed within 24 hours.\n\nScoped OAuth requires: `oauth_delegations.write`\n",
+        "summary": "Delete all OAuth delegations",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/oauth_delegation_user_id"
+          },
+          {
+            "$ref": "#/components/parameters/oauth_delegation_type"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Accepted - The deletion request has been accepted for processing, but the processing has not been completed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "accepted"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Request to delete delegations accepted. Delegations will be revoked asynchronously."
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "status": "accepted",
+                      "message": "Request to delete delegations accepted. Delegations will be revoked asynchronously."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        }
+      }
+    },
+    "/oauth_delegations/revocation_requests/status": {
+      "get": {
+        "x-pd-requires-scope": "oauth_delegations.read",
+        "tags": [
+          "OAuth Delegations"
+        ],
+        "operationId": "getOauthDelegationsRevocationRequestsStatus",
+        "description": "Get the status of all OAuth delegations revocation requests for this account, specifically how many requests are still pending.\n\nThis endpoint is limited to account owners and admins.\n\nScoped OAuth requires: `oauth_delegations.read`\n",
+        "summary": "Get OAuth delegations revocation requests status",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/oauth_delegation_requested_at_end"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Current status of all revocation requests based on your search.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "pending_count": {
+                      "type": "number",
+                      "example": 1
+                    },
+                    "requested_at_end": {
+                      "type": "string",
+                      "format": "date-time",
+                      "example": "2021-01-01T00:00:00Z"
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "pending_count": 1,
+                      "requested_at_end": "2021-01-01T00:00:00Z"
                     }
                   }
                 }
@@ -54767,7 +54932,7 @@
           "Users"
         ],
         "operationId": "deleteUserSessions",
-        "description": "Delete all user sessions.\n\nBeginning November 2021, user sessions no longer includes newly issued OAuth tokens.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users:sessions.write`\n",
+        "description": "Delete all user sessions.\n\nBeginning November 2021, user sessions no longer includes newly issued OAuth tokens.\n\nIf you are interested in deleting mobile app sessions, refer to the Delete OAuth Delegations endpoint.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users:sessions.write`\n",
         "summary": "Delete all user sessions",
         "parameters": [
           {

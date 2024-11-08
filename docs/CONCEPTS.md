@@ -172,6 +172,17 @@ Notifications cannot be created directly through the API; they are a result of o
 
 [*Read more about Notifications in the PagerDuty Knowledge Base*](https://support.pagerduty.com/hc/en-us/articles/202828840-What-is-an-alert-notification-).
 
+## OAuth Delegations
+
+An OAuth delegation represents an instance of a user or account's authorization to an app (via OAuth) to access their PagerDuty account.
+Common apps include the PagerDuty mobile app, Slack, Microsoft Teams, as well as any third-party apps.
+
+How does an OAuth delegation relate to an OAuth access token?
+
+An OAuth access token is what is actually used when an app accesses the PagerDuty API. Instead of having one long-lived token,
+tokens aim to have a shorter expiry but an app may refresh a token without asking for authorization again. Although there may be many access tokens involved throughout
+a user or account's usage of an app, there is effectively only one authorization, or "session", and that is what we call a delegation.
+
 ## On-Calls
 An On-Call represents a contiguous unit of time for which a [User](#users) will be On-Call for a given [Escalation Policy](#escalation-policies) and [Escalation Rule](#escalation-rules).
 
