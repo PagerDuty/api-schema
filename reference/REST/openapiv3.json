@@ -1663,6 +1663,7 @@
               "service_url": "https://webhook.site",
               "external_id": "My Connection",
               "external_id_label": "Connection Name",
+              "is_default": true,
               "health": {
                 "is_healthy": true,
                 "last_checked_at": "2024-07-18T21:16:51.511+00:00",
@@ -1706,6 +1707,7 @@
             "secrets": {
               "Authentication Headers": "x-api-key: 1234abcd"
             },
+            "is_default": true,
             "teams": []
           }
         }
@@ -4051,6 +4053,10 @@
                     "description": "The scopes that this connection has access to"
                   }
                 },
+                "is_default": {
+                  "type": "boolean",
+                  "description": "Whether or not this connection is the default connection for this integration"
+                },
                 "health": {
                   "type": "object",
                   "readOnly": true,
@@ -4158,6 +4164,10 @@
                     "type": "string",
                     "description": "The scopes that this connection has access to"
                   }
+                },
+                "is_default": {
+                  "type": "boolean",
+                  "description": "Whether or not this connection is the default connection for this integration"
                 },
                 "health": {
                   "type": "object",
@@ -17816,6 +17826,10 @@
                   "type": "string",
                   "description": "The scopes that this connection has access to"
                 }
+              },
+              "is_default": {
+                "type": "boolean",
+                "description": "Whether or not this connection is the default connection for this integration"
               },
               "health": {
                 "type": "object",
@@ -56463,6 +56477,7 @@
                           "service_url": "https://webhook.site",
                           "external_id": "My Connection",
                           "external_id_label": "Connection Name",
+                          "is_default": "true,",
                           "health": {
                             "is_healthy": true,
                             "last_checked_at": "2024-07-18T21:16:51.511+00:00",
