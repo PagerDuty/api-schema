@@ -5142,7 +5142,7 @@
         "properties": {
           "filters": {
             "type": "object",
-            "description": "Accepts a set of filters to apply to the Incidents before aggregating.  Any incidents that do not match the included filters will be omitted from the results",
+            "description": "Accepts a set of filters to apply to the Incidents before aggregating.  Any incidents that do not match the included filters will be omitted from the results.",
             "properties": {
               "created_at_start": {
                 "type": "string",
@@ -5241,6 +5241,11 @@
                   "P2",
                   "P3"
                 ]
+              },
+              "pd_advance_used": {
+                "type": "boolean",
+                "description": "If true, only incidents where PD Advance was used will be included in the results, and vice versa. If omitted, all incidents will be included.",
+                "example": true
               }
             }
           },
@@ -5518,6 +5523,130 @@
           "up_time_pct": {
             "type": "number",
             "description": "The percentage of time in the defined date range that the service was not interrupted\nby a [major incident](https://support.pagerduty.com/docs/operational-reviews#major-incidents). Not included when aggregating by all."
+          }
+        }
+      },
+      "AnalyticsPdAdvanceUsageFilter": {
+        "type": "object",
+        "properties": {
+          "filters": {
+            "type": "object",
+            "description": "Accepts a set of filters to apply to the Incidents before aggregating.  Any incidents that do not match the included filters will be omitted from the results.",
+            "properties": {
+              "created_at_start": {
+                "type": "string",
+                "description": "Accepts an ISO8601 DateTime string. Any PD Advance usage with a created_at less than this value will be omitted from the results. The maximum supported time range in conjunction with created_at_end is one year.",
+                "example": "2024-01-01T00:00:00+05:00"
+              },
+              "created_at_end": {
+                "type": "string",
+                "description": "Accepts an ISO8601 DateTime string. Any PD Advance usage with a created_at greater than or equal to this value will be omitted from the results. The maximum supported time range in conjunction with created_at_start is one year.",
+                "example": "2024-02-01T00:00:00Z"
+              },
+              "incident_created_at_start": {
+                "type": "string",
+                "description": "Accepts an ISO8601 DateTime string. Any incidents with a created_at less than this value will be omitted from the results. The maximum supported time range in conjunction with incident_created_at_end is one year.",
+                "example": "2024-01-01T00:00:00+05:00"
+              },
+              "incident_created_at_end": {
+                "type": "string",
+                "description": "Accepts an ISO8601 DateTime string. Any incidents with a created_at greater than or equal to this value will be omitted from the results. The maximum supported time range in conjunction with incident_created_at_start is one year.",
+                "example": "2024-02-01T00:00:00Z"
+              },
+              "urgency": {
+                "type": "string",
+                "description": "Any incidents whose urgency does not match the provided string will be omitted from the results.",
+                "example": "high",
+                "enum": [
+                  "high",
+                  "low"
+                ]
+              },
+              "major": {
+                "type": "boolean",
+                "description": "A boolean flag including whether results should contain *only* [major incidents](https://support.pagerduty.com/docs/operational-reviews#major-incidents), or exclude major incidents. If no value is provided all incidents will be included.",
+                "example": true
+              },
+              "min_ackowledgements": {
+                "type": "integer",
+                "description": "An integer that sets the requirement for the minimum number of acknowledgements to occur on an incident. For example, setting this to 1 will return only incidents that have at least 1 acknowledgement. If no value is provided, all incidents will be included.",
+                "example": 1
+              },
+              "min_timeout_escalations": {
+                "type": "integer",
+                "description": "An integer that sets the requirement for the minimum number of timeout escalations to occur on an incident. For example, setting this to 1 will return only incidents that have at least 1 timeout escalation. If no value is provided, all incidents will be included.",
+                "example": 1
+              },
+              "min_manual_escalations": {
+                "type": "integer",
+                "description": "An integer that sets the requirement for the minimum number of manual escalations to occur on an incident. For example, setting this to 1 will return only incidents that have at least 1 manual escalation. If no value is provided, all incidents will be included.",
+                "example": 1
+              },
+              "team_ids": {
+                "type": "array",
+                "description": "An array of team IDs. Only incidents related to these teams will be included in the results. If omitted, all teams the requestor has access to will be included in the results.",
+                "items": {
+                  "type": "string"
+                },
+                "example": [
+                  "P373JQQ",
+                  "PAECHJV",
+                  "P7SYGW6"
+                ]
+              },
+              "service_ids": {
+                "type": "array",
+                "description": "An array of service IDs. Only incidents related to these services will be included in the results. If omitted, all services the requestor has access to will be included in the results.",
+                "items": {
+                  "type": "string"
+                },
+                "example": [
+                  "PSEJLIN",
+                  "PSLWBL8",
+                  "PT4KHLX"
+                ]
+              },
+              "escalation_policy_ids": {
+                "type": "array",
+                "description": "An array of escalation policy IDs. Only incidents related to these escalation policies will be included in the results. If omitted, all escalation policies the requestor has access to will be included in the results.",
+                "items": {
+                  "type": "string"
+                },
+                "example": [
+                  "PDJXDF3",
+                  "PG4EHNS"
+                ]
+              },
+              "priority_ids": {
+                "type": "array",
+                "description": "An array of priority IDs. Only incidents with these priorities will be included in the results. If omitted, all priorities will be included in the results.",
+                "items": {
+                  "type": "string"
+                },
+                "example": [
+                  "PC8O0L3",
+                  "PX01HJD",
+                  "P5FK83M"
+                ]
+              },
+              "priority_names": {
+                "type": "array",
+                "description": "An array of user-defined priority names. Only incidents with these priorities will be included in the results. If omitted, all priorities will be included in the results.",
+                "items": {
+                  "type": "string"
+                },
+                "example": [
+                  "P1",
+                  "P2",
+                  "P3"
+                ]
+              }
+            }
+          },
+          "time_zone": {
+            "type": "string",
+            "description": "The time zone to use for the results and grouping. Must be in tzdata format. See list of accepted values [here](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).",
+            "example": "Etc/UTC"
           }
         }
       },
@@ -19522,7 +19651,7 @@
           },
           "description": "Parameters and filters to apply to the dataset."
         },
-        "description": "Provides aggregated enriched metrics for incidents.\n\nThe provided metrics are aggregated by day, week, month using the aggregate_unit parameter, or for the entire period if no aggregate_unit is provided.\n\n<!-- theme: info -->\n> A `team_ids` or `service_ids` filter is required for [user-level API keys](https://support.pagerduty.com/docs/using-the-api#section-generating-a-personal-rest-api-key) or keys generated through an OAuth flow. Account-level API keys do not have this requirement.\n<!-- theme: info -->\n> **Note:** Analytics data is updated once per day. It takes up to 24 hours before new incidents appear in the Analytics API.\n\nScoped OAuth requires: `analytics.read`\n",
+        "description": "Provides aggregated enriched metrics for incidents.\n\nThe provided metrics are aggregated by day, week, month using the aggregate_unit parameter, or for the entire period if no aggregate_unit is provided.\n\n<!-- theme: info -->\n> A `team_ids` or `service_ids` filter is required for [user-level API keys](https://support.pagerduty.com/docs/using-the-api#section-generating-a-personal-rest-api-key) or keys generated through an OAuth flow. Account-level API keys do not have this requirement.\n<!-- theme: info -->\n> **Note:** Analytics data is updated [periodically](https://support.pagerduty.com/main/docs/insights#:~:text=Data%20Update%20Schedule). It takes up to 24 hours before new incidents appear in the Analytics API.\n\nScoped OAuth requires: `analytics.read`\n",
         "tags": [
           "Analytics"
         ]
@@ -19683,7 +19812,7 @@
           },
           "description": "Parameters and filters to apply to the dataset."
         },
-        "description": "Provides aggregated metrics for incidents aggregated into units of time by escalation policy.\n\nExample metrics include Seconds to Resolve, Seconds to Engage, Snoozed Seconds, and Sleep Hour Interruptions. Metric definitions can be found in our [Knowledge Base](https://support.pagerduty.com/docs/insights#escalation-policy-list).\n\n<!-- theme: info -->\n> **Note:** Analytics data is updated once per day. It takes up to 24 hours before new incidents appear in the Analytics API.\n\nScoped OAuth requires: `analytics.read`\n",
+        "description": "Provides aggregated metrics for incidents aggregated into units of time by escalation policy.\n\nExample metrics include Seconds to Resolve, Seconds to Engage, Snoozed Seconds, and Sleep Hour Interruptions. Metric definitions can be found in our [Knowledge Base](https://support.pagerduty.com/docs/insights#escalation-policy-list).\n\n<!-- theme: info -->\n> **Note:** Analytics data is updated [periodically](https://support.pagerduty.com/main/docs/insights#:~:text=Data%20Update%20Schedule). It takes up to 24 hours before new incidents appear in the Analytics API.\n\nScoped OAuth requires: `analytics.read`\n",
         "tags": [
           "Analytics"
         ]
@@ -19805,7 +19934,7 @@
           },
           "description": "Parameters and filters to apply to the dataset."
         },
-        "description": "Provides aggregated metrics across all escalation policies.\n\nExample metrics include Seconds to Resolve, Seconds to Engage, Snoozed Seconds, and Sleep Hour Interruptions. Metric definitions can be found in our [Knowledge Base](https://support.pagerduty.com/docs/insights#escalation-policy-list).\n\n<!-- theme: info -->\n> **Note:** Analytics data is updated once per day. It takes up to 24 hours before new incidents appear in the Analytics API.\n\nScoped OAuth requires: `analytics.read`\n",
+        "description": "Provides aggregated metrics across all escalation policies.\n\nExample metrics include Seconds to Resolve, Seconds to Engage, Snoozed Seconds, and Sleep Hour Interruptions. Metric definitions can be found in our [Knowledge Base](https://support.pagerduty.com/docs/insights#escalation-policy-list).\n\n<!-- theme: info -->\n> **Note:** Analytics data is updated [periodically](https://support.pagerduty.com/main/docs/insights#:~:text=Data%20Update%20Schedule). It takes up to 24 hours before new incidents appear in the Analytics API.\n\nScoped OAuth requires: `analytics.read`\n",
         "tags": [
           "Analytics"
         ]
@@ -19970,7 +20099,7 @@
           },
           "description": "Parameters and filters to apply to the dataset."
         },
-        "description": "Provides aggregated metrics for incidents aggregated into units of time by service.\n\nExample metrics include Seconds to Resolve, Seconds to Engage, Snoozed Seconds, and Sleep Hour Interruptions. Metric definitions can be found in our [Knowledge Base](https://support.pagerduty.com/docs/insights#services-list).\nData can be aggregated by day, week or month in addition to by service, or provided just as a collection of aggregates for each service in the dataset for the entire period.  If a unit is provided, each row in the returned dataset will include a 'range_start' timestamp.\n\n<!-- theme: info -->\n> **Note:** Analytics data is updated once per day. It takes up to 24 hours before new incidents appear in the Analytics API.\n\nScoped OAuth requires: `analytics.read`\n",
+        "description": "Provides aggregated metrics for incidents aggregated into units of time by service.\n\nExample metrics include Seconds to Resolve, Seconds to Engage, Snoozed Seconds, and Sleep Hour Interruptions. Metric definitions can be found in our [Knowledge Base](https://support.pagerduty.com/docs/insights#services-list).\nData can be aggregated by day, week or month in addition to by service, or provided just as a collection of aggregates for each service in the dataset for the entire period.  If a unit is provided, each row in the returned dataset will include a 'range_start' timestamp.\n\n<!-- theme: info -->\n> **Note:** Analytics data is updated [periodically](https://support.pagerduty.com/main/docs/insights#:~:text=Data%20Update%20Schedule). It takes up to 24 hours before new incidents appear in the Analytics API.\n\nScoped OAuth requires: `analytics.read`\n",
         "tags": [
           "Analytics"
         ]
@@ -20091,7 +20220,7 @@
           },
           "description": "Parameters and filters to apply to the dataset."
         },
-        "description": "Provides aggregated metrics across all services.\n\nExample metrics include Seconds to Resolve, Seconds to Engage, Snoozed Seconds, and Sleep Hour Interruptions. Metric definitions can be found in our [Knowledge Base](https://support.pagerduty.com/docs/insights#services-list).\n\n<!-- theme: info -->\n> A `team_ids` or `service_ids` filter is required for [user-level API keys](https://support.pagerduty.com/docs/using-the-api#section-generating-a-personal-rest-api-key) or keys generated through an OAuth flow. Account-level API keys do not have this requirement.\n<!-- theme: info -->\n> **Note:** Analytics data is updated once per day. It takes up to 24 hours before new incidents appear in the Analytics API.\n\nScoped OAuth requires: `analytics.read`\n",
+        "description": "Provides aggregated metrics across all services.\n\nExample metrics include Seconds to Resolve, Seconds to Engage, Snoozed Seconds, and Sleep Hour Interruptions. Metric definitions can be found in our [Knowledge Base](https://support.pagerduty.com/docs/insights#services-list).\n\n<!-- theme: info -->\n> A `team_ids` or `service_ids` filter is required for [user-level API keys](https://support.pagerduty.com/docs/using-the-api#section-generating-a-personal-rest-api-key) or keys generated through an OAuth flow. Account-level API keys do not have this requirement.\n<!-- theme: info -->\n> **Note:** Analytics data is updated [periodically](https://support.pagerduty.com/main/docs/insights#:~:text=Data%20Update%20Schedule). It takes up to 24 hours before new incidents appear in the Analytics API.\n\nScoped OAuth requires: `analytics.read`\n",
         "tags": [
           "Analytics"
         ]
@@ -20248,7 +20377,7 @@
           },
           "description": "Parameters and filters to apply to the dataset."
         },
-        "description": "Provides aggregated metrics for incidents aggregated into units of time by team.\n\nExample metrics include Seconds to Resolve, Seconds to Engage, Snoozed Seconds, and Sleep Hour Interruptions. Metric definitions can be found in our [Knowledge Base](https://support.pagerduty.com/docs/insights#teams-list).\nData can be aggregated by day, week or month in addition to by team, or provided just as a collection of aggregates for each team in the dataset for the entire period.  If a unit is provided, each row in the returned dataset will include a 'range_start' timestamp.\n\n<!-- theme: info -->\n> A `team_ids` or `service_ids` filter is required for [user-level API keys](https://support.pagerduty.com/docs/using-the-api#section-generating-a-personal-rest-api-key) or keys generated through an OAuth flow. Account-level API keys do not have this requirement.\n<!-- theme: info -->\n> **Note:** Analytics data is updated once per day. It takes up to 24 hours before new incidents appear in the Analytics API.\n\nScoped OAuth requires: `analytics.read`\n",
+        "description": "Provides aggregated metrics for incidents aggregated into units of time by team.\n\nExample metrics include Seconds to Resolve, Seconds to Engage, Snoozed Seconds, and Sleep Hour Interruptions. Metric definitions can be found in our [Knowledge Base](https://support.pagerduty.com/docs/insights#teams-list).\nData can be aggregated by day, week or month in addition to by team, or provided just as a collection of aggregates for each team in the dataset for the entire period.  If a unit is provided, each row in the returned dataset will include a 'range_start' timestamp.\n\n<!-- theme: info -->\n> A `team_ids` or `service_ids` filter is required for [user-level API keys](https://support.pagerduty.com/docs/using-the-api#section-generating-a-personal-rest-api-key) or keys generated through an OAuth flow. Account-level API keys do not have this requirement.\n<!-- theme: info -->\n> **Note:** Analytics data is updated [periodically](https://support.pagerduty.com/main/docs/insights#:~:text=Data%20Update%20Schedule). It takes up to 24 hours before new incidents appear in the Analytics API.\n\nScoped OAuth requires: `analytics.read`\n",
         "tags": [
           "Analytics"
         ]
@@ -20370,7 +20499,154 @@
           },
           "description": "Parameters and filters to apply to the dataset."
         },
-        "description": "Provides aggregated metrics across all teams.\n\nExample metrics include Seconds to Resolve, Seconds to Engage, Snoozed Seconds, and Sleep Hour Interruptions. Metric definitions can be found in our [Knowledge Base](https://support.pagerduty.com/docs/insights#teams-list).\n\n<!-- theme: info -->\n> A `team_ids` or `service_ids` filter is required for [user-level API keys](https://support.pagerduty.com/docs/using-the-api#section-generating-a-personal-rest-api-key) or keys generated through an OAuth flow. Account-level API keys do not have this requirement.\n<!-- theme: info -->\n> **Note:** Analytics data is updated once per day. It takes up to 24 hours before new incidents appear in the Analytics API.\n\nScoped OAuth requires: `analytics.read`\n",
+        "description": "Provides aggregated metrics across all teams.\n\nExample metrics include Seconds to Resolve, Seconds to Engage, Snoozed Seconds, and Sleep Hour Interruptions. Metric definitions can be found in our [Knowledge Base](https://support.pagerduty.com/docs/insights#teams-list).\n\n<!-- theme: info -->\n> A `team_ids` or `service_ids` filter is required for [user-level API keys](https://support.pagerduty.com/docs/using-the-api#section-generating-a-personal-rest-api-key) or keys generated through an OAuth flow. Account-level API keys do not have this requirement.\n<!-- theme: info -->\n> **Note:** Analytics data is updated [periodically](https://support.pagerduty.com/main/docs/insights#:~:text=Data%20Update%20Schedule). It takes up to 24 hours before new incidents appear in the Analytics API.\n\nScoped OAuth requires: `analytics.read`\n",
+        "tags": [
+          "Analytics"
+        ]
+      },
+      "parameters": []
+    },
+    "/analytics/metrics/pd_advance_usage/features": {
+      "post": {
+        "x-pd-requires-scope": "analytics.read",
+        "summary": "Get aggregated PD Advance usage data",
+        "operationId": "getAnalyticsMetricsPdAdvanceUsageFeatures",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "title": "Analytics PD Advance Usage by Feature",
+                            "type": "object",
+                            "properties": {
+                              "feature_id": {
+                                "type": "string",
+                                "description": "Which feature of PD Advance was used."
+                              },
+                              "total_credits_used": {
+                                "type": "integer",
+                                "description": "How many credits were used by this feature."
+                              },
+                              "total_use_count": {
+                                "type": "integer",
+                                "description": "How many times this feature was used."
+                              },
+                              "total_proactive_credits_used": {
+                                "type": "integer",
+                                "description": "How many of the credits used were initiated by PD Advance rather than a user."
+                              },
+                              "total_proactive_use_count": {
+                                "type": "integer",
+                                "description": "How many times this feature was initiated by PD Advance rather than a user."
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "$ref": "#/components/schemas/AnalyticsPdAdvanceUsageFilter"
+                    }
+                  ]
+                },
+                "examples": {
+                  "Example Response": {
+                    "value": {
+                      "data": [
+                        {
+                          "feature_id": "genai_incident_summarization",
+                          "total_credits_used": 16,
+                          "total_use_count": 8,
+                          "total_proactive_credits_used": 0,
+                          "total_proactive_use_count": 0
+                        },
+                        {
+                          "feature_id": "genai_assist_bot",
+                          "total_credits_used": 1,
+                          "total_use_count": 1,
+                          "total_proactive_credits_used": 0,
+                          "total_proactive_use_count": 0
+                        },
+                        {
+                          "feature_id": "genai_status_updates",
+                          "total_credits_used": 48,
+                          "total_use_count": 16,
+                          "total_proactive_credits_used": 0,
+                          "total_proactive_use_count": 0
+                        },
+                        {
+                          "feature_id": "genai_knowledge_base",
+                          "total_credits_used": 18,
+                          "total_use_count": 9,
+                          "total_proactive_credits_used": 0,
+                          "total_proactive_use_count": 0
+                        },
+                        {
+                          "feature_id": "genai_incident_insight",
+                          "total_credits_used": 96,
+                          "total_use_count": 84,
+                          "total_proactive_credits_used": 0,
+                          "total_proactive_use_count": 36
+                        }
+                      ],
+                      "filters": {
+                        "incident_created_at_end": "2024-10-31T00:00:00Z",
+                        "incident_created_at_start": "2024-10-01T00:00:00Z"
+                      },
+                      "time_zone": "Etc/UTC"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AnalyticsPdAdvanceUsageFilter"
+              },
+              "examples": {
+                "Example Request": {
+                  "value": {
+                    "filters": {
+                      "incident_created_at_start": "2024-01-01T00:00:00-05:00",
+                      "incident_created_at_end": "2024-01-31T00:00:00-05:00",
+                      "urgency": "high",
+                      "major": true
+                    },
+                    "time_zone": "Etc/UTC"
+                  }
+                }
+              }
+            }
+          },
+          "description": "Parameters and filters to apply to the dataset."
+        },
+        "description": "Provides aggregated metrics for the usage of PD Advance.\n<!-- theme: info -->\n> **Note:** Analytics data is updated [periodically](https://support.pagerduty.com/main/docs/insights#:~:text=Data%20Update%20Schedule). It takes up to 24 hours before new incidents appear in the Analytics API.\n\nScoped OAuth requires: `analytics.read`\n",
         "tags": [
           "Analytics"
         ]
@@ -20488,7 +20764,7 @@
           },
           "description": "Parameters and filters to apply to the dataset."
         },
-        "description": "Provides aggregated incident metrics for all selected responders.\n\nExample metrics include Seconds to Resolve, Seconds to Engage, Snoozed Seconds, and Sleep Hour Interruptions. Metric definitions can be found in our [Knowledge Base](https://support.pagerduty.com/docs/insights#responders-list).\n\n<!-- theme: info -->\n> **Note:** Analytics data is updated once per day. It takes up to 24 hours before new incidents appear in the Analytics API.\n\nScoped OAuth requires: `analytics.read`\n",
+        "description": "Provides aggregated incident metrics for all selected responders.\n\nExample metrics include Seconds to Resolve, Seconds to Engage, Snoozed Seconds, and Sleep Hour Interruptions. Metric definitions can be found in our [Knowledge Base](https://support.pagerduty.com/docs/insights#responders-list).\n\n<!-- theme: info -->\n> **Note:** Analytics data is updated [periodically](https://support.pagerduty.com/main/docs/insights#:~:text=Data%20Update%20Schedule). It takes up to 24 hours before new incidents appear in the Analytics API.\n\nScoped OAuth requires: `analytics.read`\n",
         "tags": [
           "Analytics"
         ]
@@ -20635,7 +20911,7 @@
           },
           "description": "Parameters and filters to apply to the dataset."
         },
-        "description": "Provides incident metrics aggregated by responder.\n\nExample metrics include Seconds to Resolve, Seconds to Engage, Snoozed Seconds, and Sleep Hour Interruptions. Metric definitions can be found in our [Knowledge Base](https://support.pagerduty.com/docs/insights#responders-list).\n\n<!-- theme: info -->\n> **Note:** Analytics data is updated once per day. It takes up to 24 hours before new incidents appear in the Analytics API.\n\nScoped OAuth requires: `analytics.read`\n",
+        "description": "Provides incident metrics aggregated by responder.\n\nExample metrics include Seconds to Resolve, Seconds to Engage, Snoozed Seconds, and Sleep Hour Interruptions. Metric definitions can be found in our [Knowledge Base](https://support.pagerduty.com/docs/insights#responders-list).\n\n<!-- theme: info -->\n> **Note:** Analytics data is updated [periodically](https://support.pagerduty.com/main/docs/insights#:~:text=Data%20Update%20Schedule). It takes up to 24 hours before new incidents appear in the Analytics API.\n\nScoped OAuth requires: `analytics.read`\n",
         "tags": [
           "Analytics"
         ]
@@ -21090,7 +21366,7 @@
           },
           "description": "Parameters and filters to apply to the dataset."
         },
-        "description": "Provides enriched incident data and metrics for multiple incidents.\n\nExample metrics include Seconds to Resolve, Seconds to Engage, Snoozed Seconds, and Sleep Hour Interruptions. Metric definitions can be found in our [Knowledge Base](https://support.pagerduty.com/docs/insights#incidents-list).\n\n<!-- theme: info -->\n> A `team_ids` or `service_ids` filter is required for [user-level API keys](https://support.pagerduty.com/docs/using-the-api#section-generating-a-personal-rest-api-key) or keys generated through an OAuth flow. Account-level API keys do not have this requirement.\n<!-- theme: info -->\n> **Note:** Analytics data is updated once per day. It takes up to 24 hours before new incidents appear in the Analytics API.\n\nScoped OAuth requires: `analytics.read`\n",
+        "description": "Provides enriched incident data and metrics for multiple incidents.\n\nExample metrics include Seconds to Resolve, Seconds to Engage, Snoozed Seconds, and Sleep Hour Interruptions. Metric definitions can be found in our [Knowledge Base](https://support.pagerduty.com/docs/insights#incidents-list).\n\n<!-- theme: info -->\n> A `team_ids` or `service_ids` filter is required for [user-level API keys](https://support.pagerduty.com/docs/using-the-api#section-generating-a-personal-rest-api-key) or keys generated through an OAuth flow. Account-level API keys do not have this requirement.\n<!-- theme: info -->\n> **Note:** Analytics data is updated [periodically](https://support.pagerduty.com/main/docs/insights#:~:text=Data%20Update%20Schedule). It takes up to 24 hours before new incidents appear in the Analytics API.\n\nScoped OAuth requires: `analytics.read`\n",
         "tags": [
           "Analytics"
         ]
@@ -21202,7 +21478,7 @@
           }
         },
         "operationId": "getAnalyticsIncidentsById",
-        "description": "Provides enriched incident data and metrics for a single incident.\n\nExample metrics include Seconds to Resolve, Seconds to Engage, Snoozed Seconds, and Sleep Hour Interruptions. Metric definitions can be found in our [Knowledge Base](https://support.pagerduty.com/docs/insights#incidents-list).\n\n<!-- theme: info -->\n> **Note:** Analytics data is updated once per day. It takes up to 24 hours before new incidents appear in the Analytics API.\n\nScoped OAuth requires: `analytics.read`\n",
+        "description": "Provides enriched incident data and metrics for a single incident.\n\nExample metrics include Seconds to Resolve, Seconds to Engage, Snoozed Seconds, and Sleep Hour Interruptions. Metric definitions can be found in our [Knowledge Base](https://support.pagerduty.com/docs/insights#incidents-list).\n\n<!-- theme: info -->\n> **Note:** Analytics data is updated [periodically](https://support.pagerduty.com/main/docs/insights#:~:text=Data%20Update%20Schedule). It takes up to 24 hours before new incidents appear in the Analytics API.\n\nScoped OAuth requires: `analytics.read`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -21708,7 +21984,7 @@
         "tags": [
           "Analytics"
         ],
-        "description": "Provides enriched incident data and metrics for a specific responder.\n\nExample metrics include Mean Seconds to Resolve, Mean Seconds to Engage, Snoozed Seconds, and Sleep Hour Interruptions. Metric definitions can be found in our [Knowledge Base](https://support.pagerduty.com/docs/insights#incidents-list).\n\n<!-- theme: info -->\n> **Note:** Analytics data is updated once per day. It takes up to 24 hours before new incidents appear in the Analytics API.\n\nScoped OAuth requires: `analytics.read`\n"
+        "description": "Provides enriched incident data and metrics for a specific responder.\n\nExample metrics include Mean Seconds to Resolve, Mean Seconds to Engage, Snoozed Seconds, and Sleep Hour Interruptions. Metric definitions can be found in our [Knowledge Base](https://support.pagerduty.com/docs/insights#incidents-list).\n\n<!-- theme: info -->\n> **Note:** Analytics data is updated [periodically](https://support.pagerduty.com/main/docs/insights#:~:text=Data%20Update%20Schedule). It takes up to 24 hours before new incidents appear in the Analytics API.\n\nScoped OAuth requires: `analytics.read`\n"
       }
     },
     "/audit/records": {
