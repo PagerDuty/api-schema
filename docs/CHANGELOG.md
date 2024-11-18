@@ -4,6 +4,11 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+## 2024-11-18
+- Introduced a new endpoint for analytics on PD Advance usage
+  - `POST /analytics/metrics/pd_advance_usage/features`
+- Added support for the `pd_advance_used` filter on `/analytics/metrics/incidents/all`
+
 ## 2024-11-08
 - Introduced two new endpoints for managing OAuth delegations. In this initial release, this new functionality allows you to revoke a user's access to the mobile app
   - `DELETE /oauth_delegations`
