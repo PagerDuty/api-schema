@@ -4,8 +4,11 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+## 2024-11-22
+- Add `incident_type_ids` (array of obfuscated IDs) as a filter for `/analytics/raw/responders/:responder_id/incidents`
+
 ## 2024-11-21
-- Add `incident_type_ids` (obfuscated IDs array) as a filter for `/analytics/raw/incidents`
+- Add `incident_type_ids` (array of obfuscated IDs) as a filter for `/analytics/raw/incidents`
 
 ## 2024-11-18
 - Introduced a new endpoint for analytics on PD Advance usage
