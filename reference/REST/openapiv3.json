@@ -21017,6 +21017,13 @@
                           "items": {
                             "type": "string"
                           }
+                        },
+                        "incident_type_ids": {
+                          "type": "array",
+                          "description": "The incident_type_ids filter applied to the results.",
+                          "items": {
+                            "type": "string"
+                          }
                         }
                       }
                     },
