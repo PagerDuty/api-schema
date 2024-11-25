@@ -10802,7 +10802,46 @@
                 "default": "create_alerts_and_incidents"
               },
               "alert_grouping_parameters": {
-                "$ref": "#/components/schemas/AlertGroupingParameters"
+                "description": "Alert Grouping Parameters",
+                "deprecated": true,
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/AlertGroupingParameters"
+                  },
+                  {
+                    "type": "object",
+                    "title": "Alert Grouping Settings Reference",
+                    "deprecated": true,
+                    "description": "When a service uses alert grouping configuration that is unsupported via the services api, and can only be configured via the [Alert Grouping Settings API](https://developer.pagerduty.com/api-reference/587edbc8ff416-create-an-alert-grouping-setting). The reference object includes the new location details for the service's Alert Grouping Setting. When an `alert_grouping_settings_reference` is included in a create or update request it will be ignored and no changes are applied to the service.",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "readOnly": true,
+                        "description": "id of the related alert grouping setting"
+                      },
+                      "type": {
+                        "readOnly": true,
+                        "type": "string",
+                        "description": "type of reference eg. alert_grouping_setting_reference"
+                      },
+                      "summary": {
+                        "readOnly": true,
+                        "type": "string",
+                        "description": "an explanation of this reference"
+                      },
+                      "self": {
+                        "readOnly": true,
+                        "type": "string",
+                        "description": "link to api endpoint for this setting"
+                      },
+                      "html_url": {
+                        "readOnly": true,
+                        "type": "string",
+                        "description": "link to the ui page to edit the setting"
+                      }
+                    }
+                  }
+                ]
               },
               "alert_grouping": {
                 "type": "string",
@@ -14289,6 +14328,16 @@
                     "readOnly": true,
                     "type": "integer",
                     "description": "In order to ensure your Service has the optimal grouping window, we use data science to calculate your Service's average Alert inter-arrival time. We encourage customer's to use this value, please set `time_window` to 0 to use the `recommended_time_window`."
+                  },
+                  "iag_fields": {
+                    "type": "array",
+                    "description": "An array of strings which represent the iag fields with which to intelligently group against.",
+                    "default": [
+                      "summary"
+                    ],
+                    "items": {
+                      "type": "string"
+                    }
                   }
                 }
               }
@@ -14317,6 +14366,7 @@
       },
       "AlertGroupingParameters": {
         "type": "object",
+        "title": "Alert Grouping Parameters",
         "deprecated": true,
         "description": "Defines how alerts on this service will be automatically grouped into incidents. Note that the alert grouping features are available only on certain plans. To turn grouping off set the type to null.\nThis attribute has been deprecated and configuration via [Alert Grouping Settings](https://developer.pagerduty.com/api-reference/587edbc8ff416-create-an-alert-grouping-setting) resource is encouraged.\n",
         "properties": {
@@ -14331,7 +14381,7 @@
             ]
           },
           "config": {
-            "anyOf": [
+            "oneOf": [
               {
                 "$ref": "#/components/schemas/FlexibleTimeWindowIntelligentAlertGroupingConfig"
               },
