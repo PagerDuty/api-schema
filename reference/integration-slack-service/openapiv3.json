@@ -12,10 +12,14 @@
   },
   "servers": [
     {
-      "url": "https://app.pagerduty.com/integration-slack"
+      "url": "https://api.pagerduty.com/integration-slack"
     }
   ],
   "tags": [
+    {
+      "name": "Slack Workspaces",
+      "description": "Resource representing a slack workspace which authorized PagerDuty's Slack app"
+    },
     {
       "name": "Slack Connections",
       "description": "Slack Connections are used to create mappings between Slack channels and PagerDuty Services and Teams."
@@ -30,6 +34,59 @@
     }
   ],
   "paths": {
+    "/workspaces": {
+      "get": {
+        "tags": [
+          "Slack Workspaces"
+        ],
+        "summary": "List Slack authorised workspaces",
+        "description": "Returns a list of the authorised workspaces.",
+        "operationId": "getAuthorisedWorkspaces",
+        "responses": {
+          "200": {
+            "description": "A set of Slack Workspaces matching the request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "workspaces": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/SlackWorkspace"
+                      }
+                    }
+                  },
+                  "required": [
+                    "workspaces"
+                  ]
+                },
+                "examples": {
+                  "Response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "workspaces": [
+                        {
+                          "slack_team_id": "T0123456789",
+                          "slack_user_id": "U0123456789",
+                          "slack_team_name": "test_team"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
     "/workspaces/{slack_team_id}/connections": {
       "parameters": [
         {
@@ -39,6 +96,11 @@
       "get": {
         "tags": [
           "Slack Connections"
+        ],
+        "servers": [
+          {
+            "url": "https://app.pagerduty.com/integration-slack"
+          }
         ],
         "summary": "List Slack Connections",
         "description": "Returns a list of Slack Connections.",
@@ -140,6 +202,11 @@
       "post": {
         "tags": [
           "Slack Connections"
+        ],
+        "servers": [
+          {
+            "url": "https://app.pagerduty.com/integration-slack"
+          }
         ],
         "summary": "Create a Slack Connection",
         "description": "Creates a Slack Connection\n\n> ### Important\n>\n>  Make sure that your PagerDuty account is linked to your Slack workspace and your PagerDuty user is linked to your Slack user. You can do this on the Slack extension page in your PagerDuty account.\n",
@@ -281,6 +348,14 @@
         }
       ],
       "get": {
+        "tags": [
+          "Slack Connections"
+        ],
+        "servers": [
+          {
+            "url": "https://app.pagerduty.com/integration-slack"
+          }
+        ],
         "summary": "Get a Slack Connection",
         "operationId": "getConnection",
         "description": "Get details about an existing Slack Connection.",
@@ -291,9 +366,6 @@
           {
             "$ref": "#/components/parameters/connection_id"
           }
-        ],
-        "tags": [
-          "Slack Connections"
         ],
         "responses": {
           "200": {
@@ -365,6 +437,11 @@
       "put": {
         "tags": [
           "Slack Connections"
+        ],
+        "servers": [
+          {
+            "url": "https://app.pagerduty.com/integration-slack"
+          }
         ],
         "summary": "Update a Slack Connection",
         "description": "Update an existing Slack Connection.",
@@ -501,6 +578,11 @@
       "delete": {
         "tags": [
           "Slack Connections"
+        ],
+        "servers": [
+          {
+            "url": "https://app.pagerduty.com/integration-slack"
+          }
         ],
         "summary": "Delete a Slack Connection",
         "description": "Delete an existing Slack Connection.",
@@ -693,6 +775,21 @@
       }
     },
     "schemas": {
+      "SlackWorkspace": {
+        "title": "Slack Workspace",
+        "type": "object",
+        "properties": {
+          "slack_team_id": {
+            "type": "string"
+          },
+          "slack_user_id": {
+            "type": "string"
+          },
+          "slack_team_name": {
+            "type": "string"
+          }
+        }
+      },
       "SlackConnection": {
         "title": "Slack Connection",
         "type": "object",
