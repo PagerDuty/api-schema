@@ -2112,6 +2112,7 @@
         "description": "The type of resource to filter upon.",
         "schema": {
           "enum": [
+            "account",
             "service",
             "team"
           ],
@@ -2122,7 +2123,7 @@
         "name": "filter_id",
         "in": "query",
         "required": false,
-        "description": "The id of the resource to filter upon.",
+        "description": "The id of the resource to filter upon. Required if filter_type is service or team.",
         "schema": {
           "type": "string"
         }

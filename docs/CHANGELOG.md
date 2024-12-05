@@ -4,6 +4,9 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+## 2024-12-05
+- Added support for `filter_type=account` to `/webhook_subscriptions`.
+
 ## 2024-11-25
 - Added support for the `iag_fields` property to `/alert_grouping_settings` when using Intelligent Alert Grouping
 - Updated the Service `alert_grouping_parameters` field to reflect that an Alert Grouping Setting reference will be returned for unsupported alert grouping configuration
