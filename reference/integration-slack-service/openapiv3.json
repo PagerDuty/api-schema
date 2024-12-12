@@ -12,13 +12,21 @@
   },
   "servers": [
     {
-      "url": "https://app.pagerduty.com/integration-slack"
+      "url": "https://api.pagerduty.com/integration-slack"
     }
   ],
   "tags": [
     {
       "name": "Slack Connections",
       "description": "Slack Connections are used to create mappings between Slack channels and PagerDuty Services and Teams."
+    },
+    {
+      "name": "Slack Dedicated Channels",
+      "description": "Incident dedicated channels are created so that everything related to the incident can be handled in one slack channel."
+    },
+    {
+      "name": "Slack Notification Channels",
+      "description": "Incident notification channels are slack channels linked to send non-critical notifications of the incident."
     }
   ],
   "security": [
@@ -30,6 +38,543 @@
     }
   ],
   "paths": {
+    "/incidents/{incident_id}/dedicated_channel": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/incident_id"
+        }
+      ],
+      "get": {
+        "summary": "Get a Slack Dedicated Channel",
+        "operationId": "getDedicatedChannel",
+        "description": "Returns an incident's slack dedicated channel.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/incident_id"
+          }
+        ],
+        "tags": [
+          "Slack Dedicated Channels"
+        ],
+        "responses": {
+          "200": {
+            "description": "The incident slack dedicated channel.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "channel": {
+                      "$ref": "#/components/schemas/SlackChannel"
+                    }
+                  },
+                  "required": [
+                    "channel"
+                  ]
+                },
+                "examples": {
+                  "Response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "channel": {
+                        "id": "C0123456789",
+                        "name": "dedicated",
+                        "slack_team_id": "T0123456789",
+                        "link": "https://slack.com/app_redirect?channel=C0123456789&team=T0123456789",
+                        "deep_link": "slack://channel?team=T0123456789&id=C0123456789"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Slack Dedicated Channels"
+        ],
+        "summary": "Create a Slack Dedicated Channel",
+        "description": "Creates an incident's slack dedicated channel.",
+        "operationId": "createDedicatedChannel",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/incident_id"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "channel": {
+                    "$ref": "#/components/schemas/CreateDedicatedChannelPayload"
+                  }
+                },
+                "required": [
+                  "channel"
+                ]
+              },
+              "examples": {
+                "Request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "channel": {
+                      "name": "dedicated",
+                      "privacy": "public",
+                      "slack_team_id": "T0123456789"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Returns created Slack Dedicated Channel.",
+            "headers": {
+              "Location": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "The path to get the new incident dedicated channel info"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "channel": {
+                      "$ref": "#/components/schemas/SlackChannel"
+                    },
+                    "warnings": {
+                      "type": "array",
+                      "description": "List of unblocking events that can possibly occur durring the channel creation.",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "channel"
+                  ]
+                },
+                "examples": {
+                  "Response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "channel": {
+                        "id": "C0123456789",
+                        "name": "dedicated",
+                        "slack_team_id": "T0123456789",
+                        "link": "https://slack.com/app_redirect?channel=C0123456789&team=T0123456789",
+                        "deep_link": "slack://channel?team=T0123456789&id=C0123456789"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Slack Dedicated Channels"
+        ],
+        "summary": "Remove a Slack Dedicated Channel",
+        "description": "Removes an incident's slack dedicated channel.",
+        "operationId": "removeDedicatedChannel",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/incident_id"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The incident slack dedicated channel was deleted successfully."
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/incidents/{incident_id}/notification_channels": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/incident_id"
+        }
+      ],
+      "get": {
+        "summary": "List Notification Channels",
+        "operationId": "getNotificationChannels",
+        "description": "Returns an incident's list of slack notification channels.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/incident_id"
+          }
+        ],
+        "tags": [
+          "Slack Notification Channels"
+        ],
+        "responses": {
+          "200": {
+            "description": "The incident's list of slack notification channels.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "channels": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/SlackChannel"
+                      }
+                    }
+                  },
+                  "required": [
+                    "channels"
+                  ]
+                },
+                "examples": {
+                  "Response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "channels": [
+                        {
+                          "id": "C0123456789",
+                          "name": "notification1",
+                          "slack_team_id": "T0123456789",
+                          "link": "https://slack.com/app_redirect?channel=C0123456789&team=T0123456789",
+                          "deep_link": "slack://channel?team=T0123456789&id=C0123456789"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Slack Notification Channels"
+        ],
+        "summary": "Create a Slack Notification Channel",
+        "description": "Creates an incident's slack notification channel.",
+        "operationId": "createNotificationChannel",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/incident_id"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "channel": {
+                    "$ref": "#/components/schemas/CreateNotificationChannelPayload"
+                  }
+                },
+                "required": [
+                  "channel"
+                ]
+              },
+              "examples": {
+                "Request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "channel": {
+                      "id": "C0123456789",
+                      "slack_team_id": "T0123456789"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Returns linked Slack Notification Channel.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "channel": {
+                      "$ref": "#/components/schemas/SlackChannel"
+                    },
+                    "warnings": {
+                      "type": "array",
+                      "description": "List of unblocking events that can possibly occur durring the channel linking process.",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "channel"
+                  ]
+                },
+                "examples": {
+                  "Response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "channel": {
+                        "id": "C0123456789",
+                        "name": "notification",
+                        "slack_team_id": "T0123456789",
+                        "link": "https://slack.com/app_redirect?channel=C0123456789&team=T0123456789",
+                        "deep_link": "slack://channel?team=T0123456789&id=C0123456789"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Slack Notification Channels"
+        ],
+        "summary": "Update Slack Notification Channels",
+        "description": "Update an incident's slack notification channels.",
+        "operationId": "updateNotificationChannel",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/incident_id"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "channels": {
+                    "$ref": "#/components/schemas/UpdateNotificationChannelPayload"
+                  }
+                },
+                "required": [
+                  "channels"
+                ]
+              },
+              "examples": {
+                "Request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "channels": [
+                      {
+                        "id": "C0123456789",
+                        "slack_team_id": "T0123456789"
+                      },
+                      {
+                        "id": "C0987654321",
+                        "slack_team_id": "T0987654321"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns the new list of Slack Notification Channel.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "channels": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/SlackChannel"
+                      }
+                    },
+                    "warnings": {
+                      "type": "array",
+                      "description": "List of failed operations, when the success is only partial.",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "channels"
+                  ]
+                },
+                "examples": {
+                  "Response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "channels": [
+                        {
+                          "id": "C0123456789",
+                          "name": "notification1",
+                          "slack_team_id": "T0123456789",
+                          "link": "https://slack.com/app_redirect?channel=C0123456789&team=T0123456789",
+                          "deep_link": "slack://channel?team=T0123456789&id=C0123456789"
+                        },
+                        {
+                          "id": "C0987654321",
+                          "name": "notification2",
+                          "slack_team_id": "T0987654321",
+                          "link": "https://slack.com/app_redirect?channel=C0987654321&team=T0987654321",
+                          "deep_link": "slack://channel?team=T0987654321&id=C0987654321"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/incidents/{incident_id}/notification_channels/{channel_id}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/incident_id"
+        },
+        {
+          "$ref": "#/components/parameters/channel_id"
+        }
+      ],
+      "delete": {
+        "tags": [
+          "Slack Notification Channels"
+        ],
+        "summary": "Remove a Slack Notification Channel",
+        "description": "Unlinks an incident's slack notification channel.",
+        "operationId": "removeNotificationChannel",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/incident_id"
+          },
+          {
+            "$ref": "#/components/parameters/channel_id"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The incident slack notification channel was unlinked successfully."
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
     "/workspaces/{slack_team_id}/connections": {
       "parameters": [
         {
@@ -39,6 +584,11 @@
       "get": {
         "tags": [
           "Slack Connections"
+        ],
+        "servers": [
+          {
+            "url": "https://app.pagerduty.com/integration-slack"
+          }
         ],
         "summary": "List Slack Connections",
         "description": "Returns a list of Slack Connections.",
@@ -140,6 +690,11 @@
       "post": {
         "tags": [
           "Slack Connections"
+        ],
+        "servers": [
+          {
+            "url": "https://app.pagerduty.com/integration-slack"
+          }
         ],
         "summary": "Create a Slack Connection",
         "description": "Creates a Slack Connection\n\n> ### Important\n>\n>  Make sure that your PagerDuty account is linked to your Slack workspace and your PagerDuty user is linked to your Slack user. You can do this on the Slack extension page in your PagerDuty account.\n",
@@ -257,7 +812,43 @@
             }
           },
           "400": {
-            "$ref": "#/components/responses/BadRequest"
+            "description": "Caller provided invalid arguments. Please review the response for error details. Retrying with the same arguments will *not* work.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "ValidationError": {
+                    "summary": "Validation Error",
+                    "value": {
+                      "error": {
+                        "errors": [
+                          "Name can't be blank"
+                        ],
+                        "message": "Invalid Input Provided"
+                      }
+                    }
+                  },
+                  "InvalidInputProvided": {
+                    "summary": "Invalid channel_id provided",
+                    "value": {
+                      "error": {
+                        "message": "Unable to update a Slack Connection: Slack channel name fetch failed"
+                      }
+                    }
+                  },
+                  "MalformedJson": {
+                    "summary": "Malformed JSON",
+                    "value": {
+                      "error": {
+                        "message": "Malformed JSON"
+                      }
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "$ref": "#/components/responses/Unauthorized"
@@ -294,6 +885,11 @@
         ],
         "tags": [
           "Slack Connections"
+        ],
+        "servers": [
+          {
+            "url": "https://app.pagerduty.com/integration-slack"
+          }
         ],
         "responses": {
           "200": {
@@ -365,6 +961,11 @@
       "put": {
         "tags": [
           "Slack Connections"
+        ],
+        "servers": [
+          {
+            "url": "https://app.pagerduty.com/integration-slack"
+          }
         ],
         "summary": "Update a Slack Connection",
         "description": "Update an existing Slack Connection.",
@@ -502,6 +1103,11 @@
         "tags": [
           "Slack Connections"
         ],
+        "servers": [
+          {
+            "url": "https://app.pagerduty.com/integration-slack"
+          }
+        ],
         "summary": "Delete a Slack Connection",
         "description": "Delete an existing Slack Connection.",
         "operationId": "deleteConnection",
@@ -585,7 +1191,7 @@
   "components": {
     "responses": {
       "BadRequest": {
-        "description": "Caller provided invalid arguments. Please review the response for error details. Retrying with the same arguments will *not* work.",
+        "description": "Caller provided invalid arguments. Retrying with the same arguments will *not* work.",
         "content": {
           "application/json": {
             "schema": {
@@ -593,29 +1199,10 @@
             },
             "examples": {
               "InvalidInputProvided": {
-                "summary": "Invalid channel_id provided",
+                "summary": "Invalid payload provided",
                 "value": {
                   "error": {
-                    "message": "Unable to update a Slack Connection: Slack channel name fetch failed"
-                  }
-                }
-              },
-              "ValidationError": {
-                "summary": "Validation Error",
-                "value": {
-                  "error": {
-                    "errors": [
-                      "Name can't be blank"
-                    ],
-                    "message": "Invalid Input Provided"
-                  }
-                }
-              },
-              "MalformedJson": {
-                "summary": "Malformed JSON",
-                "value": {
-                  "error": {
-                    "message": "Malformed JSON"
+                    "message": "The payload is invalid."
                   }
                 }
               }
@@ -690,9 +1277,116 @@
             }
           }
         }
+      },
+      "UnprocessableEntity": {
+        "description": "The request could not be performed successfully, because some validations failed.\n",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "examples": {
+              "AuthorizationError": {
+                "summary": "UnprocessableEntity",
+                "value": {
+                  "error": {
+                    "message": "UnprocessableEntity"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "InternalServerError": {
+        "description": "Request resulted in internal server error.\n",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "examples": {
+              "InternalServerError": {
+                "summary": "Internal Server Error",
+                "value": {
+                  "error": {
+                    "message": "Internal Server Error"
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
     "schemas": {
+      "SlackChannel": {
+        "title": "Slack Channel",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "slack_team_id": {
+            "type": "string"
+          },
+          "link": {
+            "type": "string"
+          },
+          "deep_link": {
+            "type": "string"
+          }
+        }
+      },
+      "CreateDedicatedChannelPayload": {
+        "title": "Create Dedicated Channel Payload",
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "slack_team_id": {
+            "type": "string"
+          },
+          "privacy": {
+            "type": "string",
+            "enum": [
+              "private",
+              "public"
+            ]
+          }
+        }
+      },
+      "CreateNotificationChannelPayload": {
+        "title": "Create Notification Channel Payload",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "slack_team_id": {
+            "type": "string"
+          }
+        }
+      },
+      "UpdateNotificationChannelPayload": {
+        "title": "Update Notification Channel Payload",
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "slack_team_id": {
+              "type": "string"
+            }
+          }
+        }
+      },
       "SlackConnection": {
         "title": "Slack Connection",
         "type": "object",
@@ -875,6 +1569,24 @@
       }
     },
     "parameters": {
+      "incident_id": {
+        "name": "incident_id",
+        "description": "PagerDuty Incident ID.",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "channel_id": {
+        "name": "channel_id",
+        "description": "Slack Channel ID.",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
       "connection_id": {
         "name": "connection_id",
         "description": "Slack connection id",

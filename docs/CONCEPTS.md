@@ -310,3 +310,11 @@ A Webhook Subscription indicates an interest in a set of [outbound events](https
 Each Webhook Subscription is also associated with a delivery method that specifies how the subscribed events should be delivered.  At this time, the only supported type of delivery method is HTTP which delivers the events as an HTTP POST (webhook).
 
 [*Read more about Webhook Subscriptions in the Webhooks v3 Developer Documentation*](https://developer.pagerduty.com/docs/webhooks/v3-overview/)
+
+## Dedicated Channels
+
+A dedicated channel is a slack channel associated with one and only one incident (1:1 relation), so that every update related to that incident is posted to that channel, making the complete management of the incident possible in one place.
+
+## Notification Channels
+
+Incidents can be linked to more than 1 notification Slack channel. A notification Slack channel can be linked to more than 1 incident. This makes keeping up to date with different incidents easier.

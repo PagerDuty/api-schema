@@ -4,6 +4,17 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+## 2024-12-12
+- Add incident dedicated channel endpoints for slack integration API
+  - GET /integration-slack/incidents/{incident_id}/dedicated_channel
+  - POST /integration-slack/incidents/{incident_id}/dedicated_channel
+  - DELETE /integration-slack/incidents/{incident_id}/dedicated_channel
+- Add incident notification channels endpoints for slack integration API
+  - GET /integration-slack/incidents/{incident_id}/notification_channels
+  - POST /integration-slack/incidents/{incident_id}/notification_channels
+  - PUT /integration-slack/incidents/{incident_id}/notification_channels
+  - DELETE /integration-slack/incidents/{incident_id}/notification_channels/{channel_id}
+
 ## 2024-12-05
 - Added support for `filter_type=account` to `/webhook_subscriptions`.
 
