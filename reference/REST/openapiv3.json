@@ -28526,9 +28526,9 @@
                                     "id": "PN1C4A2",
                                     "value": "{{event.timestamp}}"
                                   }
-                                ]
-                              },
-                              "route_to": "step-two"
+                                ],
+                                "route_to": "step-two"
+                              }
                             }
                           ]
                         },
@@ -29495,9 +29495,9 @@
                                     "id": "PN1C4A2",
                                     "value": "{{event.timestamp}}"
                                   }
-                                ]
-                              },
-                              "route_to": "step-two"
+                                ],
+                                "route_to": "step-two"
+                              }
                             }
                           ]
                         },
