@@ -4,6 +4,10 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+## 2024-12-20
+- Fix position of the `route_to` attribute in the request & response examples on the `PUT /event_orchestrations/{id}/global` and `PUT /event_orchestrations/services/{service_id}` documentation.
+
+
 ## 2024-12-12
 - Add incident dedicated channel endpoints for slack integration API
   - GET /integration-slack/incidents/{incident_id}/dedicated_channel
