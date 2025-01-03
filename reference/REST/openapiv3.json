@@ -33231,6 +33231,14 @@
                         "escalation_policy": {
                           "$ref": "#/components/schemas/EscalationPolicyReference"
                         },
+                        "urgency": {
+                          "type": "string",
+                          "description": "The urgency of the incident.",
+                          "enum": [
+                            "high",
+                            "low"
+                          ]
+                        },
                         "conference_bridge": {
                           "$ref": "#/components/schemas/ConferenceBridge"
                         }
