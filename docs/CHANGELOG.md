@@ -4,6 +4,10 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+## 2025-01-07
+- Added `recommended_timeout` field to `auto_pause_notifications_parameters` on all Service endpoints
+- Added support for auto-selecting the `recommended_timeout` value when updating a Service with an `auto_pause_notifications_parameters.timeout` of `0`
+
 ## 2025-01-03
 - POST /incidents was missing `urgency` as a valid body parameter.
 
