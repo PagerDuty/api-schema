@@ -6508,13 +6508,25 @@
           "timeout": {
             "type": "integer",
             "enum": [
+              0,
               120,
               180,
               300,
               600,
               900
             ],
-            "description": "Indicates in seconds how long alerts should be suspended before triggering"
+            "description": "Indicates in seconds how long alerts should be suspended before triggering. To automatically select the recommended timeout for a service, set this value to `0`."
+          },
+          "recommended_timeout": {
+            "type": "integer",
+            "enum": [
+              120,
+              180,
+              300,
+              600,
+              900
+            ],
+            "description": "The recommended timeout setting for this service based on prior alert patterns."
           }
         },
         "example": {
