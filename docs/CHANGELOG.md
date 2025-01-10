@@ -4,6 +4,14 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+## 2025-01-10
+- Introduced a new Early Access body attribute `service` to `PUT /incidents/:id` endpoint
+
+## 2025-01-09
+- Added support for filtering incidents by `incident_type_ids` in the API.
+- Updated the request parameters to include `incident_type_ids` under the `filters` object in the `GET /incidents` endpoint.
+- Added examples for the `incident_type_ids` parameter in the API documentation.
+
 ## 2025-01-07
 - Added `recommended_timeout` field to `auto_pause_notifications_parameters` on all Service endpoints
 - Added support for auto-selecting the `recommended_timeout` value when updating a Service with an `auto_pause_notifications_parameters.timeout` of `0`

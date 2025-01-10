@@ -21502,6 +21502,17 @@
                           "P2",
                           "P3"
                         ]
+                      },
+                      "incident_type_ids": {
+                        "type": "array",
+                        "description": "Filter incidents by specific incident type IDs. Only incidents matching the given IDs will be returned.",
+                        "items": {
+                          "type": "string"
+                        },
+                        "example": [
+                          "PIJ90N7",
+                          "PKL73Z2"
+                        ]
                       }
                     }
                   },
@@ -21565,6 +21576,10 @@
                       "priority_names": [
                         "P1",
                         "P2"
+                      ],
+                      "incident_type_ids": [
+                        "PIJ90N7",
+                        "PKL73Z2"
                       ]
                     },
                     "limit": 20,
@@ -22139,6 +22154,17 @@
                           "P2",
                           "P3"
                         ]
+                      },
+                      "incident_type_ids": {
+                        "type": "array",
+                        "description": "Filter incidents by specific incident type IDs. Only incidents matching the given IDs will be returned.",
+                        "items": {
+                          "type": "string"
+                        },
+                        "example": [
+                          "PIJ90N7",
+                          "PKL73Z2"
+                        ]
                       }
                     }
                   },
@@ -22186,7 +22212,11 @@
                   "value": {
                     "filters": {
                       "created_at_start": "2023-06-10T00:00:00-07:00",
-                      "created_at_end": "2023-06-11T23:59:59-07:00"
+                      "created_at_end": "2023-06-11T23:59:59-07:00",
+                      "incident_type_ids": [
+                        "PIJ90N7",
+                        "PKL73Z2"
+                      ]
                     },
                     "responder_id": "PDUSER1",
                     "limit": 100,
@@ -34083,6 +34113,15 @@
                       },
                       "conference_bridge": {
                         "$ref": "#/components/schemas/ConferenceBridge"
+                      },
+                      "service": {
+                        "type": "object",
+                        "description": "[Early Access] Assign the incident to this service.",
+                        "allOf": [
+                          {
+                            "$ref": "#/components/schemas/ServiceReference"
+                          }
+                        ]
                       }
                     },
                     "required": [
