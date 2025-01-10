@@ -34113,6 +34113,15 @@
                       },
                       "conference_bridge": {
                         "$ref": "#/components/schemas/ConferenceBridge"
+                      },
+                      "service": {
+                        "type": "object",
+                        "description": "[Early Access] Assign the incident to this service.",
+                        "allOf": [
+                          {
+                            "$ref": "#/components/schemas/ServiceReference"
+                          }
+                        ]
                       }
                     },
                     "required": [

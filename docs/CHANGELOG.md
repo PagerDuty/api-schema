@@ -4,6 +4,9 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently we rarely deprecate, and do not remove any API functionality.
 
+## 2025-01-10
+- Introduced a new Early Access body attribute `service` to `PUT /incidents/:id` endpoint
+
 ## 2025-01-09
 - Added support for filtering incidents by `incident_type_ids` in the API.
 - Updated the request parameters to include `incident_type_ids` under the `filters` object in the `GET /incidents` endpoint.
