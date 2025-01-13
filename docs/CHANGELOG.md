@@ -2,7 +2,10 @@
 
 PagerDuty aims to have no breaking changes to our API, we do fix bugs and add new functionality continuously. This document serves as a reference for any bug fixes or additions to our API.
 
-Currently we rarely deprecate, and do not remove any API functionality.
+Currently, we rarely deprecate, and do not remove any API functionality.
+
+## 2025-01-13
+- Released incident types endpoints to General Access (removing need for X-Early-Access header)
 
 ## 2025-01-10
 - Introduced a new Early Access body attribute `service` to `PUT /incidents/:id` endpoint
