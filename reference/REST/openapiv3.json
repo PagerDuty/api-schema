@@ -10127,6 +10127,13 @@
             "nullable": true,
             "readOnly": true,
             "description": "A short-form, server-generated string that provides succinct, important information about an object suitable for primary labeling of an entity in a client. In many cases, this will be identical to `name`, though it is not intended to be an identifier."
+          },
+          "field_options": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CustomFieldsEditableFieldOption"
+            },
+            "description": "The options for the custom field."
           }
         },
         "required": [
@@ -10141,7 +10148,8 @@
           "data_type",
           "field_type",
           "enabled",
-          "incident_type"
+          "incident_type",
+          "field_options"
         ]
       },
       "IncidentTypeCustomFieldWithOptions": {
@@ -38027,7 +38035,7 @@
           "Incident Types"
         ],
         "operationId": "updateIncidentTypeCustomField",
-        "description": "Update a custom field for an incident type.\n\nCustom Fields (CF) are a feature which will allow customers to extend Incidents with their own custom data,\nto provide additional context and support features such as customized filtering, search and analytics.\nCustom Fields can be applied to different incident types.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nScoped OAuth requires: `custom_fields.write`\n",
+        "description": "Update a custom field for an incident type. Field Options can also be updated within the same call.\n\nCustom Fields (CF) are a feature which will allow customers to extend Incidents with their own custom data,\nto provide additional context and support features such as customized filtering, search and analytics.\nCustom Fields can be applied to different incident types.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nScoped OAuth requires: `custom_fields.write`\n",
         "summary": "Update a Custom Field for an Incident Type",
         "parameters": [
           {
@@ -38070,6 +38078,12 @@
                         "type": "string",
                         "description": "The description of the custom field.",
                         "maxLength": 1000
+                      },
+                      "field_options": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/components/schemas/CustomFieldsFieldOption"
+                        }
                       }
                     }
                   }
@@ -38093,7 +38107,7 @@
         },
         "responses": {
           "200": {
-            "description": "The custom field object created.",
+            "description": "The updated custom field object.",
             "content": {
               "application/json": {
                 "schema": {
