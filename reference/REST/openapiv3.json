@@ -16647,7 +16647,8 @@
             "type": "string",
             "enum": [
               "field_option"
-            ]
+            ],
+            "readOnly": true
           },
           "updated_at": {
             "type": "string",
@@ -35032,7 +35033,7 @@
                   ]
                 },
                 "examples": {
-                  "response1": {
+                  "single_value_example": {
                     "summary": "Response Example",
                     "value": {
                       "custom_fields": [
@@ -35049,7 +35050,7 @@
                       ]
                     }
                   },
-                  "response2": {
+                  "multi_value_example": {
                     "summary": "Response Example",
                     "value": {
                       "custom_fields": [
@@ -35116,7 +35117,7 @@
                 ]
               },
               "examples": {
-                "request1": {
+                "example_with_custom_field_name": {
                   "summary": "Request Example",
                   "value": {
                     "custom_fields": [
@@ -35127,7 +35128,7 @@
                     ]
                   }
                 },
-                "request2": {
+                "example_with_custom_field_id": {
                   "summary": "Request Example",
                   "value": {
                     "custom_fields": [
@@ -35138,7 +35139,7 @@
                     ]
                   }
                 },
-                "request3": {
+                "example_with_multiple_value_field": {
                   "summary": "Request Example",
                   "value": {
                     "custom_fields": [
@@ -35176,7 +35177,7 @@
                   ]
                 },
                 "examples": {
-                  "response1": {
+                  "single_value_example": {
                     "summary": "Response Example",
                     "value": {
                       "custom_fields": [
@@ -35193,7 +35194,7 @@
                       ]
                     }
                   },
-                  "response2": {
+                  "multi_value_example": {
                     "summary": "Response Example",
                     "value": {
                       "custom_fields": [
@@ -37138,7 +37139,7 @@
           "Incident Types"
         ],
         "operationId": "listIncidentTypes",
-        "description": "List the available incident types\n\nIncident Types are a feature which will allow customers to categorize incidents, such as a security incident, a major incident, or a fraud incident.\nThese can be filtered by enabled or disabled types.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidentType)\n\nScoped OAuth requires: `incident_types.read`\n",
+        "description": "List the available incident types\n\nIncident Types are a feature which will allow customers to categorize incidents, such as a security incident, a major incident, or a fraud incident.\nThese can be filtered by enabled or disabled types.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidentType)\n\nScoped OAuth requires: `incident_types.read`\n",
         "summary": "List incident types",
         "parameters": [
           {
@@ -37237,7 +37238,7 @@
           "Incident Types"
         ],
         "operationId": "createIncidentType",
-        "description": "Create a new incident type.\n\nIncident Types are a feature which will allow customers to categorize incidents, such as a security incident, a major incident, or a fraud incident.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidentType)\n\nScoped OAuth requires: `incident_types.write`\n",
+        "description": "Create a new incident type.\n\nIncident Types are a feature which will allow customers to categorize incidents, such as a security incident, a major incident, or a fraud incident.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidentType)\n\nScoped OAuth requires: `incident_types.write`\n",
         "summary": "Create an Incident Type",
         "parameters": [
           {
@@ -37373,7 +37374,7 @@
           "Incident Types"
         ],
         "operationId": "getIncidentType",
-        "description": "Get detailed information about a single incident type. Accepts either an incident type id, or an incident type name.\n\nIncident Types are a feature which will allow customers to categorize incidents, such as a security incident, a major incident, or a fraud incident.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incident)\n\nScoped OAuth requires: `incident_types.read`\n",
+        "description": "Get detailed information about a single incident type. Accepts either an incident type id, or an incident type name.\n\nIncident Types are a feature which will allow customers to categorize incidents, such as a security incident, a major incident, or a fraud incident.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incident)\n\nScoped OAuth requires: `incident_types.read`\n",
         "summary": "Get an Incident Type",
         "parameters": [
           {
@@ -37452,7 +37453,7 @@
           "Incident Types"
         ],
         "operationId": "updateIncidentType",
-        "description": "Update an Incident Type.\n\nIncident Types are a feature which will allow customers to categorize incidents, such as a security incident, a major incident, or a fraud incident.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incident)\n\nScoped OAuth requires: `incident_types.write`\n",
+        "description": "Update an Incident Type.\n\nIncident Types are a feature which will allow customers to categorize incidents, such as a security incident, a major incident, or a fraud incident.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incident)\n\nScoped OAuth requires: `incident_types.write`\n",
         "summary": "Update an Incident Type",
         "parameters": [
           {
@@ -37575,7 +37576,7 @@
           "Incident Types"
         ],
         "operationId": "listIncidentTypeCustomFields",
-        "description": "List the custom fields for an incident type.\n\nCustom Fields (CF) are a feature which will allow customers to extend Incidents with their own custom data,\nto provide additional context and support features such as customized filtering, search and analytics.\nCustom Fields can be applied to different incident types.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nScoped OAuth requires: `custom_fields.read`\n",
+        "description": "List the custom fields for an incident type.\n\nCustom Fields (CF) are a feature which will allow customers to extend Incidents with their own custom data,\nto provide additional context and support features such as customized filtering, search and analytics.\nCustom Fields can be applied to different incident types.\n\nScoped OAuth requires: `custom_fields.read`\n",
         "summary": "List Incident Type Custom Fields",
         "parameters": [
           {
@@ -37611,7 +37612,7 @@
                   ]
                 },
                 "examples": {
-                  "response1": {
+                  "simple_example": {
                     "summary": "Response Example - No query parameters",
                     "value": {
                       "fields": [
@@ -37650,7 +37651,7 @@
                       ]
                     }
                   },
-                  "response2": {
+                  "example_with_field_options": {
                     "summary": "Response Example - Include field options",
                     "value": {
                       "fields": [
@@ -37741,7 +37742,7 @@
           "Incident Types"
         ],
         "operationId": "createIncidentTypeCustomField",
-        "description": "Create a Custom Field for an Incident Type.\n\nCustom Fields (CF) are a feature which will allow customers to extend Incidents with their own custom data,\nto provide additional context and support features such as customized filtering, search and analytics.\nCustom Fields can be applied to different incident types.\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nScoped OAuth requires: `custom_fields.write`\n",
+        "description": "Create a Custom Field for an Incident Type.\n\nCustom Fields (CF) are a feature which will allow customers to extend Incidents with their own custom data,\nto provide additional context and support features such as customized filtering, search and analytics.\nCustom Fields can be applied to different incident types.\n\nScoped OAuth requires: `custom_fields.write`\n",
         "summary": "Create a Custom Field for an Incident Type.",
         "parameters": [
           {
@@ -37806,7 +37807,7 @@
                         "items": {
                           "$ref": "#/components/schemas/CustomFieldsFieldOption"
                         },
-                        "description": "The options for the custom field. Can only be applied to fields with a type of multi_value or multi_value_fixed."
+                        "description": "The options for the custom field. Can only be applied to fields with a `field_type` of `single_value_fixed` or `multi_value_fixed`. When creating a fixed-value custom field, this property is required, as the field must be created with at least one field option."
                       }
                     },
                     "required": [
@@ -37822,7 +37823,7 @@
                 ]
               },
               "examples": {
-                "request": {
+                "simple_example": {
                   "summary": "Request Example",
                   "value": {
                     "field": {
@@ -37830,6 +37831,32 @@
                       "display_name": "Custom Field 1",
                       "data_type": "string",
                       "field_type": "single_value"
+                    }
+                  }
+                },
+                "example_with_fixed_value_field": {
+                  "summary": "Example with Fixed Value Field",
+                  "value": {
+                    "field": {
+                      "name": "development_environment",
+                      "display_name": "Development Environment",
+                      "description": "The environment that the issue occurred in",
+                      "data_type": "string",
+                      "field_type": "single_value_fixed",
+                      "field_options": [
+                        {
+                          "data": {
+                            "data_type": "string",
+                            "value": "staging"
+                          }
+                        },
+                        {
+                          "data": {
+                            "data_type": "string",
+                            "value": "production"
+                          }
+                        }
+                      ]
                     }
                   }
                 }
@@ -37854,7 +37881,7 @@
                   ]
                 },
                 "examples": {
-                  "response": {
+                  "simple_example": {
                     "summary": "Response Example",
                     "value": {
                       "field": {
@@ -37863,7 +37890,7 @@
                         "name": "custom_field_1",
                         "type": "field",
                         "self": "https://api.pagerduty.com/incidents/types/P5678/custom_fields/P1234",
-                        "description": "The environment that the issue occurred in",
+                        "description": null,
                         "field_type": "single_value",
                         "data_type": "string",
                         "updated_at": "2021-06-01T21:30:42Z",
@@ -37871,7 +37898,50 @@
                         "display_name": "Custom Field 1",
                         "default_value": null,
                         "incident_type": "P5678",
-                        "summary": "environment"
+                        "summary": "custom_field_1"
+                      }
+                    }
+                  },
+                  "fixed_value_example": {
+                    "summary": "Example for Fixed-Value Field",
+                    "value": {
+                      "field": {
+                        "enabled": true,
+                        "id": "P4567",
+                        "name": "development_environment",
+                        "type": "field",
+                        "self": "https://api.pagerduty.com/incidents/types/P5678/custom_fields/P4567",
+                        "description": "The environment that the issue occurred in",
+                        "field_type": "single_value_fixed",
+                        "data_type": "string",
+                        "updated_at": "2021-06-01T21:30:43Z",
+                        "created_at": "2021-06-01T21:30:43Z",
+                        "display_name": "Development Environment",
+                        "default_value": null,
+                        "incident_type": "P5678",
+                        "summary": "development_environment",
+                        "field_options": [
+                          {
+                            "id": "PT4KHEE",
+                            "type": "field_option",
+                            "data": {
+                              "data_type": "string",
+                              "value": "staging"
+                            },
+                            "created_at": "2021-06-01T21:30:43Z",
+                            "updated_at": "2021-06-01T21:30:43Z"
+                          },
+                          {
+                            "id": "P5IYCNZ",
+                            "type": "field_option",
+                            "data": {
+                              "data_type": "string",
+                              "value": "production"
+                            },
+                            "created_at": "2021-06-01T21:30:42Z",
+                            "updated_at": "2021-06-01T21:30:42Z"
+                          }
+                        ]
                       }
                     }
                   }
@@ -37905,7 +37975,7 @@
           "Incident Types"
         ],
         "operationId": "getIncidentTypeCustomField",
-        "description": "Get a custom field for an incident type.\n\nCustom Fields (CF) are a feature which will allow customers to extend Incidents with their own custom data,\nto provide additional context and support features such as customized filtering, search and analytics.\nCustom Fields can be applied to different incident types.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nScoped OAuth requires: `custom_fields.read`\n",
+        "description": "Get a custom field for an incident type.\n\nCustom Fields (CF) are a feature which will allow customers to extend Incidents with their own custom data,\nto provide additional context and support features such as customized filtering, search and analytics.\nCustom Fields can be applied to different incident types.\n\nScoped OAuth requires: `custom_fields.read`\n",
         "summary": "Get an Incident Type Custom Field",
         "parameters": [
           {
@@ -37941,7 +38011,7 @@
                   ]
                 },
                 "examples": {
-                  "response1": {
+                  "simple_example": {
                     "summary": "Response Example - No query parameter",
                     "value": {
                       "field": {
@@ -37962,7 +38032,7 @@
                       }
                     }
                   },
-                  "response2": {
+                  "example_with_field_options": {
                     "summary": "Response Example - Include field options",
                     "value": {
                       "field": {
@@ -38035,7 +38105,7 @@
           "Incident Types"
         ],
         "operationId": "updateIncidentTypeCustomField",
-        "description": "Update a custom field for an incident type. Field Options can also be updated within the same call.\n\nCustom Fields (CF) are a feature which will allow customers to extend Incidents with their own custom data,\nto provide additional context and support features such as customized filtering, search and analytics.\nCustom Fields can be applied to different incident types.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nScoped OAuth requires: `custom_fields.write`\n",
+        "description": "Update a custom field for an incident type. Field Options can also be updated within the same call.\n\nCustom Fields (CF) are a feature which will allow customers to extend Incidents with their own custom data,\nto provide additional context and support features such as customized filtering, search and analytics.\nCustom Fields can be applied to different incident types.\n\nScoped OAuth requires: `custom_fields.write`\n",
         "summary": "Update a Custom Field for an Incident Type",
         "parameters": [
           {
@@ -38083,7 +38153,8 @@
                         "type": "array",
                         "items": {
                           "$ref": "#/components/schemas/CustomFieldsFieldOption"
-                        }
+                        },
+                        "description": "List of options to upsert on the custom field. Can only be applied to fields with a `field_type` of `single_value_fixed` or `multi_value_fixed`. When an `id` property is included, this will update the value of the specified field option. Without an `id` property, that field option will be added to the field. Any existing field options not included in the upsert list will be deleted (unless the current default value refers to a field option to be deleted)."
                       }
                     }
                   }
@@ -38093,11 +38164,34 @@
                 ]
               },
               "examples": {
-                "request": {
+                "basic_example": {
                   "summary": "Request Example",
                   "value": {
                     "field": {
                       "display_name": "Custom Field 1"
+                    }
+                  }
+                },
+                "example_with_field_options_upsert": {
+                  "summary": "Example Updating a Field Option Together With Field Metadata",
+                  "value": {
+                    "field": {
+                      "display_name": "Single Select Field Updated",
+                      "field_options": [
+                        {
+                          "data": {
+                            "data_type": "string",
+                            "value": "Updated value for an existing field option"
+                          },
+                          "id": "PQ9K7I8"
+                        },
+                        {
+                          "data": {
+                            "data_type": "string",
+                            "value": "Upserting a brand new field option, by not providing an id property"
+                          }
+                        }
+                      ]
                     }
                   }
                 }
@@ -38114,7 +38208,7 @@
                   "type": "object",
                   "properties": {
                     "field": {
-                      "$ref": "#/components/schemas/IncidentTypeCustomFields"
+                      "$ref": "#/components/schemas/IncidentTypeCustomFieldWithOptions"
                     }
                   },
                   "required": [
@@ -38139,7 +38233,29 @@
                         "display_name": "Custom Field 1",
                         "default_value": null,
                         "incident_type": "P5678",
-                        "summary": "environment"
+                        "summary": "environment",
+                        "field_options": [
+                          {
+                            "id": "PT4KHEE",
+                            "type": "field_option",
+                            "data": {
+                              "data_type": "string",
+                              "value": "production"
+                            },
+                            "created_at": "2021-06-01T21:30:42Z",
+                            "updated_at": "2021-06-01T21:30:42Z"
+                          },
+                          {
+                            "id": "P5IYCNZ",
+                            "type": "field_option",
+                            "data": {
+                              "data_type": "string",
+                              "value": "staging"
+                            },
+                            "created_at": "2021-06-01T21:30:42Z",
+                            "updated_at": "2021-06-01T21:30:42Z"
+                          }
+                        ]
                       }
                     }
                   }
@@ -38170,7 +38286,7 @@
           "Incident Types"
         ],
         "operationId": "deleteIncidentTypeCustomField",
-        "description": "Delete a custom field for an incident type.\n\nCustom Fields (CF) are a feature which will allow customers to extend Incidents with their own custom data,\nto provide additional context and support features such as customized filtering, search and analytics.\nCustom Fields can be applied to different incident types.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nScoped OAuth requires: `custom_fields.write`\n",
+        "description": "Delete a custom field for an incident type.\n\nCustom Fields (CF) are a feature which will allow customers to extend Incidents with their own custom data,\nto provide additional context and support features such as customized filtering, search and analytics.\nCustom Fields can be applied to different incident types.\n\nScoped OAuth requires: `custom_fields.write`\n",
         "summary": "Delete a Custom Field for an Incident Type",
         "parameters": [
           {
@@ -38216,7 +38332,7 @@
           "Incident Types"
         ],
         "operationId": "listIncidentTypeCustomField",
-        "description": "List field options for a custom field.\n\nCustom Fields (CF) are a feature which will allow customers to extend Incidents with their own custom data,\nto provide additional context and support features such as customized filtering, search and analytics.\nCustom Fields can be applied to different incident types.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nScoped OAuth requires: `custom_fields.read`\n",
+        "description": "List field options for a custom field.\n\nCustom Fields (CF) are a feature which will allow customers to extend Incidents with their own custom data,\nto provide additional context and support features such as customized filtering, search and analytics.\nCustom Fields can be applied to different incident types.\n\nScoped OAuth requires: `custom_fields.read`\n",
         "summary": "List Field Options on a Custom Field",
         "parameters": [
           {
@@ -38303,7 +38419,7 @@
           "Incident Types"
         ],
         "operationId": "createIncidentTypeCustomFieldFieldOptions",
-        "description": "Create a field option for a custom field.\n\nCustom Fields (CF) are a feature which will allow customers to extend Incidents with their own custom data,\nto provide additional context and support features such as customized filtering, search and analytics.\nCustom Fields can be applied to different incident types.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nScoped OAuth requires: `custom_fields.write`\n",
+        "description": "Create a field option for a custom field.\n\nCustom Fields (CF) are a feature which will allow customers to extend Incidents with their own custom data,\nto provide additional context and support features such as customized filtering, search and analytics.\nCustom Fields can be applied to different incident types.\n\nScoped OAuth requires: `custom_fields.write`\n",
         "summary": "Create a Field Option for a Custom Field",
         "parameters": [
           {
@@ -38434,7 +38550,7 @@
           "Incident Types"
         ],
         "operationId": "getIncidentTypeCustomFieldFieldOptions",
-        "description": "Get a field option on a custom field\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nScoped OAuth requires: `custom_fields.read`\n",
+        "description": "Get a field option on a custom field\n\nCustom Fields (CF) are a feature which will allow customers to extend Incidents with their own custom data,\nto provide additional context and support features such as customized filtering, search and analytics.\nCustom Fields can be applied to different incident types.\n\nScoped OAuth requires: `custom_fields.read`\n",
         "summary": "Get a Field Option on a Custom Field",
         "parameters": [
           {
@@ -38509,7 +38625,7 @@
           "Incident Types"
         ],
         "operationId": "updateIncidentTypeCustomFieldFieldOption",
-        "description": "Update a field option for a custom field.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nScoped OAuth requires: `custom_fields.write`\n",
+        "description": "Update a field option for a custom field.\n\nCustom Fields (CF) are a feature which will allow customers to extend Incidents with their own custom data,\nto provide additional context and support features such as customized filtering, search and analytics.\nCustom Fields can be applied to different incident types.\n\nScoped OAuth requires: `custom_fields.write`\n",
         "summary": "Update a Field Option for a Custom Field",
         "parameters": [
           {
@@ -38640,7 +38756,7 @@
           "Incident Types"
         ],
         "operationId": "deleteIncidentTypeCustomFieldFieldOption",
-        "description": "Delete a field option for a custom field.\n\n<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header to access it.\n\nScoped OAuth requires: `custom_fields.write`\n",
+        "description": "Delete a field option for a custom field.\n\nCustom Fields (CF) are a feature which will allow customers to extend Incidents with their own custom data,\nto provide additional context and support features such as customized filtering, search and analytics.\nCustom Fields can be applied to different incident types.\n\nScoped OAuth requires: `custom_fields.write`\n",
         "summary": "Delete a Field Option for a Custom Field",
         "parameters": [
           {
