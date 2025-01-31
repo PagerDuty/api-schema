@@ -12475,6 +12475,11 @@
                   }
                 }
               },
+              "is_enabled": {
+                "type": "boolean",
+                "default": true,
+                "description": "Indicates whether the Incident Workflow is enabled or not. Disabled workflows will not be triggered, and\nwill not count toward the account's enabled workflow limit.\n"
+              },
               "steps": {
                 "type": "array",
                 "description": "The ordered list of steps that execute sequentially as part of the workflow",
@@ -13076,12 +13081,11 @@
               },
               "condition": {
                 "type": "string",
-                "description": "A PCL condition string.\n\nIf specified, the trigger will execute when the condition is met on an incident.\n\nIf unspecified, the trigger will execute on incident creation.\n\nRequired if trigger_type is “conditional”, not allowed if trigger_type is “manual”.\n"
+                "description": "A PCL condition string.\n\nIf specified, the trigger will execute when the condition is met on an incident.\n\nIf unspecified, the trigger will execute on incident creation.\n\nRequired if trigger_type is “conditional”, not allowed for other trigger types.\n"
               },
               "trigger_url": {
                 "type": "string",
-                "format": "url",
-                "readOnly": true
+                "format": "url"
               },
               "workflow": {
                 "type": "object",
@@ -13179,7 +13183,7 @@
               },
               "is_disabled": {
                 "type": "boolean",
-                "description": "Indicates whether the Trigger is disabled or not.\nThis attribute is deprecated, and will be removed in a future version of this API.\n",
+                "description": "Indicates whether the Trigger is disabled or not. Inherited from the \"is_enabled\" property on the workflow\nto which this trigger belongs. This attribute is deprecated, and will be removed in a future version of \nthis API.\n",
                 "deprecated": true,
                 "readOnly": true
               }
@@ -32396,7 +32400,81 @@
                 "type": "object",
                 "properties": {
                   "trigger": {
-                    "$ref": "#/components/schemas/IncidentWorkflowTrigger"
+                    "allOf": [
+                      {
+                        "$ref": "#/components/schemas/Tag/allOf/0"
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "workflow_trigger"
+                            ]
+                          },
+                          "trigger_type": {
+                            "type": "string",
+                            "enum": [
+                              "conditional",
+                              "manual"
+                            ]
+                          },
+                          "condition": {
+                            "type": "string",
+                            "description": "A PCL condition string.\n\nIf specified, the trigger will execute when the condition is met on an incident.\n\nIf unspecified, the trigger will execute on incident creation.\n\nRequired if trigger_type is “conditional”, not allowed for other trigger types.\n"
+                          },
+                          "trigger_url": {
+                            "type": "string",
+                            "format": "url"
+                          },
+                          "workflow": {
+                            "type": "object",
+                            "description": "Workflow to start when this trigger is invoked",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "services": {
+                            "type": "array",
+                            "description": "An optional array of Services associated with this workflow. Incidents in any of the listed Services are eligible to fire this Trigger",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          },
+                          "is_subscribed_to_all_services": {
+                            "type": "boolean",
+                            "description": "Indicates that the Trigger should be associated with All Services"
+                          },
+                          "permissions": {
+                            "description": "An object detailing who can start this Trigger. Applicable only to manual Triggers.",
+                            "type": "object",
+                            "properties": {
+                              "restricted": {
+                                "type": "boolean",
+                                "description": "If true, indicates that the Trigger can only be started by authorized Users. If false, any user can start this Trigger. Applicable only to manual Triggers."
+                              },
+                              "team_id": {
+                                "type": "string",
+                                "description": "The ID of the team whose members can manually start this Trigger. Required and allowed if and only if permissions.restricted is true."
+                              }
+                            }
+                          },
+                          "is_disabled": {
+                            "type": "boolean",
+                            "description": "Indicates whether the Trigger is disabled or not. A previous API version allowed callers to set this\nproperty independently. This behavior is deprecated. This property's value will be set based on the \n\"is_enabled\" property of the workflow to which this trigger belongs.\n",
+                            "deprecated": true
+                          }
+                        }
+                      }
+                    ]
                   }
                 },
                 "required": [
@@ -32615,7 +32693,73 @@
                 "type": "object",
                 "properties": {
                   "trigger": {
-                    "$ref": "#/components/schemas/IncidentWorkflowTrigger"
+                    "allOf": [
+                      {
+                        "$ref": "#/components/schemas/Tag/allOf/0"
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "workflow_trigger"
+                            ]
+                          },
+                          "trigger_type_name": {
+                            "type": "string",
+                            "readOnly": true,
+                            "description": "Human readable name for the trigger type"
+                          },
+                          "trigger_type": {
+                            "type": "string",
+                            "enum": [
+                              "conditional",
+                              "manual"
+                            ]
+                          },
+                          "condition": {
+                            "type": "string",
+                            "description": "A PCL condition string.\n\nIf specified, the trigger will execute when the condition is met on an incident.\n\nIf unspecified, the trigger will execute on incident creation.\n\nRequired if trigger_type is “conditional”, not allowed for other trigger types.\n"
+                          },
+                          "services": {
+                            "type": "array",
+                            "description": "An optional array of Services associated with this workflow. Incidents in any of the listed Services are eligible to fire this Trigger",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          },
+                          "is_subscribed_to_all_services": {
+                            "type": "boolean",
+                            "description": "Indicates that the Trigger should be associated with All Services"
+                          },
+                          "permissions": {
+                            "description": "An object detailing who can start this Trigger. Applicable only to manual Triggers.",
+                            "type": "object",
+                            "properties": {
+                              "restricted": {
+                                "type": "boolean",
+                                "description": "If true, indicates that the Trigger can only be started by authorized Users. If false, any user can start this Trigger. Applicable only to manual Triggers."
+                              },
+                              "team_id": {
+                                "type": "string",
+                                "description": "The ID of the team whose members can manually start this Trigger. Required and allowed if and only if permissions.restricted is true."
+                              }
+                            }
+                          },
+                          "is_disabled": {
+                            "type": "boolean",
+                            "description": "Indicates whether the Trigger is disabled or not. A previous API version allowed callers to update this\nproperty independently. This behavior is deprecated. To update this property set \"is_enabled\" on the workflow\nto which this trigger belongs.\n",
+                            "deprecated": true
+                          }
+                        }
+                      }
+                    ]
                   }
                 },
                 "required": [

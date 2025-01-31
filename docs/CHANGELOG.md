@@ -4,6 +4,10 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently, we rarely deprecate, and do not remove any API functionality.
 
+## 2025-01-23
+- Added `is_enabled` property to Incident Workflows
+- Deprecated `is_disabled` property on Incident Workflow Triggers
+
 ## 2025-01-13
 - Released incident types endpoints to General Access (removing need for X-Early-Access header)
 
