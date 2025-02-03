@@ -3473,7 +3473,8 @@
           "type": "string",
           "enum": [
             "manual",
-            "conditional"
+            "conditional",
+            "incident_type"
           ]
         }
       },
@@ -13069,14 +13070,14 @@
               },
               "trigger_type_name": {
                 "type": "string",
-                "readOnly": true,
                 "description": "Human readable name for the trigger type"
               },
               "trigger_type": {
                 "type": "string",
                 "enum": [
                   "conditional",
-                  "manual"
+                  "manual",
+                  "incident_type"
                 ]
               },
               "condition": {
@@ -13087,6 +13088,13 @@
                 "type": "string",
                 "format": "url"
               },
+              "incident_types": {
+                "type": "array",
+                "description": "An optional array of Incident Types associated with the trigger when it is of type `incident_type`.",
+                "items": {
+                  "type": "string"
+                }
+              },
               "workflow": {
                 "type": "object",
                 "description": "Workflow to start when this trigger is invoked",
@@ -13096,7 +13104,6 @@
                   },
                   "type": {
                     "type": "string",
-                    "readOnly": true,
                     "description": "A string that determines the schema of the object. This must be the standard name for the entity, suffixed by `_reference` if the object is a reference.",
                     "enum": [
                       "workflow_reference"
@@ -13104,20 +13111,17 @@
                   },
                   "name": {
                     "type": "string",
-                    "readOnly": true,
                     "description": "A descriptive name for the Incident Workflow"
                   },
                   "self": {
                     "type": "string",
                     "nullable": true,
-                    "readOnly": true,
                     "format": "url",
                     "description": "the API show URL at which the object is accessible"
                   },
                   "html_url": {
                     "type": "string",
                     "nullable": true,
-                    "readOnly": true,
                     "format": "url",
                     "description": "a URL at which the entity is uniquely displayed in the Web app"
                   }
@@ -13135,12 +13139,10 @@
                     "summary": {
                       "type": "string",
                       "nullable": true,
-                      "readOnly": true,
                       "description": "A short-form, server-generated string that provides succinct, important information about an object suitable for primary labeling of an entity in a client. In many cases, this will be identical to `name`, though it is not intended to be an identifier."
                     },
                     "type": {
                       "type": "string",
-                      "readOnly": true,
                       "description": "A string that determines the schema of the object. This must be the standard name for the entity, suffixed by `_reference` if the object is a reference.",
                       "enum": [
                         "service"
@@ -13149,14 +13151,12 @@
                     "self": {
                       "type": "string",
                       "nullable": true,
-                      "readOnly": true,
                       "format": "url",
                       "description": "the API show URL at which the object is accessible"
                     },
                     "html_url": {
                       "type": "string",
                       "nullable": true,
-                      "readOnly": true,
                       "format": "url",
                       "description": "a URL at which the entity is uniquely displayed in the Web app"
                     }
@@ -13184,8 +13184,7 @@
               "is_disabled": {
                 "type": "boolean",
                 "description": "Indicates whether the Trigger is disabled or not. Inherited from the \"is_enabled\" property on the workflow\nto which this trigger belongs. This attribute is deprecated, and will be removed in a future version of \nthis API.\n",
-                "deprecated": true,
-                "readOnly": true
+                "deprecated": true
               }
             }
           }
@@ -32417,7 +32416,8 @@
                             "type": "string",
                             "enum": [
                               "conditional",
-                              "manual"
+                              "manual",
+                              "incident_type"
                             ]
                           },
                           "condition": {
@@ -32427,6 +32427,13 @@
                           "trigger_url": {
                             "type": "string",
                             "format": "url"
+                          },
+                          "incident_types": {
+                            "type": "array",
+                            "description": "An optional array of Incident Types associated with the trigger when it is of type `incident_type`.",
+                            "items": {
+                              "type": "string"
+                            }
                           },
                           "workflow": {
                             "type": "object",
@@ -32711,13 +32718,6 @@
                             "readOnly": true,
                             "description": "Human readable name for the trigger type"
                           },
-                          "trigger_type": {
-                            "type": "string",
-                            "enum": [
-                              "conditional",
-                              "manual"
-                            ]
-                          },
                           "condition": {
                             "type": "string",
                             "description": "A PCL condition string.\n\nIf specified, the trigger will execute when the condition is met on an incident.\n\nIf unspecified, the trigger will execute on incident creation.\n\nRequired if trigger_type is “conditional”, not allowed for other trigger types.\n"
@@ -32756,6 +32756,13 @@
                             "type": "boolean",
                             "description": "Indicates whether the Trigger is disabled or not. A previous API version allowed callers to update this\nproperty independently. This behavior is deprecated. To update this property set \"is_enabled\" on the workflow\nto which this trigger belongs.\n",
                             "deprecated": true
+                          },
+                          "incident_types": {
+                            "type": "array",
+                            "description": "An optional array of Incident Types associated with the trigger when it is of type `incident_type`.",
+                            "items": {
+                              "type": "string"
+                            }
                           }
                         }
                       }
