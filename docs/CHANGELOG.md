@@ -4,6 +4,12 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently, we rarely deprecate, and do not remove any API functionality.
 
+## 2025-01-24
+- Added `incident_type` as an allowed value for the `trigger_type` parameter in both `POST /incident_workflows/triggers` and `PUT /incident_workflows/triggers`
+- Added `incident_types` to the trigger object in both `POST /incident_workflows/triggers` and `PUT /incident_workflows/triggers/:triggerId`
+- Added `incident_type` as an allowed value for `trigger_type` in both `GET /incident_workflows/triggers` and `GET /incident_workflows/triggers/:triggerId`
+- Added `incident_types` to the trigger response in both `GET /incident_workflows/triggers` and `GET /incident_workflows/triggers/:triggerId`
+
 ## 2025-01-23
 - Added `is_enabled` property to Incident Workflows
 - Deprecated `is_disabled` property on Incident Workflow Triggers
