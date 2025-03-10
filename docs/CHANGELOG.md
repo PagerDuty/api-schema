@@ -5,6 +5,9 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 Currently, we rarely deprecate, and do not remove any API functionality.
 
 ## 2025-03-10
+- Added `allow_invocation_manually`, `allow_invocation_from_event_orchestration`, and `map_to_all_services` fields to Automation Actions endpoints.
+
+## 2025-03-10
 - Deprecated the `Incident Custom Fields` endpoints in favor of the new endpoints for Custom Fields found in `Incident Types`.
 - Clarified the usage of the `resolution` field when updating an Incident
 

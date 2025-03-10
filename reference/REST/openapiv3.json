@@ -7026,6 +7026,24 @@
                 "description": "If true, the action can only be invoked against an unresolved incident.",
                 "default": false,
                 "example": false
+              },
+              "allow_invocation_manually": {
+                "type": "boolean",
+                "description": "If true, the action can only be invoked manually by a user.",
+                "default": true,
+                "example": true
+              },
+              "allow_invocation_from_event_orchestration": {
+                "type": "boolean",
+                "description": "If true, the action can only be invoked automatically by an Event Orchestration.",
+                "default": true,
+                "example": true
+              },
+              "map_to_all_services": {
+                "type": "boolean",
+                "description": "If true, the action will be associated with every service.",
+                "default": false,
+                "example": false
               }
             },
             "required": [
@@ -7082,6 +7100,24 @@
             "description": "If true, the action can only be invoked against an unresolved incident.",
             "default": false,
             "example": false
+          },
+          "allow_invocation_manually": {
+            "type": "boolean",
+            "description": "If true, the action can only be invoked manually by a user.",
+            "default": true,
+            "example": true
+          },
+          "allow_invocation_from_event_orchestration": {
+            "type": "boolean",
+            "description": "If true, the action can only be invoked automatically by an Event Orchestration.",
+            "default": true,
+            "example": true
+          },
+          "map_to_all_services": {
+            "type": "boolean",
+            "description": "If true, the action will be associated with every service.",
+            "default": false,
+            "example": false
           }
         },
         "required": [
@@ -7116,6 +7152,24 @@
           "only_invocable_on_unresolved_incidents": {
             "type": "boolean",
             "description": "If true, the action can only be invoked against an unresolved incident.",
+            "default": false,
+            "example": false
+          },
+          "allow_invocation_manually": {
+            "type": "boolean",
+            "description": "If true, the action can only be invoked manually by a user.",
+            "default": true,
+            "example": true
+          },
+          "allow_invocation_from_event_orchestration": {
+            "type": "boolean",
+            "description": "If true, the action can only be invoked automatically by an Event Orchestration.",
+            "default": true,
+            "example": true
+          },
+          "map_to_all_services": {
+            "type": "boolean",
+            "description": "If true, the action will be associated with every service.",
             "default": false,
             "example": false
           }
@@ -22457,6 +22511,9 @@
                         "modify_time": "2022-11-08T14:54:02.267989Z",
                         "name": "Restart apache",
                         "only_invocable_on_unresolved_incidents": false,
+                        "allow_invocation_manually": true,
+                        "allow_invocation_from_event_orchestration": true,
+                        "map_to_all_services": false,
                         "privileges": {
                           "permissions": [
                             "read",
@@ -22611,6 +22668,9 @@
                           "modify_time": "2022-11-08T14:54:02.267989Z",
                           "name": "Restart apache",
                           "only_invocable_on_unresolved_incidents": false,
+                          "map_to_all_services": false,
+                          "allow_invocation_manually": true,
+                          "allow_invocation_from_event_orchestration": true,
                           "privileges": {
                             "permissions": [
                               "read",
@@ -22638,6 +22698,9 @@
                           "modify_time": "2022-11-08T14:54:02.267989Z",
                           "name": "Restart apache",
                           "only_invocable_on_unresolved_incidents": false,
+                          "map_to_all_services": false,
+                          "allow_invocation_manually": true,
+                          "allow_invocation_from_event_orchestration": true,
                           "privileges": {
                             "permissions": [
                               "read",
@@ -22749,6 +22812,9 @@
                         "modify_time": "2022-11-08T14:54:02.267989Z",
                         "name": "Restart apache",
                         "only_invocable_on_unresolved_incidents": false,
+                        "allow_invocation_manually": true,
+                        "allow_invocation_from_event_orchestration": true,
+                        "map_to_all_services": false,
                         "privileges": {
                           "permissions": [
                             "read",
@@ -22939,6 +23005,9 @@
                         "modify_time": "2022-11-08T14:54:02.267989Z",
                         "name": "Restart apache",
                         "only_invocable_on_unresolved_incidents": false,
+                        "allow_invocation_manually": true,
+                        "allow_invocation_from_event_orchestration": true,
+                        "map_to_all_services": false,
                         "privileges": {
                           "permissions": [
                             "read",
