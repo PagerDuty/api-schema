@@ -33403,7 +33403,7 @@
                         },
                         "resolution": {
                           "type": "string",
-                          "description": "The resolution for this incident if status is set to resolved."
+                          "description": "The resolution for this incident. This field is used only when setting the incident status to resolved.\nThe value provided here is added to the incident’s 'Resolve' log entry as a note and will not be displayed directly in the UI.\n"
                         },
                         "title": {
                           "type": "string",
@@ -34236,7 +34236,7 @@
                       },
                       "resolution": {
                         "type": "string",
-                        "description": "The resolution for this incident if status is set to resolved."
+                        "description": "The resolution for this incident. This field is used only when setting the incident status to resolved.\nThe value provided here is added to the incident’s 'Resolve' log entry as a note and will not be displayed directly in the UI.\n"
                       },
                       "title": {
                         "type": "string",
@@ -37893,8 +37893,8 @@
           "Incident Types"
         ],
         "operationId": "createIncidentTypeCustomField",
-        "description": "Create a Custom Field for an Incident Type.\n\nCustom Fields (CF) are a feature which will allow customers to extend Incidents with their own custom data,\nto provide additional context and support features such as customized filtering, search and analytics.\nCustom Fields can be applied to different incident types.\n\nScoped OAuth requires: `custom_fields.write`\n",
-        "summary": "Create a Custom Field for an Incident Type.",
+        "description": "Create a Custom Field for an Incident Type\n\nCustom Fields (CF) are a feature which will allow customers to extend Incidents with their own custom data,\nto provide additional context and support features such as customized filtering, search and analytics.\nCustom Fields can be applied to different incident types.\n\nScoped OAuth requires: `custom_fields.write`\n",
+        "summary": "Create a Custom Field for an Incident Type",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -38956,8 +38956,9 @@
         ],
         "x-pd-requires-scope": "custom_fields.write",
         "operationId": "createCustomFieldsField",
-        "description": "Create a new Field, along with the Field Options if provided. An account may have up to 10 Fields.\n\nScoped OAuth requires: `custom_fields.write`\n",
+        "description": "\n<!-- theme: warning -->\n> ### Deprecated\n> This endpoint is deprecated and only works for fields on the Base Incident Type. \\\n> For more flexibility, we recommend using the Incident Types endpoint: \\\n> [/incidents/types/{type_id_or_name}/custom_fields](Index.yaml/paths/~1incidents~1types~1{type_id_or_name}~1custom_fields/post)\n\nCreates a new Custom Field on the Base Incident Type, along with the Field Options if provided. \\\nAn account may have up to 10 Fields.\n\nScoped OAuth requires: `custom_fields.write`\n",
         "summary": "Create a Field",
+        "deprecated": true,
         "requestBody": {
           "content": {
             "application/json": {
@@ -39189,8 +39190,9 @@
         ],
         "x-pd-requires-scope": "custom_fields.read",
         "operationId": "listCustomFieldsFields",
-        "description": "List fields.\n\nScoped OAuth requires: `custom_fields.read`\n",
+        "description": "\n<!-- theme: warning -->\n> ### Deprecated\n> This endpoint is deprecated and only works for fields on the Base Incident Type. \\\n> For more flexibility, we recommend using the Incident Types endpoint: \\\n> [/incidents/types/{type_id_or_name}/custom_fields](Index.yaml/paths/~1incidents~1types~1{type_id_or_name}~1custom_fields/get)\n\nList Custom Fields on the Base Incident Type.\n\nScoped OAuth requires: `custom_fields.read`\n",
         "summary": "List Fields",
+        "deprecated": true,
         "parameters": [
           {
             "$ref": "#/components/parameters/include_customfields_field"
@@ -39274,8 +39276,9 @@
         ],
         "x-pd-requires-scope": "custom_fields.read",
         "operationId": "getCustomFieldsField",
-        "description": "Show detailed information about a field.\n\nScoped OAuth requires: `custom_fields.read`\n",
+        "description": "\n<!-- theme: warning -->\n> ### Deprecated\n> This endpoint is deprecated and only works for fields on the Base Incident Type. \\\n> For more flexibility, we recommend using the Incident Types endpoint: \\\n> [/incidents/types/{type_id_or_name}/custom_fields/{field_id}](Index.yaml/paths/~1incidents~1types~1{type_id_or_name}~1custom_fields~1{field_id}/get)\n\nShow detailed information about a Custom Field on the Base Incident Type.\n\nScoped OAuth requires: `custom_fields.read`\n",
         "summary": "Get a Field",
+        "deprecated": true,
         "parameters": [
           {
             "$ref": "#/components/parameters/field_id"
@@ -39382,8 +39385,9 @@
         ],
         "x-pd-requires-scope": "custom_fields.write",
         "operationId": "updateCustomFieldsField",
-        "description": "Update a field.\n\nScoped OAuth requires: `custom_fields.write`\n",
+        "description": "\n<!-- theme: warning -->\n> ### Deprecated\n> This endpoint is deprecated and only works for fields on the Base Incident Type. \\\n> For more flexibility, we recommend using the Incident Types endpoint: \\\n> [/incidents/types/{type_id_or_name}/custom_fields/{field_id}](Index.yaml/paths/~1incidents~1types~1{type_id_or_name}~1custom_fields~1{field_id}/put)\n\nUpdate a Custom Field on the Base Incident Type.\n\nScoped OAuth requires: `custom_fields.write`\n",
         "summary": "Update a Field",
+        "deprecated": true,
         "parameters": [
           {
             "$ref": "#/components/parameters/field_id"
@@ -39477,8 +39481,9 @@
         ],
         "x-pd-requires-scope": "custom_fields.write",
         "operationId": "deleteCustomFieldsField",
-        "description": "Delete a Field. Fields may not be deleted if they are used by a Field Schema.\n\nScoped OAuth requires: `custom_fields.write`\n",
+        "description": "\n<!-- theme: warning -->\n> ### Deprecated\n> This endpoint is deprecated and only works for fields on the Base Incident Type. \\\n> For more flexibility, we recommend using the Incident Types endpoint: \\\n> [/incidents/types/{type_id_or_name}/custom_fields/{field_id}](Index.yaml/paths/~1incidents~1types~1{type_id_or_name}~1custom_fields~1{field_id}/delete)\n\nDelete a Custom Field from the Base Incident Type.\n\nScoped OAuth requires: `custom_fields.write`\n",
         "summary": "Delete a Field",
+        "deprecated": true,
         "parameters": [
           {
             "$ref": "#/components/parameters/field_id"
@@ -39511,8 +39516,9 @@
         ],
         "x-pd-requires-scope": "custom_fields.write",
         "operationId": "createCustomFieldsFieldOption",
-        "description": "Create a new Field Option. Field Options may only be created for Fields that have `field_options`. A Field may have no more than 10 enabled options.\n\nScoped OAuth requires: `custom_fields.write`\n",
+        "description": "\n<!-- theme: warning -->\n> ### Deprecated\n> This endpoint is deprecated and only works for fields on the Base Incident Type. \\\n> For more flexibility, we recommend using the Incident Types endpoint: \\\n> [/incidents/types/{type_id_or_name}/custom_fields/{field_id}/field_options](Index.yaml/paths/~1incidents~1types~1{type_id_or_name}~1custom_fields~1{field_id}~1field_options/post)\n\nCreate a new Field Option for a Custom Field on the Base Incident Type. Field Options may only be created for Fields that have `field_options`. A Field may have no more than 10 enabled options.\n\nScoped OAuth requires: `custom_fields.write`\n",
         "summary": "Create a Field Option",
+        "deprecated": true,
         "parameters": [
           {
             "$ref": "#/components/parameters/field_id"
@@ -39604,8 +39610,9 @@
         ],
         "x-pd-requires-scope": "custom_fields.read",
         "operationId": "listCustomFieldsFieldOptions",
-        "description": "List all enabled Field Options for a Field.\n\nScoped OAuth requires: `custom_fields.read`\n",
+        "description": "\n<!-- theme: warning -->\n> ### Deprecated\n> This endpoint is deprecated and only works for fields on the Base Incident Type. \\\n> For more flexibility, we recommend using the Incident Types endpoint: \\\n> [/incidents/types/{type_id_or_name}/custom_fields/{field_id}/field_options](Index.yaml/paths/~1incidents~1types~1{type_id_or_name}~1custom_fields~1{field_id}~1field_options/get)\n\nList all enabled Field Options for a Custom Field on the Base Incident Type.\n\nScoped OAuth requires: `custom_fields.read`\n",
         "summary": "List Field Options",
+        "deprecated": true,
         "parameters": [
           {
             "$ref": "#/components/parameters/field_id"
@@ -39669,8 +39676,9 @@
         ],
         "x-pd-requires-scope": "custom_fields.write",
         "operationId": "updateCustomFieldsFieldOption",
-        "description": "Update Field Option for a Field.\n\nScoped OAuth requires: `custom_fields.write`\n",
+        "description": "\n<!-- theme: warning -->\n> ### Deprecated\n> This endpoint is deprecated and only works for fields on the Base Incident Type. \\\n> For more flexibility, we recommend using the Incident Types endpoint: \\\n> [/incidents/types/{type_id_or_name}/custom_fields/{field_id}/field_options/{field_option_id}](Index.yaml/paths/~1incidents~1types~1{type_id_or_name}~1custom_fields~1{field_id}~1field_options~1{field_option_id}/put)\n\nUpdate a Field Option for a Custom Field on the Base Incident Type.\n\nScoped OAuth requires: `custom_fields.write`\n",
         "summary": "Update a Field Option",
+        "deprecated": true,
         "parameters": [
           {
             "$ref": "#/components/parameters/field_id"
@@ -39765,8 +39773,9 @@
         ],
         "x-pd-requires-scope": "custom_fields.write",
         "operationId": "deleteCustomFieldsFieldOption",
-        "description": "Delete a Field Option.\n\nScoped OAuth requires: `custom_fields.write`\n",
+        "description": "\n<!-- theme: warning -->\n> ### Deprecated\n> This endpoint is deprecated and only works for fields on the Base Incident Type. \\\n> For more flexibility, we recommend using the Incident Types endpoint: \\\n> [/incidents/types/{type_id_or_name}/custom_fields/{field_id}/field_options/{field_option_id}](Index.yaml/paths/~1incidents~1types~1{type_id_or_name}~1custom_fields~1{field_id}~1field_options~1{field_option_id}/delete)\n\nDelete a Field Option for a Custom Field on the Base Incident Type.\n\nScoped OAuth requires: `custom_fields.write`\n",
         "summary": "Delete a Field Option",
+        "deprecated": true,
         "parameters": [
           {
             "$ref": "#/components/parameters/field_id"
