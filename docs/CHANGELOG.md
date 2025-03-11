@@ -5,12 +5,10 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 Currently, we rarely deprecate, and do not remove any API functionality.
 
 ## 2025-03-10
-- Added `allow_invocation_manually`, `allow_invocation_from_event_orchestration`, and `map_to_all_services` fields to Automation Actions endpoints.
-
-## 2025-03-10
 - Deprecated the `Incident Custom Fields` endpoints in favor of the new endpoints for Custom Fields found in `Incident Types`.
 - Clarified the usage of the `resolution` field when updating an Incident.
 - Fix `summary` field value examples in the Response payload of the Incident Types Custom Fields endpoints.
+- Added `allow_invocation_manually`, `allow_invocation_from_event_orchestration`, and `map_to_all_services` fields to Automation Actions endpoints.
 
 ## 2025-01-24
 - Added `incident_type` as an allowed value for the `trigger_type` parameter in both `POST /incident_workflows/triggers` and `PUT /incident_workflows/triggers`
