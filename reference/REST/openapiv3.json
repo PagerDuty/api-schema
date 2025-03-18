@@ -3958,7 +3958,17 @@
               "type": "object",
               "properties": {
                 "cache_variable": {
-                  "$ref": "#/components/schemas/OrchestrationCacheVariable"
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/OrchestrationCacheVariableRecentValue"
+                    },
+                    {
+                      "$ref": "#/components/schemas/OrchestrationCacheVariableTriggerEventCount"
+                    },
+                    {
+                      "$ref": "#/components/schemas/OrchestrationCacheVariableExternalData"
+                    }
+                  ]
                 }
               },
               "required": [
@@ -3995,6 +4005,19 @@
                     }
                   }
                 }
+              },
+              "external_data": {
+                "summary": "Request Example: External Data cache variable",
+                "value": {
+                  "cache_variable": {
+                    "name": "example_3",
+                    "configuration": {
+                      "type": "external_data",
+                      "ttl_seconds": 300,
+                      "data_type": "boolean"
+                    }
+                  }
+                }
               }
             }
           }
@@ -4007,7 +4030,17 @@
               "type": "object",
               "properties": {
                 "cache_variable": {
-                  "$ref": "#/components/schemas/OrchestrationCacheVariable"
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/OrchestrationCacheVariableRecentValue"
+                    },
+                    {
+                      "$ref": "#/components/schemas/OrchestrationCacheVariableTriggerEventCount"
+                    },
+                    {
+                      "$ref": "#/components/schemas/OrchestrationCacheVariableExternalData"
+                    }
+                  ]
                 }
               },
               "required": [
@@ -4016,7 +4049,7 @@
             },
             "examples": {
               "update_conditions": {
-                "summary": "Request Example: Update conditions",
+                "summary": "Request Example: Update conditions (trigger_event_count, recent_value)",
                 "value": {
                   "cache_variable": {
                     "name": "example_1",
@@ -4050,6 +4083,90 @@
                     "name": "example_1",
                     "disabled": true
                   }
+                }
+              }
+            }
+          }
+        }
+      },
+      "OrchestrationCacheVariableDataPutRequest": {
+        "description": "The updated data for an `external_data` type Cache Variable for this Event Orchestration.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "oneOf": [
+                {
+                  "$ref": "#/components/responses/OrchestrationCacheVariableGetDataResponse/content/application~1json/schema/oneOf/0"
+                },
+                {
+                  "$ref": "#/components/responses/OrchestrationCacheVariableGetDataResponse/content/application~1json/schema/oneOf/1"
+                },
+                {
+                  "$ref": "#/components/responses/OrchestrationCacheVariableGetDataResponse/content/application~1json/schema/oneOf/2"
+                }
+              ]
+            },
+            "examples": {
+              "string data": {
+                "summary": "Request Example: Updated string",
+                "value": {
+                  "cache_variable_data": "Updated - Hello World!"
+                }
+              },
+              "number data": {
+                "summary": "Request Example: Updated number",
+                "value": {
+                  "cache_variable_data": 85.1
+                }
+              },
+              "boolean data": {
+                "summary": "Request Example: Updated boolean",
+                "value": {
+                  "cache_variable_data": false
+                }
+              }
+            }
+          }
+        }
+      },
+      "OrchestrationCacheVariableDataPutResponse": {
+        "description": "The data on an `external_data` type Cache Variable for this Event Orchestration.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "oneOf": [
+                {
+                  "$ref": "#/components/responses/OrchestrationCacheVariableGetDataResponse/content/application~1json/schema/oneOf/0"
+                },
+                {
+                  "$ref": "#/components/responses/OrchestrationCacheVariableGetDataResponse/content/application~1json/schema/oneOf/1"
+                },
+                {
+                  "$ref": "#/components/responses/OrchestrationCacheVariableGetDataResponse/content/application~1json/schema/oneOf/2"
+                }
+              ]
+            },
+            "examples": {
+              "string data": {
+                "summary": "Response Example: String",
+                "value": {
+                  "cache_variable_data": "Updated - Hello World!",
+                  "updated_at": "2021-11-18T16:42:01Z"
+                }
+              },
+              "number data": {
+                "summary": "Response Example: Number",
+                "value": {
+                  "cache_variable_data": 85.1,
+                  "updated_at": "2021-11-18T16:42:01Z"
+                }
+              },
+              "boolean data": {
+                "summary": "Response Example: Boolean",
+                "value": {
+                  "cache_variable_data": false,
+                  "updated_at": "2021-11-18T16:42:01Z"
                 }
               }
             }
@@ -4431,7 +4548,17 @@
                 "cache_variables": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/OrchestrationCacheVariable"
+                    "anyOf": [
+                      {
+                        "$ref": "#/components/schemas/OrchestrationCacheVariableRecentValue"
+                      },
+                      {
+                        "$ref": "#/components/schemas/OrchestrationCacheVariableTriggerEventCount"
+                      },
+                      {
+                        "$ref": "#/components/schemas/OrchestrationCacheVariableExternalData"
+                      }
+                    ]
                   }
                 }
               }
@@ -4491,9 +4618,31 @@
                         "self": "https://api.pagerduty.com/users/P8B9WR8",
                         "type": "user_reference"
                       }
+                    },
+                    {
+                      "id": "b910c789-5b47-4635-a23c-20a5578b3e9a",
+                      "name": "cache_var_3",
+                      "configuration": {
+                        "type": "external_data",
+                        "ttl_seconds": 500
+                      },
+                      "disabled": false,
+                      "data_endpoint": "https://api.pagerduty.com/event_orchestrations/e5b42543-c10d-460d-8581-e89f08e0dcae/cache_variables/b910c789-5b47-4635-a23c-20a5578b3e9a/data",
+                      "created_at": "2024-10-03T16:28:48Z",
+                      "created_by": {
+                        "id": "P8B9WR8",
+                        "self": "https://api.pagerduty.com/users/P8B9WR8",
+                        "type": "user_reference"
+                      },
+                      "updated_at": "2021-11-18T16:42:01Z",
+                      "updated_by": {
+                        "id": "P8B9WR8",
+                        "self": "https://api.pagerduty.com/users/P8B9WR8",
+                        "type": "user_reference"
+                      }
                     }
                   ],
-                  "total": 2
+                  "total": 3
                 }
               }
             }
@@ -4508,7 +4657,17 @@
               "type": "object",
               "properties": {
                 "cache_variable": {
-                  "$ref": "#/components/schemas/OrchestrationCacheVariable"
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/OrchestrationCacheVariableRecentValue"
+                    },
+                    {
+                      "$ref": "#/components/schemas/OrchestrationCacheVariableTriggerEventCount"
+                    },
+                    {
+                      "$ref": "#/components/schemas/OrchestrationCacheVariableExternalData"
+                    }
+                  ]
                 }
               }
             },
@@ -4550,6 +4709,100 @@
           }
         }
       },
+      "OrchestrationCacheVariableGetDataResponse": {
+        "description": "The data on an `external_data` type Cache Variable for this Event Orchestration.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "oneOf": [
+                {
+                  "title": "String Data",
+                  "type": "object",
+                  "properties": {
+                    "cache_variable_data": {
+                      "type": "string",
+                      "description": "The string value to set on an external data cache variable configured with `data_type: string`.",
+                      "example": "Hello World!"
+                    },
+                    "updated_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "The date/time the cache variable data was last updated.",
+                      "readOnly": true
+                    }
+                  },
+                  "required": [
+                    "cache_variable_data"
+                  ]
+                },
+                {
+                  "title": "Number Data",
+                  "type": "object",
+                  "properties": {
+                    "cache_variable_data": {
+                      "type": "number",
+                      "description": "The number value to set on an external data cache variable configured with `data_type: number`.",
+                      "example": 45.678
+                    },
+                    "updated_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "The date/time the cache variable data was last updated.",
+                      "readOnly": true
+                    }
+                  },
+                  "required": [
+                    "cache_variable_data"
+                  ]
+                },
+                {
+                  "title": "Boolean Data",
+                  "type": "object",
+                  "properties": {
+                    "cache_variable_data": {
+                      "type": "boolean",
+                      "description": "The boolean value to set on an external data cache variable configured with `data_type: boolean`.",
+                      "example": true
+                    },
+                    "updated_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "The date/time the cache variable data was last updated.",
+                      "readOnly": true
+                    }
+                  },
+                  "required": [
+                    "cache_variable_data"
+                  ]
+                }
+              ]
+            },
+            "examples": {
+              "string data": {
+                "summary": "Response Example: String data",
+                "value": {
+                  "cache_variable_data": "Hello World!",
+                  "updated_at": "2021-11-18T16:42:01Z"
+                }
+              },
+              "number data": {
+                "summary": "Response Example: Number data",
+                "value": {
+                  "cache_variable_data": 45.348,
+                  "updated_at": "2021-11-18T16:42:01Z"
+                }
+              },
+              "boolean data": {
+                "summary": "Response Example: Boolean data",
+                "value": {
+                  "cache_variable_data": true,
+                  "updated_at": "2021-11-18T16:42:01Z"
+                }
+              }
+            }
+          }
+        }
+      },
       "OrchestrationCacheVariablePostResponse": {
         "description": "The created Cache Variable for this Event Orchestration.",
         "content": {
@@ -4558,7 +4811,17 @@
               "type": "object",
               "properties": {
                 "cache_variable": {
-                  "$ref": "#/components/schemas/OrchestrationCacheVariable"
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/OrchestrationCacheVariableRecentValue"
+                    },
+                    {
+                      "$ref": "#/components/schemas/OrchestrationCacheVariableTriggerEventCount"
+                    },
+                    {
+                      "$ref": "#/components/schemas/OrchestrationCacheVariableExternalData"
+                    }
+                  ]
                 }
               }
             },
@@ -4623,6 +4886,35 @@
                     }
                   ]
                 }
+              },
+              "external_data": {
+                "summary": "Response Example: External data cache variable",
+                "value": {
+                  "cache_variable": [
+                    {
+                      "id": "d35f6e12-c391-4606-93b8-2b7295670077",
+                      "name": "example_3",
+                      "configuration": {
+                        "type": "external_data",
+                        "ttl_seconds": 300,
+                        "data_type": "boolean"
+                      },
+                      "created_at": "2021-11-18T16:43:01Z",
+                      "created_by": {
+                        "id": "P8B9WR8",
+                        "self": "https://api.pagerduty.com/users/P8B9WR8",
+                        "type": "user_reference"
+                      },
+                      "updated_at": "2021-11-18T16:43:01Z",
+                      "updated_by": {
+                        "id": "P8B9WR8",
+                        "self": "https://api.pagerduty.com/users/P8B9WR8",
+                        "type": "user_reference"
+                      },
+                      "data_endpoint": "https://api.pagerduty.com/event_orchestrations/e5b42543-c10d-460d-8581-e89f08e0dcae/cache_variables/d35f6e12-c391-4606-93b8-2b7295670077/data"
+                    }
+                  ]
+                }
               }
             }
           }
@@ -4636,7 +4928,17 @@
               "type": "object",
               "properties": {
                 "cache_variable": {
-                  "$ref": "#/components/schemas/OrchestrationCacheVariable"
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/OrchestrationCacheVariableRecentValue"
+                    },
+                    {
+                      "$ref": "#/components/schemas/OrchestrationCacheVariableTriggerEventCount"
+                    },
+                    {
+                      "$ref": "#/components/schemas/OrchestrationCacheVariableExternalData"
+                    }
+                  ]
                 }
               }
             },
@@ -14998,22 +15300,134 @@
           }
         }
       },
-      "OrchestrationCacheVariable": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "readOnly": true
+      "OrchestrationCacheVariableTriggerEventCount": {
+        "title": "Trigger Event Count",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/OrchestrationCacheVariableRecentValue/allOf/0"
           },
-          "name": {
-            "type": "string",
-            "description": "The name of the Cache Variable"
-          },
-          "configuration": {
-            "oneOf": [
-              {
+          {
+            "type": "object",
+            "properties": {
+              "configuration": {
                 "type": "object",
-                "description": "Defines how the value of the Cache Variable will be set.\n",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "description": "Cache Variable will be set to the number of trigger events that have been seen within the TTL range\n",
+                    "enum": [
+                      "trigger_event_count"
+                    ]
+                  },
+                  "ttl_seconds": {
+                    "type": "integer",
+                    "description": "The time to live (in seconds) for how long to count trigger events before resetting back to 0.\n"
+                  }
+                }
+              },
+              "conditions": {
+                "type": "array",
+                "description": "Each of these conditions is evaluated to check if an event matches this rule.\nThe rule is considered a match if **any** of these conditions match.\n",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "expression": {
+                      "type": "string",
+                      "example": "event.summary matches part 'my service error'",
+                      "description": "A PCL condition string.\n\nNote: The `trigger_count` and `resetting_trigger_count` operators are unsupported for Cache Variables\n"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "OrchestrationCacheVariableRecentValue": {
+        "title": "Recent Value",
+        "allOf": [
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "readOnly": true
+              },
+              "name": {
+                "type": "string",
+                "description": "The name of the Cache Variable"
+              },
+              "disabled": {
+                "type": "boolean",
+                "description": "Indicates whether the Cache Variable is disabled and would therefore not be evaluated."
+              },
+              "created_at": {
+                "type": "string",
+                "format": "date-time",
+                "description": "The date/time the object was created.",
+                "readOnly": true
+              },
+              "created_by": {
+                "type": "object",
+                "description": "Reference to the user that created the object.",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "readOnly": true
+                  },
+                  "type": {
+                    "type": "string",
+                    "description": "A string that determines the schema of the object. This must be the standard name for the entity, suffixed by `_reference` if the object is a reference.",
+                    "readOnly": true
+                  },
+                  "self": {
+                    "type": "string",
+                    "format": "url",
+                    "description": "The API show URL at which the object is accessible",
+                    "readOnly": true
+                  }
+                },
+                "readOnly": true
+              },
+              "updated_at": {
+                "type": "string",
+                "format": "date-time",
+                "description": "The date/time the object was last updated.",
+                "readOnly": true
+              },
+              "updated_by": {
+                "type": "object",
+                "description": "Reference to the user that last updated the object.",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "readOnly": true
+                  },
+                  "type": {
+                    "type": "string",
+                    "description": "A string that determines the schema of the object. This must be the standard name for the entity, suffixed by `_reference` if the object is a reference.",
+                    "readOnly": true
+                  },
+                  "self": {
+                    "type": "string",
+                    "format": "url",
+                    "description": "The API show URL at which the object is accessible",
+                    "readOnly": true
+                  }
+                },
+                "readOnly": true
+              }
+            },
+            "required": [
+              "name",
+              "configuration"
+            ]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "configuration": {
+                "type": "object",
                 "properties": {
                   "type": {
                     "type": "string",
@@ -15029,116 +15443,70 @@
                   },
                   "regex": {
                     "type": "string",
-                    "description": "A RE2 regular expression.  If it contains one or more capture groups, their values will be extracted and appended together.  If it contains no capture groups, the whole match is used.\n"
+                    "description": "A RE2 regular expression. If it contains one or more capture groups, their values will be extracted and appended together. If it contains no capture groups, the whole match is used.\n"
                   }
-                },
-                "required": [
-                  "type",
-                  "source",
-                  "regex"
-                ]
+                }
               },
-              {
+              "conditions": {
+                "type": "array",
+                "description": "Each of these conditions is evaluated to check if an event matches this rule.\nThe rule is considered a match if **any** of these conditions match.\n",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "expression": {
+                      "type": "string",
+                      "example": "event.summary matches part 'my service error'",
+                      "description": "A PCL condition string.\n\nNote: The `trigger_count` and `resetting_trigger_count` operators are unsupported for Cache Variables\n"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "OrchestrationCacheVariableExternalData": {
+        "title": "External Data",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/OrchestrationCacheVariableRecentValue/allOf/0"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "configuration": {
                 "type": "object",
-                "description": "Defines how the value of the Cache Variable will be set.\n",
                 "properties": {
                   "type": {
                     "type": "string",
-                    "description": "Cache Variable will be set to the number of trigger events that have been seen within the TTL range\n",
+                    "description": "The Cache Variable value will be set via a PUT API request to a dedicated endpoint that is made available after the creation of the cache variable.\n",
                     "enum": [
-                      "trigger_event_count"
+                      "external_data"
+                    ]
+                  },
+                  "data_type": {
+                    "type": "string",
+                    "description": "The type of data that will eventually be set for this cache variable via an API request.\n",
+                    "enum": [
+                      "string",
+                      "number",
+                      "boolean"
                     ]
                   },
                   "ttl_seconds": {
                     "type": "integer",
-                    "description": "The time to live (in seconds) for how long to count trigger events before resetting back to 0.\n"
+                    "description": "The time to live (in seconds) for how long data sent to endpoint is persisted. After the TTL passes the data is deleted.\n"
                   }
-                },
-                "required": [
-                  "type",
-                  "ttl_seconds"
-                ]
-              }
-            ]
-          },
-          "conditions": {
-            "type": "array",
-            "description": "Each of these conditions is evaluated to check if an event matches this rule. The rule is considered a match if **any** of these conditions match.",
-            "items": {
-              "type": "object",
-              "properties": {
-                "expression": {
-                  "type": "string",
-                  "example": "event.summary matches part 'my service error'",
-                  "description": "A PCL condition string.\n\nNote: The `trigger_count` and `resetting_trigger_count` operators are unsupported for Cache Variables\n"
                 }
+              },
+              "data_endpoint": {
+                "type": "string",
+                "format": "uri",
+                "description": "The endpoint that can be used to manage the data for an `external_data` type cache variable",
+                "readOnly": true
               }
             }
-          },
-          "disabled": {
-            "type": "boolean",
-            "description": "Indicates whether the Cache Variable is disabled and would therefore not be evaluated."
-          },
-          "created_at": {
-            "type": "string",
-            "format": "date-time",
-            "description": "The date/time the object was created.",
-            "readOnly": true
-          },
-          "created_by": {
-            "type": "object",
-            "description": "Reference to the user that created the object.",
-            "properties": {
-              "id": {
-                "type": "string",
-                "readOnly": true
-              },
-              "type": {
-                "type": "string",
-                "description": "A string that determines the schema of the object. This must be the standard name for the entity, suffixed by `_reference` if the object is a reference.",
-                "readOnly": true
-              },
-              "self": {
-                "type": "string",
-                "format": "url",
-                "description": "The API show URL at which the object is accessible",
-                "readOnly": true
-              }
-            },
-            "readOnly": true
-          },
-          "updated_at": {
-            "type": "string",
-            "format": "date-time",
-            "description": "The date/time the object was last updated.",
-            "readOnly": true
-          },
-          "updated_by": {
-            "type": "object",
-            "description": "Reference to the user that last updated the object.",
-            "properties": {
-              "id": {
-                "type": "string",
-                "readOnly": true
-              },
-              "type": {
-                "type": "string",
-                "description": "A string that determines the schema of the object. This must be the standard name for the entity, suffixed by `_reference` if the object is a reference.",
-                "readOnly": true
-              },
-              "self": {
-                "type": "string",
-                "format": "url",
-                "description": "The API show URL at which the object is accessible",
-                "readOnly": true
-              }
-            },
-            "readOnly": true
           }
-        },
-        "required": [
-          "name",
-          "configuration"
         ]
       },
       "OrchestrationIntegration": {
@@ -30298,6 +30666,135 @@
         }
       }
     },
+    "/event_orchestrations/{id}/cache_variables/{cache_variable_id}/data": {
+      "description": "Manage data for an `external_data` type Cache Variable on a Global Orchestration.",
+      "get": {
+        "x-pd-requires-scope": "event_orchestrations.read",
+        "tags": [
+          "Event Orchestrations"
+        ],
+        "operationId": "getExternalDataCacheVarDataOnGlobalOrch",
+        "description": "Get the data for an `external_data` type Cache Variable on a Global Orchestration.\n\nUse External Data type Cache Variables to store string, number, or boolean values via a dedicated API endpoint. These stored values can then be used in conditions or actions in Event Orchestration rules.\n\nFor more information see the [Knowledge Base](https://support.pagerduty.com/main/docs/event-orchestration-cache-variables)\n\nScoped OAuth requires: `event_orchestrations.read`\n",
+        "summary": "Get Data for an External Data Cache Variable on a Global Event Orchestration",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/event_orchestration_id"
+          },
+          {
+            "$ref": "#/components/parameters/event_orchestration_cache_variable_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/OrchestrationCacheVariableGetDataResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "put": {
+        "x-pd-requires-scope": "event_orchestrations.write",
+        "tags": [
+          "Event Orchestrations"
+        ],
+        "operationId": "updateExternalDataCacheVarDataOnGlobalOrch",
+        "description": "Update data for an `external_data` type Cache Variable on a Global Event Orchestration\n\nUse External Data type Cache Variables to store string, number, or boolean values via a dedicated API endpoint. These stored values can then be used in conditions or actions in Event Orchestration rules.\n\nFor more information see the [Knowledge Base](https://support.pagerduty.com/main/docs/event-orchestration-cache-variables)\n\nScoped OAuth requires: `event_orchestrations.write`\n",
+        "summary": "Update Data for an External Data Cache Variable on a Global Event Orchestration",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/event_orchestration_id"
+          },
+          {
+            "$ref": "#/components/parameters/event_orchestration_cache_variable_id"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/OrchestrationCacheVariableDataPutRequest"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/requestBodies/OrchestrationCacheVariableDataPutResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "405": {
+            "$ref": "#/components/responses/NotAllowed"
+          }
+        }
+      },
+      "delete": {
+        "x-pd-requires-scope": "event_orchestrations.write",
+        "tags": [
+          "Event Orchestrations"
+        ],
+        "operationId": "deleteExternalDataCacheVarDataOnGlobalOrch",
+        "description": "Delete data for an `external_data` type Cache Variable on a Global Event Orchestration\n\nUse External Data type Cache Variables to store string, number, or boolean values via a dedicated API endpoint. These stored values can then be used in conditions or actions in Event Orchestration rules.\n\nFor more information see the [Knowledge Base](https://support.pagerduty.com/main/docs/event-orchestration-cache-variables)\n\nScoped OAuth requires: `event_orchestrations.write`\n",
+        "summary": "Delete Data for an External Data Cache Variable on a Global Event Orchestration",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/event_orchestration_id"
+          },
+          {
+            "$ref": "#/components/parameters/event_orchestration_cache_variable_id"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The Data was deleted successfully."
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
     "/event_orchestrations/services/{service_id}/cache_variables": {
       "description": "Manage Cache Variables for a Service Event Orchestration.",
       "get": {
@@ -30494,6 +30991,135 @@
         "responses": {
           "204": {
             "description": "The Cache Variable was deleted successfully."
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/event_orchestrations/services/{service_id}/cache_variables/{cache_variable_id}/data": {
+      "description": "Manage Data for an `external_data` type Cache Variable on a Service Orchestration.",
+      "get": {
+        "x-pd-requires-scope": "services.read",
+        "tags": [
+          "Event Orchestrations"
+        ],
+        "operationId": "getExternalDataCacheVarDataOnServiceOrch",
+        "description": "Get the data for an `external_data` type Cache Variable for a Service Event Orchestration.\n\nUse External Data type Cache Variables to store string, number, or boolean values via a dedicated API endpoint. These stored values can then be used in conditions or actions in Event Orchestration rules.\n\nFor more information see the [Knowledge Base](https://support.pagerduty.com/main/docs/event-orchestration-cache-variables)\n\nScoped OAuth requires: `services.read`\n",
+        "summary": "Get Data for an External Data Cache Variable on a Service Event Orchestration",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/service_id"
+          },
+          {
+            "$ref": "#/components/parameters/event_orchestration_cache_variable_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/OrchestrationCacheVariableGetDataResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "put": {
+        "x-pd-requires-scope": "services.write",
+        "tags": [
+          "Event Orchestrations"
+        ],
+        "operationId": "updateExternalDataCacheVarDataOnServiceOrch",
+        "description": "Update the data for an `external_data` type Cache Variable on a Service Event Orchestration.\n\nUse External Data type Cache Variables to store string, number, or boolean values via a dedicated API endpoint. These stored values can then be used in conditions or actions in Event Orchestration rules.\n\nFor more information see the [Knowledge Base](https://support.pagerduty.com/main/docs/event-orchestration-cache-variables)\n\nScoped OAuth requires: `services.write`\n",
+        "summary": "Update Data for an External Data Cache Variable on a Service Event Orchestration",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/service_id"
+          },
+          {
+            "$ref": "#/components/parameters/event_orchestration_cache_variable_id"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/OrchestrationCacheVariableDataPutRequest"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/requestBodies/OrchestrationCacheVariableDataPutResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "405": {
+            "$ref": "#/components/responses/NotAllowed"
+          }
+        }
+      },
+      "delete": {
+        "x-pd-requires-scope": "services.write",
+        "tags": [
+          "Event Orchestrations"
+        ],
+        "operationId": "deleteExternalDataCacheVarDataOnServiceOrch",
+        "description": "Delete Data for an `external_data` type Cache Variable on a Service Event Orchestration.\n\nUse External Data type Cache Variables to store string, number, or boolean values via a dedicated API endpoint. These stored values can then be used in conditions or actions in Event Orchestration rules.\n\nFor more information see the [Knowledge Base](https://support.pagerduty.com/main/docs/event-orchestration-cache-variables)\n\nScoped OAuth requires: `services.write`\n",
+        "summary": "Delete Data for an External Data Cache Variable on a Service Event Orchestration",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/service_id"
+          },
+          {
+            "$ref": "#/components/parameters/event_orchestration_cache_variable_id"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The Data was deleted successfully."
           },
           "400": {
             "$ref": "#/components/responses/ArgumentError"
