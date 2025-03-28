@@ -4,6 +4,24 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently, we rarely deprecate, and do not remove any API functionality.
 
+## 2025-03-31
+- Added Early Access endpoints for Service Custom Fields management. These endpoints allow creating, retrieving, updating, and deleting custom fields and their values for Services. All endpoints require the X-EARLY-ACCESS header.
+  - Service Custom Fields endpoints:
+    - `GET /services/custom_fields`
+    - `POST /services/custom_fields`
+    - `GET /services/custom_fields/{field_id}`
+    - `PUT /services/custom_fields/{field_id}`
+    - `DELETE /services/custom_fields/{field_id}`
+  - Field Options endpoints:
+    - `GET /services/custom_fields/{field_id}/field_options`
+    - `POST /services/custom_fields/{field_id}/field_options`
+    - `GET /services/custom_fields/{field_id}/field_options/{field_option_id}`
+    - `PUT /services/custom_fields/{field_id}/field_options/{field_option_id}`
+    - `DELETE /services/custom_fields/{field_id}/field_options/{field_option_id}`
+  - Field Values endpoints:
+    - `GET /services/{id}/custom_fields/values`
+    - `PUT /services/{id}/custom_fields/values`
+
 ## 2025-03-18
 - Added support for configuring a new type of Event Orchestration Cache Variable `external_data`
 - Added endpoints for managing the data for an `external_data` cache variable on a service or global Event Orchestration
