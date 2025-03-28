@@ -133,6 +133,10 @@
       "description": "A Service may represent an application, component, or team you wish to open incidents against.\n"
     },
     {
+      "name": "Service Custom Fields",
+      "description": "Custom fields allow you to enrich PagerDuty services with critical and helpful metadata throughout the Service lifecycle.\n"
+    },
+    {
       "name": "Webhooks",
       "description": "A webhook is a way to receive events that occur on the PagerDuty platform via an HTTP POST request.\nV3 webhooks are set up by creating a webhook subscription.\n"
     },
@@ -11448,6 +11452,347 @@
           }
         ]
       },
+      "ServiceCustomFieldsFieldReadModel": {
+        "type": "object",
+        "description": "Details of the custom field.",
+        "properties": {
+          "created_at": {
+            "title": "Datetime",
+            "type": "string",
+            "format": "date-time",
+            "description": "The date/time the object was created at."
+          },
+          "data_type": {
+            "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/data_type"
+          },
+          "default_value": {
+            "$ref": "#/components/schemas/IncidentTypeCustomFields/properties/default_value"
+          },
+          "description": {
+            "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/description"
+          },
+          "display_name": {
+            "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/display_name"
+          },
+          "enabled": {
+            "$ref": "#/components/schemas/CustomFieldsEditableField/properties/enabled"
+          },
+          "field_options": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ServiceCustomFieldsFieldOptionReadModel"
+            },
+            "description": "The options for the custom field. Applies only to `single_value_fixed` and `multi_value_fixed` field types. These options are returned only if the `include[]` parameter specifies `field_options`."
+          },
+          "field_type": {
+            "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/field_type"
+          },
+          "id": {
+            "type": "string",
+            "description": "The ID of the resource."
+          },
+          "name": {
+            "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/name"
+          },
+          "self": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true,
+            "format": "url",
+            "description": "The API show URL at which the object is accessible"
+          },
+          "summary": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true,
+            "description": "A short-form, server-generated string that provides succinct, important information about an object suitable for primary labeling of an entity in a client. In many cases, this will be identical to `display_name`."
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "field"
+            ],
+            "readOnly": true
+          },
+          "updated_at": {
+            "title": "Datetime",
+            "type": "string",
+            "format": "date-time",
+            "description": "The date/time the object was updated at."
+          }
+        }
+      },
+      "ServiceCustomFieldsFieldCreateModel": {
+        "type": "object",
+        "description": "Details of the custom field to be created.",
+        "properties": {
+          "data_type": {
+            "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/data_type"
+          },
+          "default_value": {
+            "$ref": "#/components/schemas/IncidentTypeCustomFields/properties/default_value"
+          },
+          "description": {
+            "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/description"
+          },
+          "display_name": {
+            "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/display_name"
+          },
+          "enabled": {
+            "$ref": "#/components/schemas/CustomFieldsEditableField/properties/enabled"
+          },
+          "field_options": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ServiceCustomFieldsFieldOptionUpdateModel"
+            }
+          },
+          "field_type": {
+            "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/field_type"
+          },
+          "name": {
+            "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/name"
+          }
+        },
+        "required": [
+          "data_type",
+          "display_name",
+          "field_type",
+          "name"
+        ]
+      },
+      "ServiceCustomFieldsFieldUpdateModel": {
+        "type": "object",
+        "description": "Details of the custom field to be updated.",
+        "properties": {
+          "default_value": {
+            "$ref": "#/components/schemas/IncidentTypeCustomFields/properties/default_value"
+          },
+          "description": {
+            "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/description"
+          },
+          "display_name": {
+            "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/display_name"
+          },
+          "enabled": {
+            "$ref": "#/components/schemas/CustomFieldsEditableField/properties/enabled"
+          },
+          "field_options": {
+            "type": "array",
+            "items": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/ServiceCustomFieldsFieldOptionUpdateModel"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "The ID of the resource. When an id property is included, this will update the value of the specified field option. Without an id property, that field option will be added to the field. Any existing field options not included in the upsert list will be deleted (unless the current default value refers to a field option to be deleted).",
+                      "nullable": true
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "ServiceCustomFieldsFieldOptionReadModel": {
+        "type": "object",
+        "properties": {
+          "created_at": {
+            "$ref": "#/components/schemas/ServiceCustomFieldsFieldReadModel/properties/created_at"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "data_type": {
+                "type": "string",
+                "description": "The kind of data represented by this option. Must match the Field's `data_type`.",
+                "enum": [
+                  "string"
+                ]
+              },
+              "value": {
+                "type": "string",
+                "maxLength": 200
+              }
+            }
+          },
+          "id": {
+            "$ref": "#/components/schemas/ServiceCustomFieldsFieldReadModel/properties/id"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "field_option"
+            ]
+          },
+          "updated_at": {
+            "$ref": "#/components/schemas/ServiceCustomFieldsFieldReadModel/properties/updated_at"
+          }
+        }
+      },
+      "ServiceCustomFieldsFieldOptionUpdateModel": {
+        "type": "object",
+        "description": "An option for a custom field. Can only be applied to fields with a `field_type` of `single_value_fixed` or `multi_value_fixed`.",
+        "properties": {
+          "data": {
+            "type": "object",
+            "description": "The data content of the field option.",
+            "properties": {
+              "data_type": {
+                "type": "string",
+                "description": "The kind of data represented by this option. Must match the Field's `data_type`.",
+                "enum": [
+                  "string"
+                ]
+              },
+              "value": {
+                "type": "string",
+                "description": "The value of the field option. Must be unique within the field.",
+                "maxLength": 200
+              }
+            },
+            "required": [
+              "data_type",
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "data"
+        ]
+      },
+      "ServiceCustomFieldsFieldValueReadModel": {
+        "type": "object",
+        "properties": {
+          "data_type": {
+            "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/data_type"
+          },
+          "description": {
+            "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/description"
+          },
+          "display_name": {
+            "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/display_name"
+          },
+          "field_type": {
+            "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/field_type"
+          },
+          "id": {
+            "$ref": "#/components/schemas/ServiceCustomFieldsFieldReadModel/properties/id"
+          },
+          "name": {
+            "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/name"
+          },
+          "type": {
+            "type": "string",
+            "description": "Determines the type of the reference.",
+            "enum": [
+              "field_value"
+            ]
+          },
+          "value": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/value/oneOf/0"
+              },
+              {
+                "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/value/oneOf/1"
+              },
+              {
+                "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/value/oneOf/2"
+              },
+              {
+                "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/value/oneOf/3"
+              },
+              {
+                "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/value/oneOf/4"
+              },
+              {
+                "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/value/oneOf/5"
+              }
+            ]
+          }
+        }
+      },
+      "ServiceCustomFieldsFieldValueUpdateModel": {
+        "title": "Custom Field Value",
+        "oneOf": [
+          {
+            "type": "object",
+            "title": "Value by Field ID",
+            "properties": {
+              "id": {
+                "$ref": "#/components/schemas/ServiceCustomFieldsFieldReadModel/properties/id"
+              },
+              "value": {
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/value/oneOf/0"
+                  },
+                  {
+                    "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/value/oneOf/4"
+                  },
+                  {
+                    "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/value/oneOf/1"
+                  },
+                  {
+                    "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/value/oneOf/2"
+                  },
+                  {
+                    "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/value/oneOf/3"
+                  },
+                  {
+                    "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/value/oneOf/5"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "id",
+              "value"
+            ]
+          },
+          {
+            "type": "object",
+            "title": "Value by Field Name",
+            "properties": {
+              "name": {
+                "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/name"
+              },
+              "value": {
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/value/oneOf/0"
+                  },
+                  {
+                    "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/value/oneOf/4"
+                  },
+                  {
+                    "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/value/oneOf/1"
+                  },
+                  {
+                    "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/value/oneOf/2"
+                  },
+                  {
+                    "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/value/oneOf/3"
+                  },
+                  {
+                    "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/value/oneOf/5"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "name",
+              "value"
+            ]
+          }
+        ]
+      },
       "PriorityReference": {
         "allOf": [
           {
@@ -16968,7 +17313,7 @@
                 "type": "string",
                 "nullable": true,
                 "readOnly": true,
-                "description": "A short-form, server-generated string that provides succinct, important information about an object suitable for primary labeling of an entity in a client. In many cases, this will be identical to `name`, though it is not intended to be an identifier."
+                "description": "A short-form, server-generated string that provides succinct, important information about an object suitable for primary labeling of an entity in a client. In many cases, this will be identical to `display_name`."
               },
               "type": {
                 "type": "string",
@@ -17011,6 +17356,14 @@
           },
           "default_value": {
             "$ref": "#/components/schemas/IncidentTypeCustomFields/properties/default_value"
+          },
+          "enabled": {
+            "type": "boolean",
+            "description": "Whether the field is enabled.",
+            "enum": [
+              true,
+              false
+            ]
           }
         }
       },
@@ -17149,7 +17502,7 @@
                 "type": "string",
                 "nullable": true,
                 "readOnly": true,
-                "description": "A short-form, server-generated string that provides succinct, important information about an object suitable for primary labeling of an entity in a client. In many cases, this will be identical to `name`, though it is not intended to be an identifier."
+                "description": "A short-form, server-generated string that provides succinct, important information about an object suitable for primary labeling of an entity in a client. In many cases, this will be identical to `display_name`."
               },
               "type": {
                 "type": "string",
@@ -17191,7 +17544,7 @@
           "name": {
             "type": "string",
             "title": "Field Name",
-            "description": "The name of the field. May include ASCII characters, specifically lowercase letters, digits, and underescores. The `name` for a Field must be unique.",
+            "description": "The name of the field. May include ASCII characters, specifically lowercase letters, digits, and underescores. The `name` for a Field must be unique and cannot be changed once created.",
             "maxLength": 50
           },
           "type": {
@@ -48560,6 +48913,1509 @@
           },
           "409": {
             "$ref": "#/components/responses/Conflict"
+          }
+        }
+      }
+    },
+    "/services/custom_fields": {
+      "description": "Create and list Fields on Services",
+      "post": {
+        "tags": [
+          "Service Custom Fields"
+        ],
+        "x-pd-requires-scope": "custom_fields.write",
+        "operationId": "createServiceCustomField",
+        "description": "<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the `X-EARLY-ACCESS` header with `service-custom-fields-preview` to access it.\n\nCreates a new Custom Field for Services, along with the Field Options if provided.\n\nScoped OAuth requires: `custom_fields.write`\n",
+        "summary": "Create a Field",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "field": {
+                    "$ref": "#/components/schemas/ServiceCustomFieldsFieldCreateModel"
+                  }
+                },
+                "required": [
+                  "field"
+                ]
+              },
+              "examples": {
+                "request1": {
+                  "summary": "Example: With field_options and single-value",
+                  "value": {
+                    "field": {
+                      "data_type": "string",
+                      "default_value": "production",
+                      "description": "The environment that the service operates in",
+                      "display_name": "Environment",
+                      "enabled": true,
+                      "field_options": [
+                        {
+                          "data": {
+                            "data_type": "string",
+                            "value": "production"
+                          }
+                        },
+                        {
+                          "data": {
+                            "data_type": "string",
+                            "value": "staging"
+                          }
+                        },
+                        {
+                          "data": {
+                            "data_type": "string",
+                            "value": "development"
+                          }
+                        }
+                      ],
+                      "field_type": "single_value_fixed",
+                      "name": "environment"
+                    }
+                  }
+                },
+                "request2": {
+                  "summary": "Example: With field_options and multi-value",
+                  "value": {
+                    "field": {
+                      "data_type": "string",
+                      "default_value": [
+                        "us-east-1",
+                        "eu-west-1"
+                      ],
+                      "description": "The regions where this service is deployed",
+                      "display_name": "Supported Regions",
+                      "enabled": true,
+                      "field_options": [
+                        {
+                          "data": {
+                            "data_type": "string",
+                            "value": "us-east-1"
+                          }
+                        },
+                        {
+                          "data": {
+                            "data_type": "string",
+                            "value": "us-west-1"
+                          }
+                        },
+                        {
+                          "data": {
+                            "data_type": "string",
+                            "value": "eu-west-1"
+                          }
+                        },
+                        {
+                          "data": {
+                            "data_type": "string",
+                            "value": "ap-southeast-1"
+                          }
+                        }
+                      ],
+                      "field_type": "multi_value_fixed",
+                      "name": "supported_regions"
+                    }
+                  }
+                },
+                "request3": {
+                  "summary": "Example: Without field_options",
+                  "value": {
+                    "field": {
+                      "data_type": "string",
+                      "default_value": "platform",
+                      "description": "The team that owns this service",
+                      "display_name": "Team Owner",
+                      "enabled": true,
+                      "field_type": "single_value",
+                      "name": "team_owner"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The field object created, along with the Field Options if provided.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "field": {
+                      "$ref": "#/components/schemas/ServiceCustomFieldsFieldReadModel"
+                    }
+                  },
+                  "required": [
+                    "field"
+                  ]
+                },
+                "examples": {
+                  "response1": {
+                    "summary": "Example: With field_options and single-value",
+                    "value": {
+                      "field": {
+                        "created_at": "2023-01-01T00:00:00Z",
+                        "data_type": "string",
+                        "default_value": "production",
+                        "description": "The environment that the service operates in",
+                        "display_name": "Environment",
+                        "enabled": true,
+                        "field_options": [
+                          {
+                            "created_at": "2023-01-01T00:00:00Z",
+                            "data": {
+                              "data_type": "string",
+                              "value": "production"
+                            },
+                            "id": "OPT1",
+                            "type": "field_option",
+                            "updated_at": "2023-01-01T00:00:00Z"
+                          },
+                          {
+                            "created_at": "2023-01-01T00:00:00Z",
+                            "data": {
+                              "data_type": "string",
+                              "value": "staging"
+                            },
+                            "id": "OPT2",
+                            "type": "field_option",
+                            "updated_at": "2023-01-01T00:00:00Z"
+                          },
+                          {
+                            "created_at": "2023-01-01T00:00:00Z",
+                            "data": {
+                              "data_type": "string",
+                              "value": "development"
+                            },
+                            "id": "OPT3",
+                            "type": "field_option",
+                            "updated_at": "2023-01-01T00:00:00Z"
+                          }
+                        ],
+                        "field_type": "single_value_fixed",
+                        "id": "ABCDEF1",
+                        "name": "environment",
+                        "self": "https://api.pagerduty.com/services/custom_fields/ABCDEF1",
+                        "summary": "Environment",
+                        "type": "custom_fields_field",
+                        "updated_at": "2023-01-01T00:00:00Z"
+                      }
+                    }
+                  },
+                  "response2": {
+                    "summary": "Example: With field_options and multi-value",
+                    "value": {
+                      "field": {
+                        "created_at": "2023-01-01T00:00:00Z",
+                        "data_type": "string",
+                        "default_value": [
+                          "us-east-1",
+                          "eu-west-1"
+                        ],
+                        "description": "The regions where this service is deployed",
+                        "display_name": "Supported Regions",
+                        "enabled": true,
+                        "field_options": [
+                          {
+                            "created_at": "2023-01-01T00:00:00Z",
+                            "data": {
+                              "data_type": "string",
+                              "value": "us-east-1"
+                            },
+                            "id": "OPT4",
+                            "type": "field_option",
+                            "updated_at": "2023-01-01T00:00:00Z"
+                          },
+                          {
+                            "created_at": "2023-01-01T00:00:00Z",
+                            "data": {
+                              "data_type": "string",
+                              "value": "us-west-1"
+                            },
+                            "id": "OPT5",
+                            "type": "field_option",
+                            "updated_at": "2023-01-01T00:00:00Z"
+                          },
+                          {
+                            "created_at": "2023-01-01T00:00:00Z",
+                            "data": {
+                              "data_type": "string",
+                              "value": "eu-west-1"
+                            },
+                            "id": "OPT6",
+                            "type": "field_option",
+                            "updated_at": "2023-01-01T00:00:00Z"
+                          },
+                          {
+                            "created_at": "2023-01-01T00:00:00Z",
+                            "data": {
+                              "data_type": "string",
+                              "value": "ap-southeast-1"
+                            },
+                            "id": "OPT7",
+                            "type": "field_option",
+                            "updated_at": "2023-01-01T00:00:00Z"
+                          }
+                        ],
+                        "field_type": "multi_value_fixed",
+                        "id": "ABCDEF2",
+                        "name": "supported_regions",
+                        "self": "https://api.pagerduty.com/services/custom_fields/ABCDEF2",
+                        "summary": "Supported Regions",
+                        "type": "custom_fields_field",
+                        "updated_at": "2023-01-01T00:00:00Z"
+                      }
+                    }
+                  },
+                  "response3": {
+                    "summary": "Example: Without field_options",
+                    "value": {
+                      "field": {
+                        "created_at": "2023-01-01T00:00:00Z",
+                        "data_type": "string",
+                        "default_value": "platform",
+                        "description": "The team that owns this service",
+                        "display_name": "Team Owner",
+                        "enabled": true,
+                        "field_type": "single_value",
+                        "id": "ABCDEF3",
+                        "name": "team_owner",
+                        "self": "https://api.pagerduty.com/services/custom_fields/ABCDEF3",
+                        "summary": "Team Owner",
+                        "type": "custom_fields_field",
+                        "updated_at": "2023-01-01T00:00:00Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Service Custom Fields"
+        ],
+        "x-pd-requires-scope": "custom_fields.read",
+        "operationId": "listServiceCustomFields",
+        "description": "<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the `X-EARLY-ACCESS` header with `service-custom-fields-preview` to access it.\n\nList Custom Fields available for Services.\n\nScoped OAuth requires: `custom_fields.read`\n",
+        "summary": "List Fields",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/include_customfields_field"
+          },
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of fields.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fields": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ServiceCustomFieldsFieldReadModel"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example (Default)",
+                    "value": {
+                      "fields": [
+                        {
+                          "created_at": "2023-01-01T00:00:00Z",
+                          "data_type": "string",
+                          "default_value": "production",
+                          "description": "The environment that the service operates in",
+                          "display_name": "Environment",
+                          "enabled": true,
+                          "field_type": "single_value_fixed",
+                          "id": "ABCDEF1",
+                          "name": "environment",
+                          "self": "https://api.pagerduty.com/services/custom_fields/ABCDEF1",
+                          "summary": "Environment",
+                          "type": "custom_fields_field",
+                          "updated_at": "2023-01-01T00:00:00Z"
+                        },
+                        {
+                          "created_at": "2023-01-01T00:00:00Z",
+                          "data_type": "string",
+                          "default_value": [
+                            "us-east-1",
+                            "eu-west-1"
+                          ],
+                          "description": "The regions where this service is deployed",
+                          "display_name": "Supported Regions",
+                          "enabled": true,
+                          "field_type": "multi_value_fixed",
+                          "id": "ABCDEF2",
+                          "name": "supported_regions",
+                          "self": "https://api.pagerduty.com/services/custom_fields/ABCDEF2",
+                          "summary": "Supported Regions",
+                          "type": "custom_fields_field",
+                          "updated_at": "2023-01-01T00:00:00Z"
+                        },
+                        {
+                          "created_at": "2023-01-01T00:00:00Z",
+                          "data_type": "string",
+                          "default_value": "platform",
+                          "description": "The team that owns this service",
+                          "display_name": "Team Owner",
+                          "enabled": true,
+                          "field_type": "single_value",
+                          "id": "ABCDEF3",
+                          "name": "team_owner",
+                          "self": "https://api.pagerduty.com/services/custom_fields/ABCDEF3",
+                          "summary": "Team Owner",
+                          "type": "custom_fields_field",
+                          "updated_at": "2023-01-01T00:00:00Z"
+                        }
+                      ]
+                    }
+                  },
+                  "response_with_options": {
+                    "summary": "Response Example (With field_options included)",
+                    "value": {
+                      "fields": [
+                        {
+                          "created_at": "2023-01-01T00:00:00Z",
+                          "data_type": "string",
+                          "default_value": "production",
+                          "description": "The environment that the service operates in",
+                          "display_name": "Environment",
+                          "enabled": true,
+                          "field_options": [
+                            {
+                              "created_at": "2023-01-01T00:00:00Z",
+                              "data": {
+                                "data_type": "string",
+                                "value": "production"
+                              },
+                              "id": "OPT1",
+                              "type": "field_option",
+                              "updated_at": "2023-01-01T00:00:00Z"
+                            },
+                            {
+                              "created_at": "2023-01-01T00:00:00Z",
+                              "data": {
+                                "data_type": "string",
+                                "value": "staging"
+                              },
+                              "id": "OPT2",
+                              "type": "field_option",
+                              "updated_at": "2023-01-01T00:00:00Z"
+                            },
+                            {
+                              "created_at": "2023-01-01T00:00:00Z",
+                              "data": {
+                                "data_type": "string",
+                                "value": "development"
+                              },
+                              "id": "OPT3",
+                              "type": "field_option",
+                              "updated_at": "2023-01-01T00:00:00Z"
+                            }
+                          ],
+                          "field_type": "single_value_fixed",
+                          "id": "ABCDEF1",
+                          "name": "environment",
+                          "self": "https://api.pagerduty.com/services/custom_fields/ABCDEF1",
+                          "summary": "Environment",
+                          "type": "custom_fields_field",
+                          "updated_at": "2023-01-01T00:00:00Z"
+                        },
+                        {
+                          "created_at": "2023-01-01T00:00:00Z",
+                          "data_type": "string",
+                          "default_value": [
+                            "us-east-1",
+                            "eu-west-1"
+                          ],
+                          "description": "The regions where this service is deployed",
+                          "display_name": "Supported Regions",
+                          "enabled": true,
+                          "field_options": [
+                            {
+                              "created_at": "2023-01-01T00:00:00Z",
+                              "data": {
+                                "data_type": "string",
+                                "value": "us-east-1"
+                              },
+                              "id": "OPT4",
+                              "type": "field_option",
+                              "updated_at": "2023-01-01T00:00:00Z"
+                            },
+                            {
+                              "created_at": "2023-01-01T00:00:00Z",
+                              "data": {
+                                "data_type": "string",
+                                "value": "us-west-1"
+                              },
+                              "id": "OPT5",
+                              "type": "field_option",
+                              "updated_at": "2023-01-01T00:00:00Z"
+                            },
+                            {
+                              "created_at": "2023-01-01T00:00:00Z",
+                              "data": {
+                                "data_type": "string",
+                                "value": "eu-west-1"
+                              },
+                              "id": "OPT6",
+                              "type": "field_option",
+                              "updated_at": "2023-01-01T00:00:00Z"
+                            },
+                            {
+                              "created_at": "2023-01-01T00:00:00Z",
+                              "data": {
+                                "data_type": "string",
+                                "value": "ap-southeast-1"
+                              },
+                              "id": "OPT7",
+                              "type": "field_option",
+                              "updated_at": "2023-01-01T00:00:00Z"
+                            }
+                          ],
+                          "field_type": "multi_value_fixed",
+                          "id": "ABCDEF2",
+                          "name": "supported_regions",
+                          "self": "https://api.pagerduty.com/services/custom_fields/ABCDEF2",
+                          "summary": "Supported Regions",
+                          "type": "custom_fields_field",
+                          "updated_at": "2023-01-01T00:00:00Z"
+                        },
+                        {
+                          "created_at": "2023-01-01T00:00:00Z",
+                          "data_type": "string",
+                          "default_value": "platform",
+                          "description": "The team that owns this service",
+                          "display_name": "Team Owner",
+                          "enabled": true,
+                          "field_type": "single_value",
+                          "id": "ABCDEF3",
+                          "name": "team_owner",
+                          "self": "https://api.pagerduty.com/services/custom_fields/ABCDEF3",
+                          "summary": "Team Owner",
+                          "type": "custom_fields_field",
+                          "updated_at": "2023-01-01T00:00:00Z"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/services/custom_fields/{field_id}": {
+      "description": "Get, update and delete a field.",
+      "get": {
+        "tags": [
+          "Service Custom Fields"
+        ],
+        "x-pd-requires-scope": "custom_fields.read",
+        "operationId": "getServiceCustomField",
+        "description": "<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the `X-EARLY-ACCESS` header with `service-custom-fields-preview` to access it.\n\nShow detailed information about a Custom Field for Services.\n\nScoped OAuth requires: `custom_fields.read`\n",
+        "summary": "Get a Field",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/field_id"
+          },
+          {
+            "$ref": "#/components/parameters/include_customfields_field"
+          },
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The field requested.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "field": {
+                      "$ref": "#/components/schemas/ServiceCustomFieldsFieldReadModel"
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example (Default)",
+                    "value": {
+                      "field": {
+                        "created_at": "2023-01-01T00:00:00Z",
+                        "data_type": "string",
+                        "default_value": "production",
+                        "description": "The environment that the service operates in",
+                        "display_name": "Environment",
+                        "enabled": true,
+                        "field_type": "single_value_fixed",
+                        "id": "ABCDEF1",
+                        "name": "environment",
+                        "self": "https://api.pagerduty.com/services/custom_fields/ABCDEF1",
+                        "summary": "Environment",
+                        "type": "custom_fields_field",
+                        "updated_at": "2023-01-01T00:00:00Z"
+                      }
+                    }
+                  },
+                  "response_with_options": {
+                    "summary": "Response Example (With field_options included)",
+                    "value": {
+                      "field": {
+                        "created_at": "2023-01-01T00:00:00Z",
+                        "data_type": "string",
+                        "default_value": "production",
+                        "description": "The environment that the service operates in",
+                        "display_name": "Environment",
+                        "enabled": true,
+                        "field_options": [
+                          {
+                            "created_at": "2023-01-01T00:00:00Z",
+                            "data": {
+                              "data_type": "string",
+                              "value": "production"
+                            },
+                            "id": "OPT1",
+                            "type": "field_option",
+                            "updated_at": "2023-01-01T00:00:00Z"
+                          },
+                          {
+                            "created_at": "2023-01-01T00:00:00Z",
+                            "data": {
+                              "data_type": "string",
+                              "value": "staging"
+                            },
+                            "id": "OPT2",
+                            "type": "field_option",
+                            "updated_at": "2023-01-01T00:00:00Z"
+                          },
+                          {
+                            "created_at": "2023-01-01T00:00:00Z",
+                            "data": {
+                              "data_type": "string",
+                              "value": "development"
+                            },
+                            "id": "OPT3",
+                            "type": "field_option",
+                            "updated_at": "2023-01-01T00:00:00Z"
+                          }
+                        ],
+                        "field_type": "single_value_fixed",
+                        "id": "ABCDEF1",
+                        "name": "environment",
+                        "self": "https://api.pagerduty.com/services/custom_fields/ABCDEF1",
+                        "summary": "Environment",
+                        "type": "custom_fields_field",
+                        "updated_at": "2023-01-01T00:00:00Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Service Custom Fields"
+        ],
+        "x-pd-requires-scope": "custom_fields.write",
+        "operationId": "updateServiceCustomField",
+        "description": "<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the `X-EARLY-ACCESS` header with `service-custom-fields-preview` to access it.\n\nUpdate a Custom Field for Services.\n\nScoped OAuth requires: `custom_fields.write`\n",
+        "summary": "Update a Field",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/field_id"
+          },
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "field": {
+                    "$ref": "#/components/schemas/ServiceCustomFieldsFieldUpdateModel"
+                  }
+                },
+                "required": [
+                  "field"
+                ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Update Field Example - Basic Properties",
+                  "value": {
+                    "field": {
+                      "default_value": "prod-main",
+                      "description": "The production environment where this service is deployed",
+                      "display_name": "Production Environment",
+                      "enabled": true
+                    }
+                  }
+                },
+                "request_with_options": {
+                  "summary": "Update Field Example - With Field Options",
+                  "value": {
+                    "field": {
+                      "default_value": "prod-main",
+                      "description": "The production environment where this service is deployed",
+                      "display_name": "Production Environment",
+                      "enabled": true,
+                      "field_options": [
+                        {
+                          "data": {
+                            "data_type": "string",
+                            "value": "production"
+                          },
+                          "id": "OPT1"
+                        },
+                        {
+                          "data": {
+                            "data_type": "string",
+                            "value": "staging-new"
+                          },
+                          "id": "OPT2"
+                        },
+                        {
+                          "data": {
+                            "data_type": "string",
+                            "value": "development-new"
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The field object updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "field": {
+                      "$ref": "#/components/schemas/ServiceCustomFieldsFieldReadModel"
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "field": {
+                        "created_at": "2023-01-01T00:00:00Z",
+                        "data_type": "string",
+                        "default_value": "prod-main",
+                        "description": "The production environment where this service is deployed",
+                        "display_name": "Production Environment",
+                        "enabled": true,
+                        "field_options": [
+                          {
+                            "created_at": "2023-01-01T00:00:00Z",
+                            "data": {
+                              "data_type": "string",
+                              "value": "production"
+                            },
+                            "id": "OPT1",
+                            "type": "field_option",
+                            "updated_at": "2023-01-02T00:00:00Z"
+                          },
+                          {
+                            "created_at": "2023-01-01T00:00:00Z",
+                            "data": {
+                              "data_type": "string",
+                              "value": "staging-new"
+                            },
+                            "id": "OPT2",
+                            "type": "field_option",
+                            "updated_at": "2023-01-02T00:00:00Z"
+                          },
+                          {
+                            "created_at": "2023-01-02T00:00:00Z",
+                            "data": {
+                              "data_type": "string",
+                              "value": "development-new"
+                            },
+                            "id": "OPT4",
+                            "type": "field_option",
+                            "updated_at": "2023-01-02T00:00:00Z"
+                          }
+                        ],
+                        "field_type": "single_value_fixed",
+                        "id": "ABCDEF1",
+                        "name": "environment",
+                        "self": "https://api.pagerduty.com/services/custom_fields/ABCDEF1",
+                        "summary": "Production Environment",
+                        "type": "custom_fields_field",
+                        "updated_at": "2023-01-02T00:00:00Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Service Custom Fields"
+        ],
+        "x-pd-requires-scope": "custom_fields.write",
+        "operationId": "deleteServiceCustomField",
+        "description": "<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the `X-EARLY-ACCESS` header with `service-custom-fields-preview` to access it.\n\nDelete a Custom Field from Services.\n\nScoped OAuth requires: `custom_fields.write`\n",
+        "summary": "Delete a Field",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/field_id"
+          },
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The field was deleted successfully."
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/services/custom_fields/{field_id}/field_options": {
+      "description": "Create new option for the given field_options (e.g., enum) field and list all options for the given field.",
+      "get": {
+        "tags": [
+          "Service Custom Fields"
+        ],
+        "x-pd-requires-scope": "custom_fields.read",
+        "operationId": "listServiceCustomFieldOptions",
+        "description": "<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the `X-EARLY-ACCESS` header with `service-custom-fields-preview` to access it.\n\nList all options for a given field.\n\nScoped OAuth requires: `custom_fields.read`\n",
+        "summary": "List Field Options",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/field_id"
+          },
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of field options.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "field_options": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ServiceCustomFieldsFieldOptionReadModel"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "field_options": [
+                        {
+                          "created_at": "2023-01-01T00:00:00Z",
+                          "data": {
+                            "data_type": "string",
+                            "value": "production"
+                          },
+                          "id": "OPT1",
+                          "type": "field_option",
+                          "updated_at": "2023-01-01T00:00:00Z"
+                        },
+                        {
+                          "created_at": "2023-01-01T00:00:00Z",
+                          "data": {
+                            "data_type": "string",
+                            "value": "staging"
+                          },
+                          "id": "OPT2",
+                          "type": "field_option",
+                          "updated_at": "2023-01-01T00:00:00Z"
+                        },
+                        {
+                          "created_at": "2023-01-01T00:00:00Z",
+                          "data": {
+                            "data_type": "string",
+                            "value": "development"
+                          },
+                          "id": "OPT3",
+                          "type": "field_option",
+                          "updated_at": "2023-01-01T00:00:00Z"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Service Custom Fields"
+        ],
+        "x-pd-requires-scope": "custom_fields.write",
+        "operationId": "createServiceCustomFieldOption",
+        "description": "<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the `X-EARLY-ACCESS` header with `service-custom-fields-preview` to access it.\n\nCreate a new option for the given field.\n\nScoped OAuth requires: `custom_fields.write`\n",
+        "summary": "Create a Field Option",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/field_id"
+          },
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "field_option": {
+                    "$ref": "#/components/schemas/ServiceCustomFieldsFieldOptionUpdateModel"
+                  }
+                },
+                "required": [
+                  "field_option"
+                ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "field_option": {
+                      "data": {
+                        "data_type": "string",
+                        "value": "production"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The field option created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "field_option": {
+                      "$ref": "#/components/schemas/ServiceCustomFieldsFieldOptionReadModel"
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "field_option": {
+                        "created_at": "2023-01-01T00:00:00Z",
+                        "data": {
+                          "data_type": "string",
+                          "value": "production"
+                        },
+                        "id": "OPT1",
+                        "type": "field_option",
+                        "updated_at": "2023-01-01T00:00:00Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/services/custom_fields/{field_id}/field_options/{field_option_id}": {
+      "description": "Get, update or delete a field option.",
+      "get": {
+        "tags": [
+          "Service Custom Fields"
+        ],
+        "x-pd-requires-scope": "custom_fields.read",
+        "operationId": "getServiceCustomFieldOption",
+        "description": "<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the `X-EARLY-ACCESS` header with `service-custom-fields-preview` to access it.\n\nGet a field option for a given field.\n\nScoped OAuth requires: `custom_fields.read`\n",
+        "summary": "Get a Field Option",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/field_id"
+          },
+          {
+            "$ref": "#/components/parameters/field_option_id"
+          },
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The requested field option.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "field_option": {
+                      "$ref": "#/components/schemas/ServiceCustomFieldsFieldOptionReadModel"
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "field_option": {
+                        "created_at": "2023-01-01T00:00:00Z",
+                        "data": {
+                          "data_type": "string",
+                          "value": "production"
+                        },
+                        "id": "OPT1",
+                        "type": "field_option",
+                        "updated_at": "2023-01-01T00:00:00Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Service Custom Fields"
+        ],
+        "x-pd-requires-scope": "custom_fields.write",
+        "operationId": "updateServiceCustomFieldOption",
+        "description": "<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the `X-EARLY-ACCESS` header with `service-custom-fields-preview` to access it.\n\nUpdate a field option for a given field.\n\nScoped OAuth requires: `custom_fields.write`\n",
+        "summary": "Update a Field Option",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/field_id"
+          },
+          {
+            "$ref": "#/components/parameters/field_option_id"
+          },
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "field_option": {
+                    "$ref": "#/components/schemas/ServiceCustomFieldsFieldOptionUpdateModel"
+                  }
+                },
+                "required": [
+                  "field_option"
+                ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "field_option": {
+                      "data": {
+                        "data_type": "string",
+                        "value": "prod"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The field option updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "field_option": {
+                      "$ref": "#/components/schemas/ServiceCustomFieldsFieldOptionReadModel"
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "field_option": {
+                        "created_at": "2023-01-01T00:00:00Z",
+                        "data": {
+                          "data_type": "string",
+                          "value": "prod"
+                        },
+                        "id": "OPT1",
+                        "type": "field_option",
+                        "updated_at": "2023-01-02T00:00:00Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Service Custom Fields"
+        ],
+        "x-pd-requires-scope": "custom_fields.write",
+        "operationId": "deleteServiceCustomFieldOption",
+        "description": "<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the `X-EARLY-ACCESS` header with `service-custom-fields-preview` to access it.\n\nDelete a field option.\n\nScoped OAuth requires: `custom_fields.write`\n",
+        "summary": "Delete a Field Option",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/field_id"
+          },
+          {
+            "$ref": "#/components/parameters/field_option_id"
+          },
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The field option was deleted successfully."
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/services/{id}/custom_fields/values": {
+      "description": "Retrieve and update service custom fields.",
+      "get": {
+        "tags": [
+          "Services"
+        ],
+        "x-pd-requires-scope": "services.read",
+        "operationId": "getServiceCustomFieldValues",
+        "description": "<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the `X-EARLY-ACCESS` header with `service-custom-fields-preview` to access it.\n\nGet custom field values for a service.\n\nScoped OAuth requires: `services.read`\n",
+        "summary": "Get Custom Field Values",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The list of custom field values.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "custom_fields": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ServiceCustomFieldsFieldValueReadModel"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "single_value_example": {
+                    "summary": "Response Example",
+                    "value": {
+                      "custom_fields": [
+                        {
+                          "data_type": "string",
+                          "description": "environment where service instance runs",
+                          "display_name": "Runtime Environment",
+                          "field_type": "single_value_fixed",
+                          "id": "PT4KHEE",
+                          "name": "environment",
+                          "type": "field_value",
+                          "value": "production"
+                        }
+                      ]
+                    }
+                  },
+                  "multi_value_example": {
+                    "summary": "Response Example",
+                    "value": {
+                      "custom_fields": [
+                        {
+                          "data_type": "string",
+                          "description": "environment where service instance runs",
+                          "display_name": "Runtime Environment",
+                          "field_type": "multi_value_fixed",
+                          "id": "PT4KHEE",
+                          "name": "environment",
+                          "type": "field_value",
+                          "value": [
+                            "production",
+                            "staging"
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Services"
+        ],
+        "x-pd-requires-scope": "services.write",
+        "operationId": "updateServiceCustomFieldValues",
+        "description": "<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the `X-EARLY-ACCESS` header with `service-custom-fields-preview` to access it.\n\nSet custom field values for a service.\n\nScoped OAuth requires: `services.write`\n",
+        "summary": "Update Custom Field Values",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "custom_fields": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/ServiceCustomFieldsFieldValueUpdateModel"
+                    }
+                  }
+                },
+                "required": [
+                  "custom_fields"
+                ]
+              },
+              "examples": {
+                "example_with_custom_field_id": {
+                  "summary": "Request Example",
+                  "value": {
+                    "custom_fields": [
+                      {
+                        "id": "PT4KHEE",
+                        "value": "production"
+                      }
+                    ]
+                  }
+                },
+                "example_with_custom_field_name": {
+                  "summary": "Request Example",
+                  "value": {
+                    "custom_fields": [
+                      {
+                        "name": "environment",
+                        "value": "production"
+                      }
+                    ]
+                  }
+                },
+                "example_with_multiple_value_field": {
+                  "summary": "Request Example",
+                  "value": {
+                    "custom_fields": [
+                      {
+                        "id": "PT4KHEE",
+                        "value": [
+                          "production",
+                          "staging"
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The custom field values were updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "custom_fields": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ServiceCustomFieldsFieldValueReadModel"
+                      }
+                    }
+                  },
+                  "required": [
+                    "custom_fields"
+                  ]
+                },
+                "examples": {
+                  "single_value_example": {
+                    "summary": "Response Example",
+                    "value": {
+                      "custom_fields": [
+                        {
+                          "data_type": "string",
+                          "description": "environment where service instance runs",
+                          "display_name": "Runtime Environment",
+                          "field_type": "single_value_fixed",
+                          "id": "PT4KHEE",
+                          "name": "environment",
+                          "type": "field_value",
+                          "value": "production"
+                        }
+                      ]
+                    }
+                  },
+                  "multi_value_example": {
+                    "summary": "Response Example",
+                    "value": {
+                      "custom_fields": [
+                        {
+                          "data_type": "string",
+                          "description": "environment where service instance runs",
+                          "display_name": "Runtime Environment",
+                          "field_type": "multi_value_fixed",
+                          "id": "PT4KHEE",
+                          "name": "environment",
+                          "type": "field_value",
+                          "value": [
+                            "production",
+                            "staging"
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           }
         }
       }
