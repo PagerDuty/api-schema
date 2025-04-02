@@ -11530,7 +11530,27 @@
             "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/data_type"
           },
           "default_value": {
-            "$ref": "#/components/schemas/IncidentTypeCustomFields/properties/default_value"
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/value/oneOf/0"
+              },
+              {
+                "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/value/oneOf/2"
+              },
+              {
+                "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/value/oneOf/1"
+              },
+              {
+                "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/value/oneOf/3"
+              },
+              {
+                "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/value/oneOf/4"
+              },
+              {
+                "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/value/oneOf/5"
+              }
+            ],
+            "description": "Default values are only applied to newly created resources. Existing resources are not updated."
           },
           "description": {
             "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/description"
@@ -11566,7 +11586,7 @@
         "description": "Details of the custom field to be updated.",
         "properties": {
           "default_value": {
-            "$ref": "#/components/schemas/IncidentTypeCustomFields/properties/default_value"
+            "$ref": "#/components/schemas/ServiceCustomFieldsFieldCreateModel/properties/default_value"
           },
           "description": {
             "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/description"
@@ -11589,13 +11609,13 @@
                   "properties": {
                     "id": {
                       "type": "string",
-                      "description": "The ID of the resource. When an id property is included, this will update the value of the specified field option. Without an id property, that field option will be added to the field. Any existing field options not included in the upsert list will be deleted (unless the current default value refers to a field option to be deleted).",
-                      "nullable": true
+                      "description": "The unique identifier of the field option. How this field is used determines the behavior:\n  - When included with a valid `id`: Updates the corresponding existing field option\n  - When omitted or null: Creates a new field option\n"
                     }
                   }
                 }
               ]
-            }
+            },
+            "description": "List of field options to update, insert or delete. This field supports several behaviors:\n  - Empty array: Deletes all field options\n  - Omitting the `field_options` array entirely: Preserves all existing options\n  - Not listing an existing option: Deletes that option (unless it's the current default value)\n"
           }
         }
       },

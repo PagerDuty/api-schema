@@ -4,6 +4,11 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently, we rarely deprecate, and do not remove any API functionality.
 
+## 2025-04-01
+For the Service Custom Fields endpoints, the following clarifications were made:
+ - Field default values are only applied to newly created Services. We now make that clearer in the API docs.
+ - Field Options, when passed in the `PUT /services/custom_fields/{field_id}` endpoint work as an upsert. That's now also made clearer, for the API user.
+
 ## 2025-03-31
 - Added Early Access endpoints for Service Custom Fields management. These endpoints allow creating, retrieving, updating, and deleting custom fields and their values for Services. All endpoints require the X-EARLY-ACCESS header.
   - Service Custom Fields endpoints:
