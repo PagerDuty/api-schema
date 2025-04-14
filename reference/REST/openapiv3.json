@@ -5180,7 +5180,10 @@
                               ],
                               "pagerduty_automation_actions": [
                                 {
-                                  "action_id": "01CSB5SMOKCKVRI5GN0LJG7SMB"
+                                  "action_id": "01CSB5SMOKCKVRI5GN0LJG7SMB",
+                                  "trigger_types": [
+                                    "alert_triggered"
+                                  ]
                                 }
                               ],
                               "route_to": "step-two",
@@ -5250,6 +5253,9 @@
                                       "key": "message",
                                       "value": "Something is wrong with the canary deployment"
                                     }
+                                  ],
+                                  "trigger_types": [
+                                    "alert_triggered"
                                   ]
                                 }
                               ],
@@ -5257,6 +5263,26 @@
                                 {
                                   "id": "PEXCK89",
                                   "value": "#my-team-channel"
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "label": "Pause the alert and trigger a reboot action if flaky server receives an error",
+                            "id": "c0163dbe",
+                            "conditions": [
+                              {
+                                "expression": "event.custom_details.hostname matches part 'staging'"
+                              }
+                            ],
+                            "actions": {
+                              "suspend": 300,
+                              "pagerduty_automation_actions": [
+                                {
+                                  "action_id": "01CSBCGJXMG7ABIJZKPD8P9RCL",
+                                  "trigger_types": [
+                                    "alert_suspended"
+                                  ]
                                 }
                               ]
                             }
@@ -16195,7 +16221,7 @@
                                     },
                                     "auto_send": {
                                       "type": "boolean",
-                                      "description": "When true, PagerDuty's servers will automatically send this webhook request as soon as the resulting incident is created. When false, your incident responder will be able to manually trigger the Webhook via the PagerDuty website & mobile app.",
+                                      "description": "When true, PagerDuty's servers will automatically send this webhook request as soon as the resulting incident or alert is created. When false, your incident responder will be able to manually trigger the Webhook via the PagerDuty website & mobile app.",
                                       "default": false
                                     },
                                     "headers": {
@@ -16212,6 +16238,21 @@
                                             "description": "AIOps users can additionally use the {{event}} variable to include elements of the event payload in the header value."
                                           }
                                         }
+                                      }
+                                    },
+                                    "trigger_types": {
+                                      "type": "array",
+                                      "description": "The Webhook will be associated (or automatically triggered, if `auto_send` is `true`) with the incident, whenever an alert reaches the specified state\n\nNote: `auto_send` must be `true` for trigger types of `alert_suppressed` and `alert_suspended`\n",
+                                      "minItems": 1,
+                                      "maxItems": 1,
+                                      "uniqueItems": true,
+                                      "items": {
+                                        "type": "string",
+                                        "enum": [
+                                          "alert_triggered",
+                                          "alert_suppressed",
+                                          "alert_suspended"
+                                        ]
                                       }
                                     },
                                     "parameters": {
@@ -16825,13 +16866,28 @@
                                 "properties": {
                                   "pagerduty_automation_actions": {
                                     "type": "array",
-                                    "description": "Configure an Automation Action associated with the resulting incident.",
+                                    "description": "Configure an Automation Action to be run for certain alert states.",
                                     "items": {
                                       "type": "object",
                                       "properties": {
                                         "action_id": {
                                           "type": "string",
                                           "description": "Automation Action ID"
+                                        },
+                                        "trigger_types": {
+                                          "type": "array",
+                                          "description": "The Automation Action will be triggered whenever an alert reaches the specified state",
+                                          "minItems": 1,
+                                          "maxItems": 1,
+                                          "uniqueItems": true,
+                                          "items": {
+                                            "type": "string",
+                                            "enum": [
+                                              "alert_triggered",
+                                              "alert_suppressed",
+                                              "alert_suspended"
+                                            ]
+                                          }
                                         }
                                       }
                                     }
@@ -16935,7 +16991,10 @@
                         "actions": {
                           "pagerduty_automation_actions": [
                             {
-                              "action_id": "01CSB5SMOKCKVRI5GN0LJG7SMB"
+                              "action_id": "01CSB5SMOKCKVRI5GN0LJG7SMB",
+                              "trigger_types": [
+                                "alert_triggered"
+                              ]
                             }
                           ]
                         }
@@ -16967,6 +17026,9 @@
                                   "key": "message",
                                   "value": "Something is wrong with the canary deployment"
                                 }
+                              ],
+                              "trigger_types": [
+                                "alert_triggered"
                               ]
                             }
                           ],
@@ -16974,6 +17036,26 @@
                             {
                               "id": "PEXCK89",
                               "value": "#my-team-channel"
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "label": "Pause the alert and trigger a reboot action if flaky server receives an error",
+                        "id": "c0163dbe",
+                        "conditions": [
+                          {
+                            "expression": "event.custom_details.hostname matches part 'staging'"
+                          }
+                        ],
+                        "actions": {
+                          "suspend": 300,
+                          "pagerduty_automation_actions": [
+                            {
+                              "action_id": "01CSBCGJXMG7ABIJZKPD8P9RCL",
+                              "trigger_types": [
+                                "alert_suspended"
+                              ]
                             }
                           ]
                         }
@@ -30347,7 +30429,10 @@
                                 ],
                                 "pagerduty_automation_actions": [
                                   {
-                                    "action_id": "01CSB5SMOKCKVRI5GN0LJG7SMB"
+                                    "action_id": "01CSB5SMOKCKVRI5GN0LJG7SMB",
+                                    "trigger_types": [
+                                      "alert_triggered"
+                                    ]
                                   }
                                 ],
                                 "incident_custom_field_updates": [
@@ -30417,6 +30502,9 @@
                                         "key": "message",
                                         "value": "Something is wrong with the canary deployment"
                                       }
+                                    ],
+                                    "trigger_types": [
+                                      "alert_triggered"
                                     ]
                                   }
                                 ],
@@ -30424,6 +30512,26 @@
                                   {
                                     "id": "PEXCK89",
                                     "value": "#my-team-channel"
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "label": "Pause the alert and trigger a reboot action if flaky server receives an error",
+                              "id": "c0163dbe",
+                              "conditions": [
+                                {
+                                  "expression": "event.custom_details.hostname matches part 'staging'"
+                                }
+                              ],
+                              "actions": {
+                                "suspend": 300,
+                                "pagerduty_automation_actions": [
+                                  {
+                                    "action_id": "01CSBCGJXMG7ABIJZKPD8P9RCL",
+                                    "trigger_types": [
+                                      "alert_suspended"
+                                    ]
                                   }
                                 ]
                               }
@@ -30533,7 +30641,10 @@
                                   ],
                                   "pagerduty_automation_actions": [
                                     {
-                                      "action_id": "01CSB5SMOKCKVRI5GN0LJG7SMB"
+                                      "action_id": "01CSB5SMOKCKVRI5GN0LJG7SMB",
+                                      "trigger_types": [
+                                        "alert_triggered"
+                                      ]
                                     }
                                   ],
                                   "incident_custom_field_updates": [
@@ -30603,6 +30714,29 @@
                                           "key": "message",
                                           "value": "Something is wrong with the canary deployment"
                                         }
+                                      ],
+                                      "trigger_types": [
+                                        "alert_triggered"
+                                      ]
+                                    }
+                                  ]
+                                }
+                              },
+                              {
+                                "label": "Pause the alert and trigger a reboot action if flaky server receives an error",
+                                "id": "c0163dbe",
+                                "conditions": [
+                                  {
+                                    "expression": "event.custom_details.hostname matches part 'staging'"
+                                  }
+                                ],
+                                "actions": {
+                                  "suspend": 300,
+                                  "pagerduty_automation_actions": [
+                                    {
+                                      "action_id": "01CSBCGJXMG7ABIJZKPD8P9RCL",
+                                      "trigger_types": [
+                                        "alert_suspended"
                                       ]
                                     }
                                   ]
