@@ -38651,8 +38651,8 @@
                   "summary": "Request Example",
                   "value": {
                     "incident_type": {
-                      "name": "security",
-                      "display_name": "Securty Incidents",
+                      "name": "fraud_incident",
+                      "display_name": "Fraud Incident",
                       "parent_type": "incident_default"
                     }
                   }
@@ -38683,17 +38683,17 @@
                     "value": {
                       "incident_type": {
                         "enabled": true,
-                        "id": "P6789",
-                        "name": "security_incident",
+                        "id": "P234567",
+                        "name": "fraud_incident",
                         "parent": {
                           "id": "P123456",
                           "type": "incident_type_reference"
                         },
                         "type": "incident_type",
-                        "description": "Security incidents",
+                        "description": null,
                         "created_at": "2023-05-31T13:41:47Z",
                         "updated_at": "2023-07-31T13:41:47Z",
-                        "display_name": "Security Incident"
+                        "display_name": "Fraud Incident"
                       }
                     }
                   }
@@ -38987,10 +38987,10 @@
                         },
                         {
                           "enabled": true,
-                          "id": "P6789",
+                          "id": "P456789",
                           "name": "due_date",
                           "type": "field",
-                          "self": "https://api.pagerduty.com/incidents/types/P123456/custom_fields/P6789",
+                          "self": "https://api.pagerduty.com/incidents/types/P123456/custom_fields/P456789",
                           "description": "field description",
                           "field_type": "single_value",
                           "data_type": "string",
@@ -39048,10 +39048,10 @@
                         },
                         {
                           "enabled": true,
-                          "id": "P6789",
+                          "id": "P456789",
                           "name": "due_date",
                           "type": "field",
-                          "self": "https://api.pagerduty.com/incidents/types/P123456/custom_fields/P6789",
+                          "self": "https://api.pagerduty.com/incidents/types/P123456/custom_fields/P456789",
                           "description": "field description",
                           "field_type": "single_value",
                           "data_type": "string",
@@ -39370,7 +39370,7 @@
                       "field": {
                         "enabled": true,
                         "id": "P123456",
-                        "name": "custom_field_1",
+                        "name": "environment",
                         "type": "field",
                         "self": "https://api.pagerduty.com/incidents/types/P567890/custom_fields/P123456",
                         "description": "The environment that the issue occurred in",
@@ -39378,10 +39378,10 @@
                         "data_type": "string",
                         "updated_at": "2021-06-01T21:30:42Z",
                         "created_at": "2021-06-01T21:30:42Z",
-                        "display_name": "Custom Field 1",
+                        "display_name": "Environment",
                         "default_value": null,
                         "incident_type": "P567890",
-                        "summary": "custom_field_1"
+                        "summary": "environment"
                       }
                     }
                   },
@@ -39391,7 +39391,7 @@
                       "field": {
                         "enabled": true,
                         "id": "P123456",
-                        "name": "custom_field_1",
+                        "name": "environment",
                         "type": "field",
                         "self": "https://api.pagerduty.com/incidents/types/P567890/custom_fields/P123456",
                         "description": "The environment that the issue occurred in",
@@ -39399,10 +39399,10 @@
                         "data_type": "string",
                         "updated_at": "2021-06-01T21:30:42Z",
                         "created_at": "2021-06-01T21:30:42Z",
-                        "display_name": "Custom Field 1",
+                        "display_name": "Environment",
                         "default_value": null,
                         "incident_type": "P567890",
-                        "summary": "custom_field_1",
+                        "summary": "environment",
                         "field_options": [
                           {
                             "id": "PT4KHEE",
