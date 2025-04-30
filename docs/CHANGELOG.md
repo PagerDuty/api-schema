@@ -4,6 +4,9 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently, we rarely deprecate, and do not remove any API functionality.
 
+## 2025-04-30
+- Clarified behavior in Service Custom Field Value update model documentation
+
 ## 2025-04-14
 - Added support for specifying `trigger_types` when configuring a Webhook or Automation Action on an Event Orchestration
 

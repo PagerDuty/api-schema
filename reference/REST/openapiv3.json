@@ -11766,6 +11766,7 @@
       },
       "ServiceCustomFieldsFieldValueUpdateModel": {
         "title": "Custom Field Value",
+        "description": "During updates:\n- Omitted fields remain unchanged\n- Null values reset fields\n- Provided values update fields\n\nNote: All updates succeed or none are applied.\n",
         "oneOf": [
           {
             "type": "object",
