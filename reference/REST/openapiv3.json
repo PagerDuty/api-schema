@@ -18812,7 +18812,8 @@
             "description": "The status of the Subscription.",
             "enum": [
               "active",
-              "pending"
+              "pending",
+              "suspended"
             ],
             "nullable": false,
             "title": "SubscriptionStatus",
