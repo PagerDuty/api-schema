@@ -33109,9 +33109,18 @@
                   "incident_workflow_instance": {
                     "type": "object",
                     "properties": {
+                      "id": {
+                        "type": "string",
+                        "description": "An identifier to help differentiate between workflow executions.",
+                        "example": "P3SNKQS"
+                      },
                       "incident": {
                         "type": "object",
                         "properties": {
+                          "id": {
+                            "type": "string",
+                            "example": "Q1R2DLCB21K7NP"
+                          },
                           "type": {
                             "type": "string",
                             "enum": [
