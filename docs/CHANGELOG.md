@@ -4,6 +4,9 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently, we rarely deprecate, and do not remove any API functionality.
 
+## 2025-05-31
+- Temporarily removed `default_value` field from Service Custom Fields endpoints during Early Access. This change only affects service custom fields and does not impact incident custom fields or incident types custom fields. The default values feature for services may be reintroduced with improvements in a future release.
+
 ## 2025-04-30
 - Clarified behavior in Service Custom Field Value update model documentation
 

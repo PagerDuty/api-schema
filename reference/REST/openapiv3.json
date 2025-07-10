@@ -11491,9 +11491,6 @@
           "data_type": {
             "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/data_type"
           },
-          "default_value": {
-            "$ref": "#/components/schemas/IncidentTypeCustomFields/properties/default_value"
-          },
           "description": {
             "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/description"
           },
@@ -11555,29 +11552,6 @@
           "data_type": {
             "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/data_type"
           },
-          "default_value": {
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/value/oneOf/0"
-              },
-              {
-                "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/value/oneOf/2"
-              },
-              {
-                "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/value/oneOf/1"
-              },
-              {
-                "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/value/oneOf/3"
-              },
-              {
-                "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/value/oneOf/4"
-              },
-              {
-                "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/value/oneOf/5"
-              }
-            ],
-            "description": "Default values are only applied to newly created resources. Existing resources are not updated."
-          },
           "description": {
             "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/description"
           },
@@ -11611,9 +11585,6 @@
         "type": "object",
         "description": "Details of the custom field to be updated.",
         "properties": {
-          "default_value": {
-            "$ref": "#/components/schemas/ServiceCustomFieldsFieldCreateModel/properties/default_value"
-          },
           "description": {
             "$ref": "#/components/schemas/CustomFieldsFieldValue/properties/description"
           },
@@ -49120,7 +49091,6 @@
                   "value": {
                     "field": {
                       "data_type": "string",
-                      "default_value": "production",
                       "description": "The environment that the service operates in",
                       "display_name": "Environment",
                       "enabled": true,
@@ -49154,10 +49124,6 @@
                   "value": {
                     "field": {
                       "data_type": "string",
-                      "default_value": [
-                        "us-east-1",
-                        "eu-west-1"
-                      ],
                       "description": "The regions where this service is deployed",
                       "display_name": "Supported Regions",
                       "enabled": true,
@@ -49197,7 +49163,6 @@
                   "value": {
                     "field": {
                       "data_type": "string",
-                      "default_value": "platform",
                       "description": "The team that owns this service",
                       "display_name": "Team Owner",
                       "enabled": true,
@@ -49233,7 +49198,6 @@
                       "field": {
                         "created_at": "2023-01-01T00:00:00Z",
                         "data_type": "string",
-                        "default_value": "production",
                         "description": "The environment that the service operates in",
                         "display_name": "Environment",
                         "enabled": true,
@@ -49285,10 +49249,6 @@
                       "field": {
                         "created_at": "2023-01-01T00:00:00Z",
                         "data_type": "string",
-                        "default_value": [
-                          "us-east-1",
-                          "eu-west-1"
-                        ],
                         "description": "The regions where this service is deployed",
                         "display_name": "Supported Regions",
                         "enabled": true,
@@ -49350,7 +49310,6 @@
                       "field": {
                         "created_at": "2023-01-01T00:00:00Z",
                         "data_type": "string",
-                        "default_value": "platform",
                         "description": "The team that owns this service",
                         "display_name": "Team Owner",
                         "enabled": true,
@@ -49422,7 +49381,6 @@
                         {
                           "created_at": "2023-01-01T00:00:00Z",
                           "data_type": "string",
-                          "default_value": "production",
                           "description": "The environment that the service operates in",
                           "display_name": "Environment",
                           "enabled": true,
@@ -49437,10 +49395,6 @@
                         {
                           "created_at": "2023-01-01T00:00:00Z",
                           "data_type": "string",
-                          "default_value": [
-                            "us-east-1",
-                            "eu-west-1"
-                          ],
                           "description": "The regions where this service is deployed",
                           "display_name": "Supported Regions",
                           "enabled": true,
@@ -49455,7 +49409,6 @@
                         {
                           "created_at": "2023-01-01T00:00:00Z",
                           "data_type": "string",
-                          "default_value": "platform",
                           "description": "The team that owns this service",
                           "display_name": "Team Owner",
                           "enabled": true,
@@ -49477,7 +49430,6 @@
                         {
                           "created_at": "2023-01-01T00:00:00Z",
                           "data_type": "string",
-                          "default_value": "production",
                           "description": "The environment that the service operates in",
                           "display_name": "Environment",
                           "enabled": true,
@@ -49524,10 +49476,6 @@
                         {
                           "created_at": "2023-01-01T00:00:00Z",
                           "data_type": "string",
-                          "default_value": [
-                            "us-east-1",
-                            "eu-west-1"
-                          ],
                           "description": "The regions where this service is deployed",
                           "display_name": "Supported Regions",
                           "enabled": true,
@@ -49584,7 +49532,6 @@
                         {
                           "created_at": "2023-01-01T00:00:00Z",
                           "data_type": "string",
-                          "default_value": "platform",
                           "description": "The team that owns this service",
                           "display_name": "Team Owner",
                           "enabled": true,
@@ -49656,7 +49603,6 @@
                       "field": {
                         "created_at": "2023-01-01T00:00:00Z",
                         "data_type": "string",
-                        "default_value": "production",
                         "description": "The environment that the service operates in",
                         "display_name": "Environment",
                         "enabled": true,
@@ -49676,7 +49622,6 @@
                       "field": {
                         "created_at": "2023-01-01T00:00:00Z",
                         "data_type": "string",
-                        "default_value": "production",
                         "description": "The environment that the service operates in",
                         "display_name": "Environment",
                         "enabled": true,
@@ -49775,7 +49720,6 @@
                   "summary": "Update Field Example - Basic Properties",
                   "value": {
                     "field": {
-                      "default_value": "prod-main",
                       "description": "The production environment where this service is deployed",
                       "display_name": "Production Environment",
                       "enabled": true
@@ -49786,7 +49730,6 @@
                   "summary": "Update Field Example - With Field Options",
                   "value": {
                     "field": {
-                      "default_value": "prod-main",
                       "description": "The production environment where this service is deployed",
                       "display_name": "Production Environment",
                       "enabled": true,
@@ -49839,7 +49782,6 @@
                       "field": {
                         "created_at": "2023-01-01T00:00:00Z",
                         "data_type": "string",
-                        "default_value": "prod-main",
                         "description": "The production environment where this service is deployed",
                         "display_name": "Production Environment",
                         "enabled": true,
