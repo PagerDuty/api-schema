@@ -49061,7 +49061,7 @@
         ],
         "x-pd-requires-scope": "custom_fields.write",
         "operationId": "createServiceCustomField",
-        "description": "<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the `X-EARLY-ACCESS` header with `service-custom-fields-preview` to access it.\n\nCreates a new Custom Field for Services, along with the Field Options if provided.\n\nScoped OAuth requires: `custom_fields.write`\n",
+        "description": "Creates a new Custom Field for Services, along with the Field Options if provided.\n\nScoped OAuth requires: `custom_fields.write`\n",
         "summary": "Create a Field",
         "parameters": [
           {
@@ -49344,7 +49344,7 @@
         ],
         "x-pd-requires-scope": "custom_fields.read",
         "operationId": "listServiceCustomFields",
-        "description": "<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the `X-EARLY-ACCESS` header with `service-custom-fields-preview` to access it.\n\nList Custom Fields available for Services.\n\nScoped OAuth requires: `custom_fields.read`\n",
+        "description": "List Custom Fields available for Services.\n\nScoped OAuth requires: `custom_fields.read`\n",
         "summary": "List Fields",
         "parameters": [
           {
@@ -49567,7 +49567,7 @@
         ],
         "x-pd-requires-scope": "custom_fields.read",
         "operationId": "getServiceCustomField",
-        "description": "<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the `X-EARLY-ACCESS` header with `service-custom-fields-preview` to access it.\n\nShow detailed information about a Custom Field for Services.\n\nScoped OAuth requires: `custom_fields.read`\n",
+        "description": "Show detailed information about a Custom Field for Services.\n\nScoped OAuth requires: `custom_fields.read`\n",
         "summary": "Get a Field",
         "parameters": [
           {
@@ -49688,7 +49688,7 @@
         ],
         "x-pd-requires-scope": "custom_fields.write",
         "operationId": "updateServiceCustomField",
-        "description": "<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the `X-EARLY-ACCESS` header with `service-custom-fields-preview` to access it.\n\nUpdate a Custom Field for Services.\n\nScoped OAuth requires: `custom_fields.write`\n",
+        "description": "Update a Custom Field for Services.\n\nScoped OAuth requires: `custom_fields.write`\n",
         "summary": "Update a Field",
         "parameters": [
           {
@@ -49851,7 +49851,7 @@
         ],
         "x-pd-requires-scope": "custom_fields.write",
         "operationId": "deleteServiceCustomField",
-        "description": "<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the `X-EARLY-ACCESS` header with `service-custom-fields-preview` to access it.\n\nDelete a Custom Field from Services.\n\nScoped OAuth requires: `custom_fields.write`\n",
+        "description": "Delete a Custom Field from Services.\n\nScoped OAuth requires: `custom_fields.write`\n",
         "summary": "Delete a Field",
         "parameters": [
           {
@@ -49891,7 +49891,7 @@
         ],
         "x-pd-requires-scope": "custom_fields.read",
         "operationId": "listServiceCustomFieldOptions",
-        "description": "<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the `X-EARLY-ACCESS` header with `service-custom-fields-preview` to access it.\n\nList all options for a given field.\n\nScoped OAuth requires: `custom_fields.read`\n",
+        "description": "List all options for a given field.\n\nScoped OAuth requires: `custom_fields.read`\n",
         "summary": "List Field Options",
         "parameters": [
           {
@@ -49982,7 +49982,7 @@
         ],
         "x-pd-requires-scope": "custom_fields.write",
         "operationId": "createServiceCustomFieldOption",
-        "description": "<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the `X-EARLY-ACCESS` header with `service-custom-fields-preview` to access it.\n\nCreate a new option for the given field.\n\nScoped OAuth requires: `custom_fields.write`\n",
+        "description": "Create a new option for the given field.\n\nScoped OAuth requires: `custom_fields.write`\n",
         "summary": "Create a Field Option",
         "parameters": [
           {
@@ -50081,7 +50081,7 @@
         ],
         "x-pd-requires-scope": "custom_fields.read",
         "operationId": "getServiceCustomFieldOption",
-        "description": "<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the `X-EARLY-ACCESS` header with `service-custom-fields-preview` to access it.\n\nGet a field option for a given field.\n\nScoped OAuth requires: `custom_fields.read`\n",
+        "description": "Get a field option for a given field.\n\nScoped OAuth requires: `custom_fields.read`\n",
         "summary": "Get a Field Option",
         "parameters": [
           {
@@ -50150,7 +50150,7 @@
         ],
         "x-pd-requires-scope": "custom_fields.write",
         "operationId": "updateServiceCustomFieldOption",
-        "description": "<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the `X-EARLY-ACCESS` header with `service-custom-fields-preview` to access it.\n\nUpdate a field option for a given field.\n\nScoped OAuth requires: `custom_fields.write`\n",
+        "description": "Update a field option for a given field.\n\nScoped OAuth requires: `custom_fields.write`\n",
         "summary": "Update a Field Option",
         "parameters": [
           {
@@ -50249,7 +50249,7 @@
         ],
         "x-pd-requires-scope": "custom_fields.write",
         "operationId": "deleteServiceCustomFieldOption",
-        "description": "<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the `X-EARLY-ACCESS` header with `service-custom-fields-preview` to access it.\n\nDelete a field option.\n\nScoped OAuth requires: `custom_fields.write`\n",
+        "description": "Delete a field option.\n\nScoped OAuth requires: `custom_fields.write`\n",
         "summary": "Delete a Field Option",
         "parameters": [
           {
@@ -50292,7 +50292,7 @@
         ],
         "x-pd-requires-scope": "services.read",
         "operationId": "getServiceCustomFieldValues",
-        "description": "<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the `X-EARLY-ACCESS` header with `service-custom-fields-preview` to access it.\n\nGet custom field values for a service.\n\nScoped OAuth requires: `services.read`\n",
+        "description": "Get custom field values for a service.\n\nScoped OAuth requires: `services.read`\n",
         "summary": "Get Custom Field Values",
         "parameters": [
           {
@@ -50380,7 +50380,7 @@
         ],
         "x-pd-requires-scope": "services.write",
         "operationId": "updateServiceCustomFieldValues",
-        "description": "<!-- theme: warning -->\n> ### Early Access\n> This endpoint is in Early Access and may change at any time. You must pass in the `X-EARLY-ACCESS` header with `service-custom-fields-preview` to access it.\n\nSet custom field values for a service.\n\nScoped OAuth requires: `services.write`\n",
+        "description": "Set custom field values for a service.\n\nScoped OAuth requires: `services.write`\n",
         "summary": "Update Custom Field Values",
         "parameters": [
           {
