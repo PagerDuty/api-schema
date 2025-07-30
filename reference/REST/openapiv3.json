@@ -3295,9 +3295,19 @@
         "schema": {
           "type": "string",
           "enum": [
-            "schedule_layers"
+            "schedule_layers",
+            "overrides_subschedule",
+            "final_schedule"
           ],
           "uniqueItems": true
+        }
+      },
+      "include_next_oncall_for_user": {
+        "name": "include_next_oncall_for_user",
+        "in": "query",
+        "description": "Specify an `user_id`, and the schedule list API will return information about this user's next on-call.",
+        "schema": {
+          "type": "string"
         }
       },
       "sort_by_event_orchestration": {
@@ -3398,7 +3408,7 @@
       "schedule_since": {
         "name": "since",
         "in": "query",
-        "description": "The start of the date range over which you want to show schedule entries. Defaults to 2 weeks before until if an until is given.",
+        "description": "The start of the date range over which you want to show schedule entries. Defaults to 2 weeks before until if an until is given. Optional parameter. When provided with include[] for schedule types, populates the rendered_schedule_entries fields in the response.",
         "schema": {
           "type": "string",
           "format": "date-time"
@@ -3407,7 +3417,7 @@
       "schedule_until": {
         "name": "until",
         "in": "query",
-        "description": "The end of the date range over which you want to show schedule entries. Defaults to 2 weeks after since if a since is given.",
+        "description": "The end of the date range over which you want to show schedule entries. Defaults to 2 weeks after since if a since is given. Optional parameter. When provided with include[] for schedule types, populates the rendered_schedule_entries fields in the response.",
         "schema": {
           "type": "string",
           "format": "date-time"
@@ -12190,6 +12200,24 @@
                 "description": "An array of all of the teams on the schedule.",
                 "items": {
                   "$ref": "#/components/schemas/TeamReference"
+                }
+              },
+              "next_oncall_for_user": {
+                "type": "object",
+                "properties": {
+                  "start": {
+                    "type": "string",
+                    "readOnly": true,
+                    "description": "The start date for the User shift"
+                  },
+                  "end": {
+                    "type": "string",
+                    "readOnly": true,
+                    "description": "The end date for the User shift"
+                  },
+                  "user": {
+                    "$ref": "#/components/schemas/Reference"
+                  }
                 }
               }
             },
@@ -44723,6 +44751,15 @@
           },
           {
             "$ref": "#/components/parameters/schedule_list_time_zone"
+          },
+          {
+            "$ref": "#/components/parameters/include_next_oncall_for_user"
+          },
+          {
+            "$ref": "#/components/parameters/schedule_since"
+          },
+          {
+            "$ref": "#/components/parameters/schedule_until"
           }
         ],
         "responses": {
@@ -45083,6 +45120,9 @@
             "$ref": "#/components/parameters/schedule_overflow"
           },
           {
+            "$ref": "#/components/parameters/include_next_oncall_for_user"
+          },
+          {
             "$ref": "#/components/parameters/id"
           }
         ],
@@ -45204,6 +45244,19 @@
                             }
                           ],
                           "rendered_coverage_percentage": 37.5
+                        },
+                        "next_oncall_for_user": {
+                          "start": "2021-12-27T16:00:00-05:00",
+                          "end": "2022-01-03T16:00:00-05:00",
+                          "user": [
+                            {
+                              "id": "PCQNVHM",
+                              "type": "user_reference",
+                              "summary": "Jim Halpert",
+                              "self": "https://api.pagerduty.com/users/PCQNVHM",
+                              "html_url": "https://subdomain.pagerduty.com/users/PCQNVHM"
+                            }
+                          ]
                         }
                       }
                     }
