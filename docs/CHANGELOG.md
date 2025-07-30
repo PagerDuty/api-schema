@@ -4,6 +4,13 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently, we rarely deprecate, and do not remove any API functionality.
 
+## 2025-07-30
+- Added support for two new include[] parameter values in Schedules API endpoints (`GET /schedules` and `GET /schedules/:id`):
+  - `overrides_subschedule`: Includes the overrides subschedule in the response
+  - `final_schedule`: Includes the final schedule in the response
+
+- Added new query parameter `include_next_oncall_for_user` to Schedules API endpoints that allows retrieving information about a specific user's next on-call shift by specifying a user ID
+
 ## 2025-07-10
 - Promoted Service Custom Fields API to General Availability (GA) by removing Early Access headers requirement. This affects all Service Custom Fields endpoints and responses.
 
