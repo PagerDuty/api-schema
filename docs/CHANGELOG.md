@@ -4,6 +4,9 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently, we rarely deprecate, and do not remove any API functionality.
 
+## 2025-07-23
+- The `oauth_client` field is present in the Webhook subscription API responses, set to `null` when no OAuth client is associated.
+
 ## 2025-07-10
 - Promoted Service Custom Fields API to General Availability (GA) by removing Early Access headers requirement. This affects all Service Custom Fields endpoints and responses.
 
