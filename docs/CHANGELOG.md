@@ -4,12 +4,13 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently, we rarely deprecate, and do not remove any API functionality.
 
-## 2025-07-30
-- Added support for two new include[] parameter values in Schedules API endpoints (`GET /schedules` and `GET /schedules/:id`):
-  - `overrides_subschedule`: Includes the overrides subschedule in the response
-  - `final_schedule`: Includes the final schedule in the response
-
-- Added new query parameter `include_next_oncall_for_user` to Schedules API endpoints that allows retrieving information about a specific user's next on-call shift by specifying a user ID
+## 2025-08-07
+- Added Limited GA endpoints for Feature Enablement management for Services and for Event Orchestrations. These endpoints allow retrieving and updating feature enablement settings (currently AIOps) on either a service or an event orchestration.
+  - `GET /services/{id}/enablements` - List feature enablement settings for a service
+  - `PUT /services/{id}/enablements/{feature_name}` - Update feature enablement for a service
+  - `GET /event_orchestrations/{id}/enablements` - List feature enablement settings for an event orchestration
+  - `PUT /event_orchestrations/{id}/enablements/{feature_name}` - Update feature enablement for an event orchestration
+- The `PUT /event_orchestrations/{id}/router` API will return new `warnings` when a user disables AIOps on an Event Orchestration and then has routes to a Service with AIOps enabled.
 
 ## 2025-07-10
 - Promoted Service Custom Fields API to General Availability (GA) by removing Early Access headers requirement. This affects all Service Custom Fields endpoints and responses.

@@ -1378,6 +1378,126 @@
           }
         }
       },
+      "FeatureEnablementListResponseDefault": {
+        "summary": "Default Response (No Settings Configured)",
+        "value": {
+          "enablements": [
+            {
+              "feature": "aiops",
+              "enabled": true,
+              "updated_at": null
+            }
+          ]
+        }
+      },
+      "FeatureEnablementListResponseSuccess": {
+        "summary": "Success Response",
+        "value": {
+          "enablements": [
+            {
+              "feature": "aiops",
+              "enabled": true,
+              "updated_at": "2025-04-25T15:00:00Z"
+            }
+          ]
+        }
+      },
+      "FeatureEnablementListResponseWarningForService": {
+        "summary": "Response with No Entitlement Warning",
+        "value": {
+          "enablements": [
+            {
+              "feature": "aiops",
+              "enabled": true,
+              "updated_at": "2025-04-25T15:00:00Z",
+              "warnings": [
+                {
+                  "message": "Your account is not entitled to use AIOps features for this Service."
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "FeatureEnablementListResponseWarningForOrchestration": {
+        "summary": "Response with No Entitlement Warning",
+        "value": {
+          "enablements": [
+            {
+              "feature": "aiops",
+              "enabled": true,
+              "updated_at": "2025-04-25T15:00:00Z",
+              "warnings": [
+                {
+                  "message": "You can't use AIOps functionality with this Orchestration because your account hasn't purchased AIOps"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "FeatureEnablementPutRequestEnable": {
+        "summary": "Enable AIOps",
+        "value": {
+          "enablement": {
+            "enabled": true
+          }
+        }
+      },
+      "FeatureEnablementPutRequestDisable": {
+        "summary": "Disable AIOps",
+        "value": {
+          "enablement": {
+            "enabled": false
+          }
+        }
+      },
+      "FeatureEnablementPutResponseSuccess": {
+        "summary": "Success Response",
+        "value": {
+          "enablement": [
+            {
+              "feature": "aiops",
+              "enabled": true,
+              "updated_at": "2025-04-25T15:00:00Z"
+            }
+          ]
+        }
+      },
+      "FeatureEnablementPutResponseWarningForService": {
+        "summary": "Response with No Entitlement Warning",
+        "value": {
+          "enablement": [
+            {
+              "feature": "aiops",
+              "enabled": true,
+              "updated_at": "2025-04-25T15:00:00Z",
+              "warnings": [
+                {
+                  "message": "Your account is not entitled to use AIOps features for this Service."
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "FeatureEnablementPutResponseWarningForOrchestration": {
+        "summary": "Response with No Entitlement Warning",
+        "value": {
+          "enablement": [
+            {
+              "feature": "aiops",
+              "enabled": true,
+              "updated_at": "2025-04-25T15:00:00Z",
+              "warnings": [
+                {
+                  "message": "You can't use AIOps functionality with this Orchestration because your account hasn't purchased AIOps"
+                }
+              ]
+            }
+          ]
+        }
+      },
       "CreateSubscriptionExample": {
         "summary": "Example",
         "value": {
@@ -3555,6 +3675,18 @@
         "schema": {
           "type": "string",
           "example": "slack"
+        }
+      },
+      "enablement_feature_name": {
+        "name": "feature_name",
+        "description": "The feature enablement identifier, typically the name of the product addon. Currently only `aiops` is supported.",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "enum": [
+            "aiops"
+          ]
         }
       },
       "include_customfields_field": {
@@ -17129,17 +17261,18 @@
           },
           "feature": {
             "type": "string",
-            "description": "The feature that the current account plan does not have access to.\n\nExample values include:\n* `threshold_condition`\n* `nested_rules`\n* `suspend`\n* `automation_actions`\n* `cache_variable:automation_actions`\n* `cache_variable:annotate`\n* `variables`\n* `interpolation:annotate`\n* `interpolation:extractions`\n* `interpolation:incident_custom_field_updates`\n* `suppress`\n* `incident_custom_field_updates`\n* `dynamic_route_to`\n* `escalation_policy`\n"
+            "description": "The feature that the current account plan does not have access to.\n\nExample values include:\n* `threshold_condition`\n* `nested_rules`\n* `suspend`\n* `automation_actions`\n* `cache_variable:automation_actions`\n* `cache_variable:annotate`\n* `variables`\n* `interpolation:annotate`\n* `interpolation:extractions`\n* `interpolation:incident_custom_field_updates`\n* `suppress`\n* `incident_custom_field_updates`\n* `dynamic_route_to`\n* `escalation_policy`\n* `aiops_routing_mismatch`\n"
           },
           "feature_type": {
             "type": "string",
-            "description": "Specifies whether the feature is a part of the rule's conditions, or its actions.\n\nExample values include:\n* `conditions`\n* `actions`\n* `nested_rules`\n* `global_orchestrations`\n"
+            "description": "Specifies whether the feature is a part of the rule's conditions, or its actions.\n\nExample values include:\n* `conditions`\n* `actions`\n* `nested_rules`\n* `global_orchestrations`\n* `aiops_routing`\n"
           },
           "warning_type": {
             "type": "string",
             "description": "The type of warning that is being returned for the rule.",
             "enum": [
-              "forbidden_feature"
+              "forbidden_feature",
+              "invalid_routing"
             ]
           }
         }
@@ -17849,6 +17982,44 @@
               }
             }
           }
+        ]
+      },
+      "FeatureEnablement": {
+        "type": "object",
+        "properties": {
+          "feature": {
+            "readOnly": true,
+            "type": "string",
+            "description": "The name of the product addon whose set of features will be enabled or disabled.",
+            "example": "aiops"
+          },
+          "enabled": {
+            "type": "boolean",
+            "description": "A boolean value indicating whether the specified product addon is enabled or disabled."
+          },
+          "updated_at": {
+            "readOnly": true,
+            "type": "string",
+            "format": "date-time",
+            "description": "The time the feature enablement was last updated."
+          },
+          "warnings": {
+            "readOnly": true,
+            "type": "array",
+            "description": "An array of warnings related to this feature enablement. Only present if warning conditions are met.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "description": "The warning message."
+                }
+              }
+            }
+          }
+        },
+        "required": [
+          "enabled"
         ]
       },
       "StandardApplied": {
@@ -31640,6 +31811,159 @@
           },
           "404": {
             "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/event_orchestrations/{id}/enablements": {
+      "description": "Manage Enablements for a Global Event Orchestration.",
+      "get": {
+        "x-pd-requires-scope": "event_orchestrations.read",
+        "tags": [
+          "Event Orchestrations"
+        ],
+        "operationId": "listEventOrchestrationFeatureEnablements",
+        "summary": "List Enablements for an Event Orchestration",
+        "description": "<!-- theme: warning -->\n> ### Limited GA\n> This feature is in Limited General Availability for some customers with the PagerDuty AIOps add-on. Please contact your account team or Support to request access.\n\nList all feature enablement settings for an Event Orchestration. Currently, only the `aiops` enablement is supported.\n\nFor any account with the AIOps product addon, every Event Orchestration will have AIOps features enabled by default.\n\n**Warning conditions**:\n- If the account is not entitled to use AIOps features, a warning will be returned alongside the enablement data.\n\nScoped OAuth requires: `event_orchestrations.read`\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/event_orchestration_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The list of feature enablement settings for the Event Orchestation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "enablements": {
+                      "type": "array",
+                      "description": "Array of feature enablement settings.",
+                      "items": {
+                        "$ref": "#/components/schemas/FeatureEnablement"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "success_response": {
+                    "$ref": "#/components/examples/FeatureEnablementListResponseSuccess"
+                  },
+                  "response_with_warning": {
+                    "$ref": "#/components/examples/FeatureEnablementListResponseWarningForOrchestration"
+                  },
+                  "default_response": {
+                    "$ref": "#/components/examples/FeatureEnablementListResponseDefault"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/event_orchestrations/{id}/enablements/{feature_name}": {
+      "description": "Manage an Enablement for a Global Event Orchestration.",
+      "put": {
+        "x-pd-requires-scope": "event_orchestrations.write",
+        "tags": [
+          "Event Orchestrations"
+        ],
+        "operationId": "updateEventOrchestrationFeatureEnablements",
+        "summary": "Update an Enablement for an Event Orchestration",
+        "description": "<!-- theme: warning -->\n> ### Limited GA\n> This feature is in Limited General Availability for some customers with the PagerDuty AIOps add-on. Please contact your account team or Support to request access.\n\nUpdate the feature enablement setting for a specific product addon on an Event Orchestration. This setting controls enabling or disabling the set of features contained within the addon.\nCurrently, only `aiops` is supported as a valid feature enablement.\n\n**Warning conditions**:\n- If the account is not entitled to use AIOps features, the setting will be updated, but a warning will be returned.\n\nScoped OAuth requires: `event_orchestrations.write`\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/event_orchestration_id"
+          },
+          {
+            "$ref": "#/components/parameters/enablement_feature_name"
+          }
+        ],
+        "requestBody": {
+          "description": "The feature enablement setting to apply.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "enablement": {
+                    "$ref": "#/components/schemas/FeatureEnablement"
+                  }
+                },
+                "required": [
+                  "enablement"
+                ]
+              },
+              "examples": {
+                "enable_aiops": {
+                  "$ref": "#/components/examples/FeatureEnablementPutRequestEnable"
+                },
+                "disable_aiops": {
+                  "$ref": "#/components/examples/FeatureEnablementPutRequestDisable"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The feature enablement setting was updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "enablement": {
+                      "$ref": "#/components/schemas/FeatureEnablement"
+                    }
+                  }
+                },
+                "examples": {
+                  "success_response": {
+                    "$ref": "#/components/examples/FeatureEnablementPutResponseSuccess"
+                  },
+                  "response_with_warning": {
+                    "$ref": "#/components/examples/FeatureEnablementPutResponseWarningForOrchestration"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           }
         }
       }
@@ -50560,6 +50884,159 @@
                         }
                       ]
                     }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/services/{id}/enablements": {
+      "description": "Get Enablements for a Service.",
+      "get": {
+        "tags": [
+          "Services"
+        ],
+        "x-pd-requires-scope": "services.read",
+        "operationId": "listServiceFeatureEnablements",
+        "summary": "Get Enablements for a Service",
+        "description": "<!-- theme: warning -->\n> ### Limited GA\n> This feature is in Limited General Availability for some customers with the PagerDuty AIOps add-on. Please contact your account team or Support to request access.\n\nList all feature enablement settings for a service. Currently, only the `aiops` enablement is supported.\n\nFor any account with the AIOps product addon, every service will have AIOps features enabled by default.\n\n**Warning conditions**:\n- If the account is not entitled to use AIOps features, a warning will be returned alongside the enablement data.\n\nScoped OAuth requires: `services.read`\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The list of feature enablement settings for the service.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "enablements": {
+                      "type": "array",
+                      "description": "Array of feature enablement settings.",
+                      "items": {
+                        "$ref": "#/components/schemas/FeatureEnablement"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "success_response": {
+                    "$ref": "#/components/examples/FeatureEnablementListResponseSuccess"
+                  },
+                  "response_with_warning": {
+                    "$ref": "#/components/examples/FeatureEnablementListResponseWarningForService"
+                  },
+                  "default_response": {
+                    "$ref": "#/components/examples/FeatureEnablementListResponseDefault"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/services/{id}/enablements/{feature_name}": {
+      "description": "Update an Enablement for a Service.",
+      "put": {
+        "tags": [
+          "Services"
+        ],
+        "x-pd-requires-scope": "services.write",
+        "operationId": "updateServiceFeatureEnablement",
+        "summary": "Update an Enablement for a Service",
+        "description": "<!-- theme: warning -->\n> ### Limited GA\n> This feature is in Limited General Availability for some customers with the PagerDuty AIOps add-on. Please contact your account team or Support to request access.\n\nUpdate the feature enablement setting for a specific product addon on a service. This setting controls enabling or disabling the set of features contained within the addon.\nCurrently, only `aiops` is supported as a valid feature enablement.\n\n**Warning conditions**:\n- If the account is not entitled to use AIOps features, the setting will be updated, but a warning will be returned.\n\nScoped OAuth requires: `services.write`\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/enablement_feature_name"
+          },
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          }
+        ],
+        "requestBody": {
+          "description": "The feature enablement setting to apply.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "enablement": {
+                    "$ref": "#/components/schemas/FeatureEnablement"
+                  }
+                },
+                "required": [
+                  "enablement"
+                ]
+              },
+              "examples": {
+                "enable_aiops": {
+                  "$ref": "#/components/examples/FeatureEnablementPutRequestEnable"
+                },
+                "disable_aiops": {
+                  "$ref": "#/components/examples/FeatureEnablementPutRequestDisable"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The feature enablement setting was updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "enablement": {
+                      "$ref": "#/components/schemas/FeatureEnablement"
+                    }
+                  }
+                },
+                "examples": {
+                  "success_response": {
+                    "$ref": "#/components/examples/FeatureEnablementPutResponseSuccess"
+                  },
+                  "response_with_warning": {
+                    "$ref": "#/components/examples/FeatureEnablementPutResponseWarningForService"
                   }
                 }
               }
