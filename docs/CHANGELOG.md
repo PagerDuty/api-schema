@@ -4,6 +4,9 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently, we rarely deprecate, and do not remove any API functionality.
 
+## 2025-08-12
+- Added `created_via_sso` field to User model in responses. This boolean field indicates whether a user was created via Single Sign-On (SSO).
+
 ## 2025-08-07
 - Added Limited GA endpoints for Feature Enablement management for Services and for Event Orchestrations. These endpoints allow retrieving and updating feature enablement settings (currently AIOps) on either a service or an event orchestration.
   - `GET /services/{id}/enablements` - List feature enablement settings for a service
