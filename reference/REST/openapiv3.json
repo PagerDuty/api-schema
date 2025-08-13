@@ -10317,6 +10317,11 @@
                 "description": "The user's title.",
                 "maxLength": 100
               },
+              "created_via_sso": {
+                "type": "boolean",
+                "readOnly": true,
+                "description": "If true, the user was created via Single Sign-On (SSO)."
+              },
               "teams": {
                 "type": "array",
                 "readOnly": true,
@@ -10355,6 +10360,7 @@
               "color": "green",
               "role": "admin",
               "job_title": "Director of Engineering",
+              "created_via_sso": false,
               "avatar_url": "https://secure.gravatar.com/avatar/1d1a39d4635208d5664082a6c654a73f.png?d=mm&r=PG",
               "description": "I'm the boss"
             }
@@ -56657,6 +56663,7 @@
                           "avatar_url": "https://secure.gravatar.com/avatar/a8b714a39626f2444ee05990b078995f.png?d=mm&r=PG",
                           "description": "I'm the boss",
                           "invitation_sent": false,
+                          "created_via_sso": true,
                           "contact_methods": [
                             {
                               "id": "PTDVERC",
@@ -56699,6 +56706,7 @@
                           "avatar_url": "https://secure.gravatar.com/avatar/47857d059adacf9a41dc4030c2e14b0a.png?d=mm&r=PG",
                           "description": "Actually, I am the boss",
                           "invitation_sent": false,
+                          "created_via_sso": false,
                           "contact_methods": [
                             {
                               "id": "PVMGSML",
@@ -56863,6 +56871,7 @@
                         "avatar_url": "https://secure.gravatar.com/avatar/a8b714a39626f2444ee05990b078995f.png?d=mm&r=PG",
                         "description": "I'm the boss",
                         "invitation_sent": false,
+                        "created_via_sso": true,
                         "contact_methods": [
                           {
                             "id": "PTDVERC",
@@ -56973,6 +56982,7 @@
                         "avatar_url": "https://secure.gravatar.com/avatar/a8b714a39626f2444ee05990b078995f.png?d=mm&r=PG",
                         "description": "I'm the boss",
                         "invitation_sent": false,
+                        "created_via_sso": true,
                         "contact_methods": [
                           {
                             "id": "PTDVERC",
@@ -57172,6 +57182,7 @@
                         "avatar_url": "https://secure.gravatar.com/avatar/a8b714a39626f2444ee05990b078995f.png?d=mm&r=PG",
                         "description": "I'm the boss",
                         "invitation_sent": false,
+                        "created_via_sso": true,
                         "contact_methods": [
                           {
                             "id": "PTDVERC",
@@ -59740,6 +59751,7 @@
                         "description": null,
                         "invitation_sent": false,
                         "job_title": "Director of Engineering",
+                        "created_via_sso": "true,",
                         "contact_methods": [
                           {
                             "id": "PTDVERC",
