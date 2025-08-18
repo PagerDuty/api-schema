@@ -1531,11 +1531,7 @@
               "id": "P393ZNQ",
               "type": "service_reference"
             },
-            "oauth_client": {
-              "id": "AGLRZQ2PGR5B7EQ52DTT4ZJERY",
-              "type": "oauth_client_reference",
-              "summary": "PagerDuty Webhook Integration"
-            },
+            "oauth_client_id": "AGMEB7F7YJYELCPG4Y5YWMYGXE",
             "type": "webhook_subscription"
           }
         }
@@ -1656,6 +1652,59 @@
               "incident.triggered",
               "incident.unacknowledged"
             ]
+          }
+        }
+      },
+      "GetOAuthClientExample": {
+        "summary": "Get OAuth Client",
+        "value": {
+          "oauth_client": {
+            "id": "AGMEB7F7YJYELCPG4Y5YWMYGXE",
+            "type": "oauth_client",
+            "name": "PagerDuty Webhook Integration",
+            "client_id": "oauth-client-id",
+            "scope": null,
+            "token_url": "https://foo.oauth-server.com/oauth_token.do",
+            "grant_type": "client_credentials",
+            "status": "active"
+          }
+        }
+      },
+      "ListOAuthClientsExample": {
+        "summary": "List OAuth Clients",
+        "value": {
+          "oauth_clients": [
+            {
+              "id": "AGLMVG7ZUZ567GK2HMOWBGNWEU",
+              "type": "oauth_client",
+              "name": "Test OAuth Client",
+              "client_id": "test_client_id",
+              "scope": "read write",
+              "token_url": "https://example.com/oauth/token",
+              "grant_type": "client_credentials",
+              "status": "active"
+            }
+          ]
+        }
+      },
+      "CreateOAuthClientExample": {
+        "summary": "Create OAuth Client",
+        "value": {
+          "oauth_client": {
+            "name": "PagerDuty Webhook Integration",
+            "client_id": "oauth-client-id",
+            "client_secret": "oauth-secret-id",
+            "token_url": "https://foo.oauth-server.com/oauth_token.do",
+            "grant_type": "client_credentials"
+          }
+        }
+      },
+      "UpdateOAuthClientExample": {
+        "summary": "Update OAuth Client",
+        "value": {
+          "oauth_client": {
+            "name": "Updated ServiceNow Integration",
+            "scope": "read write admin"
           }
         }
       },
@@ -2297,6 +2346,16 @@
           "format": "date-time"
         },
         "required": false
+      },
+      "oauth_client_id": {
+        "name": "id",
+        "description": "The ID of the OAuth client.",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "example": "AGMEB7F7YJYELCPG4Y5YWMYGXE"
+        }
       },
       "id": {
         "name": "id",
@@ -14756,25 +14815,35 @@
             ]
           },
           "oauth_client": {
+            "description": "OAuth client details. This field is populated in responses when oauth_client_id is set.",
+            "readOnly": true,
             "type": "object",
             "properties": {
               "id": {
                 "type": "string",
-                "description": "The ID of the OAuth client associated with this webhook subscription."
+                "description": "The ID of the OAuth client",
+                "example": "AGMEB7F7YJYELCPG4Y5YWMYGXE"
               },
               "type": {
                 "type": "string",
-                "description": "The type of the OAuth client reference.",
-                "default": "oauth_client_reference",
                 "enum": [
                   "oauth_client_reference"
-                ]
+                ],
+                "description": "The type of object being referenced",
+                "example": "oauth_client_reference",
+                "default": "oauth_client_reference"
               },
               "summary": {
                 "type": "string",
-                "description": "A brief summary of the OAuth client."
+                "description": "A short-form, server-generated string that provides succinct, important information about an object suitable for primary labeling of an entity in a client",
+                "example": "PagerDuty Webhook Integration",
+                "readOnly": true
               }
-            }
+            },
+            "required": [
+              "id",
+              "type"
+            ]
           }
         },
         "required": [
@@ -14824,10 +14893,197 @@
               "active": {
                 "type": "boolean",
                 "description": "If true, a webhook will be sent. True is the default state. If false, a webhook will not be sent."
+              },
+              "oauth_client_id": {
+                "type": "string",
+                "description": "The ID of the OAuth client to use for authenticating webhook requests. Optional field.",
+                "nullable": true
               }
             }
           }
         }
+      },
+      "OAuthClient": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The ID of the OAuth client",
+            "example": "AGMEB7F7YJYELCPG4Y5YWMYGXE",
+            "readOnly": true
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "oauth_client"
+            ],
+            "description": "The type of object being created",
+            "example": "oauth_client",
+            "default": "oauth_client"
+          },
+          "name": {
+            "type": "string",
+            "description": "A human-readable name for the OAuth client",
+            "example": "PagerDuty Webhook Integration",
+            "maxLength": 255
+          },
+          "client_id": {
+            "type": "string",
+            "description": "The OAuth client ID provided by the OAuth server",
+            "example": "oauth-client-id",
+            "maxLength": 255
+          },
+          "scope": {
+            "type": "string",
+            "description": "The OAuth scopes requested for this client",
+            "example": "read write",
+            "maxLength": 255,
+            "nullable": true
+          },
+          "token_url": {
+            "type": "string",
+            "format": "uri",
+            "description": "The OAuth token endpoint URL",
+            "example": "https://foo.oauth-server.com/oauth_token.do",
+            "maxLength": 255
+          },
+          "grant_type": {
+            "type": "string",
+            "enum": [
+              "client_credentials"
+            ],
+            "description": "The OAuth grant type (currently only client_credentials is supported)",
+            "example": "client_credentials"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "active",
+              "error"
+            ],
+            "description": "The current status of the OAuth client",
+            "example": "active",
+            "readOnly": true
+          }
+        },
+        "required": [
+          "type",
+          "name",
+          "client_id",
+          "token_url",
+          "grant_type"
+        ]
+      },
+      "CreateOAuthClientRequest": {
+        "type": "object",
+        "properties": {
+          "oauth_client": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "A human-readable name for the OAuth client",
+                "example": "PagerDuty Webhook Integration",
+                "maxLength": 255
+              },
+              "client_id": {
+                "type": "string",
+                "description": "The OAuth client ID provided by the OAuth server",
+                "example": "oauth-client-id",
+                "maxLength": 255
+              },
+              "client_secret": {
+                "type": "string",
+                "description": "The OAuth client secret provided by the OAuth server",
+                "example": "oauth-secret-id",
+                "maxLength": 255
+              },
+              "scope": {
+                "type": "string",
+                "description": "The OAuth scopes requested for this client",
+                "example": "read write",
+                "maxLength": 255
+              },
+              "token_url": {
+                "type": "string",
+                "format": "uri",
+                "description": "The OAuth token endpoint URL",
+                "example": "https://foo.oauth-server.com/oauth_token.do",
+                "maxLength": 255
+              },
+              "grant_type": {
+                "type": "string",
+                "enum": [
+                  "client_credentials"
+                ],
+                "description": "The OAuth grant type (currently only client_credentials is supported)",
+                "example": "client_credentials"
+              }
+            },
+            "required": [
+              "name",
+              "client_id",
+              "client_secret",
+              "token_url",
+              "grant_type"
+            ]
+          }
+        },
+        "required": [
+          "oauth_client"
+        ]
+      },
+      "UpdateOAuthClientRequest": {
+        "type": "object",
+        "properties": {
+          "oauth_client": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "A human-readable name for the OAuth client",
+                "example": "Updated ServiceNow Integration",
+                "maxLength": 255
+              },
+              "client_id": {
+                "type": "string",
+                "description": "The OAuth client ID provided by the OAuth server",
+                "example": "oauth-client-id",
+                "maxLength": 255
+              },
+              "client_secret": {
+                "type": "string",
+                "description": "The OAuth client secret provided by the OAuth server",
+                "example": "oauth-secret-id",
+                "maxLength": 255
+              },
+              "scope": {
+                "type": "string",
+                "description": "The OAuth scopes requested for this client",
+                "example": "read write admin",
+                "maxLength": 255
+              },
+              "token_url": {
+                "type": "string",
+                "format": "uri",
+                "description": "The OAuth token endpoint URL",
+                "example": "https://foo.oauth-server.com/oauth_token.do",
+                "maxLength": 255
+              },
+              "grant_type": {
+                "type": "string",
+                "enum": [
+                  "client_credentials"
+                ],
+                "description": "The OAuth grant type (currently only client_credentials is supported)",
+                "example": "client_credentials"
+              }
+            }
+          }
+        },
+        "required": [
+          "oauth_client"
+        ]
       },
       "WebhooksV1Message": {
         "type": "object",
@@ -60391,6 +60647,270 @@
         "responses": {
           "202": {
             "description": "Accepted"
+          },
+          "401": {
+            "$ref": "#/components/responses/WebhookUnauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/WebhookForbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/WebhookNotFound"
+          }
+        }
+      }
+    },
+    "/webhook_subscriptions/oauth_clients": {
+      "get": {
+        "tags": [
+          "Webhooks"
+        ],
+        "summary": "List OAuth clients",
+        "description": "List all OAuth clients for webhook subscriptions. Maximum of 10 clients per account.\n\nRequires admin or owner role permissions.\n",
+        "operationId": "listOauthClients",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of OAuth clients",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "oauth_clients": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/OAuthClient"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "default": {
+                    "$ref": "#/components/examples/ListOAuthClientsExample"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/WebhookUnauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/WebhookForbidden"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Webhooks"
+        ],
+        "summary": "Create an OAuth client",
+        "description": "Create a new OAuth client for webhook subscriptions. The client credentials will be validated by attempting to obtain an access token before creation.\n\nRequires admin or owner role permissions.\n\nMaximum of 10 OAuth clients per account.\n",
+        "operationId": "createOauthClient",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateOAuthClientRequest"
+              },
+              "examples": {
+                "default": {
+                  "$ref": "#/components/examples/CreateOAuthClientExample"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "OAuth client created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "oauth_client": {
+                      "$ref": "#/components/schemas/OAuthClient"
+                    }
+                  }
+                },
+                "examples": {
+                  "default": {
+                    "$ref": "#/components/examples/GetOAuthClientExample"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/WebhookBadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/WebhookUnauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/WebhookForbidden"
+          }
+        }
+      }
+    },
+    "/webhook_subscriptions/oauth_clients/{id}": {
+      "get": {
+        "tags": [
+          "Webhooks"
+        ],
+        "summary": "Get an OAuth client",
+        "description": "Get details of a specific OAuth client by ID.\n\nRequires admin or owner role permissions.\n",
+        "operationId": "getOauthClient",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OAuth client details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "oauth_client": {
+                      "$ref": "#/components/schemas/OAuthClient"
+                    }
+                  }
+                },
+                "examples": {
+                  "default": {
+                    "$ref": "#/components/examples/GetOAuthClientExample"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/WebhookUnauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/WebhookForbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/WebhookNotFound"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Webhooks"
+        ],
+        "summary": "Update an OAuth client",
+        "description": "Update an existing OAuth client. Any change will trigger token validation with the OAuth server.\n\nRequires admin or owner role permissions.\n",
+        "operationId": "updateOauthClient",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateOAuthClientRequest"
+              },
+              "examples": {
+                "default": {
+                  "$ref": "#/components/examples/UpdateOAuthClientExample"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OAuth client updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "oauth_client": {
+                      "$ref": "#/components/schemas/OAuthClient"
+                    }
+                  }
+                },
+                "examples": {
+                  "default": {
+                    "$ref": "#/components/examples/GetOAuthClientExample"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/WebhookBadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/WebhookUnauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/WebhookForbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/WebhookNotFound"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Webhooks"
+        ],
+        "summary": "Delete an OAuth client",
+        "description": "Delete an OAuth client. This will also remove the OAuth client association from any webhook subscriptions using it.\n\nRequires admin or owner role permissions.\n",
+        "operationId": "deleteOauthClient",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "OAuth client deleted successfully"
           },
           "401": {
             "$ref": "#/components/responses/WebhookUnauthorized"
