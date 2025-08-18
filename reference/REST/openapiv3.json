@@ -1531,6 +1531,11 @@
               "id": "P393ZNQ",
               "type": "service_reference"
             },
+            "oauth_client": {
+              "id": "AGLRZQ2PGR5B7EQ52DTT4ZJERY",
+              "type": "oauth_client_reference",
+              "summary": "PagerDuty Webhook Integration"
+            },
             "type": "webhook_subscription"
           }
         }
@@ -1570,6 +1575,11 @@
             "filter": {
               "id": "P393ZNQ",
               "type": "service_reference"
+            },
+            "oauth_client": {
+              "id": "AGLRZQ2PGR5B7EQ52DTT4ZJERY",
+              "type": "oauth_client_reference",
+              "summary": "PagerDuty Webhook Integration"
             },
             "id": "PY1OL64",
             "type": "webhook_subscription",
@@ -1611,6 +1621,11 @@
               "filter": {
                 "id": "P393ZNQ",
                 "type": "service_reference"
+              },
+              "oauth_client": {
+                "id": "AGLRZQ2PGR5B7EQ52DTT4ZJERY",
+                "type": "oauth_client_reference",
+                "summary": "PagerDuty Webhook Integration"
               },
               "id": "PY1OL64",
               "type": "webhook_subscription",
@@ -14739,6 +14754,27 @@
             "required": [
               "type"
             ]
+          },
+          "oauth_client": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "The ID of the OAuth client associated with this webhook subscription."
+              },
+              "type": {
+                "type": "string",
+                "description": "The type of the OAuth client reference.",
+                "default": "oauth_client_reference",
+                "enum": [
+                  "oauth_client_reference"
+                ]
+              },
+              "summary": {
+                "type": "string",
+                "description": "A brief summary of the OAuth client."
+              }
+            }
           }
         },
         "required": [
