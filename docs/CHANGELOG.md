@@ -15,6 +15,9 @@ Currently, we rarely deprecate, and do not remove any API functionality.
   - `PUT /event_orchestrations/{id}/enablements/{feature_name}` - Update feature enablement for an event orchestration
 - The `PUT /event_orchestrations/{id}/router` API will return new `warnings` when a user disables AIOps on an Event Orchestration and then has routes to a Service with AIOps enabled.
 
+## 2025-07-23
+- The `oauth_client` field is present in the Webhook subscription API responses, set to `null` when no OAuth client is associated.
+
 ## 2025-07-10
 - Promoted Service Custom Fields API to General Availability (GA) by removing Early Access headers requirement. This affects all Service Custom Fields endpoints and responses.
 
