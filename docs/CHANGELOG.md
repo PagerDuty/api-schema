@@ -4,6 +4,9 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently, we rarely deprecate, and do not remove any API functionality.
 
+## 2025-08-25
+-  Updated the DELETE /oauth_delegations endpoint to be synchronous and marked the revocation request status endpoint as deprecated
+
 ## 2025-08-12
 - Added `created_via_sso` field to User model in responses. This boolean field indicates whether a user was created via Single Sign-On (SSO).
 
