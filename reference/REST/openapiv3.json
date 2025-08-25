@@ -2319,11 +2319,12 @@
       "oauth_delegation_type": {
         "name": "type",
         "in": "query",
-        "description": "The type of OAuth delegations this request should target.",
+        "description": "The type of OAuth delegations this request should target. Allowed values are 'mobile' (to sign users out of the mobile app) and 'web' (to sign users out of the web app). You can pass one or more types in, separated by commas (e.g., type=web,mobile).",
         "schema": {
           "type": "string",
           "enum": [
-            "mobile"
+            "mobile",
+            "web"
           ]
         },
         "required": true
@@ -42977,7 +42978,7 @@
           "OAuth Delegations"
         ],
         "operationId": "deleteOauthDelegations",
-        "description": "Delete all OAuth delegations as per provided query parameters.\n\nAn OAuth delegation represents an instance of a user or account's authorization to an app (via OAuth) to access their PagerDuty account.\nCommon apps include the PagerDuty mobile app, Slack, Microsoft Teams, and third-party apps.\n\nDeleting an OAuth delegation will revoke that instance of an app's access to that user or account.\nTo grant access again, reauthorization/reauthentication may be required.\n\nAt this time, this endpoint only supports deleting mobile app OAuth delegations for a given user.\nThis is equivalent to signing users out of the mobile app.\n\nThis is an asynchronous API, the deletion request itself will be processed within 24 hours.\n\nScoped OAuth requires: `oauth_delegations.write`\n",
+        "description": "Delete all OAuth delegations as per provided query parameters.\n\nAn OAuth delegation represents an instance of a user or account's authorization to an app (via OAuth) to access their PagerDuty account.\nCommon apps include the PagerDuty mobile app, Slack, Microsoft Teams, and third-party apps. It also represents a user session in the PagerDuty web app.\n\nDeleting an OAuth delegation will revoke that instance of an app's access to that user or account.\nTo grant access again, reauthorization/reauthentication will be required.\n\nThis endpoint supports deleting mobile app OAuth delegations for a given user, which is equivalent to signing users out of the mobile app. It also supports deleting delegations of type web, which is equivalent to signing users out of the web app.\n\nThis is a synchronous API.\n\nScoped OAuth requires: `oauth_delegations.write`\n",
         "summary": "Delete all OAuth delegations",
         "parameters": [
           {
@@ -42994,8 +42995,8 @@
           }
         ],
         "responses": {
-          "202": {
-            "description": "Accepted - The deletion request has been accepted for processing, but the processing has not been completed.",
+          "200": {
+            "description": "The request to delete delegations has been processed.",
             "content": {
               "application/json": {
                 "schema": {
@@ -43003,11 +43004,7 @@
                   "properties": {
                     "status": {
                       "type": "string",
-                      "example": "accepted"
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Request to delete delegations accepted. Delegations will be revoked asynchronously."
+                      "example": "ok"
                     }
                   }
                 },
@@ -43015,8 +43012,7 @@
                   "response": {
                     "summary": "Response Example",
                     "value": {
-                      "status": "accepted",
-                      "message": "Request to delete delegations accepted. Delegations will be revoked asynchronously."
+                      "status": "ok"
                     }
                   }
                 }
@@ -43045,8 +43041,9 @@
           "OAuth Delegations"
         ],
         "operationId": "getOauthDelegationsRevocationRequestsStatus",
-        "description": "Get the status of all OAuth delegations revocation requests for this account, specifically how many requests are still pending.\n\nThis endpoint is limited to account owners and admins.\n\nScoped OAuth requires: `oauth_delegations.read`\n",
+        "description": "<!-- theme: warning -->\n> ### Deprecated\n> This endpoint is deprecated as OAuth token revocation is now synchronous. Please use the [DELETE /oauth_delegations endpoint](https://developer.pagerduty.com/api-reference/ad1161db75db1-delete-all-o-auth-delegations) instead.\n\nGet the status of all OAuth delegations revocation requests for this account, specifically how many requests are still pending. As all requests are now synchronous, no pending requests will be found.\n\nThis endpoint is limited to account owners and admins.\n\nScoped OAuth requires: `oauth_delegations.read`\n",
         "summary": "Get OAuth delegations revocation requests status",
+        "deprecated": true,
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -43059,36 +43056,6 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "Current status of all revocation requests based on your search.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "pending_count": {
-                      "type": "number",
-                      "example": 1
-                    },
-                    "requested_at_end": {
-                      "type": "string",
-                      "format": "date-time",
-                      "example": "2021-01-01T00:00:00Z"
-                    }
-                  }
-                },
-                "examples": {
-                  "response": {
-                    "summary": "Response Example",
-                    "value": {
-                      "pending_count": 1,
-                      "requested_at_end": "2021-01-01T00:00:00Z"
-                    }
-                  }
-                }
-              }
-            }
-          },
           "400": {
             "$ref": "#/components/responses/ArgumentError"
           },
@@ -43097,6 +43064,9 @@
           },
           "403": {
             "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
           },
           "429": {
             "$ref": "#/components/responses/TooManyRequests"
