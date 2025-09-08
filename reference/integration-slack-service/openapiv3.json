@@ -711,12 +711,9 @@
                 "type": "object",
                 "properties": {
                   "slack_connection": {
-                    "$ref": "#/components/schemas/SlackConnection"
+                    "$ref": "#/components/schemas/CreateSlackConnectionPayload"
                   }
-                },
-                "required": [
-                  "slack_connection"
-                ]
+                }
               },
               "examples": {
                 "Request": {
@@ -1416,6 +1413,36 @@
             "$ref": "#/components/schemas/SlackConnectionConfig"
           }
         }
+      },
+      "CreateSlackConnectionPayload": {
+        "title": "Create Slack Connection Payload",
+        "x-stoplight": {
+          "id": "hvz3zyml7ggfe"
+        },
+        "type": "object",
+        "properties": {
+          "channel_id": {
+            "type": "string"
+          },
+          "source_id": {
+            "type": "string"
+          },
+          "source_type": {
+            "$ref": "#/components/schemas/SlackConnectionSourceType"
+          },
+          "notification_type": {
+            "$ref": "#/components/schemas/SlackConnectionNotifiationType"
+          },
+          "config": {
+            "$ref": "#/components/schemas/SlackConnectionConfig"
+          }
+        },
+        "required": [
+          "channel_id",
+          "source_id",
+          "source_type",
+          "config"
+        ]
       },
       "SlackConnectionNotifiationType": {
         "title": "Slack Connection Notification Type",

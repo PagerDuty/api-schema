@@ -4,6 +4,9 @@ PagerDuty aims to have no breaking changes to our API, we do fix bugs and add ne
 
 Currently, we rarely deprecate, and do not remove any API functionality.
 
+## 2025-09-08
+-  Fix create slack connection payload required fields
+
 ## 2025-08-25
 -  Updated the DELETE /oauth_delegations endpoint to be synchronous and marked the revocation request status endpoint as deprecated
 
