@@ -209,17 +209,7 @@ Related Incidents provide Responders with the 20 most recent Related Incidents t
 ## Response Plays
 Response Plays let you create packages of Incident Actions that can be applied to an [Incident.](#incidents)
 
-
-This enables you to take a complex activity, like assembling a response team of multiple On-Calls and an Incident commander, and make it available to anyone that needs to use it.
-
-The Incident Actions that a Response Play can consist of include:
-
-- Mobilize a Response (Notify responders other than the assignee to help resolve the Incident.)
-- Engage Stakeholders (Subscribe people who are not directly involved with resolving the Incident to receive Status Updates.)
-- Publish Status Updates (Send a prepared Status Update to all subscribers attached to the Incident, to keep them aware of the Incident’s progress.)
-- Add a Conference Bridge (View the Conference Bridge details on the Incident details page.)
-
-**Deprecation Notice**: Response Plays are being replaced with Incident Workflows. Read our [FAQ](https://support.pagerduty.com/docs/upgrade-response-plays-to-incident-workflows) for more information.
+**Deprecation Notice**: Response Plays have been replaced by the more robust [Incident Workflows](https://support.pagerduty.com/main/docs/incident-workflows) feature.
 
 ## Rulesets
 Rulesets allow you to route events to an endpoint and create collections of event rules, which define sets of actions to take based on event content.
