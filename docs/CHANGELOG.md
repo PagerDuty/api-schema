@@ -2,11 +2,11 @@
 
 PagerDuty aims to have no breaking changes to its API. We do fix bugs and add new functionality continuously. This document serves as a reference for any bug fixes or additions to our API.
 
-## 2025-09-09
-- Removed the deprecated `GET /response_plays`, `POST /response_plays`, `GET /response_plays/{id}`, `PUT /response_plays/{id}`, and `DELETE /response_plays/{id}` endpoints. This functionality has been replaced by the more robust [Incident Workflows](https://support.pagerduty.com/main/docs/incident-workflows) feature.
-
 ## 2025-09-15
 - Added the **PagerDuty SCIM API** reference section for new APIs at the path: `/scim/v2`.
+
+## 2025-09-09
+- Removed the deprecated `GET /response_plays`, `POST /response_plays`, `GET /response_plays/{id}`, `PUT /response_plays/{id}`, and `DELETE /response_plays/{id}` endpoints. This functionality has been replaced by the more robust [Incident Workflows](https://support.pagerduty.com/main/docs/incident-workflows) feature.
 
 ## 2025-08-29
 - Marked the following endpoints as deprecated
