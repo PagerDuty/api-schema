@@ -1,1 +1,2945 @@
-{}
+{
+  "openapi": "3.0.0",
+  "info": {
+    "contact": {
+      "email": "support@pagerduty.com",
+      "name": "PagerDuty Support",
+      "url": "https://support.pagerduty.com"
+    },
+    "description": "API documentation for PagerDuty's SCIM Integration.\n\nThis API follows the Protocol defined in [System for Cross-domain Identity Management: Protocol](https://datatracker.ietf.org/doc/html/rfc7644).\nFor more information on managing users with SCIM, see [Manage users with SCIM provisioning](https://help.catalytic.com/docs/manage-users-with-scim-provisioning/).\n",
+    "title": "PagerDuty SCIM API",
+    "version": "1.0.0"
+  },
+  "security": [
+    {
+      "apiKey": [],
+      "bearerToken": []
+    }
+  ],
+  "tags": [
+    {
+      "description": "Operations to manage SCIM Users",
+      "name": "Users"
+    },
+    {
+      "description": "Endpoints to retrieve supported schemas, resource types, and service provider configuration",
+      "name": "Service Provider Metadata"
+    }
+  ],
+  "servers": [
+    {
+      "description": "PagerDuty SCIM API Server",
+      "url": "https://api.pagerduty.com/scim/v2",
+      "variables": {}
+    }
+  ],
+  "components": {
+    "parameters": {
+      "count": {
+        "description": "Specifies the desired maximum number of query results per page.",
+        "example": 100,
+        "in": "query",
+        "name": "count",
+        "required": false,
+        "schema": {
+          "type": "integer"
+        }
+      },
+      "filter": {
+        "description": "A filter expression to apply to the query. The only supported filters are by userName and externalId.",
+        "example": "userName eq \"user@example.com\"",
+        "in": "query",
+        "name": "filter",
+        "required": false,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "schemaId": {
+        "description": "The ID of the schema targeted in this request.",
+        "example": "urn:ietf:params:scim:schemas:core:2.0:User",
+        "in": "path",
+        "name": "id",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "startIndex": {
+        "description": "The 1-based index of the first result.",
+        "example": 1,
+        "in": "query",
+        "name": "startIndex",
+        "required": false,
+        "schema": {
+          "type": "integer"
+        }
+      },
+      "userId": {
+        "description": "The ID of the user targeted in this request.",
+        "example": "AGKWDNQ24N4SXBBWYENPROSIYQ",
+        "in": "path",
+        "name": "id",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    },
+    "responses": {},
+    "schemas": {
+      "BadRequestErrorResponse": {
+        "description": "A SCIM error response",
+        "example": {
+          "detail": "An error occurred",
+          "schemas": [
+            "urn:ietf:params:scim:api:messages:2.0:Error"
+          ],
+          "scimType": "invalidSyntax",
+          "status": "400"
+        },
+        "properties": {
+          "detail": {
+            "description": "Detailed error explanation",
+            "type": "string"
+          },
+          "schemas": {
+            "default": [
+              "urn:ietf:params:scim:api:messages:2.0:Error"
+            ],
+            "description": "URIs that indicate the schemas used in data",
+            "example": [
+              "urn:ietf:params:scim:api:messages:2.0:Error"
+            ],
+            "items": {
+              "default": "urn:ietf:params:scim:api:messages:2.0:Error",
+              "enum": [
+                "urn:ietf:params:scim:api:messages:2.0:Error"
+              ],
+              "example": "urn:ietf:params:scim:api:messages:2.0:Error",
+              "format": "uri",
+              "type": "string"
+            },
+            "minItems": 1,
+            "type": "array",
+            "uniqueItems": true
+          },
+          "scimType": {
+            "description": "SCIM error type",
+            "enum": [
+              "invalidFilter",
+              "tooMany",
+              "uniqueness",
+              "mutability",
+              "invalidSyntax",
+              "invalidPath",
+              "noTarget",
+              "invalidValue",
+              "invalidVers",
+              "sensitive"
+            ],
+            "type": "string"
+          },
+          "status": {
+            "description": "HTTP status code for the error",
+            "type": "string"
+          }
+        },
+        "required": [
+          "schemas",
+          "detail",
+          "status"
+        ],
+        "title": "BadRequestErrorResponse",
+        "type": "object"
+      },
+      "ForbiddenErrorResponse": {
+        "description": "A SCIM error response",
+        "example": {
+          "detail": "An error occurred",
+          "schemas": [
+            "urn:ietf:params:scim:api:messages:2.0:Error"
+          ],
+          "status": "403"
+        },
+        "properties": {
+          "detail": {
+            "description": "Detailed error explanation",
+            "type": "string"
+          },
+          "schemas": {
+            "default": [
+              "urn:ietf:params:scim:api:messages:2.0:Error"
+            ],
+            "description": "URIs that indicate the schemas used in data",
+            "example": [
+              "urn:ietf:params:scim:api:messages:2.0:Error"
+            ],
+            "items": {
+              "default": "urn:ietf:params:scim:api:messages:2.0:Error",
+              "enum": [
+                "urn:ietf:params:scim:api:messages:2.0:Error"
+              ],
+              "example": "urn:ietf:params:scim:api:messages:2.0:Error",
+              "format": "uri",
+              "type": "string"
+            },
+            "minItems": 1,
+            "type": "array",
+            "uniqueItems": true
+          },
+          "scimType": {
+            "description": "SCIM error type",
+            "enum": [
+              "invalidFilter",
+              "tooMany",
+              "uniqueness",
+              "mutability",
+              "invalidSyntax",
+              "invalidPath",
+              "noTarget",
+              "invalidValue",
+              "invalidVers",
+              "sensitive"
+            ],
+            "type": "string"
+          },
+          "status": {
+            "description": "HTTP status code for the error",
+            "type": "string"
+          }
+        },
+        "required": [
+          "schemas",
+          "detail",
+          "status"
+        ],
+        "title": "ForbiddenErrorResponse",
+        "type": "object"
+      },
+      "InternalServerErrorResponse": {
+        "description": "A SCIM error response",
+        "example": {
+          "detail": "An error occurred",
+          "schemas": [
+            "urn:ietf:params:scim:api:messages:2.0:Error"
+          ],
+          "status": "500"
+        },
+        "properties": {
+          "detail": {
+            "description": "Detailed error explanation",
+            "type": "string"
+          },
+          "schemas": {
+            "default": [
+              "urn:ietf:params:scim:api:messages:2.0:Error"
+            ],
+            "description": "URIs that indicate the schemas used in data",
+            "example": [
+              "urn:ietf:params:scim:api:messages:2.0:Error"
+            ],
+            "items": {
+              "default": "urn:ietf:params:scim:api:messages:2.0:Error",
+              "enum": [
+                "urn:ietf:params:scim:api:messages:2.0:Error"
+              ],
+              "example": "urn:ietf:params:scim:api:messages:2.0:Error",
+              "format": "uri",
+              "type": "string"
+            },
+            "minItems": 1,
+            "type": "array",
+            "uniqueItems": true
+          },
+          "scimType": {
+            "description": "SCIM error type",
+            "enum": [
+              "invalidFilter",
+              "tooMany",
+              "uniqueness",
+              "mutability",
+              "invalidSyntax",
+              "invalidPath",
+              "noTarget",
+              "invalidValue",
+              "invalidVers",
+              "sensitive"
+            ],
+            "type": "string"
+          },
+          "status": {
+            "description": "HTTP status code for the error",
+            "type": "string"
+          }
+        },
+        "required": [
+          "schemas",
+          "detail",
+          "status"
+        ],
+        "title": "InternalServerErrorResponse",
+        "type": "object"
+      },
+      "NotFoundErrorResponse": {
+        "description": "A SCIM error response",
+        "example": {
+          "detail": "An error occurred",
+          "schemas": [
+            "urn:ietf:params:scim:api:messages:2.0:Error"
+          ],
+          "status": "404"
+        },
+        "properties": {
+          "detail": {
+            "description": "Detailed error explanation",
+            "type": "string"
+          },
+          "schemas": {
+            "default": [
+              "urn:ietf:params:scim:api:messages:2.0:Error"
+            ],
+            "description": "URIs that indicate the schemas used in data",
+            "example": [
+              "urn:ietf:params:scim:api:messages:2.0:Error"
+            ],
+            "items": {
+              "default": "urn:ietf:params:scim:api:messages:2.0:Error",
+              "enum": [
+                "urn:ietf:params:scim:api:messages:2.0:Error"
+              ],
+              "example": "urn:ietf:params:scim:api:messages:2.0:Error",
+              "format": "uri",
+              "type": "string"
+            },
+            "minItems": 1,
+            "type": "array",
+            "uniqueItems": true
+          },
+          "scimType": {
+            "description": "SCIM error type",
+            "enum": [
+              "invalidFilter",
+              "tooMany",
+              "uniqueness",
+              "mutability",
+              "invalidSyntax",
+              "invalidPath",
+              "noTarget",
+              "invalidValue",
+              "invalidVers",
+              "sensitive"
+            ],
+            "type": "string"
+          },
+          "status": {
+            "description": "HTTP status code for the error",
+            "type": "string"
+          }
+        },
+        "required": [
+          "schemas",
+          "detail",
+          "status"
+        ],
+        "title": "NotFoundErrorResponse",
+        "type": "object"
+      },
+      "PatchOperation": {
+        "description": "A SCIM patch request body",
+        "example": {
+          "Operations": [
+            {
+              "op": "replace",
+              "value": {
+                "active": false
+              }
+            },
+            {
+              "op": "replace",
+              "path": "displayName",
+              "value": "Updated User Display Name"
+            },
+            {
+              "op": "remove",
+              "path": "title"
+            }
+          ],
+          "schemas": [
+            "urn:ietf:params:scim:api:messages:2.0:PatchOp"
+          ]
+        },
+        "properties": {
+          "Operations": {
+            "description": "Array of one or more patch operations to be applied to the resource.",
+            "items": {
+              "example": [
+                {
+                  "op": "replace",
+                  "value": {
+                    "active": false
+                  }
+                }
+              ],
+              "properties": {
+                "op": {
+                  "description": "The PATCH operation to perform.",
+                  "type": "string"
+                },
+                "path": {
+                  "description": "The path to the attribute to be updated.",
+                  "example": "active",
+                  "nullable": true,
+                  "type": "string"
+                },
+                "value": {
+                  "description": "The value to be updated in the operation."
+                }
+              },
+              "required": [
+                "op"
+              ],
+              "type": "object"
+            },
+            "minItems": 1,
+            "type": "array"
+          },
+          "schemas": {
+            "default": [
+              "urn:ietf:params:scim:api:messages:2.0:PatchOp"
+            ],
+            "description": "URIs that indicate the schemas used in data",
+            "example": [
+              "urn:ietf:params:scim:api:messages:2.0:PatchOp"
+            ],
+            "items": {
+              "default": "urn:ietf:params:scim:api:messages:2.0:PatchOp",
+              "enum": [
+                "urn:ietf:params:scim:api:messages:2.0:PatchOp"
+              ],
+              "example": "urn:ietf:params:scim:api:messages:2.0:PatchOp",
+              "format": "uri",
+              "type": "string"
+            },
+            "minItems": 1,
+            "type": "array",
+            "uniqueItems": true
+          }
+        },
+        "required": [
+          "schemas",
+          "Operations"
+        ],
+        "title": "PatchOperation",
+        "type": "object"
+      },
+      "ResourceIdentifier": {
+        "description": "A unique identifier for a SCIM resource as defined by the service\nprovider. The identifier is unique across the service provider's\nentire set of resources. It is a stable, non-reassignable identifier\nthat does not change when the same resource is returned in subsequent\nrequests.\n\nThe ID must always be treated as a case-sensitive opaque string.\n",
+        "example": "AGKWDNQ24N4SXBBWYENPROSIYQ",
+        "maxLength": 100,
+        "minLength": 26,
+        "title": "ResourceIdentifier",
+        "type": "string"
+      },
+      "ResourceType": {
+        "description": "SCIM ResourceType Resource",
+        "properties": {
+          "endpoint": {
+            "description": "The resource type's HTTP-addressable endpoint relative to the base URL",
+            "example": "/Users",
+            "minLength": 1,
+            "pattern": "^/.*",
+            "type": "string"
+          },
+          "meta": {
+            "additionalProperties": false,
+            "properties": {
+              "resourceType": {
+                "description": "The resource type",
+                "example": "ResourceType",
+                "type": "string"
+              }
+            },
+            "required": [
+              "resourceType"
+            ],
+            "type": "object"
+          },
+          "name": {
+            "description": "The resource type name",
+            "example": "User",
+            "minLength": 1,
+            "type": "string"
+          },
+          "schema": {
+            "description": "The resource type's primary/base schema URI",
+            "example": "urn:ietf:params:scim:schemas:core:2.0:User",
+            "format": "uri",
+            "pattern": "^urn:.*",
+            "type": "string"
+          },
+          "schemas": {
+            "default": [
+              "urn:ietf:params:scim:schemas:core:2.0:ResourceType"
+            ],
+            "description": "URIs that indicate the schemas used in data",
+            "example": [
+              "urn:ietf:params:scim:schemas:core:2.0:ResourceType"
+            ],
+            "items": {
+              "default": "urn:ietf:params:scim:schemas:core:2.0:ResourceType",
+              "enum": [
+                "urn:ietf:params:scim:schemas:core:2.0:ResourceType"
+              ],
+              "example": "urn:ietf:params:scim:schemas:core:2.0:ResourceType",
+              "format": "uri",
+              "type": "string"
+            },
+            "minItems": 1,
+            "type": "array",
+            "uniqueItems": true
+          }
+        },
+        "required": [
+          "schemas",
+          "name",
+          "endpoint",
+          "schema",
+          "meta"
+        ],
+        "title": "ResourceType",
+        "type": "object"
+      },
+      "ResourceTypeListResponse": {
+        "description": "A response to a SCIM query operation that contains a list of resources",
+        "example": {
+          "Resources": [
+            {
+              "endpoint": "/Users",
+              "meta": {
+                "resourceType": "ResourceType"
+              },
+              "name": "User",
+              "schema": "urn:ietf:params:scim:schemas:core:2.0:User",
+              "schemas": [
+                "urn:ietf:params:scim:schemas:core:2.0:ResourceType"
+              ]
+            }
+          ],
+          "itemsPerPage": 1,
+          "schemas": [
+            "urn:ietf:params:scim:api:messages:2.0:ListResponse"
+          ],
+          "startIndex": 1,
+          "totalResults": 1
+        },
+        "properties": {
+          "Resources": {
+            "default": [],
+            "description": "A multi-valued list of complex objects containing the requested resources",
+            "items": {
+              "description": "SCIM ResourceType Resource",
+              "properties": {
+                "endpoint": {
+                  "description": "The resource type's HTTP-addressable endpoint relative to the base URL",
+                  "example": "/Users",
+                  "minLength": 1,
+                  "pattern": "^/.*",
+                  "type": "string"
+                },
+                "meta": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "resourceType": {
+                      "description": "The resource type",
+                      "example": "ResourceType",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "resourceType"
+                  ],
+                  "type": "object"
+                },
+                "name": {
+                  "description": "The resource type name",
+                  "example": "User",
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "schema": {
+                  "description": "The resource type's primary/base schema URI",
+                  "example": "urn:ietf:params:scim:schemas:core:2.0:User",
+                  "format": "uri",
+                  "pattern": "^urn:.*",
+                  "type": "string"
+                },
+                "schemas": {
+                  "default": [
+                    "urn:ietf:params:scim:schemas:core:2.0:ResourceType"
+                  ],
+                  "description": "URIs that indicate the schemas used in data",
+                  "example": [
+                    "urn:ietf:params:scim:schemas:core:2.0:ResourceType"
+                  ],
+                  "items": {
+                    "default": "urn:ietf:params:scim:schemas:core:2.0:ResourceType",
+                    "enum": [
+                      "urn:ietf:params:scim:schemas:core:2.0:ResourceType"
+                    ],
+                    "example": "urn:ietf:params:scim:schemas:core:2.0:ResourceType",
+                    "format": "uri",
+                    "type": "string"
+                  },
+                  "minItems": 1,
+                  "type": "array",
+                  "uniqueItems": true
+                }
+              },
+              "required": [
+                "schemas",
+                "name",
+                "endpoint",
+                "schema",
+                "meta"
+              ],
+              "title": "ResourceType",
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "itemsPerPage": {
+            "default": 100,
+            "description": "The number of resources returned in a list response page",
+            "minimum": 0,
+            "type": "integer"
+          },
+          "schemas": {
+            "default": [
+              "urn:ietf:params:scim:api:messages:2.0:ListResponse"
+            ],
+            "description": "URIs that indicate the schemas used in data",
+            "example": [
+              "urn:ietf:params:scim:api:messages:2.0:ListResponse"
+            ],
+            "items": {
+              "default": "urn:ietf:params:scim:api:messages:2.0:ListResponse",
+              "enum": [
+                "urn:ietf:params:scim:api:messages:2.0:ListResponse"
+              ],
+              "example": "urn:ietf:params:scim:api:messages:2.0:ListResponse",
+              "format": "uri",
+              "type": "string"
+            },
+            "minItems": 1,
+            "type": "array",
+            "uniqueItems": true
+          },
+          "startIndex": {
+            "default": 1,
+            "description": "The 1-based index of the first result in the current set of query results",
+            "minimum": 1,
+            "type": "integer"
+          },
+          "totalResults": {
+            "default": 0,
+            "description": "The total number of results matching the client query",
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "schemas",
+          "totalResults",
+          "startIndex",
+          "itemsPerPage",
+          "Resources"
+        ],
+        "title": "ResourceTypeListResponse",
+        "type": "object"
+      },
+      "SchemaResource": {
+        "description": "SCIM Schema Resource",
+        "properties": {
+          "attributes": {
+            "description": "A complex type that specifies the set of attributes that make up the schema",
+            "items": {
+              "properties": {
+                "canonicalValues": {
+                  "description": "A list of canonical values. When specified, service providers MUST restrict accepted values to the specified values",
+                  "items": {
+                    "description": "A canonical string value",
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                "caseExact": {
+                  "description": "A Boolean value indicating whether the attribute is case sensitive",
+                  "example": false,
+                  "type": "boolean"
+                },
+                "description": {
+                  "description": "The attribute's human-readable description",
+                  "example": "Unique identifier for the User",
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "multiValued": {
+                  "description": "A Boolean value indicating whether the attribute can have multiple values",
+                  "example": false,
+                  "type": "boolean"
+                },
+                "mutability": {
+                  "description": "Indicates whether the attribute is modifiable",
+                  "enum": [
+                    "readOnly",
+                    "readWrite",
+                    "immutable",
+                    "writeOnly"
+                  ],
+                  "example": "readWrite",
+                  "type": "string"
+                },
+                "name": {
+                  "description": "The attribute's name",
+                  "example": "userName",
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "required": {
+                  "description": "A Boolean value indicating whether the attribute is required",
+                  "example": true,
+                  "type": "boolean"
+                },
+                "returned": {
+                  "description": "Indicates when the attribute is returned",
+                  "enum": [
+                    "always",
+                    "never",
+                    "default",
+                    "request"
+                  ],
+                  "example": "default",
+                  "type": "string"
+                },
+                "subAttributes": {
+                  "description": "List of sub-attributes for complex attributes",
+                  "items": {
+                    "description": "Sub-attribute description",
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "type": {
+                  "description": "The attribute's data type",
+                  "enum": [
+                    "string",
+                    "boolean",
+                    "decimal",
+                    "integer",
+                    "dateTime",
+                    "reference",
+                    "complex"
+                  ],
+                  "example": "string",
+                  "type": "string"
+                },
+                "uniqueness": {
+                  "description": "Indicates how unique a value must be",
+                  "enum": [
+                    "none",
+                    "server",
+                    "global"
+                  ],
+                  "example": "server",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "type",
+                "multiValued",
+                "description",
+                "required",
+                "caseExact",
+                "mutability",
+                "returned",
+                "uniqueness"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "description": {
+            "description": "The schema's human-readable description",
+            "example": "User Account",
+            "minLength": 1,
+            "type": "string"
+          },
+          "id": {
+            "description": "The unique identifier for the schema",
+            "example": "urn:ietf:params:scim:schemas:core:2.0:User",
+            "format": "uri",
+            "minLength": 1,
+            "pattern": "^urn:.*",
+            "type": "string"
+          },
+          "meta": {
+            "additionalProperties": false,
+            "properties": {
+              "resourceType": {
+                "description": "The resource type",
+                "example": "Schema",
+                "type": "string"
+              }
+            },
+            "required": [
+              "resourceType"
+            ],
+            "type": "object"
+          },
+          "name": {
+            "description": "The schema's human-readable name",
+            "example": "User",
+            "minLength": 1,
+            "type": "string"
+          },
+          "schemas": {
+            "default": [
+              "urn:ietf:params:scim:schemas:core:2.0:Schema"
+            ],
+            "description": "URIs that indicate the schemas used in data",
+            "example": [
+              "urn:ietf:params:scim:schemas:core:2.0:Schema"
+            ],
+            "items": {
+              "default": "urn:ietf:params:scim:schemas:core:2.0:Schema",
+              "enum": [
+                "urn:ietf:params:scim:schemas:core:2.0:Schema"
+              ],
+              "example": "urn:ietf:params:scim:schemas:core:2.0:Schema",
+              "format": "uri",
+              "type": "string"
+            },
+            "minItems": 1,
+            "type": "array",
+            "uniqueItems": true
+          }
+        },
+        "required": [
+          "id",
+          "schemas",
+          "name",
+          "description",
+          "attributes",
+          "meta"
+        ],
+        "title": "SchemaResource",
+        "type": "object"
+      },
+      "SchemaResourceListResponse": {
+        "description": "A response to a SCIM query operation that contains a list of resources",
+        "example": {
+          "Resources": [
+            {
+              "attributes": [
+                {
+                  "canonicalValues": [
+                    ""
+                  ],
+                  "caseExact": false,
+                  "description": "Unique identifier for the User",
+                  "multiValued": false,
+                  "mutability": "readWrite",
+                  "name": "userName",
+                  "required": true,
+                  "returned": "default",
+                  "subAttributes": [
+                    {}
+                  ],
+                  "type": "string",
+                  "uniqueness": "server"
+                }
+              ],
+              "description": "User Account",
+              "id": "urn:ietf:params:scim:schemas:core:2.0:User",
+              "meta": {
+                "resourceType": "Schema"
+              },
+              "name": "User",
+              "schemas": [
+                "urn:ietf:params:scim:schemas:core:2.0:Schema"
+              ]
+            }
+          ],
+          "itemsPerPage": 1,
+          "schemas": [
+            "urn:ietf:params:scim:api:messages:2.0:ListResponse"
+          ],
+          "startIndex": 1,
+          "totalResults": 1
+        },
+        "properties": {
+          "Resources": {
+            "default": [],
+            "description": "A multi-valued list of complex objects containing the requested resources",
+            "items": {
+              "description": "SCIM Schema Resource",
+              "properties": {
+                "attributes": {
+                  "description": "A complex type that specifies the set of attributes that make up the schema",
+                  "items": {
+                    "properties": {
+                      "canonicalValues": {
+                        "description": "A list of canonical values. When specified, service providers MUST restrict accepted values to the specified values",
+                        "items": {
+                          "description": "A canonical string value",
+                          "type": "string"
+                        },
+                        "type": "array"
+                      },
+                      "caseExact": {
+                        "description": "A Boolean value indicating whether the attribute is case sensitive",
+                        "example": false,
+                        "type": "boolean"
+                      },
+                      "description": {
+                        "description": "The attribute's human-readable description",
+                        "example": "Unique identifier for the User",
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "multiValued": {
+                        "description": "A Boolean value indicating whether the attribute can have multiple values",
+                        "example": false,
+                        "type": "boolean"
+                      },
+                      "mutability": {
+                        "description": "Indicates whether the attribute is modifiable",
+                        "enum": [
+                          "readOnly",
+                          "readWrite",
+                          "immutable",
+                          "writeOnly"
+                        ],
+                        "example": "readWrite",
+                        "type": "string"
+                      },
+                      "name": {
+                        "description": "The attribute's name",
+                        "example": "userName",
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "required": {
+                        "description": "A Boolean value indicating whether the attribute is required",
+                        "example": true,
+                        "type": "boolean"
+                      },
+                      "returned": {
+                        "description": "Indicates when the attribute is returned",
+                        "enum": [
+                          "always",
+                          "never",
+                          "default",
+                          "request"
+                        ],
+                        "example": "default",
+                        "type": "string"
+                      },
+                      "subAttributes": {
+                        "description": "List of sub-attributes for complex attributes",
+                        "items": {
+                          "description": "Sub-attribute description",
+                          "type": "object"
+                        },
+                        "type": "array"
+                      },
+                      "type": {
+                        "description": "The attribute's data type",
+                        "enum": [
+                          "string",
+                          "boolean",
+                          "decimal",
+                          "integer",
+                          "dateTime",
+                          "reference",
+                          "complex"
+                        ],
+                        "example": "string",
+                        "type": "string"
+                      },
+                      "uniqueness": {
+                        "description": "Indicates how unique a value must be",
+                        "enum": [
+                          "none",
+                          "server",
+                          "global"
+                        ],
+                        "example": "server",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "name",
+                      "type",
+                      "multiValued",
+                      "description",
+                      "required",
+                      "caseExact",
+                      "mutability",
+                      "returned",
+                      "uniqueness"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "description": {
+                  "description": "The schema's human-readable description",
+                  "example": "User Account",
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "id": {
+                  "description": "The unique identifier for the schema",
+                  "example": "urn:ietf:params:scim:schemas:core:2.0:User",
+                  "format": "uri",
+                  "minLength": 1,
+                  "pattern": "^urn:.*",
+                  "type": "string"
+                },
+                "meta": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "resourceType": {
+                      "description": "The resource type",
+                      "example": "Schema",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "resourceType"
+                  ],
+                  "type": "object"
+                },
+                "name": {
+                  "description": "The schema's human-readable name",
+                  "example": "User",
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "schemas": {
+                  "default": [
+                    "urn:ietf:params:scim:schemas:core:2.0:Schema"
+                  ],
+                  "description": "URIs that indicate the schemas used in data",
+                  "example": [
+                    "urn:ietf:params:scim:schemas:core:2.0:Schema"
+                  ],
+                  "items": {
+                    "default": "urn:ietf:params:scim:schemas:core:2.0:Schema",
+                    "enum": [
+                      "urn:ietf:params:scim:schemas:core:2.0:Schema"
+                    ],
+                    "example": "urn:ietf:params:scim:schemas:core:2.0:Schema",
+                    "format": "uri",
+                    "type": "string"
+                  },
+                  "minItems": 1,
+                  "type": "array",
+                  "uniqueItems": true
+                }
+              },
+              "required": [
+                "id",
+                "schemas",
+                "name",
+                "description",
+                "attributes",
+                "meta"
+              ],
+              "title": "SchemaResource",
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "itemsPerPage": {
+            "default": 100,
+            "description": "The number of resources returned in a list response page",
+            "minimum": 0,
+            "type": "integer"
+          },
+          "schemas": {
+            "default": [
+              "urn:ietf:params:scim:api:messages:2.0:ListResponse"
+            ],
+            "description": "URIs that indicate the schemas used in data",
+            "example": [
+              "urn:ietf:params:scim:api:messages:2.0:ListResponse"
+            ],
+            "items": {
+              "default": "urn:ietf:params:scim:api:messages:2.0:ListResponse",
+              "enum": [
+                "urn:ietf:params:scim:api:messages:2.0:ListResponse"
+              ],
+              "example": "urn:ietf:params:scim:api:messages:2.0:ListResponse",
+              "format": "uri",
+              "type": "string"
+            },
+            "minItems": 1,
+            "type": "array",
+            "uniqueItems": true
+          },
+          "startIndex": {
+            "default": 1,
+            "description": "The 1-based index of the first result in the current set of query results",
+            "minimum": 1,
+            "type": "integer"
+          },
+          "totalResults": {
+            "default": 0,
+            "description": "The total number of results matching the client query",
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "schemas",
+          "totalResults",
+          "startIndex",
+          "itemsPerPage",
+          "Resources"
+        ],
+        "title": "SchemaResourceListResponse",
+        "type": "object"
+      },
+      "ServiceProviderConfig": {
+        "description": "SCIM Service Provider Configuration",
+        "properties": {
+          "authenticationSchemes": {
+            "description": "A list of supported authentication schemes",
+            "items": {
+              "properties": {
+                "description": {
+                  "description": "A description of the authentication scheme",
+                  "example": "Authentication via a bearer token in the Authorization header",
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "documentationUri": {
+                  "description": "An HTTP-addressable URL pointing to the authentication scheme's usage documentation",
+                  "example": "https://example.com/help/oauth.html",
+                  "format": "uri",
+                  "pattern": "^https?://.*",
+                  "type": "string"
+                },
+                "name": {
+                  "description": "The name of the authentication scheme",
+                  "example": "Bearer Token",
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "primary": {
+                  "description": "A Boolean value indicating whether this is the primary authentication scheme",
+                  "example": true,
+                  "type": "boolean"
+                },
+                "specUri": {
+                  "description": "A URI that points to the specification of the authentication scheme",
+                  "example": "https://tools.ietf.org/html/rfc6750",
+                  "format": "uri",
+                  "pattern": "^https?://.*",
+                  "type": "string"
+                },
+                "type": {
+                  "description": "The type of authentication scheme",
+                  "enum": [
+                    "oauthbearertoken",
+                    "oauth",
+                    "oauth2",
+                    "httpbasic",
+                    "httpdigest",
+                    "apikey"
+                  ],
+                  "example": "oauthbearertoken",
+                  "minLength": 1,
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "description",
+                "type"
+              ],
+              "type": "object"
+            },
+            "minItems": 1,
+            "type": "array"
+          },
+          "bulk": {
+            "description": "A complex type that specifies bulk configuration options",
+            "properties": {
+              "maxOperations": {
+                "description": "An integer value specifying the maximum number of operations",
+                "example": 1000,
+                "type": "integer"
+              },
+              "maxPayloadSize": {
+                "description": "An integer value specifying the maximum payload size in bytes",
+                "example": 1048576,
+                "type": "integer"
+              },
+              "supported": {
+                "description": "A Boolean value specifying whether the operation is supported",
+                "example": false,
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "supported",
+              "maxOperations",
+              "maxPayloadSize"
+            ],
+            "type": "object"
+          },
+          "changePassword": {
+            "description": "A complex type that specifies change password configuration options",
+            "properties": {
+              "supported": {
+                "description": "A Boolean value specifying whether the operation is supported",
+                "example": false,
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "supported"
+            ],
+            "type": "object"
+          },
+          "documentationUri": {
+            "description": "An HTTP-addressable URL pointing to the service provider's documentation",
+            "example": "https://example.com/documentation",
+            "format": "uri",
+            "nullable": true,
+            "pattern": "^https?://.*",
+            "type": "string"
+          },
+          "etag": {
+            "description": "A complex type that specifies ETag configuration options",
+            "properties": {
+              "supported": {
+                "description": "A Boolean value specifying whether the operation is supported",
+                "example": false,
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "supported"
+            ],
+            "type": "object"
+          },
+          "filter": {
+            "description": "A complex type that specifies filter configuration options",
+            "properties": {
+              "maxResults": {
+                "description": "An integer value specifying the maximum number of results returned",
+                "example": 100,
+                "type": "integer"
+              },
+              "supported": {
+                "description": "A Boolean value specifying whether the operation is supported",
+                "example": true,
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "supported",
+              "maxResults"
+            ],
+            "type": "object"
+          },
+          "meta": {
+            "additionalProperties": false,
+            "properties": {
+              "resourceType": {
+                "description": "The resource type",
+                "example": "ServiceProviderConfig",
+                "type": "string"
+              }
+            },
+            "required": [
+              "resourceType"
+            ],
+            "type": "object"
+          },
+          "patch": {
+            "description": "A complex type that specifies PATCH configuration options",
+            "properties": {
+              "supported": {
+                "description": "A Boolean value specifying whether the operation is supported",
+                "example": true,
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "supported"
+            ],
+            "type": "object"
+          },
+          "schemas": {
+            "default": [
+              "urn:ietf:params:scim:schemas:core:2.0:ServiceProviderConfig"
+            ],
+            "description": "URIs that indicate the schemas used in data",
+            "example": [
+              "urn:ietf:params:scim:schemas:core:2.0:ServiceProviderConfig"
+            ],
+            "items": {
+              "default": "urn:ietf:params:scim:schemas:core:2.0:ServiceProviderConfig",
+              "enum": [
+                "urn:ietf:params:scim:schemas:core:2.0:ServiceProviderConfig"
+              ],
+              "example": "urn:ietf:params:scim:schemas:core:2.0:ServiceProviderConfig",
+              "format": "uri",
+              "type": "string"
+            },
+            "minItems": 1,
+            "type": "array",
+            "uniqueItems": true
+          },
+          "sort": {
+            "description": "A complex type that specifies sort configuration options",
+            "properties": {
+              "supported": {
+                "description": "A Boolean value specifying whether the operation is supported",
+                "example": false,
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "supported"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "schemas",
+          "patch",
+          "bulk",
+          "filter",
+          "changePassword",
+          "sort",
+          "etag",
+          "authenticationSchemes",
+          "meta"
+        ],
+        "title": "ServiceProviderConfig",
+        "type": "object"
+      },
+      "UnauthorizedErrorResponse": {
+        "description": "A SCIM error response",
+        "example": {
+          "detail": "An error occurred",
+          "schemas": [
+            "urn:ietf:params:scim:api:messages:2.0:Error"
+          ],
+          "status": "401"
+        },
+        "properties": {
+          "detail": {
+            "description": "Detailed error explanation",
+            "type": "string"
+          },
+          "schemas": {
+            "default": [
+              "urn:ietf:params:scim:api:messages:2.0:Error"
+            ],
+            "description": "URIs that indicate the schemas used in data",
+            "example": [
+              "urn:ietf:params:scim:api:messages:2.0:Error"
+            ],
+            "items": {
+              "default": "urn:ietf:params:scim:api:messages:2.0:Error",
+              "enum": [
+                "urn:ietf:params:scim:api:messages:2.0:Error"
+              ],
+              "example": "urn:ietf:params:scim:api:messages:2.0:Error",
+              "format": "uri",
+              "type": "string"
+            },
+            "minItems": 1,
+            "type": "array",
+            "uniqueItems": true
+          },
+          "scimType": {
+            "description": "SCIM error type",
+            "enum": [
+              "invalidFilter",
+              "tooMany",
+              "uniqueness",
+              "mutability",
+              "invalidSyntax",
+              "invalidPath",
+              "noTarget",
+              "invalidValue",
+              "invalidVers",
+              "sensitive"
+            ],
+            "type": "string"
+          },
+          "status": {
+            "description": "HTTP status code for the error",
+            "type": "string"
+          }
+        },
+        "required": [
+          "schemas",
+          "detail",
+          "status"
+        ],
+        "title": "UnauthorizedErrorResponse",
+        "type": "object"
+      },
+      "User": {
+        "description": "Represents a SCIM 2.0 user per RFC 7643.\n",
+        "properties": {
+          "active": {
+            "default": true,
+            "description": "A Boolean value indicating the User's administrative status. When set to false,\nthe user will be deleted.\n\nAll users are created as active by default. It is an error to\nattempt to create a user with the `active` field set to `false`.\n",
+            "type": "boolean"
+          },
+          "displayName": {
+            "description": "The name of the User, suitable for display to end-users. The name\nSHOULD be the full name of the User being described, if known.\n",
+            "example": "Fake User",
+            "maxLength": 255,
+            "minLength": 1,
+            "type": "string"
+          },
+          "entitlements": {
+            "description": "A list containing the User's entitlements. PagerDuty Users have a single entitlement\nrepresenting the User's license. The `value` field of this item must be set to the\nUser's license ID, and the `type` field must be set to `license`.\n\nThe license is not required to be set when creating a user. If not set, a\ndefault license will be assigned. Valid license IDs can be fetched from the\nPagerDuty Public API:\nhttps://developer.pagerduty.com/api-reference/4c10cb38f7381-list-licenses\n",
+            "example": [
+              {
+                "type": "license",
+                "value": "PABC123"
+              }
+            ],
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "type": {
+                  "enum": [
+                    "license"
+                  ],
+                  "type": "string"
+                },
+                "value": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "value",
+                "type"
+              ],
+              "type": "object"
+            },
+            "maxItems": 1,
+            "minItems": 1,
+            "type": "array"
+          },
+          "externalId": {
+            "description": "A unique identifier for the User, set by the SCIM client. The SCIM client is\nresponsible for ensuring that the value is unique across all Users.\n",
+            "example": "00ujl29u0le5T6Aj10h7",
+            "maxLength": 100,
+            "minLength": 1,
+            "type": "string"
+          },
+          "id": {
+            "description": "A unique identifier for a SCIM resource as defined by the service\nprovider. The identifier is unique across the service provider's\nentire set of resources. It is a stable, non-reassignable identifier\nthat does not change when the same resource is returned in subsequent\nrequests.\n\nThe ID must always be treated as a case-sensitive opaque string.\n",
+            "example": "AGKWDNQ24N4SXBBWYENPROSIYQ",
+            "maxLength": 100,
+            "minLength": 26,
+            "title": "ResourceIdentifier",
+            "type": "string"
+          },
+          "meta": {
+            "properties": {
+              "resourceType": {
+                "description": "A label indicating the resource type of the resource.\n",
+                "enum": [
+                  "User"
+                ],
+                "readOnly": true,
+                "type": "string"
+              }
+            },
+            "readOnly": true,
+            "required": [
+              "resourceType"
+            ],
+            "type": "object"
+          },
+          "roles": {
+            "description": "A list containing the User's role. PagerDuty Users have a single role\nand the list will always contain a single item.\n\nThe role is not required to be set when creating a user. If not set, a\ndefault role will be assigned. Valid user roles are defined in the\nPagerDuty Public API documentation:\nhttps://developer.pagerduty.com/api-reference/4cb4fd0f5444a-create-a-user\n\nThe only supported role type at this time is \"base\", which maps to\nthe user's base account role in PagerDuty.\n",
+            "example": [
+              {
+                "type": "base",
+                "value": "user"
+              }
+            ],
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "type": {
+                  "enum": [
+                    "base"
+                  ],
+                  "type": "string"
+                },
+                "value": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "value",
+                "type"
+              ],
+              "type": "object"
+            },
+            "maxItems": 1,
+            "minItems": 1,
+            "type": "array"
+          },
+          "schemas": {
+            "default": [
+              "urn:ietf:params:scim:schemas:core:2.0:User"
+            ],
+            "description": "URIs that indicate the schemas used in data",
+            "example": [
+              "urn:ietf:params:scim:schemas:core:2.0:User"
+            ],
+            "items": {
+              "default": "urn:ietf:params:scim:schemas:core:2.0:User",
+              "enum": [
+                "urn:ietf:params:scim:schemas:core:2.0:User"
+              ],
+              "example": "urn:ietf:params:scim:schemas:core:2.0:User",
+              "format": "uri",
+              "type": "string"
+            },
+            "minItems": 1,
+            "type": "array",
+            "uniqueItems": true
+          },
+          "timezone": {
+            "description": "The User's case-sensitive time zone. Must be a valid IANA time zone identifier.\n",
+            "example": "America/New_York",
+            "nullable": true,
+            "type": "string",
+            "writeOnly": true
+          },
+          "title": {
+            "description": "The job title of the User.\n",
+            "example": "Software Developer",
+            "nullable": true,
+            "type": "string"
+          },
+          "userName": {
+            "description": "A unique identifier for the User, typically used by the user to directly\nauthenticate to the service provider. Each User MUST include a non-empty\nuserName value. This identifier MUST be unique across the service provider's\nentire set of Users.\n",
+            "example": "fake.user@example.com",
+            "format": "email",
+            "maxLength": 100,
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "schemas",
+          "userName",
+          "displayName",
+          "roles",
+          "active",
+          "meta"
+        ],
+        "title": "User",
+        "type": "object"
+      },
+      "UserListResponse": {
+        "description": "A response to a SCIM query operation that contains a list of resources",
+        "example": {
+          "Resources": [
+            {
+              "active": false,
+              "displayName": "Fake User",
+              "entitlements": [
+                {
+                  "type": "license",
+                  "value": "PABC123"
+                }
+              ],
+              "externalId": "00ujl29u0le5T6Aj10h7",
+              "id": "AGKWDNQ24N4SXBBWYENPROSIYQ",
+              "meta": {
+                "resourceType": "User"
+              },
+              "roles": [
+                {
+                  "type": "base",
+                  "value": "user"
+                }
+              ],
+              "schemas": [
+                "urn:ietf:params:scim:schemas:core:2.0:User"
+              ],
+              "timezone": "America/New_York",
+              "title": "Software Developer",
+              "userName": "fake.user@example.com"
+            }
+          ],
+          "itemsPerPage": 1,
+          "schemas": [
+            "urn:ietf:params:scim:api:messages:2.0:ListResponse"
+          ],
+          "startIndex": 1,
+          "totalResults": 1
+        },
+        "properties": {
+          "Resources": {
+            "default": [],
+            "description": "A multi-valued list of complex objects containing the requested resources",
+            "items": {
+              "description": "Represents a SCIM 2.0 user per RFC 7643.\n",
+              "properties": {
+                "active": {
+                  "default": true,
+                  "description": "A Boolean value indicating the User's administrative status. When set to false,\nthe user will be deleted.\n\nAll users are created as active by default. It is an error to\nattempt to create a user with the `active` field set to `false`.\n",
+                  "type": "boolean"
+                },
+                "displayName": {
+                  "description": "The name of the User, suitable for display to end-users. The name\nSHOULD be the full name of the User being described, if known.\n",
+                  "example": "Fake User",
+                  "maxLength": 255,
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "entitlements": {
+                  "description": "A list containing the User's entitlements. PagerDuty Users have a single entitlement\nrepresenting the User's license. The `value` field of this item must be set to the\nUser's license ID, and the `type` field must be set to `license`.\n\nThe license is not required to be set when creating a user. If not set, a\ndefault license will be assigned. Valid license IDs can be fetched from the\nPagerDuty Public API:\nhttps://developer.pagerduty.com/api-reference/4c10cb38f7381-list-licenses\n",
+                  "example": [
+                    {
+                      "type": "license",
+                      "value": "PABC123"
+                    }
+                  ],
+                  "items": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "type": {
+                        "enum": [
+                          "license"
+                        ],
+                        "type": "string"
+                      },
+                      "value": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "value",
+                      "type"
+                    ],
+                    "type": "object"
+                  },
+                  "maxItems": 1,
+                  "minItems": 1,
+                  "type": "array"
+                },
+                "externalId": {
+                  "description": "A unique identifier for the User, set by the SCIM client. The SCIM client is\nresponsible for ensuring that the value is unique across all Users.\n",
+                  "example": "00ujl29u0le5T6Aj10h7",
+                  "maxLength": 100,
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "id": {
+                  "description": "A unique identifier for a SCIM resource as defined by the service\nprovider. The identifier is unique across the service provider's\nentire set of resources. It is a stable, non-reassignable identifier\nthat does not change when the same resource is returned in subsequent\nrequests.\n\nThe ID must always be treated as a case-sensitive opaque string.\n",
+                  "example": "AGKWDNQ24N4SXBBWYENPROSIYQ",
+                  "maxLength": 100,
+                  "minLength": 26,
+                  "title": "ResourceIdentifier",
+                  "type": "string"
+                },
+                "meta": {
+                  "properties": {
+                    "resourceType": {
+                      "description": "A label indicating the resource type of the resource.\n",
+                      "enum": [
+                        "User"
+                      ],
+                      "readOnly": true,
+                      "type": "string"
+                    }
+                  },
+                  "readOnly": true,
+                  "required": [
+                    "resourceType"
+                  ],
+                  "type": "object"
+                },
+                "roles": {
+                  "description": "A list containing the User's role. PagerDuty Users have a single role\nand the list will always contain a single item.\n\nThe role is not required to be set when creating a user. If not set, a\ndefault role will be assigned. Valid user roles are defined in the\nPagerDuty Public API documentation:\nhttps://developer.pagerduty.com/api-reference/4cb4fd0f5444a-create-a-user\n\nThe only supported role type at this time is \"base\", which maps to\nthe user's base account role in PagerDuty.\n",
+                  "example": [
+                    {
+                      "type": "base",
+                      "value": "user"
+                    }
+                  ],
+                  "items": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "type": {
+                        "enum": [
+                          "base"
+                        ],
+                        "type": "string"
+                      },
+                      "value": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "value",
+                      "type"
+                    ],
+                    "type": "object"
+                  },
+                  "maxItems": 1,
+                  "minItems": 1,
+                  "type": "array"
+                },
+                "schemas": {
+                  "default": [
+                    "urn:ietf:params:scim:schemas:core:2.0:User"
+                  ],
+                  "description": "URIs that indicate the schemas used in data",
+                  "example": [
+                    "urn:ietf:params:scim:schemas:core:2.0:User"
+                  ],
+                  "items": {
+                    "default": "urn:ietf:params:scim:schemas:core:2.0:User",
+                    "enum": [
+                      "urn:ietf:params:scim:schemas:core:2.0:User"
+                    ],
+                    "example": "urn:ietf:params:scim:schemas:core:2.0:User",
+                    "format": "uri",
+                    "type": "string"
+                  },
+                  "minItems": 1,
+                  "type": "array",
+                  "uniqueItems": true
+                },
+                "timezone": {
+                  "description": "The User's case-sensitive time zone. Must be a valid IANA time zone identifier.\n",
+                  "example": "America/New_York",
+                  "nullable": true,
+                  "type": "string",
+                  "writeOnly": true
+                },
+                "title": {
+                  "description": "The job title of the User.\n",
+                  "example": "Software Developer",
+                  "nullable": true,
+                  "type": "string"
+                },
+                "userName": {
+                  "description": "A unique identifier for the User, typically used by the user to directly\nauthenticate to the service provider. Each User MUST include a non-empty\nuserName value. This identifier MUST be unique across the service provider's\nentire set of Users.\n",
+                  "example": "fake.user@example.com",
+                  "format": "email",
+                  "maxLength": 100,
+                  "minLength": 1,
+                  "type": "string"
+                }
+              },
+              "required": [
+                "id",
+                "schemas",
+                "userName",
+                "displayName",
+                "roles",
+                "active",
+                "meta"
+              ],
+              "title": "User",
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "itemsPerPage": {
+            "default": 100,
+            "description": "The number of resources returned in a list response page",
+            "minimum": 0,
+            "type": "integer"
+          },
+          "schemas": {
+            "default": [
+              "urn:ietf:params:scim:api:messages:2.0:ListResponse"
+            ],
+            "description": "URIs that indicate the schemas used in data",
+            "example": [
+              "urn:ietf:params:scim:api:messages:2.0:ListResponse"
+            ],
+            "items": {
+              "default": "urn:ietf:params:scim:api:messages:2.0:ListResponse",
+              "enum": [
+                "urn:ietf:params:scim:api:messages:2.0:ListResponse"
+              ],
+              "example": "urn:ietf:params:scim:api:messages:2.0:ListResponse",
+              "format": "uri",
+              "type": "string"
+            },
+            "minItems": 1,
+            "type": "array",
+            "uniqueItems": true
+          },
+          "startIndex": {
+            "default": 1,
+            "description": "The 1-based index of the first result in the current set of query results",
+            "minimum": 1,
+            "type": "integer"
+          },
+          "totalResults": {
+            "default": 0,
+            "description": "The total number of results matching the client query",
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "schemas",
+          "totalResults",
+          "startIndex",
+          "itemsPerPage",
+          "Resources"
+        ],
+        "title": "UserListResponse",
+        "type": "object"
+      }
+    },
+    "securitySchemes": {
+      "apiKey": {
+        "description": "A [General Access API Key](https://support.pagerduty.com/main/docs/api-access-keys#generate-a-general-access-rest-api-key) with format `Token token=<API_KEY>`",
+        "in": "header",
+        "name": "Authorization",
+        "type": "apiKey"
+      },
+      "bearerToken": {
+        "description": "An [App OAuth Token](https://developer.pagerduty.com/docs/app-oauth-token) with format `Bearer <TOKEN>`",
+        "scheme": "bearer",
+        "type": "http"
+      }
+    }
+  },
+  "paths": {
+    "/ResourceTypes": {
+      "get": {
+        "callbacks": {},
+        "description": "Retrieves the SCIM resource types supported by the service provider.\nScoped OAuth requires: `users.read`\n",
+        "operationId": "getResourceTypes",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResourceTypeListResponse"
+                }
+              }
+            },
+            "description": "SCIM Resource Types List"
+          },
+          "400": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestErrorResponse"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedErrorResponse"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForbiddenErrorResponse"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "500": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerErrorResponse"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          }
+        },
+        "summary": "Get SCIM Resource Types",
+        "tags": [
+          "Service Provider Metadata"
+        ],
+        "x-pd-requires-scope": "users.read"
+      }
+    },
+    "/Schemas": {
+      "get": {
+        "callbacks": {},
+        "description": "Retrieves the SCIM schemas supported by the service provider.\nScoped OAuth requires: `users.read`\n",
+        "operationId": "getSchemas",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchemaResourceListResponse"
+                }
+              }
+            },
+            "description": "SCIM Schemas List"
+          },
+          "400": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestErrorResponse"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedErrorResponse"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForbiddenErrorResponse"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "500": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerErrorResponse"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          }
+        },
+        "summary": "Get SCIM Schemas",
+        "tags": [
+          "Service Provider Metadata"
+        ],
+        "x-pd-requires-scope": "users.read"
+      }
+    },
+    "/Schemas/{id}": {
+      "get": {
+        "callbacks": {},
+        "description": "Retrieves an individual SCIM Schema by ID.\nScoped OAuth requires: `users.read`\n",
+        "operationId": "getSchema",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/schemaId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchemaResource"
+                }
+              }
+            },
+            "description": "SCIM Schema"
+          },
+          "400": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestErrorResponse"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedErrorResponse"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForbiddenErrorResponse"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundErrorResponse"
+                }
+              }
+            },
+            "description": "Schema Not Found"
+          },
+          "500": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerErrorResponse"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          }
+        },
+        "summary": "Get individual SCIM Schema by ID",
+        "tags": [
+          "Service Provider Metadata"
+        ],
+        "x-pd-requires-scope": "users.read"
+      }
+    },
+    "/ServiceProviderConfig": {
+      "get": {
+        "callbacks": {},
+        "description": "Retrieves the SCIM Service Provider Configuration.\nScoped OAuth requires: `users.read`\n",
+        "operationId": "getServiceProviderConfig",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServiceProviderConfig"
+                }
+              }
+            },
+            "description": "SCIM Service Provider Configuration"
+          },
+          "400": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestErrorResponse"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedErrorResponse"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForbiddenErrorResponse"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "500": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerErrorResponse"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          }
+        },
+        "summary": "Get SCIM Service Provider Configuration",
+        "tags": [
+          "Service Provider Metadata"
+        ],
+        "x-pd-requires-scope": "users.read"
+      }
+    },
+    "/Users": {
+      "get": {
+        "callbacks": {},
+        "description": "Retrieves a list of users based on the provided query parameters.\nScoped OAuth requires: `users.read`\n",
+        "operationId": "listUsers",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/startIndex"
+          },
+          {
+            "$ref": "#/components/parameters/count"
+          },
+          {
+            "$ref": "#/components/parameters/filter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserListResponse"
+                }
+              }
+            },
+            "description": "SCIM User List"
+          },
+          "400": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestErrorResponse"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedErrorResponse"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForbiddenErrorResponse"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "500": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerErrorResponse"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          }
+        },
+        "summary": "List users",
+        "tags": [
+          "Users"
+        ],
+        "x-pd-requires-scope": "users.read"
+      },
+      "post": {
+        "callbacks": {},
+        "description": "Creates a new user with the provided details.\nScoped OAuth requires: `users.write`\n",
+        "operationId": "createUser",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "description": "The properties of a SCIM user that can be set/modified. All other\nproperties are ignored.\n",
+                "properties": {
+                  "active": {
+                    "default": true,
+                    "description": "A Boolean value indicating the User's administrative status. When set to false,\nthe user will be deleted.\n\nAll users are created as active by default. It is an error to\nattempt to create a user with the `active` field set to `false`.\n",
+                    "type": "boolean"
+                  },
+                  "displayName": {
+                    "description": "The name of the User, suitable for display to end-users. The name\nSHOULD be the full name of the User being described, if known.\n",
+                    "example": "Fake User",
+                    "maxLength": 255,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "entitlements": {
+                    "description": "A list containing the User's entitlements. PagerDuty Users have a single entitlement\nrepresenting the User's license. The `value` field of this item must be set to the\nUser's license ID, and the `type` field must be set to `license`.\n\nThe license is not required to be set when creating a user. If not set, a\ndefault license will be assigned. Valid license IDs can be fetched from the\nPagerDuty Public API:\nhttps://developer.pagerduty.com/api-reference/4c10cb38f7381-list-licenses\n",
+                    "example": [
+                      {
+                        "type": "license",
+                        "value": "PABC123"
+                      }
+                    ],
+                    "items": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "type": {
+                          "enum": [
+                            "license"
+                          ],
+                          "type": "string"
+                        },
+                        "value": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "value",
+                        "type"
+                      ],
+                      "type": "object"
+                    },
+                    "maxItems": 1,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "externalId": {
+                    "description": "A unique identifier for the User, set by the SCIM client. The SCIM client is\nresponsible for ensuring that the value is unique across all Users.\n",
+                    "example": "00ujl29u0le5T6Aj10h7",
+                    "maxLength": 100,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "roles": {
+                    "description": "A list containing the User's role. PagerDuty Users have a single role\nand the list will always contain a single item.\n\nThe role is not required to be set when creating a user. If not set, a\ndefault role will be assigned. Valid user roles are defined in the\nPagerDuty Public API documentation:\nhttps://developer.pagerduty.com/api-reference/4cb4fd0f5444a-create-a-user\n\nThe only supported role type at this time is \"base\", which maps to\nthe user's base account role in PagerDuty.\n",
+                    "example": [
+                      {
+                        "type": "base",
+                        "value": "user"
+                      }
+                    ],
+                    "items": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "type": {
+                          "enum": [
+                            "base"
+                          ],
+                          "type": "string"
+                        },
+                        "value": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "value",
+                        "type"
+                      ],
+                      "type": "object"
+                    },
+                    "maxItems": 1,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "schemas": {
+                    "default": [
+                      "urn:ietf:params:scim:schemas:core:2.0:User"
+                    ],
+                    "description": "URIs that indicate the schemas used in data",
+                    "example": [
+                      "urn:ietf:params:scim:schemas:core:2.0:User"
+                    ],
+                    "items": {
+                      "default": "urn:ietf:params:scim:schemas:core:2.0:User",
+                      "example": "urn:ietf:params:scim:schemas:core:2.0:User",
+                      "format": "uri",
+                      "type": "string"
+                    },
+                    "minItems": 1,
+                    "type": "array",
+                    "uniqueItems": true
+                  },
+                  "timezone": {
+                    "description": "The User's case-sensitive time zone. Must be a valid IANA time zone identifier.\n",
+                    "example": "America/New_York",
+                    "nullable": true,
+                    "type": "string",
+                    "writeOnly": true
+                  },
+                  "title": {
+                    "description": "The job title of the User.\n",
+                    "example": "Software Developer",
+                    "nullable": true,
+                    "type": "string"
+                  },
+                  "userName": {
+                    "description": "A unique identifier for the User, typically used by the user to directly\nauthenticate to the service provider. Each User MUST include a non-empty\nuserName value. This identifier MUST be unique across the service provider's\nentire set of Users.\n",
+                    "example": "fake.user@example.com",
+                    "format": "email",
+                    "maxLength": 100,
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "userName",
+                  "displayName"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "description": "SCIM User Create Params",
+          "required": false
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            },
+            "description": "SCIM User"
+          },
+          "400": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestErrorResponse"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedErrorResponse"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForbiddenErrorResponse"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "500": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerErrorResponse"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          }
+        },
+        "summary": "Create user",
+        "tags": [
+          "Users"
+        ],
+        "x-pd-requires-scope": "users.write"
+      }
+    },
+    "/Users/{id}": {
+      "delete": {
+        "callbacks": {},
+        "description": "Deletes a user by their unique identifier.\nScoped OAuth requires: `users.write`\n",
+        "operationId": "deleteUser",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userId"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestErrorResponse"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedErrorResponse"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForbiddenErrorResponse"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "500": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerErrorResponse"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          }
+        },
+        "summary": "Delete a user",
+        "tags": [
+          "Users"
+        ],
+        "x-pd-requires-scope": "users.write"
+      },
+      "get": {
+        "callbacks": {},
+        "description": "Retrieves a user by their unique identifier.\nScoped OAuth requires: `users.read`\n",
+        "operationId": "getUser",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            },
+            "description": "SCIM User"
+          },
+          "400": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestErrorResponse"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedErrorResponse"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForbiddenErrorResponse"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "500": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerErrorResponse"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          }
+        },
+        "summary": "Get user",
+        "tags": [
+          "Users"
+        ],
+        "x-pd-requires-scope": "users.read"
+      },
+      "patch": {
+        "callbacks": {},
+        "description": "Performs a SCIM PATCH operation on a user. Supports:\n- Replacement of specific attributes using the 'path' parameter\n- Full or partial update using the 'value' parameter without a path\n- Setting 'active' to false to delete the user (returns 204 No Content)\n- Removing attributes using the 'remove' operation. Only optional attributes can be removed.\n\nScoped OAuth requires: `users.write`\n",
+        "operationId": "patchUser",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userId"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "description": "A SCIM patch request body",
+                "example": {
+                  "Operations": [
+                    {
+                      "op": "replace",
+                      "value": {
+                        "active": false
+                      }
+                    },
+                    {
+                      "op": "replace",
+                      "path": "displayName",
+                      "value": "Updated User Display Name"
+                    },
+                    {
+                      "op": "remove",
+                      "path": "title"
+                    }
+                  ],
+                  "schemas": [
+                    "urn:ietf:params:scim:api:messages:2.0:PatchOp"
+                  ]
+                },
+                "properties": {
+                  "Operations": {
+                    "description": "Array of one or more patch operations to be applied to the resource.",
+                    "items": {
+                      "example": [
+                        {
+                          "op": "replace",
+                          "value": {
+                            "active": false
+                          }
+                        }
+                      ],
+                      "properties": {
+                        "op": {
+                          "description": "The PATCH operation to perform.",
+                          "type": "string"
+                        },
+                        "path": {
+                          "description": "The path to the attribute to be updated.",
+                          "example": "active",
+                          "nullable": true,
+                          "type": "string"
+                        },
+                        "value": {
+                          "description": "The value to be updated in the operation."
+                        }
+                      },
+                      "required": [
+                        "op"
+                      ],
+                      "type": "object"
+                    },
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "schemas": {
+                    "default": [
+                      "urn:ietf:params:scim:api:messages:2.0:PatchOp"
+                    ],
+                    "description": "URIs that indicate the schemas used in data",
+                    "example": [
+                      "urn:ietf:params:scim:api:messages:2.0:PatchOp"
+                    ],
+                    "items": {
+                      "default": "urn:ietf:params:scim:api:messages:2.0:PatchOp",
+                      "enum": [
+                        "urn:ietf:params:scim:api:messages:2.0:PatchOp"
+                      ],
+                      "example": "urn:ietf:params:scim:api:messages:2.0:PatchOp",
+                      "format": "uri",
+                      "type": "string"
+                    },
+                    "minItems": 1,
+                    "type": "array",
+                    "uniqueItems": true
+                  }
+                },
+                "required": [
+                  "schemas",
+                  "Operations"
+                ],
+                "title": "PatchOperation",
+                "type": "object"
+              }
+            }
+          },
+          "description": "SCIM Patch Operation",
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            },
+            "description": "SCIM User"
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestErrorResponse"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedErrorResponse"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForbiddenErrorResponse"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "500": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerErrorResponse"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          }
+        },
+        "summary": "Patch a user",
+        "tags": [
+          "Users"
+        ],
+        "x-pd-requires-scope": "users.write"
+      },
+      "put": {
+        "callbacks": {},
+        "description": "Updates an existing user with the provided details.\nScoped OAuth requires: `users.write`\n",
+        "operationId": "updateUser",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userId"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "description": "The properties of a SCIM user that can be set/modified. All other\nproperties are ignored.\n",
+                "properties": {
+                  "active": {
+                    "default": true,
+                    "description": "A Boolean value indicating the User's administrative status. When set to false,\nthe user will be deleted.\n\nAll users are created as active by default. It is an error to\nattempt to create a user with the `active` field set to `false`.\n",
+                    "type": "boolean"
+                  },
+                  "displayName": {
+                    "description": "The name of the User, suitable for display to end-users. The name\nSHOULD be the full name of the User being described, if known.\n",
+                    "example": "Fake User",
+                    "maxLength": 255,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "entitlements": {
+                    "description": "A list containing the User's entitlements. PagerDuty Users have a single entitlement\nrepresenting the User's license. The `value` field of this item must be set to the\nUser's license ID, and the `type` field must be set to `license`.\n\nThe license is not required to be set when creating a user. If not set, a\ndefault license will be assigned. Valid license IDs can be fetched from the\nPagerDuty Public API:\nhttps://developer.pagerduty.com/api-reference/4c10cb38f7381-list-licenses\n",
+                    "example": [
+                      {
+                        "type": "license",
+                        "value": "PABC123"
+                      }
+                    ],
+                    "items": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "type": {
+                          "enum": [
+                            "license"
+                          ],
+                          "type": "string"
+                        },
+                        "value": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "value",
+                        "type"
+                      ],
+                      "type": "object"
+                    },
+                    "maxItems": 1,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "externalId": {
+                    "description": "A unique identifier for the User, set by the SCIM client. The SCIM client is\nresponsible for ensuring that the value is unique across all Users.\n",
+                    "example": "00ujl29u0le5T6Aj10h7",
+                    "maxLength": 100,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "id": {
+                    "description": "A unique identifier for a SCIM resource as defined by the service\nprovider. The identifier is unique across the service provider's\nentire set of resources. It is a stable, non-reassignable identifier\nthat does not change when the same resource is returned in subsequent\nrequests.\n\nThe ID must always be treated as a case-sensitive opaque string.\n",
+                    "example": "AGKWDNQ24N4SXBBWYENPROSIYQ",
+                    "maxLength": 100,
+                    "minLength": 26,
+                    "title": "ResourceIdentifier",
+                    "type": "string"
+                  },
+                  "roles": {
+                    "description": "A list containing the User's role. PagerDuty Users have a single role\nand the list will always contain a single item.\n\nThe role is not required to be set when creating a user. If not set, a\ndefault role will be assigned. Valid user roles are defined in the\nPagerDuty Public API documentation:\nhttps://developer.pagerduty.com/api-reference/4cb4fd0f5444a-create-a-user\n\nThe only supported role type at this time is \"base\", which maps to\nthe user's base account role in PagerDuty.\n",
+                    "example": [
+                      {
+                        "type": "base",
+                        "value": "user"
+                      }
+                    ],
+                    "items": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "type": {
+                          "enum": [
+                            "base"
+                          ],
+                          "type": "string"
+                        },
+                        "value": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "value",
+                        "type"
+                      ],
+                      "type": "object"
+                    },
+                    "maxItems": 1,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "schemas": {
+                    "default": [
+                      "urn:ietf:params:scim:schemas:core:2.0:User"
+                    ],
+                    "description": "URIs that indicate the schemas used in data",
+                    "example": [
+                      "urn:ietf:params:scim:schemas:core:2.0:User"
+                    ],
+                    "items": {
+                      "default": "urn:ietf:params:scim:schemas:core:2.0:User",
+                      "example": "urn:ietf:params:scim:schemas:core:2.0:User",
+                      "format": "uri",
+                      "type": "string"
+                    },
+                    "minItems": 1,
+                    "type": "array",
+                    "uniqueItems": true
+                  },
+                  "timezone": {
+                    "description": "The User's case-sensitive time zone. Must be a valid IANA time zone identifier.\n",
+                    "example": "America/New_York",
+                    "nullable": true,
+                    "type": "string",
+                    "writeOnly": true
+                  },
+                  "title": {
+                    "description": "The job title of the User.\n",
+                    "example": "Software Developer",
+                    "nullable": true,
+                    "type": "string"
+                  },
+                  "userName": {
+                    "description": "A unique identifier for the User, typically used by the user to directly\nauthenticate to the service provider. Each User MUST include a non-empty\nuserName value. This identifier MUST be unique across the service provider's\nentire set of Users.\n",
+                    "example": "fake.user@example.com",
+                    "format": "email",
+                    "maxLength": 100,
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "userName",
+                  "displayName"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "description": "SCIM User Update Params",
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            },
+            "description": "SCIM User"
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestErrorResponse"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedErrorResponse"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForbiddenErrorResponse"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "500": {
+            "content": {
+              "application/scim+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerErrorResponse"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          }
+        },
+        "summary": "Update user",
+        "tags": [
+          "Users"
+        ],
+        "x-pd-requires-scope": "users.write"
+      }
+    }
+  }
+}
