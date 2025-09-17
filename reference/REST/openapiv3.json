@@ -24249,6 +24249,9 @@
                         "properties": {
                           "incident_id": {
                             "type": "string"
+                          },
+                          "alert_id": {
+                            "type": "string"
                           }
                         },
                         "required": [
