@@ -613,6 +613,10 @@
             "description": "The time when the rule was created.",
             "type": "string"
           },
+          "enabled": {
+            "description": "Indicates if the rule is enabled.",
+            "type": "boolean"
+          },
           "id": {
             "$ref": "#/components/schemas/PagerDutyObfuscatedId"
           },
@@ -953,6 +957,11 @@
             ],
             "type": "object"
           },
+          "enabled": {
+            "description": "Whether the rule is enabled.",
+            "nullable": true,
+            "type": "boolean"
+          },
           "name": {
             "description": "The name of the rule.",
             "maxLength": 100,
@@ -1211,6 +1220,11 @@
               "jira"
             ],
             "type": "object"
+          },
+          "enabled": {
+            "description": "Indicates if the rule is enabled",
+            "nullable": true,
+            "type": "boolean"
           },
           "name": {
             "description": "The name of the rule.",
@@ -1897,7 +1911,8 @@
                         "type": "service_reference"
                       }
                     },
-                    "name": "Critical IT Incidents"
+                    "name": "Critical IT Incidents",
+                    "enabled": true
                   }
                 }
               },
@@ -2013,6 +2028,7 @@
                       "created_at": "2023-09-01T12:00:00.000Z",
                       "id": "PF9KMXH",
                       "name": "Critical IT Incidents",
+                      "enabled": true,
                       "updated_at": "2023-09-01T12:00:00.000Z"
                     }
                   }
@@ -2351,6 +2367,7 @@
                       "created_at": "2023-09-01T12:00:00.000Z",
                       "id": "PF9KMXH",
                       "name": "Critical IT Incidents",
+                      "enabled": true,
                       "updated_at": "2023-09-01T12:00:00.000Z"
                     }
                   }
@@ -2555,7 +2572,8 @@
                         }
                       }
                     },
-                    "name": "Critical IT Incidents"
+                    "name": "Critical IT Incidents",
+                    "enabled": true
                   }
                 }
               },
@@ -2665,6 +2683,7 @@
                       "created_at": "2023-09-01T12:00:00.000Z",
                       "id": "PF9KMXH",
                       "name": "Critical IT Incidents",
+                      "enabled": true,
                       "updated_at": "2023-09-01T12:00:00.000Z"
                     }
                   }

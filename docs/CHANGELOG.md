@@ -2,6 +2,15 @@
 
 PagerDuty aims to have no breaking changes to its API. We do fix bugs and add new functionality continuously. This document serves as a reference for any bug fixes or additions to our API.
 
+## 2025-09-17
+- Added `enabled` field when creating or editing configurations of the Jira Cloud Integration. Affects the following endpoints:
+  - `POST /integration-jira-cloud/accounts_mappings/{id}/rules`
+  - `PUT /integration-jira-cloud/accounts_mappings/{id}/rules/{rule_id}`
+- `enabled` field added to the configuration in response payloads. Affects the following endpoints:
+  - `GET /integration-jira-cloud/accounts_mappings/{id}/rules`
+  - `GET /integration-jira-cloud/accounts_mappings/{id}/rules/{rule_id}`
+- Added `alert_id` as an optional param to `POST /automation_actions/actions/{id}/invocations`
+
 ## 2025-09-15
 - Added the **PagerDuty SCIM API** reference section for new APIs at the path: `/scim/v2`.
 
