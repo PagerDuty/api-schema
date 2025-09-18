@@ -35095,10 +35095,11 @@
                         },
                         "status": {
                           "type": "string",
-                          "description": "The new status of the incident.",
+                          "description": "The new status of the incident. If the incident is currently resolved, setting the status to \"triggered\" or \"acknowledged\" will reopen it. When reopening an incident to the \"triggered\" status, it will be assigned based on the assignees or escalation_policy fields in the request, otherwise it will be assigned to the current Escalation Policy. When reopening an incident to the \"acknowledged\" status, it will be assigned to the current user.",
                           "enum": [
                             "resolved",
-                            "acknowledged"
+                            "acknowledged",
+                            "triggered"
                           ]
                         },
                         "resolution": {
@@ -35110,7 +35111,38 @@
                           "description": "A succinct description of the nature, symptoms, cause, or effect of the incident."
                         },
                         "priority": {
-                          "$ref": "#/components/schemas/PriorityReference"
+                          "description": "The priority of the incident. Can be provided as a priority object or a string matching a priority name. If a string is provided, the highest priority with a matching name will be used.",
+                          "oneOf": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string",
+                                  "description": "The ID of the priority."
+                                },
+                                "name": {
+                                  "type": "string",
+                                  "description": "The user-provided short name of the priority."
+                                },
+                                "type": {
+                                  "type": "string",
+                                  "description": "The type of the reference.",
+                                  "enum": [
+                                    "priority",
+                                    "priority_reference"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "id",
+                                "type"
+                              ]
+                            },
+                            {
+                              "type": "string",
+                              "description": "A string matching the name of a priority. If provided, the highest priority with a matching name will be used."
+                            }
+                          ]
                         },
                         "escalation_level": {
                           "type": "integer",
@@ -35925,14 +35957,46 @@
                       },
                       "status": {
                         "type": "string",
-                        "description": "The new status of the incident.",
+                        "description": "The new status of the incident. If the incident is currently resolved, setting the status to \"triggered\" or \"acknowledged\" will reopen it. When reopening an incident to the \"triggered\" status, it will be assigned based on the assignees or escalation_policy fields in the request, otherwise it will be assigned to the current Escalation Policy. When reopening an incident to the \"acknowledged\" status, it will be assigned to the current user.",
                         "enum": [
                           "resolved",
-                          "acknowledged"
+                          "acknowledged",
+                          "triggered"
                         ]
                       },
                       "priority": {
-                        "$ref": "#/components/schemas/PriorityReference"
+                        "description": "The priority of the incident. Can be provided as a priority object or a string matching a priority name. If a string is provided, the highest priority with a matching name will be used.",
+                        "oneOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "description": "The ID of the priority."
+                              },
+                              "name": {
+                                "type": "string",
+                                "description": "The user-provided short name of the priority."
+                              },
+                              "type": {
+                                "type": "string",
+                                "description": "The type of the reference.",
+                                "enum": [
+                                  "priority",
+                                  "priority_reference"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "type"
+                            ]
+                          },
+                          {
+                            "type": "string",
+                            "description": "A string matching the name of a priority. If provided, the highest priority with a matching name will be used."
+                          }
+                        ]
                       },
                       "resolution": {
                         "type": "string",
