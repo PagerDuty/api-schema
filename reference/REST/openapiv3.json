@@ -9727,7 +9727,7 @@
       },
       "Channel": {
         "type": "object",
-        "description": "Polymorphic object representation of the means by which the action was channeled. Has different formats depending on type, indicated by channel[type]. Will be one of `auto`, `email`, `api`, `nagios`, or `timeout` if `agent[type]` is `service`. Will be one of `email`, `sms`, `website`, `web_trigger`, or `note` if `agent[type]` is `user`. See [below](https://developer.pagerduty.com/documentation/rest/log_entries/show#channel_types) for detailed information about channel formats.",
+        "description": "Polymorphic object representation of the means by which the action was channeled. Has different formats depending on type, indicated by channel[type]. Will be one of `auto`, `email`, `api`, `nagios`, or `timeout` if `agent[type]` is `service`. Will be one of `email`, `sms`, `website`, `web_trigger`, or `note` if `agent[type]` is `user`.",
         "properties": {
           "type": {
             "type": "string",
@@ -9855,6 +9855,149 @@
         },
         "required": [
           "type"
+        ],
+        "oneOf": [
+          {
+            "title": "NagiosChannel",
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "description": "Will be `nagios`"
+              },
+              "summary": {
+                "type": "string",
+                "description": "Same as `host`"
+              },
+              "host": {
+                "type": "string",
+                "description": "Nagios host"
+              },
+              "service": {
+                "type": "string",
+                "description": "Nagios service that created the event, if applicable"
+              },
+              "state": {
+                "type": "string",
+                "description": "State that caused the event"
+              },
+              "details": {
+                "type": "object",
+                "description": "Additional details of the incident"
+              }
+            }
+          },
+          {
+            "title": "APIChannel",
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "description": "Will be `api`"
+              },
+              "summary": {
+                "type": "string",
+                "description": "Same as `description`"
+              },
+              "service_key": {
+                "type": "string",
+                "description": "API service key"
+              },
+              "description": {
+                "type": "string",
+                "description": "Description of the event"
+              },
+              "incident_key": {
+                "type": "string",
+                "description": "Incident deduping string"
+              },
+              "details": {
+                "type": "object",
+                "description": "Additional details of the incident"
+              }
+            }
+          },
+          {
+            "title": "EmailChannel",
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "description": "Will be `email`"
+              },
+              "summary": {
+                "type": "string",
+                "description": "Same as `subject`"
+              },
+              "to": {
+                "type": "string",
+                "description": "To address of the email"
+              },
+              "from": {
+                "type": "string",
+                "description": "From address of the email"
+              },
+              "subject": {
+                "type": "string",
+                "description": "Subject of the email"
+              },
+              "body": {
+                "type": "string",
+                "description": "Body of the email"
+              },
+              "body_content_type": {
+                "type": "string",
+                "description": "Content type of the email body. Will be `text/plain` or `text/html`"
+              },
+              "raw_url": {
+                "type": "string",
+                "description": "URL for raw text of email"
+              },
+              "html_url": {
+                "type": "string",
+                "description": "URL for html rendered version of the email. Only present if `content_type` is `text/html`"
+              }
+            }
+          },
+          {
+            "title": "WebTriggerChannel",
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "description": "Will be `web_trigger`"
+              },
+              "summary": {
+                "type": "string",
+                "description": "Same as `subject`"
+              },
+              "subject": {
+                "type": "string",
+                "description": "Subject of the web trigger"
+              },
+              "details": {
+                "type": "string",
+                "description": "Details about the web trigger"
+              }
+            }
+          },
+          {
+            "title": "WebsiteChannel",
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "description": "Will be `website`"
+              },
+              "duration": {
+                "type": "integer",
+                "description": "For `snooze` log entries, this is the number of seconds that the incident was snoozed for."
+              }
+            },
+            "required": [
+              "type"
+            ]
+          }
         ]
       },
       "ScheduledAction": {

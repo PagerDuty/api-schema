@@ -2,14 +2,20 @@
 
 PagerDuty aims to have no breaking changes to its API. We do fix bugs and add new functionality continuously. This document serves as a reference for any bug fixes or additions to our API.
 
-## 2025-09-22
+### 2025-09-24
+- Added channel type schemas that were missing from the following pages' docs:
+  - `GET /log_entries`
+  - `GET /log_entries/{id}`
+  - `Channel` schema
+
+### 2025-09-22
 - Added documentation on the MCP (Model Context Protocol) API for agentic use cases, try it out at `https://mcp.pagerduty.com/mcp`!
 
-## 2025-09-18
+### 2025-09-18
 - Updated documentation for the incident reopening feature on the `PUT /incidents/{id}` and `PUT /incidents` endpoints. Setting the status field to "triggered" or "acknowledged" on a resolved incident will now reopen it.
 - Enhanced the `priority` field documentation in the `PUT /incidents/{id}` and `PUT /incidents` endpoints to clarify that it accepts either a priority object (with id, name, and type) or a string matching a priority name.
 
-## 2025-09-17
+### 2025-09-17
 - Added `enabled` field when creating or editing configurations of the Jira Cloud Integration. Affects the following endpoints:
   - `POST /integration-jira-cloud/accounts_mappings/{id}/rules`
   - `PUT /integration-jira-cloud/accounts_mappings/{id}/rules/{rule_id}`
@@ -18,24 +24,24 @@ PagerDuty aims to have no breaking changes to its API. We do fix bugs and add ne
   - `GET /integration-jira-cloud/accounts_mappings/{id}/rules/{rule_id}`
 - Added `alert_id` as an optional param to `POST /automation_actions/actions/{id}/invocations`
 
-## 2025-09-15
+### 2025-09-15
 - Added the **PagerDuty SCIM API** reference section for new APIs at the path: `/scim/v2`.
 
-## 2025-09-09
+### 2025-09-09
 - Removed the deprecated `GET /response_plays`, `POST /response_plays`, `GET /response_plays/{id}`, `PUT /response_plays/{id}`, and `DELETE /response_plays/{id}` endpoints. This functionality has been replaced by the more robust [Incident Workflows](https://support.pagerduty.com/main/docs/incident-workflows) feature.
 
-## 2025-08-29
+### 2025-08-29
 - Marked the following endpoints as deprecated
   - `DELETE /users/{id}/sessions endpoint`
   - `DELETE /users/{id}/sessions/{type}/{session_id}`
 
-## 2025-08-25
+### 2025-08-25
 - Updated the `DELETE /oauth_delegations` endpoint to be synchronous and marked `GET /oauth_delegations/revocation_requests/status` as deprecated
 
-## 2025-08-12
+### 2025-08-12
 - Added `created_via_sso` field to User model in responses. This boolean field indicates whether a user was created via Single Sign-On (SSO).
 
-## 2025-08-07
+### 2025-08-07
 - Added Limited GA endpoints for Feature Enablement management for Services and for Event Orchestrations. These endpoints allow retrieving and updating feature enablement settings (currently AIOps) on either a service or an event orchestration.
   - `GET /services/{id}/enablements` - List feature enablement settings for a service
   - `PUT /services/{id}/enablements/{feature_name}` - Update feature enablement for a service
@@ -43,30 +49,30 @@ PagerDuty aims to have no breaking changes to its API. We do fix bugs and add ne
   - `PUT /event_orchestrations/{id}/enablements/{feature_name}` - Update feature enablement for an event orchestration
 - The `PUT /event_orchestrations/{id}/router` API will return new `warnings` when a user disables AIOps on an Event Orchestration and then has routes to a Service with AIOps enabled.
 
-## 2025-07-25
+### 2025-07-25
 - Added new OAuth client management endpoints for creating, retrieving, updating, and deleting OAuth clients for webhook subscriptions.
 
-## 2025-07-23
+### 2025-07-23
 - The `oauth_client` field is present in the Webhook subscription API responses, set to `null` when no OAuth client is associated.
 
-## 2025-07-10
+### 2025-07-10
 - Promoted Service Custom Fields API to General Availability (GA) by removing Early Access headers requirement. This affects all Service Custom Fields endpoints and responses.
 
-## 2025-05-31
+### 2025-05-31
 - Temporarily removed `default_value` field from Service Custom Fields endpoints during Early Access. This change only affects service custom fields and does not impact incident custom fields or incident types custom fields. The default values feature for services may be reintroduced with improvements in a future release.
 
-## 2025-04-30
+### 2025-04-30
 - Clarified behavior in Service Custom Field Value update model documentation
 
-## 2025-04-14
+### 2025-04-14
 - Added support for specifying `trigger_types` when configuring a Webhook or Automation Action on an Event Orchestration
 
-## 2025-04-01
+### 2025-04-01
 For the Service Custom Fields endpoints, the following clarifications were made:
  - Field default values are only applied to newly created Services. We now make that clearer in the API docs.
  - Field Options, when passed in the `PUT /services/custom_fields/{field_id}` endpoint work as an upsert. That's now also made clearer, for the API user.
 
-## 2025-03-31
+### 2025-03-31
 - Added Early Access endpoints for Service Custom Fields management. These endpoints allow creating, retrieving, updating, and deleting custom fields and their values for Services. All endpoints require the X-EARLY-ACCESS header.
   - Service Custom Fields endpoints:
     - `GET /services/custom_fields`
@@ -84,7 +90,7 @@ For the Service Custom Fields endpoints, the following clarifications were made:
     - `GET /services/{id}/custom_fields/values`
     - `PUT /services/{id}/custom_fields/values`
 
-## 2025-03-18
+### 2025-03-18
 - Added support for configuring a new type of Event Orchestration Cache Variable `external_data`
 - Added endpoints for managing the data for an `external_data` cache variable on a service or global Event Orchestration
   - `GET /event_orchestrations/{ORCHESTRATION_ID}/cache_variables/{CACHE_VARIABLE_ID}/data`
@@ -94,44 +100,44 @@ For the Service Custom Fields endpoints, the following clarifications were made:
   - `PUT /event_orchestrations/services/{SERVICE_ID}/cache_variables/{CACHE_VARIABLE_ID}/data`
   - `DELETE /event_orchestrations/services/{SERVICE_ID}/cache_variables/{CACHE_VARIABLE_ID}/data`
 
-## 2025-03-10
+### 2025-03-10
 - Deprecated the `Incident Custom Fields` endpoints in favor of the new endpoints for Custom Fields found in `Incident Types`.
 - Clarified the usage of the `resolution` field when updating an Incident.
 - Fix `summary` field value examples in the Response payload of the Incident Types Custom Fields endpoints.
 - Added `allow_invocation_manually`, `allow_invocation_from_event_orchestration`, and `map_to_all_services` fields to Automation Actions endpoints.
 
-## 2025-01-24
+### 2025-01-24
 - Added `incident_type` as an allowed value for the `trigger_type` parameter in both `POST /incident_workflows/triggers` and `PUT /incident_workflows/triggers`
 - Added `incident_types` to the trigger object in both `POST /incident_workflows/triggers` and `PUT /incident_workflows/triggers/:triggerId`
 - Added `incident_type` as an allowed value for `trigger_type` in both `GET /incident_workflows/triggers` and `GET /incident_workflows/triggers/:triggerId`
 - Added `incident_types` to the trigger response in both `GET /incident_workflows/triggers` and `GET /incident_workflows/triggers/:triggerId`
 
-## 2025-01-23
+### 2025-01-23
 - Added `is_enabled` property to Incident Workflows
 - Deprecated `is_disabled` property on Incident Workflow Triggers
 
-## 2025-01-13
+### 2025-01-13
 - Released incident types endpoints to General Access (removing need for X-Early-Access header)
 
-## 2025-01-10
+### 2025-01-10
 - Introduced a new Early Access body attribute `service` to `PUT /incidents/:id` endpoint
 
-## 2025-01-09
+### 2025-01-09
 - Added support for filtering incidents by `incident_type_ids` in the API.
 - Updated the request parameters to include `incident_type_ids` under the `filters` object in the `GET /incidents` endpoint.
 - Added examples for the `incident_type_ids` parameter in the API documentation.
 
-## 2025-01-07
+### 2025-01-07
 - Added `recommended_timeout` field to `auto_pause_notifications_parameters` on all Service endpoints
 - Added support for auto-selecting the `recommended_timeout` value when updating a Service with an `auto_pause_notifications_parameters.timeout` of `0`
 
-## 2025-01-03
+### 2025-01-03
 - POST /incidents was missing `urgency` as a valid body parameter.
 
-## 2024-12-20
+### 2024-12-20
 - Fix position of the `route_to` attribute in the request & response examples on the `PUT /event_orchestrations/{id}/global` and `PUT /event_orchestrations/services/{service_id}` documentation.
 
-## 2024-12-12
+### 2024-12-12
 - Add incident dedicated channel endpoints for slack integration API
   - GET /integration-slack/incidents/{incident_id}/dedicated_channel
   - POST /integration-slack/incidents/{incident_id}/dedicated_channel
@@ -142,53 +148,53 @@ For the Service Custom Fields endpoints, the following clarifications were made:
   - PUT /integration-slack/incidents/{incident_id}/notification_channels
   - DELETE /integration-slack/incidents/{incident_id}/notification_channels/{channel_id}
 
-## 2024-12-05
+### 2024-12-05
 - Added support for `filter_type=account` to `/webhook_subscriptions`.
 
-## 2024-11-25
+### 2024-11-25
 - Added support for the `iag_fields` property to `/alert_grouping_settings` when using Intelligent Alert Grouping
 - Updated the Service `alert_grouping_parameters` field to reflect that an Alert Grouping Setting reference will be returned for unsupported alert grouping configuration
 
-## 2024-11-22
+### 2024-11-22
 - Add `incident_type_ids` (array of obfuscated IDs) as a filter for `/analytics/raw/responders/:responder_id/incidents`
 
-## 2024-11-21
+### 2024-11-21
 - Add `incident_type_ids` (array of obfuscated IDs) as a filter for `/analytics/raw/incidents`
 
-## 2024-11-18
+### 2024-11-18
 - Introduced a new endpoint for analytics on PD Advance usage
   - `POST /analytics/metrics/pd_advance_usage/features`
 - Added support for the `pd_advance_used` filter on `/analytics/metrics/incidents/all`
 
-## 2024-11-08
+### 2024-11-08
 - Introduced two new endpoints for managing OAuth delegations. In this initial release, this new functionality allows you to revoke a user's access to the mobile app
   - `DELETE /oauth_delegations`
   - `GET /oauth_delegations/revocation_requests/status`
 
-## 2024-11-06
+### 2024-11-06
 - Add `is_default` property to Workflow Integration Connection
 
-## 2024-10-28
+### 2024-10-28
 - Fixed descriptions for `POST /incidents/types/{type_id_or_name}/custom_fields/{field_id}/field_options` and `PUT /incidents/types/{type_id_or_name}/custom_fields/{field_id}/field_options/{field_option_id}`
 
-## 2024-10-25
+### 2024-10-25
 - Update the multi-update item limit in the Manage Alerts endpoint
 
-## 2024-10-24
+### 2024-10-24
 - Added `only_invocable_on_unresolved_incidents` field to Automation Actions endpoints.
 
-## 2024-10-16
+### 2024-10-16
 - Removed early access parameters from all status update notification rules endpoints; they are now in GA
 
-## 2024-10-09
+### 2024-10-09
 - Updated Incident Log Entries to include:
   - FieldValueChange
   - CustomFieldsValueChange
 
-## 2024-10-07
+### 2024-10-07
 - Added `incident_type_name` and `incident_type_id` to `analytics/raw/incidents` and `analytics/raw/incidents/:id`
 
-## 2024-09-30
+### 2024-09-30
 - Added endpoints for the configuration of the Jira Cloud Integration
   - `GET /integration-jira-cloud/accounts_mappings`
   - `GET /integration-jira-cloud/accounts_mappings/{id}`
@@ -198,13 +204,13 @@ For the Service Custom Fields endpoints, the following clarifications were made:
   - `PUT /integration-jira-cloud/accounts_mappings/{id}/rules/{rule_id}`
   - `DELETE /integration-jira-cloud/accounts_mappings/{id}/rules/{rule_id}`
 
-## 2024-09-26
+### 2024-09-26
 - Updated Incident endpoints to support Incident Types
 
-## 2024-09-11
+### 2024-09-11
 - Updated the [incident event webhook](https://developer.pagerduty.com/docs/db0fa8c8984fc-overview) to include the new Incident Type attribute.
 
-## 2024-08-12
+### 2024-08-12
 - Added endpoints for Workflow Integrations and Connections
   - `GET /workflows/integrations`
   - `GET /workflows/integrations/{id}`
@@ -215,7 +221,7 @@ For the Service Custom Fields endpoints, the following clarifications were made:
   - `PATCH /workflows/integrations/{id}/connections/{id}`
   - `DELETE /workflows/integrations/{id}/connections/{id}`
 
-## 2024-08-09
+### 2024-08-09
 - Add OpenAPI array items' type specifications to response schema definitions
 - Fix update Incident Workflow status code response
 - Adding deprecation notice for alert grouping configuration via the Service resource. Alert Grouping Settings power a more robust version of alert grouping. All new alert grouping features will only be available via Alert Grouping Settings. This affects the following fields on the Service endpoints:
@@ -224,47 +230,47 @@ For the Service Custom Fields endpoints, the following clarifications were made:
 - `alert_grouping_parameters`
 - `alert_grouping_timeout`
 
-## 2024-07-22
+### 2024-07-22
 - Added support for `dynamic_route_to` parameter to `/event_orchestrations/{orchestration_id}/router` endpoint
 - Added support for `escalation_policy` parameter to `/event_orchestrations/{orchestration_id}/global` and `/event_orchestrations/services/{service_id}` endpoints
 
-## 2024-07-10
+### 2024-07-10
 - Add `is_disabled` query parameter and `is_disabled` response attribute to `GET /incident_workflows/triggers`, directly as _deprecated_.
 These parameters have been returned but were not documented. Both query parameter and response attribute will be removed in later versions
 of the API, and should not be used.
 
-## 2024-06-17
+### 2024-06-17
 - Corrected documentation of `PUT /incidents/{id}/alerts` endpoint
 - Corrected documentation of `PUT /incidents/{id}/alerts/{alert_id}` endpoint
 
-## 2024-06-13
+### 2024-06-13
 - Implemented strict field validation for the `alert_grouping_parameters` object in the following endpoints:
   - `POST /services`
   - `PUT /services`
 
   A 400 error will be returned if extra or incorrect field names are included in this object.
 
-## 2024-06-06
+### 2024-06-06
 - Add a new 'unknown' value to the list of possible automation action invocation states
 - Removed  `X-EARLY-ACCESS` header requirement for all Business Services (BIS) endpoints
 
-## 2024-05-29
+### 2024-05-29
 - Added `updated_after` filter to `POST /analytics/raw/incidents` endpoint
 - Added `updated_at` column to `GET /analytics/raw/incidents/{id}` endpoint
 - Added `updated_at` column to `GET /analytics/raw/incidents` endpoint
 
-## 2024-05-08
+### 2024-05-08
 - Added the query parameter `name` to the `GET /services` endpoint
 
-## 2024-04-18
+### 2024-04-18
 - Specified the maximum `limit` for List Incidents API
 
-## 2024-04-15
+### 2024-04-15
 - Added `action_id` parameter to Automation Actions invocation list
   endpoint, which filters results based on those associated with the specified action.
 - Removed  `X-EARLY-ACCESS` header requirement for all Status Page endpoints
 
-## 2024-04-12
+### 2024-04-12
 - Added `webhook_subscriptions.read` scope to `GET /webhook_subscriptions` endpoint
 - Added `webhook_subscriptions.read` scope to `GET /webhook_subscriptions/{id}` endpoint
 - Added `webhook_subscriptions.write` scope to `POST /webhook_subscriptions` endpoint
@@ -273,33 +279,33 @@ of the API, and should not be used.
 - Added `webhook_subscriptions.write` scope to `POST /webhook_subscriptions/{id}/enable` endpoint
 - Added `webhook_subscriptions.write` scope to `POST /webhook_subscriptions/{id}/ping` endpoint
 
-## 2024-04-04
+### 2024-04-04
 - Updated the `escalation_policy_id` and `escalation_policy_name` columns at the `analytics/raw/incidents` and `analytics/raw/incidents/:id` endpoints to respect the escalation policy used in the incident as it changes. Previously these values showed the escalation policy associated with the incident's service. This change is also reflected in the aggregate Analytics endpoints.
 
-## 2024-04-02
+### 2024-04-02
 - Added documentation for managing Cache Variables for Global Event Orchestrations and Service Event Orchestrations
 - Updated documentation around allowed values for warnings returned by Event Orchestrations and included examples
 
-## 2024-04-01
+### 2024-04-01
 - Added `joined_user_ids`, `joined_user_names`, and `active_user_count` columns to `analytics/raw/incidents` and `analytics/raw/incidents/:id`
 
-## 2024-03-19
+### 2024-03-19
 - Added addtional clarification for the different allowed values of event priorities when configuring Slack service connections.
 
-## 2024-03-13
+### 2024-03-13
 - Marked `alert_creation` within the service model as deprecated and add knowledge base reference for end-of-life documentation.
 
-## 2024-03-07
+### 2024-03-07
 - Added an `acknowledgment_count` column to `analytics/raw/incidents` and `analytics/raw/incidents/:id`
 
-## 2024-03-06
+### 2024-03-06
 - Added `acknowledged_user_ids`, `acknowledged_user_names`, `assigned_user_ids`, and `assigned_user_names` columns to `analytics/raw/incidents` and `analytics/raw/incidents/:id`
 
-## 2024-02-26
+### 2024-02-26
 - Added documentation for adding Incident Custom Field updates to Global Event Orchestration
 - Added documentation for adding Incident Custom Field updates to Service Event Orchestration
 
-## 2024-01-31
+### 2024-01-31
 - Added external status page endpoints
   - `GET /status_pages`
   - `GET /status_pages/{id}/impacts`
@@ -333,45 +339,45 @@ of the API, and should not be used.
   - `POST analytics/metrics/incidents/escalation_policies`
   - `POST analytics/metrics/incidents/escalation_policies/all`
 
-## 2024-01-30
+### 2024-01-30
 - Added four percentile metrics each for time to acknowledge and time to resolve to the `POST /analytics/metrics/incidents/all` endpoint.
 
-## 2024-01-24
+### 2024-01-24
 - Clarified documentation on several Incident Workflows resources
   - IncidentWorkflowStep inputs, inline_steps_inputs, outputs
   - IncidentWorkflowInlineStep inputs, inline_steps_inputs, outputs
 
-## 2024-01-19
+### 2024-01-19
 - Fixed inconsistencies with the Custom Fields `Field` entity
 
-## 2024-01-16
+### 2024-01-16
 - Added external status page subscriptions endpoints
   - `GET /status_pages/{id}/subscriptions`
   - `POST /status_pages/{id}/subscriptions`
   - `GET /status_pages/{id}/subscriptions/{subscription_id}`
   - `DELETE /status_pages/{id}/subscriptions/{susbcription_id}`
 
-## 2023-12-14
+### 2023-12-14
 - Added `not_invocation_state` parameter to Automation Actions invocation list
   endpoint, which filters results based on those NOT in the specified state
 
-## 2023-12-12
+### 2023-12-12
 - Added Templates Fields endpoint:
   - `GET /templates/fields`
 
-## 2023-11-29
+### 2023-11-29
 - Added support for Incident Workflows inline steps inputs
 
-## 2023-11-23
+### 2023-11-23
 **Importing PagerDuty OpenAPI Specs into Postman**
 - See Postman's [documentation](https://learning.postman.com/docs/integrations/available-integrations/working-with-openAPI/) on integrating Postman with OpenAPI
 - Use [this URL](https://raw.githubusercontent.com/PagerDuty/api-schema/main/reference/REST/openapiv3.json) in the OpenAPI import tool
 - The "Run in Postman" button was removed in favor of this more concrete workflow.
 
-## 2023-11-13
+### 2023-11-13
 - Documented `overflow` query parameter in `GET /schedules/{id}`
 
-## 2023-11-06
+### 2023-11-06
 **2023 REST API Rate Limiting Refresh**
 
 The PagerDuty REST API uses rate limits to provide a consistent experience for all of our customers. As we have grown up, these limits have grown with us; sometimes in undocumented or difficult to understand ways.
@@ -401,7 +407,7 @@ The new rate limit headers are available for your applications to begin consumin
 
 See the [REST API Rate Limits](https://developer.pagerduty.com/docs/72d3b724589e3-rest-api-rate-limits) page for more information.
 
-## 2023-11-14
+### 2023-11-14
 - Added Alert Grouping Settings endpoints:
   - `GET /alert_grouping_settings`
   - `POST /alert_grouping_settings`
@@ -409,7 +415,7 @@ See the [REST API Rate Limits](https://developer.pagerduty.com/docs/72d3b724589e
   - `PUT /alert_grouping_settings/{id}`
   - `DELETE /alert_grouping_settings/{id}`
 
-## 2023-11-03
+### 2023-11-03
 - Added new Analytics endpoints
   - `POST /analytics/raw/responders/{responder_id}/incidents`
   - `POST /analytics/metrics/responders/teams`
@@ -421,41 +427,41 @@ See the [REST API Rate Limits](https://developer.pagerduty.com/docs/72d3b724589e
 - Added new escalation/reassignment metrics and filters to existing endpoints
 - Removed  `X-EARLY-ACCESS` header requirement for all Analytics endpoints
 
-## 2023-09-20
+### 2023-09-20
 - Added `incident_workflow_reference` as possible agent type for Automation Action Invocation resources.
 
-## 2023-09-18
+### 2023-09-18
 - Removed Early Access warning from `POST /services/{id}/rules/convert`
 
-## 2023-09-06
+### 2023-09-06
 - Updated `service.html_url` field from `/services/{id}` to `/service-directory/{id}`.
 - Updated `maintenance_window.html_url` field from `/maintenance_windows#/show/{id}` to `/service-directory/maintenance-windows/{id}`.
 
-## 2023-09-01
+### 2023-09-01
 -  Clarify sort order of timings attribute on automation action invocations
 
-## 2023-08-23
+### 2023-08-23
 - Added documentation to all Analytics endpoints for supported time zone formats
 
-## 2023-08-29
+### 2023-08-29
 - Added Standards endpoints:
   - `GET /standards`
   - `PUT /standards/:id`
   - `GET /standards/scores/{resource_type}`
   - `GET /standards/scores/{resource_type}/{id}`
 
-## 2023-06-20
+### 2023-06-20
 - Added documentation for including the `migrated_*` properties into the List Service's Event Rules endpoint response
 - Added documentation for including the `migrated_*` properties into the Get the Service Orchestration for a Service endpoint response
 
-## 2023-06-13
+### 2023-06-13
 - Remove `X-EARLY-ACCESS` header for `/incidents/custom_fields` and `/incidents/:id/custom_fields` endpoints
 - Added documentation for the Team `default_role` attribute, for public/private teams.
 - Removed documentation for the Team `parent` attribute, since that is part of the team hierarchy feature which is still in EA.
 - Added an API to convert a Service's Event Rules into equivalent Service Event Orchestration rules:
   - `POST /services/{id}/rules/convert`
 
-## 2023-06-12
+### 2023-06-12
 - Updated automation actions action API update endpoint to make previously mandatory fields be optional
 
 ### 2023-05-31
@@ -477,12 +483,12 @@ See the [REST API Rate Limits](https://developer.pagerduty.com/docs/72d3b724589e
 - Added status_dashboards.read scope to `GET /status_dashboards/url_slugs/{url_slug}`
 - Added status_dashboards.read scope to `GET /status_dashboards/url_slugs/{url_slug}/service_impacts`
 
-## 2023-05-16
+### 2023-05-16
 - Updated automation actions runner API update endpoint to make previously mandatory fields be optional
 - Added description details for runbook_base_uri parameter
 - Refactored runner documentation to make the above changes possible
 
-## 2023-05-15
+### 2023-05-15
 - Refactored Early-Access endpoints for Custom Fields based on customer feedback
    - `GET /custom_fields`
    - `POST /custom_fields`
@@ -499,10 +505,10 @@ See the [REST API Rate Limits](https://developer.pagerduty.com/docs/72d3b724589e
    - `GET /incidents/:id/custom_fields/values`
    - `GET /incidents/:id/?include[]=field_values`
 
-## 2023-05-10
+### 2023-05-10
 - Add `workflow_name_contains` query parameter to `GET /incident_workflows/triggers`
 
-## 2023-05-08
+### 2023-05-08
 - `resolved_at` and `updated_at` fields added to the Incident model in response payloads. Affects the following endpoints:
   - `GET /incidents`
   - `POST /incidents`
@@ -516,10 +522,10 @@ See the [REST API Rate Limits](https://developer.pagerduty.com/docs/72d3b724589e
   - `GET /log_entries?include[]=incidents`
   - `GET /log_entries/:log_entry_id?include[]=incidents`
 
-## 2023-04-19
+### 2023-04-19
 - Audit records can be published with new actor types: `app_reference` and `api_key_reference`
 
-## 2023-04-11
+### 2023-04-11
 - Added Event Orchestration Global Rules APIs:
   - `GET /event_orchestrations/{orchestration_id}/global`
   - `PUT /event_orchestrations/{orchestration_id}/global`
@@ -538,16 +544,16 @@ See the [REST API Rate Limits](https://developer.pagerduty.com/docs/72d3b724589e
     - `PUT /event_orchestrations/services/{service_id}`
 - Restored OAuth scope enforcement for Classic User OAuth apps
 
-## 2023-04-04
+### 2023-04-04
 - Added EOL warning message on each of `/rulesets/` and `/services/{id}/rules` endpoints
 
-## 2023-03-20
+### 2023-03-20
 - Updated description of Escalation Policy teams field to include the limit (1) team per Escalation Policy.
 
-## 2023-03-08
+### 2023-03-08
 - Clarified the wording around the limits of `since` and `until` parameters for the oncall API.
 
-## 2023-03-07
+### 2023-03-07
 - Added optional `process_automation_node_filter` property to:
    - `POST /automation_actions/actions`
    - `PUT /automation_actions/actions/{id}`
@@ -557,22 +563,22 @@ See the [REST API Rate Limits](https://developer.pagerduty.com/docs/72d3b724589e
    - `GET /automation_actions/invocations`
    - `GET /automation_actions/invocations/{id}`
 
-## 2023-03-06
+### 2023-03-06
 - Log entry types are now explicity listed as their attributes may differ. The list will now show on the following endpoints:
   - `GET /log_entries`
   - `GET /log_entries/{id}`
   - `GET /incidents/{incident_id}/log_entries`
 
-## 2023-03-03
+### 2023-03-03
 - Added optional `sort_by` to `GET /templates` query parameters to sort templates by `name` or `created_at` fields in a (`asc`/`desc`) order.
 
-## 2023-03-02
+### 2023-03-02
 - Update description of `IncidentWorkflowTrigger.condition` to more clearly describe the impact around triggers starting either when an incident is created, or when conditions are met
 
-## 2023-03-01
+### 2023-03-01
 - Fix example for `POST /customfields/fields/{id}/field_options` endpoint
 
-## 2023-02-22
+### 2023-02-22
 - Adding deprecation notice to Response Plays. Because Incident Workflows are a more robust and powerful version of Response Plays, we will be working to upgrade accounts from Response Plays to Incident Workflows, ultimately culminating in a Response Plays end-of-life in late 2023. This affects the following endpoints:
    - `GET /response_plays`
    - `POST /response_plays`
@@ -581,37 +587,37 @@ See the [REST API Rate Limits](https://developer.pagerduty.com/docs/72d3b724589e
    - `DELETE /response_plays/{id}`
    - `POST /response_plays/{id}/run`
 
-## 2023-02-14
+### 2023-02-14
 - Allow `default_value` when `required` is false for the following endpoints
    - `POST /customfields/schemas`
    - `PUT /customfields/schemas/{id}`
    - `POST /customfields/schemas/{id}/field_configurations`
    - `PUT /customfields/schemas/{id}/field_configurations/{configuration_id}`
 
-## 2023-02-13
+### 2023-02-13
 - Remove `X-EARLY-ACCESS` header warning from `/incident_workflows` endpoints
 
-## 2023-02-10
+### 2023-02-10
 - Removed `name` from `PUT /customfields/fields/{id}` request body.
 
-## 2023-02-09
+### 2023-02-09
 - Update `IncidentWorkflowTrigger.permissions.team_ids` (string[]) => `IncidentWorkflowTrigger.permissions.team_id` (string)
 
-## 2023-02-08
+### 2023-02-08
 - Specify valid `type` property values on `IncidentWorkflow`, `IncidentWorkflowAction`, `IncidentWorkflowInstance`, `IncidentWorkflowStep` and `IncidentWorkflowTrigger`
 - Add description to `steps` proprerty on `IncidentWorkflow`
 - Specify `incident_workflow_instance.incident.id` is a required in `POST /incident_workflows/{id}/instances` request body
 - Update `domain_name` and `name` property descriptions on `IncidentWorkflowAction`
 - Remove currently unused `integration` as allowed enum value on `action_type` property on `IncidentWorkflowAction`
 
-## 2023-02-03
+### 2023-02-03
 - Fix type of `next_cursor` property on List Triggers and List Actions response bodies
 
 ### 2023-02-02
 - Wording changes and typo correction for MS Teams Integration documentation
 - Cleaned up the list of schemas in MS Teams Integration section
 
-## 2023-02-02
+### 2023-02-02
 - Added Early-Access endpoints for Custom Fields
    - `GET /customfields/fields`
    - `POST /customfields/fields`
@@ -648,16 +654,16 @@ See the [REST API Rate Limits](https://developer.pagerduty.com/docs/72d3b724589e
    - `GET /incidents/:id/field_values/schema`
    - `GET /incidents/:id/?include[]=field_values`
 
-## 2023-01-30
+### 2023-01-30
 - Add `permissions` property to `IncidentWorkflowsTrigger` entity schema
 
-## 2023-01-27
+### 2023-01-27
 - Update Template API Documentation
   - Change render path to  /template/{id}/render, add `external` to request body and make `status_update.message` optional.
   - Add `template_type` filter to LIST endpoint
   - Remove Early Access flags
 
-## 2023-01-26
+### 2023-01-26
 - Update `GET /incident_workflows/triggers` endpoint to use cursor pagination
 - Update `GET /incident_workflows/triggers` endpoint to include sort_by query parameter
 - Update `GET /incident_workflows/actions` endpoint to use cursor pagination
@@ -667,20 +673,20 @@ See the [REST API Rate Limits](https://developer.pagerduty.com/docs/72d3b724589e
 - Remove `IncidentWorkflowTrigger.workflow_id` and `IncidentWorkflowTrigger.workflow_name` properties
 - Update `IncidentWorkflowTrigger.workflow` property to be a proper ResourceReference
 
-## 2023-01-23
+### 2023-01-23
 - Added `POST /incident_workflows/{id}/instances` endpoint
 
-## 2023-01-16
+### 2023-01-16
 - Added `POST /integration-ms-teams/incidents/{incident_id}/meeting` endpoint
 
-## 2023-01-12
+### 2023-01-12
 - Added optional `query` querystring parameter to `GET /incident_workflows`
 - Added `DELETE /incident_workflows/{id}` endpoint
 
-## 2023-01-09
+### 2023-01-09
 - Added `GET /analytics/raw/incidents/{id}/responses` to the Analytics API
 
-## 2022-12-22
+### 2022-12-22
 - Added Early Access Incident Workflows endpoints including Triggers and Actions
 - `GET /incident_workflows`
 - `POST /incident_workflows`
@@ -695,28 +701,28 @@ See the [REST API Rate Limits](https://developer.pagerduty.com/docs/72d3b724589e
 - `POST /incident_workflows/triggers/{id}/services`
 - `DELETE /incident_workflows/triggers/{trigger_id}/services/{service_id}`
 
-## 2022-12-20
+### 2022-12-20
 - Removed `integrations` key from the example response and response schema of `GET /event_orchestrations/`
 - Replaced `integration` key with `integrations` in the example response of `GET /event_orchestrations/{id}`
 
-## 2022-12-16
+### 2022-12-16
 - Removed early access parameters from all automation_access endpoints; they are
   now in GA
 
-## 2022-12-08
+### 2022-12-08
 Clarified for service post/put the null option for alert_grouping_parameters.type will shut grouping off
 
-## 2022-11-18
+### 2022-11-18
  - Added Automation Action Team Management endpoints.
  - `GET /automation_actions/action/{id}/teams`
  - `GET /automation_actions/action/{id}/teams/{team_id}`
 
-## 2022-11-17
+### 2022-11-17
 - Added Automation Action Management endpoints.
 - `GET /automation_actions/actions/{id}/services`
 - `GET /automation_actions/actions/{id}/services/{service_id}`
 
-## 2022-11-14
+### 2022-11-14
 - Added Automation Action Runner Management endpoints.
 - `GET /automation_actions/runners/{id}/teams`
 - `GET /automation_actions/runners/{id}/teams/{team_id}`
@@ -905,7 +911,6 @@ After April 30th 2023, we will apply the new expiry settings to all OAuth client
 - Removed reference to an incorrect statement in the documentation indicating a `password` property is required for user creation.
   - `POST /users`
 
-
 ### 2022-01-26
 - Added missing documentation for the `Images` field
   - `POST /change/enqueue`
@@ -939,7 +944,7 @@ After April 30th 2023, we will apply the new expiry settings to all OAuth client
 ### 202l-01-06
 - Updated how since and until parameters work for schedules GET API
 
-### 2021-12-1
+### 2021-12-01
 - Added documentation for `custom_headers` as part of the `delivery_method` on a `subscription_webhook`
 
 ### 2021-11-30
