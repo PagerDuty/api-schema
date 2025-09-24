@@ -1920,6 +1920,28 @@
           ]
         }
       },
+      "header_Authorization": {
+        "name": "Authorization",
+        "in": "header",
+        "required": true,
+        "description": "Should contain the API key or OAuth token to authorize the request. Format: `Token token=<token>` or `Bearer <token>`",
+        "schema": {
+          "type": "string",
+          "pattern": "^(Token token=[A-Za-z0-9]+|Bearer [A-Za-z0-9]+)$"
+        }
+      },
+      "header_MCPAccept": {
+        "name": "Accept",
+        "in": "header",
+        "required": true,
+        "description": "MCP clients must accept both application/json and text/event-stream.",
+        "schema": {
+          "type": "string",
+          "enum": [
+            "application/json, text/event-stream"
+          ]
+        }
+      },
       "audit_since": {
         "name": "since",
         "in": "query",
@@ -4633,6 +4655,7 @@
         "content": {
           "application/json": {
             "schema": {
+              "description": "Generic error response from the PagerDuty API",
               "type": "object",
               "properties": {
                 "error": {

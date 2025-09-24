@@ -1,0 +1,534 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "PagerDuty MCP API",
+    "version": "1.0",
+    "contact": {
+      "name": "PagerDuty Support",
+      "url": "http://www.pagerduty.com/support",
+      "email": "support@pagerduty.com"
+    },
+    "description": "# PagerDuty MCP API\n\nThe PagerDuty Model Context Protocol (MCP) API is a remote MCP server that is designed to give agentic clients the tools they need\nto interact with your PagerDuty account, based on [Model Context Protocol](https://modelcontextprotocol.io/specification/2025-06-18/basic)\nand [JSON-RPC](https://www.jsonrpc.org/).\n\nKey URLs:\n - MCP Base URL: `https://mcp.pagerduty.com/mcp`\n - OAuth Metadata: `https://identity.pagerduty.com/global/oauth/anonymous/.well-known/openid-configuration`\n\nSee the full list of tools by calling the `list/tools` method, or by browsing our [MCP server repository](https://github.com/PagerDuty/pagerduty-mcp-server),\nwhere you can also find instructions to run the server locally.\n\n## Getting Started\n\nThe MCP API supports the same authentication methods as the REST API, including API tokens and OAuth. See the\n[authentication documentation](https://developer.pagerduty.com/docs/rest-api-v2/authentication/) for more information.\n\nHere is a sample MCP configuration for clients such as Microsoft VSCode:\n\n```json\n{\n  \"servers\": {\n    \"pagerduty-mcp\": {\n      \"url\": \"https://mcp.pagerduty.com/mcp\",\n      \"type\": \"http\",\n      \"headers\": {\n        \"Authorization\": \"Token token=${input:pagerduty-api-key}\"\n      }\n    }\n  },\n  \"inputs\": [\n    {\n      \"type\": \"promptString\",\n      \"id\": \"pagerduty-api-key\",\n      \"description\": \"PagerDuty API Key\",\n      \"password\": true\n    }\n  ]\n}\n```\n"
+  },
+  "tags": [
+    {
+      "name": "PagerDuty MCP API",
+      "description": "Model Context Protocol (MCP) is an API designed for agentic clients."
+    }
+  ],
+  "paths": {
+    "/mcp": {
+      "post": {
+        "description": "The root MCP path for all JSON-RPC requests.",
+        "summary": "MCP Endpoint",
+        "operationId": "mcpRoot",
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "application/json",
+              "enum": [
+                "application/json"
+              ]
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "description": "Should contain the API key or OAuth token to authorize the request. Format: `Token token=<token>` or `Bearer <token>`",
+            "schema": {
+              "type": "string",
+              "pattern": "^(Token token=[A-Za-z0-9]+|Bearer [A-Za-z0-9]+)$"
+            }
+          },
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "description": "MCP clients must accept both application/json and text/event-stream.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "application/json, text/event-stream"
+              ]
+            }
+          }
+        ],
+        "tags": [
+          "PagerDuty MCP API"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "description": "MCP JSON-RPC request object.",
+                "properties": {
+                  "jsonrpc": {
+                    "description": "The JSON-RPC version, must be \"2.0\".",
+                    "externalDocs": {
+                      "description": "See the MCP specification for more information",
+                      "url": "https://modelcontextprotocol.io/specification/2025-06-18/basic#requests"
+                    },
+                    "title": "JSON-RPC",
+                    "type": "string",
+                    "enum": [
+                      "2.0"
+                    ]
+                  },
+                  "id": {
+                    "description": "A unique ID for this request.",
+                    "externalDocs": {
+                      "description": "See the MCP specification for more information",
+                      "url": "https://modelcontextprotocol.io/specification/2025-06-18/basic#requests"
+                    },
+                    "title": "ID",
+                    "oneOf": [
+                      {
+                        "type": "integer",
+                        "title": "Integer"
+                      },
+                      {
+                        "type": "string",
+                        "title": "String"
+                      }
+                    ]
+                  },
+                  "method": {
+                    "description": "The method to be invoked on the MCP server.",
+                    "externalDocs": {
+                      "description": "See the MCP specification for more information",
+                      "url": "https://modelcontextprotocol.io/specification/2025-06-18/basic#requests"
+                    },
+                    "title": "Method",
+                    "type": "string"
+                  },
+                  "params": {
+                    "description": "The parameters to be passed to the method.",
+                    "externalDocs": {
+                      "description": "See the MCP specification for more information",
+                      "url": "https://modelcontextprotocol.io/specification/2025-06-18/basic#requests"
+                    },
+                    "title": "Params",
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "jsonrpc",
+                  "id",
+                  "method"
+                ]
+              },
+              "examples": {
+                "fetch-tools": {
+                  "summary": "List available tools",
+                  "value": {
+                    "jsonrpc": "2.0",
+                    "id": 42,
+                    "method": "tools/list"
+                  }
+                },
+                "list-incidents": {
+                  "summary": "List the open incidents assigned to the current user",
+                  "value": {
+                    "jsonrpc": "2.0",
+                    "id": 43,
+                    "method": "tools/call",
+                    "params": {
+                      "name": "list_incidents",
+                      "query_model": {
+                        "request_scope": "assigned",
+                        "status": [
+                          "triggered",
+                          "acknowledged"
+                        ],
+                        "limit": 10
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "A successful MCP JSON-RPC response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "jsonrpc": {
+                      "type": "string",
+                      "readOnly": true,
+                      "description": "the JSON-RPC version, always '2.0'"
+                    },
+                    "id": {
+                      "type": "string",
+                      "readOnly": true,
+                      "description": "The unique identifier that was passed to the request."
+                    },
+                    "result": {
+                      "type": "object",
+                      "readOnly": true,
+                      "description": "The result of the method call."
+                    }
+                  },
+                  "required": [
+                    "jsonrpc",
+                    "id"
+                  ]
+                },
+                "examples": {
+                  "list-tools": {
+                    "summary": "List available tools sample response",
+                    "value": {
+                      "jsonrpc": "2.0",
+                      "id": 42,
+                      "result": {
+                        "tools": [
+                          {
+                            "$ref": "#/components/examples/ListIncidentsTool"
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "list-incidents": {
+                    "summary": "List available tools sample response",
+                    "value": {
+                      "jsonrpc": "2.0",
+                      "id": 43,
+                      "result": {
+                        "response": {
+                          "properties": {
+                            "items": [
+                              {
+                                "$ref": "#/components/examples/Incident"
+                              }
+                            ]
+                          }
+                        },
+                        "response_summary": {
+                          "properties": {
+                            "description": "Generate a summary of the response.",
+                            "readOnly": true,
+                            "title": "Response Summary",
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "jsonrpc": {
+                      "type": "string",
+                      "example": "2.0"
+                    },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "description": "Error code.",
+                          "example": -32602
+                        },
+                        "message": {
+                          "type": "string",
+                          "description": "Error message.",
+                          "example": "Invalid params"
+                        },
+                        "data": {
+                          "type": "object",
+                          "description": "Additional error details.",
+                          "properties": {
+                            "details": {
+                              "type": "string",
+                              "description": "Detailed error message.",
+                              "example": "The 'method' parameter is required."
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "id": {
+                      "type": "integer",
+                      "description": "The unique identifier for the request.",
+                      "example": 1
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Caller did not supply credentials or did not provide the correct credentials.\nIf you are using an API key, it may be invalid or your Authorization header may be malformed.\n",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/paths/~1mcp/post/responses/500/content/application~1json/schema"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Caller is not authorized to view the requested resource.\nWhile your authentication is valid, the authenticated user or token does not have permission to perform this action.\n",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/paths/~1mcp/post/responses/500/content/application~1json/schema"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many requests have been made, the rate limit has been reached.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/paths/~1mcp/post/responses/500/content/application~1json/schema"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Generic error response from the PagerDuty API",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Generic error response from the PagerDuty API",
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "readOnly": true
+                        },
+                        "message": {
+                          "type": "string",
+                          "readOnly": true,
+                          "description": "Error message string"
+                        },
+                        "errors": {
+                          "type": "array",
+                          "readOnly": true,
+                          "items": {
+                            "type": "string",
+                            "readOnly": true,
+                            "description": "Human-readable error details"
+                          }
+                        }
+                      },
+                      "example": {
+                        "message": "Not Found",
+                        "code": 2100
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "https://mcp.pagerduty.com"
+    }
+  ],
+  "components": {
+    "examples": {
+      "Incident": {
+        "summary": "Incident Example",
+        "value": {
+          "id": "PIJ90N5",
+          "summary": "You have no chance to survive make your time",
+          "incident_number": 42,
+          "title": "Take off every zig",
+          "created_at": "2023-01-01T00:00:00Z",
+          "updated_at": "2023-01-01T01:00:00Z",
+          "resolved_at": null,
+          "type": "incident",
+          "service": {
+            "id": "P12345",
+            "summary": "Zero Wing Service",
+            "type": "service_reference"
+          },
+          "assignments": [
+            {
+              "at": "2023-01-01T00:00:00Z",
+              "type": "assignment",
+              "assignee": {
+                "id": "P67890",
+                "type": "user_reference",
+                "summary": "Jane Doe",
+                "html_url": "https://example.pagerduty.com/users/P67890"
+              }
+            }
+          ]
+        }
+      },
+      "ListIncidentsTool": {
+        "summary": "A simplified schema for the `list_incidents` tool",
+        "value": {
+          "name": "list_incidents",
+          "description": "List incidents with optional filtering.",
+          "inputSchema": {
+            "$defs": {
+              "IncidentQuery": {
+                "properties": {
+                  "status": {
+                    "anyOf": [
+                      {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "enum": [
+                            "triggered",
+                            "acknowledged",
+                            "resolved"
+                          ]
+                        }
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "filter incidents by status",
+                    "title": "Status"
+                  }
+                },
+                "title": "IncidentQuery",
+                "type": "object"
+              }
+            },
+            "properties": {
+              "query_model": {
+                "x-$ref": "#/$defs/IncidentQuery",
+                "title": "Query Model"
+              }
+            },
+            "required": [
+              "query_model"
+            ],
+            "type": "object"
+          },
+          "outputSchema": {
+            "$defs": {
+              "Incident": {
+                "properties": {
+                  "id": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The ID of the incident",
+                    "title": "Id"
+                  },
+                  "summary": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "A short summary of the incident",
+                    "title": "Summary"
+                  },
+                  "incident_number": {
+                    "description": "The number of the incident. This is unique across your account",
+                    "title": "Incident Number",
+                    "type": "integer"
+                  },
+                  "status": {
+                    "description": "The current status of the incident",
+                    "enum": [
+                      "triggered",
+                      "acknowledged",
+                      "resolved"
+                    ],
+                    "title": "Status",
+                    "type": "string"
+                  },
+                  "type": {
+                    "const": "incident",
+                    "readOnly": true,
+                    "title": "Type",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "incident_number",
+                  "status",
+                  "type"
+                ],
+                "title": "Incident",
+                "type": "object"
+              }
+            },
+            "properties": {
+              "response": {
+                "items": {
+                  "x-$ref": "#/$defs/Incident"
+                },
+                "title": "Response",
+                "type": "array"
+              },
+              "response_summary": {
+                "description": "Generate a summary of the response.",
+                "readOnly": true,
+                "title": "Response Summary",
+                "type": "string"
+              }
+            },
+            "required": [
+              "response",
+              "response_summary"
+            ],
+            "title": "ListResponseModel[Incident]",
+            "type": "object"
+          },
+          "annotations": {
+            "readOnlyHint": true,
+            "destructiveHint": false,
+            "idempotentHint": true
+          },
+          "_meta": {
+            "_fastmcp": {
+              "tags": []
+            }
+          }
+        }
+      }
+    }
+  }
+}
