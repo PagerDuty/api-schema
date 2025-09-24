@@ -2,6 +2,9 @@
 
 PagerDuty aims to have no breaking changes to its API. We do fix bugs and add new functionality continuously. This document serves as a reference for any bug fixes or additions to our API.
 
+## 2025-09-22
+- Added documentation on the MCP (Model Context Protocol) API for agentic use cases, try it out at `https://mcp.pagerduty.com/mcp`!
+
 ## 2025-09-18
 - Updated documentation for the incident reopening feature on the `PUT /incidents/{id}` and `PUT /incidents` endpoints. Setting the status field to "triggered" or "acknowledged" on a resolved incident will now reopen it.
 - Enhanced the `priority` field documentation in the `PUT /incidents/{id}` and `PUT /incidents` endpoints to clarify that it accepts either a priority object (with id, name, and type) or a string matching a priority name.
