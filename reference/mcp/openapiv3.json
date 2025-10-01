@@ -141,13 +141,15 @@
                     "method": "tools/call",
                     "params": {
                       "name": "list_incidents",
-                      "query_model": {
-                        "request_scope": "assigned",
-                        "status": [
-                          "triggered",
-                          "acknowledged"
-                        ],
-                        "limit": 10
+                      "arguments": {
+                        "query_model": {
+                          "request_scope": "all",
+                          "status": [
+                            "triggered",
+                            "acknowledged"
+                          ],
+                          "limit": 10
+                        }
                       }
                     }
                   }
