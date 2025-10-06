@@ -36206,11 +36206,23 @@
                       },
                       "service": {
                         "type": "object",
-                        "description": "[Early Access] Assign the incident to this service.",
-                        "allOf": [
-                          {
-                            "$ref": "#/components/schemas/ServiceReference"
+                        "description": "Assign the incident to this service.",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "description": "The ID of the service."
+                          },
+                          "type": {
+                            "type": "string",
+                            "description": "The type of the reference.",
+                            "enum": [
+                              "service_reference"
+                            ]
                           }
+                        },
+                        "required": [
+                          "id",
+                          "type"
                         ]
                       }
                     },

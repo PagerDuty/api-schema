@@ -2,6 +2,11 @@
 
 PagerDuty aims to have no breaking changes to its API. We do fix bugs and add new functionality continuously. This document serves as a reference for any bug fixes or additions to our API.
 
+### 2025-10-01
+- Enhanced the `service` field in the `PUT /incidents/{id}` endpoint:
+  - Removed the `[Early Access]` flag from the description, indicating that this feature is now generally available
+  - Fixed the object schema
+
 ### 2025-09-24
 - Added channel type schemas that were missing from the following pages' docs:
   - `GET /log_entries`
