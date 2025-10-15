@@ -2,6 +2,13 @@
 
 PagerDuty aims to have no breaking changes to its API. We do fix bugs and add new functionality continuously. This document serves as a reference for any bug fixes or additions to our API.
 
+### 2025-10-06
+- Introduced a new concept Session Configurations in API Concepts
+- Added session configurations endpoints so users can manage their session timeouts for web and mobile
+  - `GET /session_configurations?type={type}`
+  - `PUT /session_configurations?type={type}`
+  - `DELETE /session_configurations?type={type}`
+
 ### 2025-10-01
 - Enhanced the `service` field in the `PUT /incidents/{id}` endpoint:
   - Removed the `[Early Access]` flag from the description, indicating that this feature is now generally available

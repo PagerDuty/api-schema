@@ -233,6 +233,12 @@ Schedules are used by [Escalation Policies](#escalation-policies) as an escalati
 
 [*Read more about On-Call Schedules in the PagerDuty Knowledge Base*](https://support.pagerduty.com/main/docs/schedule-basics).
 
+## Session Configurations
+
+A session configuration represents an account-level session timeout setting that applies to all users belonging to the account. The configuration consists of two timeouts: `idle_session_timeout` logs out users after a specified period of inactivity, while `absolute_session_timeout` defines the maximum period of time a session is considered valid since login. The configuration can be set by `type`: `web`, `mobile`, or for both types.  Once a configuration is set for an account, existing sessions are automatically revoked, to ensure all sessions follow the configured timeouts. 
+
+If an account does not have session configuration defined, all its users would follow the system-level session defaults: 15 mins idle and 1 hour absolute session timeout, applicable to both `web` and `mobile`. These defaults are not accessible via the APIs. 
+
 ## Services
 A Service represents an entity you monitor (such as a web Service, email Service, or database Service.)
 
