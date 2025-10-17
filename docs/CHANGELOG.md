@@ -2,6 +2,9 @@
 
 PagerDuty aims to have no breaking changes to its API. We do fix bugs and add new functionality continuously. This document serves as a reference for any bug fixes or additions to our API.
 
+### 2025-10-17
+- Fixed the documentation link for SCIM User Provisioning to go to the correct web page
+
 ### 2025-10-06
 - Introduced a new concept Session Configurations in API Concepts
 - Added session configurations endpoints so users can manage their session timeouts for web and mobile

@@ -6,7 +6,7 @@
       "name": "PagerDuty Support",
       "url": "https://support.pagerduty.com"
     },
-    "description": "API documentation for PagerDuty's SCIM Integration.\n\nThis API follows the Protocol defined in [System for Cross-domain Identity Management: Protocol](https://datatracker.ietf.org/doc/html/rfc7644).\nFor more information on managing users with SCIM, see [Manage users with SCIM provisioning](https://help.catalytic.com/docs/manage-users-with-scim-provisioning/).\n",
+    "description": "API documentation for PagerDuty's SCIM Integration.\n\nThis API follows the Protocol defined in [System for Cross-domain Identity Management: Protocol](https://datatracker.ietf.org/doc/html/rfc7644).\nFor more information on managing users with SCIM, see the [SCIM User Provisioning](https://support.pagerduty.com/main/docs/scim-user-provisioning) support page.\n",
     "title": "PagerDuty SCIM API",
     "version": "1.0.0"
   },
