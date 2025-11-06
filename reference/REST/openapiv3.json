@@ -6846,6 +6846,244 @@
           }
         }
       },
+      "AnalyticsRawUser": {
+        "title": "Analytics Raw User",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Obfuscated ID of the user."
+          },
+          "user_name": {
+            "type": "string",
+            "description": "Name of the user."
+          },
+          "email": {
+            "type": "string",
+            "description": "Email of the user."
+          },
+          "account_id": {
+            "type": "integer",
+            "description": "Account ID the user belongs to."
+          },
+          "description": {
+            "type": "string",
+            "nullable": true,
+            "description": "User description, if available."
+          },
+          "time_zone": {
+            "type": "string",
+            "nullable": true,
+            "description": "User's configured time zone."
+          },
+          "role": {
+            "type": "string",
+            "description": "User's role in the account."
+          },
+          "team_id": {
+            "type": "string",
+            "nullable": true,
+            "description": "ID of the team the user belongs to, if any."
+          },
+          "team_name": {
+            "type": "string",
+            "nullable": true,
+            "description": "Name of the team the user belongs to, if any."
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Timestamp indicating when the user was created."
+          },
+          "last_sign_in_at": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "description": "Timestamp of the user's last sign-in, if available."
+          },
+          "default_notification_channel_count": {
+            "type": "integer",
+            "description": "Number of notification channels configured for this user."
+          },
+          "escalation_policies_count": {
+            "type": "integer",
+            "description": "Number of escalation policies this user is part of."
+          },
+          "schedules_count": {
+            "type": "integer",
+            "description": "Number of schedules this user is part of."
+          },
+          "channel_types_configured": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "List of notification channel types configured for this user."
+          },
+          "team_count": {
+            "type": "integer",
+            "description": "Number of teams this user belongs to."
+          },
+          "downloaded_mobile_app": {
+            "type": "boolean",
+            "description": "Whether the user has downloaded the mobile app."
+          },
+          "notification_methods": {
+            "type": "boolean",
+            "description": "Whether the user has notification methods configured."
+          },
+          "on_escalation_policy": {
+            "type": "boolean",
+            "description": "Whether the user is part of any escalation policy."
+          },
+          "on_schedule": {
+            "type": "boolean",
+            "description": "Whether the user is part of any schedule."
+          },
+          "signed_up": {
+            "type": "boolean",
+            "description": "Whether the user has signed up (based on last_sign_in_at not being null)."
+          }
+        }
+      },
+      "AnalyticsUserFilter": {
+        "title": "Analytics User Filter",
+        "type": "object",
+        "properties": {
+          "filters": {
+            "$ref": "#/components/schemas/AnalyticsUserFilterConditions"
+          },
+          "time_zone": {
+            "type": "string",
+            "description": "The time zone to use for the results and grouping. Must be in tzdata format. See list of accepted values [here](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).",
+            "example": "Etc/UTC"
+          },
+          "order": {
+            "type": "string",
+            "description": "The order in which the results were sorted; asc for ascending, desc for descending.",
+            "enum": [
+              "asc",
+              "desc"
+            ],
+            "default": "desc"
+          },
+          "order_by": {
+            "type": "string",
+            "description": "The column that was used for ordering the results.",
+            "example": "user_id",
+            "default": "user_id"
+          },
+          "aggregate_unit": {
+            "type": "string",
+            "description": "The time unit to aggregate metrics by. If no value is provided, the metrics will be aggregated for the entire period.",
+            "nullable": true,
+            "example": "day",
+            "enum": [
+              "day",
+              "week",
+              "month"
+            ]
+          },
+          "limit": {
+            "type": "integer",
+            "description": "The maximum number of results to return per page. The default (and maximum allowed value) is 1000.",
+            "default": 1000
+          },
+          "starting_after": {
+            "type": "string",
+            "nullable": true,
+            "description": "A cursor used for pagination. Starting after cursor provides the next set of results in forward pagination order."
+          },
+          "ending_before": {
+            "type": "string",
+            "nullable": true,
+            "description": "A cursor used for pagination. Ending before cursor provides the previous set of results in reverse pagination order."
+          }
+        }
+      },
+      "AnalyticsUserFilterConditions": {
+        "title": "Analytics User Filter Conditions",
+        "type": "object",
+        "properties": {
+          "created_at_start": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The start of the date range to search"
+          },
+          "created_at_end": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The end of the date range to search"
+          },
+          "team_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "An array of team IDs. Only users belonging to these teams will be included in results."
+          },
+          "user_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "An array of user IDs. Only these users will be included in results."
+          },
+          "role_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "An array of role IDs. Only users with these roles will be included in results."
+          }
+        }
+      },
+      "AnalyticsUserMetrics": {
+        "title": "Analytics User Metrics",
+        "type": "object",
+        "properties": {
+          "total_downloaded_mobile_app_count": {
+            "type": "integer",
+            "description": "The number of users who have downloaded the mobile app."
+          },
+          "total_downloaded_mobile_app_percentage": {
+            "type": "number",
+            "format": "float",
+            "description": "The percentage of users who have downloaded the mobile app."
+          },
+          "total_on_escalation_policy_count": {
+            "type": "integer",
+            "description": "The number of users who are on at least one escalation policy."
+          },
+          "total_on_escalation_policy_percentage": {
+            "type": "number",
+            "format": "float",
+            "description": "The percentage of users who are on at least one escalation policy."
+          },
+          "total_signed_up_count": {
+            "type": "integer",
+            "description": "The number of users who have signed up (completed onboarding)."
+          },
+          "total_signed_up_percentage": {
+            "type": "number",
+            "format": "float",
+            "description": "The percentage of users who have signed up."
+          },
+          "total_user_count": {
+            "type": "integer",
+            "description": "The total number of users in the account that match the filters."
+          },
+          "total_with_notification_methods_count": {
+            "type": "integer",
+            "description": "The number of users who have at least one notification method configured."
+          },
+          "total_with_notification_methods_percentage": {
+            "type": "number",
+            "format": "float",
+            "description": "The percentage of users who have at least one notification method configured."
+          }
+        }
+      },
       "FieldValueChangeLogEntry": {
         "allOf": [
           {
@@ -22537,6 +22775,123 @@
       },
       "parameters": []
     },
+    "/analytics/metrics/users/all": {
+      "post": {
+        "x-pd-requires-scope": "analytics.read",
+        "summary": "Get aggregated metrics for all users",
+        "operationId": "getAnalyticsMetricsUsersAll",
+        "responses": {
+          "200": {
+            "description": "Returns user metrics aggregated across the account",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/AnalyticsUserMetrics"
+                      }
+                    },
+                    "filters": {
+                      "type": "object",
+                      "properties": {
+                        "created_at_start": {
+                          "type": "string",
+                          "format": "date-time",
+                          "description": "The start of the date range used for filtering"
+                        },
+                        "created_at_end": {
+                          "type": "string",
+                          "format": "date-time",
+                          "description": "The end of the date range used for filtering"
+                        },
+                        "team_ids": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "description": "The team IDs used for filtering"
+                        }
+                      }
+                    },
+                    "time_zone": {
+                      "type": "string",
+                      "description": "The time zone used for the results"
+                    }
+                  }
+                },
+                "examples": {
+                  "Example Response": {
+                    "value": {
+                      "data": [
+                        {
+                          "total_downloaded_mobile_app_count": 0,
+                          "total_downloaded_mobile_app_percentage": 0,
+                          "total_on_escalation_policy_count": 0,
+                          "total_on_escalation_policy_percentage": 0,
+                          "total_signed_up_count": 14,
+                          "total_signed_up_percentage": 70,
+                          "total_user_count": 20,
+                          "total_with_notification_methods_count": 5,
+                          "total_with_notification_methods_percentage": 25
+                        }
+                      ],
+                      "filters": {
+                        "created_at_start": "2024-08-07T07:00:00Z",
+                        "created_at_end": "2025-08-06T06:59:59Z"
+                      },
+                      "time_zone": "America/Chicago"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AnalyticsUserFilter"
+              },
+              "examples": {
+                "Example Request": {
+                  "value": {
+                    "filters": {
+                      "created_at_start": "2024-08-07T00:00:00-07:00",
+                      "created_at_end": "2025-08-05T23:59:59-07:00"
+                    },
+                    "time_zone": "America/Chicago"
+                  }
+                }
+              }
+            }
+          },
+          "description": "Parameters and filters to apply to the dataset."
+        },
+        "description": "Provides aggregated metrics across all users within their account. This endpoint provides summary statistics about user activity and performance.\n\n<!-- theme: info -->\n> **Note:** Analytics data is updated [periodically](https://support.pagerduty.com/main/docs/insights#:~:text=Data%20Update%20Schedule). It takes up to 24 hours before new incidents appear in the Analytics API.\n\nScoped OAuth requires: `analytics.read`\n",
+        "tags": [
+          "Analytics"
+        ]
+      },
+      "parameters": []
+    },
     "/analytics/raw/incidents": {
       "post": {
         "x-pd-requires-scope": "analytics.read",
@@ -23649,6 +24004,208 @@
         ],
         "description": "Provides enriched incident data and metrics for a specific responder.\n\nExample metrics include Mean Seconds to Resolve, Mean Seconds to Engage, Snoozed Seconds, and Sleep Hour Interruptions. Metric definitions can be found in our [Knowledge Base](https://support.pagerduty.com/docs/insights#incidents-list).\n\n<!-- theme: info -->\n> **Note:** Analytics data is updated [periodically](https://support.pagerduty.com/main/docs/insights#:~:text=Data%20Update%20Schedule). It takes up to 24 hours before new incidents appear in the Analytics API.\n\nScoped OAuth requires: `analytics.read`\n"
       }
+    },
+    "/analytics/raw/users": {
+      "post": {
+        "x-pd-requires-scope": "analytics.read",
+        "summary": "Get raw user analytics data",
+        "operationId": "getAnalyticsUsers",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "first": {
+                      "type": "string",
+                      "description": "Cursor to identify the first object in the response."
+                    },
+                    "last": {
+                      "type": "string",
+                      "description": "Cursor to identify the last object in the response."
+                    },
+                    "limit": {
+                      "type": "integer",
+                      "description": "Number of results to include in the batch."
+                    },
+                    "more": {
+                      "type": "boolean",
+                      "description": "Indicates if there are more resources available than were returned."
+                    },
+                    "order": {
+                      "type": "string",
+                      "description": "The order in which the results were sorted; asc for ascending, desc for descending.",
+                      "enum": [
+                        "asc",
+                        "desc"
+                      ]
+                    },
+                    "order_by": {
+                      "type": "string",
+                      "description": "The column that was used for ordering the results.",
+                      "default": "name"
+                    },
+                    "filters": {
+                      "type": "object",
+                      "description": "A collection of filters that were applied to the results.",
+                      "properties": {
+                        "created_at_start": {
+                          "type": "string",
+                          "description": "The lower boundary for the created_at range filter applied to the results."
+                        },
+                        "created_at_end": {
+                          "type": "string",
+                          "description": "The upper boundary for the created_at range filter applied to the results."
+                        },
+                        "team_ids": {
+                          "type": "array",
+                          "description": "The team_ids filter applied to the results.",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "roles": {
+                          "type": "array",
+                          "description": "The roles filter applied to the results.",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "time_zone": {
+                      "type": "string",
+                      "description": "The time zone that the results are in."
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/AnalyticsRawUser"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Example Response": {
+                    "value": {
+                      "data": [
+                        {
+                          "id": "PAQ8IMO",
+                          "description": null,
+                          "time_zone": null,
+                          "role": "user",
+                          "account_id": 1454,
+                          "team_id": null,
+                          "team_name": null,
+                          "created_at": "2025-02-21T16:56:08",
+                          "email": "atest@pagerduty.com",
+                          "user_name": "Adam Test",
+                          "last_sign_in_at": "2025-03-04T09:30:51",
+                          "default_notification_channel_count": 0,
+                          "escalation_policies_count": 0,
+                          "schedules_count": 0,
+                          "channel_types_configured": [
+                            "SlackChannel",
+                            "EmailChannel"
+                          ],
+                          "team_count": 0,
+                          "downloaded_mobile_app": false,
+                          "notification_methods": false,
+                          "on_escalation_policy": false,
+                          "on_schedule": false,
+                          "signed_up": true
+                        },
+                        {
+                          "id": "PLNOYYJ",
+                          "description": null,
+                          "time_zone": "Europe/Lisbon",
+                          "role": "user",
+                          "account_id": 1454,
+                          "team_id": null,
+                          "team_name": null,
+                          "created_at": "2025-08-12T17:16:12",
+                          "email": "btest@pagerduty.com",
+                          "user_name": "B Test",
+                          "last_sign_in_at": "2025-09-03T12:05:29",
+                          "default_notification_channel_count": 1,
+                          "escalation_policies_count": 0,
+                          "schedules_count": 0,
+                          "channel_types_configured": [
+                            "EmailChannel",
+                            "PushNotificationChannel",
+                            "SlackChannel",
+                            "SmsChannel",
+                            "PhoneChannel"
+                          ],
+                          "team_count": 0,
+                          "downloaded_mobile_app": true,
+                          "notification_methods": true,
+                          "on_escalation_policy": false,
+                          "on_schedule": false,
+                          "signed_up": true
+                        }
+                      ],
+                      "first": "eyJpZCI6IlBBUThJTU8iLCJ2YWx1ZSI6IkFkYW0gRGlvcCIsIm9yZGVyX2J5IjoibmFtZSJ9",
+                      "last": "eyJpZCI6IlBQNTlSRTAiLCJ2YWx1ZSI6IkFsbGlzb24gQ29ybGV5Iiwib3JkZXJfYnkiOiJuYW1lIn0=",
+                      "more": true,
+                      "limit": 10,
+                      "filters": {
+                        "created_at_start": "2025-01-01T00:00:00Z",
+                        "created_at_end": "2025-09-01T00:00:00Z"
+                      },
+                      "time_zone": "Etc/UTC",
+                      "order": "asc",
+                      "order_by": "name"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AnalyticsUserFilter"
+              },
+              "examples": {
+                "Example Request": {
+                  "value": {
+                    "filters": {
+                      "created_at_start": "2025-01-01T00:00:00Z",
+                      "created_at_end": "2025-09-01T00:00:00Z"
+                    },
+                    "limit": 10
+                  }
+                }
+              }
+            }
+          },
+          "description": "Parameters and filters to apply to the dataset."
+        },
+        "description": "Allows users to retrieve a raw list of user analytics data within their account. This endpoint provides detailed data about user activity and account configuration.\n\n<!-- theme: info -->\n> **Note:** Analytics data is updated [periodically](https://support.pagerduty.com/main/docs/insights#:~:text=Data%20Update%20Schedule). It takes up to 24 hours before new user data appears in the Analytics API.\n\nScoped OAuth requires: `analytics.read`\n",
+        "tags": [
+          "Analytics"
+        ]
+      },
+      "parameters": []
     },
     "/audit/records": {
       "description": "List audit records.",

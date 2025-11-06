@@ -2,6 +2,16 @@
 
 PagerDuty aims to have no breaking changes to its API. We do fix bugs and add new functionality continuously. This document serves as a reference for any bug fixes or additions to our API.
 
+## 2025-11-06
+- Added Get user delegation and list user delegations API endpoints:
+  - `GET /users/{id}/delegations` - Get delegations for a particular user
+  - `GET /users/{id}/delegations/delegationId` - Get detailed delegation information for a specific delegation
+
+## 2025-11-02
+- Added Analytics API endpoints for user metrics:
+  - `POST /analytics/raw/users` - Get raw user analytics data
+  - `POST /analytics/metrics/users/all` - Get aggregated metrics for all users
+
 ### 2025-10-17
 - Fixed the documentation link for SCIM User Provisioning to go to the correct web page
 
