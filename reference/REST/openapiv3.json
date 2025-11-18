@@ -19969,7 +19969,7 @@
           "Tags"
         ],
         "operationId": "createEntityTypeByIdChangeTags",
-        "description": "Assign existing or new tags.\n\nA Tag is applied to Escalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#tags)\n\nScoped OAuth requires: `tags.write`\n",
+        "description": "Assign existing or new tags.\n\nA Tag is applied to Escalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#tags)\n\nScoped OAuth requires: `tags.write`\n",
         "summary": "Assign tags",
         "parameters": [
           {
@@ -20139,7 +20139,7 @@
           "Tags"
         ],
         "operationId": "getEntityTypeByIdTags",
-        "description": "Get related tags for Users, Teams or Escalation Policies.\n\nA Tag is applied to Escalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#tags)\n\nScoped OAuth requires: `tags.read`\n",
+        "description": "Get related tags for Users, Teams or Escalation Policies.\n\nA Tag is applied to Escalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#tags)\n\nScoped OAuth requires: `tags.read`\n",
         "summary": "Get tags for entities",
         "parameters": [
           {
@@ -20234,7 +20234,7 @@
           "Abilities"
         ],
         "operationId": "listAbilities",
-        "description": "List all of your account's abilities, by name.\n\n\"Abilities\" describes your account's capabilities by feature name. For example `\"teams\"`.\n\nAn ability may be available to your account based on things like your pricing plan or account state.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#abilities)\n\nScoped OAuth requires: `abilities.read`\n",
+        "description": "List all of your account's abilities, by name.\n\n\"Abilities\" describes your account's capabilities by feature name. For example `\"teams\"`.\n\nAn ability may be available to your account based on things like your pricing plan or account state.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#abilities)\n\nScoped OAuth requires: `abilities.read`\n",
         "summary": "List abilities",
         "parameters": [
           {
@@ -20306,7 +20306,7 @@
           "Abilities"
         ],
         "operationId": "getAbility",
-        "description": "Test whether your account has a given ability.\n\n\"Abilities\" describes your account's capabilities by feature name. For example `\"teams\"`.\n\nAn ability may be available to your account based on things like your pricing plan or account state.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#abilities)\n\nScoped OAuth requires: `abilities.read`\n",
+        "description": "Test whether your account has a given ability.\n\n\"Abilities\" describes your account's capabilities by feature name. For example `\"teams\"`.\n\nAn ability may be available to your account based on things like your pricing plan or account state.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#abilities)\n\nScoped OAuth requires: `abilities.read`\n",
         "summary": "Test an ability",
         "parameters": [
           {
@@ -20349,7 +20349,7 @@
           "Add-ons"
         ],
         "operationId": "listAddon",
-        "description": "List all of the Add-ons installed on your account.\n\nAddon's are pieces of functionality that developers can write to insert new functionality into PagerDuty's UI.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#add-ons)\n\nScoped OAuth requires: `addons.read`\n",
+        "description": "List all of the Add-ons installed on your account.\n\nAddon's are pieces of functionality that developers can write to insert new functionality into PagerDuty's UI.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#add-ons)\n\nScoped OAuth requires: `addons.read`\n",
         "summary": "List installed Add-ons",
         "parameters": [
           {
@@ -20448,7 +20448,7 @@
           "Add-ons"
         ],
         "operationId": "createAddon",
-        "description": "Install an Add-on for your account.\n\nAddon's are pieces of functionality that developers can write to insert new functionality into PagerDuty's UI.\n\nGiven a configuration containing a `src` parameter, that URL will be embedded in an `iframe` on a page that's available to users from a drop-down menu.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#add-ons)\n\nScoped OAuth requires: `addons.write`\n",
+        "description": "Install an Add-on for your account.\n\nAddon's are pieces of functionality that developers can write to insert new functionality into PagerDuty's UI.\n\nGiven a configuration containing a `src` parameter, that URL will be embedded in an `iframe` on a page that's available to users from a drop-down menu.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#add-ons)\n\nScoped OAuth requires: `addons.write`\n",
         "summary": "Install an Add-on",
         "parameters": [
           {
@@ -20546,7 +20546,7 @@
           "Add-ons"
         ],
         "operationId": "getAddon",
-        "description": "Get details about an existing Add-on.\n\nAddon's are pieces of functionality that developers can write to insert new functionality into PagerDuty's UI.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#add-ons)\n\nScoped OAuth requires: `addons.read`\n",
+        "description": "Get details about an existing Add-on.\n\nAddon's are pieces of functionality that developers can write to insert new functionality into PagerDuty's UI.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#add-ons)\n\nScoped OAuth requires: `addons.read`\n",
         "summary": "Get an Add-on",
         "parameters": [
           {
@@ -20623,7 +20623,7 @@
           "Add-ons"
         ],
         "operationId": "deleteAddon",
-        "description": "Remove an existing Add-on.\n\nAddon's are pieces of functionality that developers can write to insert new functionality into PagerDuty's UI.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#add-ons)\n\nScoped OAuth requires: `addons.write`\n",
+        "description": "Remove an existing Add-on.\n\nAddon's are pieces of functionality that developers can write to insert new functionality into PagerDuty's UI.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#add-ons)\n\nScoped OAuth requires: `addons.write`\n",
         "summary": "Delete an Add-on",
         "parameters": [
           {
@@ -20660,7 +20660,7 @@
           "Add-ons"
         ],
         "operationId": "updateAddon",
-        "description": "Update an existing Add-on.\n\nAddon's are pieces of functionality that developers can write to insert new functionality into PagerDuty's UI.\n\nGiven a configuration containing a `src` parameter, that URL will be embedded in an `iframe` on a page that's available to users from a drop-down menu.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#add-ons)\n\nScoped OAuth requires: `addons.write`\n",
+        "description": "Update an existing Add-on.\n\nAddon's are pieces of functionality that developers can write to insert new functionality into PagerDuty's UI.\n\nGiven a configuration containing a `src` parameter, that URL will be embedded in an `iframe` on a page that's available to users from a drop-down menu.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#add-ons)\n\nScoped OAuth requires: `addons.write`\n",
         "summary": "Update an Add-on",
         "parameters": [
           {
@@ -26814,7 +26814,7 @@
           "Business Services"
         ],
         "operationId": "listBusinessServices",
-        "description": "List existing Business Services.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#business-services)\n\nScoped OAuth requires: `services.read`\n",
+        "description": "List existing Business Services.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#business-services)\n\nScoped OAuth requires: `services.read`\n",
         "summary": "List Business Services",
         "parameters": [
           {
@@ -26917,7 +26917,7 @@
           "Business Services"
         ],
         "operationId": "createBusinessService",
-        "description": "Create a new Business Service.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nThere is a limit of 5,000 business services per account. If the limit is reached, the API will respond with an error.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#business-services)\n\nScoped OAuth requires: `services.write`\n",
+        "description": "Create a new Business Service.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nThere is a limit of 5,000 business services per account. If the limit is reached, the API will respond with an error.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#business-services)\n\nScoped OAuth requires: `services.write`\n",
         "summary": "Create a Business Service",
         "parameters": [
           {
@@ -27046,7 +27046,7 @@
           "Business Services"
         ],
         "operationId": "getBusinessService",
-        "description": "Get details about an existing Business Service.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#business-services)\n\nScoped OAuth requires: `services.read`\n",
+        "description": "Get details about an existing Business Service.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#business-services)\n\nScoped OAuth requires: `services.read`\n",
         "summary": "Get a Business Service",
         "parameters": [
           {
@@ -27120,7 +27120,7 @@
           "Business Services"
         ],
         "operationId": "deleteBusinessService",
-        "description": "Delete an existing Business Service.\n\nOnce the service is deleted, it will not be accessible from the web UI and new incidents won't be able to be created for this service.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#business-services)\n\nScoped OAuth requires: `services.write`\n",
+        "description": "Delete an existing Business Service.\n\nOnce the service is deleted, it will not be accessible from the web UI and new incidents won't be able to be created for this service.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#business-services)\n\nScoped OAuth requires: `services.write`\n",
         "summary": "Delete a Business Service",
         "parameters": [
           {
@@ -27154,7 +27154,7 @@
           "Business Services"
         ],
         "operationId": "updateBusinessService",
-        "description": "Update an existing Business Service. NOTE that this endpoint also accepts the PATCH verb.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#business-services)\n\nScoped OAuth requires: `services.write`\n",
+        "description": "Update an existing Business Service. NOTE that this endpoint also accepts the PATCH verb.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#business-services)\n\nScoped OAuth requires: `services.write`\n",
         "summary": "Update a Business Service",
         "parameters": [
           {
@@ -28591,7 +28591,7 @@
         ],
         "x-pd-requires-scope": "escalation_policies.read",
         "operationId": "listEscalationPolicies",
-        "description": "List all of the existing escalation policies.\n\nEscalation policies define which user should be alerted at which time.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#escalation-policies)\n\nScoped OAuth requires: `escalation_policies.read`\n",
+        "description": "List all of the existing escalation policies.\n\nEscalation policies define which user should be alerted at which time.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#escalation-policies)\n\nScoped OAuth requires: `escalation_policies.read`\n",
         "summary": "List escalation policies",
         "parameters": [
           {
@@ -28737,7 +28737,7 @@
         ],
         "x-pd-requires-scope": "escalation_policies.write",
         "operationId": "createEscalationPolicy",
-        "description": "Creates a new escalation policy. At least one escalation rule must be provided.\n\nEscalation policies define which user should be alerted at which time.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#escalation-policies)\n\nScoped OAuth requires: `escalation_policies.write`\n",
+        "description": "Creates a new escalation policy. At least one escalation rule must be provided.\n\nEscalation policies define which user should be alerted at which time.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#escalation-policies)\n\nScoped OAuth requires: `escalation_policies.write`\n",
         "summary": "Create an escalation policy",
         "parameters": [
           {
@@ -28910,7 +28910,7 @@
         ],
         "x-pd-requires-scope": "escalation_policies.read",
         "operationId": "getEscalationPolicy",
-        "description": "Get information about an existing escalation policy and its rules.\n\nEscalation policies define which user should be alerted at which time.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#escalation-policies)\n\nScoped OAuth requires: `escalation_policies.read`\n",
+        "description": "Get information about an existing escalation policy and its rules.\n\nEscalation policies define which user should be alerted at which time.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#escalation-policies)\n\nScoped OAuth requires: `escalation_policies.read`\n",
         "summary": "Get an escalation policy",
         "parameters": [
           {
@@ -29020,7 +29020,7 @@
         ],
         "x-pd-requires-scope": "escalation_policies.write",
         "operationId": "deleteEscalationPolicy",
-        "description": "Deletes an existing escalation policy and rules. The escalation policy must not be in use by any services.\n\nEscalation policies define which user should be alerted at which time.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#escalation-policies)\n\nScoped OAuth requires: `escalation_policies.write`\n",
+        "description": "Deletes an existing escalation policy and rules. The escalation policy must not be in use by any services.\n\nEscalation policies define which user should be alerted at which time.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#escalation-policies)\n\nScoped OAuth requires: `escalation_policies.write`\n",
         "summary": "Delete an escalation policy",
         "parameters": [
           {
@@ -29057,7 +29057,7 @@
         ],
         "x-pd-requires-scope": "escalation_policies.write",
         "operationId": "updateEscalationPolicy",
-        "description": "Updates an existing escalation policy and rules.\n\nEscalation policies define which user should be alerted at which time.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#escalation-policies)\n\nScoped OAuth requires: `escalation_policies.write`\n",
+        "description": "Updates an existing escalation policy and rules.\n\nEscalation policies define which user should be alerted at which time.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#escalation-policies)\n\nScoped OAuth requires: `escalation_policies.write`\n",
         "summary": "Update an escalation policy",
         "parameters": [
           {
@@ -29304,7 +29304,7 @@
           "Event Orchestrations"
         ],
         "operationId": "listEventOrchestrations",
-        "description": "List all Global Event Orchestrations on an Account.\n\nGlobal Event Orchestrations allow you define a set of Global Rules and Router Rules, so that when you ingest events using the Orchestration's Routing Key your events will have actions applied via the Global Rules & then routed to the correct Service by the Router Rules, based on the event's content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `event_orchestrations.read`\n",
+        "description": "List all Global Event Orchestrations on an Account.\n\nGlobal Event Orchestrations allow you define a set of Global Rules and Router Rules, so that when you ingest events using the Orchestration's Routing Key your events will have actions applied via the Global Rules & then routed to the correct Service by the Router Rules, based on the event's content.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `event_orchestrations.read`\n",
         "summary": "List Event Orchestrations",
         "parameters": [
           {
@@ -29510,7 +29510,7 @@
         "tags": [
           "Event Orchestrations"
         ],
-        "description": "Create a Global Event Orchestration.\n\nGlobal Event Orchestrations allow you define a set of Global Rules and Router Rules, so that when you ingest events using the Orchestration's Routing Key your events will have actions applied via the Global Rules & then routed to the correct Service by the Router Rules, based on the event's content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `event_orchestrations.write`\n",
+        "description": "Create a Global Event Orchestration.\n\nGlobal Event Orchestrations allow you define a set of Global Rules and Router Rules, so that when you ingest events using the Orchestration's Routing Key your events will have actions applied via the Global Rules & then routed to the correct Service by the Router Rules, based on the event's content.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `event_orchestrations.write`\n",
         "summary": "Create an Orchestration",
         "operationId": "postOrchestration",
         "requestBody": {
@@ -29639,7 +29639,7 @@
           "Event Orchestrations"
         ],
         "operationId": "getOrchestration",
-        "description": "Get a Global Event Orchestration.\n\nGlobal Event Orchestrations allow you define a set of Global Rules and Router Rules, so that when you ingest events using the Orchestration's Routing Key your events will have actions applied via the Global Rules & then routed to the correct Service by the Router Rules, based on the event's content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `event_orchestrations.read`\n",
+        "description": "Get a Global Event Orchestration.\n\nGlobal Event Orchestrations allow you define a set of Global Rules and Router Rules, so that when you ingest events using the Orchestration's Routing Key your events will have actions applied via the Global Rules & then routed to the correct Service by the Router Rules, based on the event's content.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `event_orchestrations.read`\n",
         "summary": "Get an Orchestration",
         "parameters": [
           {
@@ -29730,7 +29730,7 @@
           "Event Orchestrations"
         ],
         "operationId": "updateOrchestration",
-        "description": "Update a Global Event Orchestration.\n\nGlobal Event Orchestrations allow you define a set of Global Rules and Router Rules, so that when you ingest events using the Orchestration's Routing Key your events will have actions applied via the Global Rules & then routed to the correct Service by the Router Rules, based on the event's content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `event_orchestrations.write`\n",
+        "description": "Update a Global Event Orchestration.\n\nGlobal Event Orchestrations allow you define a set of Global Rules and Router Rules, so that when you ingest events using the Orchestration's Routing Key your events will have actions applied via the Global Rules & then routed to the correct Service by the Router Rules, based on the event's content.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `event_orchestrations.write`\n",
         "summary": "Update an Orchestration",
         "parameters": [
           {
@@ -29873,7 +29873,7 @@
           "Event Orchestrations"
         ],
         "operationId": "deleteOrchestration",
-        "description": "Delete a Global Event Orchestration.\n\nOnce deleted, you will no longer be able to ingest events into PagerDuty using this Orchestration's Routing Key.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `event_orchestrations.write`\n",
+        "description": "Delete a Global Event Orchestration.\n\nOnce deleted, you will no longer be able to ingest events into PagerDuty using this Orchestration's Routing Key.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `event_orchestrations.write`\n",
         "summary": "Delete an Orchestration",
         "parameters": [
           {
@@ -29918,7 +29918,7 @@
         "tags": [
           "Event Orchestrations"
         ],
-        "description": "List the Integrations associated with this Event Orchestrations.\n\nYou can use a Routing Key from these Integrations to send events to PagerDuty!\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `event_orchestrations.read`\n",
+        "description": "List the Integrations associated with this Event Orchestrations.\n\nYou can use a Routing Key from these Integrations to send events to PagerDuty!\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `event_orchestrations.read`\n",
         "summary": "List Integrations for an Event Orchestration",
         "operationId": "listOrchestrationIntegrations",
         "parameters": [
@@ -29999,7 +29999,7 @@
         "tags": [
           "Event Orchestrations"
         ],
-        "description": "Create an Integration associated with this Event Orchestration.\n\nYou can then use the Routing Key from this new Integration to send events to PagerDuty!\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `event_orchestrations.write`\n",
+        "description": "Create an Integration associated with this Event Orchestration.\n\nYou can then use the Routing Key from this new Integration to send events to PagerDuty!\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `event_orchestrations.write`\n",
         "summary": "Create an Integration for an Event Orchestration",
         "operationId": "postOrchestrationIntegration",
         "requestBody": {
@@ -30108,7 +30108,7 @@
         "tags": [
           "Event Orchestrations"
         ],
-        "description": "Get an Integration associated with this Event Orchestrations.\n\nYou can use the Routing Key from this Integration to send events to PagerDuty!\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `event_orchestrations.read`\n",
+        "description": "Get an Integration associated with this Event Orchestrations.\n\nYou can use the Routing Key from this Integration to send events to PagerDuty!\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `event_orchestrations.read`\n",
         "summary": "Get an Integration for an Event Orchestration",
         "operationId": "getOrchestrationIntegration",
         "parameters": [
@@ -30174,7 +30174,7 @@
         "tags": [
           "Event Orchestrations"
         ],
-        "description": "Update an Integration associated with this Event Orchestrations.\n\nYou can use the Routing Key from this Integration to send events to PagerDuty!\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `event_orchestrations.write`\n",
+        "description": "Update an Integration associated with this Event Orchestrations.\n\nYou can use the Routing Key from this Integration to send events to PagerDuty!\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `event_orchestrations.write`\n",
         "summary": "Update an Integration for an Event Orchestration",
         "operationId": "updateOrchestrationIntegration",
         "requestBody": {
@@ -30283,7 +30283,7 @@
         "tags": [
           "Event Orchestrations"
         ],
-        "description": "Delete an Integration and its associated Routing Key.\n\nOnce deleted, PagerDuty will drop all future events sent to PagerDuty using the Routing Key.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `event_orchestrations.write`\n",
+        "description": "Delete an Integration and its associated Routing Key.\n\nOnce deleted, PagerDuty will drop all future events sent to PagerDuty using the Routing Key.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `event_orchestrations.write`\n",
         "summary": "Delete an Integration for an Event Orchestration",
         "operationId": "deleteOrchestrationIntegration",
         "parameters": [
@@ -30329,7 +30329,7 @@
         "tags": [
           "Event Orchestrations"
         ],
-        "description": "Move an Integration and its Routing Key from the Event Orchestration specified in the request payload, to the Event Orchestration specified in the request URL.\n\nAny future events sent to this Integration's Routing Key will be processed by this Event Orchestration's Rules.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `event_orchestrations.write`\n",
+        "description": "Move an Integration and its Routing Key from the Event Orchestration specified in the request payload, to the Event Orchestration specified in the request URL.\n\nAny future events sent to this Integration's Routing Key will be processed by this Event Orchestration's Rules.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `event_orchestrations.write`\n",
         "summary": "Migrate an Integration from one Event Orchestration to another",
         "operationId": "migrateOrchestrationIntegration",
         "requestBody": {
@@ -30462,7 +30462,7 @@
         ],
         "operationId": "getOrchPathGlobal",
         "summary": "Get the Global Orchestration for an Event Orchestration",
-        "description": "Get the Global Orchestration for an Event Orchestration.\n\nGlobal Orchestration Rules allows you to create a set of Event Rules. These rules evaluate against all Events sent to an Event Orchestration. When a matching rule is found, it can modify and enhance the event and can route the event to another set of Global Rules within this Orchestration for further processing.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `event_orchestrations.read`\n",
+        "description": "Get the Global Orchestration for an Event Orchestration.\n\nGlobal Orchestration Rules allows you to create a set of Event Rules. These rules evaluate against all Events sent to an Event Orchestration. When a matching rule is found, it can modify and enhance the event and can route the event to another set of Global Rules within this Orchestration for further processing.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `event_orchestrations.read`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -30511,7 +30511,7 @@
         ],
         "operationId": "updateOrchPathGlobal",
         "summary": "Update the Global Orchestration for an Event Orchestration",
-        "description": "Update the Global Orchestration for an Event Orchestration.\n\nGlobal Orchestration Rules allows you to create a set of Event Rules. These rules evaluate against all Events sent to an Event Orchestration. When a matching rule is found, it can modify and enhance the event and can route the event to another set of Global Rules within this Orchestration for further processing.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `event_orchestrations.write`\n",
+        "description": "Update the Global Orchestration for an Event Orchestration.\n\nGlobal Orchestration Rules allows you to create a set of Event Rules. These rules evaluate against all Events sent to an Event Orchestration. When a matching rule is found, it can modify and enhance the event and can route the event to another set of Global Rules within this Orchestration for further processing.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `event_orchestrations.write`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -30901,7 +30901,7 @@
         ],
         "operationId": "getOrchPathRouter",
         "summary": "Get the Router for an Event Orchestration",
-        "description": "Get a Global Orchestration's Routing Rules.\n\nAn Orchestration Router allows you to create a set of Event Rules. The Router evaluates Events you send to this Global Orchestration against each of its rules, one at a time, and routes the event to a specific Service based on the first rule that matches. If an event doesn't match any rules, it'll be sent to service specified in as the `catch_all` or the \"Unrouted\" Orchestration if no service is specified.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `event_orchestrations.read`\n",
+        "description": "Get a Global Orchestration's Routing Rules.\n\nAn Orchestration Router allows you to create a set of Event Rules. The Router evaluates Events you send to this Global Orchestration against each of its rules, one at a time, and routes the event to a specific Service based on the first rule that matches. If an event doesn't match any rules, it'll be sent to service specified in as the `catch_all` or the \"Unrouted\" Orchestration if no service is specified.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `event_orchestrations.read`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -30938,7 +30938,7 @@
         ],
         "operationId": "updateOrchPathRouter",
         "summary": "Update the Router for an Event Orchestration",
-        "description": "Update a Global Orchestration's Routing Rules.\n\nAn Orchestration Router allows you to create a set of Event Rules. The Router evaluates Events you send to this Global Orchestration against each of its rules, one at a time, and routes the event to a specific Service based on the first rule that matches. If an event doesn't match any rules, it'll be sent to service specified in as the `catch_all` or the \"Unrouted\" Orchestration if no service is specified.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `event_orchestrations.write`\n",
+        "description": "Update a Global Orchestration's Routing Rules.\n\nAn Orchestration Router allows you to create a set of Event Rules. The Router evaluates Events you send to this Global Orchestration against each of its rules, one at a time, and routes the event to a specific Service based on the first rule that matches. If an event doesn't match any rules, it'll be sent to service specified in as the `catch_all` or the \"Unrouted\" Orchestration if no service is specified.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `event_orchestrations.write`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -31194,7 +31194,7 @@
         ],
         "operationId": "getOrchPathUnrouted",
         "summary": "Get the Unrouted Orchestration for an Event Orchestration",
-        "description": "Get a Global Event Orchestration's Rules for Unrouted events.\n\nAn Unrouted Orchestration allows you to create a set of Event Rules that will be evaluated against all events that don't match any rules in the Global Orchestration's Router. Events that reach the Unrouted Orchestration will never be routed to a specific Service.\n\nThe Unrouted Orchestration evaluates Events sent to it against each of its rules, beginning with the rules in the \"start\" set. When a matching rule is found, it can modify and enhance the event and can route the event to another set of rules within this Unrouted Orchestration for further processing.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `event_orchestrations.read`\n",
+        "description": "Get a Global Event Orchestration's Rules for Unrouted events.\n\nAn Unrouted Orchestration allows you to create a set of Event Rules that will be evaluated against all events that don't match any rules in the Global Orchestration's Router. Events that reach the Unrouted Orchestration will never be routed to a specific Service.\n\nThe Unrouted Orchestration evaluates Events sent to it against each of its rules, beginning with the rules in the \"start\" set. When a matching rule is found, it can modify and enhance the event and can route the event to another set of rules within this Unrouted Orchestration for further processing.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `event_orchestrations.read`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -31231,7 +31231,7 @@
         ],
         "operationId": "updateOrchPathUnrouted",
         "summary": "Update the Unrouted Orchestration for an Event Orchestration",
-        "description": "Update a Global Event Orchestration's Rules for Unrouted events.\n\nAn Unrouted Orchestration allows you to create a set of Event Rules that will be evaluated against all events that don't match any rules in the Global Orchestration's Router. Events that reach the Unrouted Orchestration will never be routed to a specific Service.\n\nThe Unrouted Orchestration evaluates Events sent to it against each of its rules, beginning with the rules in the \"start\" set. When a matching rule is found, it can modify and enhance the event and can route the event to another set of rules within this Unrouted Orchestration for further processing.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `event_orchestrations.write`\n",
+        "description": "Update a Global Event Orchestration's Rules for Unrouted events.\n\nAn Unrouted Orchestration allows you to create a set of Event Rules that will be evaluated against all events that don't match any rules in the Global Orchestration's Router. Events that reach the Unrouted Orchestration will never be routed to a specific Service.\n\nThe Unrouted Orchestration evaluates Events sent to it against each of its rules, beginning with the rules in the \"start\" set. When a matching rule is found, it can modify and enhance the event and can route the event to another set of rules within this Unrouted Orchestration for further processing.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `event_orchestrations.write`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -31435,7 +31435,7 @@
         ],
         "operationId": "getOrchPathService",
         "summary": "Get the Service Orchestration for a Service",
-        "description": "Get a Service Orchestration.\n\nA Service Orchestration allows you to create a set of Event Rules. The Service Orchestration evaluates Events sent to this Service against each of its rules, beginning with the rules in the \"start\" set. When a matching rule is found, it can modify and enhance the event and can route the event to another set of rules within this Service Orchestration for further processing.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `services.read`\n",
+        "description": "Get a Service Orchestration.\n\nA Service Orchestration allows you to create a set of Event Rules. The Service Orchestration evaluates Events sent to this Service against each of its rules, beginning with the rules in the \"start\" set. When a matching rule is found, it can modify and enhance the event and can route the event to another set of rules within this Service Orchestration for further processing.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `services.read`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -31475,7 +31475,7 @@
         ],
         "operationId": "updateOrchPathService",
         "summary": "Update the Service Orchestration for a Service",
-        "description": "Update a Service Orchestration.\n\nA Service Orchestration allows you to create a set of Event Rules. The Service Orchestration evaluates Events sent to this Service against each of its rules, beginning with the rules in the \"start\" set. When a matching rule is found, it can modify and enhance the event and can route the event to another set of rules within this Service Orchestration for further processing.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `services.write`\n",
+        "description": "Update a Service Orchestration.\n\nA Service Orchestration allows you to create a set of Event Rules. The Service Orchestration evaluates Events sent to this Service against each of its rules, beginning with the rules in the \"start\" set. When a matching rule is found, it can modify and enhance the event and can route the event to another set of rules within this Service Orchestration for further processing.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `services.write`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -31969,7 +31969,7 @@
         ],
         "operationId": "getOrchActiveStatus",
         "summary": "Get the Service Orchestration active status for a Service",
-        "description": "Get a Service Orchestration's active status.\n\nA Service Orchestration allows you to set an active status based on whether an event will be evaluated against a service orchestration path (true) or service ruleset (false).\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `services.read`\n",
+        "description": "Get a Service Orchestration's active status.\n\nA Service Orchestration allows you to set an active status based on whether an event will be evaluated against a service orchestration path (true) or service ruleset (false).\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `services.read`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -32006,7 +32006,7 @@
         ],
         "operationId": "updateOrchActiveStatus",
         "summary": "Update the Service Orchestration active status for a Service",
-        "description": "Update a Service Orchestration's active status.\n\nA Service Orchestration allows you to set an active status based on whether an event will be evaluated against a service orchestration path (true) or service ruleset (false).\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `services.write`\n",
+        "description": "Update a Service Orchestration's active status.\n\nA Service Orchestration allows you to set an active status based on whether an event will be evaluated against a service orchestration path (true) or service ruleset (false).\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `services.write`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -32069,7 +32069,7 @@
           "Event Orchestrations"
         ],
         "operationId": "listCacheVarOnGlobalOrch",
-        "description": "List Cache Variables for a Global Event Orchestration.\n\nCache Variables allow you to store event data on an Event Orchestration, which can then be used in Event Orchestration rules as part of conditions or actions.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `event_orchestrations.read`\n",
+        "description": "List Cache Variables for a Global Event Orchestration.\n\nCache Variables allow you to store event data on an Event Orchestration, which can then be used in Event Orchestration rules as part of conditions or actions.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `event_orchestrations.read`\n",
         "summary": "List Cache Variables for a Global Event Orchestration",
         "parameters": [
           {
@@ -32106,7 +32106,7 @@
           "Event Orchestrations"
         ],
         "operationId": "createCacheVarOnGlobalOrch",
-        "description": "Create a Cache Variable for a Global Event Orchestration.\n\nCache Variables allow you to store event data on an Event Orchestration, which can then be used in Event Orchestration rules as part of conditions or actions.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `event_orchestrations.write`\n",
+        "description": "Create a Cache Variable for a Global Event Orchestration.\n\nCache Variables allow you to store event data on an Event Orchestration, which can then be used in Event Orchestration rules as part of conditions or actions.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `event_orchestrations.write`\n",
         "summary": "Create a Cache Variable for a Global Event Orchestration",
         "parameters": [
           {
@@ -32152,7 +32152,7 @@
           "Event Orchestrations"
         ],
         "operationId": "getCacheVarOnGlobalOrch",
-        "description": "Get a Cache Variable for a Global Event Orchestration.\n\nCache Variables allow you to store event data on an Event Orchestration, which can then be used in Event Orchestration rules as part of conditions or actions.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `event_orchestrations.read`\n",
+        "description": "Get a Cache Variable for a Global Event Orchestration.\n\nCache Variables allow you to store event data on an Event Orchestration, which can then be used in Event Orchestration rules as part of conditions or actions.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `event_orchestrations.read`\n",
         "summary": "Get a Cache Variable for a Global Event Orchestration",
         "parameters": [
           {
@@ -32192,7 +32192,7 @@
           "Event Orchestrations"
         ],
         "operationId": "updateCacheVarOnGlobalOrch",
-        "description": "Update a Cache Variable for a Global Event Orchestration.\n\nCache Variables allow you to store event data on an Event Orchestration, which can then be used in Event Orchestration rules as part of conditions or actions.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `event_orchestrations.write`\n",
+        "description": "Update a Cache Variable for a Global Event Orchestration.\n\nCache Variables allow you to store event data on an Event Orchestration, which can then be used in Event Orchestration rules as part of conditions or actions.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `event_orchestrations.write`\n",
         "summary": "Update a Cache Variable for a Global Event Orchestration",
         "parameters": [
           {
@@ -32238,7 +32238,7 @@
           "Event Orchestrations"
         ],
         "operationId": "deleteCacheVarOnGlobalOrch",
-        "description": "Delete a Cache Variable for a Global Event Orchestration.\n\nCache Variables allow you to store event data on an Event Orchestration, which can then be used in Event Orchestration rules as part of conditions or actions.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `event_orchestrations.write`\n",
+        "description": "Delete a Cache Variable for a Global Event Orchestration.\n\nCache Variables allow you to store event data on an Event Orchestration, which can then be used in Event Orchestration rules as part of conditions or actions.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `event_orchestrations.write`\n",
         "summary": "Delete a Cache Variable for a Global Event Orchestration",
         "parameters": [
           {
@@ -32410,7 +32410,7 @@
           "Event Orchestrations"
         ],
         "operationId": "listCacheVarOnServiceOrch",
-        "description": "List Cache Variables for a Service Event Orchestration.\n\nCache Variables allow you to store event data on an Event Orchestration, which can then be used in Event Orchestration rules as part of conditions or actions.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `services.read`\n",
+        "description": "List Cache Variables for a Service Event Orchestration.\n\nCache Variables allow you to store event data on an Event Orchestration, which can then be used in Event Orchestration rules as part of conditions or actions.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `services.read`\n",
         "summary": "List Cache Variables for a Service Event Orchestration",
         "parameters": [
           {
@@ -32447,7 +32447,7 @@
           "Event Orchestrations"
         ],
         "operationId": "createCacheVarOnServiceOrch",
-        "description": "Create a Cache Variable for a Service Event Orchestration.\n\nCache Variables allow you to store event data on an Event Orchestration, which can then be used in Event Orchestration rules as part of conditions or actions.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `services.write`\n",
+        "description": "Create a Cache Variable for a Service Event Orchestration.\n\nCache Variables allow you to store event data on an Event Orchestration, which can then be used in Event Orchestration rules as part of conditions or actions.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `services.write`\n",
         "summary": "Create a Cache Variable for a Service Event Orchestration",
         "parameters": [
           {
@@ -32493,7 +32493,7 @@
           "Event Orchestrations"
         ],
         "operationId": "getCacheVarOnServiceOrch",
-        "description": "Get a Cache Variable for a Service Event Orchestration.\n\nCache Variables allow you to store event data on an Event Orchestration, which can then be used in Event Orchestration rules as part of conditions or actions.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `services.read`\n",
+        "description": "Get a Cache Variable for a Service Event Orchestration.\n\nCache Variables allow you to store event data on an Event Orchestration, which can then be used in Event Orchestration rules as part of conditions or actions.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `services.read`\n",
         "summary": "Get a Cache Variable for a Service Event Orchestration",
         "parameters": [
           {
@@ -32533,7 +32533,7 @@
           "Event Orchestrations"
         ],
         "operationId": "updateCacheVarOnServiceOrch",
-        "description": "Update a Cache Variable for a Service Event Orchestration.\n\nCache Variables allow you to store event data on an Event Orchestration, which can then be used in Event Orchestration rules as part of conditions or actions.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `services.write`\n",
+        "description": "Update a Cache Variable for a Service Event Orchestration.\n\nCache Variables allow you to store event data on an Event Orchestration, which can then be used in Event Orchestration rules as part of conditions or actions.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `services.write`\n",
         "summary": "Update a Cache Variable for a Service Event Orchestration",
         "parameters": [
           {
@@ -32579,7 +32579,7 @@
           "Event Orchestrations"
         ],
         "operationId": "deleteCacheVarOnServiceOrch",
-        "description": "Delete a Cache Variable for a Service Event Orchestration.\n\nCache Variables allow you to store event data on an Event Orchestration, which can then be used in Event Orchestration rules as part of conditions or actions.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `services.write`\n",
+        "description": "Delete a Cache Variable for a Service Event Orchestration.\n\nCache Variables allow you to store event data on an Event Orchestration, which can then be used in Event Orchestration rules as part of conditions or actions.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#event-orchestrations)\n\nScoped OAuth requires: `services.write`\n",
         "summary": "Delete a Cache Variable for a Service Event Orchestration",
         "parameters": [
           {
@@ -32904,7 +32904,7 @@
           "Extension Schemas"
         ],
         "operationId": "listExtensionSchemas",
-        "description": "List all extension schemas.\n\nA PagerDuty extension vendor represents a specific type of outbound extension such as Generic Webhook, Slack, ServiceNow.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#extension-schemas)\n\nScoped OAuth requires: `extension_schemas.read`\n",
+        "description": "List all extension schemas.\n\nA PagerDuty extension vendor represents a specific type of outbound extension such as Generic Webhook, Slack, ServiceNow.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#extension-schemas)\n\nScoped OAuth requires: `extension_schemas.read`\n",
         "summary": "List extension schemas",
         "parameters": [
           {
@@ -33010,7 +33010,7 @@
           "Extension Schemas"
         ],
         "operationId": "getExtensionSchema",
-        "description": "Get details about one specific extension vendor.\n\nA PagerDuty extension vendor represents a specific type of outbound extension such as Generic Webhook, Slack, ServiceNow.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#extension-schemas)\n\nScoped OAuth requires: `extension_schemas.read`\n",
+        "description": "Get details about one specific extension vendor.\n\nA PagerDuty extension vendor represents a specific type of outbound extension such as Generic Webhook, Slack, ServiceNow.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#extension-schemas)\n\nScoped OAuth requires: `extension_schemas.read`\n",
         "summary": "Get an extension vendor",
         "parameters": [
           {
@@ -33097,7 +33097,7 @@
         ],
         "x-pd-requires-scope": "extensions.read",
         "operationId": "listExtensions",
-        "description": "List existing extensions.\n\nExtensions are representations of Extension Schema objects that are attached to Services.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#extensions)\n\nScoped OAuth requires: `extensions.read`\n",
+        "description": "List existing extensions.\n\nExtensions are representations of Extension Schema objects that are attached to Services.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#extensions)\n\nScoped OAuth requires: `extensions.read`\n",
         "summary": "List extensions",
         "parameters": [
           {
@@ -33210,7 +33210,7 @@
         ],
         "x-pd-requires-scope": "extensions.write",
         "operationId": "createExtension",
-        "description": "Create a new Extension.\n\nExtensions are representations of Extension Schema objects that are attached to Services.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#extensions)\n\nScoped OAuth requires: `extensions.write`\n",
+        "description": "Create a new Extension.\n\nExtensions are representations of Extension Schema objects that are attached to Services.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#extensions)\n\nScoped OAuth requires: `extensions.write`\n",
         "summary": "Create an extension",
         "parameters": [
           {
@@ -33427,7 +33427,7 @@
         ],
         "x-pd-requires-scope": "extensions.read",
         "operationId": "getExtension",
-        "description": "Get details about an existing extension.\n\nExtensions are representations of Extension Schema objects that are attached to Services.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#extensions)\n\nScoped OAuth requires: `extensions.read`\n",
+        "description": "Get details about an existing extension.\n\nExtensions are representations of Extension Schema objects that are attached to Services.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#extensions)\n\nScoped OAuth requires: `extensions.read`\n",
         "summary": "Get an extension",
         "parameters": [
           {
@@ -33513,7 +33513,7 @@
         ],
         "x-pd-requires-scope": "extensions.write",
         "operationId": "deleteExtension",
-        "description": "Delete an existing extension.\n\nOnce the extension is deleted, it will not be accessible from the web UI and new incidents won't be able to be created for this extension.\n\nExtensions are representations of Extension Schema objects that are attached to Services.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#extensions)\n\nScoped OAuth requires: `extensions.write`\n",
+        "description": "Delete an existing extension.\n\nOnce the extension is deleted, it will not be accessible from the web UI and new incidents won't be able to be created for this extension.\n\nExtensions are representations of Extension Schema objects that are attached to Services.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#extensions)\n\nScoped OAuth requires: `extensions.write`\n",
         "summary": "Delete an extension",
         "parameters": [
           {
@@ -33547,7 +33547,7 @@
         ],
         "x-pd-requires-scope": "extensions.write",
         "operationId": "updateExtension",
-        "description": "Update an existing extension.\n\nExtensions are representations of Extension Schema objects that are attached to Services.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#extensions)\n\nScoped OAuth requires: `extensions.write`\n",
+        "description": "Update an existing extension.\n\nExtensions are representations of Extension Schema objects that are attached to Services.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#extensions)\n\nScoped OAuth requires: `extensions.write`\n",
         "summary": "Update an extension",
         "parameters": [
           {
@@ -33698,7 +33698,7 @@
         ],
         "x-pd-requires-scope": "extensions.write",
         "operationId": "enableExtension",
-        "description": "Enable an extension that is temporarily disabled. (This API does not require a request body.)\n\nExtensions are representations of Extension Schema objects that are attached to Services.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#extensions)\n\nScoped OAuth requires: `extensions.write`\n",
+        "description": "Enable an extension that is temporarily disabled. (This API does not require a request body.)\n\nExtensions are representations of Extension Schema objects that are attached to Services.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#extensions)\n\nScoped OAuth requires: `extensions.write`\n",
         "summary": "Enable an extension",
         "parameters": [
           {
@@ -35607,7 +35607,7 @@
           "Incidents"
         ],
         "operationId": "listIncidents",
-        "description": "List existing incidents.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n\nScoped OAuth requires: `incidents.read`\n",
+        "description": "List existing incidents.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#incidents)\n\nScoped OAuth requires: `incidents.read`\n",
         "summary": "List incidents",
         "parameters": [
           {
@@ -35812,7 +35812,7 @@
           "Incidents"
         ],
         "operationId": "updateIncidents",
-        "description": "Acknowledge, resolve, escalate or reassign one or more incidents.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nA maximum of 250 incidents may be updated at a time. If more than this number of incidents are given, the API will respond with status 413 (Request Entity Too Large).\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n\nScoped OAuth requires: `incidents.write`\n\nThis API operation has operation specific rate limits. See the [Rate Limits](https://developer.pagerduty.com/docs/72d3b724589e3-rest-api-rate-limits) page for more information.\n",
+        "description": "Acknowledge, resolve, escalate or reassign one or more incidents.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nA maximum of 250 incidents may be updated at a time. If more than this number of incidents are given, the API will respond with status 413 (Request Entity Too Large).\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#incidents)\n\nScoped OAuth requires: `incidents.write`\n\nThis API operation has operation specific rate limits. See the [Rate Limits](https://developer.pagerduty.com/docs/72d3b724589e3-rest-api-rate-limits) page for more information.\n",
         "summary": "Manage incidents",
         "parameters": [
           {
@@ -36159,7 +36159,7 @@
           "Incidents"
         ],
         "operationId": "createIncident",
-        "description": "Create an incident synchronously without a corresponding event from a monitoring service.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n\nScoped OAuth requires: `incidents.write`\n\nThis API operation has operation specific rate limits. See the [Rate Limits](https://developer.pagerduty.com/docs/72d3b724589e3-rest-api-rate-limits) page for more information.\n",
+        "description": "Create an incident synchronously without a corresponding event from a monitoring service.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#incidents)\n\nScoped OAuth requires: `incidents.write`\n\nThis API operation has operation specific rate limits. See the [Rate Limits](https://developer.pagerduty.com/docs/72d3b724589e3-rest-api-rate-limits) page for more information.\n",
         "summary": "Create an Incident",
         "parameters": [
           {
@@ -36404,7 +36404,7 @@
           "Incidents"
         ],
         "operationId": "getIncident",
-        "description": "Show detailed information about an incident. Accepts either an incident id, or an incident number.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n\nScoped OAuth requires: `incidents.read`\n",
+        "description": "Show detailed information about an incident. Accepts either an incident id, or an incident number.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#incidents)\n\nScoped OAuth requires: `incidents.read`\n",
         "summary": "Get an incident",
         "parameters": [
           {
@@ -36685,7 +36685,7 @@
           "Incidents"
         ],
         "operationId": "updateIncident",
-        "description": "Acknowledge, resolve, escalate or reassign an incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n\nScoped OAuth requires: `incidents.write`\n",
+        "description": "Acknowledge, resolve, escalate or reassign an incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#incidents)\n\nScoped OAuth requires: `incidents.write`\n",
         "summary": "Update an incident",
         "parameters": [
           {
@@ -36997,7 +36997,7 @@
           "Incidents"
         ],
         "operationId": "listIncidentAlerts",
-        "description": "List alerts for the specified incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n\nScoped OAuth requires: `incidents.read`\n",
+        "description": "List alerts for the specified incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#incidents)\n\nScoped OAuth requires: `incidents.read`\n",
         "summary": "List alerts for an incident",
         "parameters": [
           {
@@ -37134,7 +37134,7 @@
           "Incidents"
         ],
         "operationId": "updateIncidentAlerts",
-        "description": "Resolve multiple alerts or associate them with different incidents.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved. An alert represents a digital signal that was emitted to PagerDuty by the monitoring systems that detected or identified the issue.\n\nA maximum of 250 alerts may be updated at a time. If more than this number of alerts are given, the API will respond with status 413 (Request Entity Too Large).\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n\nScoped OAuth requires: `incidents.write`\n",
+        "description": "Resolve multiple alerts or associate them with different incidents.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved. An alert represents a digital signal that was emitted to PagerDuty by the monitoring systems that detected or identified the issue.\n\nA maximum of 250 alerts may be updated at a time. If more than this number of alerts are given, the API will respond with status 413 (Request Entity Too Large).\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#incidents)\n\nScoped OAuth requires: `incidents.write`\n",
         "summary": "Manage alerts",
         "parameters": [
           {
@@ -37304,7 +37304,7 @@
           "Incidents"
         ],
         "operationId": "getIncidentAlert",
-        "description": "Show detailed information about an alert. Accepts an alert id.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nWhen a service sends an event to PagerDuty, an alert and corresponding incident is triggered in PagerDuty.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n\nScoped OAuth requires: `incidents.read`\n",
+        "description": "Show detailed information about an alert. Accepts an alert id.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nWhen a service sends an event to PagerDuty, an alert and corresponding incident is triggered in PagerDuty.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#incidents)\n\nScoped OAuth requires: `incidents.read`\n",
         "summary": "Get an alert",
         "parameters": [
           {
@@ -37402,7 +37402,7 @@
           "Incidents"
         ],
         "operationId": "updateIncidentAlert",
-        "description": "Resolve an alert or associate an alert with a new parent incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nWhen a service sends an event to PagerDuty, an alert and corresponding incident is triggered in PagerDuty.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n\nScoped OAuth requires: `incidents.write`\n",
+        "description": "Resolve an alert or associate an alert with a new parent incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nWhen a service sends an event to PagerDuty, an alert and corresponding incident is triggered in PagerDuty.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#incidents)\n\nScoped OAuth requires: `incidents.write`\n",
         "summary": "Update an alert",
         "parameters": [
           {
@@ -37946,7 +37946,7 @@
           "Incidents"
         ],
         "operationId": "listIncidentLogEntries",
-        "description": "List log entries for the specified incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nA Log Entry are a record of all events on your account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n\nScoped OAuth requires: `incidents.read`\n",
+        "description": "List log entries for the specified incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nA Log Entry are a record of all events on your account.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#incidents)\n\nScoped OAuth requires: `incidents.read`\n",
         "summary": "List log entries for an incident",
         "parameters": [
           {
@@ -38249,7 +38249,7 @@
           "Incidents"
         ],
         "operationId": "listIncidentNotes",
-        "description": "List existing notes for the specified incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n\nScoped OAuth requires: `incidents.read`\n",
+        "description": "List existing notes for the specified incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#incidents)\n\nScoped OAuth requires: `incidents.read`\n",
         "summary": "List notes for an incident",
         "parameters": [
           {
@@ -38352,7 +38352,7 @@
         ],
         "x-pd-requires-scope": "incidents.write",
         "operationId": "createIncidentNote",
-        "description": "Create a new note for the specified incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nA maximum of 2000 notes can be added to an incident.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n\nScoped OAuth requires: `incidents.write`\n",
+        "description": "Create a new note for the specified incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nA maximum of 2000 notes can be added to an incident.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#incidents)\n\nScoped OAuth requires: `incidents.write`\n",
         "summary": "Create a note on an incident",
         "parameters": [
           {
@@ -38473,7 +38473,7 @@
         ],
         "x-pd-requires-scope": "incidents.write",
         "operationId": "updateIncidentNote",
-        "description": "Update an existing note for the specified incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n\nScoped OAuth requires: `incidents.write`\n",
+        "description": "Update an existing note for the specified incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#incidents)\n\nScoped OAuth requires: `incidents.write`\n",
         "summary": "Update a note on an incident",
         "parameters": [
           {
@@ -38591,7 +38591,7 @@
         ],
         "x-pd-requires-scope": "incidents.write",
         "operationId": "deleteIncidentNote",
-        "description": "Delete an existing note for the specified incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n\nScoped OAuth requires: `incidents.write`\n",
+        "description": "Delete an existing note for the specified incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#incidents)\n\nScoped OAuth requires: `incidents.write`\n",
         "summary": "Delete a note on an incident",
         "parameters": [
           {
@@ -38634,7 +38634,7 @@
           "Incidents"
         ],
         "operationId": "getOutlierIncident",
-        "description": "Gets Outlier Incident information for a given Incident on its Service.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#outlier-incident)\n\nScoped OAuth requires: `incidents.read`\n",
+        "description": "Gets Outlier Incident information for a given Incident on its Service.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#outlier-incident)\n\nScoped OAuth requires: `incidents.read`\n",
         "summary": "Get Outlier Incident",
         "parameters": [
           {
@@ -38875,7 +38875,7 @@
             "$ref": "#/components/parameters/past_incidents_total"
           }
         ],
-        "description": "Past Incidents returns Incidents within the past 6 months that have similar metadata and were generated on the same Service as the parent Incident. By default, 5 Past Incidents are returned. Note: This feature is currently available as part of the Event Intelligence package or Digital Operations plan only.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#past_incidents)\n\nScoped OAuth requires: `incidents.read`\n"
+        "description": "Past Incidents returns Incidents within the past 6 months that have similar metadata and were generated on the same Service as the parent Incident. By default, 5 Past Incidents are returned. Note: This feature is currently available as part of the Event Intelligence package or Digital Operations plan only.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#past_incidents)\n\nScoped OAuth requires: `incidents.read`\n"
       }
     },
     "/incidents/{id}/related_change_events": {
@@ -39043,7 +39043,7 @@
           "Incidents"
         ],
         "operationId": "getRelatedIncidents",
-        "description": "Returns the 20 most recent Related Incidents that are impacting other Responders and Services. Note: This feature is currently available as part of the Event Intelligence package or Digital Operations plan only.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#related_incidents)\n\nScoped OAuth requires: `incidents.read`\n",
+        "description": "Returns the 20 most recent Related Incidents that are impacting other Responders and Services. Note: This feature is currently available as part of the Event Intelligence package or Digital Operations plan only.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#related_incidents)\n\nScoped OAuth requires: `incidents.read`\n",
         "summary": "Get Related Incidents",
         "parameters": [
           {
@@ -39180,7 +39180,7 @@
           "Incidents"
         ],
         "operationId": "createIncidentResponderRequest",
-        "description": "Send a new responder request for the specified incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n\nScoped OAuth requires: `incidents.write`\n",
+        "description": "Send a new responder request for the specified incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#incidents)\n\nScoped OAuth requires: `incidents.write`\n",
         "summary": "Create a responder request for an incident",
         "parameters": [
           {
@@ -39352,7 +39352,7 @@
         ],
         "x-pd-requires-scope": "incidents.write",
         "operationId": "createIncidentSnooze",
-        "description": "Snooze an incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n\nScoped OAuth requires: `incidents.write`\n",
+        "description": "Snooze an incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#incidents)\n\nScoped OAuth requires: `incidents.write`\n",
         "summary": "Snooze an incident",
         "parameters": [
           {
@@ -39538,7 +39538,7 @@
           "Incidents"
         ],
         "operationId": "createIncidentStatusUpdate",
-        "description": "Create a new status update for the specified incident. Optionally pass `subject` and `html_message` properties in the request body to override the email notification that gets sent.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidents)\n\nScoped OAuth requires: `incidents.write`\n",
+        "description": "Create a new status update for the specified incident. Optionally pass `subject` and `html_message` properties in the request body to override the email notification that gets sent.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#incidents)\n\nScoped OAuth requires: `incidents.write`\n",
         "summary": "Create a status update on an incident",
         "parameters": [
           {
@@ -39995,7 +39995,7 @@
           "Incident Types"
         ],
         "operationId": "listIncidentTypes",
-        "description": "List the available incident types\n\nIncident Types are a feature which will allow customers to categorize incidents, such as a security incident, a major incident, or a fraud incident.\nThese can be filtered by enabled or disabled types.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidentType)\n\nScoped OAuth requires: `incident_types.read`\n",
+        "description": "List the available incident types\n\nIncident Types are a feature which will allow customers to categorize incidents, such as a security incident, a major incident, or a fraud incident.\nThese can be filtered by enabled or disabled types.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#incidentType)\n\nScoped OAuth requires: `incident_types.read`\n",
         "summary": "List incident types",
         "parameters": [
           {
@@ -40094,7 +40094,7 @@
           "Incident Types"
         ],
         "operationId": "createIncidentType",
-        "description": "Create a new incident type.\n\nIncident Types are a feature which will allow customers to categorize incidents, such as a security incident, a major incident, or a fraud incident.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incidentType)\n\nScoped OAuth requires: `incident_types.write`\n",
+        "description": "Create a new incident type.\n\nIncident Types are a feature which will allow customers to categorize incidents, such as a security incident, a major incident, or a fraud incident.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#incidentType)\n\nScoped OAuth requires: `incident_types.write`\n",
         "summary": "Create an Incident Type",
         "parameters": [
           {
@@ -40230,7 +40230,7 @@
           "Incident Types"
         ],
         "operationId": "getIncidentType",
-        "description": "Get detailed information about a single incident type. Accepts either an incident type id, or an incident type name.\n\nIncident Types are a feature which will allow customers to categorize incidents, such as a security incident, a major incident, or a fraud incident.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incident)\n\nScoped OAuth requires: `incident_types.read`\n",
+        "description": "Get detailed information about a single incident type. Accepts either an incident type id, or an incident type name.\n\nIncident Types are a feature which will allow customers to categorize incidents, such as a security incident, a major incident, or a fraud incident.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#incident)\n\nScoped OAuth requires: `incident_types.read`\n",
         "summary": "Get an Incident Type",
         "parameters": [
           {
@@ -40309,7 +40309,7 @@
           "Incident Types"
         ],
         "operationId": "updateIncidentType",
-        "description": "Update an Incident Type.\n\nIncident Types are a feature which will allow customers to categorize incidents, such as a security incident, a major incident, or a fraud incident.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#incident)\n\nScoped OAuth requires: `incident_types.write`\n",
+        "description": "Update an Incident Type.\n\nIncident Types are a feature which will allow customers to categorize incidents, such as a security incident, a major incident, or a fraud incident.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#incident)\n\nScoped OAuth requires: `incident_types.write`\n",
         "summary": "Update an Incident Type",
         "parameters": [
           {
@@ -42748,7 +42748,7 @@
           "Log Entries"
         ],
         "operationId": "listLogEntries",
-        "description": "List all of the incident log entries across the entire account.\n\nA log of all the events that happen to an Incident, and these are exposed as Log Entries.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#log-entries)\n\nScoped OAuth requires: `incidents.read`\n",
+        "description": "List all of the incident log entries across the entire account.\n\nA log of all the events that happen to an Incident, and these are exposed as Log Entries.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#log-entries)\n\nScoped OAuth requires: `incidents.read`\n",
         "summary": "List log entries",
         "parameters": [
           {
@@ -42933,7 +42933,7 @@
           "Log Entries"
         ],
         "operationId": "getLogEntry",
-        "description": "Get details for a specific incident log entry. This method provides additional information you can use to get at raw event data.\n\nA log of all the events that happen to an Incident, and these are exposed as Log Entries.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#log-entries)\n\nScoped OAuth requires: `incidents.read`\n",
+        "description": "Get details for a specific incident log entry. This method provides additional information you can use to get at raw event data.\n\nA log of all the events that happen to an Incident, and these are exposed as Log Entries.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#log-entries)\n\nScoped OAuth requires: `incidents.read`\n",
         "summary": "Get a log entry",
         "parameters": [
           {
@@ -43088,7 +43088,7 @@
           "Log Entries"
         ],
         "operationId": "updateLogEntryChannel",
-        "description": "Update an existing incident log entry channel.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#log-entries)\n\nScoped OAuth requires: `incidents.write`\n",
+        "description": "Update an existing incident log entry channel.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#log-entries)\n\nScoped OAuth requires: `incidents.write`\n",
         "summary": "Update log entry channel information.",
         "parameters": [
           {
@@ -43182,7 +43182,7 @@
           "Maintenance Windows"
         ],
         "operationId": "listMaintenanceWindows",
-        "description": "List existing maintenance windows, optionally filtered by service and/or team, or whether they are from the past, present or future.\n\nA Maintenance Window is used to temporarily disable one or more Services for a set period of time.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#maintenance-windows)\n\nScoped OAuth requires: `services.read`\n",
+        "description": "List existing maintenance windows, optionally filtered by service and/or team, or whether they are from the past, present or future.\n\nA Maintenance Window is used to temporarily disable one or more Services for a set period of time.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#maintenance-windows)\n\nScoped OAuth requires: `services.read`\n",
         "summary": "List maintenance windows",
         "parameters": [
           {
@@ -43314,7 +43314,7 @@
           "Maintenance Windows"
         ],
         "operationId": "createMaintenanceWindow",
-        "description": "Create a new maintenance window for the specified services. No new incidents will be created for a service that is in maintenance.\n\nA Maintenance Window is used to temporarily disable one or more Services for a set period of time.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#maintenance-windows)\n\nScoped OAuth requires: `services.write`\n",
+        "description": "Create a new maintenance window for the specified services. No new incidents will be created for a service that is in maintenance.\n\nA Maintenance Window is used to temporarily disable one or more Services for a set period of time.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#maintenance-windows)\n\nScoped OAuth requires: `services.write`\n",
         "summary": "Create a maintenance window",
         "parameters": [
           {
@@ -43449,7 +43449,7 @@
           "Maintenance Windows"
         ],
         "operationId": "getMaintenanceWindow",
-        "description": "Get an existing maintenance window.\n\nA Maintenance Window is used to temporarily disable one or more Services for a set period of time.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#maintenance-windows)\n\nScoped OAuth requires: `services.read`\n",
+        "description": "Get an existing maintenance window.\n\nA Maintenance Window is used to temporarily disable one or more Services for a set period of time.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#maintenance-windows)\n\nScoped OAuth requires: `services.read`\n",
         "summary": "Get a maintenance window",
         "parameters": [
           {
@@ -43547,7 +43547,7 @@
           "Maintenance Windows"
         ],
         "operationId": "deleteMaintenanceWindow",
-        "description": "Delete an existing maintenance window if it's in the future, or end it if it's currently on-going. If the maintenance window has already ended it cannot be deleted.\n\nA Maintenance Window is used to temporarily disable one or more Services for a set period of time.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#maintenance-windows)\n\nScoped OAuth requires: `services.write`\n",
+        "description": "Delete an existing maintenance window if it's in the future, or end it if it's currently on-going. If the maintenance window has already ended it cannot be deleted.\n\nA Maintenance Window is used to temporarily disable one or more Services for a set period of time.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#maintenance-windows)\n\nScoped OAuth requires: `services.write`\n",
         "summary": "Delete or end a maintenance window",
         "parameters": [
           {
@@ -43587,7 +43587,7 @@
           "Maintenance Windows"
         ],
         "operationId": "updateMaintenanceWindow",
-        "description": "Update an existing maintenance window.\n\nA Maintenance Window is used to temporarily disable one or more Services for a set period of time.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#maintenance-windows)\n\nScoped OAuth requires: `services.write`\n",
+        "description": "Update an existing maintenance window.\n\nA Maintenance Window is used to temporarily disable one or more Services for a set period of time.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#maintenance-windows)\n\nScoped OAuth requires: `services.write`\n",
         "summary": "Update a maintenance window",
         "parameters": [
           {
@@ -43725,7 +43725,7 @@
           "Notifications"
         ],
         "operationId": "listNotifications",
-        "description": "List notifications for a given time range, optionally filtered by type (sms_notification, email_notification, phone_notification, or push_notification).\n\nA Notification is created when an Incident is triggered or escalated.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#notifications)\n\nScoped OAuth requires: `users:notifications.read`\n",
+        "description": "List notifications for a given time range, optionally filtered by type (sms_notification, email_notification, phone_notification, or push_notification).\n\nA Notification is created when an Incident is triggered or escalated.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#notifications)\n\nScoped OAuth requires: `users:notifications.read`\n",
         "summary": "List notifications",
         "parameters": [
           {
@@ -43953,7 +43953,7 @@
         "x-pd-requires-scope": "oncalls.read",
         "x-pd-operation-limit": true,
         "operationId": "listOnCalls",
-        "description": "List the on-call entries during a given time range.\n\nAn on-call represents a contiguous unit of time for which a User will be on call for a given Escalation Policy and Escalation Rules.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#on-calls)\n\nScoped OAuth requires: `oncalls.read`\n\nThis API operation has operation specific rate limits. See the [Rate Limits](https://developer.pagerduty.com/docs/72d3b724589e3-rest-api-rate-limits) page for more information.\n",
+        "description": "List the on-call entries during a given time range.\n\nAn on-call represents a contiguous unit of time for which a User will be on call for a given Escalation Policy and Escalation Rules.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#on-calls)\n\nScoped OAuth requires: `oncalls.read`\n\nThis API operation has operation specific rate limits. See the [Rate Limits](https://developer.pagerduty.com/docs/72d3b724589e3-rest-api-rate-limits) page for more information.\n",
         "summary": "List all of the on-calls",
         "parameters": [
           {
@@ -44087,7 +44087,7 @@
           "Paused Incident Reports"
         ],
         "operationId": "getPausedIncidentReportAlerts",
-        "description": "Returns the 5 most recent alerts that were triggered after being paused and the 5 most recent alerts that were resolved after being paused for a given reporting period (maximum 6 months lookback period).  Note: This feature is currently available as part of the Event Intelligence package or Digital Operations plan only.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#paused-incident-reports)\n\nScoped OAuth requires: `incidents.read`\n",
+        "description": "Returns the 5 most recent alerts that were triggered after being paused and the 5 most recent alerts that were resolved after being paused for a given reporting period (maximum 6 months lookback period).  Note: This feature is currently available as part of the Event Intelligence package or Digital Operations plan only.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#paused-incident-reports)\n\nScoped OAuth requires: `incidents.read`\n",
         "summary": "Get Paused Incident Reporting on Alerts",
         "parameters": [
           {
@@ -44233,7 +44233,7 @@
           "Paused Incident Reports"
         ],
         "operationId": "getPausedIncidentReportCounts",
-        "description": "Returns reporting counts for paused Incident usage for a given reporting period (maximum 6 months lookback period).  Note: This feature is currently available as part of the Event Intelligence package or Digital Operations plan only.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#paused-incident-reports)\n\nScoped OAuth requires: `incidents.read`\n",
+        "description": "Returns reporting counts for paused Incident usage for a given reporting period (maximum 6 months lookback period).  Note: This feature is currently available as part of the Event Intelligence package or Digital Operations plan only.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#paused-incident-reports)\n\nScoped OAuth requires: `incidents.read`\n",
         "summary": "Get Paused Incident Reporting counts",
         "parameters": [
           {
@@ -44335,7 +44335,7 @@
         ],
         "x-pd-requires-scope": "priorities.read",
         "operationId": "listPriorities",
-        "description": "List existing priorities, in order (most to least severe).\n\nA priority is a label representing the importance and impact of an incident. This feature is only available on Standard and Enterprise plans.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#priorities)\n\nScoped OAuth requires: `priorities.read`\n",
+        "description": "List existing priorities, in order (most to least severe).\n\nA priority is a label representing the importance and impact of an incident.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#priorities)\n\nScoped OAuth requires: `priorities.read`\n",
         "summary": "List priorities",
         "parameters": [
           {
@@ -44462,7 +44462,7 @@
           "Rulesets"
         ],
         "operationId": "listRulesets",
-        "description": "List all Rulesets\n<!-- theme: warning -->\n> ### End-of-life\n> Rulesets and Event Rules will end-of-life soon. We highly recommend that you [migrate to Event Orchestration](https://support.pagerduty.com/docs/migrate-to-event-orchestration) as soon as possible so you can take advantage of the new functionality, such as improved UI, rule creation, APIs and Terraform support, advanced conditions, and rule nesting.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#rulesets)\n\nScoped OAuth requires: `event_rules.read`\n",
+        "description": "List all Rulesets\n<!-- theme: warning -->\n> ### End-of-life\n> Rulesets and Event Rules will end-of-life soon. We highly recommend that you [migrate to Event Orchestration](https://support.pagerduty.com/docs/migrate-to-event-orchestration) as soon as possible so you can take advantage of the new functionality, such as improved UI, rule creation, APIs and Terraform support, advanced conditions, and rule nesting.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#rulesets)\n\nScoped OAuth requires: `event_rules.read`\n",
         "summary": "List Rulesets",
         "parameters": [
           {
@@ -44563,7 +44563,7 @@
           "Rulesets"
         ],
         "operationId": "createRuleset",
-        "description": "Create a new Ruleset.\n<!-- theme: warning -->\n> ### End-of-life\n> Rulesets and Event Rules will end-of-life soon. We highly recommend that you [migrate to Event Orchestration](https://support.pagerduty.com/docs/migrate-to-event-orchestration) as soon as possible so you can take advantage of the new functionality, such as improved UI, rule creation, APIs and Terraform support, advanced conditions, and rule nesting.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#rulesets)\n\nScoped OAuth requires: `event_rules.write`\n",
+        "description": "Create a new Ruleset.\n<!-- theme: warning -->\n> ### End-of-life\n> Rulesets and Event Rules will end-of-life soon. We highly recommend that you [migrate to Event Orchestration](https://support.pagerduty.com/docs/migrate-to-event-orchestration) as soon as possible so you can take advantage of the new functionality, such as improved UI, rule creation, APIs and Terraform support, advanced conditions, and rule nesting.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#rulesets)\n\nScoped OAuth requires: `event_rules.write`\n",
         "summary": "Create a Ruleset",
         "parameters": [
           {
@@ -44686,7 +44686,7 @@
           "Rulesets"
         ],
         "operationId": "getRuleset",
-        "description": "Get a Ruleset.\n<!-- theme: warning -->\n> ### End-of-life\n> Rulesets and Event Rules will end-of-life soon. We highly recommend that you [migrate to Event Orchestration](https://support.pagerduty.com/docs/migrate-to-event-orchestration) as soon as possible so you can take advantage of the new functionality, such as improved UI, rule creation, APIs and Terraform support, advanced conditions, and rule nesting.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#rulesets)\n\nScoped OAuth requires: `event_rules.read`\n",
+        "description": "Get a Ruleset.\n<!-- theme: warning -->\n> ### End-of-life\n> Rulesets and Event Rules will end-of-life soon. We highly recommend that you [migrate to Event Orchestration](https://support.pagerduty.com/docs/migrate-to-event-orchestration) as soon as possible so you can take advantage of the new functionality, such as improved UI, rule creation, APIs and Terraform support, advanced conditions, and rule nesting.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#rulesets)\n\nScoped OAuth requires: `event_rules.read`\n",
         "summary": "Get a Ruleset",
         "parameters": [
           {
@@ -44768,7 +44768,7 @@
           "Rulesets"
         ],
         "operationId": "updateRuleset",
-        "description": "Update a Ruleset.\n<!-- theme: warning -->\n> ### End-of-life\n> Rulesets and Event Rules will end-of-life soon. We highly recommend that you [migrate to Event Orchestration](https://support.pagerduty.com/docs/migrate-to-event-orchestration) as soon as possible so you can take advantage of the new functionality, such as improved UI, rule creation, APIs and Terraform support, advanced conditions, and rule nesting.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#rulesets)\n\nScoped OAuth requires: `event_rules.write`\n",
+        "description": "Update a Ruleset.\n<!-- theme: warning -->\n> ### End-of-life\n> Rulesets and Event Rules will end-of-life soon. We highly recommend that you [migrate to Event Orchestration](https://support.pagerduty.com/docs/migrate-to-event-orchestration) as soon as possible so you can take advantage of the new functionality, such as improved UI, rule creation, APIs and Terraform support, advanced conditions, and rule nesting.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#rulesets)\n\nScoped OAuth requires: `event_rules.write`\n",
         "summary": "Update a Ruleset",
         "parameters": [
           {
@@ -44894,7 +44894,7 @@
           "Rulesets"
         ],
         "operationId": "deleteRuleset",
-        "description": "Delete a Ruleset.\n<!-- theme: warning -->\n> ### End-of-life\n> Rulesets and Event Rules will end-of-life soon. We highly recommend that you [migrate to Event Orchestration](https://support.pagerduty.com/docs/migrate-to-event-orchestration) as soon as possible so you can take advantage of the new functionality, such as improved UI, rule creation, APIs and Terraform support, advanced conditions, and rule nesting.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#rulesets)\n\nScoped OAuth requires: `event_rules.write`\n",
+        "description": "Delete a Ruleset.\n<!-- theme: warning -->\n> ### End-of-life\n> Rulesets and Event Rules will end-of-life soon. We highly recommend that you [migrate to Event Orchestration](https://support.pagerduty.com/docs/migrate-to-event-orchestration) as soon as possible so you can take advantage of the new functionality, such as improved UI, rule creation, APIs and Terraform support, advanced conditions, and rule nesting.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#rulesets)\n\nScoped OAuth requires: `event_rules.write`\n",
         "summary": "Delete a Ruleset",
         "parameters": [
           {
@@ -44940,7 +44940,7 @@
           "Rulesets"
         ],
         "operationId": "listRulesetEventRules",
-        "description": "List all Event Rules on a Ruleset.\n<!-- theme: warning -->\n> ### End-of-life\n> Rulesets and Event Rules will end-of-life soon. We highly recommend that you [migrate to Event Orchestration](https://support.pagerduty.com/docs/migrate-to-event-orchestration) as soon as possible so you can take advantage of the new functionality, such as improved UI, rule creation, APIs and Terraform support, advanced conditions, and rule nesting.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#rulesets)\n\nNote: Create and Update on rules will accept 'description' or 'summary' interchangeably as an extraction action target. Get and List on rules will always return 'summary' as the target. If you are expecting 'description' please change your automation code to expect 'summary' instead.\n\nScoped OAuth requires: `event_rules.read`\n",
+        "description": "List all Event Rules on a Ruleset.\n<!-- theme: warning -->\n> ### End-of-life\n> Rulesets and Event Rules will end-of-life soon. We highly recommend that you [migrate to Event Orchestration](https://support.pagerduty.com/docs/migrate-to-event-orchestration) as soon as possible so you can take advantage of the new functionality, such as improved UI, rule creation, APIs and Terraform support, advanced conditions, and rule nesting.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#rulesets)\n\nNote: Create and Update on rules will accept 'description' or 'summary' interchangeably as an extraction action target. Get and List on rules will always return 'summary' as the target. If you are expecting 'description' please change your automation code to expect 'summary' instead.\n\nScoped OAuth requires: `event_rules.read`\n",
         "summary": "List Event Rules",
         "parameters": [
           {
@@ -45083,7 +45083,7 @@
           "Rulesets"
         ],
         "operationId": "createRulesetEventRule",
-        "description": "Create a new Event Rule.\n<!-- theme: warning -->\n> ### End-of-life\n> Rulesets and Event Rules will end-of-life soon. We highly recommend that you [migrate to Event Orchestration](https://support.pagerduty.com/docs/migrate-to-event-orchestration) as soon as possible so you can take advantage of the new functionality, such as improved UI, rule creation, APIs and Terraform support, advanced conditions, and rule nesting.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#rulesets)\n\nNote: Create and Update on rules will accept 'description' or 'summary' interchangeably as an extraction action target. Get and List on rules will always return 'summary' as the target. If you are expecting 'description' please change your automation code to expect 'summary' instead.\n\nScoped OAuth requires: `event_rules.write`\n",
+        "description": "Create a new Event Rule.\n<!-- theme: warning -->\n> ### End-of-life\n> Rulesets and Event Rules will end-of-life soon. We highly recommend that you [migrate to Event Orchestration](https://support.pagerduty.com/docs/migrate-to-event-orchestration) as soon as possible so you can take advantage of the new functionality, such as improved UI, rule creation, APIs and Terraform support, advanced conditions, and rule nesting.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#rulesets)\n\nNote: Create and Update on rules will accept 'description' or 'summary' interchangeably as an extraction action target. Get and List on rules will always return 'summary' as the target. If you are expecting 'description' please change your automation code to expect 'summary' instead.\n\nScoped OAuth requires: `event_rules.write`\n",
         "summary": "Create an Event Rule",
         "parameters": [
           {
@@ -45260,7 +45260,7 @@
           "Rulesets"
         ],
         "operationId": "getRulesetEventRule",
-        "description": "Get an Event Rule.\n<!-- theme: warning -->\n> ### End-of-life\n> Rulesets and Event Rules will end-of-life soon. We highly recommend that you [migrate to Event Orchestration](https://support.pagerduty.com/docs/migrate-to-event-orchestration) as soon as possible so you can take advantage of the new functionality, such as improved UI, rule creation, APIs and Terraform support, advanced conditions, and rule nesting.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#rulesets)\n\nNote: Create and Update on rules will accept 'description' or 'summary' interchangeably as an extraction action target. Get and List on rules will always return 'summary' as the target. If you are expecting 'description' please change your automation code to expect 'summary' instead.\n\nScoped OAuth requires: `event_rules.read`\n",
+        "description": "Get an Event Rule.\n<!-- theme: warning -->\n> ### End-of-life\n> Rulesets and Event Rules will end-of-life soon. We highly recommend that you [migrate to Event Orchestration](https://support.pagerduty.com/docs/migrate-to-event-orchestration) as soon as possible so you can take advantage of the new functionality, such as improved UI, rule creation, APIs and Terraform support, advanced conditions, and rule nesting.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#rulesets)\n\nNote: Create and Update on rules will accept 'description' or 'summary' interchangeably as an extraction action target. Get and List on rules will always return 'summary' as the target. If you are expecting 'description' please change your automation code to expect 'summary' instead.\n\nScoped OAuth requires: `event_rules.read`\n",
         "summary": "Get an Event Rule",
         "parameters": [
           {
@@ -45383,7 +45383,7 @@
         ],
         "operationId": "updateRulesetEventRule",
         "summary": "Update an Event Rule",
-        "description": "Update an Event Rule. Note that the endpoint supports partial updates, so any number of the writable fields can be provided.\n<!-- theme: warning -->\n> ### End-of-life\n> Rulesets and Event Rules will end-of-life soon. We highly recommend that you [migrate to Event Orchestration](https://support.pagerduty.com/docs/migrate-to-event-orchestration) as soon as possible so you can take advantage of the new functionality, such as improved UI, rule creation, APIs and Terraform support, advanced conditions, and rule nesting.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#rulesets)\n\nNote: Create and Update on rules will accept 'description' or 'summary' interchangeably as an extraction action target. Get and List on rules will always return 'summary' as the target. If you are expecting 'description' please change your automation code to expect 'summary' instead.\n\nScoped OAuth requires: `event_rules.write`\n",
+        "description": "Update an Event Rule. Note that the endpoint supports partial updates, so any number of the writable fields can be provided.\n<!-- theme: warning -->\n> ### End-of-life\n> Rulesets and Event Rules will end-of-life soon. We highly recommend that you [migrate to Event Orchestration](https://support.pagerduty.com/docs/migrate-to-event-orchestration) as soon as possible so you can take advantage of the new functionality, such as improved UI, rule creation, APIs and Terraform support, advanced conditions, and rule nesting.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#rulesets)\n\nNote: Create and Update on rules will accept 'description' or 'summary' interchangeably as an extraction action target. Get and List on rules will always return 'summary' as the target. If you are expecting 'description' please change your automation code to expect 'summary' instead.\n\nScoped OAuth requires: `event_rules.write`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -45543,7 +45543,7 @@
           "Rulesets"
         ],
         "operationId": "deleteRulesetEventRule",
-        "description": "Delete an Event Rule.\n<!-- theme: warning -->\n> ### End-of-life\n> Rulesets and Event Rules will end-of-life soon. We highly recommend that you [migrate to Event Orchestration](https://support.pagerduty.com/docs/migrate-to-event-orchestration) as soon as possible so you can take advantage of the new functionality, such as improved UI, rule creation, APIs and Terraform support, advanced conditions, and rule nesting.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#rulesets)\n\nScoped OAuth requires: `event_rules.write`\n",
+        "description": "Delete an Event Rule.\n<!-- theme: warning -->\n> ### End-of-life\n> Rulesets and Event Rules will end-of-life soon. We highly recommend that you [migrate to Event Orchestration](https://support.pagerduty.com/docs/migrate-to-event-orchestration) as soon as possible so you can take advantage of the new functionality, such as improved UI, rule creation, APIs and Terraform support, advanced conditions, and rule nesting.\n\nRulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#rulesets)\n\nScoped OAuth requires: `event_rules.write`\n",
         "summary": "Delete an Event Rule",
         "parameters": [
           {
@@ -45592,7 +45592,7 @@
         ],
         "x-pd-requires-scope": "schedules.read",
         "operationId": "listSchedules",
-        "description": "List the on-call schedules.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#schedules)\n\nScoped OAuth requires: `schedules.read`\n",
+        "description": "List the on-call schedules.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#schedules)\n\nScoped OAuth requires: `schedules.read`\n",
         "summary": "List schedules",
         "parameters": [
           {
@@ -45784,7 +45784,7 @@
         ],
         "x-pd-requires-scope": "schedules.write",
         "operationId": "createSchedule",
-        "description": "Create a new on-call schedule.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#schedules)\n\nScoped OAuth requires: `schedules.write`\n",
+        "description": "Create a new on-call schedule.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#schedules)\n\nScoped OAuth requires: `schedules.write`\n",
         "summary": "Create a schedule",
         "parameters": [
           {
@@ -46155,7 +46155,7 @@
         ],
         "x-pd-requires-scope": "schedules.write",
         "operationId": "deleteSchedule",
-        "description": "Delete an on-call schedule.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#schedules)\n\nScoped OAuth requires: `schedules.write`\n",
+        "description": "Delete an on-call schedule.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#schedules)\n\nScoped OAuth requires: `schedules.write`\n",
         "summary": "Delete a schedule",
         "parameters": [
           {
@@ -46195,7 +46195,7 @@
         ],
         "x-pd-requires-scope": "schedules.write",
         "operationId": "updateSchedule",
-        "description": "Update an existing on-call schedule.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#schedules)\n\nScoped OAuth requires: `schedules.write`\n",
+        "description": "Update an existing on-call schedule.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#schedules)\n\nScoped OAuth requires: `schedules.write`\n",
         "summary": "Update a schedule",
         "parameters": [
           {
@@ -46464,7 +46464,7 @@
         ],
         "x-pd-requires-scope": "schedules.read",
         "operationId": "listScheduleOverrides",
-        "description": "List overrides for a given time range.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#schedules)\n\nScoped OAuth requires: `schedules.read`\n",
+        "description": "List overrides for a given time range.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#schedules)\n\nScoped OAuth requires: `schedules.read`\n",
         "summary": "List overrides",
         "parameters": [
           {
@@ -46555,7 +46555,7 @@
         ],
         "x-pd-requires-scope": "schedules.write",
         "operationId": "createScheduleOverride",
-        "description": "Create one or more overrides, each for a specific user covering a specified time range. If you create an override on top of an existing override, the last created override will have priority.\n\nA Schedule determines the time periods that users are On-Call.\n\nNote: An older implementation of this endpoint only supported creating a single ocverride per request. That functionality is still supported, but deprecated and may be removed in the future.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#schedules)\n\nScoped OAuth requires: `schedules.write`\n",
+        "description": "Create one or more overrides, each for a specific user covering a specified time range. If you create an override on top of an existing override, the last created override will have priority.\n\nA Schedule determines the time periods that users are On-Call.\n\nNote: An older implementation of this endpoint only supported creating a single ocverride per request. That functionality is still supported, but deprecated and may be removed in the future.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#schedules)\n\nScoped OAuth requires: `schedules.write`\n",
         "summary": "Create one or more overrides",
         "parameters": [
           {
@@ -46731,7 +46731,7 @@
         ],
         "x-pd-requires-scope": "schedules.write",
         "operationId": "deleteScheduleOverride",
-        "description": "Remove an override.\n\nYou cannot remove a past override.\n\nIf the override start time is before the current time, but the end time is after the current time, the override will be truncated to the current time.\n\nIf the override is truncated, the status code will be 200 OK, as opposed to a 204 No Content for a successful delete.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#schedules)\n\nScoped OAuth requires: `schedules.write`\n",
+        "description": "Remove an override.\n\nYou cannot remove a past override.\n\nIf the override start time is before the current time, but the end time is after the current time, the override will be truncated to the current time.\n\nIf the override is truncated, the status code will be 200 OK, as opposed to a 204 No Content for a successful delete.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#schedules)\n\nScoped OAuth requires: `schedules.write`\n",
         "summary": "Delete an override",
         "parameters": [
           {
@@ -46777,7 +46777,7 @@
         ],
         "x-pd-requires-scope": "users.read",
         "operationId": "listScheduleUsers",
-        "description": "List all of the users on call in a given schedule for a given time range.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#schedules)\n\nScoped OAuth requires: `users.read`\n",
+        "description": "List all of the users on call in a given schedule for a given time range.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#schedules)\n\nScoped OAuth requires: `users.read`\n",
         "summary": "List users on call.",
         "parameters": [
           {
@@ -46938,7 +46938,7 @@
         ],
         "x-pd-requires-scope": "schedules.write",
         "operationId": "createSchedulePreview",
-        "description": "Preview what an on-call schedule would look like without saving it.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#schedules)\n\nScoped OAuth requires: `schedules.write`\n",
+        "description": "Preview what an on-call schedule would look like without saving it.\n\nA Schedule determines the time periods that users are On-Call.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#schedules)\n\nScoped OAuth requires: `schedules.write`\n",
         "summary": "Preview a schedule",
         "parameters": [
           {
@@ -47127,7 +47127,7 @@
         ],
         "operationId": "createServiceDependency",
         "summary": "Associate service dependencies",
-        "description": "Create new dependencies between two services.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nA service can have a maximum of 2,000 dependencies with a depth limit of 100. If the limit is reached, the API will respond with an error.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#business-services)\n\nScoped OAuth requires: `services.write`\n",
+        "description": "Create new dependencies between two services.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nA service can have a maximum of 2,000 dependencies with a depth limit of 100. If the limit is reached, the API will respond with an error.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#business-services)\n\nScoped OAuth requires: `services.write`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -47318,7 +47318,7 @@
         ],
         "operationId": "getBusinessServiceServiceDependencies",
         "summary": "Get Business Service dependencies",
-        "description": "Get all immediate dependencies of any Business Service.\n\nBusiness Services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#business-services)\n\nScoped OAuth requires: `services.read`\n",
+        "description": "Get all immediate dependencies of any Business Service.\n\nBusiness Services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#business-services)\n\nScoped OAuth requires: `services.read`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -47439,7 +47439,7 @@
         ],
         "operationId": "deleteServiceDependency",
         "summary": "Disassociate service dependencies",
-        "description": "Disassociate dependencies between two services.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#business-services)\n\nScoped OAuth requires: `services.write`\n",
+        "description": "Disassociate dependencies between two services.\n\nBusiness services model capabilities that span multiple technical services and that may be owned by several different teams.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#business-services)\n\nScoped OAuth requires: `services.write`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -47630,7 +47630,7 @@
         ],
         "operationId": "getTechnicalServiceServiceDependencies",
         "summary": "Get technical service dependencies",
-        "description": "Get all immediate dependencies of any technical service.\nTechnical services are also known as `services`.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#services)\n\nScoped OAuth requires: `services.read`\n",
+        "description": "Get all immediate dependencies of any technical service.\nTechnical services are also known as `services`.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#services)\n\nScoped OAuth requires: `services.read`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -47750,7 +47750,7 @@
         ],
         "operationId": "listServices",
         "x-pd-requires-scope": "services.read",
-        "description": "List existing Services.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#services)\n\nScoped OAuth requires: `services.read`\n",
+        "description": "List existing Services.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#services)\n\nScoped OAuth requires: `services.read`\n",
         "summary": "List services",
         "parameters": [
           {
@@ -47925,7 +47925,7 @@
           "Services"
         ],
         "operationId": "createService",
-        "description": "Create a new service.\n\nIf `status` is included in the request, it must have a value of `active` when creating a new service. If a different status is required, make a second request to update the service.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nThere is a limit of 25,000 services per account. If the limit is reached, the API will respond with an error. There is also a limit of 100,000 open Incidents per Service. If the limit is reached and `auto_resolve_timeout` is disabled (set to 0 or null), the `auto_resolve_timeout` property will automatically be set to  84600 (1 day).\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#services)\n\nScoped OAuth requires: `services.write`\n",
+        "description": "Create a new service.\n\nIf `status` is included in the request, it must have a value of `active` when creating a new service. If a different status is required, make a second request to update the service.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nThere is a limit of 25,000 services per account. If the limit is reached, the API will respond with an error. There is also a limit of 100,000 open Incidents per Service. If the limit is reached and `auto_resolve_timeout` is disabled (set to 0 or null), the `auto_resolve_timeout` property will automatically be set to  84600 (1 day).\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#services)\n\nScoped OAuth requires: `services.write`\n",
         "summary": "Create a service",
         "parameters": [
           {
@@ -48142,7 +48142,7 @@
         ],
         "operationId": "getService",
         "x-pd-requires-scope": "services.read",
-        "description": "Get details about an existing service.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#services)\n\nScoped OAuth requires: `services.read`\n",
+        "description": "Get details about an existing service.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#services)\n\nScoped OAuth requires: `services.read`\n",
         "summary": "Get a service",
         "parameters": [
           {
@@ -48280,7 +48280,7 @@
           "Services"
         ],
         "operationId": "deleteService",
-        "description": "Delete an existing service.\n\nOnce the service is deleted, it will not be accessible from the web UI and new incidents won't be able to be created for this service.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#services)\n\nScoped OAuth requires: `services.write`\n",
+        "description": "Delete an existing service.\n\nOnce the service is deleted, it will not be accessible from the web UI and new incidents won't be able to be created for this service.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#services)\n\nScoped OAuth requires: `services.write`\n",
         "summary": "Delete a service",
         "parameters": [
           {
@@ -48310,7 +48310,7 @@
         "tags": [
           "Services"
         ],
-        "description": "Update an existing service.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nThere is a limit of 100,000 open Incidents per Service. If the limit is reached and you disable `auto_resolve_timeout` (set to 0 or null), the API will respond with an error.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#services)\n\nScoped OAuth requires: `services.write`\n",
+        "description": "Update an existing service.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nThere is a limit of 100,000 open Incidents per Service. If the limit is reached and you disable `auto_resolve_timeout` (set to 0 or null), the API will respond with an error.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#services)\n\nScoped OAuth requires: `services.write`\n",
         "summary": "Update a service",
         "parameters": [
           {
@@ -48756,7 +48756,7 @@
         ],
         "operationId": "createServiceIntegration",
         "summary": "Create a new integration",
-        "description": "Create a new integration belonging to a Service.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#services)\n\nScoped OAuth requires: `services.write`\n",
+        "description": "Create a new integration belonging to a Service.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#services)\n\nScoped OAuth requires: `services.write`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -48927,7 +48927,7 @@
         ],
         "operationId": "updateServiceIntegration",
         "summary": "Update an existing integration",
-        "description": "Update an integration belonging to a Service.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#services)\n\nScoped OAuth requires: `services.write`\n",
+        "description": "Update an integration belonging to a Service.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#services)\n\nScoped OAuth requires: `services.write`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -49050,7 +49050,7 @@
         ],
         "operationId": "getServiceIntegration",
         "summary": "View an integration",
-        "description": "Get details about an integration belonging to a service.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#services)\n\nScoped OAuth requires: `services.read`\n",
+        "description": "Get details about an integration belonging to a service.\n\nA service may represent an application, component, or team you wish to open incidents against.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#services)\n\nScoped OAuth requires: `services.read`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -55168,7 +55168,7 @@
           "Tags"
         ],
         "operationId": "listTags",
-        "description": "List all of your account's tags.\n\nA Tag is applied to Escalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#tags)\n\nScoped OAuth requires: `tags.read`\n",
+        "description": "List all of your account's tags.\n\nA Tag is applied to Escalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#tags)\n\nScoped OAuth requires: `tags.read`\n",
         "summary": "List tags",
         "parameters": [
           {
@@ -55257,7 +55257,7 @@
           "Tags"
         ],
         "operationId": "createTags",
-        "description": "Create a Tag.\n\nA Tag is applied to Escalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#tags)\n\nScoped OAuth requires: `tags.write`\n",
+        "description": "Create a Tag.\n\nA Tag is applied to Escalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#tags)\n\nScoped OAuth requires: `tags.write`\n",
         "summary": "Create a tag",
         "parameters": [
           {
@@ -55351,7 +55351,7 @@
           "Tags"
         ],
         "operationId": "getTag",
-        "description": "Get details about an existing Tag.\n\nA Tag is applied to Escalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#tags)\n\nScoped OAuth requires: `tags.read`\n",
+        "description": "Get details about an existing Tag.\n\nA Tag is applied to Escalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#tags)\n\nScoped OAuth requires: `tags.read`\n",
         "summary": "Get a tag",
         "parameters": [
           {
@@ -55418,7 +55418,7 @@
           "Tags"
         ],
         "operationId": "deleteTag",
-        "description": "Remove an existing Tag.\n\nA Tag is applied to Escalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#tags)\n\nScoped OAuth requires: `tags.write`\n",
+        "description": "Remove an existing Tag.\n\nA Tag is applied to Escalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#tags)\n\nScoped OAuth requires: `tags.write`\n",
         "summary": "Delete a tag",
         "parameters": [
           {
@@ -55454,7 +55454,7 @@
           "Tags"
         ],
         "operationId": "getTagsByEntityType",
-        "description": "Get related Users, Teams or Escalation Policies for the Tag.\n\nA Tag is applied to Escalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#tags)\n\nScoped OAuth requires: `tags.read`\n",
+        "description": "Get related Users, Teams or Escalation Policies for the Tag.\n\nA Tag is applied to Escalation Policies, Teams or Users and can be used to filter them.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#tags)\n\nScoped OAuth requires: `tags.read`\n",
         "summary": "Get connected entities",
         "parameters": [
           {
@@ -55558,7 +55558,7 @@
           "Teams"
         ],
         "operationId": "createTeam",
-        "description": "Create a new Team.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#teams)\n\nScoped OAuth requires: `teams.write`\n",
+        "description": "Create a new Team.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#teams)\n\nScoped OAuth requires: `teams.write`\n",
         "summary": "Create a team",
         "parameters": [
           {
@@ -55657,7 +55657,7 @@
           "Teams"
         ],
         "operationId": "listTeams",
-        "description": "List teams of your PagerDuty account, optionally filtered by a search query.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#teams)\n\nScoped OAuth requires: `teams.read`\n",
+        "description": "List teams of your PagerDuty account, optionally filtered by a search query.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#teams)\n\nScoped OAuth requires: `teams.read`\n",
         "summary": "List teams",
         "parameters": [
           {
@@ -55756,7 +55756,7 @@
           "Teams"
         ],
         "operationId": "getTeam",
-        "description": "Get details about an existing team.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#teams)\n\nScoped OAuth requires: `teams.read`\n",
+        "description": "Get details about an existing team.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#teams)\n\nScoped OAuth requires: `teams.read`\n",
         "summary": "Get a team",
         "parameters": [
           {
@@ -55834,7 +55834,7 @@
           "Teams"
         ],
         "operationId": "deleteTeam",
-        "description": "Remove an existing team.\n\nSucceeds only if the team has no associated Escalation Policies, Services, Schedules and Subteams.\n\nAll associated unresovled incidents will be reassigned to another team (if specified) or will loose team association, thus becoming account-level (with visibility implications).\n\nNote that the incidents reassignment process is asynchronous and has no guarantee to complete before the API call return.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#teams)\n\nScoped OAuth requires: `teams.write`\n",
+        "description": "Remove an existing team.\n\nSucceeds only if the team has no associated Escalation Policies, Services, Schedules and Subteams.\n\nAll associated unresovled incidents will be reassigned to another team (if specified) or will loose team association, thus becoming account-level (with visibility implications).\n\nNote that the incidents reassignment process is asynchronous and has no guarantee to complete before the API call return.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#teams)\n\nScoped OAuth requires: `teams.write`\n",
         "summary": "Delete a team",
         "parameters": [
           {
@@ -55874,7 +55874,7 @@
           "Teams"
         ],
         "operationId": "updateTeam",
-        "description": "Update an existing team.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#teams)\n\nScoped OAuth requires: `teams.write`\n",
+        "description": "Update an existing team.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#teams)\n\nScoped OAuth requires: `teams.write`\n",
         "summary": "Update a team",
         "parameters": [
           {
@@ -56052,7 +56052,7 @@
         ],
         "x-pd-requires-scope": "teams.write",
         "operationId": "deleteTeamEscalationPolicy",
-        "description": "Remove an escalation policy from a team.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#teams)\n\nScoped OAuth requires: `teams.write`\n",
+        "description": "Remove an escalation policy from a team.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#teams)\n\nScoped OAuth requires: `teams.write`\n",
         "summary": "Remove an escalation policy from a team",
         "parameters": [
           {
@@ -56098,7 +56098,7 @@
         ],
         "x-pd-requires-scope": "teams.write",
         "operationId": "updateTeamEscalationPolicy",
-        "description": "Add an escalation policy to a team.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#teams)\n\nScoped OAuth requires: `teams.write`\n",
+        "description": "Add an escalation policy to a team.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#teams)\n\nScoped OAuth requires: `teams.write`\n",
         "summary": "Add an escalation policy to a team",
         "parameters": [
           {
@@ -56147,7 +56147,7 @@
           "Teams"
         ],
         "operationId": "listTeamUsers",
-        "description": "Get information about members on a team.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#teams)\n\nScoped OAuth requires: `teams.read`\n",
+        "description": "Get information about members on a team.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#teams)\n\nScoped OAuth requires: `teams.read`\n",
         "summary": "List members of a team",
         "parameters": [
           {
@@ -56598,7 +56598,7 @@
           "Teams"
         ],
         "operationId": "deleteTeamUser",
-        "description": "Remove a user from a team.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#teams)\n\nScoped OAuth requires: `teams.write`\n",
+        "description": "Remove a user from a team.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#teams)\n\nScoped OAuth requires: `teams.write`\n",
         "summary": "Remove a user from a team",
         "parameters": [
           {
@@ -56644,7 +56644,7 @@
           "Teams"
         ],
         "operationId": "updateTeamUser",
-        "description": "Add a user to a team. Attempting to add a user with the `read_only_user` role will return a 400 error.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#teams)\n\nScoped OAuth requires: `teams.write`\n",
+        "description": "Add a user to a team. Attempting to add a user with the `read_only_user` role will return a 400 error.\n\nA team is a collection of Users and Escalation Policies that represent a group of people within an organization.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#teams)\n\nScoped OAuth requires: `teams.write`\n",
         "summary": "Add a user to a team",
         "parameters": [
           {
@@ -57418,7 +57418,7 @@
           "Users"
         ],
         "operationId": "listUsers",
-        "description": "List users of your PagerDuty account, optionally filtered by a search query.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users.read`\n",
+        "description": "List users of your PagerDuty account, optionally filtered by a search query.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#users)\n\nScoped OAuth requires: `users.read`\n",
         "summary": "List users",
         "parameters": [
           {
@@ -57594,7 +57594,7 @@
           "Users"
         ],
         "operationId": "createUser",
-        "description": "Create a new user.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users.write`\n",
+        "description": "Create a new user.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#users)\n\nScoped OAuth requires: `users.write`\n",
         "summary": "Create a user",
         "parameters": [
           {
@@ -57760,7 +57760,7 @@
           "Users"
         ],
         "operationId": "getUser",
-        "description": "Get details about an existing user.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users.read`\n",
+        "description": "Get details about an existing user.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#users)\n\nScoped OAuth requires: `users.read`\n",
         "summary": "Get a user",
         "parameters": [
           {
@@ -57868,7 +57868,7 @@
           "Users"
         ],
         "operationId": "deleteUser",
-        "description": "Remove an existing user.\n\nReturns 400 if the user has assigned incidents unless your [pricing plan](https://www.pagerduty.com/pricing) has the `offboarding` feature and the account is [configured](https://support.pagerduty.com/docs/offboarding#section-additional-configurations) appropriately.\n\nNote that the incidents reassignment process is asynchronous and has no guarantee to complete before the api call return.\n\n[*Learn more about `offboarding` feature*](https://support.pagerduty.com/docs/offboarding).\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users.write`\n",
+        "description": "Remove an existing user.\n\nReturns 400 if the user has assigned incidents unless your [pricing plan](https://www.pagerduty.com/pricing) has the `offboarding` feature and the account is [configured](https://support.pagerduty.com/docs/offboarding#section-additional-configurations) appropriately.\n\nNote that the incidents reassignment process is asynchronous and has no guarantee to complete before the api call return.\n\n[*Learn more about `offboarding` feature*](https://support.pagerduty.com/docs/offboarding).\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#users)\n\nScoped OAuth requires: `users.write`\n",
         "summary": "Delete a user",
         "parameters": [
           {
@@ -57905,7 +57905,7 @@
           "Users"
         ],
         "operationId": "updateUser",
-        "description": "Update an existing user.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users.write`\n",
+        "description": "Update an existing user.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#users)\n\nScoped OAuth requires: `users.write`\n",
         "summary": "Update a user",
         "parameters": [
           {
@@ -58147,7 +58147,7 @@
           "Users"
         ],
         "operationId": "getUserContactMethods",
-        "description": "List contact methods of your PagerDuty user.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users:contact_methods.read`\n",
+        "description": "List contact methods of your PagerDuty user.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#users)\n\nScoped OAuth requires: `users:contact_methods.read`\n",
         "summary": "List a user's contact methods",
         "parameters": [
           {
@@ -58227,7 +58227,7 @@
           "Users"
         ],
         "operationId": "createUserContactMethod",
-        "description": "Create a new contact method for the User.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users:contact_methods.write`\n",
+        "description": "Create a new contact method for the User.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#users)\n\nScoped OAuth requires: `users:contact_methods.write`\n",
         "summary": "Create a user contact method",
         "parameters": [
           {
@@ -58349,7 +58349,7 @@
           "Users"
         ],
         "operationId": "getUserContactMethod",
-        "description": "Get details about a User's contact method.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users:contact_methods.read`\n",
+        "description": "Get details about a User's contact method.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#users)\n\nScoped OAuth requires: `users:contact_methods.read`\n",
         "summary": "Get a user's contact method",
         "parameters": [
           {
@@ -58430,7 +58430,7 @@
           "Users"
         ],
         "operationId": "deleteUserContactMethod",
-        "description": "Remove a user's contact method.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users:contact_methods.write`\n",
+        "description": "Remove a user's contact method.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#users)\n\nScoped OAuth requires: `users:contact_methods.write`\n",
         "summary": "Delete a user's contact method",
         "parameters": [
           {
@@ -58470,7 +58470,7 @@
           "Users"
         ],
         "operationId": "updateUserContactMethod",
-        "description": "Update a User's contact method.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users:contact_methods.write`\n",
+        "description": "Update a User's contact method.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#users)\n\nScoped OAuth requires: `users:contact_methods.write`\n",
         "summary": "Update a user's contact method",
         "parameters": [
           {
@@ -58675,7 +58675,7 @@
           "Users"
         ],
         "operationId": "getUserNotificationRules",
-        "description": "List notification rules of your PagerDuty user.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users:contact_methods.read`\n",
+        "description": "List notification rules of your PagerDuty user.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#users)\n\nScoped OAuth requires: `users:contact_methods.read`\n",
         "summary": "List a user's notification rules",
         "parameters": [
           {
@@ -58761,7 +58761,7 @@
           "Users"
         ],
         "operationId": "createUserNotificationRule",
-        "description": "Create a new notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users:contact_methods.write`\n",
+        "description": "Create a new notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#users)\n\nScoped OAuth requires: `users:contact_methods.write`\n",
         "summary": "Create a user notification rule",
         "parameters": [
           {
@@ -58876,7 +58876,7 @@
           "Users"
         ],
         "operationId": "getUserNotificationRule",
-        "description": "Get details about a user's notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users:contact_methods.read`\n",
+        "description": "Get details about a user's notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#users)\n\nScoped OAuth requires: `users:contact_methods.read`\n",
         "summary": "Get a user's notification rule",
         "parameters": [
           {
@@ -58959,7 +58959,7 @@
           "Users"
         ],
         "operationId": "deleteUserNotificationRule",
-        "description": "Remove a user's notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users:contact_methods.write`\n",
+        "description": "Remove a user's notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#users)\n\nScoped OAuth requires: `users:contact_methods.write`\n",
         "summary": "Delete a user's notification rule",
         "parameters": [
           {
@@ -58999,7 +58999,7 @@
           "Users"
         ],
         "operationId": "updateUserNotificationRule",
-        "description": "Update a user's notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users:contact_methods.write`\n",
+        "description": "Update a user's notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#users)\n\nScoped OAuth requires: `users:contact_methods.write`\n",
         "summary": "Update a user's notification rule",
         "parameters": [
           {
@@ -59458,7 +59458,7 @@
         ],
         "x-pd-requires-scope": "users.read",
         "operationId": "getUserHandoffNotificationRules",
-        "description": "List Handoff Notification Rules of your PagerDuty User.\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users.read`\n",
+        "description": "List Handoff Notification Rules of your PagerDuty User.\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#users)\n\nScoped OAuth requires: `users.read`\n",
         "summary": "List a User's Handoff Notification Rules",
         "parameters": [
           {
@@ -59533,7 +59533,7 @@
         ],
         "x-pd-requires-scope": "users.write",
         "operationId": "createUserHandoffNotificationRule",
-        "description": "Create a new Handoff Notification Rule.\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users.write`\n",
+        "description": "Create a new Handoff Notification Rule.\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#users)\n\nScoped OAuth requires: `users.write`\n",
         "summary": "Create a User Handoff Notification Rule",
         "parameters": [
           {
@@ -59643,7 +59643,7 @@
         ],
         "x-pd-requires-scope": "users.read",
         "operationId": "getUserHandoffNotifiactionRule",
-        "description": "Get details about a User's Handoff Notification Rule.\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users.read`\n",
+        "description": "Get details about a User's Handoff Notification Rule.\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#users)\n\nScoped OAuth requires: `users.read`\n",
         "summary": "Get a user's handoff notification rule",
         "parameters": [
           {
@@ -59719,7 +59719,7 @@
         ],
         "x-pd-requires-scope": "users.write",
         "operationId": "deleteUserHandoffNotificationRule",
-        "description": "Remove a User's Handoff Notification Rule.\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users.write`\n",
+        "description": "Remove a User's Handoff Notification Rule.\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#users)\n\nScoped OAuth requires: `users.write`\n",
         "summary": "Delete a User's Handoff Notification rule",
         "parameters": [
           {
@@ -59759,7 +59759,7 @@
         ],
         "x-pd-requires-scope": "users.write",
         "operationId": "updateUserHandoffNotification",
-        "description": "Update a User's Handoff Notification Rule.\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users.write`\n",
+        "description": "Update a User's Handoff Notification Rule.\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#users)\n\nScoped OAuth requires: `users.write`\n",
         "summary": "Update a User's Handoff Notification Rule",
         "parameters": [
           {
@@ -59872,7 +59872,7 @@
           "Users"
         ],
         "operationId": "getUserSessions",
-        "description": "List active sessions of a PagerDuty user.\n\nBeginning November 2021, active sessions no longer includes newly issued OAuth tokens.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users:sessions.read`\n",
+        "description": "List active sessions of a PagerDuty user.\n\nBeginning November 2021, active sessions no longer includes newly issued OAuth tokens.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#users)\n\nScoped OAuth requires: `users:sessions.read`\n",
         "summary": "List a user's active sessions",
         "parameters": [
           {
@@ -59947,7 +59947,7 @@
           "Users"
         ],
         "operationId": "deleteUserSessions",
-        "description": "<!-- theme: warning -->\n> ### Deprecated\n> This endpoint is deprecated as OAuth token revocation is now synchronous. Please use the [DELETE /oauth_delegations endpoint](https://developer.pagerduty.com/api-reference/ad1161db75db1-delete-all-o-auth-delegations) instead.\n\nDelete all user sessions.\n\nBeginning November 2021, user sessions no longer includes newly issued OAuth tokens.\n\nIf you are interested in deleting mobile app sessions, refer to the Delete OAuth Delegations endpoint.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users:sessions.write`\n",
+        "description": "<!-- theme: warning -->\n> ### Deprecated\n> This endpoint is deprecated as OAuth token revocation is now synchronous. Please use the [DELETE /oauth_delegations endpoint](https://developer.pagerduty.com/api-reference/ad1161db75db1-delete-all-o-auth-delegations) instead.\n\nDelete all user sessions.\n\nBeginning November 2021, user sessions no longer includes newly issued OAuth tokens.\n\nIf you are interested in deleting mobile app sessions, refer to the Delete OAuth Delegations endpoint.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#users)\n\nScoped OAuth requires: `users:sessions.write`\n",
         "summary": "Delete all user sessions",
         "parameters": [
           {
@@ -59987,7 +59987,7 @@
           "Users"
         ],
         "operationId": "getUserSession",
-        "description": "Get details about a user's session.\n\nBeginning November 2021, user sessions no longer includes newly issued OAuth tokens.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users:sessions.read`\n",
+        "description": "Get details about a user's session.\n\nBeginning November 2021, user sessions no longer includes newly issued OAuth tokens.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#users)\n\nScoped OAuth requires: `users:sessions.read`\n",
         "summary": "Get a user's session",
         "parameters": [
           {
@@ -60063,7 +60063,7 @@
           "Users"
         ],
         "operationId": "deleteUserSession",
-        "description": "<!-- theme: warning -->\n> ### Deprecated\n> This endpoint is deprecated as OAuth token revocation is now synchronous. Please use the [DELETE /oauth_delegations endpoint](https://developer.pagerduty.com/api-reference/ad1161db75db1-delete-all-o-auth-delegations) instead.\n\nDelete a user's session.\n\nBeginning November 2021, user sessions no longer includes newly issued OAuth tokens.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users:sessions.write`\n",
+        "description": "<!-- theme: warning -->\n> ### Deprecated\n> This endpoint is deprecated as OAuth token revocation is now synchronous. Please use the [DELETE /oauth_delegations endpoint](https://developer.pagerduty.com/api-reference/ad1161db75db1-delete-all-o-auth-delegations) instead.\n\nDelete a user's session.\n\nBeginning November 2021, user sessions no longer includes newly issued OAuth tokens.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#users)\n\nScoped OAuth requires: `users:sessions.write`\n",
         "summary": "Delete a user's session",
         "parameters": [
           {
@@ -60109,7 +60109,7 @@
           "Users"
         ],
         "operationId": "getUserStatusUpdateNotificationRules",
-        "description": "List status update notification rules of your PagerDuty user.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users.read`\n",
+        "description": "List status update notification rules of your PagerDuty user.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#users)\n\nScoped OAuth requires: `users.read`\n",
         "summary": "List a user's status update notification rules",
         "parameters": [
           {
@@ -60190,7 +60190,7 @@
           "Users"
         ],
         "operationId": "createUserStatusUpdateNotificationRule",
-        "description": "Create a new status update notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users.write`\n",
+        "description": "Create a new status update notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#users)\n\nScoped OAuth requires: `users.write`\n",
         "summary": "Create a user status update notification rule",
         "parameters": [
           {
@@ -60299,7 +60299,7 @@
           "Users"
         ],
         "operationId": "getUserStatusUpdateNotificationRule",
-        "description": "Get details about a user's status update notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users.read`\n",
+        "description": "Get details about a user's status update notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#users)\n\nScoped OAuth requires: `users.read`\n",
         "summary": "Get a user's status update notification rule",
         "parameters": [
           {
@@ -60381,7 +60381,7 @@
           "Users"
         ],
         "operationId": "deleteUserStatusUpdateNotificationRule",
-        "description": "Remove a user's status update notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users.write`\n",
+        "description": "Remove a user's status update notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#users)\n\nScoped OAuth requires: `users.write`\n",
         "summary": "Delete a user's status update notification rule",
         "parameters": [
           {
@@ -60421,7 +60421,7 @@
           "Users"
         ],
         "operationId": "updateUserStatusUpdateNotificationRule",
-        "description": "Update a user's status update notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n\nScoped OAuth requires: `users.write`\n",
+        "description": "Update a user's status update notification rule.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#users)\n\nScoped OAuth requires: `users.write`\n",
         "summary": "Update a user's status update notification rule",
         "parameters": [
           {
@@ -60533,7 +60533,7 @@
           "Users"
         ],
         "operationId": "getCurrentUser",
-        "description": "Get details about the current user.\n\nThis endpoint can only be used with a [user-level API key](https://support.pagerduty.com/docs/using-the-api#section-generating-a-personal-rest-api-key) or a key generated through an OAuth flow. This will not work if the request is made with an account-level access token.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#users)\n",
+        "description": "Get details about the current user.\n\nThis endpoint can only be used with a [user-level API key](https://support.pagerduty.com/docs/using-the-api#section-generating-a-personal-rest-api-key) or a key generated through an OAuth flow. This will not work if the request is made with an account-level access token.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#users)\n",
         "summary": "Get the current user",
         "parameters": [
           {
@@ -60633,7 +60633,7 @@
           "Vendors"
         ],
         "operationId": "listVendors",
-        "description": "List all vendors.\n\nA PagerDuty Vendor represents a specific type of integration. AWS Cloudwatch, Splunk, Datadog are all examples of vendors\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#vendors)\n\nScoped OAuth requires: `vendors.read`\n",
+        "description": "List all vendors.\n\nA PagerDuty Vendor represents a specific type of integration. AWS Cloudwatch, Splunk, Datadog are all examples of vendors\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#vendors)\n\nScoped OAuth requires: `vendors.read`\n",
         "summary": "List vendors",
         "parameters": [
           {
@@ -60729,7 +60729,7 @@
           "Vendors"
         ],
         "operationId": "getVendor",
-        "description": "Get details about one specific vendor.\n\nA PagerDuty Vendor represents a specific type of integration. AWS Cloudwatch, Splunk, Datadog are all examples of vendors\n\nFor more information see the [API Concepts Document](../../api-reference/ZG9jOjI3NDc5Nzc-api-concepts#vendors)\n\nScoped OAuth requires: `vendors.read`\n",
+        "description": "Get details about one specific vendor.\n\nA PagerDuty Vendor represents a specific type of integration. AWS Cloudwatch, Splunk, Datadog are all examples of vendors\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#vendors)\n\nScoped OAuth requires: `vendors.read`\n",
         "summary": "Get a vendor",
         "parameters": [
           {
