@@ -9,7 +9,7 @@ PagerDuty aims to have no breaking changes to its API. We do fix bugs and add ne
   - `PUT /incidents/{id}/notes/{note_id}` - Edit an existing incident note
   - `DELETE /incidents/{id}/notes/{note_id}` - Delete an existing incident note
 
-## 2025-11-02
+### 2025-11-02
 - Added Analytics API endpoints for user metrics:
   - `POST /analytics/raw/users` - Get raw user analytics data
   - `POST /analytics/metrics/users/all` - Get aggregated metrics for all users
