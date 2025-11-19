@@ -9,11 +9,6 @@ PagerDuty aims to have no breaking changes to its API. We do fix bugs and add ne
   - `PUT /incidents/{id}/notes/{note_id}` - Edit an existing incident note
   - `DELETE /incidents/{id}/notes/{note_id}` - Delete an existing incident note
 
-### 2025-11-06
-- Added Get user delegation and list user delegations API endpoints:
-  - `GET /users/{id}/delegations` - Get delegations for a particular user
-  - `GET /users/{id}/delegations/delegationId` - Get detailed delegation information for a specific delegation
-
 ### 2025-11-02
 - Added Analytics API endpoints for user metrics:
   - `POST /analytics/raw/users` - Get raw user analytics data
