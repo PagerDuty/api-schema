@@ -51749,7 +51749,7 @@
                         "description": "Idle session time to live in seconds",
                         "example": 600,
                         "minimum": 60,
-                        "maximum": 86400
+                        "maximum": 15552000
                       }
                     },
                     "required": [
