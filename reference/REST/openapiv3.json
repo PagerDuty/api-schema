@@ -51749,7 +51749,7 @@
                         "description": "Idle session time to live in seconds",
                         "example": 600,
                         "minimum": 60,
-                        "maximum": 86400
+                        "maximum": 15552000
                       }
                     },
                     "required": [
@@ -55800,7 +55800,7 @@
                         "html_url": "https://subdomain.pagerduty.com/teams/PQ9K7I8",
                         "name": "Engineering",
                         "description": "All engineering",
-                        "default_role": "observer"
+                        "default_role": "manager"
                       }
                     }
                   }
@@ -55945,7 +55945,7 @@
                         "html_url": "https://subdomain.pagerduty.com/teams/PQ9K7I8",
                         "name": "Engineering",
                         "description": "All engineering",
-                        "default_role": "observer"
+                        "default_role": "manager"
                       }
                     }
                   }

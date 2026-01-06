@@ -2,6 +2,10 @@
 
 PagerDuty aims to have no breaking changes to its API. We do fix bugs and add new functionality continuously. This document serves as a reference for any bug fixes or additions to our API.
 
+### 2025-11-25
+- Updated the upper bounds of allowed idle session timeout configurations.
+  - `PUT /session_configurations?type={type}`
+
 ### 2025-11-07
 - `GET /incidents/{id}/notes` - Including updated_at in response payload
 - `POST /incidents/{id}/notes` - Including updated_at in response payload
