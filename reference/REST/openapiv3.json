@@ -1861,6 +1861,7 @@
               },
               "secrets": null,
               "teams": [],
+              "apps": [],
               "html_url": "https://subdomain.pagerduty.com/workflows/integrations/http-api/connections/5a8e88bb-2acd-4035-8f02-163c10f917b8",
               "self": "https://api.pagerduty.com/workflows/integrations/http-api/connections/5a8e88bb-2acd-4035-8f02-163c10f917b8",
               "created_at": "2024-06-18T18:41:27.1+00:00",
@@ -1876,7 +1877,7 @@
         }
       },
       "CreateWorkflowIntegrationConnectionExample": {
-        "summary": "Create or update Workflow Integration Connection example",
+        "summary": "Create or update Workflow Integration Connection example.",
         "value": {
           "connection": {
             "name": "My Connection",
@@ -1892,7 +1893,8 @@
               "Authentication Headers": "x-api-key: 1234abcd"
             },
             "is_default": true,
-            "teams": []
+            "teams": [],
+            "apps": []
           }
         }
       }
@@ -4546,6 +4548,25 @@
                       }
                     }
                   }
+                },
+                "apps": {
+                  "type": "array",
+                  "description": "The app IDs for this connection",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "app_id": {
+                        "type": "string",
+                        "description": "The ID of the app"
+                      },
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "pd_app_reference"
+                        ]
+                      }
+                    }
+                  }
                 }
               },
               "required": [
@@ -4654,6 +4675,25 @@
                         "type": "string",
                         "enum": [
                           "team_reference"
+                        ]
+                      }
+                    }
+                  }
+                },
+                "apps": {
+                  "type": "array",
+                  "description": "The app IDs for this connection",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "app_id": {
+                        "type": "string",
+                        "description": "The ID of the app"
+                      },
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "pd_app_reference"
                         ]
                       }
                     }
@@ -19907,6 +19947,25 @@
                       "type": "string",
                       "enum": [
                         "team_reference"
+                      ]
+                    }
+                  }
+                }
+              },
+              "apps": {
+                "type": "array",
+                "description": "The app IDs for this connection",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "app_id": {
+                      "type": "string",
+                      "description": "The ID of the app"
+                    },
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "pd_app_reference"
                       ]
                     }
                   }
@@ -61810,6 +61869,7 @@
                           },
                           "secrets": null,
                           "teams": [],
+                          "apps": [],
                           "html_url": "https://subdomain.pagerduty.com/workflows/integrations/http-api/connections/5a8e88bb-2acd-4035-8f02-163c10f917b8",
                           "self": "https://api.pagerduty.com/workflows/integrations/http-api/connections/5a8e88bb-2acd-4035-8f02-163c10f917b8",
                           "created_at": "2024-06-18T18:41:27.1+00:00",

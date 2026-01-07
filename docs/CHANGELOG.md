@@ -2,6 +2,9 @@
 
 PagerDuty aims to have no breaking changes to its API. We do fix bugs and add new functionality continuously. This document serves as a reference for any bug fixes or additions to our API.
 
+### 2025-12-08
+- Add `apps` parameter to Workflow Integrations
+
 ### 2025-11-25
 - Updated the upper bounds of allowed idle session timeout configurations.
   - `PUT /session_configurations?type={type}`
