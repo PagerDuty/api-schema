@@ -55685,7 +55685,7 @@
                         "html_url": "https://subdomain.pagerduty.com/teams/PQ9K7I8",
                         "name": "Engineering",
                         "description": "All engineering",
-                        "base_role": "observer"
+                        "default_role": "manager"
                       }
                     }
                   }

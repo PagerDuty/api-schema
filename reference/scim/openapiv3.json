@@ -1480,16 +1480,22 @@
             "type": "object"
           },
           "roles": {
-            "description": "A list containing the User's role. PagerDuty Users have a single role\nand the list will always contain a single item.\n\nThe role is not required to be set when creating a user. If not set, a\ndefault role will be assigned. Valid user roles are defined in the\nPagerDuty Public API documentation:\nhttps://developer.pagerduty.com/api-reference/4cb4fd0f5444a-create-a-user\n\nThe only supported role type at this time is \"base\", which maps to\nthe user's base account role in PagerDuty.\n",
+            "description": "A list containing the User's role. PagerDuty Users have a single role\nand the list will always contain a single item. The only supported role\ntype at this time is \"base\", which maps to the user's base account role\nin PagerDuty.\n",
             "example": [
               {
+                "primary": true,
                 "type": "base",
                 "value": "user"
               }
             ],
             "items": {
-              "additionalProperties": false,
               "properties": {
+                "primary": {
+                  "enum": [
+                    true
+                  ],
+                  "type": "boolean"
+                },
                 "type": {
                   "enum": [
                     "base"
@@ -1502,7 +1508,8 @@
               },
               "required": [
                 "value",
-                "type"
+                "type",
+                "primary"
               ],
               "type": "object"
             },
@@ -1585,6 +1592,7 @@
               },
               "roles": [
                 {
+                  "primary": true,
                   "type": "base",
                   "value": "user"
                 }
@@ -1687,16 +1695,22 @@
                   "type": "object"
                 },
                 "roles": {
-                  "description": "A list containing the User's role. PagerDuty Users have a single role\nand the list will always contain a single item.\n\nThe role is not required to be set when creating a user. If not set, a\ndefault role will be assigned. Valid user roles are defined in the\nPagerDuty Public API documentation:\nhttps://developer.pagerduty.com/api-reference/4cb4fd0f5444a-create-a-user\n\nThe only supported role type at this time is \"base\", which maps to\nthe user's base account role in PagerDuty.\n",
+                  "description": "A list containing the User's role. PagerDuty Users have a single role\nand the list will always contain a single item. The only supported role\ntype at this time is \"base\", which maps to the user's base account role\nin PagerDuty.\n",
                   "example": [
                     {
+                      "primary": true,
                       "type": "base",
                       "value": "user"
                     }
                   ],
                   "items": {
-                    "additionalProperties": false,
                     "properties": {
+                      "primary": {
+                        "enum": [
+                          true
+                        ],
+                        "type": "boolean"
+                      },
                       "type": {
                         "enum": [
                           "base"
@@ -1709,7 +1723,8 @@
                     },
                     "required": [
                       "value",
-                      "type"
+                      "type",
+                      "primary"
                     ],
                     "type": "object"
                   },
@@ -2250,30 +2265,31 @@
                     "type": "string"
                   },
                   "roles": {
-                    "description": "A list containing the User's role. PagerDuty Users have a single role\nand the list will always contain a single item.\n\nThe role is not required to be set when creating a user. If not set, a\ndefault role will be assigned. Valid user roles are defined in the\nPagerDuty Public API documentation:\nhttps://developer.pagerduty.com/api-reference/4cb4fd0f5444a-create-a-user\n\nThe only supported role type at this time is \"base\", which maps to\nthe user's base account role in PagerDuty.\n",
+                    "description": "A list containing the User's role. PagerDuty Users have a single role\nand the list will always contain a single item.\n\nThe `roles` field accepts two formats:\n\nFormat 1 - Using the primary field:\n\n```json\n{\"roles\": [{\"value\": \"user\", \"primary\": true}]}\n```\n\n*Required*: `value` (role name), `primary` (must be `true`)\n\n*Optional*: `type` (can be any string value, will be ignored and default to `\"base\"`)\n\nFormat 2 - Using the type field:\n\n```json\n{\"roles\": [{\"value\": \"user\", \"type\": \"base\"}]}\n```\n\n*Required*: `value` (role name), `type` (must be `\"base\"`)\n\n*Optional*: `primary` (must be `true` if included)\n\nThe role is not required when creating a user. If not set, a default\nrole will be assigned. Valid user roles are defined in the PagerDuty\nPublic API documentation:\nhttps://developer.pagerduty.com/api-reference/4cb4fd0f5444a-create-a-user\n\nThe only supported role type at this time is \"base\", which maps to\nthe user's base account role in PagerDuty.\n",
                     "example": [
                       {
-                        "type": "base",
+                        "primary": true,
                         "value": "user"
                       }
                     ],
                     "items": {
-                      "additionalProperties": false,
                       "properties": {
-                        "type": {
+                        "primary": {
+                          "description": "Whether this is the primary role (must be true)",
                           "enum": [
-                            "base"
+                            true
                           ],
+                          "type": "boolean"
+                        },
+                        "type": {
+                          "description": "Role type (can be any string when primary=true, must be 'base' otherwise)",
                           "type": "string"
                         },
                         "value": {
+                          "description": "Role name",
                           "type": "string"
                         }
                       },
-                      "required": [
-                        "value",
-                        "type"
-                      ],
                       "type": "object"
                     },
                     "maxItems": 1,
@@ -2788,30 +2804,31 @@
                     "type": "string"
                   },
                   "roles": {
-                    "description": "A list containing the User's role. PagerDuty Users have a single role\nand the list will always contain a single item.\n\nThe role is not required to be set when creating a user. If not set, a\ndefault role will be assigned. Valid user roles are defined in the\nPagerDuty Public API documentation:\nhttps://developer.pagerduty.com/api-reference/4cb4fd0f5444a-create-a-user\n\nThe only supported role type at this time is \"base\", which maps to\nthe user's base account role in PagerDuty.\n",
+                    "description": "A list containing the User's role. PagerDuty Users have a single role\nand the list will always contain a single item.\n\nThe `roles` field accepts two formats:\n\nFormat 1 - Using the primary field:\n\n```json\n{\"roles\": [{\"value\": \"user\", \"primary\": true}]}\n```\n\n*Required*: `value` (role name), `primary` (must be `true`)\n\n*Optional*: `type` (can be any string value, will be ignored and default to `\"base\"`)\n\nFormat 2 - Using the type field:\n\n```json\n{\"roles\": [{\"value\": \"user\", \"type\": \"base\"}]}\n```\n\n*Required*: `value` (role name), `type` (must be `\"base\"`)\n\n*Optional*: `primary` (must be `true` if included)\n\nThe role is not required when creating a user. If not set, a default\nrole will be assigned. Valid user roles are defined in the PagerDuty\nPublic API documentation:\nhttps://developer.pagerduty.com/api-reference/4cb4fd0f5444a-create-a-user\n\nThe only supported role type at this time is \"base\", which maps to\nthe user's base account role in PagerDuty.\n",
                     "example": [
                       {
-                        "type": "base",
+                        "primary": true,
                         "value": "user"
                       }
                     ],
                     "items": {
-                      "additionalProperties": false,
                       "properties": {
-                        "type": {
+                        "primary": {
+                          "description": "Whether this is the primary role (must be true)",
                           "enum": [
-                            "base"
+                            true
                           ],
+                          "type": "boolean"
+                        },
+                        "type": {
+                          "description": "Role type (can be any string when primary=true, must be 'base' otherwise)",
                           "type": "string"
                         },
                         "value": {
+                          "description": "Role name",
                           "type": "string"
                         }
                       },
-                      "required": [
-                        "value",
-                        "type"
-                      ],
                       "type": "object"
                     },
                     "maxItems": 1,

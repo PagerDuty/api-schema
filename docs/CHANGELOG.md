@@ -2,6 +2,13 @@
 
 PagerDuty aims to have no breaking changes to its API. We do fix bugs and add new functionality continuously. This document serves as a reference for any bug fixes or additions to our API.
 
+### 2026-01-06
+- Enhanced SCIM User roles documentation to clarify that the `roles` field accepts two formats: Format 1 using the `primary` field (required with `value`), and Format 2 using the `type` field (must be `"base"` with `value`). Affects the following endpoints:
+  - `POST /scim/v2/Users`
+  - `PUT /scim/v2/Users/{id}`
+  - `PATCH /scim/v2/Users/{id}`
+- Updated user schema documentation to clarify `primary` is always returned as part of the role object.
+
 ### 2025-12-08
 - Add `apps` parameter to Workflow Integrations
 
