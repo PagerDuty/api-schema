@@ -2,6 +2,9 @@
 
 PagerDuty aims to have no breaking changes to its API. We do fix bugs and add new functionality continuously. This document serves as a reference for any bug fixes or additions to our API.
 
+### 2026-01-20
+- Add `action_tier` parameter to Workflow Integration Actions
+
 ### 2026-01-06
 - Enhanced SCIM User roles documentation to clarify that the `roles` field accepts two formats: Format 1 using the `primary` field (required with `value`), and Format 2 using the `type` field (must be `"base"` with `value`). Affects the following endpoints:
   - `POST /scim/v2/Users`
