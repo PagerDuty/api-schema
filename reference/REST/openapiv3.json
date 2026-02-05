@@ -14189,6 +14189,15 @@
                   "trigger"
                 ]
               },
+              "action_tier": {
+                "type": "string",
+                "description": "The tier of the Action",
+                "enum": [
+                  "basic-action",
+                  "standard-action",
+                  "premium-action"
+                ]
+              },
               "trigger_type": {
                 "type": "string",
                 "description": "The type of Trigger this Action is, if action_type is trigger",
@@ -34595,6 +34604,7 @@
                           "name": "Test: Sample Action",
                           "description": "A fake Action for documentation purposes",
                           "action_type": "integration",
+                          "action_tier": "premium-action",
                           "tags": [],
                           "metadata": "{}",
                           "search_keywords": [],
@@ -34708,6 +34718,7 @@
                         "name": "Test: Sample Action",
                         "description": "A fake Action for documentation purposes",
                         "action_type": "integration",
+                        "action_tier": "premium-action",
                         "tags": [],
                         "metadata": "{}",
                         "search_keywords": [],
@@ -51913,7 +51924,7 @@
         "summary": "Delete an account's session configurations.",
         "operationId": "deleteSessionConfigurations",
         "x-pd-requires-scope": "session_configurations.write",
-        "description": "<!-- theme: warning -->\n> ### Early Access\n \n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header with the value of `session-configurations-early-access` to access it.\n\nDeletes the session configurations for a PagerDuty account that was previously set.\nThe type parameter is required and specifies which configurations to delete.\nA single type ('mobile' or 'web') or comma-separated list may be passed in.\n\nScoped OAuth requires: `session_configurations.write`\n",
+        "description": "<!-- theme: warning -->\n> ### Early Access\n\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header with the value of `session-configurations-early-access` to access it.\n\nDeletes the session configurations for a PagerDuty account that was previously set.\nThe type parameter is required and specifies which configurations to delete.\nA single type ('mobile' or 'web') or comma-separated list may be passed in.\n\nScoped OAuth requires: `session_configurations.write`\n",
         "tags": [
           "Session Configurations"
         ],
