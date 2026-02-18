@@ -2,6 +2,10 @@
 
 PagerDuty aims to have no breaking changes to its API. We do fix bugs and add new functionality continuously. This document serves as a reference for any bug fixes or additions to our API.
 
+### 2026-02-18
+- Added new endpoint for cancelling pending responder requests on incidents:
+    - `PUT /incidents/{id}/responder_requests/cancel` - Cancel responder requests for users and escalation policies
+
 ### 2026-01-20
 - Add `action_tier` parameter to Workflow Integration Actions
 

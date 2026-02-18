@@ -14652,6 +14652,10 @@
       "ResponderRequest": {
         "type": "object",
         "properties": {
+          "id": {
+            "type": "string",
+            "description": "The ID of the responder request"
+          },
           "incident": {
             "$ref": "#/components/schemas/IncidentReference"
           },
@@ -14704,6 +14708,12 @@
           "state": {
             "type": "string",
             "description": "The status of the responder being added to the incident",
+            "enum": [
+              "pending",
+              "joined",
+              "declined",
+              "user_cancelled"
+            ],
             "example": "pending"
           },
           "user": {
@@ -14724,6 +14734,13 @@
           },
           "requested_at": {
             "type": "string"
+          },
+          "escalation_policy_requests": {
+            "type": "array",
+            "description": "Names of escalation policies that this responder was requested through, if applicable",
+            "items": {
+              "type": "string"
+            }
           }
         }
       },
@@ -39250,7 +39267,7 @@
           "Incidents"
         ],
         "operationId": "createIncidentResponderRequest",
-        "description": "Send a new responder request for the specified incident.\n\nAn incident represents a problem or an issue that needs to be addressed and resolved.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#incidents)\n\nScoped OAuth requires: `incidents.write`\n",
+        "description": "Send a new responder request for the specified incident. This endpoint requires the account to have access to the [responder requests](https://support.pagerduty.com/main/docs/add-responders) feature.\n\n**Account Ability Requirement**: The account must have the `coordinated_responding` ability. Returns 402 Payment Required if the ability is missing. You can use the [List Abilities API](openapiv3.json/paths/~1abilities/get) to check account abilities.\n\nA user or an escalation policy can be requested. The responder targets will be notified via their high urgency notification rules, until the target user has either accepted or declined the request. \nPrevious responder requests for a given target can be cancelled (preventing them from further notifying or escalating), with the [Cancel Responder Requests](openapiv3.json/paths/~1incidents~1{id}~1responder_requests~1cancel/put) endpoint.\n\nScoped OAuth requires: `incidents.write`\n",
         "summary": "Create a responder request for an incident",
         "parameters": [
           {
@@ -39261,9 +39278,6 @@
           },
           {
             "$ref": "#/components/parameters/id"
-          },
-          {
-            "$ref": "#/components/parameters/from_header"
           }
         ],
         "requestBody": {
@@ -39401,6 +39415,203 @@
           },
           "401": {
             "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        }
+      }
+    },
+    "/incidents/{id}/responder_requests/cancel": {
+      "description": "Cancel responder requests for an incident.",
+      "put": {
+        "x-pd-requires-scope": "incidents.write",
+        "tags": [
+          "Incidents"
+        ],
+        "operationId": "cancelIncidentResponderRequest",
+        "description": "Cancel pending responder requests for the specified incident.\n\nThis endpoint allows you to cancel responder requests for specified targets that are in a pending state. Only responders who have not yet joined or declined can be cancelled. This endpoint requires the account to have access to the [responder requests](https://support.pagerduty.com/main/docs/add-responders) feature.\n\n**Account Ability Requirement**: The account must have the `coordinated_responding` ability. Returns 402 Payment Required if the ability is missing. You can use the [List Abilities API](openapiv3.json/paths/~1abilities/get) to check account abilities.\n\n**State Constraints**: Only responders in the `pending` state can be cancelled. Responders who have already `joined` or `declined` are not affected (the result will indicate their current state).\n\n**User vs Escalation Policy Behavior**:\n- **Users**: Direct cancellation, updates state to `user_cancelled`, stops notifications\n- **Escalation Policies**: Stops the escalation process, updates state of all pending users from that escalation policy to `user_cancelled` and stops notifications\n\n**Result Values**:\n- `cancelled`: Successfully cancelled\n- `joined`: User already joined (not cancelled)\n- `declined`: User already declined (not cancelled)\n- `not_found`: Target not found or not part of any responder request\n\nScoped OAuth requires: `incidents.write`\n",
+        "summary": "Cancel responder requests for an incident",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "requester_id": {
+                    "type": "string",
+                    "description": "The user id of the requester."
+                  },
+                  "responder_request_targets": {
+                    "description": "The array of targets to cancel.",
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "description": "The type of target (either a user or an escalation policy)",
+                          "enum": [
+                            "user_reference",
+                            "escalation_policy_reference"
+                          ]
+                        },
+                        "id": {
+                          "type": "string",
+                          "description": "The id of the user or escalation policy"
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "id"
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "requester_id",
+                  "responder_request_targets"
+                ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "requester_id": "PL1JMK5",
+                    "responder_request_targets": [
+                      {
+                        "type": "user_reference",
+                        "id": "PJ25ZYX"
+                      },
+                      {
+                        "type": "escalation_policy_reference",
+                        "id": "PEP12AB"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The result of cancelling responder requests for the given incident.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "responder_request_targets": {
+                      "description": "The array of targets with their cancellation results.",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "description": "The type of target (either a user or an escalation policy)",
+                            "enum": [
+                              "user_reference",
+                              "escalation_policy_reference"
+                            ]
+                          },
+                          "id": {
+                            "type": "string",
+                            "description": "The id of the user or escalation policy"
+                          },
+                          "result": {
+                            "type": "string",
+                            "description": "The result of the cancellation attempt",
+                            "enum": [
+                              "cancelled",
+                              "joined",
+                              "declined",
+                              "not_found"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "type",
+                          "id",
+                          "result"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "responder_request_targets"
+                  ]
+                },
+                "examples": {
+                  "all_cancelled": {
+                    "summary": "All Targets Cancelled",
+                    "value": {
+                      "responder_request_targets": [
+                        {
+                          "type": "user_reference",
+                          "id": "PJ25ZYX",
+                          "result": "cancelled"
+                        },
+                        {
+                          "type": "escalation_policy_reference",
+                          "id": "PEP12AB",
+                          "result": "cancelled"
+                        }
+                      ]
+                    }
+                  },
+                  "mixed_results": {
+                    "summary": "Mixed Results",
+                    "value": {
+                      "responder_request_targets": [
+                        {
+                          "type": "user_reference",
+                          "id": "PJ25ZYX",
+                          "result": "cancelled"
+                        },
+                        {
+                          "type": "user_reference",
+                          "id": "PL7A2O4",
+                          "result": "joined"
+                        },
+                        {
+                          "type": "user_reference",
+                          "id": "PABC123",
+                          "result": "not_found"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
           },
           "403": {
             "$ref": "#/components/responses/Forbidden"
