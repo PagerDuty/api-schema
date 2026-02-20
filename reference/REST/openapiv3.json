@@ -10507,7 +10507,8 @@
                   "email_contact_method_reference",
                   "phone_contact_method_reference",
                   "push_notification_contact_method_reference",
-                  "sms_contact_method_reference"
+                  "sms_contact_method_reference",
+                  "whatsapp_contact_method_reference"
                 ]
               }
             }
@@ -10530,7 +10531,8 @@
                   "email_contact_method",
                   "phone_contact_method",
                   "push_notification_contact_method",
-                  "sms_contact_method"
+                  "sms_contact_method",
+                  "whatsapp_contact_method"
                 ]
               },
               "label": {
@@ -10624,6 +10626,50 @@
               "label": "work",
               "country_code": 123,
               "address": "1234567"
+            }
+          }
+        ]
+      },
+      "WhatsAppContactMethod": {
+        "description": "The WhatsApp Contact Method of the User.\n\n**Availability Note:** WhatsApp contact methods are available in select regions and require account-level access. For information about regional availability and how to enable WhatsApp for your account, please refer to the [PagerDuty Knowledge Base](https://support.pagerduty.com/).\n",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ContactMethod"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "whatsapp_contact_method"
+                ]
+              },
+              "country_code": {
+                "type": "integer",
+                "description": "The 1-to-3 digit country calling code.",
+                "minimum": 1,
+                "maximum": 1999
+              },
+              "enabled": {
+                "type": "boolean",
+                "description": "If true, this phone is capable of receiving WhatsApp messages.",
+                "readOnly": true
+              },
+              "blacklisted": {
+                "type": "boolean",
+                "description": "If true, this phone has been blacklisted by PagerDuty and no messages will be sent to it.",
+                "readOnly": true
+              }
+            },
+            "required": [
+              "country_code"
+            ],
+            "example": {
+              "type": "whatsapp_contact_method",
+              "label": "work",
+              "country_code": 1,
+              "address": "5555555555"
             }
           }
         ]
@@ -58461,6 +58507,9 @@
                           },
                           {
                             "$ref": "#/components/schemas/EmailContactMethod"
+                          },
+                          {
+                            "$ref": "#/components/schemas/WhatsAppContactMethod"
                           }
                         ]
                       }
@@ -58537,6 +58586,9 @@
                       },
                       {
                         "$ref": "#/components/schemas/EmailContactMethod"
+                      },
+                      {
+                        "$ref": "#/components/schemas/WhatsAppContactMethod"
                       }
                     ]
                   }
@@ -58783,6 +58835,9 @@
                       },
                       {
                         "$ref": "#/components/schemas/EmailContactMethod"
+                      },
+                      {
+                        "$ref": "#/components/schemas/WhatsAppContactMethod"
                       }
                     ]
                   }
