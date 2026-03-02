@@ -2,6 +2,13 @@
 
 PagerDuty aims to have no breaking changes to its API. We do fix bugs and add new functionality continuously. This document serves as a reference for any bug fixes or additions to our API.
 
+### 2026-03-02
+- Added new endpoints to get details on a user's OAuth delegations
+  - List a user's delegations `GET /users/{id}/oauth_delegations`
+  - Show details on a specific delegation `GET /users/{id}/oauth_delegations/{delegation_id}`
+- Deprecated `GET /users/{id}/sessions` - Please use the new OAuth delegations endpoints instead.
+- Deprecated `GET /users/{id}/sessions/{type}/{session_id}` - Please use the new OAuth delegations endpoints instead.
+
 ### 2026-02-20
 - Add WhatsApp contact method support. WhatsApp is now available as a contact method type alongside phone, SMS, email, and push notifications. Affects the following endpoints:
   - `GET /users/{id}/contact_methods`

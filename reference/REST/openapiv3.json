@@ -105,6 +105,10 @@
       "description": "A Notification is created when an Incident is triggered or escalated.\n"
     },
     {
+      "name": "OAuth Delegations",
+      "description": "An OAuth Delegation represents a delegation of a User's permissions to an OAuth Client, allowing the client to impersonate the user when making API requests.\n"
+    },
+    {
       "name": "On-Calls",
       "description": "An on-call represents a contiguous unit of time for which a User will be on call for a given Escalation Policy and Escalation Rules\n"
     },
@@ -2336,10 +2340,31 @@
           "type": "string"
         }
       },
+      "oauth_delegation_id": {
+        "name": "delegation_id",
+        "in": "path",
+        "description": "The ID of the delegation.",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "oauth_delegation_status": {
+        "name": "status",
+        "in": "query",
+        "description": "The status of the delegations to return. Allowed values are 'issued' and 'revoked'. You can pass one or more statuses in, separated by commas (e.g., `status=issued,revoked`).",
+        "schema": {
+          "type": "string",
+          "enum": [
+            "issued",
+            "revoked"
+          ]
+        }
+      },
       "oauth_delegation_type": {
         "name": "type",
         "in": "query",
-        "description": "The type of OAuth delegations this request should target. Allowed values are 'mobile' (to sign users out of the mobile app) and 'web' (to sign users out of the web app). You can pass one or more types in, separated by commas (e.g., type=web,mobile).",
+        "description": "The type of OAuth delegations this request should target. Allowed values are 'mobile' (to sign users out of the mobile app) and 'web' (to sign users out of the web app). You can pass one or more types in, separated by commas (e.g., `type=web,mobile`).",
         "schema": {
           "type": "string",
           "enum": [
@@ -2348,6 +2373,19 @@
           ]
         },
         "required": true
+      },
+      "oauth_delegation_filter_type": {
+        "name": "delegation_type",
+        "in": "query",
+        "description": "The type of OAuth delegations to filter on. Allowed values are 'mobile', 'web', and 'integration'. You can pass one or more types in, separated by commas (e.g., `type=web,mobile`).",
+        "schema": {
+          "type": "string",
+          "enum": [
+            "mobile",
+            "web",
+            "integration"
+          ]
+        }
       },
       "oauth_delegation_user_id": {
         "name": "user_id",
@@ -10317,6 +10355,105 @@
               "type"
             ]
           }
+        ]
+      },
+      "OAuthDelegation": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The unique identifier for the delegation",
+            "example": "e53326c6-a713-409c-8f7e-ps1xczid"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "issued",
+              "revoked"
+            ],
+            "description": "The current status of the delegation",
+            "example": "issued"
+          },
+          "client_id": {
+            "type": "string",
+            "description": "The OAuth client ID",
+            "example": "PagerDutyLogin"
+          },
+          "delegation_type": {
+            "type": "string",
+            "enum": [
+              "web",
+              "mobile",
+              "integration"
+            ],
+            "description": "The type of delegation",
+            "example": "web"
+          },
+          "scope": {
+            "type": "string",
+            "description": "The OAuth scopes granted",
+            "example": "openid"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the delegation was created (ISO 8601 format)",
+            "example": "2025-10-30T15:45:02Z"
+          },
+          "expires_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the delegation expires (ISO 8601 format)",
+            "example": "2025-12-29T15:45:02Z"
+          },
+          "self": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to retrieve this delegation in detail",
+            "example": "https://api.pagerduty.com/users/PBGVC7B/oauth_delegations/e53326c6-a713-409c-8f7e-ps1xczid"
+          }
+        },
+        "required": [
+          "id",
+          "status",
+          "client_id",
+          "delegation_type",
+          "scope",
+          "created_at",
+          "expires_at",
+          "self"
+        ]
+      },
+      "UserOAuthDelegations": {
+        "type": "object",
+        "properties": {
+          "oauth_delegations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OAuthDelegation"
+            },
+            "description": "Array of OAuth delegation objects"
+          },
+          "limit": {
+            "type": "integer",
+            "description": "Number of results per page",
+            "example": 25
+          },
+          "more": {
+            "type": "boolean",
+            "description": "Whether there are more results available",
+            "example": true
+          },
+          "next_cursor": {
+            "type": "string",
+            "description": "Cursor for retrieving the next page (only present when more is true)",
+            "example": "eyJsYXN0RXZhbHVhdGVkS2V5Ijp7ImlkIjoiNzg5MWRkNzktZWIwZi00ZjIzLWE4YzQtcGdmeG0wOSJ9fQ=="
+          }
+        },
+        "required": [
+          "oauth_delegations",
+          "limit",
+          "more"
         ]
       },
       "ScheduledAction": {
@@ -39313,7 +39450,7 @@
           "Incidents"
         ],
         "operationId": "createIncidentResponderRequest",
-        "description": "Send a new responder request for the specified incident. This endpoint requires the account to have access to the [responder requests](https://support.pagerduty.com/main/docs/add-responders) feature.\n\n**Account Ability Requirement**: The account must have the `coordinated_responding` ability. Returns 402 Payment Required if the ability is missing. You can use the [List Abilities API](openapiv3.json/paths/~1abilities/get) to check account abilities.\n\nA user or an escalation policy can be requested. The responder targets will be notified via their high urgency notification rules, until the target user has either accepted or declined the request. \nPrevious responder requests for a given target can be cancelled (preventing them from further notifying or escalating), with the [Cancel Responder Requests](openapiv3.json/paths/~1incidents~1{id}~1responder_requests~1cancel/put) endpoint.\n\nScoped OAuth requires: `incidents.write`\n",
+        "description": "Send a new responder request for the specified incident. This endpoint requires the account to have access to the [responder requests](https://support.pagerduty.com/main/docs/add-responders) feature.\n\n**Account Ability Requirement**: The account must have the `coordinated_responding` ability. Returns 402 Payment Required if the ability is missing. You can use the [List Abilities API](openapiv3.json/paths/~1abilities/get) to check account abilities.\n\nA user or an escalation policy can be requested. The responder targets will be notified via their high urgency notification rules, until the target user has either accepted or declined the request.\nPrevious responder requests for a given target can be cancelled (preventing them from further notifying or escalating), with the [Cancel Responder Requests](openapiv3.json/paths/~1incidents~1{id}~1responder_requests~1cancel/put) endpoint.\n\nScoped OAuth requires: `incidents.write`\n",
         "summary": "Create a responder request for an incident",
         "parameters": [
           {
@@ -51932,7 +52069,7 @@
         "operationId": "getSessionConfigurations",
         "x-pd-requires-scope": "session_configurations.read",
         "summary": "Get an account's session configurations",
-        "description": "<!-- theme: warning -->\n> ### Early Access\n\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header with the value of `session-configurations-early-access` to access it.\n\nRetrieves session configurations for a PagerDuty account. Returns an array containing\nthe requested configurations. If a specific type is requested, the array contains one item.\nIf no type is specified, the array contains all available configurations (mobile and web).\nIf no configurations exist, a 404 Not Found error will be returned.\n\nA Session Configuration needs to be created before it can be retrieved and used.\n\nScoped OAuth requires: `session_configurations.read`\n",
+        "description": "Retrieves session configurations for a PagerDuty account. Returns an array containing\nthe requested configurations. If a specific type is requested, the array contains one item.\nIf no type is specified, the array contains all available configurations (mobile and web).\nIf no configurations exist, a 404 Not Found error will be returned.\n\nA Session Configuration needs to be created before it can be retrieved and used.\n\nScoped OAuth requires: `session_configurations.read`\n",
         "tags": [
           "Session Configurations"
         ],
@@ -52039,7 +52176,7 @@
         "summary": "Configure an account's session configurations",
         "operationId": "updateSessionConfigurations",
         "x-pd-requires-scope": "session_configurations.write",
-        "description": "<!-- theme: warning -->\n> ### Early Access\n\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header with the value of `session-configurations-early-access` to access it.\n\nCreates or updates session configurations for a PagerDuty Account. The configurations will take effect immediately for new sessions, while existing sessions for the specified `types` are immediately revoked.\n\nScoped OAuth requires: `session_configurations.write`\n",
+        "description": "Creates or updates session configurations for a PagerDuty Account. The configurations will take effect immediately for new sessions, while existing sessions for the specified `types` are immediately revoked.\n\nScoped OAuth requires: `session_configurations.write`\n",
         "tags": [
           "Session Configurations"
         ],
@@ -52181,7 +52318,7 @@
         "summary": "Delete an account's session configurations.",
         "operationId": "deleteSessionConfigurations",
         "x-pd-requires-scope": "session_configurations.write",
-        "description": "<!-- theme: warning -->\n> ### Early Access\n\n> This endpoint is in Early Access and may change at any time. You must pass in the X-EARLY-ACCESS header with the value of `session-configurations-early-access` to access it.\n\nDeletes the session configurations for a PagerDuty account that was previously set.\nThe type parameter is required and specifies which configurations to delete.\nA single type ('mobile' or 'web') or comma-separated list may be passed in.\n\nScoped OAuth requires: `session_configurations.write`\n",
+        "description": "Deletes the session configurations for a PagerDuty account that was previously set.\nThe type parameter is required and specifies which configurations to delete.\nA single type ('mobile' or 'web') or comma-separated list may be passed in.\n\nScoped OAuth requires: `session_configurations.write`\n",
         "tags": [
           "Session Configurations"
         ],
@@ -58926,6 +59063,169 @@
         }
       }
     },
+    "/users/{id}/oauth_delegations": {
+      "description": "List a user's delegations.",
+      "get": {
+        "summary": "List a user's delegations",
+        "description": "Get a list of OAuth delegations for a specific user.\n\nThis endpoint replaces the deprecated `/users/{id}/sessions` endpoint.\n\n**Required OAuth Scope:** For Scoped OAuth requests, this operation requires the `oauth_delegations.read` scope.\n\nScoped OAuth requires: `oauth_delegations.read`\n",
+        "x-pd-requires-scope": "oauth_delegations.read",
+        "tags": [
+          "Users"
+        ],
+        "operationId": "listUserDelegations",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/oauth_delegation_filter_type"
+          },
+          {
+            "$ref": "#/components/parameters/oauth_delegation_status"
+          },
+          {
+            "$ref": "#/components/parameters/cursor_limit"
+          },
+          {
+            "$ref": "#/components/parameters/cursor_cursor"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Delegations retrieved sucessfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserOAuthDelegations"
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "oauth_delegations": [
+                        {
+                          "id": "e53326c6-a713-409c-8f7e-ps1xczid",
+                          "type": "web",
+                          "client_id": "PagerDutyLogin",
+                          "self": "https://api.pagerduty.com/users/PXPGF42/oauth_delegations/e53326c6-a713-409c-8f7e-ps1xczid",
+                          "created_at": "2026-01-01T12:00:00Z",
+                          "expires_at": "2026-01-08T12:00:00Z",
+                          "status": "issued",
+                          "scope": "openid profile"
+                        }
+                      ],
+                      "limit": 25,
+                      "more": false,
+                      "next_cursor": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/users/{id}/oauth_delegations/{delegation_id}": {
+      "description": "Retrieves details about a specific OAuth delegation.",
+      "get": {
+        "summary": "Get a user's delegation",
+        "description": "Get details about a specific OAuth delegation.\n\nThis endpoint replaces the deprecated `/users/{id}/sessions/{session_id}` endpoint.\n\n**Required OAuth Scope:** For Scoped OAuth requests, this operation requires the `oauth_delegations.read` scope.\n\nScoped OAuth requires: `oauth_delegations.read`\n",
+        "x-pd-requires-scope": "oauth_delegations.read",
+        "tags": [
+          "Users"
+        ],
+        "operationId": "getUserDelegation",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/oauth_delegation_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Delegation retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OAuthDelegation"
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "oauth_delegation": {
+                        "client_id": "PagerDutyLogin",
+                        "created_at": "2026-01-01T12:00:00Z",
+                        "expires_at": "2026-01-08T12:00:00Z",
+                        "id": "e53326c6-a713-409c-8f7e-ps1xczid",
+                        "scope": "openid profile",
+                        "self": "https://api.pagerduty.com/users/PXPGF42/oauth_delegations/e53326c6-a713-409c-8f7e-ps1xczid",
+                        "status": "issued",
+                        "type": "web"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
     "/users/{id}/license": {
       "description": "The License allocated to a User",
       "get": {
@@ -60208,8 +60508,9 @@
           "Users"
         ],
         "operationId": "getUserSessions",
-        "description": "List active sessions of a PagerDuty user.\n\nBeginning November 2021, active sessions no longer includes newly issued OAuth tokens.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#users)\n\nScoped OAuth requires: `users:sessions.read`\n",
+        "description": "<!-- theme: warning -->\n> ### Deprecated\n> This endpoint is deprecated, please use the [List OAuth Delegations endpoint](https://developer.pagerduty.com/api-reference/fc03ba9dffd1f-list-user-oauth-delegations) instead.\n\nList active sessions of a PagerDuty user.\n\nBeginning November 2021, active sessions no longer includes newly issued OAuth tokens.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#users)\n\nScoped OAuth requires: `users:sessions.read`\n",
         "summary": "List a user's active sessions",
+        "deprecated": true,
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -60323,8 +60624,9 @@
           "Users"
         ],
         "operationId": "getUserSession",
-        "description": "Get details about a user's session.\n\nBeginning November 2021, user sessions no longer includes newly issued OAuth tokens.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#users)\n\nScoped OAuth requires: `users:sessions.read`\n",
+        "description": "<!-- theme: warning -->\n> ### Deprecated\n> This endpoint is deprecated, please use the [Get OAuth Delegation endpoint](https://developer.pagerduty.com/api-reference//e3c7cd550aa2b-get-a-user-oauth-delegation) instead.\nGet details about a user's session.\n\nBeginning November 2021, user sessions no longer includes newly issued OAuth tokens.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#users)\n\nScoped OAuth requires: `users:sessions.read`\n",
         "summary": "Get a user's session",
+        "deprecated": true,
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
