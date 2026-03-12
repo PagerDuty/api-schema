@@ -2,6 +2,12 @@
 
 PagerDuty aims to have no breaking changes to its API. We do fix bugs and add new functionality continuously. This document serves as a reference for any bug fixes or additions to our API.
 
+### 2026-03-12
+- Added new SRE Agent endpoints for managing AI-powered incident knowledge:
+  - `GET /sre_agent/memories` - List SRE Agent memories (service runbooks, service profiles, incident playbooks, and incident summaries)
+  - `PUT /sre_agent/memories/{id}` - Update an SRE Agent memory
+  - `DELETE /sre_agent/memories/{id}` - Delete an SRE Agent memory
+
 ### 2026-03-02
 - Added new endpoints to get details on a user's OAuth delegations
   - List a user's delegations `GET /users/{id}/oauth_delegations`
