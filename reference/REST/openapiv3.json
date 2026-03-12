@@ -137,6 +137,10 @@
       "description": "Custom fields allow you to enrich PagerDuty services with critical and helpful metadata throughout the Service lifecycle.\n"
     },
     {
+      "name": "SRE Agent",
+      "description": "The SRE Agent uses AI to help manage and resolve incidents. Memories are knowledge learned by the SRE Agent from past incidents and conversations.\n"
+    },
+    {
       "name": "Webhooks",
       "description": "A webhook is a way to receive events that occur on the PagerDuty platform via an HTTP POST request.\nV3 webhooks are set up by creating a webhook subscription.\n"
     },
@@ -4263,6 +4267,50 @@
         "schema": {
           "type": "string",
           "example": "PagerDuty"
+        }
+      },
+      "sre_memories_service_id": {
+        "name": "service_id",
+        "in": "query",
+        "required": false,
+        "description": "Filter memories by service ID",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "sre_memories_incident_id": {
+        "name": "incident_id",
+        "in": "query",
+        "required": false,
+        "description": "Filter memories by incident ID",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "sre_memories_type": {
+        "name": "type",
+        "in": "query",
+        "required": false,
+        "description": "Filter memories by type",
+        "schema": {
+          "type": "string",
+          "enum": [
+            "runbook",
+            "service_profile",
+            "incident_playbook"
+          ]
+        }
+      },
+      "sre_memories_limit": {
+        "name": "limit",
+        "in": "query",
+        "description": "The number of results to return per page.",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100,
+          "default": "20 - incident_summary"
         }
       }
     },
@@ -13245,6 +13293,76 @@
         "required": [
           "user"
         ]
+      },
+      "SREMemory": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The unique identifier for this memory.",
+            "readOnly": true
+          },
+          "content": {
+            "type": "string",
+            "description": "The content of the SRE memory."
+          },
+          "attributes": {
+            "type": "object",
+            "description": "Additional attributes associated with this memory.",
+            "properties": {
+              "account_id": {
+                "type": "string",
+                "description": "The ID of the account this memory is associated with."
+              },
+              "service_id": {
+                "type": "string",
+                "description": "The ID of the service this memory is associated with."
+              },
+              "incident_id": {
+                "type": "string",
+                "description": "The ID of the incident this memory is associated with."
+              },
+              "type": {
+                "type": "string",
+                "description": "The type of memory.",
+                "enum": [
+                  "runbook",
+                  "service_profile",
+                  "incident_playbook",
+                  "incident_summary"
+                ]
+              }
+            }
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The date and time the memory was created.",
+            "readOnly": true
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The date and time the memory was last updated.",
+            "readOnly": true
+          }
+        },
+        "required": [
+          "type",
+          "content"
+        ],
+        "example": {
+          "attributes": {
+            "incident_id": "PX9LMN2",
+            "service_id": "PJYY37U",
+            "memory_type": "incident_summary"
+          },
+          "content": "Restarting the cache service resolved timeout errors on the payment service during the 2026-02-24 incident",
+          "created_at": "2026-02-24T17:15:42.123Z",
+          "id": "PM4QR2T",
+          "type": "sre_memory",
+          "updated_at": "2026-02-24T17:15:42.123Z"
+        }
       },
       "Standard": {
         "title": "Standard",
@@ -55609,6 +55727,279 @@
         "responses": {
           "204": {
             "description": "No Content"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        }
+      }
+    },
+    "/sre_agent/memories": {
+      "get": {
+        "x-pd-requires-scope": "incident.read",
+        "tags": [
+          "SRE Agent"
+        ],
+        "operationId": "listSreMemories",
+        "description": "Search SRE Agent memories for the account.\n\nMemories are knowledge learned by the SRE Agent, including service runbooks, service profiles,\nincident playbooks, and incident summaries. Filter by service ID, incident ID, or memory type to retrieve\nrelevant memories.\n\nScoped OAuth requires: `incident.read`\n",
+        "summary": "List SRE Agent memories",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/sre_memories_limit"
+          },
+          {
+            "$ref": "#/components/parameters/sre_memories_service_id"
+          },
+          {
+            "$ref": "#/components/parameters/sre_memories_incident_id"
+          },
+          {
+            "$ref": "#/components/parameters/sre_memories_type"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of SRE Agent memories.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "memories": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/SREMemory"
+                          }
+                        }
+                      },
+                      "required": [
+                        "memories"
+                      ]
+                    }
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "memories": [
+                        {
+                          "attributes": {
+                            "account_id": "PLHJ8WE",
+                            "service_id": "PJYY37U",
+                            "type": "service_profile"
+                          },
+                          "content": "The Payment Processing Service handles all transaction processing with a 99.9% SLA target. Primary dependencies include Redis cache and PostgreSQL database.",
+                          "created_at": "2026-02-23T19:53:19.268Z",
+                          "id": "PLHJ8WE",
+                          "updated_at": "2026-02-23T19:53:19.268Z"
+                        },
+                        {
+                          "attributes": {
+                            "account_id": "PLHJ8WE",
+                            "service_id": "PJYY37U",
+                            "type": "runbook"
+                          },
+                          "content": "To restart the Payment Processing Service, first drain traffic from the load balancer, then run 'systemctl restart payment-service', and verify health checks pass before restoring traffic.",
+                          "created_at": "2026-02-24T17:15:42.123Z",
+                          "id": "PM4QR2T",
+                          "updated_at": "2026-02-24T17:15:42.123Z"
+                        },
+                        {
+                          "attributes": {
+                            "account_id": "PLHJ8WE",
+                            "incident_id": "PX9LMN2",
+                            "service_id": "PJYY37U",
+                            "type": "incident_playbook"
+                          },
+                          "content": "For payment timeout incidents, check Redis cache connection pool first, then verify database query performance. Restart cache service if connection pool is exhausted.",
+                          "created_at": "2026-02-25T22:22:10.543Z",
+                          "id": "PQRS123",
+                          "updated_at": "2026-02-25T22:22:10.543Z"
+                        },
+                        {
+                          "attributes": {
+                            "account_id": "PLHJ8WE",
+                            "incident_id": "PX9LMN2",
+                            "service_id": "PJYY37U",
+                            "type": "incident_summary"
+                          },
+                          "content": "Payment service experienced timeout errors due to exhausted Redis connection pool. Resolved by restarting cache service and increasing pool size from 50 to 100 connections.",
+                          "created_at": "2026-02-26T00:45:30.123Z",
+                          "id": "PXYZ789",
+                          "updated_at": "2026-02-26T00:45:30.123Z"
+                        }
+                      ],
+                      "limit": 20
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        }
+      }
+    },
+    "/sre_agent/memories/{id}": {
+      "put": {
+        "x-pd-requires-scope": "sre_agent.write",
+        "tags": [
+          "SRE Agent"
+        ],
+        "operationId": "updateSreMemory",
+        "description": "Update an existing SRE Agent memory.\n\nScoped OAuth requires: `sre_agent.write`\n",
+        "summary": "Update an SRE Agent memory",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "memory": {
+                    "type": "object",
+                    "properties": {
+                      "content": {
+                        "type": "string",
+                        "description": "The content of the SRE memory."
+                      }
+                    },
+                    "required": [
+                      "content"
+                    ]
+                  }
+                },
+                "required": [
+                  "memory"
+                ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "memory": {
+                      "content": "Updated memory content - The database connection pool was increased to 100 connections to resolve performance issues during peak load."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "description": "The SRE Agent memory to be updated."
+        },
+        "responses": {
+          "200": {
+            "description": "The SRE Agent memory that was updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "memory": {
+                      "$ref": "#/components/schemas/SREMemory"
+                    }
+                  },
+                  "required": [
+                    "memory"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "memory": {
+                        "attributes": {
+                          "account_id": "PLHJ8WE",
+                          "service_id": "PJYY37U",
+                          "type": "service_runbook"
+                        },
+                        "content": "Updated memory content - The database connection pool was increased to 100 connections to resolve performance issues during peak load.",
+                        "created_at": "2026-02-23T19:53:19.268Z",
+                        "id": "PLHJ8WE",
+                        "type": "sre_memory",
+                        "updated_at": "2026-02-25T22:22:10.543Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        }
+      },
+      "delete": {
+        "x-pd-requires-scope": "sre_agent.write",
+        "tags": [
+          "SRE Agent"
+        ],
+        "operationId": "deleteSreMemory",
+        "description": "Permanently delete an SRE Agent memory.\n\nScoped OAuth requires: `sre_agent.write`\n",
+        "summary": "Delete an SRE Agent memory",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The SRE Agent memory was deleted successfully."
           },
           "401": {
             "$ref": "#/components/responses/Unauthorized"
