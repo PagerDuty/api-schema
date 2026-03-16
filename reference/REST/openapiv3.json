@@ -33138,7 +33138,7 @@
         ],
         "operationId": "listEventOrchestrationFeatureEnablements",
         "summary": "List Enablements for an Event Orchestration",
-        "description": "<!-- theme: warning -->\n> ### Limited GA\n> This feature is in Limited General Availability for some customers with the PagerDuty AIOps add-on. Please contact your account team or Support to request access.\n\nList all feature enablement settings for an Event Orchestration. Currently, only the `aiops` enablement is supported.\n\nFor any account with the AIOps product addon, every Event Orchestration will have AIOps features enabled by default.\n\n**Warning conditions**:\n- If the account is not entitled to use AIOps features, a warning will be returned alongside the enablement data.\n\nScoped OAuth requires: `event_orchestrations.read`\n",
+        "description": "List all feature enablement settings for an Event Orchestration. Currently, only the `aiops` enablement is supported.\n\nFor any account with the AIOps product addon, every Event Orchestration will have AIOps features enabled by default.\n\n**Warning conditions**:\n- If the account is not entitled to use AIOps features, a warning will be returned alongside the enablement data.\n\nScoped OAuth requires: `event_orchestrations.read`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -33202,7 +33202,7 @@
         ],
         "operationId": "updateEventOrchestrationFeatureEnablements",
         "summary": "Update an Enablement for an Event Orchestration",
-        "description": "<!-- theme: warning -->\n> ### Limited GA\n> This feature is in Limited General Availability for some customers with the PagerDuty AIOps add-on. Please contact your account team or Support to request access.\n\nUpdate the feature enablement setting for a specific product addon on an Event Orchestration. This setting controls enabling or disabling the set of features contained within the addon.\nCurrently, only `aiops` is supported as a valid feature enablement.\n\n**Warning conditions**:\n- If the account is not entitled to use AIOps features, the setting will be updated, but a warning will be returned.\n\nScoped OAuth requires: `event_orchestrations.write`\n",
+        "description": "Update the feature enablement setting for a specific product addon on an Event Orchestration. This setting controls enabling or disabling the set of features contained within the addon.\nCurrently, only `aiops` is supported as a valid feature enablement.\n\n**Warning conditions**:\n- If the account is not entitled to use AIOps features, the setting will be updated, but a warning will be returned.\n\nScoped OAuth requires: `event_orchestrations.write`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -52038,7 +52038,7 @@
         "x-pd-requires-scope": "services.read",
         "operationId": "listServiceFeatureEnablements",
         "summary": "Get Enablements for a Service",
-        "description": "<!-- theme: warning -->\n> ### Limited GA\n> This feature is in Limited General Availability for some customers with the PagerDuty AIOps add-on. Please contact your account team or Support to request access.\n\nList all feature enablement settings for a service. Currently, only the `aiops` enablement is supported.\n\nFor any account with the AIOps product addon, every service will have AIOps features enabled by default.\n\n**Warning conditions**:\n- If the account is not entitled to use AIOps features, a warning will be returned alongside the enablement data.\n\nScoped OAuth requires: `services.read`\n",
+        "description": "List all feature enablement settings for a service. Currently, only the `aiops` enablement is supported.\n\nFor any account with the AIOps product addon, every service will have AIOps features enabled by default.\n\n**Warning conditions**:\n- If the account is not entitled to use AIOps features, a warning will be returned alongside the enablement data.\n\nScoped OAuth requires: `services.read`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/id"
@@ -52102,7 +52102,7 @@
         "x-pd-requires-scope": "services.write",
         "operationId": "updateServiceFeatureEnablement",
         "summary": "Update an Enablement for a Service",
-        "description": "<!-- theme: warning -->\n> ### Limited GA\n> This feature is in Limited General Availability for some customers with the PagerDuty AIOps add-on. Please contact your account team or Support to request access.\n\nUpdate the feature enablement setting for a specific product addon on a service. This setting controls enabling or disabling the set of features contained within the addon.\nCurrently, only `aiops` is supported as a valid feature enablement.\n\n**Warning conditions**:\n- If the account is not entitled to use AIOps features, the setting will be updated, but a warning will be returned.\n\nScoped OAuth requires: `services.write`\n",
+        "description": "Update the feature enablement setting for a specific product addon on a service. This setting controls enabling or disabling the set of features contained within the addon.\nCurrently, only `aiops` is supported as a valid feature enablement.\n\n**Warning conditions**:\n- If the account is not entitled to use AIOps features, the setting will be updated, but a warning will be returned.\n\nScoped OAuth requires: `services.write`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/id"
