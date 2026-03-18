@@ -221,17 +221,52 @@ A Schedule determines the time periods that [Users](#users) are [On-Call.](#on-c
 
 Only [On-Call](#on-calls) [Users](#users) are eligible to receive [Notifications](#notifications) from [Incidents](#incidents).
 
-
 The details of the On-Call Schedule specify which single [User](#users) is [On-Call](#on-calls) for that Schedule at any given point in time.
-
-
-An On-Call Schedule consists of one or more [Schedule Layers](https://support.pagerduty.com/main/docs/schedule-basics#schedule-layers) that rotate a group of [Users](#users) through the same shift at a set interval.
-
 
 Schedules are used by [Escalation Policies](#escalation-policies) as an escalation target for a given [Escalation Rule](#escalation-rules).
 
+[*Read more about Schedules in the PagerDuty Knowledge Base*](https://support.pagerduty.com/main/docs/schedule-basics).
 
-[*Read more about On-Call Schedules in the PagerDuty Knowledge Base*](https://support.pagerduty.com/main/docs/schedule-basics).
+### V2 Layer-Based (Legacy Schedule)
+
+A V2 Schedule consists of one or more [Schedule Layers](https://support.pagerduty.com/main/docs/schedule-basics#schedule-layers) that rotate a group of [Users](#users) through the same shift at a set interval.
+
+V2 Schedules are accessed at `/schedules` and use the layer-based model for defining on-call rotations.
+
+### V3 Shift-Based (Flexible Schedule)
+
+Flexible Schedules (V3) introduce a more powerful and flexible model for on-call scheduling, replacing the previous layer-based model with a shift-based model.
+
+V3 Schedules are accessed at `/v3/schedules` and support multiple rotations running simultaneously under one schedule, time-based events that track configuration changes, custom shifts, and overrides.
+
+Flexible Schedules can support complex scheduling scenarios such as weekday/weekend coverage, 24-hour multi-shift coverage, and geography-based rotations.
+
+
+V3 is currently in Early Access. Register [here](https://www.pagerduty.com/early-access/), and contact your Customer Success Manager to confirm your enrollment.
+
+#### Rotations
+
+A Rotation is a container within a [Flexible Schedule](#v3-shift-based-flexible-schedule) that defines distinct configuration rules [Events](#events) for on-call coverage.
+
+Multiple rotations can run simultaneously under one schedule, each with its own settings, timezones, and team members. Rotations are made up of [Events](#events), which hold the scheduling rules effective for a period of time.
+
+Rotations enable complex scheduling scenarios such as weekday/weekend coverage, 24-hour multi-shift coverage, and geography-based rotations. A schedule can have a maximum of 10 active rotations.
+
+#### Events
+
+An Event represents a specific configuration of scheduling rules within a [Rotation](#rotations). It defines the actual configurations that put people on call. It contains rules on who is on-call, when they're on-call, how they rotate, and when these rules are effective.
+
+Events have different editing capabilities based on their state: past events are read-only, active events can only be ended, and future events are fully editable. This timeline integrity ensures configuration changes are tracked over time.
+
+A rotation can have up to 5 events, starting now or later. Past events are not counted towards this limit.
+
+
+#### Custom Shifts
+A Custom Shift is a standalone, one‑off shift added directly to a schedule, bypassing the Rotation mechanism. It explicitly defines start and end times and the assigned member (or an unassigned placeholder). Custom Shifts are suited for ad‑hoc coverage, maintenance windows, or cases where an external system determines on-call assignments and the schedule must reflect that source of truth. Custom Shifts bypass rotation logic but are included in the final schedule of shift assignments.
+
+#### Overrides
+An Override is a temporary substitution that changes the assigned on-call member for a defined time window without modifying the underlying configuration. In Flexible Schedules, an Override can target either a Rotation or a specific Custom Shift, replacing the originally assigned member only for the specified duration. This mechanism supports short-notice swaps, vacation coverage, or partial-day handoffs. An override sits on top of the custom shift or rotation being overridden, and the shift produced are included in the final schedule of shift assignments.
+
 
 ## Session Configurations
 
