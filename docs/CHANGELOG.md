@@ -2,6 +2,33 @@
 
 PagerDuty aims to have no breaking changes to its API. We do fix bugs and add new functionality continuously. This document serves as a reference for any bug fixes or additions to our API.
 
+### 2026-03-18
+- Added shift-based schedules endpoints in early access:
+  - `GET /v3/schedules`
+  - `POST /v3/schedules`
+  - `GET /v3/schedules/{id}`
+  - `PUT /v3/schedules/{id}`
+  - `DELETE /v3/schedules/{id}`
+  - `GET /v3/schedules/{id}/rotations`
+  - `POST /v3/schedules/{id}/rotations`
+  - `GET /v3/schedules/{id}/rotations/{rotation_id}`
+  - `DELETE /v3/schedules/{id}/rotations/{rotation_id}`
+  - `GET /v3/schedules/{id}/rotations/{rotation_id}/events`
+  - `POST /v3/schedules/{id}/rotations/{rotation_id}/events`
+  - `GET /v3/schedules/{id}/rotations/{rotation_id}/events/{event_id}`
+  - `PUT /v3/schedules/{id}/rotations/{rotation_id}/events/{event_id}`
+  - `DELETE /v3/schedules/{id}/rotations/{rotation_id}/events/{event_id}`
+  - `GET /v3/schedules/{id}/custom_shifts`
+  - `POST /v3/schedules/{id}/custom_shifts`
+  - `GET /v3/schedules/{id}/custom_shifts/{custom_shift_id}`
+  - `PUT /v3/schedules/{id}/custom_shifts/{custom_shift_id}`
+  - `DELETE /v3/schedules/{id}/custom_shifts/{custom_shift_id}`
+  - `GET /v3/schedules/{id}/overrides`
+  - `POST /v3/schedules/{id}/overrides`
+  - `GET /v3/schedules/{id}/overrides/{override_id}`
+  - `PUT /v3/schedules/{id}/overrides/{override_id}`
+  - `DELETE /v3/schedules/{id}/overrides/{override_id}`
+
 ### 2026-03-12
 - Removed the `Limited GA` banner from the Enablements endpoints, indicating that this feature is now generally available. Affects the following endpoints:
   - `GET /event_orchestrations/{id}/enablements`
