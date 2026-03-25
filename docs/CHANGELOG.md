@@ -2,6 +2,26 @@
 
 PagerDuty aims to have no breaking changes to its API. We do fix bugs and add new functionality continuously. This document serves as a reference for any bug fixes or additions to our API.
 
+### 2026-03-25
+- Increased Base Incident Type Custom Field limit from 30 enabled (35 including disabled) to 100 total fields for Enterprise Accounts.
+- Introduced new Custom Field type, Paragraph, which allows up to 2000 characters.
+- Introduced type-specific limits per Incident Type Hierarchy:
+  - Tag fields: 5 maximum
+  - Multiselect fields: 10 maximum
+  - URL fields: 10 maximum
+  - Paragraph fields: 5 maximum
+- Increased Tag field value length from 70 to 255 characters.
+- Increased Multiselect option value length from 70 to 100 characters.
+- Increased field options limit from 100 to 200 for Multiselect and Singleselect fields.
+- Enforcing Multiselect fields selection to a maximum of 100 value options out of a possible 200 options.
+- Enforcing Tag field values limit to 55 values.
+- Enhanced error messages to provide specific details when limits are exceeded.
+- These changes affect the following incident type custom field endpoints:
+  - `POST /incidents/types/{type_id_or_name}/custom_fields`
+  - `PUT /incidents/types/{type_id_or_name}/custom_fields/{field_id}`
+  - `POST /incidents/types/{type_id_or_name}/custom_fields/{field_id}/field_options`
+  - `PUT /incidents/types/{type_id_or_name}/custom_fields/{field_id}/field_options/{field_option_id}`
+
 ### 2026-03-18
 - Added shift-based schedules endpoints in early access:
   - `GET /v3/schedules`
