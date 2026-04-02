@@ -63473,7 +63473,19 @@
                         "id": "ABCDE12345FGHIJ67890KLMNO",
                         "type": "custom_shift",
                         "start_time": "2025-03-15T09:00:00Z",
-                        "end_time": "2025-03-15T17:00:00Z"
+                        "end_time": "2025-03-15T17:00:00Z",
+                        "assignments": [
+                          {
+                            "id": "AGOQEAQOOJ3UDGC22OGLXLIRY4",
+                            "member": {
+                              "type": "user_member",
+                              "user_id": "PNFNM8M"
+                            },
+                            "type": "shift_assignment"
+                          }
+                        ],
+                        "self": "https://api.pagerduty.com/v3/schedules/PI7DH85/custom_shifts/ABCDE12345FGHIJ67890KLMNO",
+                        "html_url": "https://subdomain.pagerduty.com/schedules/PI7DH85"
                       }
                     }
                   }
@@ -63562,7 +63574,19 @@
                         "id": "ABCDE12345FGHIJ67890KLMNO",
                         "type": "custom_shift",
                         "start_time": "2025-03-15T10:00:00Z",
-                        "end_time": "2025-03-15T18:00:00Z"
+                        "end_time": "2025-03-15T18:00:00Z",
+                        "assignments": [
+                          {
+                            "id": "AGOQEAQOOJ3UDGC22OGLXLIRY4",
+                            "member": {
+                              "type": "user_member",
+                              "user_id": "PNFNM8M"
+                            },
+                            "type": "shift_assignment"
+                          }
+                        ],
+                        "self": "https://api.pagerduty.com/v3/schedules/PI7DH85/custom_shifts/ABCDE12345FGHIJ67890KLMNO",
+                        "html_url": "https://subdomain.pagerduty.com/schedules/PI7DH85"
                       }
                     }
                   }
@@ -63592,7 +63616,7 @@
           "Schedules_v3"
         ],
         "summary": "Delete a custom shift",
-        "description": "<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: flexible-schedules-early-access` header on every request.\n\nDelete a custom shift by ID.\n",
+        "description": "<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: flexible-schedules-early-access` header on every request.\n\nDelete a custom shift by ID. When the shift is not started, it deletes the shift entirely. If the shift is already started, it sets the end_time to now. It returns Bad Request when shift is already ended.\n",
         "operationId": "deleteCustomShift",
         "parameters": [
           {
@@ -63608,6 +63632,9 @@
         "responses": {
           "204": {
             "description": "Custom shift deleted successfully"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
           },
           "401": {
             "$ref": "#/components/responses/Unauthorized"
