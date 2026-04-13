@@ -2,6 +2,15 @@
 
 PagerDuty aims to have no breaking changes to its API. We do fix bugs and add new functionality continuously. This document serves as a reference for any bug fixes or additions to our API.
 
+### 2026-04-02
+- Fixing documented request examples for the following notification rule endpoints:
+  - `POST /users/{id}/notification_rules`
+  - `PUT /users/{id}/notification_rules`
+  - `POST /users/{id}/oncall_handoff_notification_rules`
+  - `PUT /users/{id}/oncall_handoff_notification_rules`
+  - `POST /users/{id}/status_update_notification_rules`
+  - `PUT /users/{id}/status_update_notification_rules`
+
 ### 2026-03-25
 - Increased Base Incident Type Custom Field limit from 30 enabled (35 including disabled) to 100 total fields for Enterprise Accounts.
 - Introduced new Custom Field type, Paragraph, which allows up to 2000 characters.

@@ -60914,7 +60914,7 @@
                       "start_delay_in_minutes": 0,
                       "contact_method": {
                         "id": "PXPGF42",
-                        "type": "email_contact_method_reference"
+                        "type": "email_contact_method"
                       },
                       "urgency": "high"
                     }
@@ -61155,7 +61155,7 @@
                       "start_delay_in_minutes": 0,
                       "contact_method": {
                         "id": "PXPGF42",
-                        "type": "email_contact_method_reference"
+                        "type": "email_contact_method"
                       },
                       "urgency": "high"
                     }
@@ -61687,7 +61687,7 @@
                       "notify_advance_in_minutes": 180,
                       "contact_method": {
                         "id": "PXPGF42",
-                        "type": "email_contact_method_reference"
+                        "type": "email_contact_method"
                       }
                     }
                   }
@@ -61916,7 +61916,7 @@
                       "notify_advance_in_minutes": 60,
                       "contact_method": {
                         "id": "PXPGF42",
-                        "type": "email_contact_method_reference"
+                        "type": "email_contact_method"
                       }
                     }
                   }
@@ -62342,7 +62342,7 @@
                     "status_update_notification_rule": {
                       "contact_method": {
                         "id": "PXPGF42",
-                        "type": "email_contact_method_reference"
+                        "type": "email_contact_method"
                       }
                     }
                   }
@@ -62577,7 +62577,7 @@
                     "status_update_notification_rule": {
                       "contact_method": {
                         "id": "PXPGF42",
-                        "type": "email_contact_method_reference"
+                        "type": "email_contact_method"
                       }
                     }
                   }
