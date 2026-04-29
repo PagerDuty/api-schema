@@ -2,6 +2,26 @@
 
 PagerDuty aims to have no breaking changes to its API. We do fix bugs and add new functionality continuously. This document serves as a reference for any bug fixes or additions to our API.
 
+### 2026-04-29
+- Added resource references for the following shift-based schedules (early access) endpoints:
+  - `GET /v3/schedules`
+  - `GET /v3/schedules/{id}`
+  - `GET /v3/schedules/{id}/rotations`
+  - `GET /v3/schedules/{id}/rotations/{rotation_id}`
+  - `GET /v3/schedules/{id}/rotations/{rotation_id}/events`
+  - `GET /v3/schedules/{id}/rotations/{rotation_id}/events/{event_id}`
+  - `GET /v3/schedules/{id}/custom_shifts`
+  - `GET /v3/schedules/{id}/custom_shifts/{custom_shift_id}`
+  - `GET /v3/schedules/{id}/overrides`
+  - `GET /v3/schedules/{id}/overrides/{override_id}`
+
+- Added resource references for the following layer-based schedules (legacy) endpoints:
+  - `GET /schedules`
+  - `GET /schedules/{id}`
+  - `GET /schedules/{id}/audit/records`
+  - `GET /schedules/{id}/overrides`
+  - `GET /schedules/{id}/users`
+
 ### 2026-04-02
 - Fixing documented request examples for the following notification rule endpoints:
   - `POST /users/{id}/notification_rules`

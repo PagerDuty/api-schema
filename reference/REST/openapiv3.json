@@ -2691,7 +2691,8 @@
         "required": true,
         "schema": {
           "type": "string"
-        }
+        },
+        "example": "Q2MCMG5TVIV6LQ"
       },
       "team_ids": {
         "name": "team_ids[]",
@@ -3459,7 +3460,8 @@
         "schema": {
           "type": "string",
           "format": "date-time"
-        }
+        },
+        "example": "2026-04-01T00:00:00Z"
       },
       "until_schedules": {
         "name": "until",
@@ -3469,7 +3471,8 @@
         "schema": {
           "type": "string",
           "format": "date-time"
-        }
+        },
+        "example": "2026-05-30T00:00:00Z"
       },
       "editable_schedules": {
         "name": "editable",
@@ -3693,6 +3696,16 @@
           ],
           "default": "created_at:asc"
         }
+      },
+      "schedule_id": {
+        "name": "id",
+        "description": "The ID of the schedule.",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "example": "P2LJD7G"
       },
       "schedule_since": {
         "name": "since",
@@ -4324,7 +4337,8 @@
         "description": "The ID of the schedule.",
         "schema": {
           "type": "string"
-        }
+        },
+        "example": "PSJUKNI"
       },
       "schedule_v3_rotation_id": {
         "name": "rotation_id",
@@ -4333,7 +4347,8 @@
         "description": "The ID of the rotation.",
         "schema": {
           "type": "string"
-        }
+        },
+        "example": "AGO462IDT5ZMNFBVSROUDT6B4M"
       },
       "schedule_v3_event_id": {
         "name": "event_id",
@@ -4342,7 +4357,8 @@
         "description": "The ID of the event.",
         "schema": {
           "type": "string"
-        }
+        },
+        "example": "AGO462IDT55XVGN74FDAQUUNHY"
       },
       "schedule_v3_custom_shift_id": {
         "name": "custom_shift_id",
@@ -4351,7 +4367,8 @@
         "description": "The ID of the custom shift.",
         "schema": {
           "type": "string"
-        }
+        },
+        "example": "AGO4624VGZ44ZJDFTW5NSZ2CG4"
       },
       "schedule_v3_override_id": {
         "name": "override_id",
@@ -4360,7 +4377,8 @@
         "description": "The ID of the override.",
         "schema": {
           "type": "string"
-        }
+        },
+        "example": "AGO4642RBB5RBGG65Q6I5X34VI"
       },
       "schedule_v3_since": {
         "name": "since",
@@ -4458,7 +4476,7 @@
           "type": "string",
           "format": "date-time"
         },
-        "example": "2025-01-01T00:00:00Z"
+        "example": "2026-06-01T00:00:00Z"
       },
       "schedule_v3_until_required": {
         "name": "until",
@@ -4469,7 +4487,7 @@
           "type": "string",
           "format": "date-time"
         },
-        "example": "2025-01-31T23:59:59Z"
+        "example": "2026-06-28T23:59:59Z"
       },
       "schedule_v3_early_access": {
         "name": "X-EARLY-ACCESS",
@@ -47723,7 +47741,7 @@
             "$ref": "#/components/parameters/include_next_oncall_for_user"
           },
           {
-            "$ref": "#/components/parameters/id"
+            "$ref": "#/components/parameters/schedule_id"
           }
         ],
         "responses": {
@@ -48134,7 +48152,7 @@
             "$ref": "#/components/parameters/header_Content-Type"
           },
           {
-            "$ref": "#/components/parameters/id"
+            "$ref": "#/components/parameters/schedule_id"
           },
           {
             "$ref": "#/components/parameters/cursor_limit"
@@ -48207,7 +48225,7 @@
             "$ref": "#/components/parameters/header_Content-Type"
           },
           {
-            "$ref": "#/components/parameters/id"
+            "$ref": "#/components/parameters/schedule_id"
           },
           {
             "$ref": "#/components/parameters/since_schedules"
@@ -48520,7 +48538,7 @@
             "$ref": "#/components/parameters/header_Content-Type"
           },
           {
-            "$ref": "#/components/parameters/id"
+            "$ref": "#/components/parameters/schedule_id"
           },
           {
             "$ref": "#/components/parameters/since"
@@ -50280,7 +50298,7 @@
             "$ref": "#/components/parameters/header_Content-Type"
           },
           {
-            "$ref": "#/components/parameters/id"
+            "$ref": "#/components/parameters/schedule_id"
           },
           {
             "$ref": "#/components/parameters/cursor_limit"
