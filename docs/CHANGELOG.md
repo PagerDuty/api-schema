@@ -2,6 +2,10 @@
 
 PagerDuty aims to have no breaking changes to its API. We do fix bugs and add new functionality continuously. This document serves as a reference for any bug fixes or additions to our API.
 
+### 2026-05-07
+- Added shift-based schedules audit endpoint in early access:
+  - `GET /v3/schedules/{id}/audit/records`
+
 ### 2026-04-29
 - Added resource references for the following shift-based schedules (early access) endpoints:
   - `GET /v3/schedules`

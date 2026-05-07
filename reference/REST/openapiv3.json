@@ -63211,6 +63211,82 @@
         }
       }
     },
+    "/v3/schedules/{id}/audit/records": {
+      "description": "List audit records of changes made to the schedule.",
+      "get": {
+        "x-pd-requires-scope": "audit_records.read",
+        "tags": [
+          "Schedules_v3"
+        ],
+        "operationId": "listSchedulesAuditRecordsV3",
+        "summary": "List audit records for a schedule",
+        "description": "<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: flexible-schedules-early-access` header on every request.\n\n<!-- theme: info -->\n\n> **Important note:** Shift-based schedules use the V3 API and are not compatible with V2 automations. **To create automations for Shift-Based Schedules, you need to:**\n>\n> 1. **Update your automations** to use the V3 API for all new shift-based schedules\n> 2. **Keep the V2 endpoint** for your existing schedules\n>\n> An upgrade tool for existing schedules is coming soon; your legacy schedules will keep working in the meantime. [Learn more](https://support.pagerduty.com/main/docs/shift-based-schedules-api-upgrade-examples).\n\nThe returned records are sorted by the `execution_time` from newest to oldest.\n\nSee [`Cursor-based pagination`](https://developer.pagerduty.com/docs/rest-api-v2/pagination/) for instructions on how to paginate through the result set.\n\nFor more information see the [Audit API Document](https://developer.pagerduty.com/docs/rest-api-v2/audit-records-api/).\n\nScoped OAuth requires: `audit_records.read`\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/schedule_v3_early_access"
+          },
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/schedule_v3_id"
+          },
+          {
+            "$ref": "#/components/parameters/cursor_limit"
+          },
+          {
+            "$ref": "#/components/parameters/cursor_cursor"
+          },
+          {
+            "$ref": "#/components/parameters/audit_since"
+          },
+          {
+            "$ref": "#/components/parameters/audit_until"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Records matching the query criteria.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuditRecordResponseSchema"
+                },
+                "examples": {
+                  "response": {
+                    "$ref": "#/components/examples/AuditRecordScheduleResponse"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
     "/v3/schedules/{id}/custom_shifts": {
       "get": {
         "tags": [
