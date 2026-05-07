@@ -126,7 +126,7 @@
     },
     {
       "name": "Schedules_v3",
-      "description": "Shift-Based Schedules API. Creates and manages on-call schedules using a rotation and event model.\n\n\n<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: flexible-schedules-early-access` header on every request.\n"
+      "description": "Shift-Based Schedules API. Creates and manages on-call schedules using a rotation and event model.\n\n\n<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: flexible-schedules-early-access` header on every request.\n\n<!-- theme: info -->\n\n> **Important note:** Shift-based schedules use the V3 API and are not compatible with V2 automations. **To create automations for Shift-Based Schedules, you need to:**\n>\n> 1. **Update your automations** to use the V3 API for all new shift-based schedules\n> 2. **Keep the V2 endpoint** for your existing schedules\n>\n> An upgrade tool for existing schedules is coming soon; your legacy schedules will keep working in the meantime. [Learn more](https://support.pagerduty.com/main/docs/shift-based-schedules-api-upgrade-examples).\n"
     },
     {
       "name": "Service Dependencies",
@@ -62864,7 +62864,7 @@
           "Schedules_v3"
         ],
         "summary": "List schedules",
-        "description": "<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: flexible-schedules-early-access` header on every request.\n\nRetrieve a paginated list of schedule references. Returns lightweight\nobjects without embedded rotations or events.\n\nEach result is filtered by the caller's read permission; schedules the\ncaller cannot read are silently excluded.\n",
+        "description": "<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: flexible-schedules-early-access` header on every request.\n\n<!-- theme: info -->\n\n> **Important note:** Shift-based schedules use the V3 API and are not compatible with V2 automations. **To create automations for Shift-Based Schedules, you need to:**\n>\n> 1. **Update your automations** to use the V3 API for all new shift-based schedules\n> 2. **Keep the V2 endpoint** for your existing schedules\n>\n> An upgrade tool for existing schedules is coming soon; your legacy schedules will keep working in the meantime. [Learn more](https://support.pagerduty.com/main/docs/shift-based-schedules-api-upgrade-examples).\n\nRetrieve a paginated list of schedule references. Returns lightweight\nobjects without embedded rotations or events.\n\nEach result is filtered by the caller's read permission; schedules the\ncaller cannot read are silently excluded.\n",
         "operationId": "listSchedulesV3",
         "parameters": [
           {
@@ -62955,7 +62955,7 @@
           "Schedules_v3"
         ],
         "summary": "Create a schedule",
-        "description": "<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: flexible-schedules-early-access` header on every request.\n\nCreate a new on-call schedule with basic metadata. Rotations and events\nmust be added via separate API calls after creation.\n\n**Rejected fields:** `rotations` and `escalation_policies` are not\naccepted in the request body and will result in a 400 error.\n",
+        "description": "<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: flexible-schedules-early-access` header on every request.\n\n<!-- theme: info -->\n\n> **Important note:** Shift-based schedules use the V3 API and are not compatible with V2 automations. **To create automations for Shift-Based Schedules, you need to:**\n>\n> 1. **Update your automations** to use the V3 API for all new shift-based schedules\n> 2. **Keep the V2 endpoint** for your existing schedules\n>\n> An upgrade tool for existing schedules is coming soon; your legacy schedules will keep working in the meantime. [Learn more](https://support.pagerduty.com/main/docs/shift-based-schedules-api-upgrade-examples).\n\nCreate a new on-call schedule with basic metadata. Rotations and events\nmust be added via separate API calls after creation.\n\n**Rejected fields:** `rotations` and `escalation_policies` are not\naccepted in the request body and will result in a 400 error.\n",
         "operationId": "createScheduleV3",
         "requestBody": {
           "required": true,
@@ -63026,7 +63026,7 @@
           "Schedules_v3"
         ],
         "summary": "Get a schedule",
-        "description": "<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: flexible-schedules-early-access` header on every request.\n\nRetrieve a schedule by ID including rotations and events. Optionally\ninclude the computed final schedule for a time range.\n\nUse `include[]=final_schedule` to get computed on-call assignments.\nUse `since` and `until` to specify the time range.\n",
+        "description": "<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: flexible-schedules-early-access` header on every request.\n\n<!-- theme: info -->\n\n> **Important note:** Shift-based schedules use the V3 API and are not compatible with V2 automations. **To create automations for Shift-Based Schedules, you need to:**\n>\n> 1. **Update your automations** to use the V3 API for all new shift-based schedules\n> 2. **Keep the V2 endpoint** for your existing schedules\n>\n> An upgrade tool for existing schedules is coming soon; your legacy schedules will keep working in the meantime. [Learn more](https://support.pagerduty.com/main/docs/shift-based-schedules-api-upgrade-examples).\n\nRetrieve a schedule by ID including rotations and events. Optionally\ninclude the computed final schedule for a time range.\n\nUse `include[]=final_schedule` to get computed on-call assignments.\nUse `since` and `until` to specify the time range.\n",
         "operationId": "getScheduleV3",
         "parameters": [
           {
@@ -63095,7 +63095,7 @@
           "Schedules_v3"
         ],
         "summary": "Update a schedule",
-        "description": "<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: flexible-schedules-early-access` header on every request.\n\nUpdate schedule metadata (name, description, time zone). All fields are\noptional — only provided fields are updated.\n\nTo modify rotations or events, use their respective endpoints.\n\n**Rejected fields:** `rotations` and `escalation_policies` are not\naccepted and will result in a 400 error.\n",
+        "description": "<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: flexible-schedules-early-access` header on every request.\n\n<!-- theme: info -->\n\n> **Important note:** Shift-based schedules use the V3 API and are not compatible with V2 automations. **To create automations for Shift-Based Schedules, you need to:**\n>\n> 1. **Update your automations** to use the V3 API for all new shift-based schedules\n> 2. **Keep the V2 endpoint** for your existing schedules\n>\n> An upgrade tool for existing schedules is coming soon; your legacy schedules will keep working in the meantime. [Learn more](https://support.pagerduty.com/main/docs/shift-based-schedules-api-upgrade-examples).\n\nUpdate schedule metadata (name, description, time zone). All fields are\noptional — only provided fields are updated.\n\nTo modify rotations or events, use their respective endpoints.\n\n**Rejected fields:** `rotations` and `escalation_policies` are not\naccepted and will result in a 400 error.\n",
         "operationId": "updateScheduleV3",
         "parameters": [
           {
@@ -63182,7 +63182,7 @@
           "Schedules_v3"
         ],
         "summary": "Delete a schedule",
-        "description": "<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: flexible-schedules-early-access` header on every request.\n\nDelete a schedule and all associated rotations and events.\n\nIf the schedule is referenced by an active escalation policy, the\ndeletion will be rejected.\n",
+        "description": "<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: flexible-schedules-early-access` header on every request.\n\n<!-- theme: info -->\n\n> **Important note:** Shift-based schedules use the V3 API and are not compatible with V2 automations. **To create automations for Shift-Based Schedules, you need to:**\n>\n> 1. **Update your automations** to use the V3 API for all new shift-based schedules\n> 2. **Keep the V2 endpoint** for your existing schedules\n>\n> An upgrade tool for existing schedules is coming soon; your legacy schedules will keep working in the meantime. [Learn more](https://support.pagerduty.com/main/docs/shift-based-schedules-api-upgrade-examples).\n\nDelete a schedule and all associated rotations and events.\n\nIf the schedule is referenced by an active escalation policy, the\ndeletion will be rejected.\n",
         "operationId": "deleteScheduleV3",
         "parameters": [
           {
@@ -63217,7 +63217,7 @@
           "Schedules_v3"
         ],
         "summary": "List custom shifts",
-        "description": "<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: flexible-schedules-early-access` header on every request.\n\nRetrieve custom shifts for a schedule within a time range.\n\n**`since` and `until` are required.**\n",
+        "description": "<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: flexible-schedules-early-access` header on every request.\n\n<!-- theme: info -->\n\n> **Important note:** Shift-based schedules use the V3 API and are not compatible with V2 automations. **To create automations for Shift-Based Schedules, you need to:**\n>\n> 1. **Update your automations** to use the V3 API for all new shift-based schedules\n> 2. **Keep the V2 endpoint** for your existing schedules\n>\n> An upgrade tool for existing schedules is coming soon; your legacy schedules will keep working in the meantime. [Learn more](https://support.pagerduty.com/main/docs/shift-based-schedules-api-upgrade-examples).\n\nRetrieve custom shifts for a schedule within a time range.\n\n**`since` and `until` are required.**\n",
         "operationId": "listCustomShifts",
         "parameters": [
           {
@@ -63309,7 +63309,7 @@
           "Schedules_v3"
         ],
         "summary": "Create custom shifts",
-        "description": "<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: flexible-schedules-early-access` header on every request.\n\nCreate one or more custom shifts for a schedule. Custom shifts are\nad-hoc one-off coverage periods that exist outside of rotation events.\n\nEach custom shift requires exactly one assignment.\n",
+        "description": "<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: flexible-schedules-early-access` header on every request.\n\n<!-- theme: info -->\n\n> **Important note:** Shift-based schedules use the V3 API and are not compatible with V2 automations. **To create automations for Shift-Based Schedules, you need to:**\n>\n> 1. **Update your automations** to use the V3 API for all new shift-based schedules\n> 2. **Keep the V2 endpoint** for your existing schedules\n>\n> An upgrade tool for existing schedules is coming soon; your legacy schedules will keep working in the meantime. [Learn more](https://support.pagerduty.com/main/docs/shift-based-schedules-api-upgrade-examples).\n\nCreate one or more custom shifts for a schedule. Custom shifts are\nad-hoc one-off coverage periods that exist outside of rotation events.\n\nEach custom shift requires exactly one assignment.\n",
         "operationId": "createCustomShifts",
         "parameters": [
           {
@@ -63393,7 +63393,7 @@
           "Schedules_v3"
         ],
         "summary": "Get a custom shift",
-        "description": "<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: flexible-schedules-early-access` header on every request.\n\nRetrieve a single custom shift by ID.\n",
+        "description": "<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: flexible-schedules-early-access` header on every request.\n\n<!-- theme: info -->\n\n> **Important note:** Shift-based schedules use the V3 API and are not compatible with V2 automations. **To create automations for Shift-Based Schedules, you need to:**\n>\n> 1. **Update your automations** to use the V3 API for all new shift-based schedules\n> 2. **Keep the V2 endpoint** for your existing schedules\n>\n> An upgrade tool for existing schedules is coming soon; your legacy schedules will keep working in the meantime. [Learn more](https://support.pagerduty.com/main/docs/shift-based-schedules-api-upgrade-examples).\n\nRetrieve a single custom shift by ID.\n",
         "operationId": "getCustomShift",
         "parameters": [
           {
@@ -63469,7 +63469,7 @@
           "Schedules_v3"
         ],
         "summary": "Update a custom shift",
-        "description": "<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: flexible-schedules-early-access` header on every request.\n\nUpdate an existing custom shift.\n\nIf the shift has already started, only `end_time` can be modified.\n",
+        "description": "<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: flexible-schedules-early-access` header on every request.\n\n<!-- theme: info -->\n\n> **Important note:** Shift-based schedules use the V3 API and are not compatible with V2 automations. **To create automations for Shift-Based Schedules, you need to:**\n>\n> 1. **Update your automations** to use the V3 API for all new shift-based schedules\n> 2. **Keep the V2 endpoint** for your existing schedules\n>\n> An upgrade tool for existing schedules is coming soon; your legacy schedules will keep working in the meantime. [Learn more](https://support.pagerduty.com/main/docs/shift-based-schedules-api-upgrade-examples).\n\nUpdate an existing custom shift.\n\nIf the shift has already started, only `end_time` can be modified.\n",
         "operationId": "updateCustomShift",
         "parameters": [
           {
@@ -63573,7 +63573,7 @@
           "Schedules_v3"
         ],
         "summary": "Delete a custom shift",
-        "description": "<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: flexible-schedules-early-access` header on every request.\n\nDelete a custom shift by ID. When the shift is not started, it deletes the shift entirely. If the shift is already started, it sets the end_time to now. It returns Bad Request when shift is already ended.\n",
+        "description": "<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: flexible-schedules-early-access` header on every request.\n\n<!-- theme: info -->\n\n> **Important note:** Shift-based schedules use the V3 API and are not compatible with V2 automations. **To create automations for Shift-Based Schedules, you need to:**\n>\n> 1. **Update your automations** to use the V3 API for all new shift-based schedules\n> 2. **Keep the V2 endpoint** for your existing schedules\n>\n> An upgrade tool for existing schedules is coming soon; your legacy schedules will keep working in the meantime. [Learn more](https://support.pagerduty.com/main/docs/shift-based-schedules-api-upgrade-examples).\n\nDelete a custom shift by ID. When the shift is not started, it deletes the shift entirely. If the shift is already started, it sets the end_time to now. It returns Bad Request when shift is already ended.\n",
         "operationId": "deleteCustomShift",
         "parameters": [
           {
@@ -63614,7 +63614,7 @@
           "Schedules_v3"
         ],
         "summary": "List overrides",
-        "description": "<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: flexible-schedules-early-access` header on every request.\n\nRetrieve overrides for a schedule within a time range.\n\n**`since` and `until` are required.**\n",
+        "description": "<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: flexible-schedules-early-access` header on every request.\n\n<!-- theme: info -->\n\n> **Important note:** Shift-based schedules use the V3 API and are not compatible with V2 automations. **To create automations for Shift-Based Schedules, you need to:**\n>\n> 1. **Update your automations** to use the V3 API for all new shift-based schedules\n> 2. **Keep the V2 endpoint** for your existing schedules\n>\n> An upgrade tool for existing schedules is coming soon; your legacy schedules will keep working in the meantime. [Learn more](https://support.pagerduty.com/main/docs/shift-based-schedules-api-upgrade-examples).\n\nRetrieve overrides for a schedule within a time range.\n\n**`since` and `until` are required.**\n",
         "operationId": "listOverrides",
         "parameters": [
           {
@@ -63706,7 +63706,7 @@
           "Schedules_v3"
         ],
         "summary": "Create overrides",
-        "description": "<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: flexible-schedules-early-access` header on every request.\n\nCreate one or more overrides for a schedule. An override temporarily\nreplaces a scheduled on-call member with a different member for a\nspecific time period.\n\nEach override must reference either a `rotation_id` or a\n`custom_shift_id` (not both). The overriding member must belong to\nthe account.\n\n**Note:** The create response wraps the result in an `overrides` array.\nSingle-resource endpoints (get, update) wrap in `override` (singular).\n",
+        "description": "<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: flexible-schedules-early-access` header on every request.\n\n<!-- theme: info -->\n\n> **Important note:** Shift-based schedules use the V3 API and are not compatible with V2 automations. **To create automations for Shift-Based Schedules, you need to:**\n>\n> 1. **Update your automations** to use the V3 API for all new shift-based schedules\n> 2. **Keep the V2 endpoint** for your existing schedules\n>\n> An upgrade tool for existing schedules is coming soon; your legacy schedules will keep working in the meantime. [Learn more](https://support.pagerduty.com/main/docs/shift-based-schedules-api-upgrade-examples).\n\nCreate one or more overrides for a schedule. An override temporarily\nreplaces a scheduled on-call member with a different member for a\nspecific time period.\n\nEach override must reference either a `rotation_id` or a\n`custom_shift_id` (not both). The overriding member must belong to\nthe account.\n\n**Note:** The create response wraps the result in an `overrides` array.\nSingle-resource endpoints (get, update) wrap in `override` (singular).\n",
         "operationId": "createOverrides",
         "parameters": [
           {
@@ -63790,7 +63790,7 @@
           "Schedules_v3"
         ],
         "summary": "Get an override",
-        "description": "<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: flexible-schedules-early-access` header on every request.\n\nRetrieve a single override by ID.\n",
+        "description": "<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: flexible-schedules-early-access` header on every request.\n\n<!-- theme: info -->\n\n> **Important note:** Shift-based schedules use the V3 API and are not compatible with V2 automations. **To create automations for Shift-Based Schedules, you need to:**\n>\n> 1. **Update your automations** to use the V3 API for all new shift-based schedules\n> 2. **Keep the V2 endpoint** for your existing schedules\n>\n> An upgrade tool for existing schedules is coming soon; your legacy schedules will keep working in the meantime. [Learn more](https://support.pagerduty.com/main/docs/shift-based-schedules-api-upgrade-examples).\n\nRetrieve a single override by ID.\n",
         "operationId": "getOverride",
         "parameters": [
           {
@@ -63854,7 +63854,7 @@
           "Schedules_v3"
         ],
         "summary": "Update an override",
-        "description": "<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: flexible-schedules-early-access` header on every request.\n\nUpdate an existing override.\n",
+        "description": "<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: flexible-schedules-early-access` header on every request.\n\n<!-- theme: info -->\n\n> **Important note:** Shift-based schedules use the V3 API and are not compatible with V2 automations. **To create automations for Shift-Based Schedules, you need to:**\n>\n> 1. **Update your automations** to use the V3 API for all new shift-based schedules\n> 2. **Keep the V2 endpoint** for your existing schedules\n>\n> An upgrade tool for existing schedules is coming soon; your legacy schedules will keep working in the meantime. [Learn more](https://support.pagerduty.com/main/docs/shift-based-schedules-api-upgrade-examples).\n\nUpdate an existing override.\n",
         "operationId": "updateOverride",
         "parameters": [
           {
@@ -63941,7 +63941,7 @@
           "Schedules_v3"
         ],
         "summary": "Delete an override",
-        "description": "<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: flexible-schedules-early-access` header on every request.\n\nDelete an override by ID.\n",
+        "description": "<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: flexible-schedules-early-access` header on every request.\n\n<!-- theme: info -->\n\n> **Important note:** Shift-based schedules use the V3 API and are not compatible with V2 automations. **To create automations for Shift-Based Schedules, you need to:**\n>\n> 1. **Update your automations** to use the V3 API for all new shift-based schedules\n> 2. **Keep the V2 endpoint** for your existing schedules\n>\n> An upgrade tool for existing schedules is coming soon; your legacy schedules will keep working in the meantime. [Learn more](https://support.pagerduty.com/main/docs/shift-based-schedules-api-upgrade-examples).\n\nDelete an override by ID.\n",
         "operationId": "deleteOverride",
         "parameters": [
           {
@@ -63979,7 +63979,7 @@
           "Schedules_v3"
         ],
         "summary": "List rotations",
-        "description": "<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: flexible-schedules-early-access` header on every request.\n\nRetrieve all rotations for a schedule.\n",
+        "description": "<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: flexible-schedules-early-access` header on every request.\n\n<!-- theme: info -->\n\n> **Important note:** Shift-based schedules use the V3 API and are not compatible with V2 automations. **To create automations for Shift-Based Schedules, you need to:**\n>\n> 1. **Update your automations** to use the V3 API for all new shift-based schedules\n> 2. **Keep the V2 endpoint** for your existing schedules\n>\n> An upgrade tool for existing schedules is coming soon; your legacy schedules will keep working in the meantime. [Learn more](https://support.pagerduty.com/main/docs/shift-based-schedules-api-upgrade-examples).\n\nRetrieve all rotations for a schedule.\n",
         "operationId": "listRotations",
         "parameters": [
           {
@@ -64061,7 +64061,7 @@
           "Schedules_v3"
         ],
         "summary": "Create a rotation",
-        "description": "<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: flexible-schedules-early-access` header on every request.\n\nCreate a new empty rotation for a schedule. After creating a rotation,\nadd events to define the on-call pattern.\n\n**Note:** Rotations have no configuration of their own — all scheduling\nlogic (recurrence, assignment strategy, members) is specified on events.\nThe request body must be empty or `{}`.\n",
+        "description": "<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: flexible-schedules-early-access` header on every request.\n\n<!-- theme: info -->\n\n> **Important note:** Shift-based schedules use the V3 API and are not compatible with V2 automations. **To create automations for Shift-Based Schedules, you need to:**\n>\n> 1. **Update your automations** to use the V3 API for all new shift-based schedules\n> 2. **Keep the V2 endpoint** for your existing schedules\n>\n> An upgrade tool for existing schedules is coming soon; your legacy schedules will keep working in the meantime. [Learn more](https://support.pagerduty.com/main/docs/shift-based-schedules-api-upgrade-examples).\n\nCreate a new empty rotation for a schedule. After creating a rotation,\nadd events to define the on-call pattern.\n\n**Note:** Rotations have no configuration of their own — all scheduling\nlogic (recurrence, assignment strategy, members) is specified on events.\nThe request body must be empty or `{}`.\n",
         "operationId": "createRotation",
         "parameters": [
           {
@@ -64117,7 +64117,7 @@
           "Schedules_v3"
         ],
         "summary": "Get a rotation",
-        "description": "<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: flexible-schedules-early-access` header on every request.\n\nRetrieve a rotation by ID including all its events.\n",
+        "description": "<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: flexible-schedules-early-access` header on every request.\n\n<!-- theme: info -->\n\n> **Important note:** Shift-based schedules use the V3 API and are not compatible with V2 automations. **To create automations for Shift-Based Schedules, you need to:**\n>\n> 1. **Update your automations** to use the V3 API for all new shift-based schedules\n> 2. **Keep the V2 endpoint** for your existing schedules\n>\n> An upgrade tool for existing schedules is coming soon; your legacy schedules will keep working in the meantime. [Learn more](https://support.pagerduty.com/main/docs/shift-based-schedules-api-upgrade-examples).\n\nRetrieve a rotation by ID including all its events.\n",
         "operationId": "getRotation",
         "parameters": [
           {
@@ -64182,7 +64182,7 @@
           "Schedules_v3"
         ],
         "summary": "Delete a rotation",
-        "description": "<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: flexible-schedules-early-access` header on every request.\n\nDelete a rotation and all its events.\n\nOn deletion, past events are preserved in the audit history, the current\nactive event is truncated to the deletion time, and future events are\nremoved.\n",
+        "description": "<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: flexible-schedules-early-access` header on every request.\n\n<!-- theme: info -->\n\n> **Important note:** Shift-based schedules use the V3 API and are not compatible with V2 automations. **To create automations for Shift-Based Schedules, you need to:**\n>\n> 1. **Update your automations** to use the V3 API for all new shift-based schedules\n> 2. **Keep the V2 endpoint** for your existing schedules\n>\n> An upgrade tool for existing schedules is coming soon; your legacy schedules will keep working in the meantime. [Learn more](https://support.pagerduty.com/main/docs/shift-based-schedules-api-upgrade-examples).\n\nDelete a rotation and all its events.\n\nOn deletion, past events are preserved in the audit history, the current\nactive event is truncated to the deletion time, and future events are\nremoved.\n",
         "operationId": "deleteRotation",
         "parameters": [
           {
@@ -64220,7 +64220,7 @@
           "Schedules_v3"
         ],
         "summary": "List events",
-        "description": "<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: flexible-schedules-early-access` header on every request.\n\nRetrieve all events for a rotation, ordered by start time.\n",
+        "description": "<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: flexible-schedules-early-access` header on every request.\n\n<!-- theme: info -->\n\n> **Important note:** Shift-based schedules use the V3 API and are not compatible with V2 automations. **To create automations for Shift-Based Schedules, you need to:**\n>\n> 1. **Update your automations** to use the V3 API for all new shift-based schedules\n> 2. **Keep the V2 endpoint** for your existing schedules\n>\n> An upgrade tool for existing schedules is coming soon; your legacy schedules will keep working in the meantime. [Learn more](https://support.pagerduty.com/main/docs/shift-based-schedules-api-upgrade-examples).\n\nRetrieve all events for a rotation, ordered by start time.\n",
         "operationId": "listEvents",
         "parameters": [
           {
@@ -64300,7 +64300,7 @@
           "Schedules_v3"
         ],
         "summary": "Create an event",
-        "description": "<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: flexible-schedules-early-access` header on every request.\n\nCreate a new event that defines when and how users are on-call within\na rotation.\n\n**Constraints:**\n- Maximum 5 events per rotation\n- Events within a rotation cannot overlap\n- `effective_since` must be in the future (past values are clamped to now)\n- All users referenced in `assignment_strategy.members` must exist and\n  belong to the account\n",
+        "description": "<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: flexible-schedules-early-access` header on every request.\n\n<!-- theme: info -->\n\n> **Important note:** Shift-based schedules use the V3 API and are not compatible with V2 automations. **To create automations for Shift-Based Schedules, you need to:**\n>\n> 1. **Update your automations** to use the V3 API for all new shift-based schedules\n> 2. **Keep the V2 endpoint** for your existing schedules\n>\n> An upgrade tool for existing schedules is coming soon; your legacy schedules will keep working in the meantime. [Learn more](https://support.pagerduty.com/main/docs/shift-based-schedules-api-upgrade-examples).\n\nCreate a new event that defines when and how users are on-call within\na rotation.\n\n**Constraints:**\n- Maximum 5 events per rotation\n- Events within a rotation cannot overlap\n- `effective_since` must be in the future (past values are clamped to now)\n- All users referenced in `assignment_strategy.members` must exist and\n  belong to the account\n",
         "operationId": "createEvent",
         "parameters": [
           {
@@ -64428,7 +64428,7 @@
           "Schedules_v3"
         ],
         "summary": "Get an event",
-        "description": "<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: flexible-schedules-early-access` header on every request.\n\nRetrieve a specific event by ID.\n",
+        "description": "<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: flexible-schedules-early-access` header on every request.\n\n<!-- theme: info -->\n\n> **Important note:** Shift-based schedules use the V3 API and are not compatible with V2 automations. **To create automations for Shift-Based Schedules, you need to:**\n>\n> 1. **Update your automations** to use the V3 API for all new shift-based schedules\n> 2. **Keep the V2 endpoint** for your existing schedules\n>\n> An upgrade tool for existing schedules is coming soon; your legacy schedules will keep working in the meantime. [Learn more](https://support.pagerduty.com/main/docs/shift-based-schedules-api-upgrade-examples).\n\nRetrieve a specific event by ID.\n",
         "operationId": "getEvent",
         "parameters": [
           {
@@ -64492,7 +64492,7 @@
           "Schedules_v3"
         ],
         "summary": "Update an event",
-        "description": "<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: flexible-schedules-early-access` header on every request.\n\nUpdate an existing event.\n\n**Restrictions based on event timing:**\n- **Past events** (effective_until in the past): Cannot be modified\n- **Active events** (currently producing shifts): Can only update\n  `effective_until`\n- **Future events** (effective_since in the future): All fields can\n  be updated\n",
+        "description": "<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: flexible-schedules-early-access` header on every request.\n\n<!-- theme: info -->\n\n> **Important note:** Shift-based schedules use the V3 API and are not compatible with V2 automations. **To create automations for Shift-Based Schedules, you need to:**\n>\n> 1. **Update your automations** to use the V3 API for all new shift-based schedules\n> 2. **Keep the V2 endpoint** for your existing schedules\n>\n> An upgrade tool for existing schedules is coming soon; your legacy schedules will keep working in the meantime. [Learn more](https://support.pagerduty.com/main/docs/shift-based-schedules-api-upgrade-examples).\n\nUpdate an existing event.\n\n**Restrictions based on event timing:**\n- **Past events** (effective_until in the past): Cannot be modified\n- **Active events** (currently producing shifts): Can only update\n  `effective_until`\n- **Future events** (effective_since in the future): All fields can\n  be updated\n",
         "operationId": "updateEvent",
         "parameters": [
           {
@@ -64591,7 +64591,7 @@
           "Schedules_v3"
         ],
         "summary": "Delete an event",
-        "description": "<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: flexible-schedules-early-access` header on every request.\n\nDelete an event from a rotation.\n",
+        "description": "<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: flexible-schedules-early-access` header on every request.\n\n<!-- theme: info -->\n\n> **Important note:** Shift-based schedules use the V3 API and are not compatible with V2 automations. **To create automations for Shift-Based Schedules, you need to:**\n>\n> 1. **Update your automations** to use the V3 API for all new shift-based schedules\n> 2. **Keep the V2 endpoint** for your existing schedules\n>\n> An upgrade tool for existing schedules is coming soon; your legacy schedules will keep working in the meantime. [Learn more](https://support.pagerduty.com/main/docs/shift-based-schedules-api-upgrade-examples).\n\nDelete an event from a rotation.\n",
         "operationId": "deleteEvent",
         "parameters": [
           {
