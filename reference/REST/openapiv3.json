@@ -2546,7 +2546,8 @@
           "enum": [
             "services",
             "teams",
-            "targets"
+            "targets",
+            "escalation_rule_assignment_strategies"
           ],
           "uniqueItems": true
         }
