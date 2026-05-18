@@ -2,6 +2,9 @@
 
 PagerDuty aims to have no breaking changes to its API. We do fix bugs and add new functionality continuously. This document serves as a reference for any bug fixes or additions to our API.
 
+### 2026-05-18
+- Removed `X-EARLY-ACCESS` header requirement for all Shift-Based Schedules (v3) endpoints
+
 ### 2026-05-07
 - Added shift-based schedules audit endpoint in early access:
   - `GET /v3/schedules/{id}/audit/records`
