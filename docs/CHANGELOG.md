@@ -2,6 +2,14 @@
 
 PagerDuty aims to have no breaking changes to its API. We do fix bugs and add new functionality continuously. This document serves as a reference for any bug fixes or additions to our API.
 
+### 2026-05-26
+- Added IP Allow List management endpoints in early access:
+  - `POST /ip_allow_lists`
+  - `GET /ip_allow_lists`
+  - `GET /ip_allow_lists/{id}`
+  - `PUT /ip_allow_lists/{id}`
+  - `DELETE /ip_allow_lists/{id}`
+
 ### 2026-05-18
 - Removed `X-EARLY-ACCESS` header requirement for all Shift-Based Schedules (v3) endpoints
 
