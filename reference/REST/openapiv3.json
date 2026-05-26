@@ -89,6 +89,10 @@
       "description": "An Incident Workflow is a sequence of configurable Steps and associated Triggers that can execute automated Actions for a given Incident.\n"
     },
     {
+      "name": "IP Allow Lists",
+      "description": "Manage account-level IP Allow Lists that restrict access to your PagerDuty subdomain to a configured set of IPv4 CIDR ranges. Enforcement currently applies to web and mobile application traffic.\n\n\n<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: ip-allow-lists` header on every request, and your account must be enrolled in the IP Allow Lists Early Access program. Contact your PagerDuty account team to request access.\n"
+    },
+    {
       "name": "Licenses",
       "description": "Licenses are allocated to Users to allow for per-User access to PagerDuty functionality within an Account.\n"
     },
@@ -1506,6 +1510,26 @@
           ]
         }
       },
+      "IpAllowListResponse": {
+        "summary": "Example response",
+        "value": {
+          "ip_allow_list": {
+            "id": "AGIS47HYOV6BDODBTMQKMPQPHU",
+            "type": "ip_allow_list",
+            "state": "enabled",
+            "cidr_entries": [
+              {
+                "cidr": "192.168.1.0/24",
+                "description": "Office VPN"
+              },
+              {
+                "cidr": "10.0.0.0/24",
+                "description": "Data Center"
+              }
+            ]
+          }
+        }
+      },
       "CreateSubscriptionExample": {
         "summary": "Example",
         "value": {
@@ -2324,6 +2348,18 @@
         "name": "X-EARLY-ACCESS",
         "description": "This header indicates that this API endpoint is __UNDER CONSTRUCTION__ and may change at any time. You __MUST__ pass in this header with the value `status-dashboards`. Do not use this endpoint in production, as it may change!",
         "required": true
+      },
+      "ip_allow_list_early_access": {
+        "name": "X-EARLY-ACCESS",
+        "in": "header",
+        "required": true,
+        "description": "This API is currently in Early Access. You __MUST__ pass in this header with the value `ip-allow-lists`, and your account must be enrolled in the IP Allow Lists Early Access program. Contact your PagerDuty account team to request access.",
+        "schema": {
+          "type": "string",
+          "enum": [
+            "ip-allow-lists"
+          ]
+        }
       },
       "webhooks_filter_type": {
         "name": "filter_type",
@@ -15129,6 +15165,83 @@
             }
           }
         ]
+      },
+      "CidrEntry": {
+        "type": "object",
+        "description": "A single CIDR entry within an IP allow list.",
+        "required": [
+          "cidr"
+        ],
+        "properties": {
+          "cidr": {
+            "type": "string",
+            "description": "An IPv4 CIDR range. Each octet must be `0`-`255` and the mask must be between `1` and `32`.",
+            "pattern": "^((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)\\.){3}(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)/([1-9]|[12]\\d|3[0-2])$",
+            "example": "192.168.1.0/24"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true,
+            "description": "An optional human-readable description for the entry. Limited to 64 characters.",
+            "maxLength": 64,
+            "example": "Office VPN"
+          }
+        }
+      },
+      "IpAllowList": {
+        "type": "object",
+        "description": "An IP allow list restricts access to a PagerDuty account's subdomain to a set\nof IPv4 CIDR ranges. Enforcement currently applies to web and mobile\napplication traffic.\n",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the allow list\n(e.g. `AGIS47HYOV6BDODBTMQKMPQPHU`).\n",
+            "readOnly": true
+          },
+          "type": {
+            "type": "string",
+            "description": "A string that determines the schema of the object.",
+            "default": "ip_allow_list",
+            "enum": [
+              "ip_allow_list"
+            ],
+            "readOnly": true
+          },
+          "state": {
+            "type": "string",
+            "description": "Whether the allow list is enforced for the account. When `enabled`, only\nrequests from IPs matching one of the `cidr_entries` are permitted to\naccess the subdomain. When `disabled`, the allow list is stored but not\nenforced.\n",
+            "enum": [
+              "enabled",
+              "disabled"
+            ]
+          },
+          "cidr_entries": {
+            "type": "array",
+            "description": "The CIDR ranges that are allowed when the allow list is `enabled`. Must\nbe non-empty when `state` is `enabled`.\n",
+            "maxItems": 100,
+            "items": {
+              "$ref": "#/components/schemas/CidrEntry"
+            }
+          }
+        },
+        "required": [
+          "state",
+          "cidr_entries"
+        ],
+        "example": {
+          "id": "AGIS47HYOV6BDODBTMQKMPQPHU",
+          "type": "ip_allow_list",
+          "state": "enabled",
+          "cidr_entries": [
+            {
+              "cidr": "192.168.1.0/24",
+              "description": "Office VPN"
+            },
+            {
+              "cidr": "10.0.0.0/24",
+              "description": "Data Center"
+            }
+          ]
+        }
       },
       "StatusUpdate": {
         "type": "object",
@@ -44240,6 +44353,391 @@
           },
           "404": {
             "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/ip_allow_lists": {
+      "description": "Manage the account's IP Allow List.",
+      "post": {
+        "x-pd-requires-scope": "ip_allow_lists.write",
+        "tags": [
+          "IP Allow Lists"
+        ],
+        "summary": "Create an IP allow list",
+        "operationId": "createIpAllowList",
+        "description": "<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: ip-allow-lists` header on every request, and your account must be enrolled in the IP Allow Lists Early Access program. Contact your PagerDuty account team to request access.\n\nCreate the account's IP allow list.\n\nOnly Account Owners, Global Admins, and Account API Keys can call this endpoint.\n\nScoped OAuth requires: `ip_allow_lists.write`\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ip_allow_list_early_access"
+          },
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "ip_allow_list"
+                ],
+                "properties": {
+                  "ip_allow_list": {
+                    "$ref": "#/components/schemas/IpAllowList"
+                  }
+                }
+              },
+              "examples": {
+                "basic": {
+                  "summary": "Create an enabled allow list",
+                  "value": {
+                    "ip_allow_list": {
+                      "type": "ip_allow_list",
+                      "state": "enabled",
+                      "cidr_entries": [
+                        {
+                          "cidr": "192.168.1.0/24",
+                          "description": "Office VPN"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "IP allow list created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "ip_allow_list"
+                  ],
+                  "properties": {
+                    "ip_allow_list": {
+                      "$ref": "#/components/schemas/IpAllowList"
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "$ref": "#/components/examples/IpAllowListResponse"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "get": {
+        "x-pd-requires-scope": "ip_allow_lists.read",
+        "tags": [
+          "IP Allow Lists"
+        ],
+        "summary": "List IP allow lists",
+        "operationId": "listIpAllowLists",
+        "description": "<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: ip-allow-lists` header on every request, and your account must be enrolled in the IP Allow Lists Early Access program. Contact your PagerDuty account team to request access.\n\nReturn all IP allow lists for the account.\n\nOnly Account Owners, Global Admins, and Account API Keys can call this endpoint.\n\nScoped OAuth requires: `ip_allow_lists.read`\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ip_allow_list_early_access"
+          },
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "IP allow lists retrieved successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "ip_allow_lists"
+                  ],
+                  "properties": {
+                    "ip_allow_lists": {
+                      "type": "array",
+                      "maxItems": 1,
+                      "items": {
+                        "$ref": "#/components/schemas/IpAllowList"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Example response",
+                    "value": {
+                      "ip_allow_lists": [
+                        {
+                          "id": "AGIS47HYOV6BDODBTMQKMPQPHU",
+                          "type": "ip_allow_list",
+                          "state": "enabled",
+                          "cidr_entries": [
+                            {
+                              "cidr": "192.168.1.0/24",
+                              "description": "Office VPN"
+                            },
+                            {
+                              "cidr": "10.0.0.0/24",
+                              "description": "Data Center"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/ip_allow_lists/{id}": {
+      "description": "Manage a specific IP Allow List for the account.",
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/id"
+        }
+      ],
+      "get": {
+        "x-pd-requires-scope": "ip_allow_lists.read",
+        "tags": [
+          "IP Allow Lists"
+        ],
+        "summary": "Get an IP allow list",
+        "operationId": "getIpAllowList",
+        "description": "<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: ip-allow-lists` header on every request, and your account must be enrolled in the IP Allow Lists Early Access program. Contact your PagerDuty account team to request access.\n\nReturn the IP allow list with the given `id`.\n\nOnly Account Owners, Global Admins, and Account API Keys can call this endpoint.\n\nScoped OAuth requires: `ip_allow_lists.read`\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ip_allow_list_early_access"
+          },
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "IP allow list retrieved successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "ip_allow_list"
+                  ],
+                  "properties": {
+                    "ip_allow_list": {
+                      "$ref": "#/components/schemas/IpAllowList"
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "$ref": "#/components/examples/IpAllowListResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "put": {
+        "x-pd-requires-scope": "ip_allow_lists.write",
+        "tags": [
+          "IP Allow Lists"
+        ],
+        "summary": "Update an IP allow list",
+        "operationId": "updateIpAllowList",
+        "description": "<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: ip-allow-lists` header on every request, and your account must be enrolled in the IP Allow Lists Early Access program. Contact your PagerDuty account team to request access.\n\nUpdate the IP allow list with the given `id`. The request body fully replaces the writable fields.\n\nOnly Account Owners, Global Admins, and Account API Keys can call this endpoint.\n\nScoped OAuth requires: `ip_allow_lists.write`\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ip_allow_list_early_access"
+          },
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "ip_allow_list"
+                ],
+                "properties": {
+                  "ip_allow_list": {
+                    "$ref": "#/components/schemas/IpAllowList"
+                  }
+                }
+              },
+              "examples": {
+                "update": {
+                  "summary": "Replace the allow list entries",
+                  "value": {
+                    "ip_allow_list": {
+                      "type": "ip_allow_list",
+                      "state": "enabled",
+                      "cidr_entries": [
+                        {
+                          "cidr": "192.168.1.0/24",
+                          "description": "Office VPN"
+                        },
+                        {
+                          "cidr": "10.0.0.0/24",
+                          "description": "Data Center"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "IP allow list updated successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "ip_allow_list"
+                  ],
+                  "properties": {
+                    "ip_allow_list": {
+                      "$ref": "#/components/schemas/IpAllowList"
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "$ref": "#/components/examples/IpAllowListResponse"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "delete": {
+        "x-pd-requires-scope": "ip_allow_lists.write",
+        "tags": [
+          "IP Allow Lists"
+        ],
+        "summary": "Delete an IP allow list",
+        "operationId": "deleteIpAllowList",
+        "description": "<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: ip-allow-lists` header on every request, and your account must be enrolled in the IP Allow Lists Early Access program. Contact your PagerDuty account team to request access.\n\nDelete the IP allow list with the given `id`. Subsequent `GET` and `PUT` requests for the same `id` will return `404`. The list is no longer enforced once deleted.\n\nOnly Account Owners, Global Admins, and Account API Keys can call this endpoint.\n\nScoped OAuth requires: `ip_allow_lists.write`\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ip_allow_list_early_access"
+          },
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "IP allow list deleted successfully. No response body."
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
           },
           "500": {
             "$ref": "#/components/responses/InternalServerError"
