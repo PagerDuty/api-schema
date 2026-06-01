@@ -121,6 +121,10 @@
       "description": "A priority is a label representing the importance and impact of an incident. This feature is only available on Standard and Enterprise plans.\n"
     },
     {
+      "name": "Recommendations",
+      "description": "Recommendations allow you to view and act on AI-generated rule suggestions for your Event Orchestrations. Use these APIs to list recommended rules, accept them into your orchestration, or dismiss them with feedback.\n"
+    },
+    {
       "name": "Rulesets",
       "description": "Rulesets allow you to route events to an endpoint and create collections of Event Rules, which define sets of actions to take based on event content.\n"
     },
@@ -4525,6 +4529,78 @@
           "format": "date-time"
         },
         "example": "2026-06-28T23:59:59Z"
+      },
+      "recommendation_actions": {
+        "name": "actions[]",
+        "in": "query",
+        "required": false,
+        "description": "Filter recommended rules by action type.",
+        "explode": true,
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "suppress",
+              "severity",
+              "priority"
+            ]
+          },
+          "uniqueItems": true
+        }
+      },
+      "recommendation_limit": {
+        "name": "limit",
+        "in": "query",
+        "required": false,
+        "description": "The number of results per page.",
+        "schema": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 50,
+          "default": 25
+        }
+      },
+      "recommendation_service_id_query": {
+        "name": "service_id",
+        "in": "query",
+        "required": false,
+        "description": "Filter recommended rules for a single service. Cannot be combined with `service_ids[]`.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "recommendation_service_ids": {
+        "name": "service_ids[]",
+        "in": "query",
+        "required": false,
+        "description": "Filter recommended rules for multiple services. Cannot be combined with `service_id`.",
+        "explode": true,
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        }
+      },
+      "recommendation_id": {
+        "name": "recommendation_id",
+        "in": "path",
+        "required": true,
+        "description": "The recommendation ID (rule instance hash).",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "recommendation_rule_id": {
+        "name": "rule_id",
+        "in": "path",
+        "required": true,
+        "description": "The ID of the accepted rule.",
+        "schema": {
+          "type": "string"
+        }
       }
     },
     "requestBodies": {
@@ -5007,6 +5083,35 @@
             "examples": {
               "request": {
                 "$ref": "#/components/examples/CreateWorkflowIntegrationConnectionExample"
+              }
+            }
+          }
+        }
+      },
+      "RecommendationDismissRequest": {
+        "description": "A request to dismiss a recommended rule with feedback.",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/RecommendedRuleDecision"
+            },
+            "examples": {
+              "negative_feedback": {
+                "summary": "Request Example: Dismiss with negative feedback",
+                "value": {
+                  "decision": {
+                    "feedback": "negative"
+                  }
+                }
+              },
+              "positive_feedback": {
+                "summary": "Request Example: Dismiss with positive feedback",
+                "value": {
+                  "decision": {
+                    "feedback": "positive"
+                  }
+                }
               }
             }
           }
@@ -6090,6 +6195,88 @@
       },
       "WebhookNotFound": {
         "description": "The requested resource was not found."
+      },
+      "RecommendationListResponse": {
+        "description": "A list of recommended rules for the account's Service Event Orchestrations.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "recommended_rules": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RecommendedRule"
+                  }
+                },
+                "next_cursor": {
+                  "type": "string",
+                  "nullable": true,
+                  "description": "Cursor to retrieve the next page of results. Null if there are no more results."
+                }
+              }
+            },
+            "examples": {
+              "response": {
+                "summary": "Response Example",
+                "value": {
+                  "recommended_rules": [
+                    {
+                      "recommendation_id": "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4",
+                      "type": "service",
+                      "status": "available",
+                      "description": "Suppress alerts where event.summary matches 'disk usage'",
+                      "pcl_expr": "event.summary matches part 'disk usage'",
+                      "created_at": "2026-01-15T10:30:00Z",
+                      "updated_at": "2026-01-15T10:30:00Z",
+                      "metrics": {
+                        "num_events_matching_rule": 1200,
+                        "num_events_with_action": 950,
+                        "num_events_with_action_matching_rule": 900,
+                        "precision_metric": 0.75,
+                        "recall": 0.95
+                      },
+                      "actions": {
+                        "suppress": true
+                      },
+                      "parent": {
+                        "id": "P1ABC23",
+                        "type": "service_reference"
+                      }
+                    }
+                  ],
+                  "next_cursor": "eyJ2ZXJzaW9uIjoxLCJwYWdlIjoyLCJuZXh0X3JlY29tbWVuZGF0aW9uIjpudWxsfQ=="
+                }
+              }
+            }
+          }
+        }
+      },
+      "RecommendationActionResponse": {
+        "description": "Successful response confirming the action was applied.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "ok"
+                  ]
+                }
+              }
+            },
+            "examples": {
+              "response": {
+                "summary": "Response Example",
+                "value": {
+                  "status": "ok"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "securitySchemes": {
@@ -9025,6 +9212,158 @@
             "readOnly": true,
             "type": "integer",
             "description": "In order to ensure your Service has the optimal grouping window, we use data science to calculate your Service`s average Alert inter-arrival time. We encourage customer`s to use this value, please set `time_window` to 0 to use the `recommended_time_window`."
+          }
+        }
+      },
+      "RecommendedRule": {
+        "type": "object",
+        "description": "An AI-generated recommended rule for a Service Event Orchestration.",
+        "properties": {
+          "recommendation_id": {
+            "type": "string",
+            "description": "The unique identifier for this recommendation (rule instance hash).",
+            "readOnly": true,
+            "example": "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4"
+          },
+          "type": {
+            "type": "string",
+            "description": "The type of resource this recommendation applies to.",
+            "enum": [
+              "service"
+            ],
+            "readOnly": true
+          },
+          "status": {
+            "type": "string",
+            "description": "The availability status of the recommendation.",
+            "enum": [
+              "available"
+            ],
+            "readOnly": true
+          },
+          "description": {
+            "type": "string",
+            "description": "A human-readable description of what the recommended rule does.",
+            "example": "Suppress alerts where event.summary matches 'disk usage'"
+          },
+          "pcl_expr": {
+            "type": "string",
+            "description": "The PagerDuty Condition Language (PCL) expression that defines the rule's matching condition.",
+            "example": "event.summary matches part 'disk usage'"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The date/time the recommendation was created.",
+            "readOnly": true
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The date/time the recommendation was last updated.",
+            "readOnly": true
+          },
+          "metrics": {
+            "type": "object",
+            "description": "Performance metrics describing the recommendation's historical match rate and effectiveness.",
+            "readOnly": true,
+            "properties": {
+              "num_events_matching_rule": {
+                "type": "integer",
+                "description": "Total number of events that match the rule's condition."
+              },
+              "num_events_with_action": {
+                "type": "integer",
+                "description": "Total number of events that had the recommended action applied."
+              },
+              "num_events_with_action_matching_rule": {
+                "type": "integer",
+                "description": "Number of events that both match the condition and had the action applied."
+              },
+              "precision_metric": {
+                "type": "number",
+                "format": "float",
+                "description": "Fraction of events matching the rule that also had the action applied. Value between 0 and 1.",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "recall": {
+                "type": "number",
+                "format": "float",
+                "description": "Fraction of events with the action applied that also match the rule condition. Value between 0 and 1.",
+                "minimum": 0,
+                "maximum": 1
+              }
+            }
+          },
+          "actions": {
+            "type": "object",
+            "description": "The action the recommended rule would apply when its condition is matched. One of the following action types will be present.",
+            "properties": {
+              "suppress": {
+                "type": "boolean",
+                "description": "If true, matching events will be suppressed."
+              },
+              "severity": {
+                "type": "string",
+                "description": "Normalize the severity of matching events to this value.",
+                "enum": [
+                  "critical",
+                  "high",
+                  "warning",
+                  "info",
+                  "low"
+                ]
+              },
+              "priority": {
+                "type": "string",
+                "description": "The ID of the priority to assign to matching incidents."
+              }
+            }
+          },
+          "parent": {
+            "type": "object",
+            "description": "The service this recommendation applies to.",
+            "readOnly": true,
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "The obfuscated ID of the service.",
+                "example": "P1ABC23"
+              },
+              "type": {
+                "type": "string",
+                "description": "The type of the parent resource.",
+                "enum": [
+                  "service_reference"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "RecommendedRuleDecision": {
+        "type": "object",
+        "description": "A decision to dismiss a recommended rule, including feedback on its usefulness.",
+        "required": [
+          "decision"
+        ],
+        "properties": {
+          "decision": {
+            "type": "object",
+            "required": [
+              "feedback"
+            ],
+            "properties": {
+              "feedback": {
+                "type": "string",
+                "description": "Feedback on whether the recommendation was useful.\n- `positive`: The recommendation was relevant and useful.\n- `negative`: The recommendation was not relevant or not useful.\n",
+                "enum": [
+                  "positive",
+                  "negative"
+                ]
+              }
+            }
           }
         }
       },
@@ -66557,6 +66896,214 @@
           },
           "429": {
             "$ref": "#/components/responses/TooManyRequests"
+          }
+        }
+      }
+    },
+    "/recommendations/event_orchestrations/rules": {
+      "description": "List AI-generated recommended rules for Event Orchestrations.",
+      "get": {
+        "x-pd-requires-scope": "recommendations.read",
+        "tags": [
+          "Recommendations"
+        ],
+        "operationId": "listRecommendedRules",
+        "summary": "List recommended rules",
+        "description": "List AI-generated recommended rules available for an account's Service Event Orchestrations.\n\nResults can be filtered by service or team. Use cursor-based pagination to retrieve large result sets.\n\nNote: `service_id` and `service_ids[]` cannot be used together in the same request.\n\nScoped OAuth requires: `recommendations.read`\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/recommendation_service_id_query"
+          },
+          {
+            "$ref": "#/components/parameters/recommendation_service_ids"
+          },
+          {
+            "$ref": "#/components/parameters/team_ids"
+          },
+          {
+            "$ref": "#/components/parameters/recommendation_actions"
+          },
+          {
+            "$ref": "#/components/parameters/recommendation_limit"
+          },
+          {
+            "$ref": "#/components/parameters/cursor_cursor"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/RecommendationListResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/recommendations/event_orchestrations/services/{service_id}/rules/{recommendation_id}/dismiss": {
+      "description": "Dismiss an AI-generated recommended rule with feedback.",
+      "post": {
+        "x-pd-requires-scope": "recommendations.write",
+        "tags": [
+          "Recommendations"
+        ],
+        "operationId": "dismissRecommendedRule",
+        "summary": "Dismiss a recommended rule",
+        "description": "Dismiss a recommended rule for a service, recording feedback on whether the recommendation was useful.\n\nScoped OAuth requires: `recommendations.write`\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/service_id"
+          },
+          {
+            "$ref": "#/components/parameters/recommendation_id"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/RecommendationDismissRequest"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/RecommendationActionResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/recommendations/event_orchestrations/services/{service_id}/rules/{recommendation_id}/accept": {
+      "description": "Accept an AI-generated recommended rule and apply it to the service's Event Orchestration.",
+      "post": {
+        "x-pd-requires-scope": "recommendations.write",
+        "tags": [
+          "Recommendations"
+        ],
+        "operationId": "acceptRecommendedRule",
+        "summary": "Accept a recommended rule",
+        "description": "Accept a recommended rule and apply it to the service's Event Orchestration.\n\nScoped OAuth requires: `recommendations.write`\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/service_id"
+          },
+          {
+            "$ref": "#/components/parameters/recommendation_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/RecommendationActionResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/recommendations/event_orchestrations/services/{service_id}/accepted_rules/{rule_id}": {
+      "description": "Remove a previously accepted recommended rule from a service's Event Orchestration.",
+      "delete": {
+        "x-pd-requires-scope": "recommendations.write",
+        "tags": [
+          "Recommendations"
+        ],
+        "operationId": "deleteAcceptedRecommendedRule",
+        "summary": "Delete an accepted rule",
+        "description": "Remove a previously accepted recommended rule from a service's Event Orchestration.\n\nScoped OAuth requires: `recommendations.write`\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/service_id"
+          },
+          {
+            "$ref": "#/components/parameters/recommendation_rule_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/RecommendationActionResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           }
         }
       }
