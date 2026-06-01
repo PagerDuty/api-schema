@@ -2,6 +2,13 @@
 
 PagerDuty aims to have no breaking changes to its API. We do fix bugs and add new functionality continuously. This document serves as a reference for any bug fixes or additions to our API.
 
+### 2026-06-01
+- Added AI Orchestrations recommended rules endpoints:
+  - `GET /recommendations/event_orchestrations/rules`
+  - `POST /recommendations/event_orchestrations/services/{service_id}/rules/{recommendation_id}/dismiss`
+  - `POST /recommendations/event_orchestrations/services/{service_id}/rules/{recommendation_id}/accept`
+  - `DELETE /recommendations/event_orchestrations/services/{service_id}/accepted_rules/{rule_id}`
+
 ### 2026-05-26
 - Added IP Allow List management endpoints in early access:
   - `POST /ip_allow_lists`
