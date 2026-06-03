@@ -2,6 +2,10 @@
 
 PagerDuty aims to have no breaking changes to its API. We do fix bugs and add new functionality continuously. This document serves as a reference for any bug fixes or additions to our API.
 
+### 2026-06-02
+- Documented `team_ids[]` query parameter for `GET /schedules` (List Schedules)
+- Documented `team_ids[]`, `query`, and `total` query parameters for `GET /v3/schedules` (List Schedules v3)
+
 ### 2026-06-01
 - Added AI Orchestrations recommended rules endpoints:
   - `GET /recommendations/event_orchestrations/rules`
