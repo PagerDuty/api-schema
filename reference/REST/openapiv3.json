@@ -48203,6 +48203,9 @@
           },
           {
             "$ref": "#/components/parameters/schedule_until"
+          },
+          {
+            "$ref": "#/components/parameters/team_ids"
           }
         ],
         "responses": {
@@ -63697,6 +63700,15 @@
           },
           {
             "$ref": "#/components/parameters/schedule_v3_offset"
+          },
+          {
+            "$ref": "#/components/parameters/query"
+          },
+          {
+            "$ref": "#/components/parameters/offset_total"
+          },
+          {
+            "$ref": "#/components/parameters/team_ids"
           }
         ],
         "responses": {
@@ -63739,9 +63751,9 @@
                         {
                           "id": "PS1A2B3C",
                           "type": "schedule_v3_reference",
-                          "name": "Engineering On-Call",
                           "summary": "Engineering On-Call",
-                          "self": "https://api.pagerduty.com/v3/schedules/PS1A2B3C"
+                          "self": "https://api.pagerduty.com/v3/schedules/PS1A2B3C",
+                          "html_url": "https://subdomain.pagerduty.com/schedules/PS1A2B3C"
                         }
                       ],
                       "limit": 100,
