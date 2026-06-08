@@ -2013,7 +2013,8 @@
             "teams",
             "schedules",
             "escalation_policies",
-            "services"
+            "services",
+            "ip_allow_lists"
           ],
           "example": "users"
         }
@@ -45068,6 +45069,199 @@
           },
           "401": {
             "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/ip_allow_lists/{id}/audit/records": {
+      "description": "List audit records of changes made to the IP allow list.",
+      "get": {
+        "x-pd-requires-scope": "audit_records.read",
+        "tags": [
+          "IP Allow Lists"
+        ],
+        "operationId": "listIpAllowListAuditRecords",
+        "summary": "List audit records for an IP allow list",
+        "description": "<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: ip-allow-lists` header on every request, and your account must be enrolled in the IP Allow Lists Early Access program. Contact your PagerDuty account team to request access.\n\nThe response will include audit records with changes that are made to the given IP allow list.\n\nThe returned records are sorted by the `execution_time` from newest to oldest.\n\nSee [`Cursor-based pagination`](https://developer.pagerduty.com/docs/rest-api-v2/pagination/) for instructions on how to paginate through the result set.\n\nFor more information see the [Audit API Document](https://developer.pagerduty.com/docs/rest-api-v2/audit-records-api/).\n\nScoped OAuth requires: `audit_records.read`\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ip_allow_list_early_access"
+          },
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/cursor_limit"
+          },
+          {
+            "$ref": "#/components/parameters/cursor_cursor"
+          },
+          {
+            "$ref": "#/components/parameters/audit_since"
+          },
+          {
+            "$ref": "#/components/parameters/audit_until"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Records matching the query criteria.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuditRecordResponseSchema"
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "records": [
+                        {
+                          "id": "kRm-tyP",
+                          "action": "delete",
+                          "actors": [
+                            {
+                              "id": "P8AC329",
+                              "type": "api_key_reference"
+                            }
+                          ],
+                          "details": {
+                            "fields": [],
+                            "references": [],
+                            "resource": {
+                              "id": "B2KTPSXM5L42BFCNYJ73HRDQML",
+                              "type": "ip_allow_list_reference"
+                            }
+                          },
+                          "execution_context": {
+                            "request_id": "4e8c2a1f9b3d7e6c5a8b2c9d1e4f7a3b"
+                          },
+                          "execution_time": "2026-04-20T18:09:47.563218Z",
+                          "method": {
+                            "type": "api_token"
+                          },
+                          "root_resource": {
+                            "id": "B2KTPSXM5L42BFCNYJ73HRDQML",
+                            "type": "ip_allow_list_reference"
+                          }
+                        },
+                        {
+                          "id": "xQ4nVbS",
+                          "action": "update",
+                          "actors": [
+                            {
+                              "id": "P8AC329",
+                              "type": "api_key_reference"
+                            }
+                          ],
+                          "details": {
+                            "fields": [
+                              {
+                                "name": "state",
+                                "value": "enabled",
+                                "before_value": "disabled"
+                              }
+                            ],
+                            "references": [],
+                            "resource": {
+                              "id": "B2KTPSXM5L42BFCNYJ73HRDQML",
+                              "type": "ip_allow_list_reference"
+                            }
+                          },
+                          "execution_context": {
+                            "request_id": "7b3a9c1d2e5f8a4b6c9d0e1f2a3b4c5d"
+                          },
+                          "execution_time": "2026-04-16T09:51:33.207614Z",
+                          "method": {
+                            "type": "api_token"
+                          },
+                          "root_resource": {
+                            "id": "B2KTPSXM5L42BFCNYJ73HRDQML",
+                            "type": "ip_allow_list_reference"
+                          }
+                        },
+                        {
+                          "id": "Hf8-zEm",
+                          "action": "create",
+                          "actors": [
+                            {
+                              "id": "P8AC329",
+                              "type": "api_key_reference"
+                            }
+                          ],
+                          "details": {
+                            "fields": [
+                              {
+                                "name": "state",
+                                "value": "disabled",
+                                "before_value": null
+                              }
+                            ],
+                            "references": [
+                              {
+                                "name": "cidr_entries",
+                                "added": [
+                                  {
+                                    "id": "192.0.2.0/24",
+                                    "summary": "Example Office Network",
+                                    "type": "cidr_entry"
+                                  }
+                                ],
+                                "removed": []
+                              }
+                            ],
+                            "resource": {
+                              "id": "B2KTPSXM5L42BFCNYJ73HRDQML",
+                              "type": "ip_allow_list_reference"
+                            }
+                          },
+                          "execution_context": {
+                            "request_id": "2c9d1e4f7a3b6c5a8b2c9d1e4f7a3b6c"
+                          },
+                          "execution_time": "2026-04-15T14:22:18.412903Z",
+                          "method": {
+                            "type": "api_token"
+                          },
+                          "root_resource": {
+                            "id": "B2KTPSXM5L42BFCNYJ73HRDQML",
+                            "type": "ip_allow_list_reference"
+                          }
+                        }
+                      ],
+                      "limit": 10,
+                      "next_cursor": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "402": {
+            "$ref": "#/components/responses/PaymentRequired"
           },
           "403": {
             "$ref": "#/components/responses/Forbidden"

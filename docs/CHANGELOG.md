@@ -2,6 +2,11 @@
 
 PagerDuty aims to have no breaking changes to its API. We do fix bugs and add new functionality continuously. This document serves as a reference for any bug fixes or additions to our API.
 
+### 2026-06-08
+- Added `ip_allow_lists` to the `root_resource_types[]` filter on `GET /audit/records`
+- Added IP Allow Lists audit endpoint in early access:
+  - `GET /ip_allow_lists/{id}/audit/records`
+
 ### 2026-06-02
 - Documented `team_ids[]` query parameter for `GET /schedules` (List Schedules)
 - Documented `team_ids[]`, `query`, and `total` query parameters for `GET /v3/schedules` (List Schedules v3)
