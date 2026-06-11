@@ -21456,7 +21456,7 @@
           "shifts_per_member": {
             "type": "integer",
             "minimum": 1,
-            "description": "Required for `rotating_member_assignment_strategy`. Number of\nconsecutive shift occurrences each member covers before the\nnext member takes over.\n",
+            "description": "Required for `rotating_member_assignment_strategy`. Number of\nconsecutive shift occurrences each member covers before the\nnext member takes over.\n\n**UI editor constraint:** When `recurrence` uses `FREQ=WEEKLY`,\n`shifts_per_member` must be evenly divisible by the number of days\nlisted in the RRULE `BYDAY` parameter. Events that violate this\nare fully functional via the API but cannot be loaded in the\nweb schedule editor.\n",
             "example": 1
           },
           "members": {
@@ -21583,7 +21583,7 @@
                 "items": {
                   "type": "string"
                 },
-                "description": "RFC 5545 recurrence rules"
+                "description": "RFC 5545 recurrence rules. Must be an array containing exactly\none RRULE, zero or more EXDATE, and zero or more RDATE.\n\n**UI editor constraints:** The shift-based schedule editor can\nonly load an event when the RRULE satisfies all of the following:\n1. A `FREQ` parameter is present.\n2. `FREQ` is one of `WEEKLY`, `DAILY`, `MONTHLY`, or `HOURLY`.\n3. All `BYDAY` values are standard two-letter day codes\n   (`MO`, `TU`, `WE`, `TH`, `FR`, `SA`, `SU`).\n\nEvents that violate any condition display a\n\"can't be edited in the UI\" modal and must be managed via the API.\n"
               },
               "assignment_strategy": {
                 "$ref": "#/components/schemas/EventAssignmentStrategy"
@@ -21625,7 +21625,8 @@
                 "type": "array",
                 "items": {
                   "type": "string"
-                }
+                },
+                "description": "RFC 5545 recurrence rules. Must be an array containing exactly\none RRULE, zero or more EXDATE, and zero or more RDATE.\n\n**UI editor constraints:** The shift-based schedule editor can\nonly load an event when the RRULE satisfies all of the following:\n1. A `FREQ` parameter is present.\n2. `FREQ` is one of `WEEKLY`, `DAILY`, `MONTHLY`, or `HOURLY`.\n3. All `BYDAY` values are standard two-letter day codes\n   (`MO`, `TU`, `WE`, `TH`, `FR`, `SA`, `SU`).\n\nEvents that violate any condition display a\n\"can't be edited in the UI\" modal and must be managed via the API.\n"
               },
               "assignment_strategy": {
                 "$ref": "#/components/schemas/EventAssignmentStrategy"
