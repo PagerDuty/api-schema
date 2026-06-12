@@ -2,6 +2,9 @@
 
 PagerDuty aims to have no breaking changes to its API. We do fix bugs and add new functionality continuously. This document serves as a reference for any bug fixes or additions to our API.
 
+### 2026-06-12
+- Updated data availability note across all Analytics API endpoints. Replaced "Analytics data is updated periodically. It takes up to 24 hours before new incidents appear in the Analytics API." with "Data availability reflects pipeline processing cycles and is generally within 24 hours under normal conditions."
+
 ### 2026-06-11
 - Documented UI editor compatibility constraints for rotation event fields in `POST /v3/schedules/{id}/rotations/{rotation_id}/events` and `PUT /v3/schedules/{id}/rotations/{rotation_id}/events/{event_id}`:
   - `recurrence`: must be an array with exactly one RRULE; the RRULE must include a `FREQ` parameter set to one of `WEEKLY`, `DAILY`, `MONTHLY`, or `HOURLY`; all `BYDAY` values must be standard two-letter day codes
