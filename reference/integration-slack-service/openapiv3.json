@@ -688,6 +688,7 @@
         }
       },
       "post": {
+        "x-pd-requires-scope": "services.read users.read webhook_subscriptions.write priorities.read incidents.read",
         "tags": [
           "Slack Connections"
         ],
@@ -697,7 +698,7 @@
           }
         ],
         "summary": "Create a Slack Connection",
-        "description": "Creates a Slack Connection\n\n> ### Important\n>\n>  Make sure that your PagerDuty account is linked to your Slack workspace and your PagerDuty user is linked to your Slack user. You can do this on the Slack extension page in your PagerDuty account.\n",
+        "description": "Creates a Slack Connection\n\n> ### Important\n>\n>  Make sure that your PagerDuty account is linked to your Slack workspace and your PagerDuty user is linked to your Slack user. You can do this on the Slack extension page in your PagerDuty account.\n\nScoped OAuth requires: `services.read users.read webhook_subscriptions.write priorities.read incidents.read`\n",
         "operationId": "createConnection",
         "parameters": [
           {
