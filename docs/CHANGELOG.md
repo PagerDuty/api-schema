@@ -2,6 +2,12 @@
 
 PagerDuty aims to have no breaking changes to its API. We do fix bugs and add new functionality continuously. This document serves as a reference for any bug fixes or additions to our API.
 
+### 2026-06-25
+- Added MS Teams dedicated chat endpoints:
+  - `POST /integration-ms-teams/incidents/{incident_id}/dedicated_chat`
+  - `GET /integration-ms-teams/incidents/{incident_id}/dedicated_chat`
+  - `DELETE /integration-ms-teams/incidents/{incident_id}/dedicated_chat`
+
 ### 2026-06-11
 - Documented UI editor compatibility constraints for rotation event fields in `POST /v3/schedules/{id}/rotations/{rotation_id}/events` and `PUT /v3/schedules/{id}/rotations/{rotation_id}/events/{event_id}`:
   - `recurrence`: must be an array with exactly one RRULE; the RRULE must include a `FREQ` parameter set to one of `WEEKLY`, `DAILY`, `MONTHLY`, or `HOURLY`; all `BYDAY` values must be standard two-letter day codes
