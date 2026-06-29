@@ -19,6 +19,10 @@
     {
       "name": "MS Teams Meetings",
       "description": "Meetings for PagerDuty Incidents created in Microsoft Teams"
+    },
+    {
+      "name": "MS Teams Dedicated Chats",
+      "description": "Dedicated Microsoft Teams Group Chats for PagerDuty Incidents"
     }
   ],
   "security": [
@@ -27,6 +31,229 @@
     }
   ],
   "paths": {
+    "/incidents/{incident_id}/dedicated_chat": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/incident_id"
+        }
+      ],
+      "post": {
+        "tags": [
+          "MS Teams Dedicated Chats"
+        ],
+        "summary": "Create a Dedicated Chat",
+        "description": "Creates a Microsoft Teams Group Chat for the specified Incident and returns its details.\n\n> ### Important\n>\n>  Make sure that your PagerDuty account is connected to your MS Teams tenant and your\n>  PagerDuty user is linked to your MS Teams user. You can do this on the MS Teams\n>  add-on page in your PagerDuty account or by interacting with the PagerDuty bot\n>  in Microsoft Teams.\n",
+        "operationId": "createDedicatedChat",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1incidents~1%7Bincident_id%7D~1meeting/post/parameters/0"
+          },
+          {
+            "$ref": "#/paths/~1incidents~1%7Bincident_id%7D~1meeting/post/parameters/1"
+          },
+          {
+            "$ref": "#/components/parameters/incident_id"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "mst_tenant_id": {
+                    "title": "Microsoft Teams Tenant ID",
+                    "description": "ID of the Microsoft Teams tenant connected to PagerDuty.",
+                    "type": "string",
+                    "example": "dd649b90-2b30-45cb-a264-1130134c625e"
+                  },
+                  "owner_pd_user_id": {
+                    "title": "Owner PagerDuty User ID",
+                    "description": "PagerDuty User ID of the user whose MS Teams account should own the chat. Defaults to the requesting user.",
+                    "type": "string",
+                    "example": "PXXXXXX"
+                  },
+                  "chat": {
+                    "description": "Details of the Group Chat to be created in Microsoft Teams.",
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "description": "Name of the Group Chat in Microsoft Teams.",
+                        "type": "string",
+                        "example": "Incident #1234: Server Room is on Fire"
+                      }
+                    }
+                  },
+                  "events": {
+                    "description": "Preset name for the type of Incident updates to send to the chat. Valid values: highlights_only, status_updates_only, all_updates, no_updates. Defaults to all_updates.",
+                    "type": "string",
+                    "example": "all_updates"
+                  }
+                },
+                "required": [
+                  "mst_tenant_id"
+                ]
+              },
+              "examples": {
+                "Request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "mst_tenant_id": "dd649b90-2b30-45cb-a264-1130134c625e",
+                    "chat": {
+                      "name": "Incident #1234: Server Room is on Fire"
+                    },
+                    "events": "all_updates"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Returns details of the Group Chat created in Microsoft Teams.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "chat": {
+                      "$ref": "#/components/schemas/Chat"
+                    }
+                  },
+                  "required": [
+                    "chat"
+                  ]
+                },
+                "examples": {
+                  "Response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "chat": {
+                        "name": "Incident #1234: Server Room is on Fire",
+                        "url": "https://teams.microsoft.com/l/chat/19%3Ameeting_xyz%40thread.v2/0"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "MS Teams Dedicated Chats"
+        ],
+        "summary": "Get a Dedicated Chat",
+        "description": "Retrieves the Microsoft Teams Group Chat details for the specified Incident.",
+        "operationId": "getDedicatedChat",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1incidents~1%7Bincident_id%7D~1meeting/post/parameters/0"
+          },
+          {
+            "$ref": "#/components/parameters/incident_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the Group Chat details for the specified Incident.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "chat": {
+                      "$ref": "#/components/schemas/Chat"
+                    },
+                    "tenant_id": {
+                      "type": "string",
+                      "description": "MS Teams Tenant ID associated with the chat.",
+                      "example": "dd649b90-2b30-45cb-a264-1130134c625e"
+                    }
+                  },
+                  "required": [
+                    "chat",
+                    "tenant_id"
+                  ]
+                },
+                "examples": {
+                  "Response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "chat": {
+                        "name": "Incident #1234: Server Room is on Fire",
+                        "url": "https://teams.microsoft.com/l/chat/19%3Ameeting_xyz%40thread.v2/0"
+                      },
+                      "tenant_id": "dd649b90-2b30-45cb-a264-1130134c625e"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "MS Teams Dedicated Chats"
+        ],
+        "summary": "Delete a Dedicated Chat",
+        "description": "Deletes the Microsoft Teams Group Chat for the specified Incident.",
+        "operationId": "deleteDedicatedChat",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1incidents~1%7Bincident_id%7D~1meeting/post/parameters/0"
+          },
+          {
+            "$ref": "#/components/parameters/incident_id"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The Group Chat was deleted successfully."
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
     "/incidents/{incident_id}/meeting": {
       "parameters": [
         {
@@ -35,7 +262,7 @@
       ],
       "post": {
         "tags": [
-          "MS Teams Meeting"
+          "MS Teams Meetings"
         ],
         "summary": "Create a Meeting",
         "description": "Creates a meeting in Microsoft Teams and attaches it to the conference bridge details of the Incident.\n\n> ### Important\n>\n>  Make sure that your PagerDuty account is connected to your MS Teams team and your\n>  PagerDuty user is linked to your MS Teams user. You can do this on the MS Teams\n>  add-on page in your PagerDuty account or by interacting with the PagerDuty bot\n>  in Microsoft Teams.\n>\n>  Also, to create meetings you have to be authorized in Microsoft Graph. Type\n>  `graphAuth` in a personal chat with the PagerDuty bot to pass the authorization.\n",
@@ -211,9 +438,69 @@
             }
           }
         }
+      },
+      "BadRequest": {
+        "description": "The request was malformed or invalid.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "examples": {
+              "BadRequest": {
+                "summary": "Bad Request",
+                "value": {
+                  "error": {
+                    "message": "Bad Request"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "Conflict": {
+        "description": "A dedicated chat already exists for the specified Incident.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "examples": {
+              "Conflict": {
+                "summary": "Conflict",
+                "value": {
+                  "error": {
+                    "message": "The incident chat group already exists."
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
     "schemas": {
+      "Chat": {
+        "description": "Microsoft Teams Group Chat details.",
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the Group Chat in Microsoft Teams.",
+            "example": "Incident #1234: Server Room is on Fire"
+          },
+          "url": {
+            "type": "string",
+            "description": "URL to open the Group Chat in Microsoft Teams.",
+            "example": "https://teams.microsoft.com/l/chat/19%3Ameeting_xyz%40thread.v2/0"
+          }
+        },
+        "required": [
+          "name",
+          "url"
+        ]
+      },
       "Meeting": {
         "description": "Microsoft Teams meeting details.",
         "type": "object",

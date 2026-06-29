@@ -2,6 +2,17 @@
 
 PagerDuty aims to have no breaking changes to its API. We do fix bugs and add new functionality continuously. This document serves as a reference for any bug fixes or additions to our API.
 
+### 2026-06-29
+- Documented behavior for accounts using the New Slack Configuration on the following Slack Connections endpoints:
+  - `GET /workspaces/{slack_team_id}/connections` and `GET /workspaces/{slack_team_id}/connections/{connection_id}`: the `config.urgency` and `config.priorities` fields reflect the values last written through the REST API. Changes made through the Slack web UI will not be reflected in these fields.
+  - `PUT /workspaces/{slack_team_id}/connections/{connection_id}`: submitting this request rebuilds the channel's PCL filter from the `config.urgency` and `config.priorities` values in the payload. Any PCL conditions previously configured through the Slack web UI will be overridden.
+
+### 2026-06-25
+- Added MS Teams dedicated chat endpoints:
+  - `POST /integration-ms-teams/incidents/{incident_id}/dedicated_chat`
+  - `GET /integration-ms-teams/incidents/{incident_id}/dedicated_chat`
+  - `DELETE /integration-ms-teams/incidents/{incident_id}/dedicated_chat`
+
 ### 2026-06-11
 - Documented UI editor compatibility constraints for rotation event fields in `POST /v3/schedules/{id}/rotations/{rotation_id}/events` and `PUT /v3/schedules/{id}/rotations/{rotation_id}/events/{event_id}`:
   - `recurrence`: must be an array with exactly one RRULE; the RRULE must include a `FREQ` parameter set to one of `WEEKLY`, `DAILY`, `MONTHLY`, or `HOURLY`; all `BYDAY` values must be standard two-letter day codes
