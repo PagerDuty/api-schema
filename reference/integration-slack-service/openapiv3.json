@@ -591,7 +591,7 @@
           }
         ],
         "summary": "List Slack Connections",
-        "description": "Returns a list of Slack Connections.",
+        "description": "Returns a list of Slack Connections.\n\n> **Note:** For accounts using the New Slack Configuration, the `config.urgency` and `config.priorities` fields reflect the values last written through the REST API. If the connection's channel conditions were subsequently modified through the Slack web UI, those changes will not be reflected in these fields.\n",
         "operationId": "getConnections",
         "parameters": [
           {
@@ -872,7 +872,7 @@
       "get": {
         "summary": "Get a Slack Connection",
         "operationId": "getConnection",
-        "description": "Get details about an existing Slack Connection.",
+        "description": "Get details about an existing Slack Connection.\n\n> **Note:** For accounts using the New Slack Configuration, the `config.urgency` and `config.priorities` fields reflect the values last written through the REST API. If the connection's channel conditions were subsequently modified through the Slack web UI, those changes will not be reflected in these fields.\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/slack_team_id"
@@ -966,7 +966,7 @@
           }
         ],
         "summary": "Update a Slack Connection",
-        "description": "Update an existing Slack Connection.",
+        "description": "Update an existing Slack Connection.\n\n> **Note:** For accounts using the New Slack Configuration, submitting this request rebuilds the channel's PCL (PagerDuty Condition Language) filter from the `config.urgency` and `config.priorities` values in the request payload. Any PCL conditions previously configured through the Slack web UI will be overridden.\n",
         "operationId": "updateConnection",
         "parameters": [
           {
