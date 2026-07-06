@@ -2,7 +2,7 @@
 
 PagerDuty aims to have no breaking changes to its API. We do fix bugs and add new functionality continuously. This document serves as a reference for any bug fixes or additions to our API.
 
-### 2026-07-06
+### 2026-XX-XX
 - Added Event Enrichment endpoints in early access:
   - `GET /enrichment/event_enrichments`
   - `POST /enrichment/event_enrichments`
