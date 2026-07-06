@@ -61,6 +61,10 @@
       "description": "Escalation policies define which user should be alerted at which time.\n"
     },
     {
+      "name": "Event Enrichments",
+      "description": "Event Enrichments allow you to automatically add contextual data to events as they're ingested, so that relevant information is available throughout the event, alert, and incident lifecycle. By leveraging the Contextual Data Platform (CDP), you can define rules that extract values from events or query enrichment schemas to populate event fields.\n\n<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time before General Availability. Contact your PagerDuty account team to request access.\n"
+    },
+    {
       "name": "Event Orchestrations",
       "description": "Event Orchestrations allow you to route events to an endpoint and create collections of Event Orchestrations, which define sets of actions to take based on event content.\n"
     },
@@ -4602,6 +4606,44 @@
         "schema": {
           "type": "string"
         }
+      },
+      "event_enrichment_id": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "description": "The ID of the Event Enrichment.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "enrichment_association_type": {
+        "name": "association_type",
+        "in": "query",
+        "required": false,
+        "description": "Filter associations by type. Either \"service\" or \"event_orchestration\".",
+        "schema": {
+          "type": "string",
+          "enum": [
+            "service",
+            "event_orchestration"
+          ]
+        }
+      },
+      "enrichment_include": {
+        "name": "include[]",
+        "in": "query",
+        "required": false,
+        "description": "Include additional details. Supported value is \"privileges\".",
+        "explode": true,
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "privileges"
+            ]
+          }
+        }
       }
     },
     "requestBodies": {
@@ -5112,6 +5154,275 @@
                   "decision": {
                     "feedback": "positive"
                   }
+                }
+              }
+            }
+          }
+        }
+      },
+      "EventEnrichmentPostRequest": {
+        "description": "The Event Enrichment to create.",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "event_enrichment"
+              ],
+              "properties": {
+                "event_enrichment": {
+                  "$ref": "#/components/schemas/EventEnrichment"
+                }
+              }
+            },
+            "examples": {
+              "basic": {
+                "summary": "Create a new Event Enrichment",
+                "value": {
+                  "event_enrichment": {
+                    "name": "1st Event Enrichment",
+                    "description": "My very first EE!",
+                    "team": {
+                      "id": "PA5JAKW"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "EventEnrichmentPutRequest": {
+        "description": "The Event Enrichment fields to update.",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "event_enrichment"
+              ],
+              "properties": {
+                "event_enrichment": {
+                  "$ref": "#/components/schemas/EventEnrichment"
+                }
+              }
+            },
+            "examples": {
+              "basic": {
+                "summary": "Update an Event Enrichment",
+                "value": {
+                  "event_enrichment": {
+                    "name": "Event Enrichment - Updated Name",
+                    "description": "New Description",
+                    "team": {
+                      "id": "PUBG4NJ"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "EventEnrichmentDefaultPutRequest": {
+        "description": "The Event Enrichment to set as the account default. Set to `default: null` to clear the current default.",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "default": {
+                  "nullable": true,
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/EventEnrichmentReference"
+                    }
+                  ]
+                }
+              }
+            },
+            "examples": {
+              "set_default": {
+                "summary": "Set a new account default",
+                "value": {
+                  "default": {
+                    "id": "AGN4PVDO2F5AZIVWETZ42I6IP4",
+                    "type": "event_enrichment_reference"
+                  }
+                }
+              },
+              "clear_default": {
+                "summary": "Clear the current account default",
+                "value": {
+                  "default": null
+                }
+              }
+            }
+          }
+        }
+      },
+      "EventEnrichmentRulesPutRequest": {
+        "description": "The updated Event Enrichment rules configuration.",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "orchestration_path"
+              ],
+              "properties": {
+                "orchestration_path": {
+                  "$ref": "#/components/schemas/EventEnrichmentOrchestrationPath"
+                }
+              }
+            },
+            "examples": {
+              "with_extractions": {
+                "summary": "Update rules with an extraction action",
+                "value": {
+                  "orchestration_path": {
+                    "sets": [
+                      {
+                        "id": "start",
+                        "rules": [
+                          {
+                            "label": "Extract server name from event source",
+                            "conditions": [
+                              {
+                                "expression": "event.summary matches part 'Application:'"
+                              }
+                            ],
+                            "actions": {
+                              "extractions": [
+                                {
+                                  "target": "event.custom_details.server_name",
+                                  "template": "[production] {{event.source}}"
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              },
+              "with_enrichments": {
+                "summary": "Update rules with an enrichment action",
+                "value": {
+                  "orchestration_path": {
+                    "sets": [
+                      {
+                        "id": "start",
+                        "rules": [
+                          {
+                            "label": "Enrich events that have an `Application:` in their summary",
+                            "conditions": [
+                              {
+                                "expression": "event.summary matches part 'Application:'"
+                              }
+                            ],
+                            "actions": {
+                              "enrichments": [
+                                {
+                                  "schema_to_search": "9f194d8d-0f58-4c5c-b1d2-a5adf7171821",
+                                  "search_values": [
+                                    {
+                                      "path": "event.custom_details.app",
+                                      "query_field_name": "app_name"
+                                    }
+                                  ],
+                                  "target": "event.custom_details.app_metadata"
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "EventEnrichmentAssociationPostRequest": {
+        "description": "The associations to add to the Event Enrichment.",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "associations"
+              ],
+              "properties": {
+                "associations": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EventEnrichmentAssociation"
+                  }
+                }
+              }
+            },
+            "examples": {
+              "basic": {
+                "summary": "Associate a Service and an Event Orchestration",
+                "value": {
+                  "associations": [
+                    {
+                      "type": "service_reference",
+                      "id": "PVBHKC1"
+                    },
+                    {
+                      "type": "event_orchestration_reference",
+                      "id": "af3d4d66-4a34-46c6-9a3c-7d5d8bd8eeeb"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "EventEnrichmentAssociationDeleteRequest": {
+        "description": "The associations to remove from the Event Enrichment.",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "associations"
+              ],
+              "properties": {
+                "associations": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EventEnrichmentAssociation"
+                  }
+                }
+              }
+            },
+            "examples": {
+              "basic": {
+                "summary": "Remove a Service and an Event Orchestration association",
+                "value": {
+                  "associations": [
+                    {
+                      "type": "service_reference",
+                      "id": "PVBHKC1"
+                    },
+                    {
+                      "type": "event_orchestration_reference",
+                      "id": "af3d4d66-4a34-46c6-9a3c-7d5d8bd8eeeb"
+                    }
+                  ]
                 }
               }
             }
@@ -6271,6 +6582,627 @@
             "examples": {
               "response": {
                 "summary": "Response Example",
+                "value": {
+                  "status": "ok"
+                }
+              }
+            }
+          }
+        }
+      },
+      "EventEnrichmentListResponse": {
+        "description": "A list of Event Enrichments for the account.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/EventEnrichments"
+            },
+            "examples": {
+              "response": {
+                "summary": "Example Response",
+                "value": {
+                  "event_enrichments": [
+                    {
+                      "id": "AGN4PVDO2F5AZIVWETZ42I6IP4",
+                      "name": "1st Event Enrichment",
+                      "description": null,
+                      "is_default": false,
+                      "associated_services": 32,
+                      "associated_event_orchestrations": 23,
+                      "team": {
+                        "id": "PA5JAKW",
+                        "type": "team_reference",
+                        "self": "https://api.pagerduty.com/teams/PA5JAKW"
+                      },
+                      "created_at": "2023-10-25T22:04:24Z",
+                      "created_by": {
+                        "id": "P1TYZRY",
+                        "type": "user_reference",
+                        "self": "https://api.pagerduty.com/users/P1TYZRY"
+                      },
+                      "updated_at": "2025-06-16T14:39:11Z",
+                      "updated_by": {
+                        "id": "P1TYZRY",
+                        "type": "user_reference",
+                        "self": "https://api.pagerduty.com/users/P1TYZRY"
+                      },
+                      "self": "https://api.pagerduty.com/enrichment/event_enrichments/AGN4PVDO2F5AZIVWETZ42I6IP4"
+                    }
+                  ],
+                  "limit": 25,
+                  "offset": 0,
+                  "more": false,
+                  "total": 1
+                }
+              }
+            }
+          }
+        }
+      },
+      "EventEnrichmentPostResponse": {
+        "description": "The Event Enrichment was created successfully.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "event_enrichment": {
+                  "$ref": "#/components/schemas/EventEnrichment"
+                }
+              }
+            },
+            "examples": {
+              "response": {
+                "summary": "Example Response",
+                "value": {
+                  "event_enrichment": {
+                    "id": "AGN4PVDO2F5AZIVWETZ42I6IP4",
+                    "name": "1st Event Enrichment",
+                    "description": "My very first EE!",
+                    "is_default": false,
+                    "associated_services": 0,
+                    "associated_event_orchestrations": 0,
+                    "team": {
+                      "id": "PA5JAKW",
+                      "type": "team_reference",
+                      "self": "https://api.pagerduty.com/teams/PA5JAKW"
+                    },
+                    "created_at": "2023-10-25T22:04:24Z",
+                    "created_by": {
+                      "id": "P1TYZRY",
+                      "type": "user_reference",
+                      "self": "https://api.pagerduty.com/users/P1TYZRY"
+                    },
+                    "updated_at": "2023-10-25T22:04:24Z",
+                    "updated_by": {
+                      "id": "P1TYZRY",
+                      "type": "user_reference",
+                      "self": "https://api.pagerduty.com/users/P1TYZRY"
+                    },
+                    "self": "https://api.pagerduty.com/enrichment/event_enrichments/AGN4PVDO2F5AZIVWETZ42I6IP4"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "EventEnrichmentGetResponse": {
+        "description": "The Event Enrichment object.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "event_enrichment": {
+                  "$ref": "#/components/schemas/EventEnrichment"
+                }
+              }
+            },
+            "examples": {
+              "response": {
+                "summary": "Example Response",
+                "value": {
+                  "event_enrichment": {
+                    "id": "AGN4PVDO2F5AZIVWETZ42I6IP4",
+                    "name": "1st Event Enrichment",
+                    "description": null,
+                    "is_default": false,
+                    "associated_services": 32,
+                    "associated_event_orchestrations": 23,
+                    "team": {
+                      "id": "PA5JAKW",
+                      "type": "team_reference",
+                      "self": "https://api.pagerduty.com/teams/PA5JAKW"
+                    },
+                    "created_at": "2023-10-25T22:04:24Z",
+                    "created_by": {
+                      "id": "P1TYZRY",
+                      "type": "user_reference",
+                      "self": "https://api.pagerduty.com/users/P1TYZRY"
+                    },
+                    "updated_at": "2025-06-16T14:39:11Z",
+                    "updated_by": {
+                      "id": "P1TYZRY",
+                      "type": "user_reference",
+                      "self": "https://api.pagerduty.com/users/P1TYZRY"
+                    },
+                    "self": "https://api.pagerduty.com/enrichment/event_enrichments/AGN4PVDO2F5AZIVWETZ42I6IP4"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "EventEnrichmentPutResponse": {
+        "description": "The updated Event Enrichment object.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "event_enrichment": {
+                  "$ref": "#/components/schemas/EventEnrichment"
+                }
+              }
+            },
+            "examples": {
+              "response": {
+                "summary": "Example Response",
+                "value": {
+                  "event_enrichment": {
+                    "id": "AGN4PVDO2F5AZIVWETZ42I6IP4",
+                    "name": "Event Enrichment - Updated Name",
+                    "description": "New Description",
+                    "is_default": false,
+                    "associated_services": 32,
+                    "associated_event_orchestrations": 23,
+                    "team": {
+                      "id": "PUBG4NJ",
+                      "type": "team_reference",
+                      "self": "https://api.pagerduty.com/teams/PUBG4NJ"
+                    },
+                    "created_at": "2023-10-25T22:04:24Z",
+                    "created_by": {
+                      "id": "P1TYZRY",
+                      "type": "user_reference",
+                      "self": "https://api.pagerduty.com/users/P1TYZRY"
+                    },
+                    "updated_at": "2025-06-16T14:39:11Z",
+                    "updated_by": {
+                      "id": "P1TYZRY",
+                      "type": "user_reference",
+                      "self": "https://api.pagerduty.com/users/P1TYZRY"
+                    },
+                    "self": "https://api.pagerduty.com/enrichment/event_enrichments/AGN4PVDO2F5AZIVWETZ42I6IP4"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "EventEnrichmentDefaultGetResponse": {
+        "description": "The account default Event Enrichment.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/EventEnrichmentDefault"
+            },
+            "examples": {
+              "with_default": {
+                "summary": "Account has a default set",
+                "value": {
+                  "default": {
+                    "id": "AGN4PVDO2F5AZIVWETZ42I6IP4",
+                    "type": "event_enrichment_reference",
+                    "summary": "My enrichment name",
+                    "self": "https://api.pagerduty.com/enrichment/event_enrichments/AGN4PVDO2F5AZIVWETZ42I6IP4"
+                  }
+                }
+              },
+              "no_default": {
+                "summary": "No default set for the account",
+                "value": {
+                  "default": null
+                }
+              }
+            }
+          }
+        }
+      },
+      "EventEnrichmentDefaultPutResponse": {
+        "description": "The updated account default Event Enrichment.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/EventEnrichmentDefault"
+            },
+            "examples": {
+              "new_default_no_previous": {
+                "summary": "New default set, no previous default existed",
+                "value": {
+                  "default": {
+                    "id": "AGN4PVDO2F5AZIVWETZ42I6IP4",
+                    "type": "event_enrichment_reference",
+                    "summary": "My enrichment name",
+                    "self": "https://api.pagerduty.com/enrichment/event_enrichments/AGN4PVDO2F5AZIVWETZ42I6IP4"
+                  },
+                  "previous_default": null
+                }
+              },
+              "new_default_with_previous": {
+                "summary": "New default set, replacing a previous default",
+                "value": {
+                  "default": {
+                    "id": "AGN4PVDO2F5AZIVWETZ42I6IP4",
+                    "type": "event_enrichment_reference",
+                    "summary": "My enrichment name",
+                    "self": "https://api.pagerduty.com/enrichment/event_enrichments/AGN4PVDO2F5AZIVWETZ42I6IP4"
+                  },
+                  "previous_default": {
+                    "id": "AGN6ZO345532XBOFCBX6OVTQ6Y",
+                    "type": "event_enrichment_reference",
+                    "summary": "The old enrichment",
+                    "self": "https://api.pagerduty.com/enrichment/event_enrichments/AGN6ZO345532XBOFCBX6OVTQ6Y"
+                  }
+                }
+              },
+              "cleared_default": {
+                "summary": "Default cleared",
+                "value": {
+                  "default": null,
+                  "previous_default": {
+                    "id": "AGN6ZO345532XBOFCBX6OVTQ6Y",
+                    "type": "event_enrichment_reference",
+                    "summary": "The old enrichment",
+                    "self": "https://api.pagerduty.com/enrichment/event_enrichments/AGN6ZO345532XBOFCBX6OVTQ6Y"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "EventEnrichmentRulesGetResponse": {
+        "description": "The Event Enrichment rules (orchestration path).",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "orchestration_path": {
+                  "$ref": "#/components/schemas/EventEnrichmentOrchestrationPath"
+                }
+              }
+            },
+            "examples": {
+              "response": {
+                "summary": "Example Response",
+                "value": {
+                  "orchestration_path": {
+                    "type": "event_enrichment",
+                    "parent": {
+                      "id": "AGN4PVDO2F5AZIVWETZ42I6IP4",
+                      "type": "event_enrichment_reference",
+                      "self": "https://api.pagerduty.com/enrichment/event_enrichments/AGN4PVDO2F5AZIVWETZ42I6IP4"
+                    },
+                    "self": "https://api.pagerduty.com/enrichment/event_enrichments/AGN4PVDO2F5AZIVWETZ42I6IP4/rules",
+                    "sets": [
+                      {
+                        "id": "start",
+                        "rules": [
+                          {
+                            "id": "ef760c4b",
+                            "label": "Enrich events that have an `Application:` in their summary",
+                            "conditions": [
+                              {
+                                "expression": "event.summary matches part 'Application:'"
+                              }
+                            ],
+                            "actions": {
+                              "enrichments": [
+                                {
+                                  "schema_to_search": "9f194d8d-0f58-4c5c-b1d2-a5adf7171821",
+                                  "search_values": [
+                                    {
+                                      "path": "event.custom_details.app",
+                                      "query_field_name": "app_name"
+                                    }
+                                  ],
+                                  "target": "event.custom_details.app_metadata"
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    ],
+                    "created_at": "2026-02-04T20:02:23Z",
+                    "created_by": {
+                      "id": "P3HAR9Y",
+                      "type": "user_reference",
+                      "self": "https://api.pagerduty.com/users/P3HAR9Y"
+                    },
+                    "updated_at": "2026-02-10T23:53:48Z",
+                    "updated_by": null,
+                    "version": "1TpoWwY9xTKVAM2qYmiDl0kN.o9PBQDV"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "EventEnrichmentRulesPutResponse": {
+        "description": "The updated Event Enrichment rules (orchestration path).",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "orchestration_path": {
+                  "$ref": "#/components/schemas/EventEnrichmentOrchestrationPath"
+                }
+              }
+            },
+            "examples": {
+              "response": {
+                "summary": "Example Response",
+                "value": {
+                  "orchestration_path": {
+                    "type": "event_enrichment",
+                    "parent": {
+                      "id": "AGN4PVDO2F5AZIVWETZ42I6IP4",
+                      "type": "event_enrichment_reference",
+                      "self": "https://api.pagerduty.com/enrichment/event_enrichments/AGN4PVDO2F5AZIVWETZ42I6IP4"
+                    },
+                    "self": "https://api.pagerduty.com/enrichment/event_enrichments/AGN4PVDO2F5AZIVWETZ42I6IP4/rules",
+                    "sets": [
+                      {
+                        "id": "start",
+                        "rules": [
+                          {
+                            "id": "ef760c4b",
+                            "label": "Extract server name from event source",
+                            "conditions": [
+                              {
+                                "expression": "event.summary matches part 'Application:'"
+                              }
+                            ],
+                            "actions": {
+                              "extractions": [
+                                {
+                                  "target": "event.custom_details.server_name",
+                                  "template": "[production] {{event.source}}",
+                                  "source": null,
+                                  "regex": null
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    ],
+                    "created_at": "2026-02-04T20:02:23Z",
+                    "created_by": {
+                      "id": "P3HAR9Y",
+                      "type": "user_reference",
+                      "self": "https://api.pagerduty.com/users/P3HAR9Y"
+                    },
+                    "updated_at": "2026-02-10T23:53:48Z",
+                    "updated_by": {
+                      "id": "P3HAR9Y",
+                      "type": "user_reference",
+                      "self": "https://api.pagerduty.com/users/P3HAR9Y"
+                    },
+                    "version": "2UqpXzY0aULBen3DisjGm1lQ.p0QDVE"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "EventEnrichmentAssociationListResponse": {
+        "description": "A list of associations for the Event Enrichment.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "associations": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EventEnrichmentAssociation"
+                  }
+                },
+                "limit": {
+                  "type": "integer"
+                },
+                "offset": {
+                  "type": "integer"
+                },
+                "more": {
+                  "type": "boolean"
+                },
+                "total": {
+                  "type": "integer",
+                  "nullable": true
+                }
+              }
+            },
+            "examples": {
+              "response": {
+                "summary": "Example Response",
+                "value": {
+                  "associations": [
+                    {
+                      "type": "service_reference",
+                      "id": "P6NZENL",
+                      "summary": "Web Database",
+                      "self": "https://api.pagerduty.com/services/P6NZENL"
+                    },
+                    {
+                      "type": "event_orchestration_reference",
+                      "id": "962dcc99-d338-4fd7-8454-653b2480841d",
+                      "summary": "NOC Central Ingestion",
+                      "self": "https://api.pagerduty.com/event_orchestrations/962dcc99-d338-4fd7-8454-653b2480841d"
+                    }
+                  ],
+                  "limit": 50,
+                  "offset": 0,
+                  "more": false,
+                  "total": 2
+                }
+              }
+            }
+          }
+        }
+      },
+      "EventEnrichmentAssociationPostResponse": {
+        "description": "Associations created successfully, or a multi-status response if some failed.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "created"
+                  ]
+                }
+              }
+            },
+            "examples": {
+              "created": {
+                "summary": "All associations created successfully (201)",
+                "value": {
+                  "status": "created"
+                }
+              },
+              "multi_status": {
+                "summary": "Partial success — some associations failed (207)",
+                "value": {
+                  "associations": [
+                    {
+                      "status": 201,
+                      "errors": [],
+                      "association": {
+                        "type": "service_reference",
+                        "id": "PVBHKC1"
+                      }
+                    },
+                    {
+                      "status": 500,
+                      "errors": [
+                        "Internal Server Error"
+                      ],
+                      "association": {
+                        "type": "event_orchestration_reference",
+                        "id": "af3d4d66-4a34-46c6-9a3c-7d5d8bd8eeeb"
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "EventEnrichmentAssociationMultiStatusResponse": {
+        "description": "Multi-status response indicating partial success when adding or deleting associations.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "associations": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "status": {
+                        "type": "integer",
+                        "description": "The HTTP status code for this individual association attempt."
+                      },
+                      "errors": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "Error messages for this association attempt, if any."
+                      },
+                      "association": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "service_reference",
+                              "event_orchestration_reference"
+                            ]
+                          },
+                          "id": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "examples": {
+              "multi_status": {
+                "summary": "Partial success — some associations failed (207)",
+                "value": {
+                  "associations": [
+                    {
+                      "status": 201,
+                      "errors": [],
+                      "association": {
+                        "type": "service_reference",
+                        "id": "PVBHKC1"
+                      }
+                    },
+                    {
+                      "status": 500,
+                      "errors": [
+                        "Internal Server Error"
+                      ],
+                      "association": {
+                        "type": "event_orchestration_reference",
+                        "id": "af3d4d66-4a34-46c6-9a3c-7d5d8bd8eeeb"
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "EventEnrichmentAssociationDeleteResponse": {
+        "description": "Associations deleted successfully.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "ok"
+                  ]
+                }
+              }
+            },
+            "examples": {
+              "response": {
+                "summary": "Example Response",
                 "value": {
                   "status": "ok"
                 }
@@ -8807,6 +9739,485 @@
             }
           }
         ]
+      },
+      "EventEnrichment": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "ID of the Event Enrichment.",
+            "readOnly": true
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the Event Enrichment."
+          },
+          "description": {
+            "type": "string",
+            "nullable": true,
+            "description": "A description of this Event Enrichment's purpose."
+          },
+          "is_default": {
+            "type": "boolean",
+            "description": "Indicates whether this Event Enrichment is the account default.",
+            "readOnly": true
+          },
+          "associated_services": {
+            "type": "integer",
+            "description": "The number of Services associated with this Event Enrichment.",
+            "readOnly": true
+          },
+          "associated_event_orchestrations": {
+            "type": "integer",
+            "description": "The number of Event Orchestrations associated with this Event Enrichment.",
+            "readOnly": true
+          },
+          "team": {
+            "type": "object",
+            "nullable": true,
+            "description": "Reference to the team that owns this Event Enrichment.",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "The ID of the team."
+              },
+              "type": {
+                "type": "string",
+                "description": "A string that determines the schema of the object.",
+                "readOnly": true
+              },
+              "self": {
+                "type": "string",
+                "format": "url",
+                "description": "The API show URL at which the object is accessible.",
+                "readOnly": true
+              }
+            }
+          },
+          "privileges": {
+            "type": "object",
+            "nullable": true,
+            "description": "Details about the read/update permissions of the current user for this Event Enrichment. Only present when `include[]=privileges` is requested.",
+            "readOnly": true,
+            "properties": {
+              "permissions": {
+                "type": "array",
+                "description": "The list of permissions the current user has for this Event Enrichment.",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "read",
+                    "update",
+                    "delete"
+                  ]
+                }
+              }
+            }
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The date/time the Event Enrichment was created.",
+            "readOnly": true
+          },
+          "created_by": {
+            "type": "object",
+            "nullable": true,
+            "description": "Reference to the user that created the Event Enrichment.",
+            "readOnly": true,
+            "properties": {
+              "id": {
+                "type": "string",
+                "readOnly": true
+              },
+              "type": {
+                "type": "string",
+                "description": "A string that determines the schema of the object.",
+                "readOnly": true
+              },
+              "self": {
+                "type": "string",
+                "format": "url",
+                "description": "The API show URL at which the object is accessible.",
+                "readOnly": true
+              }
+            }
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The date/time the Event Enrichment was last updated.",
+            "readOnly": true
+          },
+          "updated_by": {
+            "type": "object",
+            "nullable": true,
+            "description": "Reference to the user that last updated the Event Enrichment.",
+            "readOnly": true,
+            "properties": {
+              "id": {
+                "type": "string",
+                "readOnly": true
+              },
+              "type": {
+                "type": "string",
+                "description": "A string that determines the schema of the object.",
+                "readOnly": true
+              },
+              "self": {
+                "type": "string",
+                "format": "url",
+                "description": "The API show URL at which the object is accessible.",
+                "readOnly": true
+              }
+            }
+          },
+          "self": {
+            "type": "string",
+            "format": "url",
+            "description": "The API show URL at which the object is accessible.",
+            "readOnly": true
+          }
+        }
+      },
+      "EventEnrichmentAssociation": {
+        "type": "object",
+        "description": "An association between an Event Enrichment and a Service or Event Orchestration.",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "The type of the associated resource.",
+            "enum": [
+              "service_reference",
+              "event_orchestration_reference"
+            ]
+          },
+          "id": {
+            "type": "string",
+            "description": "The ID of the associated Service or Event Orchestration."
+          },
+          "summary": {
+            "type": "string",
+            "description": "The name of the associated Service or Event Orchestration.",
+            "readOnly": true
+          },
+          "self": {
+            "type": "string",
+            "format": "url",
+            "description": "The API show URL at which the associated resource is accessible.",
+            "readOnly": true
+          }
+        }
+      },
+      "EventEnrichmentDefault": {
+        "type": "object",
+        "description": "The account default Event Enrichment, along with the previous default if one was replaced.",
+        "properties": {
+          "default": {
+            "nullable": true,
+            "description": "The current account default Event Enrichment. Null if no default is set.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/EventEnrichmentReference"
+              }
+            ]
+          },
+          "previous_default": {
+            "nullable": true,
+            "description": "The previous account default Event Enrichment, if one was replaced. Only present after a PUT request.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/EventEnrichmentReference"
+              }
+            ]
+          }
+        }
+      },
+      "EventEnrichmentOrchestrationPath": {
+        "type": "object",
+        "description": "The rules configuration for an Event Enrichment, represented as an orchestration path.",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "The type of this orchestration path.",
+            "enum": [
+              "event_enrichment"
+            ],
+            "readOnly": true
+          },
+          "parent": {
+            "description": "Reference to the parent Event Enrichment.",
+            "readOnly": true,
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/EventEnrichmentReference"
+              }
+            ]
+          },
+          "self": {
+            "type": "string",
+            "format": "url",
+            "description": "The API show URL at which the object is accessible.",
+            "readOnly": true
+          },
+          "sets": {
+            "type": "array",
+            "description": "An array of sets of rules. Must contain a set with id `start`.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "description": "The ID of this set. The first set must have id `start`."
+                },
+                "rules": {
+                  "type": "array",
+                  "description": "The rules in this set.",
+                  "items": {
+                    "$ref": "#/components/schemas/EventEnrichmentRule"
+                  }
+                }
+              }
+            }
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The date/time the rules were created.",
+            "readOnly": true
+          },
+          "created_by": {
+            "type": "object",
+            "nullable": true,
+            "description": "Reference to the user that created the rules.",
+            "readOnly": true,
+            "properties": {
+              "id": {
+                "type": "string",
+                "readOnly": true
+              },
+              "type": {
+                "type": "string",
+                "readOnly": true
+              },
+              "self": {
+                "type": "string",
+                "format": "url",
+                "readOnly": true
+              }
+            }
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The date/time the rules were last updated.",
+            "readOnly": true
+          },
+          "updated_by": {
+            "type": "object",
+            "nullable": true,
+            "description": "Reference to the user that last updated the rules.",
+            "readOnly": true,
+            "properties": {
+              "id": {
+                "type": "string",
+                "readOnly": true
+              },
+              "type": {
+                "type": "string",
+                "readOnly": true
+              },
+              "self": {
+                "type": "string",
+                "format": "url",
+                "readOnly": true
+              }
+            }
+          },
+          "version": {
+            "type": "string",
+            "description": "Version of the rules configuration.",
+            "readOnly": true
+          }
+        }
+      },
+      "EventEnrichmentRule": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The ID of this rule.",
+            "readOnly": true
+          },
+          "label": {
+            "type": "string",
+            "description": "A description of this rule's purpose."
+          },
+          "conditions": {
+            "type": "array",
+            "description": "Conditions that must be satisfied for this rule's actions to execute.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "expression": {
+                  "type": "string",
+                  "description": "A PCL condition expression.",
+                  "example": "event.summary matches part 'my service error'"
+                }
+              }
+            }
+          },
+          "actions": {
+            "description": "Actions to perform when the rule conditions are met. Must be one of `extractions` or `enrichments`.",
+            "oneOf": [
+              {
+                "type": "object",
+                "title": "Extractions",
+                "description": "Modify the event payload using regex-based extraction or template-based composition.",
+                "required": [
+                  "extractions"
+                ],
+                "properties": {
+                  "extractions": {
+                    "type": "array",
+                    "description": "Modify the event payload using regex-based extraction or template-based composition. Maximum 25 extractions per rule.",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "target": {
+                          "type": "string",
+                          "description": "The PD-CEF field to set with the extracted value."
+                        },
+                        "template": {
+                          "type": "string",
+                          "nullable": true,
+                          "description": "A string template used to populate the target field. Supports event field interpolation. Used for template-based extraction."
+                        },
+                        "source": {
+                          "type": "string",
+                          "description": "The path to the event field where the regex will be applied. Used for regex-based extraction."
+                        },
+                        "regex": {
+                          "type": "string",
+                          "description": "A RE2 regular expression. If it contains capture groups, their values are extracted and appended. If no capture groups, the whole match is used. Used for regex-based extraction."
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "title": "Enrichments",
+                "description": "Query a CDP enrichment schema using event values and write results back into the event payload.",
+                "required": [
+                  "enrichments"
+                ],
+                "properties": {
+                  "enrichments": {
+                    "type": "array",
+                    "description": "Query a CDP enrichment schema using event values and write results back into the event payload. Maximum 1 enrichment action per rule; maximum 5 enrichment actions applied per event per Event Enrichment.",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "schema_to_search": {
+                          "type": "string",
+                          "description": "The ID of the Enrichment Schema to query."
+                        },
+                        "search_values": {
+                          "type": "array",
+                          "description": "Configurations that specify how to read values from the event to query the Enrichment Schema.",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string",
+                                "description": "The PD-CEF field whose value is used to search the Enrichment Schema. Used for path-based configuration."
+                              },
+                              "template": {
+                                "type": "string",
+                                "description": "A string template used to build the search value. Supports event field interpolation. Used for template-based configuration."
+                              },
+                              "query_field_name": {
+                                "type": "string",
+                                "description": "The name of the Enrichment Schema field to search against. Must be a field of type `query`."
+                              }
+                            }
+                          }
+                        },
+                        "target": {
+                          "type": "string",
+                          "description": "The PD-CEF field to set with the data retrieved from the Enrichment Schema."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "disabled": {
+            "type": "boolean",
+            "description": "Indicates whether the rule is disabled and would therefore not be evaluated."
+          }
+        }
+      },
+      "EventEnrichmentReference": {
+        "type": "object",
+        "description": "A reference to an Event Enrichment object.",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The ID of the Event Enrichment."
+          },
+          "type": {
+            "type": "string",
+            "description": "A string that determines the schema of the object.",
+            "enum": [
+              "event_enrichment_reference"
+            ]
+          },
+          "summary": {
+            "type": "string",
+            "description": "A short-form, server-generated string that provides succinct, important information about an object suitable for primary labeling of an entity in a client. In many cases, this will be identical to `name`, though it is not intended to be an identifier.",
+            "readOnly": true
+          },
+          "self": {
+            "type": "string",
+            "format": "url",
+            "description": "The API show URL at which the object is accessible.",
+            "readOnly": true
+          }
+        }
+      },
+      "EventEnrichments": {
+        "type": "object",
+        "properties": {
+          "event_enrichments": {
+            "type": "array",
+            "description": "The list of Event Enrichments.",
+            "items": {
+              "$ref": "#/components/schemas/EventEnrichment"
+            }
+          },
+          "limit": {
+            "type": "integer",
+            "description": "The minimum of the `limit` parameter used in the request or the maximum request size of the API."
+          },
+          "offset": {
+            "type": "integer",
+            "description": "Echoes offset pagination property."
+          },
+          "more": {
+            "type": "boolean",
+            "description": "Indicates if there are additional records to return."
+          },
+          "total": {
+            "type": "integer",
+            "nullable": true,
+            "description": "The total number of records matching the given query."
+          }
+        }
       },
       "EventRuleActionsCommon": {
         "type": "object",
@@ -34995,6 +36406,513 @@
           },
           "429": {
             "$ref": "#/components/responses/TooManyRequests"
+          }
+        }
+      }
+    },
+    "/enrichment/event_enrichments": {
+      "description": "List and create Event Enrichments.",
+      "get": {
+        "tags": [
+          "Event Enrichments"
+        ],
+        "summary": "List Event Enrichments",
+        "operationId": "listEventEnrichments",
+        "description": "Event Enrichments allow you to automatically add contextual data to events as they're ingested, so that relevant information is available throughout the event, alert, and incident lifecycle. By leveraging the Contextual Data Platform (CDP), you can define rules that extract values from events or query enrichment schemas to populate event fields.\n\n<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. Contact your PagerDuty account team to request access.\n\nRetrieve a list of all Event Enrichments in the account.\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/offset_limit"
+          },
+          {
+            "$ref": "#/components/parameters/offset_offset"
+          },
+          {
+            "$ref": "#/components/parameters/enrichment_include"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/EventEnrichmentListResponse"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Event Enrichments"
+        ],
+        "summary": "Create an Event Enrichment",
+        "operationId": "createEventEnrichment",
+        "description": "Event Enrichments allow you to automatically add contextual data to events as they're ingested, so that relevant information is available throughout the event, alert, and incident lifecycle. By leveraging the Contextual Data Platform (CDP), you can define rules that extract values from events or query enrichment schemas to populate event fields.\n\n<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. Contact your PagerDuty account team to request access.\n\nCreate a new Event Enrichment.\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/EventEnrichmentPostRequest"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/EventEnrichmentPostResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/enrichment/event_enrichments/default": {
+      "description": "Get and set the account default Event Enrichment.",
+      "get": {
+        "tags": [
+          "Event Enrichments"
+        ],
+        "summary": "Get the account default Event Enrichment",
+        "operationId": "getAccountDefaultEventEnrichment",
+        "description": "Event Enrichments allow you to automatically add contextual data to events as they're ingested, so that relevant information is available throughout the event, alert, and incident lifecycle. By leveraging the Contextual Data Platform (CDP), you can define rules that extract values from events or query enrichment schemas to populate event fields.\n\nThe default Event Enrichment gets applied to every Event Orchestration or Service that is not already associated to any other Event Enrichment\n\n<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. Contact your PagerDuty account team to request access.\n\nRetrieve the account default Event Enrichment.\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/EventEnrichmentDefaultGetResponse"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Event Enrichments"
+        ],
+        "summary": "Mark an Event Enrichment as the account default",
+        "operationId": "markEventEnrichmentAsDefault",
+        "description": "Event Enrichments allow you to automatically add contextual data to events as they're ingested, so that relevant information is available throughout the event, alert, and incident lifecycle. By leveraging the Contextual Data Platform (CDP), you can define rules that extract values from events or query enrichment schemas to populate event fields.\n\nThe default Event Enrichment gets applied to every Event Orchestration or Service that is not already associated to any other Event Enrichment\n\n<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. Contact your PagerDuty account team to request access.\n\nMark a specific Event Enrichment as the account default. Set the request body to `default: null` to clear the current default.\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/EventEnrichmentDefaultPutRequest"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/EventEnrichmentDefaultPutResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/enrichment/event_enrichments/{id}": {
+      "description": "Get, update, and delete a specific Event Enrichment.",
+      "get": {
+        "tags": [
+          "Event Enrichments"
+        ],
+        "summary": "Get an Event Enrichment",
+        "operationId": "getEventEnrichment",
+        "description": "Event Enrichments allow you to automatically add contextual data to events as they're ingested, so that relevant information is available throughout the event, alert, and incident lifecycle. By leveraging the Contextual Data Platform (CDP), you can define rules that extract values from events or query enrichment schemas to populate event fields.\n\n<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. Contact your PagerDuty account team to request access.\n\nRetrieve details of a specific Event Enrichment.\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/event_enrichment_id"
+          },
+          {
+            "$ref": "#/components/parameters/enrichment_include"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/EventEnrichmentGetResponse"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Event Enrichments"
+        ],
+        "summary": "Update an Event Enrichment",
+        "operationId": "updateEventEnrichment",
+        "description": "Event Enrichments allow you to automatically add contextual data to events as they're ingested, so that relevant information is available throughout the event, alert, and incident lifecycle. By leveraging the Contextual Data Platform (CDP), you can define rules that extract values from events or query enrichment schemas to populate event fields.\n\n<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. Contact your PagerDuty account team to request access.\n\nUpdate an existing Event Enrichment.\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/event_enrichment_id"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/EventEnrichmentPutRequest"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/EventEnrichmentPutResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Event Enrichments"
+        ],
+        "summary": "Delete an Event Enrichment",
+        "operationId": "deleteEventEnrichment",
+        "description": "Event Enrichments allow you to automatically add contextual data to events as they're ingested, so that relevant information is available throughout the event, alert, and incident lifecycle. By leveraging the Contextual Data Platform (CDP), you can define rules that extract values from events or query enrichment schemas to populate event fields.\n\n<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. Contact your PagerDuty account team to request access.\n\nDelete a specific Event Enrichment. The user must have \"Delete\" privileges for both the Event Enrichment and all of its associated items.\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/event_enrichment_id"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The Event Enrichment was deleted successfully."
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/enrichment/event_enrichments/{id}/associations": {
+      "description": "Manage associations between an Event Enrichment and Services or Event Orchestrations.",
+      "get": {
+        "tags": [
+          "Event Enrichments"
+        ],
+        "summary": "List Event Enrichment associations",
+        "operationId": "listEventEnrichmentAssociations",
+        "description": "Event Enrichments allow you to automatically add contextual data to events as they're ingested, so that relevant information is available throughout the event, alert, and incident lifecycle. By leveraging the Contextual Data Platform (CDP), you can define rules that extract values from events or query enrichment schemas to populate event fields.\n\nAssociating an Event Orchestration or Service with an Event Enrichment allows for the enrichment to be evaluated when events are ingested for that Event Orchestration or Service\n\n<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. Contact your PagerDuty account team to request access.\n\nRetrieve all items (Services or Event Orchestrations) associated with an Event Enrichment. If the API key lacks view access to an associated target, that item will not be returned in the results.\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/event_enrichment_id"
+          },
+          {
+            "$ref": "#/components/parameters/enrichment_association_type"
+          },
+          {
+            "$ref": "#/components/parameters/offset_limit"
+          },
+          {
+            "$ref": "#/components/parameters/offset_offset"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/EventEnrichmentAssociationListResponse"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Event Enrichments"
+        ],
+        "summary": "Add Event Enrichment associations",
+        "operationId": "addEventEnrichmentAssociations",
+        "description": "Event Enrichments allow you to automatically add contextual data to events as they're ingested, so that relevant information is available throughout the event, alert, and incident lifecycle. By leveraging the Contextual Data Platform (CDP), you can define rules that extract values from events or query enrichment schemas to populate event fields.\n\nAssociating an Event Orchestration or Service with an Event Enrichment allows for the enrichment to be evaluated when events are ingested for that Event Orchestration or Service\n\n<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. Contact your PagerDuty account team to request access.\n\nAdd new associations between an Event Enrichment and Services or Event Orchestrations.\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/event_enrichment_id"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/EventEnrichmentAssociationPostRequest"
+        },
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/EventEnrichmentAssociationPostResponse"
+          },
+          "207": {
+            "$ref": "#/components/responses/EventEnrichmentAssociationMultiStatusResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Event Enrichments"
+        ],
+        "summary": "Delete Event Enrichment associations",
+        "operationId": "deleteEventEnrichmentAssociations",
+        "description": "Event Enrichments allow you to automatically add contextual data to events as they're ingested, so that relevant information is available throughout the event, alert, and incident lifecycle. By leveraging the Contextual Data Platform (CDP), you can define rules that extract values from events or query enrichment schemas to populate event fields.\n\nAssociating an Event Orchestration or Service with an Event Enrichment allows for the enrichment to be evaluated when events are ingested for that Event Orchestration or Service\n\n<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. Contact your PagerDuty account team to request access.\n\nRemove associations between an Event Enrichment and Services or Event Orchestrations.\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/event_enrichment_id"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/EventEnrichmentAssociationDeleteRequest"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/EventEnrichmentAssociationDeleteResponse"
+          },
+          "207": {
+            "$ref": "#/components/responses/EventEnrichmentAssociationMultiStatusResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/enrichment/event_enrichments/{id}/rules": {
+      "description": "Get and update the enrichment rules for an Event Enrichment.",
+      "get": {
+        "tags": [
+          "Event Enrichments"
+        ],
+        "summary": "Get Event Enrichment rules",
+        "operationId": "getEventEnrichmentRules",
+        "description": "Event Enrichments allow you to automatically add contextual data to events as they're ingested, so that relevant information is available throughout the event, alert, and incident lifecycle. By leveraging the Contextual Data Platform (CDP), you can define rules that extract values from events or query enrichment schemas to populate event fields.\n\n<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. Contact your PagerDuty account team to request access.\n\nGet the rules associated with an Event Enrichment.\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/event_enrichment_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/EventEnrichmentRulesGetResponse"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Event Enrichments"
+        ],
+        "summary": "Update Event Enrichment rules",
+        "operationId": "updateEventEnrichmentRules",
+        "description": "Event Enrichments allow you to automatically add contextual data to events as they're ingested, so that relevant information is available throughout the event, alert, and incident lifecycle. By leveraging the Contextual Data Platform (CDP), you can define rules that extract values from events or query enrichment schemas to populate event fields.\n\n<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. Contact your PagerDuty account team to request access.\n\nUpdate the enrichment rules for a specific Event Enrichment. Performs a full replacement of the rules set.\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/event_enrichment_id"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/EventEnrichmentRulesPutRequest"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/EventEnrichmentRulesPutResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           }
         }
       }
