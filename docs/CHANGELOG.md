@@ -2,6 +2,21 @@
 
 PagerDuty aims to have no breaking changes to its API. We do fix bugs and add new functionality continuously. This document serves as a reference for any bug fixes or additions to our API.
 
+### 2026-XX-XX
+- Added Event Enrichment endpoints in early access:
+  - `GET /enrichment/event_enrichments`
+  - `POST /enrichment/event_enrichments`
+  - `GET /enrichment/event_enrichments/default`
+  - `PUT /enrichment/event_enrichments/default`
+  - `GET /enrichment/event_enrichments/{id}`
+  - `PUT /enrichment/event_enrichments/{id}`
+  - `DELETE /enrichment/event_enrichments/{id}`
+  - `GET /enrichment/event_enrichments/{id}/rules`
+  - `PUT /enrichment/event_enrichments/{id}/rules`
+  - `GET /enrichment/event_enrichments/{id}/associations`
+  - `POST /enrichment/event_enrichments/{id}/associations`
+  - `DELETE /enrichment/event_enrichments/{id}/associations`
+
 ### 2026-06-29
 - Documented behavior for accounts using the New Slack Configuration on the following Slack Connections endpoints:
   - `GET /workspaces/{slack_team_id}/connections` and `GET /workspaces/{slack_team_id}/connections/{connection_id}`: the `config.urgency` and `config.priorities` fields reflect the values last written through the REST API. Changes made through the Slack web UI will not be reflected in these fields.
