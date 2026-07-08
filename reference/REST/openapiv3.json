@@ -57,6 +57,10 @@
       "description": "Change Events enable you to send informational events about recent changes such as code deploys and system config changes from any system that can make an outbound HTTP connection. These events do not create incidents and do not send notifications; they are shown in context with incidents on the same PagerDuty service.\n"
     },
     {
+      "name": "Enrichment Schemas",
+      "description": "Enrichment Schemas are queryable \"data tables\" of contextual information that you can use in Event Enrichment to add context to incoming events. Each schema defines query fields (used to match events) and enriched fields (the data added to a match). CSV schemas can be created and populated directly, or generated automatically from an uploaded CSV file.\n\n<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time before General Availability. Contact your PagerDuty account team to request access.\n"
+    },
+    {
       "name": "Escalation Policies",
       "description": "Escalation policies define which user should be alerted at which time.\n"
     },
@@ -4661,6 +4665,55 @@
             ]
           }
         }
+      },
+      "enrichment_schema_id": {
+        "name": "schema_id",
+        "in": "path",
+        "required": true,
+        "description": "The ID of the enrichment schema.",
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        }
+      },
+      "enrichment_record_id": {
+        "name": "record_id",
+        "in": "path",
+        "required": true,
+        "description": "The ID of the enrichment record.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "enrichment_csv_filename": {
+        "name": "filename",
+        "in": "query",
+        "required": false,
+        "description": "The filename for the CSV content. Required when creating a schema from a `text/csv` body; optional for `text/csv` record uploads. Ignored for `multipart/form-data` and JSON requests.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "enrichment_records_limit": {
+        "name": "limit",
+        "in": "query",
+        "required": false,
+        "description": "The maximum number of records to return per page (1-100).",
+        "schema": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100,
+          "default": 100
+        }
+      },
+      "enrichment_records_cursor": {
+        "name": "cursor",
+        "in": "query",
+        "required": false,
+        "description": "Pagination cursor returned by a previous list request.",
+        "schema": {
+          "type": "string"
+        }
       }
     },
     "requestBodies": {
@@ -5438,6 +5491,253 @@
                     {
                       "type": "event_orchestration_reference",
                       "id": "af3d4d66-4a34-46c6-9a3c-7d5d8bd8eeeb"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "EnrichmentSchemaPostRequest": {
+        "description": "The enrichment schema to create. Provide a JSON body to define the schema explicitly, or upload a CSV file (as `multipart/form-data` or `text/csv`) to auto-generate a schema in which the first column becomes the query field and the remaining columns become enriched fields. CSV uploads are limited to 10 MB.",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "name",
+                "fields"
+              ],
+              "properties": {
+                "integration_type": {
+                  "type": "string",
+                  "description": "The schema source. Only `CSV` is supported through the API; the schema is always recorded as `CSV` regardless of the value sent.",
+                  "enum": [
+                    "CSV"
+                  ]
+                },
+                "name": {
+                  "type": "string",
+                  "maxLength": 50,
+                  "description": "Display name of the enrichment schema."
+                },
+                "description": {
+                  "type": "string",
+                  "maxLength": 2048,
+                  "description": "Description of this set of enrichment data."
+                },
+                "fields": {
+                  "type": "array",
+                  "minItems": 2,
+                  "maxItems": 25,
+                  "description": "The schema fields. Must include 1-3 query fields and at least one enriched field, up to 25 fields total. Field names must be unique (case-insensitive).",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "name",
+                      "type"
+                    ],
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "maxLength": 256,
+                        "description": "The name of the field. Must be unique within the schema (case-insensitive)."
+                      },
+                      "type": {
+                        "type": "string",
+                        "description": "How the field is used. `query` fields match incoming events to records (case-insensitive); `enriched` fields carry the data added to a matched event.",
+                        "enum": [
+                          "query",
+                          "enriched"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "examples": {
+              "basic": {
+                "summary": "Create a schema with multiple query fields",
+                "value": {
+                  "integration_type": "CSV",
+                  "name": "Application Environment Enrichment",
+                  "description": "Maps applications to team and runbook info by environment",
+                  "fields": [
+                    {
+                      "name": "Application",
+                      "type": "query"
+                    },
+                    {
+                      "name": "Environment",
+                      "type": "query"
+                    },
+                    {
+                      "name": "Manager",
+                      "type": "enriched"
+                    },
+                    {
+                      "name": "Team",
+                      "type": "enriched"
+                    },
+                    {
+                      "name": "Runbook URL",
+                      "type": "enriched"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "file"
+              ],
+              "properties": {
+                "file": {
+                  "type": "string",
+                  "format": "binary",
+                  "description": "The CSV file to upload (max 10 MB). The schema name is derived from the filename."
+                }
+              }
+            }
+          },
+          "text/csv": {
+            "schema": {
+              "type": "string",
+              "description": "The raw CSV content (max 10 MB). Provide the filename via the `filename` query parameter."
+            }
+          }
+        }
+      },
+      "EnrichmentSchemaPutRequest": {
+        "description": "The schema fields to update. At least one of `name` or `description` must be provided.",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "schema"
+              ],
+              "properties": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "maxLength": 50,
+                      "description": "Display name of the enrichment schema."
+                    },
+                    "description": {
+                      "type": "string",
+                      "maxLength": 2048,
+                      "description": "Description of this set of enrichment data."
+                    }
+                  }
+                }
+              }
+            },
+            "examples": {
+              "basic": {
+                "summary": "Rename a schema",
+                "value": {
+                  "schema": {
+                    "name": "Team Leads and Runbooks",
+                    "description": "Attaches SME and Runbook URLs to incidents"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "EnrichmentRecordsCsvUploadRequest": {
+        "description": "The CSV file to upload into the schema, as `multipart/form-data` or `text/csv`. The file is streamed for asynchronous processing and is limited to 10 MB. The CSV columns must align with the schema's fields: missing columns result in empty values and extra columns are ignored. Records are keyed by their query-field values, so uploading a row whose query values match an existing record updates that record.",
+        "required": true,
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "file"
+              ],
+              "properties": {
+                "file": {
+                  "type": "string",
+                  "format": "binary",
+                  "description": "The CSV file to upload (max 10 MB)."
+                }
+              }
+            }
+          },
+          "text/csv": {
+            "schema": {
+              "type": "string",
+              "description": "The raw CSV content (max 10 MB). Optionally provide the filename via the `filename` query parameter."
+            }
+          }
+        }
+      },
+      "EnrichmentQueryPostRequest": {
+        "description": "The schema and query field values to match enrichment records against.",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "schema_id",
+                "query"
+              ],
+              "properties": {
+                "schema_id": {
+                  "type": "string",
+                  "format": "uuid",
+                  "description": "The ID of the enrichment schema to query."
+                },
+                "query": {
+                  "type": "array",
+                  "minItems": 1,
+                  "maxItems": 3,
+                  "description": "The query field values to match against. Up to 3 query fields may be supplied; all must match.",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "field",
+                      "value"
+                    ],
+                    "properties": {
+                      "field": {
+                        "type": "string",
+                        "description": "The query field name."
+                      },
+                      "value": {
+                        "type": "string",
+                        "description": "The value to match for this field."
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "examples": {
+              "basic": {
+                "summary": "Query enrichment data",
+                "value": {
+                  "schema_id": "9f194d8d-0f58-4c5c-b1d2-a5adf7171821",
+                  "query": [
+                    {
+                      "field": "Application",
+                      "value": "Authorization"
+                    },
+                    {
+                      "field": "Environment",
+                      "value": "production"
                     }
                   ]
                 }
@@ -7227,6 +7527,462 @@
             }
           }
         }
+      },
+      "EnrichmentSchemaPostResponse": {
+        "description": "The enrichment schema was created successfully.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnrichmentSchema"
+                }
+              }
+            },
+            "examples": {
+              "response": {
+                "summary": "Example Response",
+                "value": {
+                  "schema": {
+                    "id": "9f194d8d-0f58-4c5c-b1d2-a5adf7171821",
+                    "type": "enrichment_schema",
+                    "integration_type": "CSV",
+                    "name": "Team Lead and Runbooks",
+                    "description": "Attaches SME and Runbook URLs to Incident",
+                    "fields": [
+                      {
+                        "name": "Application",
+                        "type": "query"
+                      },
+                      {
+                        "name": "Manager",
+                        "type": "enriched"
+                      },
+                      {
+                        "name": "Runbook URL",
+                        "type": "enriched"
+                      }
+                    ],
+                    "created_at": "2026-06-30T15:17:30Z",
+                    "updated_at": "2026-06-30T15:17:30Z",
+                    "deleted_at": null
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "EnrichmentSchemaCsvCreateResponse": {
+        "description": "The schema was created from the uploaded CSV and the file was accepted for asynchronous processing. The records become queryable once processing completes.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnrichmentSchema"
+                }
+              }
+            },
+            "examples": {
+              "response": {
+                "summary": "Example Response",
+                "value": {
+                  "schema": {
+                    "id": "b620bbb5-2571-4b7a-b0c6-47c55bd491d0",
+                    "type": "enrichment_schema",
+                    "integration_type": "CSV",
+                    "name": "users",
+                    "description": "Auto generated schema from CSV upload",
+                    "fields": [
+                      {
+                        "name": "email",
+                        "type": "query"
+                      },
+                      {
+                        "name": "team",
+                        "type": "enriched"
+                      },
+                      {
+                        "name": "manager",
+                        "type": "enriched"
+                      }
+                    ],
+                    "created_at": "2026-06-30T15:20:00Z",
+                    "updated_at": "2026-06-30T15:20:00Z",
+                    "deleted_at": null
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "EnrichmentSchemaGetResponse": {
+        "description": "The requested enrichment schema.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnrichmentSchema"
+                }
+              }
+            },
+            "examples": {
+              "response": {
+                "summary": "Example Response",
+                "value": {
+                  "schema": {
+                    "id": "9f194d8d-0f58-4c5c-b1d2-a5adf7171821",
+                    "type": "enrichment_schema",
+                    "integration_type": "CSV",
+                    "name": "Team Lead and Runbooks",
+                    "description": "Attaches SME and Runbook URLs to Incident",
+                    "fields": [
+                      {
+                        "name": "Application",
+                        "type": "query"
+                      },
+                      {
+                        "name": "Manager",
+                        "type": "enriched"
+                      },
+                      {
+                        "name": "Runbook URL",
+                        "type": "enriched"
+                      }
+                    ],
+                    "created_at": "2026-06-30T15:17:30Z",
+                    "updated_at": "2026-06-30T15:17:30Z",
+                    "deleted_at": null
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "EnrichmentSchemaListResponse": {
+        "description": "The list of enrichment schemas for the account.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "schemas": {
+                  "type": "array",
+                  "description": "The list of enrichment schemas.",
+                  "items": {
+                    "$ref": "#/components/schemas/EnrichmentSchema"
+                  }
+                }
+              }
+            },
+            "examples": {
+              "response": {
+                "summary": "Example Response",
+                "value": {
+                  "schemas": [
+                    {
+                      "id": "9f194d8d-0f58-4c5c-b1d2-a5adf7171821",
+                      "type": "enrichment_schema",
+                      "integration_type": "CSV",
+                      "name": "Team Lead and Runbooks",
+                      "description": "Attaches SME and Runbook URLs to Incident",
+                      "fields": [
+                        {
+                          "name": "Application",
+                          "type": "query"
+                        },
+                        {
+                          "name": "Manager",
+                          "type": "enriched"
+                        },
+                        {
+                          "name": "Runbook URL",
+                          "type": "enriched"
+                        }
+                      ],
+                      "created_at": "2026-06-30T15:17:30Z",
+                      "updated_at": "2026-06-30T15:17:30Z",
+                      "deleted_at": null
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "EnrichmentSchemaPutResponse": {
+        "description": "The enrichment schema was updated successfully.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnrichmentSchema"
+                }
+              }
+            },
+            "examples": {
+              "response": {
+                "summary": "Example Response",
+                "value": {
+                  "schema": {
+                    "id": "9f194d8d-0f58-4c5c-b1d2-a5adf7171821",
+                    "type": "enrichment_schema",
+                    "integration_type": "CSV",
+                    "name": "Team Leads and Runbooks",
+                    "description": "Attaches SME and Runbook URLs to incidents",
+                    "fields": [
+                      {
+                        "name": "Application",
+                        "type": "query"
+                      },
+                      {
+                        "name": "Manager",
+                        "type": "enriched"
+                      },
+                      {
+                        "name": "Runbook URL",
+                        "type": "enriched"
+                      }
+                    ],
+                    "created_at": "2026-06-30T15:17:30Z",
+                    "updated_at": "2026-06-30T16:02:00Z",
+                    "deleted_at": null
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "EnrichmentSchemaDeleteResponse": {
+        "description": "The enrichment schema was deleted successfully. Only `CSV` schemas can be deleted.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnrichmentSchema"
+                }
+              }
+            },
+            "examples": {
+              "response": {
+                "summary": "Example Response",
+                "value": {
+                  "schema": {
+                    "id": "9f194d8d-0f58-4c5c-b1d2-a5adf7171821",
+                    "type": "enrichment_schema",
+                    "integration_type": "CSV",
+                    "name": "Team Lead and Runbooks",
+                    "description": "Attaches SME and Runbook URLs to Incident",
+                    "fields": [
+                      {
+                        "name": "Application",
+                        "type": "query"
+                      },
+                      {
+                        "name": "Manager",
+                        "type": "enriched"
+                      },
+                      {
+                        "name": "Runbook URL",
+                        "type": "enriched"
+                      }
+                    ],
+                    "created_at": "2026-06-30T15:17:30Z",
+                    "updated_at": "2026-06-30T15:17:30Z",
+                    "deleted_at": "2026-06-30T16:45:00Z"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "EnrichmentRecordsCsvUploadResponse": {
+        "description": "The CSV file was accepted for asynchronous processing.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "upload_id": {
+                  "type": "string",
+                  "format": "uuid",
+                  "description": "Unique identifier for the CSV upload operation."
+                },
+                "schema_id": {
+                  "type": "string",
+                  "format": "uuid",
+                  "description": "The schema the CSV data is being uploaded to."
+                },
+                "filename": {
+                  "type": "string",
+                  "nullable": true,
+                  "description": "Original filename of the uploaded CSV file."
+                },
+                "size_bytes": {
+                  "type": "integer",
+                  "format": "int64",
+                  "description": "Size of the uploaded file in bytes."
+                },
+                "status": {
+                  "type": "string",
+                  "description": "Status of the upload operation."
+                },
+                "accepted_at": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "Timestamp when the upload was accepted."
+                }
+              }
+            },
+            "examples": {
+              "response": {
+                "summary": "Example Response",
+                "value": {
+                  "upload_id": "605d87a2-c67c-441e-a4cb-dbbbd94a340c",
+                  "schema_id": "b620bbb5-2571-4b7a-b0c6-47c55bd491d0",
+                  "filename": "users.csv",
+                  "size_bytes": 1024,
+                  "status": "accepted",
+                  "accepted_at": "2026-06-30T10:30:00Z"
+                }
+              }
+            }
+          }
+        }
+      },
+      "EnrichmentRecordsListResponse": {
+        "description": "A page of enrichment records for the schema.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "schema_id": {
+                  "type": "string",
+                  "format": "uuid",
+                  "description": "The schema the records belong to."
+                },
+                "records": {
+                  "type": "array",
+                  "description": "The page of enrichment records.",
+                  "items": {
+                    "$ref": "#/components/schemas/EnrichmentRecord"
+                  }
+                },
+                "next_cursor": {
+                  "type": "string",
+                  "nullable": true,
+                  "description": "Cursor for fetching the next page, or `null` if there are no more pages."
+                }
+              }
+            },
+            "examples": {
+              "response": {
+                "summary": "Example Response",
+                "value": {
+                  "schema_id": "9f194d8d-0f58-4c5c-b1d2-a5adf7171821",
+                  "records": [
+                    {
+                      "record_id": "a3b2c1d4e5f6",
+                      "type": "enrichment_record",
+                      "created_at": "2026-06-30T15:17:30Z",
+                      "enrichment_data": {
+                        "Application": "Auth Service",
+                        "Manager": "alice@example.com",
+                        "Runbook URL": "https://runbooks.example.com/auth"
+                      }
+                    }
+                  ],
+                  "next_cursor": "eyJuZXh0IjoiYTNiMmMxZDRlNWY2In0="
+                }
+              }
+            }
+          }
+        }
+      },
+      "EnrichmentRecordDeleteResponse": {
+        "description": "The enrichment record was deleted successfully.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "record": {
+                  "$ref": "#/components/schemas/EnrichmentRecord"
+                }
+              }
+            },
+            "examples": {
+              "response": {
+                "summary": "Example Response",
+                "value": {
+                  "record": {
+                    "record_id": "a3b2c1d4e5f6",
+                    "type": "enrichment_record",
+                    "created_at": "2026-06-30T15:17:30Z",
+                    "enrichment_data": {
+                      "Application": "Auth Service",
+                      "Manager": "alice@example.com",
+                      "Runbook URL": "https://runbooks.example.com/auth"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "EnrichmentQueryPostResponse": {
+        "description": "The enrichment records matching the query. Returns 0-1 records for standard schemas, or 0-N records for schemas that use a discriminator field.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "records": {
+                  "type": "array",
+                  "description": "The enrichment records matching the query.",
+                  "items": {
+                    "$ref": "#/components/schemas/EnrichmentRecord"
+                  }
+                }
+              }
+            },
+            "examples": {
+              "response": {
+                "summary": "Example Response",
+                "value": {
+                  "records": [
+                    {
+                      "record_id": "a3b2c1d4e5f6",
+                      "type": "enrichment_record",
+                      "created_at": "2026-06-30T15:17:30Z",
+                      "enrichment_data": {
+                        "Application": "Authorization",
+                        "Environment": "production",
+                        "Manager": "alice@example.com"
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
       }
     },
     "securitySchemes": {
@@ -7238,6 +7994,123 @@
       }
     },
     "schemas": {
+      "EnrichmentSchema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "readOnly": true,
+            "description": "Unique identifier for the enrichment schema."
+          },
+          "type": {
+            "type": "string",
+            "readOnly": true,
+            "description": "The type of the resource.",
+            "example": "enrichment_schema"
+          },
+          "integration_type": {
+            "type": "string",
+            "readOnly": true,
+            "description": "The source of the enrichment schema. `CSV` schemas are created and populated through the schema and CSV-upload endpoints; `SERVICENOW` schemas are managed by the ServiceNow CMDB integration. Schemas created through the API are always `CSV`, and only `CSV` schemas can be deleted.",
+            "enum": [
+              "CSV",
+              "SERVICENOW"
+            ]
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 50,
+            "description": "Display name of the enrichment schema."
+          },
+          "description": {
+            "type": "string",
+            "nullable": true,
+            "maxLength": 2048,
+            "description": "Description of this set of enrichment data."
+          },
+          "fields": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 25,
+            "description": "The fields that make up the schema, including both query and enriched fields. A schema must contain 1-3 `query` fields and at least one `enriched` field, up to a maximum of 25 fields. Field names are unique within the schema (case-insensitive).",
+            "items": {
+              "$ref": "#/components/schemas/EnrichmentField"
+            }
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true,
+            "description": "Timestamp when the schema was created."
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true,
+            "description": "Timestamp when the schema was last updated."
+          },
+          "deleted_at": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "readOnly": true,
+            "description": "Timestamp when the schema was deleted, or `null` if it has not been deleted."
+          }
+        }
+      },
+      "EnrichmentField": {
+        "type": "object",
+        "required": [
+          "name",
+          "type"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 256,
+            "description": "The name of the field. Unique within the schema (case-insensitive)."
+          },
+          "type": {
+            "type": "string",
+            "description": "How the field is used during enrichment. `query` fields are used to match incoming events to enrichment records (matching is case-insensitive), and `enriched` fields carry the contextual data added to a matched event. A schema has 1-3 query fields and at least one enriched field. `discriminator` is reserved for internal use (for example, by the ServiceNow CMDB integration).",
+            "enum": [
+              "query",
+              "enriched",
+              "discriminator"
+            ]
+          }
+        }
+      },
+      "EnrichmentRecord": {
+        "type": "object",
+        "properties": {
+          "record_id": {
+            "type": "string",
+            "readOnly": true,
+            "description": "Unique identifier for this enrichment record."
+          },
+          "type": {
+            "type": "string",
+            "readOnly": true,
+            "description": "The type of the resource.",
+            "example": "enrichment_record"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true,
+            "description": "Timestamp when the record was created."
+          },
+          "enrichment_data": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "The enrichment data for this record, as key-value pairs keyed by field name."
+          }
+        }
+      },
       "StatusUpdateNotificationRule": {
         "type": "object",
         "description": "A rule for contacting the user for Incident Status Updates.",
@@ -32016,6 +32889,396 @@
           },
           "404": {
             "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/enrichment/query": {
+      "description": "Query enrichment records by field values.",
+      "post": {
+        "tags": [
+          "Enrichment Schemas"
+        ],
+        "summary": "Query enrichment data",
+        "x-pd-requires-scope": "contextual_data.read",
+        "operationId": "queryEnrichmentData",
+        "description": "Query an enrichment schema for records matching a set of field values. Supply up to 3 query fields; all must match. Returns at most one record for standard schemas, or multiple records for schemas that use a discriminator field.\n\n<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. Contact your PagerDuty account team to request access.\n\nScoped OAuth requires: `contextual_data.read`\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/EnrichmentQueryPostRequest"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/EnrichmentQueryPostResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/enrichment/schemas": {
+      "description": "List and create enrichment schemas.",
+      "get": {
+        "tags": [
+          "Enrichment Schemas"
+        ],
+        "summary": "List enrichment schemas",
+        "x-pd-requires-scope": "contextual_data.read",
+        "operationId": "listEnrichmentSchemas",
+        "description": "Lists all enrichment schemas for the account.\n\n<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. Contact your PagerDuty account team to request access.\n\nScoped OAuth requires: `contextual_data.read`\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/EnrichmentSchemaListResponse"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Enrichment Schemas"
+        ],
+        "summary": "Create an enrichment schema",
+        "x-pd-requires-scope": "contextual_data.write",
+        "operationId": "createEnrichmentSchema",
+        "description": "Creates an enrichment schema. Provide a JSON body to define the schema explicitly (returns `201`), or upload a CSV file as `multipart/form-data` or `text/csv` to auto-generate a schema from the file's columns — the first column becomes a query field and the rest become enriched fields (returns `202` once the file is accepted for processing). A schema must include 1-3 query fields and at least one enriched field, up to 25 fields total, with unique (case-insensitive) field names. Schemas created through the API are always `CSV`, and an account may have at most 25 CSV schemas. CSV uploads are limited to 10 MB.\n\n<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. Contact your PagerDuty account team to request access.\n\nScoped OAuth requires: `contextual_data.write`\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/enrichment_csv_filename"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/EnrichmentSchemaPostRequest"
+        },
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/EnrichmentSchemaPostResponse"
+          },
+          "202": {
+            "$ref": "#/components/responses/EnrichmentSchemaCsvCreateResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/enrichment/schemas/{schema_id}": {
+      "description": "Get, update, and delete a specific enrichment schema.",
+      "get": {
+        "tags": [
+          "Enrichment Schemas"
+        ],
+        "summary": "Get an enrichment schema",
+        "x-pd-requires-scope": "contextual_data.read",
+        "operationId": "getEnrichmentSchema",
+        "description": "Retrieves a specific enrichment schema by ID.\n\n<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. Contact your PagerDuty account team to request access.\n\nScoped OAuth requires: `contextual_data.read`\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/enrichment_schema_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/EnrichmentSchemaGetResponse"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Enrichment Schemas"
+        ],
+        "summary": "Update an enrichment schema",
+        "x-pd-requires-scope": "contextual_data.write",
+        "operationId": "updateEnrichmentSchema",
+        "description": "Updates the name and/or description of an enrichment schema. At least one of `name` or `description` must be provided. Schema fields cannot be changed after creation.\n\n<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. Contact your PagerDuty account team to request access.\n\nScoped OAuth requires: `contextual_data.write`\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/enrichment_schema_id"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/EnrichmentSchemaPutRequest"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/EnrichmentSchemaPutResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Enrichment Schemas"
+        ],
+        "summary": "Delete an enrichment schema",
+        "x-pd-requires-scope": "contextual_data.write",
+        "operationId": "deleteEnrichmentSchema",
+        "description": "Soft-deletes an enrichment schema and returns the deleted schema. Only `CSV` schemas can be deleted; `SERVICENOW` schemas are managed by the ServiceNow CMDB integration.\n\n<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. Contact your PagerDuty account team to request access.\n\nScoped OAuth requires: `contextual_data.write`\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/enrichment_schema_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/EnrichmentSchemaDeleteResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/enrichment/schemas/{schema_id}/records": {
+      "description": "List and upload enrichment records for a schema.",
+      "get": {
+        "tags": [
+          "Enrichment Schemas"
+        ],
+        "summary": "List enrichment records",
+        "x-pd-requires-scope": "contextual_data.read",
+        "operationId": "listEnrichmentRecords",
+        "description": "Retrieves a page of enrichment records for a schema. Results are cursor-paginated.\n\n<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. Contact your PagerDuty account team to request access.\n\nScoped OAuth requires: `contextual_data.read`\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/enrichment_schema_id"
+          },
+          {
+            "$ref": "#/components/parameters/enrichment_records_limit"
+          },
+          {
+            "$ref": "#/components/parameters/enrichment_records_cursor"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/EnrichmentRecordsListResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Enrichment Schemas"
+        ],
+        "summary": "Upload CSV records",
+        "x-pd-requires-scope": "contextual_data.write",
+        "operationId": "uploadEnrichmentCsv",
+        "description": "Uploads a CSV file of enrichment records into an existing schema, as `multipart/form-data` or `text/csv`. The file is accepted for asynchronous processing (returns `202`) and is limited to 10 MB. The CSV columns must align with the schema's fields: missing columns result in empty values and extra columns are ignored. Records are keyed by their query-field values, so uploading a row whose query values match an existing record updates that record.\n\n<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. Contact your PagerDuty account team to request access.\n\nScoped OAuth requires: `contextual_data.write`\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/enrichment_schema_id"
+          },
+          {
+            "$ref": "#/components/parameters/enrichment_csv_filename"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/EnrichmentRecordsCsvUploadRequest"
+        },
+        "responses": {
+          "202": {
+            "$ref": "#/components/responses/EnrichmentRecordsCsvUploadResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/enrichment/schemas/{schema_id}/records/{record_id}": {
+      "description": "Delete a specific enrichment record.",
+      "delete": {
+        "tags": [
+          "Enrichment Schemas"
+        ],
+        "summary": "Delete an enrichment record",
+        "x-pd-requires-scope": "contextual_data.write",
+        "operationId": "deleteEnrichmentRecord",
+        "description": "Deletes a single enrichment record by ID and returns the deleted record.\n\n<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. Contact your PagerDuty account team to request access.\n\nScoped OAuth requires: `contextual_data.write`\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/enrichment_schema_id"
+          },
+          {
+            "$ref": "#/components/parameters/enrichment_record_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/EnrichmentRecordDeleteResponse"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           }
         }
       }
