@@ -57,6 +57,10 @@
       "description": "Change Events enable you to send informational events about recent changes such as code deploys and system config changes from any system that can make an outbound HTTP connection. These events do not create incidents and do not send notifications; they are shown in context with incidents on the same PagerDuty service.\n"
     },
     {
+      "name": "Enrichment Integrations",
+      "description": "Enrichment Integrations synchronize external data sources into PagerDuty's Enrichment Service, producing enrichment schemas (\"data tables\") that you can use in Event Enrichment rules to add context to incoming events. The ServiceNow CMDB integration synchronizes Configuration Item (CI) data from your ServiceNow instance, mapping ServiceNow fields onto event fields.\n\n<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time before General Availability. Contact your PagerDuty account team to request access.\n"
+    },
+    {
       "name": "Enrichment Schemas",
       "description": "Enrichment Schemas are queryable \"data tables\" of contextual information that you can use in Event Enrichment to add context to incoming events. Each schema defines query fields (used to match events) and enriched fields (the data added to a match). CSV schemas can be created and populated directly, or generated automatically from an uploaded CSV file.\n\n<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time before General Availability. Contact your PagerDuty account team to request access.\n"
     },
@@ -4714,6 +4718,33 @@
         "schema": {
           "type": "string"
         }
+      },
+      "servicenow_integration_id": {
+        "name": "integration_id",
+        "in": "path",
+        "required": true,
+        "description": "Base32-encoded UUID v7 (26 uppercase alphanumeric characters) identifying the ServiceNow enrichment integration.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "servicenow_table_id": {
+        "name": "table_id",
+        "in": "path",
+        "required": true,
+        "description": "Base32-encoded UUID v7 (26 uppercase alphanumeric characters) identifying the CMDB table configuration.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "servicenow_credentials_id": {
+        "name": "credentials_id",
+        "in": "path",
+        "required": true,
+        "description": "Base32-encoded UUID v7 (26 uppercase alphanumeric characters) identifying the ServiceNow credentials.",
+        "schema": {
+          "type": "string"
+        }
       }
     },
     "requestBodies": {
@@ -5740,6 +5771,270 @@
                       "value": "production"
                     }
                   ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "ServiceNowIntegrationPostRequest": {
+        "description": "The ServiceNow enrichment integration to create. Credentials are added separately through the credentials endpoint.",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "name",
+                "cmdb_tables"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "maxLength": 100,
+                  "description": "The name of the integration."
+                },
+                "description": {
+                  "type": "string",
+                  "maxLength": 500,
+                  "description": "An optional description of the integration."
+                },
+                "cmdb_tables": {
+                  "type": "array",
+                  "minItems": 1,
+                  "maxItems": 8,
+                  "description": "The ServiceNow CMDB table configurations. An integration must have between 1 and 8 tables.",
+                  "items": {
+                    "$ref": "#/components/schemas/ServiceNowTableInput"
+                  }
+                }
+              }
+            },
+            "examples": {
+              "basic": {
+                "summary": "Create a ServiceNow enrichment integration",
+                "value": {
+                  "name": "Production CMDB Integration",
+                  "description": "Enrichment data from production ServiceNow instance",
+                  "cmdb_tables": [
+                    {
+                      "display_name": "Network Switches",
+                      "ci_table_name": "cmdb_ci_ip_switch",
+                      "query_filter": "operational_status=1",
+                      "field_mappings": [
+                        {
+                          "servicenow_field": "name",
+                          "event_field": "source"
+                        },
+                        {
+                          "servicenow_field": "operational_status",
+                          "event_field": "Operational Status"
+                        },
+                        {
+                          "servicenow_field": "support_group",
+                          "event_field": "Support Group"
+                        },
+                        {
+                          "servicenow_field": "sys_class_name",
+                          "event_field": "CI Class"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              "multipleQueryFields": {
+                "summary": "Match on multiple query fields",
+                "description": "Designate more than one mapping as a query field with `type: query`. A CI is matched only when the event contains a value for every query field (here, both `host` and `ci_class`). The remaining mappings provide enrichment data.",
+                "value": {
+                  "name": "Production CMDB Integration",
+                  "description": "Match CIs on both host name and CI class",
+                  "cmdb_tables": [
+                    {
+                      "display_name": "Servers",
+                      "ci_table_name": "cmdb_ci_server",
+                      "query_filter": "operational_status=1",
+                      "field_mappings": [
+                        {
+                          "servicenow_field": "name",
+                          "event_field": "host",
+                          "type": "query"
+                        },
+                        {
+                          "servicenow_field": "sys_class_name",
+                          "event_field": "ci_class",
+                          "type": "query"
+                        },
+                        {
+                          "servicenow_field": "support_group",
+                          "event_field": "Support Group"
+                        },
+                        {
+                          "servicenow_field": "location",
+                          "event_field": "Location"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "ServiceNowTablePostRequest": {
+        "description": "The CMDB table configuration to add to the integration.",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "cmdb_table"
+              ],
+              "properties": {
+                "cmdb_table": {
+                  "$ref": "#/components/schemas/ServiceNowTableInput"
+                }
+              }
+            },
+            "examples": {
+              "basic": {
+                "summary": "Add a CMDB table",
+                "value": {
+                  "cmdb_table": {
+                    "display_name": "Windows Servers",
+                    "ci_table_name": "cmdb_ci_win_server",
+                    "query_filter": null,
+                    "field_mappings": [
+                      {
+                        "servicenow_field": "name",
+                        "event_field": "source"
+                      },
+                      {
+                        "servicenow_field": "category",
+                        "event_field": "category"
+                      },
+                      {
+                        "servicenow_field": "fault_count",
+                        "event_field": "fault count"
+                      },
+                      {
+                        "servicenow_field": "cost_cc",
+                        "event_field": "cost cc"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "ServiceNowTablePutRequest": {
+        "description": "The replacement CMDB table configuration. This is a full replacement — all fields, including `ci_table_name` and the complete `field_mappings` list, must be provided. A table can only be updated while its sync is disabled and before its initial backfill has started.",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "cmdb_table"
+              ],
+              "properties": {
+                "cmdb_table": {
+                  "$ref": "#/components/schemas/ServiceNowTableInput"
+                }
+              }
+            },
+            "examples": {
+              "basic": {
+                "summary": "Update a CMDB table configuration",
+                "value": {
+                  "cmdb_table": {
+                    "display_name": "Production Network Switches",
+                    "ci_table_name": "cmdb_ci_ip_switch",
+                    "query_filter": "operational_status=1^u_environment=production",
+                    "field_mappings": [
+                      {
+                        "servicenow_field": "name",
+                        "event_field": "source"
+                      },
+                      {
+                        "servicenow_field": "operational_status",
+                        "event_field": "Operational Status"
+                      },
+                      {
+                        "servicenow_field": "sys_class_name",
+                        "event_field": "CI Class"
+                      },
+                      {
+                        "servicenow_field": "support_group.name",
+                        "event_field": "Support Team"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "ServiceNowCredentialsPostRequest": {
+        "description": "The ServiceNow credentials to create. Only one credential set is allowed per account.",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "credentials"
+              ],
+              "properties": {
+                "credentials": {
+                  "$ref": "#/components/schemas/ServiceNowCredentialsInput"
+                }
+              }
+            },
+            "examples": {
+              "basic": {
+                "summary": "Create ServiceNow credentials",
+                "value": {
+                  "credentials": {
+                    "instance_endpoint": "https://your-instance.service-now.com",
+                    "user": "integration_user",
+                    "password": "YOUR_SERVICENOW_PASSWORD"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "ServiceNowCredentialsPutRequest": {
+        "description": "The credential fields to update. Supports partial updates — only the fields provided are changed.",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "credentials"
+              ],
+              "properties": {
+                "credentials": {
+                  "$ref": "#/components/schemas/ServiceNowCredentials"
+                }
+              }
+            },
+            "examples": {
+              "basic": {
+                "summary": "Update ServiceNow credentials",
+                "value": {
+                  "credentials": {
+                    "instance_endpoint": "https://your-instance.service-now.com",
+                    "password": "YOUR_NEW_SERVICENOW_PASSWORD"
+                  }
                 }
               }
             }
@@ -7983,6 +8278,485 @@
             }
           }
         }
+      },
+      "ServiceNowIntegrationPostResponse": {
+        "description": "The ServiceNow enrichment integration was created successfully.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "integration": {
+                  "$ref": "#/components/schemas/ServiceNowIntegration"
+                }
+              }
+            },
+            "examples": {
+              "response": {
+                "summary": "Example Response",
+                "value": {
+                  "integration": {
+                    "id": "01HQXYZ9ABCDEFGHIJKLMNOPQR",
+                    "name": "Production CMDB Integration",
+                    "description": "Enrichment data from production ServiceNow instance",
+                    "cmdb_tables": [
+                      {
+                        "id": "01HTABC8DEFGHIJKLMNOPQRSTU",
+                        "display_name": "Network Switches",
+                        "ci_table_name": "cmdb_ci_ip_switch",
+                        "query_filter": "operational_status=1",
+                        "field_mappings": [
+                          {
+                            "servicenow_field": "name",
+                            "event_field": "source",
+                            "type": "query"
+                          },
+                          {
+                            "servicenow_field": "operational_status",
+                            "event_field": "Operational Status",
+                            "type": "enriched"
+                          },
+                          {
+                            "servicenow_field": "support_group",
+                            "event_field": "Support Group",
+                            "type": "enriched"
+                          },
+                          {
+                            "servicenow_field": "sys_class_name",
+                            "event_field": "CI Class",
+                            "type": "enriched"
+                          }
+                        ],
+                        "status": "disabled",
+                        "created_at": "2026-06-30T18:24:00Z",
+                        "updated_at": "2026-06-30T18:24:00Z",
+                        "deleted_at": null
+                      }
+                    ],
+                    "credentials": {
+                      "id": "01HV2C3D4E5F6G7H8J9K0LMNPQ",
+                      "instance_endpoint": "https://your-instance.service-now.com",
+                      "user": "integration_user",
+                      "created_at": "2026-06-30T18:20:00Z",
+                      "updated_at": "2026-06-30T18:20:00Z",
+                      "deleted_at": null
+                    },
+                    "created_at": "2026-06-30T18:24:00Z",
+                    "updated_at": "2026-06-30T18:24:00Z"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "ServiceNowIntegrationGetResponse": {
+        "description": "The requested ServiceNow enrichment integration, including its CMDB tables, field mappings, and credentials.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "integration": {
+                  "$ref": "#/components/schemas/ServiceNowIntegration"
+                }
+              }
+            },
+            "examples": {
+              "response": {
+                "summary": "Example Response",
+                "value": {
+                  "integration": {
+                    "id": "01HQXYZ9ABCDEFGHIJKLMNOPQR",
+                    "name": "Production CMDB Integration",
+                    "description": "Enrichment data from production ServiceNow instance",
+                    "cmdb_tables": [
+                      {
+                        "id": "01HTABC8DEFGHIJKLMNOPQRSTU",
+                        "display_name": "Network Switches",
+                        "ci_table_name": "cmdb_ci_ip_switch",
+                        "query_filter": "operational_status=1",
+                        "field_mappings": [
+                          {
+                            "servicenow_field": "name",
+                            "event_field": "source",
+                            "type": "query"
+                          },
+                          {
+                            "servicenow_field": "operational_status",
+                            "event_field": "Operational Status",
+                            "type": "enriched"
+                          },
+                          {
+                            "servicenow_field": "support_group",
+                            "event_field": "Support Group",
+                            "type": "enriched"
+                          },
+                          {
+                            "servicenow_field": "sys_class_name",
+                            "event_field": "CI Class",
+                            "type": "enriched"
+                          }
+                        ],
+                        "status": "active",
+                        "created_at": "2026-06-30T18:24:00Z",
+                        "updated_at": "2026-06-30T19:05:00Z",
+                        "deleted_at": null
+                      }
+                    ],
+                    "credentials": {
+                      "id": "01HV2C3D4E5F6G7H8J9K0LMNPQ",
+                      "instance_endpoint": "https://your-instance.service-now.com",
+                      "user": "integration_user",
+                      "created_at": "2026-06-30T18:20:00Z",
+                      "updated_at": "2026-06-30T18:20:00Z",
+                      "deleted_at": null
+                    },
+                    "created_at": "2026-06-30T18:24:00Z",
+                    "updated_at": "2026-06-30T19:05:00Z"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "ServiceNowIntegrationListResponse": {
+        "description": "The list of ServiceNow enrichment integrations for the account. Returns at most one integration due to product limits.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "integrations": {
+                  "type": "array",
+                  "description": "The list of ServiceNow enrichment integrations.",
+                  "items": {
+                    "$ref": "#/components/schemas/ServiceNowIntegration"
+                  }
+                }
+              }
+            },
+            "examples": {
+              "response": {
+                "summary": "Example Response",
+                "value": {
+                  "integrations": [
+                    {
+                      "id": "01HQXYZ9ABCDEFGHIJKLMNOPQR",
+                      "name": "Production CMDB Integration",
+                      "description": "Enrichment data from production ServiceNow instance",
+                      "cmdb_tables": [
+                        {
+                          "id": "01HTABC8DEFGHIJKLMNOPQRSTU",
+                          "display_name": "Network Switches",
+                          "ci_table_name": "cmdb_ci_ip_switch",
+                          "query_filter": "operational_status=1",
+                          "field_mappings": [
+                            {
+                              "servicenow_field": "name",
+                              "event_field": "source",
+                              "type": "query"
+                            },
+                            {
+                              "servicenow_field": "support_group",
+                              "event_field": "Support Group",
+                              "type": "enriched"
+                            }
+                          ],
+                          "status": "active",
+                          "created_at": "2026-06-30T18:24:00Z",
+                          "updated_at": "2026-06-30T19:05:00Z",
+                          "deleted_at": null
+                        }
+                      ],
+                      "credentials": {
+                        "id": "01HV2C3D4E5F6G7H8J9K0LMNPQ",
+                        "instance_endpoint": "https://your-instance.service-now.com",
+                        "user": "integration_user",
+                        "created_at": "2026-06-30T18:20:00Z",
+                        "updated_at": "2026-06-30T18:20:00Z",
+                        "deleted_at": null
+                      },
+                      "created_at": "2026-06-30T18:24:00Z",
+                      "updated_at": "2026-06-30T19:05:00Z"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "ServiceNowTablePostResponse": {
+        "description": "The CMDB table was added to the integration successfully.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "cmdb_table": {
+                  "$ref": "#/components/schemas/ServiceNowTable"
+                }
+              }
+            },
+            "examples": {
+              "response": {
+                "summary": "Example Response",
+                "value": {
+                  "cmdb_table": {
+                    "id": "01HV9TBLE2DEFGHIJKLMNOPQRS",
+                    "display_name": "Windows Servers",
+                    "ci_table_name": "cmdb_ci_win_server",
+                    "query_filter": null,
+                    "field_mappings": [
+                      {
+                        "servicenow_field": "name",
+                        "event_field": "source",
+                        "type": "query"
+                      },
+                      {
+                        "servicenow_field": "category",
+                        "event_field": "category",
+                        "type": "enriched"
+                      },
+                      {
+                        "servicenow_field": "fault_count",
+                        "event_field": "fault count",
+                        "type": "enriched"
+                      },
+                      {
+                        "servicenow_field": "cost_cc",
+                        "event_field": "cost cc",
+                        "type": "enriched"
+                      }
+                    ],
+                    "status": "disabled",
+                    "created_at": "2026-06-30T20:00:00Z",
+                    "updated_at": "2026-06-30T20:00:00Z",
+                    "deleted_at": null
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "ServiceNowTablePutResponse": {
+        "description": "The CMDB table configuration was updated successfully.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "cmdb_table": {
+                  "$ref": "#/components/schemas/ServiceNowTable"
+                }
+              }
+            },
+            "examples": {
+              "response": {
+                "summary": "Example Response",
+                "value": {
+                  "cmdb_table": {
+                    "id": "01HTABC8DEFGHIJKLMNOPQRSTU",
+                    "display_name": "Production Network Switches",
+                    "ci_table_name": "cmdb_ci_ip_switch",
+                    "query_filter": "operational_status=1^u_environment=production",
+                    "field_mappings": [
+                      {
+                        "servicenow_field": "name",
+                        "event_field": "source",
+                        "type": "query"
+                      },
+                      {
+                        "servicenow_field": "operational_status",
+                        "event_field": "Operational Status",
+                        "type": "enriched"
+                      },
+                      {
+                        "servicenow_field": "sys_class_name",
+                        "event_field": "CI Class",
+                        "type": "enriched"
+                      },
+                      {
+                        "servicenow_field": "support_group.name",
+                        "event_field": "Support Team",
+                        "type": "enriched"
+                      }
+                    ],
+                    "status": "disabled",
+                    "created_at": "2026-06-30T18:24:00Z",
+                    "updated_at": "2026-06-30T20:30:00Z",
+                    "deleted_at": null
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "ServiceNowTableEnableResponse": {
+        "description": "Data synchronization was enabled for the CMDB table. This operation is idempotent — enabling an already-enabled table succeeds.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "description": "The outcome of the enable operation."
+                },
+                "message": {
+                  "type": "string",
+                  "description": "A human-readable message describing the result."
+                }
+              }
+            },
+            "examples": {
+              "response": {
+                "summary": "Example Response",
+                "value": {
+                  "status": "enabled",
+                  "message": "Data synchronization enabled for table"
+                }
+              }
+            }
+          }
+        }
+      },
+      "ServiceNowTableTestResponse": {
+        "description": "Up to 10 sample records returned from a live query against ServiceNow. The records are keyed by ServiceNow field name (not the mapped `event_field` names), so you can verify that the correct ServiceNow fields are configured.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "enrichment_data": {
+                  "type": "array",
+                  "description": "Sample records retrieved from ServiceNow, each keyed by ServiceNow field name.",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "examples": {
+              "response": {
+                "summary": "Example Response",
+                "value": {
+                  "enrichment_data": [
+                    {
+                      "name": "core-switch-01",
+                      "operational_status": "1",
+                      "support_group": "Network Operations",
+                      "sys_class_name": "cmdb_ci_ip_switch"
+                    },
+                    {
+                      "name": "core-switch-02",
+                      "operational_status": "1",
+                      "support_group": "Network Operations",
+                      "sys_class_name": "cmdb_ci_ip_switch"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "ServiceNowCredentialsPostResponse": {
+        "description": "The ServiceNow credentials were created successfully. The password is never returned.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "credentials": {
+                  "$ref": "#/components/schemas/ServiceNowCredentials"
+                }
+              }
+            },
+            "examples": {
+              "response": {
+                "summary": "Example Response",
+                "value": {
+                  "credentials": {
+                    "id": "01HV2C3D4E5F6G7H8J9K0LMNPQ",
+                    "instance_endpoint": "https://your-instance.service-now.com",
+                    "user": "integration_user",
+                    "created_at": "2026-06-30T18:20:00Z",
+                    "updated_at": "2026-06-30T18:20:00Z",
+                    "deleted_at": null
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "ServiceNowCredentialsGetResponse": {
+        "description": "The requested ServiceNow credentials. The password is never returned.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "credentials": {
+                  "$ref": "#/components/schemas/ServiceNowCredentials"
+                }
+              }
+            },
+            "examples": {
+              "response": {
+                "summary": "Example Response",
+                "value": {
+                  "credentials": {
+                    "id": "01HV2C3D4E5F6G7H8J9K0LMNPQ",
+                    "instance_endpoint": "https://your-instance.service-now.com",
+                    "user": "integration_user",
+                    "created_at": "2026-06-30T18:20:00Z",
+                    "updated_at": "2026-06-30T18:20:00Z",
+                    "deleted_at": null
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "ServiceNowCredentialsPutResponse": {
+        "description": "The ServiceNow credentials were updated successfully. The password is never returned.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "credentials": {
+                  "$ref": "#/components/schemas/ServiceNowCredentials"
+                }
+              }
+            },
+            "examples": {
+              "response": {
+                "summary": "Example Response",
+                "value": {
+                  "credentials": {
+                    "id": "01HV2C3D4E5F6G7H8J9K0LMNPQ",
+                    "instance_endpoint": "https://your-instance.service-now.com",
+                    "user": "integration_user",
+                    "created_at": "2026-06-30T18:20:00Z",
+                    "updated_at": "2026-06-30T21:00:00Z",
+                    "deleted_at": null
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
     "securitySchemes": {
@@ -7994,6 +8768,261 @@
       }
     },
     "schemas": {
+      "ServiceNowIntegration": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "readOnly": true,
+            "description": "Base32-encoded UUID v7 (26 uppercase alphanumeric characters) identifying the integration."
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the integration."
+          },
+          "description": {
+            "type": "string",
+            "nullable": true,
+            "description": "An optional description of the integration."
+          },
+          "cmdb_tables": {
+            "type": "array",
+            "description": "The ServiceNow CMDB table configurations belonging to this integration. An integration must have at least 1 and at most 8 tables.",
+            "items": {
+              "$ref": "#/components/schemas/ServiceNowTable"
+            }
+          },
+          "credentials": {
+            "readOnly": true,
+            "nullable": true,
+            "description": "The ServiceNow credentials associated with the account, or `null` if no credentials have been configured. Credentials are managed through the credentials endpoints, not through this object.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ServiceNowCredentials"
+              }
+            ]
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true,
+            "description": "The date/time the integration was created."
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true,
+            "description": "The date/time the integration was last updated."
+          }
+        }
+      },
+      "ServiceNowTable": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "readOnly": true,
+            "description": "Base32-encoded UUID v7 (26 uppercase alphanumeric characters) identifying the CMDB table configuration."
+          },
+          "display_name": {
+            "type": "string",
+            "description": "A human-readable name for the CMDB table configuration. This name is used to identify the generated enrichment schema in the Event Enrichment rule editor."
+          },
+          "ci_table_name": {
+            "type": "string",
+            "description": "The name of the ServiceNow CMDB table to synchronize (for example, `cmdb_ci_server` or `cmdb_ci_ip_switch`). Table names are case-sensitive."
+          },
+          "query_filter": {
+            "type": "string",
+            "nullable": true,
+            "description": "An optional ServiceNow encoded query used to limit which records are synchronized from the table (for example, `operational_status=1^u_environment=production`). Set to `null` to synchronize all records."
+          },
+          "field_mappings": {
+            "type": "array",
+            "description": "The mappings between ServiceNow fields and event fields. Must contain between 2 and 20 mappings, including at least one enrichment field. At most 3 mappings may be designated as query fields.",
+            "items": {
+              "$ref": "#/components/schemas/ServiceNowFieldMapping"
+            }
+          },
+          "status": {
+            "type": "string",
+            "readOnly": true,
+            "description": "The current data synchronization status of the table. `disabled`: sync is not enabled (the default for newly created tables). `syncing`: an initial sync is in progress. `active`: sync is healthy and incremental updates are running. `error`: sync failed (check the credentials or table configuration).",
+            "enum": [
+              "disabled",
+              "syncing",
+              "active",
+              "error"
+            ]
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true,
+            "description": "The date/time the table configuration was created."
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true,
+            "description": "The date/time the table configuration was last updated."
+          },
+          "deleted_at": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "readOnly": true,
+            "description": "The date/time the table configuration was deleted, or `null` if it has not been deleted."
+          }
+        }
+      },
+      "ServiceNowFieldMapping": {
+        "type": "object",
+        "required": [
+          "servicenow_field",
+          "event_field"
+        ],
+        "properties": {
+          "servicenow_field": {
+            "type": "string",
+            "description": "The ServiceNow field (column) to read the value from. Dot-walked fields are supported to traverse relationships (for example, `support_group.manager.email`)."
+          },
+          "event_field": {
+            "type": "string",
+            "description": "The event field that the ServiceNow value is mapped to."
+          },
+          "type": {
+            "type": "string",
+            "description": "Determines how the field is used during enrichment. `enriched` fields add contextual data to a matched event, while `query` fields are used to match incoming events to Configuration Items. When no mapping specifies a `type`, the field defaults to `enriched` and the `name` field is automatically used as the single query field. To match on a different field — or on more than one field — set `type: query` on those mappings; in that mode `name` is no longer used as a query field unless it is itself marked `query`. Up to 3 query fields may be configured, and when more than one is set an event must contain a matching value for every query field to be enriched (logical AND). At least one mapping must be an enriched field. In responses, a mapping's `type` is `query`, `enriched`, or `discriminator`. `discriminator` is assigned automatically to the `sys_id` field of `cmdb_rel_ci` relationship tables to distinguish relationship types; it appears in responses but cannot be set on requests.",
+            "enum": [
+              "query",
+              "enriched",
+              "discriminator"
+            ]
+          }
+        }
+      },
+      "ServiceNowTableInput": {
+        "type": "object",
+        "required": [
+          "display_name",
+          "ci_table_name",
+          "field_mappings"
+        ],
+        "properties": {
+          "display_name": {
+            "type": "string",
+            "description": "A human-readable name for the CMDB table configuration. This name is used to identify the generated enrichment schema in the Event Enrichment rule editor."
+          },
+          "ci_table_name": {
+            "type": "string",
+            "description": "The name of the ServiceNow CMDB table to synchronize (for example, `cmdb_ci_server` or `cmdb_ci_ip_switch`). Table names are case-sensitive."
+          },
+          "query_filter": {
+            "type": "string",
+            "nullable": true,
+            "description": "An optional ServiceNow encoded query used to limit which records are synchronized from the table (for example, `operational_status=1^u_environment=production`). Set to `null` to synchronize all records."
+          },
+          "field_mappings": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 20,
+            "description": "The mappings between ServiceNow fields and event fields. Must contain between 2 and 20 mappings, including at least one enrichment field. At most 3 mappings may be marked as query fields.",
+            "items": {
+              "$ref": "#/components/schemas/ServiceNowFieldMappingInput"
+            }
+          }
+        }
+      },
+      "ServiceNowFieldMappingInput": {
+        "type": "object",
+        "required": [
+          "servicenow_field",
+          "event_field"
+        ],
+        "properties": {
+          "servicenow_field": {
+            "type": "string",
+            "description": "The ServiceNow field (column) to read the value from. Dot-walked fields are supported to traverse relationships (for example, `support_group.manager.email`)."
+          },
+          "event_field": {
+            "type": "string",
+            "description": "The event field that the ServiceNow value is mapped to."
+          },
+          "type": {
+            "type": "string",
+            "description": "Set to `query` to use this mapping as a lookup key for matching incoming events to Configuration Items. Omit it for enrichment fields (the default). At most 3 mappings may be marked `query`, and at least one mapping must be left as an enrichment field. When no mapping is marked `query`, the `name` field is used as the query field automatically. Only `query` is accepted here — any other value is rejected.",
+            "enum": [
+              "query"
+            ]
+          }
+        }
+      },
+      "ServiceNowCredentials": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "readOnly": true,
+            "description": "Base32-encoded UUID v7 (26 uppercase alphanumeric characters) identifying the credentials."
+          },
+          "instance_endpoint": {
+            "type": "string",
+            "description": "The ServiceNow instance URL (for example, `https://your-instance.service-now.com`)."
+          },
+          "user": {
+            "type": "string",
+            "description": "The ServiceNow username used to authenticate API requests. The user must have read access to the configured CMDB tables."
+          },
+          "password": {
+            "type": "string",
+            "writeOnly": true,
+            "description": "The ServiceNow password. Only accepted in requests and never returned in responses."
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true,
+            "description": "The date/time the credentials were created."
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true,
+            "description": "The date/time the credentials were last updated."
+          },
+          "deleted_at": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "readOnly": true,
+            "description": "The date/time the credentials were deleted, or `null` if they have not been deleted."
+          }
+        }
+      },
+      "ServiceNowCredentialsInput": {
+        "type": "object",
+        "required": [
+          "instance_endpoint",
+          "user",
+          "password"
+        ],
+        "properties": {
+          "instance_endpoint": {
+            "type": "string",
+            "description": "The ServiceNow instance URL (for example, `https://your-instance.service-now.com`)."
+          },
+          "user": {
+            "type": "string",
+            "description": "The ServiceNow username used to authenticate API requests. The user must have read access to the configured CMDB tables."
+          },
+          "password": {
+            "type": "string",
+            "writeOnly": true,
+            "description": "The ServiceNow password. Only accepted in requests and never returned in responses."
+          }
+        }
+      },
       "EnrichmentSchema": {
         "type": "object",
         "properties": {
@@ -32889,6 +33918,556 @@
           },
           "404": {
             "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/enrichment/integrations/servicenow": {
+      "description": "List and create ServiceNow enrichment integrations.",
+      "get": {
+        "tags": [
+          "Enrichment Integrations"
+        ],
+        "summary": "List ServiceNow integrations",
+        "x-pd-requires-scope": "contextual_data.read",
+        "operationId": "listServiceNowIntegrations",
+        "description": "Lists the ServiceNow enrichment integrations for the account, including their CMDB tables, field mappings, and credentials. Because only one integration is allowed per account, this returns at most one integration.\n\n<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. Contact your PagerDuty account team to request access.\n\nScoped OAuth requires: `contextual_data.read`\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ServiceNowIntegrationListResponse"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Enrichment Integrations"
+        ],
+        "summary": "Create a ServiceNow integration",
+        "x-pd-requires-scope": "contextual_data.write",
+        "operationId": "createServiceNowIntegration",
+        "description": "Creates a ServiceNow enrichment integration with one or more CMDB table configurations. Only one integration is allowed per account. Each CMDB table must define between 2 and 20 field mappings, and an integration may contain at most 8 tables. Credentials are managed separately through the credentials endpoints.\n\n<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. Contact your PagerDuty account team to request access.\n\nScoped OAuth requires: `contextual_data.write`\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/ServiceNowIntegrationPostRequest"
+        },
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/ServiceNowIntegrationPostResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/enrichment/integrations/servicenow/{integration_id}": {
+      "description": "Get and delete a specific ServiceNow enrichment integration.",
+      "get": {
+        "tags": [
+          "Enrichment Integrations"
+        ],
+        "summary": "Get a ServiceNow integration",
+        "x-pd-requires-scope": "contextual_data.read",
+        "operationId": "getServiceNowIntegration",
+        "description": "Retrieves a single ServiceNow enrichment integration by ID, including its CMDB tables, field mappings, the current sync status of each table, and credentials.\n\n<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. Contact your PagerDuty account team to request access.\n\nScoped OAuth requires: `contextual_data.read`\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/servicenow_integration_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ServiceNowIntegrationGetResponse"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Enrichment Integrations"
+        ],
+        "summary": "Delete a ServiceNow integration",
+        "x-pd-requires-scope": "contextual_data.write",
+        "operationId": "deleteServiceNowIntegration",
+        "description": "Deletes a ServiceNow enrichment integration, including all of its CMDB table configurations and their generated enrichment schemas, and disables any associated data synchronization.\n\n<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. Contact your PagerDuty account team to request access.\n\nScoped OAuth requires: `contextual_data.write`\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/servicenow_integration_id"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The ServiceNow integration was deleted successfully."
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/enrichment/integrations/servicenow/{integration_id}/tables": {
+      "description": "Add a CMDB table to a ServiceNow enrichment integration.",
+      "post": {
+        "tags": [
+          "Enrichment Integrations"
+        ],
+        "summary": "Add a CMDB table",
+        "x-pd-requires-scope": "contextual_data.write",
+        "operationId": "addServiceNowTable",
+        "description": "Adds a new ServiceNow CMDB table configuration to an existing integration. An integration may contain at most 8 tables. New tables are created with `status: disabled`; enable synchronization separately once the configuration has been validated.\n\n<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. Contact your PagerDuty account team to request access.\n\nScoped OAuth requires: `contextual_data.write`\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/servicenow_integration_id"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/ServiceNowTablePostRequest"
+        },
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/ServiceNowTablePostResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/enrichment/integrations/servicenow/{integration_id}/tables/{table_id}": {
+      "description": "Update and delete a CMDB table configuration.",
+      "put": {
+        "tags": [
+          "Enrichment Integrations"
+        ],
+        "summary": "Update a CMDB table",
+        "x-pd-requires-scope": "contextual_data.write",
+        "operationId": "updateServiceNowTable",
+        "description": "Replaces a ServiceNow CMDB table configuration. This is a full replacement — all fields, including `ci_table_name` and the complete `field_mappings` list, must be provided. A table can only be updated while its synchronization is disabled and before its initial backfill has started.\n\n<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. Contact your PagerDuty account team to request access.\n\nScoped OAuth requires: `contextual_data.write`\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/servicenow_integration_id"
+          },
+          {
+            "$ref": "#/components/parameters/servicenow_table_id"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/ServiceNowTablePutRequest"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ServiceNowTablePutResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Enrichment Integrations"
+        ],
+        "summary": "Remove a CMDB table",
+        "x-pd-requires-scope": "contextual_data.write",
+        "operationId": "deleteServiceNowTable",
+        "description": "Removes a ServiceNow CMDB table configuration from an integration. The table's generated enrichment schema is removed and its data synchronization is disabled.\n\n<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. Contact your PagerDuty account team to request access.\n\nScoped OAuth requires: `contextual_data.write`\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/servicenow_integration_id"
+          },
+          {
+            "$ref": "#/components/parameters/servicenow_table_id"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The CMDB table was removed successfully."
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/enrichment/integrations/servicenow/{integration_id}/tables/{table_id}/enable": {
+      "description": "Enable data synchronization for a CMDB table.",
+      "post": {
+        "tags": [
+          "Enrichment Integrations"
+        ],
+        "summary": "Enable CMDB table sync",
+        "x-pd-requires-scope": "contextual_data.write",
+        "operationId": "enableServiceNowTableSync",
+        "description": "Enables data synchronization for a ServiceNow CMDB table configuration. Once enabled, the table's enrichment schema is populated with CI data from ServiceNow and kept up to date with periodic syncs. This operation is idempotent — enabling an already-enabled table succeeds.\n\n<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. Contact your PagerDuty account team to request access.\n\nScoped OAuth requires: `contextual_data.write`\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/servicenow_integration_id"
+          },
+          {
+            "$ref": "#/components/parameters/servicenow_table_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ServiceNowTableEnableResponse"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/enrichment/integrations/servicenow/{integration_id}/tables/{table_id}/test": {
+      "description": "Test a CMDB table configuration against live ServiceNow data.",
+      "get": {
+        "tags": [
+          "Enrichment Integrations"
+        ],
+        "summary": "Test a CMDB table",
+        "x-pd-requires-scope": "contextual_data.read",
+        "operationId": "testServiceNowTable",
+        "description": "Validates a ServiceNow CMDB table configuration by running a live query against ServiceNow and returning up to 10 sample records. Use this before enabling synchronization to confirm that the credentials, table name, query filter, and mapped fields are correct. Records are returned keyed by ServiceNow field name.\n\n<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. Contact your PagerDuty account team to request access.\n\nScoped OAuth requires: `contextual_data.read`\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/servicenow_integration_id"
+          },
+          {
+            "$ref": "#/components/parameters/servicenow_table_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ServiceNowTableTestResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/enrichment/integrations/servicenow/credentials": {
+      "description": "Create ServiceNow credentials for the account.",
+      "post": {
+        "tags": [
+          "Enrichment Integrations"
+        ],
+        "summary": "Create ServiceNow credentials",
+        "x-pd-requires-scope": "contextual_data.write",
+        "operationId": "createServiceNowCredentials",
+        "description": "Creates the ServiceNow API credentials used to authenticate synchronization and test requests. Only one credential set is allowed per account, and it is shared across the account's ServiceNow integration. The password is never returned in responses.\n\n<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. Contact your PagerDuty account team to request access.\n\nScoped OAuth requires: `contextual_data.write`\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/ServiceNowCredentialsPostRequest"
+        },
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/ServiceNowCredentialsPostResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/enrichment/integrations/servicenow/credentials/{credentials_id}": {
+      "description": "Get, update, and delete ServiceNow credentials.",
+      "get": {
+        "tags": [
+          "Enrichment Integrations"
+        ],
+        "summary": "Get ServiceNow credentials",
+        "x-pd-requires-scope": "contextual_data.read",
+        "operationId": "getServiceNowCredentials",
+        "description": "Retrieves the ServiceNow credentials by ID. The password is never returned.\n\n<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. Contact your PagerDuty account team to request access.\n\nScoped OAuth requires: `contextual_data.read`\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/servicenow_credentials_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ServiceNowCredentialsGetResponse"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Enrichment Integrations"
+        ],
+        "summary": "Update ServiceNow credentials",
+        "x-pd-requires-scope": "contextual_data.write",
+        "operationId": "updateServiceNowCredentials",
+        "description": "Updates the ServiceNow credentials. Supports partial updates — only the fields provided in the request are changed. If a password is provided, it replaces the stored password. The password is never returned.\n\n<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. Contact your PagerDuty account team to request access.\n\nScoped OAuth requires: `contextual_data.write`\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/servicenow_credentials_id"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/ServiceNowCredentialsPutRequest"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/ServiceNowCredentialsPutResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Enrichment Integrations"
+        ],
+        "summary": "Delete ServiceNow credentials",
+        "x-pd-requires-scope": "contextual_data.write",
+        "operationId": "deleteServiceNowCredentials",
+        "description": "Deletes the ServiceNow credentials. Credentials cannot be deleted while they are associated with an existing ServiceNow integration; delete the integration first.\n\n<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. Contact your PagerDuty account team to request access.\n\nScoped OAuth requires: `contextual_data.write`\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/servicenow_credentials_id"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The ServiceNow credentials were deleted successfully."
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           }
         }
       }
