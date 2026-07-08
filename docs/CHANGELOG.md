@@ -3,6 +3,20 @@
 PagerDuty aims to have no breaking changes to its API. We do fix bugs and add new functionality continuously. This document serves as a reference for any bug fixes or additions to our API.
 
 ### 2026-07-08
+- Added ServiceNow CMDB integration endpoints in early access:
+  - `GET /enrichment/integrations/servicenow`
+  - `POST /enrichment/integrations/servicenow`
+  - `GET /enrichment/integrations/servicenow/{integration_id}`
+  - `DELETE /enrichment/integrations/servicenow/{integration_id}`
+  - `POST /enrichment/integrations/servicenow/{integration_id}/tables`
+  - `PUT /enrichment/integrations/servicenow/{integration_id}/tables/{table_id}`
+  - `DELETE /enrichment/integrations/servicenow/{integration_id}/tables/{table_id}`
+  - `POST /enrichment/integrations/servicenow/{integration_id}/tables/{table_id}/enable`
+  - `GET /enrichment/integrations/servicenow/{integration_id}/tables/{table_id}/test`
+  - `POST /enrichment/integrations/servicenow/credentials`
+  - `GET /enrichment/integrations/servicenow/credentials/{credentials_id}`
+  - `PUT /enrichment/integrations/servicenow/credentials/{credentials_id}`
+  - `DELETE /enrichment/integrations/servicenow/credentials/{credentials_id}`
 - Added Enrichment Schema endpoints in early access:
   - `GET /enrichment/schemas`
   - `POST /enrichment/schemas`
