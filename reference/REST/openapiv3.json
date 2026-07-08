@@ -2639,6 +2639,23 @@
           "uniqueItems": true
         }
       },
+      "include_user_detail": {
+        "name": "include[]",
+        "in": "query",
+        "description": "Array of additional Models to include in response. Use `calendar_urls` to include `http_cal_url` and `web_cal_url`; account admins with `can_update_user` may use this to retrieve another user's calendar feed URLs. Note that these URLs are bearer credentials: anyone with the URL can read that user's on-call calendar.",
+        "explode": true,
+        "schema": {
+          "type": "string",
+          "enum": [
+            "contact_methods",
+            "notification_rules",
+            "teams",
+            "subdomains",
+            "calendar_urls"
+          ],
+          "uniqueItems": true
+        }
+      },
       "include_maintenance_window": {
         "name": "include[]",
         "in": "query",
@@ -13119,6 +13136,18 @@
                 "items": {
                   "$ref": "#/components/schemas/NotificationRuleReference"
                 }
+              },
+              "http_cal_url": {
+                "type": "string",
+                "format": "uri",
+                "readOnly": true,
+                "description": "iCal HTTP feed URL for this user's on-call shifts. Only returned on the `GET /users/{id}` detail endpoint: automatically when viewing your own profile with a user-level token, or when an account admin with `can_update_user` passes `include[]=calendar_urls` for another user. Not returned on list endpoints or with account-level read-only keys.\n\n**Security:** this URL is a bearer credential. Anyone with the URL can read the user's on-call calendar without further authentication. Rotate via `POST /users/{id}/regenerate_private_url_key` if it may have been exposed."
+              },
+              "web_cal_url": {
+                "type": "string",
+                "format": "uri",
+                "readOnly": true,
+                "description": "iCal webcal URL for this user's on-call shifts. Only returned on the `GET /users/{id}` detail endpoint: automatically when viewing your own profile with a user-level token, or when an account admin with `can_update_user` passes `include[]=calendar_urls` for another user. Not returned on list endpoints or with account-level read-only keys.\n\n**Security:** this URL is a bearer credential. Anyone with the URL can read the user's on-call calendar without further authentication. Rotate via `POST /users/{id}/regenerate_private_url_key` if it may have been exposed."
               }
             },
             "required": [
@@ -62677,7 +62706,7 @@
             "$ref": "#/components/parameters/id"
           },
           {
-            "$ref": "#/components/parameters/include_user"
+            "$ref": "#/components/parameters/include_user_detail"
           }
         ],
         "responses": {
@@ -62741,7 +62770,9 @@
                             "self": "https://api.pagerduty.com/teams/PQ9K7I8",
                             "html_url": "https://subdomain.pagerduty.com/teams/PQ9K7I8"
                           }
-                        ]
+                        ],
+                        "http_cal_url": "https://webcal.pagerduty.com/private/ABCDEFGHIJKLMNOP/feed",
+                        "web_cal_url": "webcal://webcal.pagerduty.com/private/ABCDEFGHIJKLMNOP/feed"
                       }
                     }
                   }
@@ -65604,6 +65635,70 @@
         }
       }
     },
+    "/users/{id}/regenerate_private_url_key": {
+      "description": "Regenerate the private URL key for a user's personal calendar feeds.",
+      "post": {
+        "x-pd-requires-scope": "users.write",
+        "tags": [
+          "Users"
+        ],
+        "operationId": "regenerateUserPrivateUrlKey",
+        "summary": "Regenerate a user's calendar feed URL key",
+        "description": "Regenerate the private URL key used to construct a user's personal iCal calendar feed URLs\n(`http_cal_url` and `web_cal_url`). The old key is immediately invalidated; callers should\nupdate any stored feed subscriptions with the new key.\n\nA user may only regenerate their own key. Account admins may regenerate on behalf of any user.\n\nThe calendar feed URLs act as bearer credentials: anyone with the URL can read that user's\non-call calendar without further authentication. Rotate the key here whenever a URL may\nhave been exposed (for example, if it was shared outside the intended audience or if an\nadmin with `can_update_user` retrieved it via `GET /users/{id}?include[]=calendar_urls`).\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and\nother data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#users)\n\nScoped OAuth requires: `users.write`\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The user's new private URL key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "private_url_key": {
+                      "type": "string",
+                      "description": "The newly generated private URL key for calendar feed URLs."
+                    }
+                  },
+                  "required": [
+                    "private_url_key"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "private_url_key": "ABCDEFGHIJKLMNOP"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        }
+      }
+    },
     "/users/me": {
       "description": "Get the current user.",
       "get": {
@@ -65621,7 +65716,7 @@
             "$ref": "#/components/parameters/header_Content-Type"
           },
           {
-            "$ref": "#/components/parameters/include_user"
+            "$ref": "#/components/parameters/include_user_detail"
           }
         ],
         "responses": {
