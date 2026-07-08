@@ -3,6 +3,9 @@
 PagerDuty aims to have no breaking changes to its API. We do fix bugs and add new functionality continuously. This document serves as a reference for any bug fixes or additions to our API.
 
 ### 2026-07-06
+- Documented `http_cal_url` and `web_cal_url` on the User model (`GET /users/{id}` and `GET /users/me`). Fields are returned automatically when viewing your own profile with a user-level token, and for account admins with `can_update_user` when passing `include[]=calendar_urls`. These URLs are bearer credentials.
+- Documented `include[]=calendar_urls` on `GET /users/{id}` and `GET /users/me`.
+- Documented `POST /users/{id}/regenerate_private_url_key` for rotating the private URL key that backs the calendar feed URLs.
 - Added Event Enrichment endpoints in early access:
   - `GET /enrichment/event_enrichments`
   - `POST /enrichment/event_enrichments`
