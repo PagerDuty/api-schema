@@ -62793,7 +62793,7 @@
           "SRE Agent"
         ],
         "operationId": "updateSreMemory",
-        "description": "Update an existing SRE Agent memory.\n\nScoped OAuth requires: `sre_agent.write`\n",
+        "description": "Update an existing SRE Agent memory. Changes to the runbook may not update in a currently ongoing conversation, but will be available to new conversations. To modify the runbook for an in progress conversation update the runbook via the agent instead.\n\nScoped OAuth requires: `sre_agent.write`\n",
         "summary": "Update an SRE Agent memory",
         "parameters": [
           {
@@ -62904,7 +62904,7 @@
           "SRE Agent"
         ],
         "operationId": "deleteSreMemory",
-        "description": "Permanently delete an SRE Agent memory.\n\nScoped OAuth requires: `sre_agent.write`\n",
+        "description": "Permanently delete an SRE Agent memory. Deleting a runbook may not delete it immediately from a currently running conversation, but will remove it from all future conversations. To modify an in progress conversation ask the agent to delete the runbook instead.\n\nScoped OAuth requires: `sre_agent.write`\n",
         "summary": "Delete an SRE Agent memory",
         "parameters": [
           {
