@@ -2,6 +2,11 @@
 
 PagerDuty aims to have no breaking changes to its API. We do fix bugs and add new functionality continuously. This document serves as a reference for any bug fixes or additions to our API.
 
+### 2026-07-16
+- Document runbook limitations
+  - `PUT sre_agent/memories/{memory_id}`
+  - `DELETE sre_agent/memories/{memory_id}`
+
 ### 2026-07-08
 - Added ServiceNow CMDB integration endpoints in early access:
   - `GET /enrichment/integrations/servicenow`
