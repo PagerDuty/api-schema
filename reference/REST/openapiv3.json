@@ -14663,13 +14663,19 @@
                 "type": "boolean",
                 "description": "Send an abbreviated email message instead of the standard email output. Useful for email-to-SMS gateways and email based pagers.",
                 "default": false
+              },
+              "enabled": {
+                "type": "boolean",
+                "description": "If true, this email address is capable of receiving email notifications.",
+                "readOnly": true
               }
             },
             "example": {
               "type": "email_contact_method",
               "label": "work",
               "address": "grady.haylie.126@hickle.net",
-              "send_short_email": false
+              "send_short_email": false,
+              "enabled": true
             }
           }
         ]
@@ -14698,7 +14704,7 @@
               },
               "enabled": {
                 "type": "boolean",
-                "description": "If true, this phone is capable of receiving SMS messages.",
+                "description": "If true, this phone is capable of receiving notifications.",
                 "readOnly": true
               },
               "blacklisted": {
