@@ -4,6 +4,7 @@ PagerDuty aims to have no breaking changes to its API. We do fix bugs and add ne
 
 ### 2026-08-04
 - Documented support for User OAuth Tokens (in addition to User API Tokens) for authenticating requests to the Slack Integration API
+- Added `enabled` field to the `EmailContactMethod` model, and now return `enabled` for the `phone_contact_method` type (voice) in addition to the existing `sms_contact_method` and `whatsapp_contact_method` types.
 
 ### 2026-07-16
 - Document runbook limitations
