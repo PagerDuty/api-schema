@@ -11636,7 +11636,7 @@
           "recommended_time_window": {
             "readOnly": true,
             "type": "integer",
-            "description": "In order to ensure your Service has the optimal grouping window, we use data science to calculate your Service's average Alert inter-arrival time. We encourage customer's to use this value, please set `time_window` to 0 to use the `recommended_time_window`."
+            "description": "In order to ensure your Service has the optimal grouping window, we use data science to calculate your Service's average Alert inter-arrival time. We encourage customers to use this value. Please set `time_window` to 0 to use the `recommended_time_window`."
           }
         }
       },
@@ -12542,7 +12542,7 @@
           "recommended_time_window": {
             "readOnly": true,
             "type": "integer",
-            "description": "In order to ensure your Service has the optimal grouping window, we use data science to calculate your Service`s average Alert inter-arrival time. We encourage customer`s to use this value, please set `time_window` to 0 to use the `recommended_time_window`."
+            "description": "In order to ensure your Service has the optimal grouping window, we use data science to calculate your Service's average Alert inter-arrival time. We encourage customers to use this value. Please set `time_window` to 0 to use the `recommended_time_window`."
           }
         }
       },
@@ -20354,7 +20354,7 @@
                   "recommended_time_window": {
                     "readOnly": true,
                     "type": "integer",
-                    "description": "In order to ensure your Service has the optimal grouping window, we use data science to calculate your Service's average Alert inter-arrival time. We encourage customer's to use this value, please set `time_window` to 0 to use the `recommended_time_window`."
+                    "description": "In order to ensure your Service has the optimal grouping window, we use data science to calculate your Service's average Alert inter-arrival time. We encourage customers to use this value. Please set `time_window` to 0 to use the `recommended_time_window`."
                   },
                   "iag_fields": {
                     "type": "array",
@@ -20450,7 +20450,7 @@
           "recommended_time_window": {
             "readOnly": true,
             "type": "integer",
-            "description": "In order to ensure your Service has the optimal grouping window, we use data science to calculate your Service's average Alert inter-arrival time. We encourage customer's to use this value, please set `time_window` to 0 to use the `recommended_time_window`."
+            "description": "In order to ensure your Service has the optimal grouping window, we use data science to calculate your Service's average Alert inter-arrival time. We encourage customers to use this value. Please set `time_window` to 0 to use the `recommended_time_window`."
           }
         }
       },
