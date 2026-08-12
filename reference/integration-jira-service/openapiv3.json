@@ -1302,7 +1302,7 @@
                                       "email": "user1@example.com",
                                       "label": "User 1",
                                       "html_url": "https://subdomain.pagerduty.com/users/PDU13T4",
-                                      "icon": "https://secure.gravatar.com/avatar/0787c04e4eb52aa05d2c94bac8293c83.png?d=mm&r=PG"
+                                      "icon": "https://pd-static-assets.pagerduty.com/users/blank-avatar.png"
                                     },
                                     {
                                       "id": "PKH7YP2",
@@ -1310,7 +1310,7 @@
                                       "email": "user2@example.com",
                                       "label": "User 2",
                                       "html_url": "https://subdomain.pagerduty.com/users/PKH7YP2",
-                                      "icon": "https://secure.gravatar.com/avatar/7358657a3a25a1ab291289aaf38afcba.png?d=mm&r=PG"
+                                      "icon": "https://pd-static-assets.pagerduty.com/users/blank-avatar.png"
                                     }
                                   ]
                                 }
@@ -1886,7 +1886,7 @@
                                   "email": "user1@example.com",
                                   "label": "User 1",
                                   "html_url": "https://subdomain.pagerduty.com/users/PDU13T4",
-                                  "icon": "https://secure.gravatar.com/avatar/0787c04e4eb52aa05d2c94bac8293c83.png?d=mm&r=PG"
+                                  "icon": "https://pd-static-assets.pagerduty.com/users/blank-avatar.png"
                                 },
                                 {
                                   "id": "PKH7YP2",
@@ -1894,7 +1894,7 @@
                                   "email": "user2@example.com",
                                   "label": "User 2",
                                   "html_url": "https://subdomain.pagerduty.com/users/PKH7YP2",
-                                  "icon": "https://secure.gravatar.com/avatar/7358657a3a25a1ab291289aaf38afcba.png?d=mm&r=PG"
+                                  "icon": "https://pd-static-assets.pagerduty.com/users/blank-avatar.png"
                                 }
                               ]
                             }
@@ -2450,7 +2450,7 @@
                                     "email": "user1@example.com",
                                     "label": "User 1",
                                     "html_url": "https://subdomain.pagerduty.com/users/PDU13T4",
-                                    "icon": "https://secure.gravatar.com/avatar/0787c04e4eb52aa05d2c94bac8293c83.png?d=mm&r=PG"
+                                    "icon": "https://pd-static-assets.pagerduty.com/users/blank-avatar.png"
                                   },
                                   {
                                     "id": "PKH7YP2",
@@ -2458,7 +2458,7 @@
                                     "email": "user2@example.com",
                                     "label": "User 2",
                                     "html_url": "https://subdomain.pagerduty.com/users/PKH7YP2",
-                                    "icon": "https://secure.gravatar.com/avatar/7358657a3a25a1ab291289aaf38afcba.png?d=mm&r=PG"
+                                    "icon": "https://pd-static-assets.pagerduty.com/users/blank-avatar.png"
                                   }
                                 ]
                               }
@@ -3042,7 +3042,7 @@
                                     "email": "user1@example.com",
                                     "label": "User 1",
                                     "html_url": "https://subdomain.pagerduty.com/users/PDU13T4",
-                                    "icon": "https://secure.gravatar.com/avatar/0787c04e4eb52aa05d2c94bac8293c83.png?d=mm&r=PG"
+                                    "icon": "https://pd-static-assets.pagerduty.com/users/blank-avatar.png"
                                   },
                                   {
                                     "id": "PKH7YP2",
@@ -3050,7 +3050,7 @@
                                     "email": "user2@example.com",
                                     "label": "User 2",
                                     "html_url": "https://subdomain.pagerduty.com/users/PKH7YP2",
-                                    "icon": "https://secure.gravatar.com/avatar/7358657a3a25a1ab291289aaf38afcba.png?d=mm&r=PG"
+                                    "icon": "https://pd-static-assets.pagerduty.com/users/blank-avatar.png"
                                   }
                                 ]
                               }
@@ -3627,7 +3627,7 @@
                                   "email": "user1@example.com",
                                   "label": "User 1",
                                   "html_url": "https://subdomain.pagerduty.com/users/PDU13T4",
-                                  "icon": "https://secure.gravatar.com/avatar/0787c04e4eb52aa05d2c94bac8293c83.png?d=mm&r=PG"
+                                  "icon": "https://pd-static-assets.pagerduty.com/users/blank-avatar.png"
                                 },
                                 {
                                   "id": "PKH7YP2",
@@ -3635,7 +3635,7 @@
                                   "email": "user2@example.com",
                                   "label": "User 2",
                                   "html_url": "https://subdomain.pagerduty.com/users/PKH7YP2",
-                                  "icon": "https://secure.gravatar.com/avatar/7358657a3a25a1ab291289aaf38afcba.png?d=mm&r=PG"
+                                  "icon": "https://pd-static-assets.pagerduty.com/users/blank-avatar.png"
                                 }
                               ]
                             }
@@ -4191,7 +4191,7 @@
                                     "email": "user1@example.com",
                                     "label": "User 1",
                                     "html_url": "https://subdomain.pagerduty.com/users/PDU13T4",
-                                    "icon": "https://secure.gravatar.com/avatar/0787c04e4eb52aa05d2c94bac8293c83.png?d=mm&r=PG"
+                                    "icon": "https://pd-static-assets.pagerduty.com/users/blank-avatar.png"
                                   },
                                   {
                                     "id": "PKH7YP2",
@@ -4199,7 +4199,7 @@
                                     "email": "user2@example.com",
                                     "label": "User 2",
                                     "html_url": "https://subdomain.pagerduty.com/users/PKH7YP2",
-                                    "icon": "https://secure.gravatar.com/avatar/7358657a3a25a1ab291289aaf38afcba.png?d=mm&r=PG"
+                                    "icon": "https://pd-static-assets.pagerduty.com/users/blank-avatar.png"
                                   }
                                 ]
                               }

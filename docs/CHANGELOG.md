@@ -2,9 +2,15 @@
 
 PagerDuty aims to have no breaking changes to its API. We do fix bugs and add new functionality continuously. This document serves as a reference for any bug fixes or additions to our API.
 
+### 2026-08-06
+- Documented the User API Token / User OAuth Token requirement on every operation of the Slack Integration API (previously only shown at the page level)
+
 ### 2026-08-04
 - Documented support for User OAuth Tokens (in addition to User API Tokens) for authenticating requests to the Slack Integration API
 - Added `enabled` field to the `EmailContactMethod` model, and now return `enabled` for the `phone_contact_method` type (voice) in addition to the existing `sms_contact_method` and `whatsapp_contact_method` types.
+
+### 2026-07-28
+- PagerDuty no longer uses Gravatar for user profile photos. The `avatar_url` field on the User model now returns a PagerDuty-hosted image URL instead of a `secure.gravatar.com` URL. Documentation examples have been updated accordingly.
 
 ### 2026-07-16
 - Document runbook limitations
