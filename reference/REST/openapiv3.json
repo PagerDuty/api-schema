@@ -15072,7 +15072,7 @@
               "role": "admin",
               "job_title": "Director of Engineering",
               "created_via_sso": false,
-              "avatar_url": "https://secure.gravatar.com/avatar/1d1a39d4635208d5664082a6c654a73f.png?d=mm&r=PG",
+              "avatar_url": "https://pd-static-assets.pagerduty.com/users/blank-avatar.png",
               "description": "I'm the boss"
             }
           }
@@ -43355,7 +43355,7 @@
                               "summary": "Lee Turner",
                               "self": "https://api.pagerduty.com/users/PL7A2O4",
                               "html_url": "https://subdomain.pagerduty.com/users/PL7A2O4",
-                              "avatar_url": "https://secure.gravatar.com/avatar/51c673f51f6b483b24c889bbafbd2a67.png?d=mm&r=PG"
+                              "avatar_url": "https://pd-static-assets.pagerduty.com/users/blank-avatar.png"
                             },
                             "incident": {
                               "id": "PXP12GZ",
@@ -43372,7 +43372,7 @@
                               "summary": "Jane Doe",
                               "self": "https://api.pagerduty.com/users/P09TT3C",
                               "html_url": "https://subdomain.pagerduty.com/users/P09TT3C",
-                              "avatar_url": "https://secure.gravatar.com/avatar/1c747247b75acc1f724e2784c838b3f8.png?d=mm&r=PG"
+                              "avatar_url": "https://pd-static-assets.pagerduty.com/users/blank-avatar.png"
                             },
                             "requested_at": "2018-08-09T21:40:49Z"
                           }
@@ -43409,7 +43409,7 @@
                                         "summary": "Lee Turner",
                                         "self": "https://api.pagerduty.com/users/PL7A2O4",
                                         "html_url": "https://subdomain.pagerduty.com/users/PL7A2O4",
-                                        "avatar_url": "https://secure.gravatar.com/avatar/51c673f51f6b483b24c889bbafbd2a67.png?d=mm&r=PG"
+                                        "avatar_url": "https://pd-static-assets.pagerduty.com/users/blank-avatar.png"
                                       },
                                       "incident": {
                                         "id": "PXP12GZ",
@@ -43426,7 +43426,7 @@
                                         "summary": "Jane Doe",
                                         "self": "https://api.pagerduty.com/users/P09TT3C",
                                         "html_url": "https://subdomain.pagerduty.com/users/P09TT3C",
-                                        "avatar_url": "https://secure.gravatar.com/avatar/1c747247b75acc1f724e2784c838b3f8.png?d=mm&r=PG"
+                                        "avatar_url": "https://pd-static-assets.pagerduty.com/users/blank-avatar.png"
                                       },
                                       "requested_at": "2018-08-09T21:40:49Z"
                                     }
@@ -46085,7 +46085,7 @@
                                     "summary": "Lee Turner",
                                     "self": "https://api.pagerduty.com/users/PL7A2O4",
                                     "html_url": "https://subdomain.pagerduty.com/users/PL7A2O4",
-                                    "avatar_url": "https://secure.gravatar.com/avatar/51c673f51f6b483b24c889bbafbd2a67.png?d=mm&r=PG"
+                                    "avatar_url": "https://pd-static-assets.pagerduty.com/users/blank-avatar.png"
                                   },
                                   "incident": {
                                     "id": "PXP12GZ",
@@ -46102,7 +46102,7 @@
                                     "summary": "Jane Doe",
                                     "self": "https://api.pagerduty.com/users/P09TT3C",
                                     "html_url": "https://subdomain.pagerduty.com/users/P09TT3C",
-                                    "avatar_url": "https://secure.gravatar.com/avatar/1c747247b75acc1f724e2784c838b3f8.png?d=mm&r=PG"
+                                    "avatar_url": "https://pd-static-assets.pagerduty.com/users/blank-avatar.png"
                                   },
                                   "requested_at": "2018-08-09T21:40:49Z"
                                 }
@@ -54401,7 +54401,7 @@
                           "time_zone": "Asia/Hong_Kong",
                           "color": "red",
                           "role": "admin",
-                          "avatar_url": "https://secure.gravatar.com/avatar/47857d059adacf9a41dc4030c2e14b0a.png?d=mm&r=PG",
+                          "avatar_url": "https://pd-static-assets.pagerduty.com/users/blank-avatar.png",
                           "description": "Engineer based in HK",
                           "invitation_sent": false,
                           "contact_methods": [
@@ -54443,7 +54443,7 @@
                           "time_zone": "America/Lima",
                           "color": "green",
                           "role": "admin",
-                          "avatar_url": "https://secure.gravatar.com/avatar/a8b714a39626f2444ee05990b078995f.png?d=mm&r=PG",
+                          "avatar_url": "https://pd-static-assets.pagerduty.com/users/blank-avatar.png",
                           "description": "I'm the boss",
                           "invitation_sent": false,
                           "contact_methods": [
@@ -65269,7 +65269,7 @@
                           "time_zone": "America/Lima",
                           "color": "green",
                           "role": "admin",
-                          "avatar_url": "https://secure.gravatar.com/avatar/a8b714a39626f2444ee05990b078995f.png?d=mm&r=PG",
+                          "avatar_url": "https://pd-static-assets.pagerduty.com/users/blank-avatar.png",
                           "description": "I'm the boss",
                           "invitation_sent": false,
                           "created_via_sso": true,
@@ -65312,7 +65312,7 @@
                           "time_zone": "Asia/Hong_Kong",
                           "color": "red",
                           "role": "admin",
-                          "avatar_url": "https://secure.gravatar.com/avatar/47857d059adacf9a41dc4030c2e14b0a.png?d=mm&r=PG",
+                          "avatar_url": "https://pd-static-assets.pagerduty.com/users/blank-avatar.png",
                           "description": "Actually, I am the boss",
                           "invitation_sent": false,
                           "created_via_sso": false,
@@ -65432,7 +65432,7 @@
                       "color": "green",
                       "role": "admin",
                       "job_title": "Director of Engineering",
-                      "avatar_url": "https://secure.gravatar.com/avatar/1d1a39d4635208d5664082a6c654a73f.png?d=mm&r=PG",
+                      "avatar_url": "https://pd-static-assets.pagerduty.com/users/blank-avatar.png",
                       "description": "I'm the boss",
                       "license": {
                         "id": "PTDVERC",
@@ -65477,7 +65477,7 @@
                         "time_zone": "America/Lima",
                         "color": "green",
                         "role": "admin",
-                        "avatar_url": "https://secure.gravatar.com/avatar/a8b714a39626f2444ee05990b078995f.png?d=mm&r=PG",
+                        "avatar_url": "https://pd-static-assets.pagerduty.com/users/blank-avatar.png",
                         "description": "I'm the boss",
                         "invitation_sent": false,
                         "created_via_sso": true,
@@ -65588,7 +65588,7 @@
                         "time_zone": "America/Lima",
                         "color": "green",
                         "role": "admin",
-                        "avatar_url": "https://secure.gravatar.com/avatar/a8b714a39626f2444ee05990b078995f.png?d=mm&r=PG",
+                        "avatar_url": "https://pd-static-assets.pagerduty.com/users/blank-avatar.png",
                         "description": "I'm the boss",
                         "invitation_sent": false,
                         "created_via_sso": true,
@@ -65745,7 +65745,7 @@
                       "color": "green",
                       "role": "admin",
                       "job_title": "Director of Engineering",
-                      "avatar_url": "https://secure.gravatar.com/avatar/1d1a39d4635208d5664082a6c654a73f.png?d=mm&r=PG",
+                      "avatar_url": "https://pd-static-assets.pagerduty.com/users/blank-avatar.png",
                       "description": "I'm the boss",
                       "license": {
                         "id": "PTDVERC",
@@ -65790,7 +65790,7 @@
                         "time_zone": "America/Lima",
                         "color": "green",
                         "role": "admin",
-                        "avatar_url": "https://secure.gravatar.com/avatar/a8b714a39626f2444ee05990b078995f.png?d=mm&r=PG",
+                        "avatar_url": "https://pd-static-assets.pagerduty.com/users/blank-avatar.png",
                         "description": "I'm the boss",
                         "invitation_sent": false,
                         "created_via_sso": true,
@@ -68598,7 +68598,7 @@
                         "time_zone": "America/Lima",
                         "color": "green",
                         "role": "admin",
-                        "avatar_url": "https://secure.gravatar.com/avatar/a8b714a39626f2444ee05990b078995f.png?d=mm&r=PG",
+                        "avatar_url": "https://pd-static-assets.pagerduty.com/users/blank-avatar.png",
                         "description": null,
                         "invitation_sent": false,
                         "job_title": "Director of Engineering",
