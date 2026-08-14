@@ -2787,6 +2787,15 @@
           "format": "tzinfo"
         }
       },
+      "incident_list_time_zone": {
+        "name": "time_zone",
+        "in": "query",
+        "description": "Time zone used to render timestamps and to interpret `since/until` values before filtering. Rendering defaults to UTC if omitted. `since/until` default to the account's time zone if omitted.",
+        "schema": {
+          "type": "string",
+          "format": "tzinfo"
+        }
+      },
       "schedule_time_zone": {
         "name": "time_zone",
         "in": "query",
@@ -42438,7 +42447,7 @@
             "$ref": "#/components/parameters/incident_urgencies"
           },
           {
-            "$ref": "#/components/parameters/time_zone"
+            "$ref": "#/components/parameters/incident_list_time_zone"
           },
           {
             "$ref": "#/components/parameters/statuses_incidents"
