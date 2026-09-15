@@ -102,7 +102,7 @@
     },
     {
       "name": "IP Allow Lists",
-      "description": "Manage account-level IP Allow Lists that restrict access to your PagerDuty subdomain to a configured set of IPv4 CIDR ranges. Enforcement currently applies to web and mobile application traffic.\n\n\n<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: ip-allow-lists` header on every request, and your account must be enrolled in the IP Allow Lists Early Access program. Contact your PagerDuty account team to request access.\n"
+      "description": "Manage account-level IP Allow Lists that restrict access to your PagerDuty subdomain to a configured set of IPv4 CIDR ranges. Enforcement currently applies to web and mobile application traffic.\n"
     },
     {
       "name": "Licenses",
@@ -2365,18 +2365,6 @@
         "name": "X-EARLY-ACCESS",
         "description": "This header indicates that this API endpoint is __UNDER CONSTRUCTION__ and may change at any time. You __MUST__ pass in this header with the value `status-dashboards`. Do not use this endpoint in production, as it may change!",
         "required": true
-      },
-      "ip_allow_list_early_access": {
-        "name": "X-EARLY-ACCESS",
-        "in": "header",
-        "required": true,
-        "description": "This API is currently in Early Access. You __MUST__ pass in this header with the value `ip-allow-lists`, and your account must be enrolled in the IP Allow Lists Early Access program. Contact your PagerDuty account team to request access.",
-        "schema": {
-          "type": "string",
-          "enum": [
-            "ip-allow-lists"
-          ]
-        }
       },
       "webhooks_filter_type": {
         "name": "filter_type",
@@ -49514,11 +49502,8 @@
         ],
         "summary": "Create an IP allow list",
         "operationId": "createIpAllowList",
-        "description": "<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: ip-allow-lists` header on every request, and your account must be enrolled in the IP Allow Lists Early Access program. Contact your PagerDuty account team to request access.\n\nCreate the account's IP allow list.\n\nOnly Account Owners, Global Admins, and Account API Keys can call this endpoint.\n\nScoped OAuth requires: `ip_allow_lists.write`\n",
+        "description": "Create the account's IP allow list.\n\nOnly Account Owners, Global Admins, and Account API Keys can call this endpoint.\n\nScoped OAuth requires: `ip_allow_lists.write`\n",
         "parameters": [
-          {
-            "$ref": "#/components/parameters/ip_allow_list_early_access"
-          },
           {
             "$ref": "#/components/parameters/header_Accept"
           },
@@ -49612,11 +49597,8 @@
         ],
         "summary": "List IP allow lists",
         "operationId": "listIpAllowLists",
-        "description": "<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: ip-allow-lists` header on every request, and your account must be enrolled in the IP Allow Lists Early Access program. Contact your PagerDuty account team to request access.\n\nReturn all IP allow lists for the account.\n\nOnly Account Owners, Global Admins, and Account API Keys can call this endpoint.\n\nScoped OAuth requires: `ip_allow_lists.read`\n",
+        "description": "Return all IP allow lists for the account.\n\nOnly Account Owners, Global Admins, and Account API Keys can call this endpoint.\n\nScoped OAuth requires: `ip_allow_lists.read`\n",
         "parameters": [
-          {
-            "$ref": "#/components/parameters/ip_allow_list_early_access"
-          },
           {
             "$ref": "#/components/parameters/header_Accept"
           }
@@ -49700,11 +49682,8 @@
         ],
         "summary": "Get an IP allow list",
         "operationId": "getIpAllowList",
-        "description": "<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: ip-allow-lists` header on every request, and your account must be enrolled in the IP Allow Lists Early Access program. Contact your PagerDuty account team to request access.\n\nReturn the IP allow list with the given `id`.\n\nOnly Account Owners, Global Admins, and Account API Keys can call this endpoint.\n\nScoped OAuth requires: `ip_allow_lists.read`\n",
+        "description": "Return the IP allow list with the given `id`.\n\nOnly Account Owners, Global Admins, and Account API Keys can call this endpoint.\n\nScoped OAuth requires: `ip_allow_lists.read`\n",
         "parameters": [
-          {
-            "$ref": "#/components/parameters/ip_allow_list_early_access"
-          },
           {
             "$ref": "#/components/parameters/header_Accept"
           }
@@ -49757,11 +49736,8 @@
         ],
         "summary": "Update an IP allow list",
         "operationId": "updateIpAllowList",
-        "description": "<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: ip-allow-lists` header on every request, and your account must be enrolled in the IP Allow Lists Early Access program. Contact your PagerDuty account team to request access.\n\nUpdate the IP allow list with the given `id`. The request body fully replaces the writable fields.\n\nOnly Account Owners, Global Admins, and Account API Keys can call this endpoint.\n\nScoped OAuth requires: `ip_allow_lists.write`\n",
+        "description": "Update the IP allow list with the given `id`. The request body fully replaces the writable fields.\n\nOnly Account Owners, Global Admins, and Account API Keys can call this endpoint.\n\nScoped OAuth requires: `ip_allow_lists.write`\n",
         "parameters": [
-          {
-            "$ref": "#/components/parameters/ip_allow_list_early_access"
-          },
           {
             "$ref": "#/components/parameters/header_Accept"
           },
@@ -49859,11 +49835,8 @@
         ],
         "summary": "Delete an IP allow list",
         "operationId": "deleteIpAllowList",
-        "description": "<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: ip-allow-lists` header on every request, and your account must be enrolled in the IP Allow Lists Early Access program. Contact your PagerDuty account team to request access.\n\nDelete the IP allow list with the given `id`. Subsequent `GET` and `PUT` requests for the same `id` will return `404`. The list is no longer enforced once deleted.\n\nOnly Account Owners, Global Admins, and Account API Keys can call this endpoint.\n\nScoped OAuth requires: `ip_allow_lists.write`\n",
+        "description": "Delete the IP allow list with the given `id`. Subsequent `GET` and `PUT` requests for the same `id` will return `404`. The list is no longer enforced once deleted.\n\nOnly Account Owners, Global Admins, and Account API Keys can call this endpoint.\n\nScoped OAuth requires: `ip_allow_lists.write`\n",
         "parameters": [
-          {
-            "$ref": "#/components/parameters/ip_allow_list_early_access"
-          },
           {
             "$ref": "#/components/parameters/header_Accept"
           }
@@ -49899,11 +49872,8 @@
         ],
         "operationId": "listIpAllowListAuditRecords",
         "summary": "List audit records for an IP allow list",
-        "description": "<!-- theme: warning -->\n\n> ### Early Access\n> This API is in Early Access and may change at any time. You must pass the `X-EARLY-ACCESS: ip-allow-lists` header on every request, and your account must be enrolled in the IP Allow Lists Early Access program. Contact your PagerDuty account team to request access.\n\nThe response will include audit records with changes that are made to the given IP allow list.\n\nThe returned records are sorted by the `execution_time` from newest to oldest.\n\nSee [`Cursor-based pagination`](https://developer.pagerduty.com/docs/rest-api-v2/pagination/) for instructions on how to paginate through the result set.\n\nFor more information see the [Audit API Document](https://developer.pagerduty.com/docs/rest-api-v2/audit-records-api/).\n\nScoped OAuth requires: `audit_records.read`\n",
+        "description": "The response will include audit records with changes that are made to the given IP allow list.\n\nThe returned records are sorted by the `execution_time` from newest to oldest.\n\nSee [`Cursor-based pagination`](https://developer.pagerduty.com/docs/rest-api-v2/pagination/) for instructions on how to paginate through the result set.\n\nFor more information see the [Audit API Document](https://developer.pagerduty.com/docs/rest-api-v2/audit-records-api/).\n\nScoped OAuth requires: `audit_records.read`\n",
         "parameters": [
-          {
-            "$ref": "#/components/parameters/ip_allow_list_early_access"
-          },
           {
             "$ref": "#/components/parameters/header_Accept"
           },
