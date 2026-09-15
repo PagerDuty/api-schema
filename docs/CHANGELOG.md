@@ -2,6 +2,9 @@
 
 PagerDuty aims to have no breaking changes to its API. We do fix bugs and add new functionality continuously. This document serves as a reference for any bug fixes or additions to our API.
 
+### 2026-09-15
+- Removed `X-EARLY-ACCESS` header requirement for all IP Allow Lists endpoints
+
 ### 2026-08-06
 - Documented the User API Token / User OAuth Token requirement on every operation of the Slack Integration API (previously only shown at the page level)
 
