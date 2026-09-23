@@ -67806,7 +67806,7 @@
           "Users"
         ],
         "operationId": "getUserSessions",
-        "description": "<!-- theme: warning -->\n> ### Deprecated\n> This endpoint is deprecated, please use the [List OAuth Delegations endpoint](https://developer.pagerduty.com/api-reference/fc03ba9dffd1f-list-user-oauth-delegations) instead.\n\nList active sessions of a PagerDuty user.\n\nBeginning November 2021, active sessions no longer includes newly issued OAuth tokens.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#users)\n\nScoped OAuth requires: `users:sessions.read`\n",
+        "description": "<!-- theme: warning -->\n> ### Deprecated\n> This endpoint is deprecated, please use the [List OAuth Delegations endpoint](https://developer.pagerduty.com/api-reference/4f8e257df4468-list-a-user-s-delegations) instead.\n\nList active sessions of a PagerDuty user.\n\nBeginning November 2021, active sessions no longer includes newly issued OAuth tokens.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#users)\n\nScoped OAuth requires: `users:sessions.read`\n",
         "summary": "List a user's active sessions",
         "deprecated": true,
         "parameters": [
@@ -67922,7 +67922,7 @@
           "Users"
         ],
         "operationId": "getUserSession",
-        "description": "<!-- theme: warning -->\n> ### Deprecated\n> This endpoint is deprecated, please use the [Get OAuth Delegation endpoint](https://developer.pagerduty.com/api-reference//e3c7cd550aa2b-get-a-user-oauth-delegation) instead.\nGet details about a user's session.\n\nBeginning November 2021, user sessions no longer includes newly issued OAuth tokens.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#users)\n\nScoped OAuth requires: `users:sessions.read`\n",
+        "description": "<!-- theme: warning -->\n> ### Deprecated\n> This endpoint is deprecated, please use the [Get OAuth Delegation endpoint](https://developer.pagerduty.com/api-reference/3e32112cd7324-get-a-user-s-delegation) instead.\nGet details about a user's session.\n\nBeginning November 2021, user sessions no longer includes newly issued OAuth tokens.\n\nUsers are members of a PagerDuty account that have the ability to interact with Incidents and other data on the account.\n\nFor more information see the [API Concepts Document](../../api-reference/a47605517c19a-api-concepts#users)\n\nScoped OAuth requires: `users:sessions.read`\n",
         "summary": "Get a user's session",
         "deprecated": true,
         "parameters": [
