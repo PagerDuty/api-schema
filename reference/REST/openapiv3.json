@@ -1408,7 +1408,6 @@
       },
       "FeatureEnablementListResponseDefault": {
         "summary": "Default Response (No Settings Configured)",
-        "description": "For PDRP customers, this feature is branded **Signal Intelligence** in the PagerDuty product UI. The API field names and values (e.g. `aiops`) are unchanged.",
         "value": {
           "enablements": [
             {
@@ -1421,7 +1420,6 @@
       },
       "FeatureEnablementListResponseSuccess": {
         "summary": "Success Response",
-        "description": "For PDRP customers, this feature is branded **Signal Intelligence** in the PagerDuty product UI. The API field names and values (e.g. `aiops`) are unchanged.",
         "value": {
           "enablements": [
             {
@@ -1434,7 +1432,6 @@
       },
       "FeatureEnablementListResponseWarningForService": {
         "summary": "Response with No Entitlement Warning",
-        "description": "For PDRP customers, this feature is branded **Signal Intelligence** in the PagerDuty product UI. The API field names and values (e.g. `aiops`) are unchanged.",
         "value": {
           "enablements": [
             {
@@ -1452,7 +1449,6 @@
       },
       "FeatureEnablementListResponseWarningForOrchestration": {
         "summary": "Response with No Entitlement Warning",
-        "description": "For PDRP customers, this feature is branded **Signal Intelligence** in the PagerDuty product UI. The API field names and values (e.g. `aiops`) are unchanged.",
         "value": {
           "enablements": [
             {
@@ -1470,7 +1466,6 @@
       },
       "FeatureEnablementPutRequestEnable": {
         "summary": "Enable AIOps",
-        "description": "For PDRP customers, this feature is branded **Signal Intelligence** in the PagerDuty product UI. The API field names and values (e.g. `aiops`) are unchanged.",
         "value": {
           "enablement": {
             "enabled": true
@@ -1479,7 +1474,6 @@
       },
       "FeatureEnablementPutRequestDisable": {
         "summary": "Disable AIOps",
-        "description": "For PDRP customers, this feature is branded **Signal Intelligence** in the PagerDuty product UI. The API field names and values (e.g. `aiops`) are unchanged.",
         "value": {
           "enablement": {
             "enabled": false
@@ -1488,7 +1482,6 @@
       },
       "FeatureEnablementPutResponseSuccess": {
         "summary": "Success Response",
-        "description": "For PDRP customers, this feature is branded **Signal Intelligence** in the PagerDuty product UI. The API field names and values (e.g. `aiops`) are unchanged.",
         "value": {
           "enablement": [
             {
@@ -1501,7 +1494,6 @@
       },
       "FeatureEnablementPutResponseWarningForService": {
         "summary": "Response with No Entitlement Warning",
-        "description": "For PDRP customers, this feature is branded **Signal Intelligence** in the PagerDuty product UI. The API field names and values (e.g. `aiops`) are unchanged.",
         "value": {
           "enablement": [
             {
@@ -1519,7 +1511,6 @@
       },
       "FeatureEnablementPutResponseWarningForOrchestration": {
         "summary": "Response with No Entitlement Warning",
-        "description": "For PDRP customers, this feature is branded **Signal Intelligence** in the PagerDuty product UI. The API field names and values (e.g. `aiops`) are unchanged.",
         "value": {
           "enablement": [
             {
@@ -3947,7 +3938,7 @@
       },
       "enablement_feature_name": {
         "name": "feature_name",
-        "description": "The feature enablement identifier, typically the name of the product addon. Currently only `aiops` is supported. For PDRP customers, this feature is branded **Signal Intelligence** in the PagerDuty product UI. The API field names and values (e.g. `aiops`) are unchanged.",
+        "description": "The feature enablement identifier, typically the name of the product addon. Currently only `aiops` is supported.",
         "in": "path",
         "required": true,
         "schema": {
@@ -21314,7 +21305,7 @@
                               },
                               "annotate": {
                                 "type": "string",
-                                "description": "Add this text as a note on the resulting incident. AIOps users can additionally use the {{event}} variable to include elements of the event payload in the note. For PDRP customers, this feature is branded **Signal Intelligence** in the PagerDuty product UI. The API field names and values (e.g. `aiops`) are unchanged."
+                                "description": "Add this text as a note on the resulting incident. AIOps users can additionally use the {{event}} variable to include elements of the event payload in the note."
                               }
                             }
                           },
@@ -21354,7 +21345,7 @@
                                           },
                                           "value": {
                                             "type": "string",
-                                            "description": "AIOps users can additionally use the {{event}} variable to include elements of the event payload in the header value. For PDRP customers, this feature is branded **Signal Intelligence** in the PagerDuty product UI. The API field names and values (e.g. `aiops`) are unchanged."
+                                            "description": "AIOps users can additionally use the {{event}} variable to include elements of the event payload in the header value."
                                           }
                                         }
                                       }
@@ -21411,7 +21402,7 @@
                                     },
                                     "value": {
                                       "type": "string",
-                                      "description": "A value that will be used to populate the specified Incident Custom Field. AIOps users can additionally use the {{event}} variable to include elements of the event payload in the custom field value. For PDRP customers, this feature is branded **Signal Intelligence** in the PagerDuty product UI. The API field names and values (e.g. `aiops`) are unchanged.",
+                                      "description": "A value that will be used to populate the specified Incident Custom Field. AIOps users can additionally use the {{event}} variable to include elements of the event payload in the custom field value.",
                                       "example": "High CPU on server"
                                     }
                                   }
@@ -21476,7 +21467,7 @@
                                   },
                                   "dynamic_route_to": {
                                     "type": "object",
-                                    "description": "Use the contents of an event payload to dynamically route an event to the target service. Available to AIOps customers. Note it can only be used once in the Router, and only in the first rule. The dynamic_route_to rule cannot have conditions or a route_to action defined. For PDRP customers, this feature is branded **Signal Intelligence** in the PagerDuty product UI. The API field names and values (e.g. `aiops`) are unchanged.",
+                                    "description": "Use the contents of an event payload to dynamically route an event to the target service. Available to AIOps customers. Note it can only be used once in the Router, and only in the first rule. The dynamic_route_to rule cannot have conditions or a route_to action defined.",
                                     "properties": {
                                       "source": {
                                         "type": "string",
@@ -22252,7 +22243,7 @@
           },
           "feature_type": {
             "type": "string",
-            "description": "Specifies whether the feature is a part of the rule's conditions, or its actions.\n\nExample values include:\n* `conditions`\n* `actions`\n* `nested_rules`\n* `global_orchestrations`\n* `aiops_routing`\n\nFor PDRP customers, this feature is branded **Signal Intelligence** in the\nPagerDuty product UI. The API field names and values (e.g. `aiops_routing_mismatch`,\n`aiops_routing`) are unchanged.\n"
+            "description": "Specifies whether the feature is a part of the rule's conditions, or its actions.\n\nExample values include:\n* `conditions`\n* `actions`\n* `nested_rules`\n* `global_orchestrations`\n* `aiops_routing`\n"
           },
           "warning_type": {
             "type": "string",
@@ -22977,7 +22968,7 @@
           "feature": {
             "readOnly": true,
             "type": "string",
-            "description": "The name of the product addon whose set of features will be enabled or disabled. For PDRP customers, this feature is branded **Signal Intelligence** in the PagerDuty product UI. The API field names and values (e.g. `aiops`) are unchanged.",
+            "description": "The name of the product addon whose set of features will be enabled or disabled.",
             "example": "aiops"
           },
           "enabled": {
@@ -39043,7 +39034,7 @@
         ],
         "operationId": "listEventOrchestrationFeatureEnablements",
         "summary": "List Enablements for an Event Orchestration",
-        "description": "List all feature enablement settings for an Event Orchestration. Currently, only the `aiops` enablement is supported.\n\nFor any account with the AIOps product addon, every Event Orchestration will have AIOps features enabled by default.\n\n**Warning conditions**:\n- If the account is not entitled to use AIOps features, a warning will be returned alongside the enablement data.\n\nFor PDRP customers, this feature is branded **Signal Intelligence** in the PagerDuty product UI. The API field names and values (e.g. `aiops`) are unchanged.\n\nScoped OAuth requires: `event_orchestrations.read`\n",
+        "description": "List all feature enablement settings for an Event Orchestration. Currently, only the `aiops` enablement is supported.\n\nFor any account with the AIOps product addon, every Event Orchestration will have AIOps features enabled by default.\n\n**Warning conditions**:\n- If the account is not entitled to use AIOps features, a warning will be returned alongside the enablement data.\n\nScoped OAuth requires: `event_orchestrations.read`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -39107,7 +39098,7 @@
         ],
         "operationId": "updateEventOrchestrationFeatureEnablements",
         "summary": "Update an Enablement for an Event Orchestration",
-        "description": "Update the feature enablement setting for a specific product addon on an Event Orchestration. This setting controls enabling or disabling the set of features contained within the addon.\nCurrently, only `aiops` is supported as a valid feature enablement.\n\n**Warning conditions**:\n- If the account is not entitled to use AIOps features, the setting will be updated, but a warning will be returned.\n\nFor PDRP customers, this feature is branded **Signal Intelligence** in the PagerDuty product UI. The API field names and values (e.g. `aiops`) are unchanged.\n\nScoped OAuth requires: `event_orchestrations.write`\n",
+        "description": "Update the feature enablement setting for a specific product addon on an Event Orchestration. This setting controls enabling or disabling the set of features contained within the addon.\nCurrently, only `aiops` is supported as a valid feature enablement.\n\n**Warning conditions**:\n- If the account is not entitled to use AIOps features, the setting will be updated, but a warning will be returned.\n\nScoped OAuth requires: `event_orchestrations.write`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -59013,7 +59004,7 @@
         "x-pd-requires-scope": "services.read",
         "operationId": "listServiceFeatureEnablements",
         "summary": "Get Enablements for a Service",
-        "description": "List all feature enablement settings for a service. Currently, only the `aiops` enablement is supported.\n\nFor any account with the AIOps product addon, every service will have AIOps features enabled by default.\n\n**Warning conditions**:\n- If the account is not entitled to use AIOps features, a warning will be returned alongside the enablement data.\n\nFor PDRP customers, this feature is branded **Signal Intelligence** in the PagerDuty product UI. The API field names and values (e.g. `aiops`) are unchanged.\n\nScoped OAuth requires: `services.read`\n",
+        "description": "List all feature enablement settings for a service. Currently, only the `aiops` enablement is supported.\n\nFor any account with the AIOps product addon, every service will have AIOps features enabled by default.\n\n**Warning conditions**:\n- If the account is not entitled to use AIOps features, a warning will be returned alongside the enablement data.\n\nScoped OAuth requires: `services.read`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/id"
@@ -59077,7 +59068,7 @@
         "x-pd-requires-scope": "services.write",
         "operationId": "updateServiceFeatureEnablement",
         "summary": "Update an Enablement for a Service",
-        "description": "Update the feature enablement setting for a specific product addon on a service. This setting controls enabling or disabling the set of features contained within the addon.\nCurrently, only `aiops` is supported as a valid feature enablement.\n\n**Warning conditions**:\n- If the account is not entitled to use AIOps features, the setting will be updated, but a warning will be returned.\n\nFor PDRP customers, this feature is branded **Signal Intelligence** in the PagerDuty product UI. The API field names and values (e.g. `aiops`) are unchanged.\n\nScoped OAuth requires: `services.write`\n",
+        "description": "Update the feature enablement setting for a specific product addon on a service. This setting controls enabling or disabling the set of features contained within the addon.\nCurrently, only `aiops` is supported as a valid feature enablement.\n\n**Warning conditions**:\n- If the account is not entitled to use AIOps features, the setting will be updated, but a warning will be returned.\n\nScoped OAuth requires: `services.write`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/id"
