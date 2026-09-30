@@ -19,6 +19,8 @@ PagerDuty aims to have no breaking changes to its API. We do fix bugs and add ne
 - Documented that only `end_time` can be changed on a v3 override that has started
 - Documented that a past `start_time` on `POST /v3/schedules/{id}/overrides` is set to the current time
 - Documented `user_id` on `GET /v3/schedules`, `users` in `include[]` on `GET /v3/schedules/{id}`, and `teams` on `PUT /v3/schedules/{id}`
+- Documented that `PUT /v3/schedules/{id}/rotations/{rotation_id}/events/{event_id}` replaces the full event: `name`, `start_time`, `end_time`, `effective_since`, `recurrence`, and `assignment_strategy` are required. Updated the request examples to send the full event.
+- Documented that `PUT /v3/schedules/{id}/overrides/{override_id}` replaces the full override: `type`, `start_time`, `end_time`, and `overriding_member` are required, and an omitted `overridden_member` is cleared. Added `type` and `overridden_member` to the request schema and example.
 
 ### 2026-09-15
 - Removed `X-EARLY-ACCESS` header requirement for all IP Allow Lists endpoints
