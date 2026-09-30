@@ -24985,13 +24985,21 @@
       },
       "UpdateEventRequest": {
         "type": "object",
-        "description": "Which fields can be updated depends on the\nevent's current state:\n- Active events (already started): only `effective_until` can be changed\n- Future events: all fields can be changed\n- Past events: no fields can be changed (returns 400)\n",
+        "description": "The request replaces the full event. Send every required field,\neven the fields that do not change. Get the current values with\n`GET /v3/schedules/{id}/rotations/{rotation_id}/events/{event_id}`.\n\nWhich fields can be changed depends on the\nevent's current state:\n- Active events (already started): only `effective_until` can be changed\n- Future events: all fields can be changed\n- Past events: no fields can be changed (returns 400)\n",
         "required": [
           "event"
         ],
         "properties": {
           "event": {
             "type": "object",
+            "required": [
+              "name",
+              "start_time",
+              "end_time",
+              "effective_since",
+              "recurrence",
+              "assignment_strategy"
+            ],
             "properties": {
               "name": {
                 "type": "string",
@@ -25339,13 +25347,26 @@
       },
       "UpdateOverrideRequest": {
         "type": "object",
+        "description": "The request replaces the full override. Send every required field,\neven the fields that do not change. An omitted `overridden_member`\nis cleared.\n",
         "required": [
           "override"
         ],
         "properties": {
           "override": {
             "type": "object",
+            "required": [
+              "type",
+              "start_time",
+              "end_time",
+              "overriding_member"
+            ],
             "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "override_shift"
+                ]
+              },
               "start_time": {
                 "type": "string",
                 "format": "date-time"
@@ -25353,6 +25374,9 @@
               "end_time": {
                 "type": "string",
                 "format": "date-time"
+              },
+              "overridden_member": {
+                "$ref": "#/components/schemas/ShiftMember"
               },
               "overriding_member": {
                 "$ref": "#/components/schemas/ShiftMember"
@@ -69805,8 +69829,13 @@
               },
               "example": {
                 "override": {
+                  "type": "override_shift",
                   "start_time": "2025-03-15T10:00:00Z",
                   "end_time": "2025-03-15T18:00:00Z",
+                  "overridden_member": {
+                    "type": "user_member",
+                    "user_id": "PUSER123"
+                  },
                   "overriding_member": {
                     "type": "user_member",
                     "user_id": "PUSER789"
@@ -70408,17 +70437,58 @@
               "examples": {
                 "extendActive": {
                   "summary": "Extend an active event's end date",
+                  "description": "Send the full event. Only `effective_until` differs from\nthe current values.\n",
                   "value": {
                     "event": {
-                      "effective_until": "2025-09-01T00:00:00Z"
+                      "name": "Weekly On-Call",
+                      "start_time": {
+                        "date_time": "2025-03-03T09:00:00Z",
+                        "time_zone": "America/New_York"
+                      },
+                      "end_time": {
+                        "date_time": "2025-03-10T09:00:00Z",
+                        "time_zone": "America/New_York"
+                      },
+                      "effective_since": "2025-03-03T00:00:00Z",
+                      "effective_until": "2025-09-01T00:00:00Z",
+                      "recurrence": [
+                        "RRULE:FREQ=WEEKLY"
+                      ],
+                      "assignment_strategy": {
+                        "type": "rotating_member_assignment_strategy",
+                        "shifts_per_member": 1,
+                        "members": [
+                          {
+                            "type": "user_member",
+                            "user_id": "PUSER123"
+                          },
+                          {
+                            "type": "user_member",
+                            "user_id": "PUSER456"
+                          }
+                        ]
+                      }
                     }
                   }
                 },
                 "updateFuture": {
                   "summary": "Update a future event",
+                  "description": "Send the full event. `name` and `assignment_strategy`\ndiffer from the current values.\n",
                   "value": {
                     "event": {
                       "name": "Updated Weekly On-Call",
+                      "start_time": {
+                        "date_time": "2025-10-06T09:00:00Z",
+                        "time_zone": "America/New_York"
+                      },
+                      "end_time": {
+                        "date_time": "2025-10-13T09:00:00Z",
+                        "time_zone": "America/New_York"
+                      },
+                      "effective_since": "2025-10-06T00:00:00Z",
+                      "recurrence": [
+                        "RRULE:FREQ=WEEKLY"
+                      ],
                       "assignment_strategy": {
                         "type": "rotating_member_assignment_strategy",
                         "shifts_per_member": 1,
