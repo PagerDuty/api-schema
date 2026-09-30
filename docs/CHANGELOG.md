@@ -2,6 +2,24 @@
 
 PagerDuty aims to have no breaking changes to its API. We do fix bugs and add new functionality continuously. This document serves as a reference for any bug fixes or additions to our API.
 
+### 2026-09-25
+- Documented that `PUT /v3/schedules/{id}` requires `time_zone`; `name` and `description` are optional
+- Documented that `PUT /v3/schedules/{id}/custom_shifts/{custom_shift_id}` replaces the full custom shift: `type`, `start_time`, `end_time`, and `assignments` are required. Added `type` to the request schema and example
+- Corrected the maximum number of `assignment_strategy.members` on v3 schedule events from 20 to 60
+- Documented that `type` is optional in `POST /v3/schedules/{id}/overrides`
+- Documented that `GET /v3/schedules/{id}/overrides` and `GET /v3/schedules/{id}/custom_shifts` have no pagination: removed `limit`/`offset` parameters and the `limit`, `offset`, and `more` response fields
+- Removed `since` and `until` from `GET /v3/schedules/{id}/rotations/{rotation_id}` and `GET /v3/schedules/{id}/rotations/{rotation_id}/events/{event_id}`; both endpoints ignore them
+- Corrected `limit` on `GET /v3/schedules`: the default is 25 and the maximum is 100
+- Corrected `limit` on `GET /v3/schedules/{id}/rotations` and `GET /v3/schedules/{id}/rotations/{rotation_id}/events`: the default is 100 and the maximum is 1000
+- Documented the `since`/`until` rules on `GET /v3/schedules/{id}`: both must be sent together, `until` must be after `since`, `since` at most 3 years and `until` at most 3 years and 2 weeks in the future
+- Documented the future limit on `since`/`until` for `GET /v3/schedules/{id}/overrides` and `GET /v3/schedules/{id}/custom_shifts`: 2 years for `since`, 2 years and 2 weeks for `until`
+- Documented the future limits on v3 schedules: event `effective_since` at most 12 months ahead (create and update), override `start_time` within one year
+- Documented that a v3 event `recurrence` RRULE can repeat at most once per hour (create and update)
+- Documented that `shifts_per_member` must be omitted for `every_member_assignment_strategy`
+- Documented that only `end_time` can be changed on a v3 override that has started
+- Documented that a past `start_time` on `POST /v3/schedules/{id}/overrides` is set to the current time
+- Documented `user_id` on `GET /v3/schedules`, `users` in `include[]` on `GET /v3/schedules/{id}`, and `teams` on `PUT /v3/schedules/{id}`
+
 ### 2026-09-15
 - Removed `X-EARLY-ACCESS` header requirement for all IP Allow Lists endpoints
 

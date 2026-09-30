@@ -4460,7 +4460,7 @@
       "schedule_v3_since": {
         "name": "since",
         "in": "query",
-        "description": "Start of time range (ISO 8601)",
+        "description": "Start of time range (ISO 8601). Send `since` and `until` together.\n`since` can be at most 3 years in the future.\n",
         "schema": {
           "type": "string",
           "format": "date-time"
@@ -4470,7 +4470,7 @@
       "schedule_v3_until": {
         "name": "until",
         "in": "query",
-        "description": "End of time range (ISO 8601)",
+        "description": "End of time range (ISO 8601). Send `since` and `until` together.\n`until` must be after `since`, and can be at most 3 years and 2 weeks\nin the future.\n",
         "schema": {
           "type": "string",
           "format": "date-time"
@@ -4498,13 +4498,14 @@
       "schedule_v3_include": {
         "name": "include[]",
         "in": "query",
-        "description": "Additional data to include in the schedule response:\n- `final_schedule`: computed on-call assignments for the time range\n",
+        "description": "Additional data to include in the schedule response:\n- `final_schedule`: computed on-call assignments for the time range\n- `users`: all users referenced in the schedule\n",
         "schema": {
           "type": "array",
           "items": {
             "type": "string",
             "enum": [
-              "final_schedule"
+              "final_schedule",
+              "users"
             ]
           }
         },
@@ -4514,14 +4515,15 @@
           "final_schedule"
         ]
       },
-      "schedule_v3_limit": {
+      "schedule_v3_limit_rotations_events": {
         "name": "limit",
         "in": "query",
+        "description": "Maximum number of items to return",
         "schema": {
           "type": "integer",
           "minimum": 1,
-          "maximum": 100,
-          "default": 25
+          "maximum": 1000,
+          "default": 100
         }
       },
       "schedule_v3_limit_schedules": {
@@ -4531,9 +4533,18 @@
         "schema": {
           "type": "integer",
           "minimum": 1,
-          "maximum": 1000,
-          "default": 100
+          "maximum": 100,
+          "default": 25
         }
+      },
+      "schedule_v3_user_id": {
+        "name": "user_id",
+        "in": "query",
+        "description": "Return only schedules that include this user.",
+        "schema": {
+          "type": "string"
+        },
+        "example": "PUSER123"
       },
       "schedule_v3_offset": {
         "name": "offset",
@@ -4548,7 +4559,7 @@
         "name": "since",
         "in": "query",
         "required": true,
-        "description": "Start of time range (ISO 8601)",
+        "description": "Start of time range (ISO 8601). Can be at most 2 years in the future.\n",
         "schema": {
           "type": "string",
           "format": "date-time"
@@ -4559,7 +4570,7 @@
         "name": "until",
         "in": "query",
         "required": true,
-        "description": "End of time range (ISO 8601)",
+        "description": "End of time range (ISO 8601). Can be at most 2 years and 2 weeks in\nthe future.\n",
         "schema": {
           "type": "string",
           "format": "date-time"
@@ -24498,6 +24509,10 @@
         "properties": {
           "schedule": {
             "type": "object",
+            "description": "`time_zone` is required. `name` and `description` are\noptional; an omitted field keeps its current value.\n",
+            "required": [
+              "time_zone"
+            ],
             "properties": {
               "name": {
                 "type": "string",
@@ -24513,6 +24528,28 @@
                 "type": "string",
                 "maxLength": 1024,
                 "example": "Updated description"
+              },
+              "teams": {
+                "type": "array",
+                "description": "Teams to associate with this schedule",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "id",
+                    "type"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "team_reference"
+                      ]
+                    }
+                  }
+                }
               }
             }
           }
@@ -24810,13 +24847,13 @@
           "shifts_per_member": {
             "type": "integer",
             "minimum": 1,
-            "description": "Required for `rotating_member_assignment_strategy`. Number of\nconsecutive shift occurrences each member covers before the\nnext member takes over.\n\n**UI editor constraint:** When `recurrence` uses `FREQ=WEEKLY`,\n`shifts_per_member` must be evenly divisible by the number of days\nlisted in the RRULE `BYDAY` parameter. Events that violate this\nare fully functional via the API but cannot be loaded in the\nweb schedule editor.\n",
+            "description": "Required for `rotating_member_assignment_strategy`. Number of\nconsecutive shift occurrences each member covers before the\nnext member takes over.\n\nMust be omitted (or null) for `every_member_assignment_strategy`.\n\n**UI editor constraint:** When `recurrence` uses `FREQ=WEEKLY`,\n`shifts_per_member` must be evenly divisible by the number of days\nlisted in the RRULE `BYDAY` parameter. Events that violate this\nare fully functional via the API but cannot be loaded in the\nweb schedule editor.\n",
             "example": 1
           },
           "members": {
             "type": "array",
             "minItems": 1,
-            "maxItems": 20,
+            "maxItems": 60,
             "items": {
               "$ref": "#/components/schemas/ShiftMember"
             }
@@ -24924,7 +24961,7 @@
               "effective_since": {
                 "type": "string",
                 "format": "date-time",
-                "description": "When this event starts producing shifts. Values in the past are\nclamped to the current time.\n"
+                "description": "When this event starts producing shifts. Values in the past are\nclamped to the current time. Can be at most 12 months in the\nfuture.\n"
               },
               "effective_until": {
                 "type": "string",
@@ -24937,7 +24974,7 @@
                 "items": {
                   "type": "string"
                 },
-                "description": "RFC 5545 recurrence rules. Must be an array containing exactly\none RRULE, zero or more EXDATE, and zero or more RDATE.\n\n**UI editor constraints:** The shift-based schedule editor can\nonly load an event when the RRULE satisfies all of the following:\n1. A `FREQ` parameter is present.\n2. `FREQ` is one of `WEEKLY`, `DAILY`, `MONTHLY`, or `HOURLY`.\n3. All `BYDAY` values are standard two-letter day codes\n   (`MO`, `TU`, `WE`, `TH`, `FR`, `SA`, `SU`).\n\nEvents that violate any condition display a\n\"can't be edited in the UI\" modal and must be managed via the API.\n"
+                "description": "RFC 5545 recurrence rules. Must be an array containing exactly\none RRULE, zero or more EXDATE, and zero or more RDATE.\n\nThe RRULE can repeat at most once per hour.\n\n**UI editor constraints:** The shift-based schedule editor can\nonly load an event when the RRULE satisfies all of the following:\n1. A `FREQ` parameter is present.\n2. `FREQ` is one of `WEEKLY`, `DAILY`, `MONTHLY`, or `HOURLY`.\n3. All `BYDAY` values are standard two-letter day codes\n   (`MO`, `TU`, `WE`, `TH`, `FR`, `SA`, `SU`).\n\nEvents that violate any condition display a\n\"can't be edited in the UI\" modal and must be managed via the API.\n"
               },
               "assignment_strategy": {
                 "$ref": "#/components/schemas/EventAssignmentStrategy"
@@ -24968,7 +25005,8 @@
               },
               "effective_since": {
                 "type": "string",
-                "format": "date-time"
+                "format": "date-time",
+                "description": "Can be at most 12 months in the future.\n"
               },
               "effective_until": {
                 "type": "string",
@@ -24980,7 +25018,7 @@
                 "items": {
                   "type": "string"
                 },
-                "description": "RFC 5545 recurrence rules. Must be an array containing exactly\none RRULE, zero or more EXDATE, and zero or more RDATE.\n\n**UI editor constraints:** The shift-based schedule editor can\nonly load an event when the RRULE satisfies all of the following:\n1. A `FREQ` parameter is present.\n2. `FREQ` is one of `WEEKLY`, `DAILY`, `MONTHLY`, or `HOURLY`.\n3. All `BYDAY` values are standard two-letter day codes\n   (`MO`, `TU`, `WE`, `TH`, `FR`, `SA`, `SU`).\n\nEvents that violate any condition display a\n\"can't be edited in the UI\" modal and must be managed via the API.\n"
+                "description": "RFC 5545 recurrence rules. Must be an array containing exactly\none RRULE, zero or more EXDATE, and zero or more RDATE.\n\nThe RRULE can repeat at most once per hour.\n\n**UI editor constraints:** The shift-based schedule editor can\nonly load an event when the RRULE satisfies all of the following:\n1. A `FREQ` parameter is present.\n2. `FREQ` is one of `WEEKLY`, `DAILY`, `MONTHLY`, or `HOURLY`.\n3. All `BYDAY` values are standard two-letter day codes\n   (`MO`, `TU`, `WE`, `TH`, `FR`, `SA`, `SU`).\n\nEvents that violate any condition display a\n\"can't be edited in the UI\" modal and must be managed via the API.\n"
               },
               "assignment_strategy": {
                 "$ref": "#/components/schemas/EventAssignmentStrategy"
@@ -25141,8 +25179,20 @@
         "properties": {
           "custom_shift": {
             "type": "object",
-            "description": "If the shift has already started,\nonly `end_time` can be modified.\n",
+            "description": "The request replaces the full custom shift. Send every required\nfield, even the fields that do not change.\n\nIf the shift has already started,\nonly `end_time` can be modified.\n",
+            "required": [
+              "type",
+              "start_time",
+              "end_time",
+              "assignments"
+            ],
             "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "custom_shift"
+                ]
+              },
               "start_time": {
                 "type": "string",
                 "format": "date-time"
@@ -25246,7 +25296,6 @@
             "items": {
               "type": "object",
               "required": [
-                "type",
                 "start_time",
                 "end_time",
                 "overridden_member",
@@ -25257,7 +25306,8 @@
                   "type": "string",
                   "enum": [
                     "override_shift"
-                  ]
+                  ],
+                  "description": "Optional."
                 },
                 "rotation_id": {
                   "type": "string",
@@ -25269,7 +25319,8 @@
                 },
                 "start_time": {
                   "type": "string",
-                  "format": "date-time"
+                  "format": "date-time",
+                  "description": "Must be within one year from now. A value in the past is set\nto the current time.\n"
                 },
                 "end_time": {
                   "type": "string",
@@ -68753,6 +68804,9 @@
           },
           {
             "$ref": "#/components/parameters/team_ids"
+          },
+          {
+            "$ref": "#/components/parameters/schedule_v3_user_id"
           }
         ],
         "responses": {
@@ -68965,7 +69019,7 @@
           "Schedules_v3"
         ],
         "summary": "Update a schedule",
-        "description": "<!-- theme: info -->\n\n> **Important note:** Shift-based schedules use the V3 API and are not compatible with V2 automations. **To create automations for Shift-Based Schedules, you need to:**\n>\n> 1. **Update your automations** to use the V3 API for all new shift-based schedules\n> 2. **Keep the V2 endpoint** for your existing schedules\n>\n> An upgrade tool for existing schedules is coming soon; your legacy schedules will keep working in the meantime. [Learn more](https://support.pagerduty.com/main/docs/shift-based-schedules-api-upgrade-examples).\n\nUpdate schedule metadata (name, description, time zone). All fields are\noptional — only provided fields are updated.\n\nTo modify rotations or events, use their respective endpoints.\n\n**Rejected fields:** `rotations` and `escalation_policies` are not\naccepted and will result in a 400 error.\n",
+        "description": "<!-- theme: info -->\n\n> **Important note:** Shift-based schedules use the V3 API and are not compatible with V2 automations. **To create automations for Shift-Based Schedules, you need to:**\n>\n> 1. **Update your automations** to use the V3 API for all new shift-based schedules\n> 2. **Keep the V2 endpoint** for your existing schedules\n>\n> An upgrade tool for existing schedules is coming soon; your legacy schedules will keep working in the meantime. [Learn more](https://support.pagerduty.com/main/docs/shift-based-schedules-api-upgrade-examples).\n\nUpdate schedule metadata (name, description, time zone). `time_zone`\nis required; `name` and `description` are optional and keep their\ncurrent values when omitted.\n\nTo modify rotations or events, use their respective endpoints.\n\n**Rejected fields:** `rotations` and `escalation_policies` are not\naccepted and will result in a 400 error.\n",
         "operationId": "updateScheduleV3",
         "parameters": [
           {
@@ -69154,7 +69208,7 @@
           "Schedules_v3"
         ],
         "summary": "List custom shifts",
-        "description": "<!-- theme: info -->\n\n> **Important note:** Shift-based schedules use the V3 API and are not compatible with V2 automations. **To create automations for Shift-Based Schedules, you need to:**\n>\n> 1. **Update your automations** to use the V3 API for all new shift-based schedules\n> 2. **Keep the V2 endpoint** for your existing schedules\n>\n> An upgrade tool for existing schedules is coming soon; your legacy schedules will keep working in the meantime. [Learn more](https://support.pagerduty.com/main/docs/shift-based-schedules-api-upgrade-examples).\n\nRetrieve custom shifts for a schedule within a time range.\n\n**`since` and `until` are required.**\n",
+        "description": "<!-- theme: info -->\n\n> **Important note:** Shift-based schedules use the V3 API and are not compatible with V2 automations. **To create automations for Shift-Based Schedules, you need to:**\n>\n> 1. **Update your automations** to use the V3 API for all new shift-based schedules\n> 2. **Keep the V2 endpoint** for your existing schedules\n>\n> An upgrade tool for existing schedules is coming soon; your legacy schedules will keep working in the meantime. [Learn more](https://support.pagerduty.com/main/docs/shift-based-schedules-api-upgrade-examples).\n\nRetrieve custom shifts for a schedule within a time range.\n\n**`since` and `until` are required.**\n\nReturns every custom shift that overlaps the window.\n",
         "operationId": "listCustomShifts",
         "parameters": [
           {
@@ -69171,12 +69225,6 @@
           },
           {
             "$ref": "#/components/parameters/schedule_v3_overflow"
-          },
-          {
-            "$ref": "#/components/parameters/schedule_v3_limit"
-          },
-          {
-            "$ref": "#/components/parameters/schedule_v3_offset"
           }
         ],
         "responses": {
@@ -69195,15 +69243,6 @@
                       "items": {
                         "$ref": "#/components/schemas/CustomShift"
                       }
-                    },
-                    "limit": {
-                      "type": "integer"
-                    },
-                    "offset": {
-                      "type": "integer"
-                    },
-                    "more": {
-                      "type": "boolean"
                     }
                   }
                 },
@@ -69211,10 +69250,7 @@
                   "response": {
                     "summary": "Example response",
                     "value": {
-                      "custom_shifts": [],
-                      "limit": 25,
-                      "offset": 0,
-                      "more": false
+                      "custom_shifts": []
                     }
                   }
                 }
@@ -69416,6 +69452,7 @@
               },
               "example": {
                 "custom_shift": {
+                  "type": "custom_shift",
                   "start_time": "2025-03-15T10:00:00Z",
                   "end_time": "2025-03-15T18:00:00Z",
                   "assignments": [
@@ -69536,7 +69573,7 @@
           "Schedules_v3"
         ],
         "summary": "List overrides",
-        "description": "<!-- theme: info -->\n\n> **Important note:** Shift-based schedules use the V3 API and are not compatible with V2 automations. **To create automations for Shift-Based Schedules, you need to:**\n>\n> 1. **Update your automations** to use the V3 API for all new shift-based schedules\n> 2. **Keep the V2 endpoint** for your existing schedules\n>\n> An upgrade tool for existing schedules is coming soon; your legacy schedules will keep working in the meantime. [Learn more](https://support.pagerduty.com/main/docs/shift-based-schedules-api-upgrade-examples).\n\nRetrieve overrides for a schedule within a time range.\n\n**`since` and `until` are required.**\n",
+        "description": "<!-- theme: info -->\n\n> **Important note:** Shift-based schedules use the V3 API and are not compatible with V2 automations. **To create automations for Shift-Based Schedules, you need to:**\n>\n> 1. **Update your automations** to use the V3 API for all new shift-based schedules\n> 2. **Keep the V2 endpoint** for your existing schedules\n>\n> An upgrade tool for existing schedules is coming soon; your legacy schedules will keep working in the meantime. [Learn more](https://support.pagerduty.com/main/docs/shift-based-schedules-api-upgrade-examples).\n\nRetrieve overrides for a schedule within a time range.\n\n**`since` and `until` are required.**\n\nReturns every override that overlaps the window.\n",
         "operationId": "listOverrides",
         "parameters": [
           {
@@ -69553,12 +69590,6 @@
           },
           {
             "$ref": "#/components/parameters/schedule_v3_overflow"
-          },
-          {
-            "$ref": "#/components/parameters/schedule_v3_limit"
-          },
-          {
-            "$ref": "#/components/parameters/schedule_v3_offset"
           }
         ],
         "responses": {
@@ -69577,15 +69608,6 @@
                       "items": {
                         "$ref": "#/components/schemas/OverrideShift"
                       }
-                    },
-                    "limit": {
-                      "type": "integer"
-                    },
-                    "offset": {
-                      "type": "integer"
-                    },
-                    "more": {
-                      "type": "boolean"
                     }
                   }
                 },
@@ -69593,10 +69615,7 @@
                   "response": {
                     "summary": "Example response",
                     "value": {
-                      "overrides": [],
-                      "limit": 25,
-                      "offset": 0,
-                      "more": false
+                      "overrides": []
                     }
                   }
                 }
@@ -69767,7 +69786,7 @@
           "Schedules_v3"
         ],
         "summary": "Update an override",
-        "description": "<!-- theme: info -->\n\n> **Important note:** Shift-based schedules use the V3 API and are not compatible with V2 automations. **To create automations for Shift-Based Schedules, you need to:**\n>\n> 1. **Update your automations** to use the V3 API for all new shift-based schedules\n> 2. **Keep the V2 endpoint** for your existing schedules\n>\n> An upgrade tool for existing schedules is coming soon; your legacy schedules will keep working in the meantime. [Learn more](https://support.pagerduty.com/main/docs/shift-based-schedules-api-upgrade-examples).\n\nUpdate an existing override.\n",
+        "description": "<!-- theme: info -->\n\n> **Important note:** Shift-based schedules use the V3 API and are not compatible with V2 automations. **To create automations for Shift-Based Schedules, you need to:**\n>\n> 1. **Update your automations** to use the V3 API for all new shift-based schedules\n> 2. **Keep the V2 endpoint** for your existing schedules\n>\n> An upgrade tool for existing schedules is coming soon; your legacy schedules will keep working in the meantime. [Learn more](https://support.pagerduty.com/main/docs/shift-based-schedules-api-upgrade-examples).\n\nUpdate an existing override.\n\nOnce the override has started, only `end_time` can be changed.\n",
         "operationId": "updateOverride",
         "parameters": [
           {
@@ -69893,7 +69912,7 @@
             "$ref": "#/components/parameters/schedule_v3_id"
           },
           {
-            "$ref": "#/components/parameters/schedule_v3_limit"
+            "$ref": "#/components/parameters/schedule_v3_limit_rotations_events"
           },
           {
             "$ref": "#/components/parameters/schedule_v3_offset"
@@ -70026,12 +70045,6 @@
           },
           {
             "$ref": "#/components/parameters/schedule_v3_rotation_id"
-          },
-          {
-            "$ref": "#/components/parameters/schedule_v3_since"
-          },
-          {
-            "$ref": "#/components/parameters/schedule_v3_until"
           }
         ],
         "responses": {
@@ -70125,7 +70138,7 @@
             "$ref": "#/components/parameters/schedule_v3_rotation_id"
           },
           {
-            "$ref": "#/components/parameters/schedule_v3_limit"
+            "$ref": "#/components/parameters/schedule_v3_limit_rotations_events"
           },
           {
             "$ref": "#/components/parameters/schedule_v3_offset"
@@ -70328,12 +70341,6 @@
           },
           {
             "$ref": "#/components/parameters/schedule_v3_event_id"
-          },
-          {
-            "$ref": "#/components/parameters/schedule_v3_since"
-          },
-          {
-            "$ref": "#/components/parameters/schedule_v3_until"
           }
         ],
         "responses": {
