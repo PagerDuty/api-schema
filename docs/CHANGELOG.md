@@ -2,6 +2,9 @@
 
 PagerDuty aims to have no breaking changes to its API. We do fix bugs and add new functionality continuously. This document serves as a reference for any bug fixes or additions to our API.
 
+### 2026-10-01
+- Added `GET /incidents/{id}/scribe_transcripts` to retrieve download links for an Incident's completed Scribe transcripts, in `enhanced` (default) or `raw` format
+
 ### 2026-09-25
 - Documented that `PUT /v3/schedules/{id}` requires `time_zone`; `name` and `description` are optional
 - Documented that `PUT /v3/schedules/{id}/custom_shifts/{custom_shift_id}` replaces the full custom shift: `type`, `start_time`, `end_time`, and `assignments` are required. Added `type` to the request schema and example
