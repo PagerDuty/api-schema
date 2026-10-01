@@ -4762,6 +4762,20 @@
         "schema": {
           "type": "string"
         }
+      },
+      "scribe_transcript_format": {
+        "name": "format",
+        "in": "query",
+        "description": "The transcript format to return a download link for.",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "enum": [
+            "enhanced",
+            "raw"
+          ],
+          "default": "enhanced"
+        }
       }
     },
     "requestBodies": {
@@ -46400,6 +46414,122 @@
           },
           "402": {
             "$ref": "#/components/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        }
+      }
+    },
+    "/incidents/{id}/scribe_transcripts": {
+      "description": "Retrieve download links for an incident's Scribe transcripts.",
+      "get": {
+        "x-pd-requires-scope": "incidents.read",
+        "tags": [
+          "Incidents"
+        ],
+        "operationId": "getIncidentScribeTranscripts",
+        "description": "Get download links for the Scribe transcripts of the specified incident. Only Scribes that have completed are returned; a Scribe that is still in progress does not appear in the response.\n\nEach entry contains a presigned `download_url` for a single transcript format, selected with the `format` query parameter (`enhanced` by default, or `raw`). \n\nThe `download_url` is time-limited and expires after one hour, so request a new one if it has expired. `download_url` is `null` when the transcript is not available for the requested format.\n\nScoped OAuth requires: `incidents.read`\n",
+        "summary": "Get Scribe transcripts for an incident",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/scribe_transcript_format"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The completed Scribe transcripts for the specified incident.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "scribe_transcripts": {
+                      "type": "array",
+                      "description": "The Scribe transcripts associated with the incident.",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "scribe_id": {
+                            "type": "string",
+                            "description": "The ID of the Scribe."
+                          },
+                          "format": {
+                            "type": "string",
+                            "description": "The transcript format that `download_url` corresponds to.",
+                            "enum": [
+                              "enhanced",
+                              "raw"
+                            ]
+                          },
+                          "started_at": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "The time the Scribe started."
+                          },
+                          "ended_at": {
+                            "type": "string",
+                            "format": "date-time",
+                            "nullable": true,
+                            "description": "The time the Scribe ended."
+                          },
+                          "download_url": {
+                            "type": "string",
+                            "nullable": true,
+                            "description": "A presigned URL to download the transcript. Expires after one hour. `null` if the transcript is not available."
+                          }
+                        },
+                        "required": [
+                          "scribe_id",
+                          "format",
+                          "download_url"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "scribe_transcripts"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "scribe_transcripts": [
+                        {
+                          "format": "enhanced",
+                          "started_at": "2026-09-28T09:22:57.896Z",
+                          "scribe_id": "AGQOOUXTMR3TPA3ULKC7KHPZCQ",
+                          "ended_at": "2026-09-28T09:24:50.097Z",
+                          "download_url": "https://s3.us-west-2.amazonaws.com/example-bucket/AGQOOUXTMR3TPA3ULKC7KHPZCQ_enhanced_transcript.json?X-Amz-Expires=3600&X-Amz-Signature=EXAMPLE"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
           },
           "403": {
             "$ref": "#/components/responses/Forbidden"
