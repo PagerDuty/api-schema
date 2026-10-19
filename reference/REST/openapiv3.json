@@ -61875,7 +61875,8 @@
                     "id": "P0400H4",
                     "type": "status_page_status"
                   },
-                  "type": "status_page_post_update"
+                  "type": "status_page_post_update",
+                  "update_frequency_ms": 300000
                 }
               }
             }
@@ -62117,7 +62118,8 @@
                     "id": "P0400H4",
                     "type": "status_page_status"
                   },
-                  "type": "status_page_post_update"
+                  "type": "status_page_post_update",
+                  "update_frequency_ms": 300000
                 }
               }
             }
