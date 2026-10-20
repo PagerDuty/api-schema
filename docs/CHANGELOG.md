@@ -2,7 +2,7 @@
 
 PagerDuty aims to have no breaking changes to its API. We do fix bugs and add new functionality continuously. This document serves as a reference for any bug fixes or additions to our API.
 
-### 2026-10-19
+### 2026-10-20
 - Added the required `update_frequency_ms` field to the request examples for `POST /status_pages/{id}/posts/{post_id}/post_updates` and `PUT /status_pages/{id}/posts/{post_id}/post_updates/{post_update_id}`. It can be `null`
 - Documented that `type` is required on every reference in Status Pages request bodies (`status_page`, `post`, `status`, `severity`, `service`, and `impact`)
 - Documented that `POST /status_pages/{id}/posts` does not take a `post` reference in each entry of `updates`
