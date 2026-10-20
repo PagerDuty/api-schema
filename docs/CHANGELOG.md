@@ -2,6 +2,15 @@
 
 PagerDuty aims to have no breaking changes to its API. We do fix bugs and add new functionality continuously. This document serves as a reference for any bug fixes or additions to our API.
 
+### 2026-10-20
+- Added the required `update_frequency_ms` field to the request examples for `POST /status_pages/{id}/posts/{post_id}/post_updates` and `PUT /status_pages/{id}/posts/{post_id}/post_updates/{post_update_id}`. It can be `null`
+- Documented that `type` is required on every reference in Status Pages request bodies (`status_page`, `post`, `status`, `severity`, `service`, and `impact`)
+- Documented that `POST /status_pages/{id}/posts` does not take a `post` reference in each entry of `updates`
+- Documented that `message` on a Status Pages post update request has a maximum length of 7500 characters
+- Added `limit`, `offset`, and `total` to the Status Pages list operations. `limit` defaults to 100 and has a maximum of 100
+- Added `audience_specific` to the `status_page_type` values on Status Pages and on the `GET /status_pages` filter
+- Added `suspended` to the `status` filter on `GET /status_pages/{id}/subscriptions`
+
 ### 2026-10-01
 - Added `GET /incidents/{id}/scribe_transcripts` to retrieve download links for an Incident's completed Scribe transcripts, in `enhanced` (default) or `raw` format
 

@@ -2130,6 +2130,29 @@
           "type": "boolean"
         }
       },
+      "status_page_limit": {
+        "name": "limit",
+        "in": "query",
+        "required": false,
+        "description": "The number of results per page.",
+        "schema": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100,
+          "default": 100
+        }
+      },
+      "status_page_offset": {
+        "name": "offset",
+        "in": "query",
+        "required": false,
+        "description": "Offset to start pagination search results.",
+        "schema": {
+          "type": "integer",
+          "minimum": 0,
+          "default": 0
+        }
+      },
       "automation_actions_name": {
         "name": "name",
         "description": "Filters results to include the ones matching the name (case insensitive substring matching)",
@@ -4117,7 +4140,8 @@
         "schema": {
           "enum": [
             "public",
-            "private"
+            "private",
+            "audience_specific"
           ],
           "nullable": false,
           "type": "string"
@@ -4308,7 +4332,8 @@
         "schema": {
           "enum": [
             "active",
-            "pending"
+            "pending",
+            "suspended"
           ],
           "nullable": false,
           "type": "string"
@@ -23132,14 +23157,15 @@
             "nullable": false,
             "enum": [
               "public",
-              "private"
+              "private",
+              "audience_specific"
             ]
           },
           "url": {
             "type": "string",
             "description": "The URL from which the Status Page can be accessed on the internet (either customer's domain or default *.trust.pagerduty.com).",
             "nullable": false,
-            "format": "url"
+            "format": "uri"
           },
           "type": {
             "type": "string",
@@ -23369,7 +23395,98 @@
             "type": "array",
             "description": "Post Updates to be associated with a Post",
             "items": {
-              "$ref": "#/components/schemas/StatusPagePostUpdateRequest"
+              "type": "object",
+              "title": "StatusPagePostUpdateNestedRequest",
+              "description": "Attributes for a Post Update created together with its Post. The Post is implied by the enclosing request, so no `post` reference is sent.",
+              "properties": {
+                "self": {
+                  "type": "string",
+                  "description": "The path to which the Post Update resource is accessible.",
+                  "nullable": false,
+                  "readOnly": true
+                },
+                "message": {
+                  "type": "string",
+                  "description": "The message of the Post Update.",
+                  "nullable": false,
+                  "maxLength": 7500
+                },
+                "status": {
+                  "description": "Status Page Status",
+                  "nullable": false,
+                  "properties": {
+                    "id": {
+                      "description": "Status page Status unique identifier",
+                      "type": "string"
+                    },
+                    "type": {
+                      "description": "A string that determines the schema of the object.",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "type"
+                  ],
+                  "type": "object"
+                },
+                "severity": {
+                  "description": "Status Page Severity",
+                  "nullable": false,
+                  "properties": {
+                    "id": {
+                      "description": "Status page Severity unique identifier",
+                      "type": "string"
+                    },
+                    "type": {
+                      "description": "A string that determines the schema of the object.",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "type"
+                  ],
+                  "type": "object"
+                },
+                "impacted_services": {
+                  "type": "array",
+                  "description": "Impacted services represent the status page services affected by a post update, and its impact.",
+                  "items": {
+                    "$ref": "#/components/schemas/StatusPagePostUpdateRequest/properties/impacted_services/items"
+                  },
+                  "minItems": 0
+                },
+                "update_frequency_ms": {
+                  "type": "integer",
+                  "description": "The frequency of the next Post Update in milliseconds.",
+                  "nullable": true
+                },
+                "notify_subscribers": {
+                  "type": "boolean",
+                  "description": "Determines if the subscribers should be notified of the Post Update.",
+                  "nullable": false
+                },
+                "reported_at": {
+                  "type": "string",
+                  "description": "The date and time the Post Update was reported.",
+                  "nullable": true,
+                  "format": "date-time"
+                },
+                "type": {
+                  "type": "string",
+                  "description": "The type of the object returned by the API - in this case, a Status Page Post Update."
+                }
+              },
+              "required": [
+                "type",
+                "message",
+                "status",
+                "severity",
+                "update_frequency_ms",
+                "notify_subscribers",
+                "impacted_services"
+              ]
             },
             "nullable": false,
             "minItems": 1,
@@ -23389,7 +23506,8 @@
               }
             },
             "required": [
-              "id"
+              "id",
+              "type"
             ],
             "type": "object"
           }
@@ -23459,7 +23577,8 @@
               }
             },
             "required": [
-              "id"
+              "id",
+              "type"
             ],
             "type": "object"
           }
@@ -23649,14 +23768,16 @@
               }
             },
             "required": [
-              "id"
+              "id",
+              "type"
             ],
             "type": "object"
           },
           "message": {
             "type": "string",
             "description": "The message of the Post Update.",
-            "nullable": false
+            "nullable": false,
+            "maxLength": 7500
           },
           "status": {
             "description": "Status Page Status",
@@ -23672,7 +23793,8 @@
               }
             },
             "required": [
-              "id"
+              "id",
+              "type"
             ],
             "type": "object"
           },
@@ -23690,7 +23812,8 @@
               }
             },
             "required": [
-              "id"
+              "id",
+              "type"
             ],
             "type": "object"
           },
@@ -23698,7 +23821,53 @@
             "type": "array",
             "description": "Impacted services represent the status page services affected by a post update, and its impact.",
             "items": {
-              "$ref": "#/components/schemas/StatusPagePostUpdate/properties/impacted_services/items"
+              "type": "object",
+              "title": "StatusPagePostUpdateImpactRequest",
+              "description": "A Status Page Service and the Impact it has in a Post Update, as sent in a request.",
+              "properties": {
+                "service": {
+                  "description": "Status Page Service",
+                  "nullable": false,
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "An unique identifier within Status Page scope that defines a Service entry."
+                    },
+                    "type": {
+                      "type": "string",
+                      "description": "The type of the object - in this case, a Status Page Service."
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "type"
+                  ],
+                  "type": "object"
+                },
+                "impact": {
+                  "description": "Status Page Impact",
+                  "nullable": false,
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "An unique identifier within Status Page scope that defines a Status Page Impact entry."
+                    },
+                    "type": {
+                      "type": "string",
+                      "description": "The type of the object - in this case, a Status Page Impact."
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "type"
+                  ],
+                  "type": "object"
+                }
+              },
+              "required": [
+                "service",
+                "impact"
+              ]
             },
             "minItems": 0
           },
@@ -23821,7 +23990,8 @@
               }
             },
             "required": [
-              "id"
+              "id",
+              "type"
             ],
             "type": "object"
           },
@@ -60443,6 +60613,15 @@
           },
           {
             "$ref": "#/components/parameters/status_page_type"
+          },
+          {
+            "$ref": "#/components/parameters/status_page_limit"
+          },
+          {
+            "$ref": "#/components/parameters/status_page_offset"
+          },
+          {
+            "$ref": "#/components/parameters/offset_total"
           }
         ],
         "responses": {
@@ -60472,7 +60651,7 @@
                   "response": {
                     "summary": "Response Example",
                     "value": {
-                      "limit": 25,
+                      "limit": 100,
                       "more": false,
                       "offset": 0,
                       "status_pages": [
@@ -60527,6 +60706,15 @@
           },
           {
             "$ref": "#/components/parameters/status_page_impact_post_type"
+          },
+          {
+            "$ref": "#/components/parameters/status_page_limit"
+          },
+          {
+            "$ref": "#/components/parameters/status_page_offset"
+          },
+          {
+            "$ref": "#/components/parameters/offset_total"
           }
         ],
         "responses": {
@@ -60591,7 +60779,7 @@
                           "type": "status_page_impact"
                         }
                       ],
-                      "limit": 25,
+                      "limit": 100,
                       "more": false,
                       "offset": 0
                     }
@@ -60702,6 +60890,15 @@
           },
           {
             "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/status_page_limit"
+          },
+          {
+            "$ref": "#/components/parameters/status_page_offset"
+          },
+          {
+            "$ref": "#/components/parameters/offset_total"
           }
         ],
         "responses": {
@@ -60731,7 +60928,7 @@
                   "response": {
                     "summary": "Response Example",
                     "value": {
-                      "limit": 25,
+                      "limit": 100,
                       "more": false,
                       "offset": 0,
                       "services": [
@@ -60865,6 +61062,15 @@
           },
           {
             "$ref": "#/components/parameters/status_page_severity_post_type"
+          },
+          {
+            "$ref": "#/components/parameters/status_page_limit"
+          },
+          {
+            "$ref": "#/components/parameters/status_page_offset"
+          },
+          {
+            "$ref": "#/components/parameters/offset_total"
           }
         ],
         "responses": {
@@ -60894,7 +61100,7 @@
                   "response": {
                     "summary": "Response Example",
                     "value": {
-                      "limit": 25,
+                      "limit": 100,
                       "more": false,
                       "offset": 0,
                       "severities": [
@@ -61043,6 +61249,15 @@
           },
           {
             "$ref": "#/components/parameters/status_page_status_post_type"
+          },
+          {
+            "$ref": "#/components/parameters/status_page_limit"
+          },
+          {
+            "$ref": "#/components/parameters/status_page_offset"
+          },
+          {
+            "$ref": "#/components/parameters/offset_total"
           }
         ],
         "responses": {
@@ -61072,7 +61287,7 @@
                   "response": {
                     "summary": "Response Example",
                     "value": {
-                      "limit": 25,
+                      "limit": 100,
                       "more": false,
                       "offset": 0,
                       "statuses": [
@@ -61228,6 +61443,15 @@
           },
           {
             "$ref": "#/components/parameters/status_page_post_status"
+          },
+          {
+            "$ref": "#/components/parameters/status_page_limit"
+          },
+          {
+            "$ref": "#/components/parameters/status_page_offset"
+          },
+          {
+            "$ref": "#/components/parameters/offset_total"
           }
         ],
         "responses": {
@@ -61257,7 +61481,7 @@
                   "response": {
                     "summary": "Response Example",
                     "value": {
-                      "limit": 25,
+                      "limit": 100,
                       "more": false,
                       "offset": 0,
                       "posts": [
@@ -61718,6 +61942,15 @@
           },
           {
             "$ref": "#/components/parameters/status_page_post_update_reviewed_status"
+          },
+          {
+            "$ref": "#/components/parameters/status_page_limit"
+          },
+          {
+            "$ref": "#/components/parameters/status_page_offset"
+          },
+          {
+            "$ref": "#/components/parameters/offset_total"
           }
         ],
         "responses": {
@@ -61747,7 +61980,7 @@
                   "response": {
                     "summary": "Response Example",
                     "value": {
-                      "limit": 25,
+                      "limit": 100,
                       "more": false,
                       "offset": 0,
                       "post_updates": [
@@ -61863,6 +62096,7 @@
                   ],
                   "message": "<p>Message</p>",
                   "notify_subscribers": false,
+                  "update_frequency_ms": 300000,
                   "post": {
                     "id": "P6F2CJ3",
                     "type": "status_page_post"
@@ -62105,6 +62339,7 @@
                   ],
                   "message": "<p>Message</p>",
                   "notify_subscribers": false,
+                  "update_frequency_ms": 300000,
                   "post": {
                     "id": "P6F2CJ3",
                     "type": "status_page_post"
@@ -62507,6 +62742,15 @@
           },
           {
             "$ref": "#/components/parameters/status_page_subscription_channel"
+          },
+          {
+            "$ref": "#/components/parameters/status_page_limit"
+          },
+          {
+            "$ref": "#/components/parameters/status_page_offset"
+          },
+          {
+            "$ref": "#/components/parameters/offset_total"
           }
         ],
         "responses": {
@@ -62536,7 +62780,7 @@
                   "response": {
                     "summary": "Response Example",
                     "value": {
-                      "limit": 25,
+                      "limit": 100,
                       "more": false,
                       "offset": 0,
                       "subscriptions": [
@@ -62637,7 +62881,8 @@
                           }
                         },
                         "required": [
-                          "id"
+                          "id",
+                          "type"
                         ],
                         "type": "object"
                       },
