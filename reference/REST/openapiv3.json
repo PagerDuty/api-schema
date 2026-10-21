@@ -15467,9 +15467,10 @@
           },
           "status": {
             "type": "string",
-            "description": "The status of the Incident Review.\n\nMoving to `completed` is rejected while any required section is still unfilled.\n",
+            "description": "The status of the Incident Review.\n\nMoving to `completed` is rejected while any required section is still unfilled.\n\nOn accounts where completed Incident Reviews are read-only, a `completed` Incident Review cannot be changed until it is reopened by setting another status.\n",
             "enum": [
               "started",
+              "in_review",
               "completed"
             ],
             "example": "started"
@@ -15712,16 +15713,15 @@
             "description": "The time the action item is due, or `null` if no due date is set.",
             "example": "2026-09-15T17:00:00Z"
           },
-          "external_type": {
+          "type": {
             "type": "string",
             "nullable": true,
-            "description": "The type of external tracker the action item is linked to, or `null` if it is not linked to one.",
+            "description": "The type of external tracker the action item is linked to, or `null` if it is not linked to one. Note that unlike most PagerDuty resources, this names an external tracker rather than identifying the schema of the object.\n",
             "example": "Jira"
           },
           "external_url": {
             "type": "string",
-            "nullable": true,
-            "description": "The URL of the action item in the external tracker, or `null` if it is not linked to one.",
+            "description": "The URL of the action item in the external tracker. Only present when `type` is `Jira`; omitted from the response otherwise.",
             "example": "https://example.atlassian.net/browse/PROJ-123"
           },
           "ai_generated": {
@@ -15743,13 +15743,6 @@
             "readOnly": true,
             "description": "The time the action item was created.",
             "example": "2026-09-01T20:00:00Z"
-          },
-          "updated_at": {
-            "type": "string",
-            "format": "date-time",
-            "readOnly": true,
-            "description": "The time the action item was last modified.",
-            "example": "2026-09-01T21:02:00Z"
           },
           "completed_at": {
             "type": "string",
@@ -47350,12 +47343,11 @@
                           "priority": "high",
                           "assignee": "PABC123",
                           "due_at": "2026-09-15T17:00:00Z",
-                          "external_type": "Jira",
+                          "type": "Jira",
                           "external_url": "https://example.atlassian.net/browse/PROJ-123",
                           "ai_generated": false,
                           "created_by": "PUSER123",
                           "created_at": "2026-09-01T20:00:00Z",
-                          "updated_at": "2026-09-01T21:02:00Z",
                           "completed_at": null
                         }
                       ],
@@ -47391,7 +47383,7 @@
           "Incident Reviews"
         ],
         "operationId": "getIncidentReview",
-        "description": "Get the Incident Review for the specified Incident.\n\nAn Incident Review is a structured, post-resolution record of what happened during an Incident. Each Incident has at most one Incident Review.\n\nReturns `404` if the Incident has no Incident Review.\n\nScoped OAuth requires: `incident_reviews.read`\n",
+        "description": "Get the Incident Review for the specified Incident.\n\nAn Incident Review is a structured, post-resolution record of what happened during an Incident. Each Incident has at most one Incident Review.\n\nReturns `404` if the Incident has no Incident Review, or if the caller cannot see it.\n\nScoped OAuth requires: `incident_reviews.read`\n",
         "summary": "Get an Incident Review",
         "parameters": [
           {
@@ -47482,7 +47474,7 @@
           "Incident Reviews"
         ],
         "operationId": "createIncidentReview",
-        "description": "Create an Incident Review for the specified Incident.\n\nAn Incident can have at most one Incident Review, so this returns `400` if the Incident already has one. A caller that wants create-or-fetch behaviour should fall back to `GET` on failure.\n\nThe new Incident Review follows the account's default template, which determines its sections.\n\nScoped OAuth requires: `incident_reviews.write`\n",
+        "description": "Create an Incident Review for the specified Incident.\n\nAn Incident can have at most one Incident Review, so this returns `400` if the Incident already has one. A caller that wants create-or-fetch behaviour should fall back to `GET` on failure.\n\nThe new Incident Review follows the account's default template, which determines its sections.\n\nWhen called with a User API token, the caller owns the new Incident Review. An account API key may name an owner with `owner_user_id`.\n\nReturns `400` if `owner_user_id` is not a User on the account, or if a User API token names someone other than the caller.\n\nScoped OAuth requires: `incident_reviews.write`\n",
         "summary": "Create an Incident Review",
         "parameters": [
           {
@@ -47505,6 +47497,10 @@
                     "type": "string",
                     "description": "The title of the Incident Review.",
                     "maxLength": 255
+                  },
+                  "owner_user_id": {
+                    "type": "string",
+                    "description": "The ID of the User who should own the Incident Review. Only for account API keys, whose Incident Reviews would otherwise have no owner; with a User API token the caller is the owner, and naming anyone else is rejected with `400`. The User must belong to the account. Ignored unless the account has per-review permissions.\n"
                   }
                 },
                 "required": [
@@ -47583,9 +47579,6 @@
           "403": {
             "$ref": "#/components/responses/Forbidden"
           },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          },
           "429": {
             "$ref": "#/components/responses/TooManyRequests"
           }
@@ -47597,7 +47590,7 @@
           "Incident Reviews"
         ],
         "operationId": "updateIncidentReview",
-        "description": "Update the Incident Review for the specified Incident.\n\nThis is a partial update: an omitted field leaves the current value unchanged.\n\nMoving `status` to `completed` is rejected with `409` while any required section is still unfilled.\n\nScoped OAuth requires: `incident_reviews.write`\n",
+        "description": "Update the Incident Review for the specified Incident.\n\nThis is a partial update: an omitted field leaves the current value unchanged.\n\nMoving `status` to `completed` is rejected with `409` while any required section is still unfilled.\n\nOn accounts where completed Incident Reviews are read-only, any other change to a `completed` Incident Review is rejected with `409` until it is reopened by setting `status` to another value. Completing or reopening an Incident Review requires permission to complete it, or the request is rejected with `403`.\n\n`409` is also returned if the Incident Review is locked, or if it uses a format this version of the API cannot edit.\n\nScoped OAuth requires: `incident_reviews.write`\n",
         "summary": "Update an Incident Review",
         "parameters": [
           {
@@ -47627,6 +47620,7 @@
                     "description": "The updated status of the Incident Review.",
                     "enum": [
                       "started",
+                      "in_review",
                       "completed"
                     ]
                   }
@@ -47725,7 +47719,7 @@
           "Incident Reviews"
         ],
         "operationId": "listIncidentReviewActionItems",
-        "description": "List the action items on the Incident Review for the specified Incident, oldest first by creation time.\n\nReturns an empty list for an Incident Review that has no action items, and `404` when the Incident has no Incident Review.\n\nThis endpoint uses cursor pagination. Omit `cursor` for the first page, then pass the `next_cursor` from the previous response until it is `null`.\n\nScoped OAuth requires: `incident_reviews.read`\n",
+        "description": "List the action items on the Incident Review for the specified Incident, oldest first by creation time.\n\nReturns an empty list for an Incident Review that has no action items, and `404` when the Incident has no Incident Review, or if the caller cannot see it.\n\nThis endpoint uses cursor pagination. Omit `cursor` for the first page, then pass the `next_cursor` from the previous response until it is `null`.\n\nScoped OAuth requires: `incident_reviews.read`\n",
         "summary": "List action items for an Incident Review",
         "parameters": [
           {
@@ -47790,12 +47784,11 @@
                           "priority": "high",
                           "assignee": "PABC123",
                           "due_at": "2026-09-15T17:00:00Z",
-                          "external_type": "Jira",
+                          "type": "Jira",
                           "external_url": "https://example.atlassian.net/browse/PROJ-123",
                           "ai_generated": false,
                           "created_by": "PUSER123",
                           "created_at": "2026-09-01T20:00:00Z",
-                          "updated_at": "2026-09-01T21:02:00Z",
                           "completed_at": null
                         }
                       ],
@@ -47834,7 +47827,7 @@
           "Incident Reviews"
         ],
         "operationId": "createIncidentReviewMarker",
-        "description": "Add a marker to the timeline of the Incident Review for the specified Incident.\n\nA marker highlights a point of interest on the timeline. Each entry in `notes` is added as its own event attached to the new marker.\n\nReturns `404` when the Incident has no Incident Review.\n\nScoped OAuth requires: `incident_reviews.write`\n",
+        "description": "Add a marker to the timeline of the Incident Review for the specified Incident.\n\nA marker highlights a point of interest on the timeline. Each entry in `notes` is added as its own event attached to the new marker.\n\nReturns `404` when the Incident has no Incident Review, or if the caller cannot see it, and `409` when the Incident Review is `completed` and must be reopened first.\n\n`409` is also returned if the Incident Review is locked, or if it uses a format this version of the API cannot edit.\n\nScoped OAuth requires: `incident_reviews.write`\n",
         "summary": "Add a marker to an Incident Review timeline",
         "parameters": [
           {
@@ -47944,6 +47937,9 @@
           },
           "404": {
             "$ref": "#/components/responses/NotFound"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
           },
           "429": {
             "$ref": "#/components/responses/TooManyRequests"
