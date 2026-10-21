@@ -93,6 +93,10 @@
       "description": "Custom fields allow you to enrich PagerDuty incidents with critical and helpful metadata throughout the incident lifecycle.\n"
     },
     {
+      "name": "Incident Reviews",
+      "description": "An Incident Review is a structured, post-resolution record of what happened during an Incident: what the impact was, how it was handled, and what should change as a result. Each Incident has at most one Incident Review, and its sections are determined by the template the Incident Review follows.\n"
+    },
+    {
       "name": "Incident Types",
       "description": "Incident Types are a feature which will allow customers to categorize incidents, such as a security incident, a major incident, or a fraud incident.\n"
     },
@@ -2323,6 +2327,162 @@
             "all"
           ],
           "default": "enabled"
+        }
+      },
+      "incident_reviews_limit": {
+        "name": "limit",
+        "in": "query",
+        "required": false,
+        "description": "The number of results per page.",
+        "schema": {
+          "type": "integer",
+          "default": 25,
+          "minimum": 1,
+          "maximum": 100
+        }
+      },
+      "incident_reviews_created_since": {
+        "name": "created_since",
+        "in": "query",
+        "required": false,
+        "description": "Only return results created on or after this time.",
+        "schema": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "incident_reviews_created_until": {
+        "name": "created_until",
+        "in": "query",
+        "required": false,
+        "description": "Only return results created on or before this time.",
+        "schema": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "incident_reviews_status": {
+        "name": "status",
+        "in": "query",
+        "required": false,
+        "description": "Only return Incident Reviews with one of these statuses. Repeat the parameter to pass more than one.",
+        "explode": true,
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "started",
+              "in_review",
+              "completed"
+            ]
+          }
+        }
+      },
+      "incident_reviews_status_not": {
+        "name": "status_not",
+        "in": "query",
+        "required": false,
+        "description": "Exclude Incident Reviews with any of these statuses. Repeat the parameter to pass more than one.",
+        "explode": true,
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "started",
+              "in_review",
+              "completed"
+            ]
+          }
+        }
+      },
+      "incident_reviews_status_not_empty": {
+        "name": "status_not_empty",
+        "in": "query",
+        "required": false,
+        "description": "When `true`, only return Incident Reviews that have a status set.",
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      "incident_reviews_has_open_action_items": {
+        "name": "has_open_action_items",
+        "in": "query",
+        "required": false,
+        "description": "When `true`, only return Incident Reviews that have at least one action item that is not complete.",
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      "incident_review_action_items_assignee": {
+        "name": "assignee",
+        "in": "query",
+        "required": false,
+        "description": "Only return action items assigned to one of these Users. Repeat the parameter to pass more than one.",
+        "explode": true,
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "incident_review_action_items_assignee_not": {
+        "name": "assignee_not",
+        "in": "query",
+        "required": false,
+        "description": "Exclude action items assigned to any of these Users. Repeat the parameter to pass more than one.",
+        "explode": true,
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "incident_review_action_items_assignee_not_empty": {
+        "name": "assignee_not_empty",
+        "in": "query",
+        "required": false,
+        "description": "When `true`, only return action items that are assigned to a User.",
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      "incident_review_action_items_status": {
+        "name": "status",
+        "in": "query",
+        "required": false,
+        "description": "Only return action items with one of these statuses, for example `complete` or `incomplete`. Repeat the parameter to pass more than one.",
+        "explode": true,
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "incident_review_action_items_status_not": {
+        "name": "status_not",
+        "in": "query",
+        "required": false,
+        "description": "Exclude action items with any of these statuses. Repeat the parameter to pass more than one.",
+        "explode": true,
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "incident_review_action_items_status_not_empty": {
+        "name": "status_not_empty",
+        "in": "query",
+        "required": false,
+        "description": "When `true`, only return action items that have a status set.",
+        "schema": {
+          "type": "boolean"
         }
       },
       "past_incidents_limit": {
@@ -15283,6 +15443,390 @@
             }
           }
         ]
+      },
+      "IncidentReview": {
+        "type": "object",
+        "description": "An Incident Review is a structured, post-resolution record of what happened during an Incident. Each Incident has at most one Incident Review.",
+        "properties": {
+          "id": {
+            "type": "string",
+            "readOnly": true,
+            "description": "The unique identifier of the Incident Review.",
+            "example": "AGOBAMKTT5Z3RO7CR7T2ZGSMJA"
+          },
+          "incident_id": {
+            "type": "string",
+            "readOnly": true,
+            "description": "The ID of the Incident this Incident Review describes.",
+            "example": "P1234ABC"
+          },
+          "title": {
+            "type": "string",
+            "description": "The title of the Incident Review.",
+            "example": "Database outage review"
+          },
+          "status": {
+            "type": "string",
+            "description": "The status of the Incident Review.\n\nMoving to `completed` is rejected while any required section is still unfilled.\n",
+            "enum": [
+              "started",
+              "completed"
+            ],
+            "example": "started"
+          },
+          "sections": {
+            "type": "array",
+            "readOnly": true,
+            "description": "The sections of the Incident Review, ordered by `priority`.",
+            "items": {
+              "$ref": "#/components/schemas/IncidentReviewSection"
+            }
+          },
+          "generation_status": {
+            "type": "string",
+            "readOnly": true,
+            "description": "Whether an AI draft is currently being generated for this Incident Review. While this is `generating`, section content is still being written and the Incident Review should be re-fetched to see the result.\n",
+            "enum": [
+              "idle",
+              "generating"
+            ],
+            "example": "idle"
+          },
+          "ai_generated": {
+            "type": "boolean",
+            "readOnly": true,
+            "description": "Whether this Incident Review has been through the AI draft flow.",
+            "example": false
+          },
+          "template_id": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true,
+            "description": "The ID of the template this Incident Review currently follows, or `null` if it does not follow one.",
+            "example": "AGOBAMKTT5Z3RO7CR7T2ZGSMJA"
+          },
+          "has_events": {
+            "type": "boolean",
+            "readOnly": true,
+            "description": "Whether the Incident Review has at least one event on its timeline.",
+            "example": true
+          },
+          "action_item_count": {
+            "type": "integer",
+            "readOnly": true,
+            "description": "The total number of action items on this Incident Review.",
+            "example": 5
+          },
+          "completed_action_item_count": {
+            "type": "integer",
+            "readOnly": true,
+            "description": "The number of completed action items on this Incident Review.",
+            "example": 3
+          },
+          "created_by": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true,
+            "description": "The ID of the User who created this Incident Review, or `null` if it was not created by a User.",
+            "example": "PUSER123"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true,
+            "description": "The time the Incident Review was created.",
+            "example": "2026-09-01T20:00:00Z"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true,
+            "description": "The time the Incident Review was last modified.",
+            "example": "2026-09-01T21:02:00Z"
+          },
+          "completed_at": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "readOnly": true,
+            "description": "The time the Incident Review was completed, or `null` if it has not been completed.",
+            "example": "2026-09-02T14:30:00Z"
+          }
+        }
+      },
+      "IncidentReviewListItem": {
+        "type": "object",
+        "description": "A summary of an Incident Review, as returned when listing Incident Reviews. Fetch the Incident Review by its Incident to get its sections.",
+        "properties": {
+          "id": {
+            "type": "string",
+            "readOnly": true,
+            "description": "The unique identifier of the Incident Review.",
+            "example": "AGOBAMKTT5Z3RO7CR7T2ZGSMJA"
+          },
+          "incident_id": {
+            "type": "string",
+            "readOnly": true,
+            "description": "The ID of the Incident this Incident Review describes.",
+            "example": "P1234ABC"
+          },
+          "title": {
+            "type": "string",
+            "readOnly": true,
+            "description": "The title of the Incident Review.",
+            "example": "Database outage review"
+          },
+          "status": {
+            "type": "string",
+            "readOnly": true,
+            "description": "The status of the Incident Review.",
+            "enum": [
+              "started",
+              "in_review",
+              "completed"
+            ],
+            "example": "started"
+          },
+          "action_item_count": {
+            "type": "integer",
+            "readOnly": true,
+            "description": "The total number of action items on this Incident Review.",
+            "example": 5
+          },
+          "completed_action_item_count": {
+            "type": "integer",
+            "readOnly": true,
+            "description": "The number of completed action items on this Incident Review.",
+            "example": 3
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true,
+            "description": "The time the Incident Review was created.",
+            "example": "2026-09-01T20:00:00Z"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true,
+            "description": "The time the Incident Review was last modified.",
+            "example": "2026-09-01T21:02:00Z"
+          },
+          "completed_at": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "readOnly": true,
+            "description": "The time the Incident Review was completed, or `null` if it has not been completed.",
+            "example": "2026-09-02T14:30:00Z"
+          }
+        }
+      },
+      "IncidentReviewSection": {
+        "type": "object",
+        "description": "A single section of an Incident Review. The set of sections is determined by the template the Incident Review follows.",
+        "properties": {
+          "title": {
+            "type": "string",
+            "readOnly": true,
+            "description": "The title of the section.",
+            "example": "Summary"
+          },
+          "content": {
+            "type": "string",
+            "nullable": true,
+            "description": "The section's content, as [Tiptap](https://tiptap.dev/) editor JSON. `null` or empty for a section that has not been written or generated yet.\n",
+            "example": "{\"type\":\"doc\",\"content\":[]}"
+          },
+          "priority": {
+            "type": "integer",
+            "readOnly": true,
+            "description": "The display order of the section within the Incident Review. Lower values sort first.",
+            "example": 0
+          },
+          "required": {
+            "type": "boolean",
+            "readOnly": true,
+            "description": "Whether this section must be filled in before the Incident Review can be moved to the `completed` status.",
+            "example": true
+          },
+          "completed_at": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "readOnly": true,
+            "description": "The time the section was marked completed, or `null` if it has not been completed.",
+            "example": "2026-09-01T20:00:00Z"
+          }
+        }
+      },
+      "IncidentReviewActionItem": {
+        "type": "object",
+        "description": "An action item captured on an Incident Review: a follow-up task identified while reviewing the Incident.",
+        "properties": {
+          "id": {
+            "type": "string",
+            "readOnly": true,
+            "description": "The unique identifier of the action item.",
+            "example": "AGOBAMKTT5Z3RO7CR7T2ZGSMJA"
+          },
+          "incident_id": {
+            "type": "string",
+            "readOnly": true,
+            "description": "The ID of the Incident whose Incident Review this action item belongs to.",
+            "example": "P1234ABC"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the action item.",
+            "example": "Update runbook"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true,
+            "description": "A long-form description of the action item.",
+            "example": "Add failover steps to the runbook"
+          },
+          "status": {
+            "type": "string",
+            "description": "The status of the action item on the Incident Review.",
+            "example": "incomplete"
+          },
+          "priority": {
+            "type": "string",
+            "nullable": true,
+            "description": "The priority of the action item.",
+            "example": "high"
+          },
+          "assignee": {
+            "type": "string",
+            "nullable": true,
+            "description": "The ID of the User the action item is assigned to, or `null` if it is unassigned.",
+            "example": "PABC123"
+          },
+          "due_at": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "description": "The time the action item is due, or `null` if no due date is set.",
+            "example": "2026-09-15T17:00:00Z"
+          },
+          "external_type": {
+            "type": "string",
+            "nullable": true,
+            "description": "The type of external tracker the action item is linked to, or `null` if it is not linked to one.",
+            "example": "Jira"
+          },
+          "external_url": {
+            "type": "string",
+            "nullable": true,
+            "description": "The URL of the action item in the external tracker, or `null` if it is not linked to one.",
+            "example": "https://example.atlassian.net/browse/PROJ-123"
+          },
+          "ai_generated": {
+            "type": "boolean",
+            "readOnly": true,
+            "description": "Whether this action item was generated by AI.",
+            "example": false
+          },
+          "created_by": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true,
+            "description": "The ID of the User who created the action item. `null` when it was created by PagerDuty Advance rather than by a User.",
+            "example": "PUSER123"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true,
+            "description": "The time the action item was created.",
+            "example": "2026-09-01T20:00:00Z"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true,
+            "description": "The time the action item was last modified.",
+            "example": "2026-09-01T21:02:00Z"
+          },
+          "completed_at": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "readOnly": true,
+            "description": "The time the action item was completed, or `null` if it has not been completed.",
+            "example": "2026-09-02T14:30:00Z"
+          }
+        }
+      },
+      "IncidentReviewMarker": {
+        "type": "object",
+        "description": "A marker highlights a point of interest on an Incident Review timeline, along with the notes captured as supporting evidence for it.",
+        "properties": {
+          "id": {
+            "type": "string",
+            "readOnly": true,
+            "description": "The unique identifier of the marker.",
+            "example": "AGOBAMKTT5Z3RO7CR7T2ZGSMJA"
+          },
+          "incident_review_id": {
+            "type": "string",
+            "readOnly": true,
+            "description": "The ID of the Incident Review this marker was added to.",
+            "example": "AGOBAMKTT5Z3RO7CR7T2ZGSMJA"
+          },
+          "type": {
+            "type": "string",
+            "description": "The name of the marker type. Note that unlike most PagerDuty resources, this is a customer-configurable marker type name rather than a string identifying the schema of the object.\n",
+            "example": "Key Moment"
+          },
+          "title": {
+            "type": "string",
+            "description": "The title of the marker.",
+            "example": "Customer-reported timeline update"
+          },
+          "events": {
+            "type": "array",
+            "readOnly": true,
+            "description": "The note events attached to this marker.",
+            "items": {
+              "$ref": "#/components/schemas/IncidentReviewMarkerEvent"
+            }
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true,
+            "description": "The time the marker was created.",
+            "example": "2026-09-01T20:00:00Z"
+          }
+        }
+      },
+      "IncidentReviewMarkerEvent": {
+        "type": "object",
+        "description": "A free-text note attached to an Incident Review marker. Each note supplied when creating a marker is stored as its own event on the Incident Review timeline.",
+        "properties": {
+          "id": {
+            "type": "string",
+            "readOnly": true,
+            "description": "The unique identifier of the event.",
+            "example": "AGOBAMKTT5Z3RO7CR7T2ZGSMJA"
+          },
+          "body": {
+            "type": "string",
+            "description": "The content of the note.",
+            "example": "Customer confirmed impact started at 10:42 UTC"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true,
+            "description": "The time the event was created.",
+            "example": "2026-09-01T20:00:00Z"
+          }
+        }
       },
       "IncidentType": {
         "type": "object",
@@ -46584,6 +47128,816 @@
           },
           "402": {
             "$ref": "#/components/responses/PaymentRequired"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        }
+      }
+    },
+    "/incidents/reviews": {
+      "description": "List the Incident Reviews on an account.",
+      "get": {
+        "x-pd-requires-scope": "incident_reviews.read",
+        "tags": [
+          "Incident Reviews"
+        ],
+        "operationId": "listIncidentReviews",
+        "description": "List the Incident Reviews on the account, newest first by creation time.\n\nOnly Incident Reviews on Incidents the caller can see are returned. Each entry is a summary; fetch the Incident Review by its Incident to get its sections.\n\nThis endpoint uses cursor pagination. Omit `cursor` for the first page, then pass the `next_cursor` from the previous response until it is `null`.\n\nScoped OAuth requires: `incident_reviews.read`\n",
+        "summary": "List Incident Reviews",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/incident_reviews_limit"
+          },
+          {
+            "$ref": "#/components/parameters/cursor_cursor"
+          },
+          {
+            "$ref": "#/components/parameters/incident_reviews_status"
+          },
+          {
+            "$ref": "#/components/parameters/incident_reviews_status_not"
+          },
+          {
+            "$ref": "#/components/parameters/incident_reviews_status_not_empty"
+          },
+          {
+            "$ref": "#/components/parameters/incident_reviews_created_since"
+          },
+          {
+            "$ref": "#/components/parameters/incident_reviews_created_until"
+          },
+          {
+            "$ref": "#/components/parameters/incident_reviews_has_open_action_items"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A page of Incident Reviews on the account.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "incident_reviews": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/IncidentReviewListItem"
+                      }
+                    },
+                    "limit": {
+                      "type": "integer",
+                      "description": "The number of results per page requested."
+                    },
+                    "more": {
+                      "type": "boolean",
+                      "description": "Whether more Incident Reviews exist after this page."
+                    },
+                    "next_cursor": {
+                      "type": "string",
+                      "nullable": true,
+                      "description": "The cursor to pass as `cursor` to fetch the next page, or `null` on the last page."
+                    }
+                  },
+                  "required": [
+                    "incident_reviews"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "incident_reviews": [
+                        {
+                          "id": "AGOBAMKTT5Z3RO7CR7T2ZGSMJA",
+                          "incident_id": "P1234ABC",
+                          "title": "Database outage review",
+                          "status": "completed",
+                          "action_item_count": 5,
+                          "completed_action_item_count": 3,
+                          "created_at": "2026-09-01T20:00:00Z",
+                          "updated_at": "2026-09-02T14:30:00Z",
+                          "completed_at": "2026-09-02T14:30:00Z"
+                        }
+                      ],
+                      "limit": 25,
+                      "more": false,
+                      "next_cursor": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        }
+      }
+    },
+    "/incidents/reviews/action_items": {
+      "description": "List the action items across every Incident Review on an account.",
+      "get": {
+        "x-pd-requires-scope": "incident_reviews.read",
+        "tags": [
+          "Incident Reviews"
+        ],
+        "operationId": "listAccountIncidentReviewActionItems",
+        "description": "List the action items across every Incident Review on the account, oldest first by creation time.\n\nOnly action items on Incident Reviews the caller can see are returned. Each action item's `incident_id` identifies the Incident Review it belongs to.\n\nThis endpoint uses cursor pagination. Omit `cursor` for the first page, then pass the `next_cursor` from the previous response until it is `null`.\n\nScoped OAuth requires: `incident_reviews.read`\n",
+        "summary": "List action items across all Incident Reviews",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/incident_reviews_limit"
+          },
+          {
+            "$ref": "#/components/parameters/cursor_cursor"
+          },
+          {
+            "$ref": "#/components/parameters/incident_review_action_items_assignee"
+          },
+          {
+            "$ref": "#/components/parameters/incident_review_action_items_assignee_not"
+          },
+          {
+            "$ref": "#/components/parameters/incident_review_action_items_assignee_not_empty"
+          },
+          {
+            "$ref": "#/components/parameters/incident_review_action_items_status"
+          },
+          {
+            "$ref": "#/components/parameters/incident_review_action_items_status_not"
+          },
+          {
+            "$ref": "#/components/parameters/incident_review_action_items_status_not_empty"
+          },
+          {
+            "$ref": "#/components/parameters/incident_reviews_created_since"
+          },
+          {
+            "$ref": "#/components/parameters/incident_reviews_created_until"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A page of action items across the account's Incident Reviews.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "action_items": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/IncidentReviewActionItem"
+                      }
+                    },
+                    "limit": {
+                      "type": "integer",
+                      "description": "The number of results per page requested."
+                    },
+                    "more": {
+                      "type": "boolean",
+                      "description": "Whether more action items exist after this page."
+                    },
+                    "next_cursor": {
+                      "type": "string",
+                      "nullable": true,
+                      "description": "The cursor to pass as `cursor` to fetch the next page, or `null` on the last page."
+                    }
+                  },
+                  "required": [
+                    "action_items"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "action_items": [
+                        {
+                          "id": "AGOBAMKTT5Z3RO7CR7T2ZGSMJA",
+                          "incident_id": "P1234ABC",
+                          "name": "Update runbook",
+                          "description": "Add failover steps to the runbook",
+                          "status": "incomplete",
+                          "priority": "high",
+                          "assignee": "PABC123",
+                          "due_at": "2026-09-15T17:00:00Z",
+                          "external_type": "Jira",
+                          "external_url": "https://example.atlassian.net/browse/PROJ-123",
+                          "ai_generated": false,
+                          "created_by": "PUSER123",
+                          "created_at": "2026-09-01T20:00:00Z",
+                          "updated_at": "2026-09-01T21:02:00Z",
+                          "completed_at": null
+                        }
+                      ],
+                      "limit": 25,
+                      "more": false,
+                      "next_cursor": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        }
+      }
+    },
+    "/incidents/{id}/review": {
+      "description": "Manage the Incident Review for an Incident.",
+      "get": {
+        "x-pd-requires-scope": "incident_reviews.read",
+        "tags": [
+          "Incident Reviews"
+        ],
+        "operationId": "getIncidentReview",
+        "description": "Get the Incident Review for the specified Incident.\n\nAn Incident Review is a structured, post-resolution record of what happened during an Incident. Each Incident has at most one Incident Review.\n\nReturns `404` if the Incident has no Incident Review.\n\nScoped OAuth requires: `incident_reviews.read`\n",
+        "summary": "Get an Incident Review",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The Incident Review for the specified Incident.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "incident_review": {
+                      "$ref": "#/components/schemas/IncidentReview"
+                    }
+                  },
+                  "required": [
+                    "incident_review"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "incident_review": {
+                        "id": "AGOBAMKTT5Z3RO7CR7T2ZGSMJA",
+                        "incident_id": "P1234ABC",
+                        "title": "Database outage review",
+                        "status": "started",
+                        "sections": [
+                          {
+                            "title": "Summary",
+                            "content": "{\"type\":\"doc\",\"content\":[]}",
+                            "priority": 0,
+                            "required": true,
+                            "completed_at": null
+                          },
+                          {
+                            "title": "What happened",
+                            "content": null,
+                            "priority": 1,
+                            "required": false,
+                            "completed_at": null
+                          }
+                        ],
+                        "generation_status": "idle",
+                        "ai_generated": false,
+                        "template_id": "AGOBAMKTT5Z3RO7CR7T2ZGSMJA",
+                        "has_events": true,
+                        "action_item_count": 5,
+                        "completed_action_item_count": 3,
+                        "created_by": "PUSER123",
+                        "created_at": "2026-09-01T20:00:00Z",
+                        "updated_at": "2026-09-01T21:02:00Z",
+                        "completed_at": null
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        }
+      },
+      "post": {
+        "x-pd-requires-scope": "incident_reviews.write",
+        "tags": [
+          "Incident Reviews"
+        ],
+        "operationId": "createIncidentReview",
+        "description": "Create an Incident Review for the specified Incident.\n\nAn Incident can have at most one Incident Review, so this returns `400` if the Incident already has one. A caller that wants create-or-fetch behaviour should fall back to `GET` on failure.\n\nThe new Incident Review follows the account's default template, which determines its sections.\n\nScoped OAuth requires: `incident_reviews.write`\n",
+        "summary": "Create an Incident Review",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "description": "The title of the Incident Review.",
+                    "maxLength": 255
+                  }
+                },
+                "required": [
+                  "title"
+                ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "title": "Database outage review"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "The Incident Review created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "incident_review": {
+                      "$ref": "#/components/schemas/IncidentReview"
+                    }
+                  },
+                  "required": [
+                    "incident_review"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "incident_review": {
+                        "id": "AGOBAMKTT5Z3RO7CR7T2ZGSMJA",
+                        "incident_id": "P1234ABC",
+                        "title": "Database outage review",
+                        "status": "started",
+                        "sections": [
+                          {
+                            "title": "Summary",
+                            "content": null,
+                            "priority": 0,
+                            "required": true,
+                            "completed_at": null
+                          }
+                        ],
+                        "generation_status": "idle",
+                        "ai_generated": false,
+                        "template_id": "AGOBAMKTT5Z3RO7CR7T2ZGSMJA",
+                        "has_events": false,
+                        "action_item_count": 0,
+                        "completed_action_item_count": 0,
+                        "created_by": "PUSER123",
+                        "created_at": "2026-09-01T20:00:00Z",
+                        "updated_at": "2026-09-01T20:00:00Z",
+                        "completed_at": null
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        }
+      },
+      "put": {
+        "x-pd-requires-scope": "incident_reviews.write",
+        "tags": [
+          "Incident Reviews"
+        ],
+        "operationId": "updateIncidentReview",
+        "description": "Update the Incident Review for the specified Incident.\n\nThis is a partial update: an omitted field leaves the current value unchanged.\n\nMoving `status` to `completed` is rejected with `409` while any required section is still unfilled.\n\nScoped OAuth requires: `incident_reviews.write`\n",
+        "summary": "Update an Incident Review",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "description": "The updated title of the Incident Review.",
+                    "maxLength": 255,
+                    "minLength": 1
+                  },
+                  "status": {
+                    "type": "string",
+                    "description": "The updated status of the Incident Review.",
+                    "enum": [
+                      "started",
+                      "completed"
+                    ]
+                  }
+                }
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "title": "Database outage review",
+                    "status": "completed"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "The Incident Review updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "incident_review": {
+                      "$ref": "#/components/schemas/IncidentReview"
+                    }
+                  },
+                  "required": [
+                    "incident_review"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "incident_review": {
+                        "id": "AGOBAMKTT5Z3RO7CR7T2ZGSMJA",
+                        "incident_id": "P1234ABC",
+                        "title": "Database outage review",
+                        "status": "completed",
+                        "sections": [
+                          {
+                            "title": "Summary",
+                            "content": "{\"type\":\"doc\",\"content\":[]}",
+                            "priority": 0,
+                            "required": true,
+                            "completed_at": "2026-09-02T14:30:00Z"
+                          }
+                        ],
+                        "generation_status": "idle",
+                        "ai_generated": false,
+                        "template_id": "AGOBAMKTT5Z3RO7CR7T2ZGSMJA",
+                        "has_events": true,
+                        "action_item_count": 5,
+                        "completed_action_item_count": 5,
+                        "created_by": "PUSER123",
+                        "created_at": "2026-09-01T20:00:00Z",
+                        "updated_at": "2026-09-02T14:30:00Z",
+                        "completed_at": "2026-09-02T14:30:00Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        }
+      }
+    },
+    "/incidents/{id}/review/action_items": {
+      "description": "List the action items on an Incident Review.",
+      "get": {
+        "x-pd-requires-scope": "incident_reviews.read",
+        "tags": [
+          "Incident Reviews"
+        ],
+        "operationId": "listIncidentReviewActionItems",
+        "description": "List the action items on the Incident Review for the specified Incident, oldest first by creation time.\n\nReturns an empty list for an Incident Review that has no action items, and `404` when the Incident has no Incident Review.\n\nThis endpoint uses cursor pagination. Omit `cursor` for the first page, then pass the `next_cursor` from the previous response until it is `null`.\n\nScoped OAuth requires: `incident_reviews.read`\n",
+        "summary": "List action items for an Incident Review",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/incident_reviews_limit"
+          },
+          {
+            "$ref": "#/components/parameters/cursor_cursor"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of action items on the Incident Review.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "action_items": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/IncidentReviewActionItem"
+                      }
+                    },
+                    "limit": {
+                      "type": "integer",
+                      "description": "The number of results per page requested."
+                    },
+                    "more": {
+                      "type": "boolean",
+                      "description": "Whether more action items exist after this page."
+                    },
+                    "next_cursor": {
+                      "type": "string",
+                      "nullable": true,
+                      "description": "The cursor to pass as `cursor` to fetch the next page, or `null` on the last page."
+                    }
+                  },
+                  "required": [
+                    "action_items"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "action_items": [
+                        {
+                          "id": "AGOBAMKTT5Z3RO7CR7T2ZGSMJA",
+                          "incident_id": "P1234ABC",
+                          "name": "Update runbook",
+                          "description": "Add failover steps to the runbook",
+                          "status": "incomplete",
+                          "priority": "high",
+                          "assignee": "PABC123",
+                          "due_at": "2026-09-15T17:00:00Z",
+                          "external_type": "Jira",
+                          "external_url": "https://example.atlassian.net/browse/PROJ-123",
+                          "ai_generated": false,
+                          "created_by": "PUSER123",
+                          "created_at": "2026-09-01T20:00:00Z",
+                          "updated_at": "2026-09-01T21:02:00Z",
+                          "completed_at": null
+                        }
+                      ],
+                      "limit": 25,
+                      "more": false,
+                      "next_cursor": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          }
+        }
+      }
+    },
+    "/incidents/{id}/review/markers": {
+      "description": "Add markers to an Incident Review timeline.",
+      "post": {
+        "x-pd-requires-scope": "incident_reviews.write",
+        "tags": [
+          "Incident Reviews"
+        ],
+        "operationId": "createIncidentReviewMarker",
+        "description": "Add a marker to the timeline of the Incident Review for the specified Incident.\n\nA marker highlights a point of interest on the timeline. Each entry in `notes` is added as its own event attached to the new marker.\n\nReturns `404` when the Incident has no Incident Review.\n\nScoped OAuth requires: `incident_reviews.write`\n",
+        "summary": "Add a marker to an Incident Review timeline",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/header_Accept"
+          },
+          {
+            "$ref": "#/components/parameters/header_Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "description": "The title of the marker.",
+                    "maxLength": 255
+                  },
+                  "type": {
+                    "type": "string",
+                    "description": "The name of an existing marker type. Defaults to `Key Moment` if omitted."
+                  },
+                  "notes": {
+                    "type": "array",
+                    "description": "One or more notes to attach to the marker as supporting evidence. Each note becomes its own event on the marker.",
+                    "minItems": 1,
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  }
+                },
+                "required": [
+                  "title",
+                  "notes"
+                ]
+              },
+              "examples": {
+                "request": {
+                  "summary": "Request Example",
+                  "value": {
+                    "title": "Customer-reported timeline update",
+                    "type": "Key Moment",
+                    "notes": [
+                      "Customer confirmed impact started at 10:42 UTC"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "The marker created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "marker": {
+                      "$ref": "#/components/schemas/IncidentReviewMarker"
+                    }
+                  },
+                  "required": [
+                    "marker"
+                  ]
+                },
+                "examples": {
+                  "response": {
+                    "summary": "Response Example",
+                    "value": {
+                      "marker": {
+                        "id": "AGOBAMKTT5Z3RO7CR7T2ZGSMJA",
+                        "incident_review_id": "AGOBAMKTT5Z3RO7CR7T2ZGSMJA",
+                        "type": "Key Moment",
+                        "title": "Customer-reported timeline update",
+                        "events": [
+                          {
+                            "id": "AGOBAMKTT5Z3RO7CR7T2ZGSMJB",
+                            "body": "Customer confirmed impact started at 10:42 UTC",
+                            "created_at": "2026-09-01T20:00:00Z"
+                          }
+                        ],
+                        "created_at": "2026-09-01T20:00:00Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ArgumentError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
           },
           "403": {
             "$ref": "#/components/responses/Forbidden"

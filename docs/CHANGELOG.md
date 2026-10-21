@@ -2,7 +2,7 @@
 
 PagerDuty aims to have no breaking changes to its API. We do fix bugs and add new functionality continuously. This document serves as a reference for any bug fixes or additions to our API.
 
-### 2026-10-20
+### 2026-10-19
 - Added the required `update_frequency_ms` field to the request examples for `POST /status_pages/{id}/posts/{post_id}/post_updates` and `PUT /status_pages/{id}/posts/{post_id}/post_updates/{post_update_id}`. It can be `null`
 - Documented that `type` is required on every reference in Status Pages request bodies (`status_page`, `post`, `status`, `severity`, `service`, and `impact`)
 - Documented that `POST /status_pages/{id}/posts` does not take a `post` reference in each entry of `updates`
@@ -36,6 +36,16 @@ PagerDuty aims to have no breaking changes to its API. We do fix bugs and add ne
 
 ### 2026-09-15
 - Removed `X-EARLY-ACCESS` header requirement for all IP Allow Lists endpoints
+
+### 2026-09-04
+- Added Incident Review endpoints:
+  - `GET /incidents/{id}/review`
+  - `POST /incidents/{id}/review`
+  - `PUT /incidents/{id}/review`
+  - `GET /incidents/reviews`
+  - `GET /incidents/{id}/review/action_items`
+  - `GET /incidents/reviews/action_items`
+  - `POST /incidents/{id}/review/markers`
 
 ### 2026-08-06
 - Documented the User API Token / User OAuth Token requirement on every operation of the Slack Integration API (previously only shown at the page level)
@@ -1228,7 +1238,7 @@ After April 30th 2023, we will apply the new expiry settings to all OAuth client
   - `GET /event_orchestrations/services/{service_id}`
   - `PUT /event_orchestrations/services/{service_id}`
 
-### 202l-01-06
+### 2022-01-06
 - Updated how since and until parameters work for schedules GET API
 
 ### 2021-12-01
