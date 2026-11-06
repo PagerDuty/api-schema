@@ -3,7 +3,7 @@
 PagerDuty aims to have no breaking changes to its API. We do fix bugs and add new functionality continuously. This document serves as a reference for any bug fixes or additions to our API.
 
 ### 2026-10-21
-- Added Incident Review endpoints:
+- Added Post-Incident Review endpoints:
   - `GET /incidents/{id}/review`
   - `POST /incidents/{id}/review`
   - `PUT /incidents/{id}/review`

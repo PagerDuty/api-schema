@@ -93,8 +93,8 @@
       "description": "Custom fields allow you to enrich PagerDuty incidents with critical and helpful metadata throughout the incident lifecycle.\n"
     },
     {
-      "name": "Incident Reviews",
-      "description": "An Incident Review is a structured, post-resolution record of what happened during an Incident: what the impact was, how it was handled, and what should change as a result. Each Incident has at most one Incident Review, and its sections are determined by the template the Incident Review follows.\n"
+      "name": "Post-Incident Reviews",
+      "description": "A Post-Incident Review is a structured, post-resolution record of what happened during an Incident: what the impact was, how it was handled, and what should change as a result. Each Incident has at most one Post-Incident Review, and its sections are determined by the template the Post-Incident Review follows.\n"
     },
     {
       "name": "Incident Types",
@@ -2365,7 +2365,7 @@
         "name": "status",
         "in": "query",
         "required": false,
-        "description": "Only return Incident Reviews with one of these statuses. Repeat the parameter to pass more than one.",
+        "description": "Only return Post-Incident Reviews with one of these statuses. Repeat the parameter to pass more than one.",
         "explode": true,
         "schema": {
           "type": "array",
@@ -2383,7 +2383,7 @@
         "name": "status_not",
         "in": "query",
         "required": false,
-        "description": "Exclude Incident Reviews with any of these statuses. Repeat the parameter to pass more than one.",
+        "description": "Exclude Post-Incident Reviews with any of these statuses. Repeat the parameter to pass more than one.",
         "explode": true,
         "schema": {
           "type": "array",
@@ -2401,7 +2401,7 @@
         "name": "status_not_empty",
         "in": "query",
         "required": false,
-        "description": "When `true`, only return Incident Reviews that have a status set.",
+        "description": "When `true`, only return Post-Incident Reviews that have a status set.",
         "schema": {
           "type": "boolean"
         }
@@ -2410,7 +2410,7 @@
         "name": "has_open_action_items",
         "in": "query",
         "required": false,
-        "description": "When `true`, only return Incident Reviews that have at least one action item that is not complete.",
+        "description": "When `true`, only return Post-Incident Reviews that have at least one action item that is not complete.",
         "schema": {
           "type": "boolean"
         }
@@ -15446,28 +15446,28 @@
       },
       "IncidentReview": {
         "type": "object",
-        "description": "An Incident Review is a structured, post-resolution record of what happened during an Incident. Each Incident has at most one Incident Review.",
+        "description": "A Post-Incident Review is a structured, post-resolution record of what happened during an Incident. Each Incident has at most one Post-Incident Review.",
         "properties": {
           "id": {
             "type": "string",
             "readOnly": true,
-            "description": "The unique identifier of the Incident Review.",
+            "description": "The unique identifier of the Post-Incident Review.",
             "example": "AGOBAMKTT5Z3RO7CR7T2ZGSMJA"
           },
           "incident_id": {
             "type": "string",
             "readOnly": true,
-            "description": "The ID of the Incident this Incident Review describes.",
+            "description": "The ID of the Incident this Post-Incident Review describes.",
             "example": "P1234ABC"
           },
           "title": {
             "type": "string",
-            "description": "The title of the Incident Review.",
+            "description": "The title of the Post-Incident Review.",
             "example": "Database outage review"
           },
           "status": {
             "type": "string",
-            "description": "The status of the Incident Review.\n\nMoving to `completed` is rejected while any required section is still unfilled.\n\nOn accounts where completed Incident Reviews are read-only, a `completed` Incident Review cannot be changed until it is reopened by setting another status.\n",
+            "description": "The status of the Post-Incident Review.\n\nMoving to `completed` is rejected while any required section is still unfilled.\n\nOn accounts where completed Post-Incident Reviews are read-only, a `completed` Post-Incident Review cannot be changed until it is reopened by setting another status.\n",
             "enum": [
               "started",
               "in_review",
@@ -15478,7 +15478,7 @@
           "sections": {
             "type": "array",
             "readOnly": true,
-            "description": "The sections of the Incident Review, ordered by `priority`.",
+            "description": "The sections of the Post-Incident Review, ordered by `priority`.",
             "items": {
               "$ref": "#/components/schemas/IncidentReviewSection"
             }
@@ -15486,7 +15486,7 @@
           "generation_status": {
             "type": "string",
             "readOnly": true,
-            "description": "Whether an AI draft is currently being generated for this Incident Review. While this is `generating`, section content is still being written and the Incident Review should be re-fetched to see the result.\n",
+            "description": "Whether an AI draft is currently being generated for this Post-Incident Review. While this is `generating`, section content is still being written and the Post-Incident Review should be re-fetched to see the result.\n",
             "enum": [
               "idle",
               "generating"
@@ -15496,53 +15496,53 @@
           "ai_generated": {
             "type": "boolean",
             "readOnly": true,
-            "description": "Whether this Incident Review has been through the AI draft flow.",
+            "description": "Whether this Post-Incident Review has been through the AI draft flow.",
             "example": false
           },
           "template_id": {
             "type": "string",
             "nullable": true,
             "readOnly": true,
-            "description": "The ID of the template this Incident Review currently follows, or `null` if it does not follow one.",
+            "description": "The ID of the template this Post-Incident Review currently follows, or `null` if it does not follow one.",
             "example": "AGOBAMKTT5Z3RO7CR7T2ZGSMJA"
           },
           "has_events": {
             "type": "boolean",
             "readOnly": true,
-            "description": "Whether the Incident Review has at least one event on its timeline.",
+            "description": "Whether the Post-Incident Review has at least one event on its timeline.",
             "example": true
           },
           "action_item_count": {
             "type": "integer",
             "readOnly": true,
-            "description": "The total number of action items on this Incident Review.",
+            "description": "The total number of action items on this Post-Incident Review.",
             "example": 5
           },
           "completed_action_item_count": {
             "type": "integer",
             "readOnly": true,
-            "description": "The number of completed action items on this Incident Review.",
+            "description": "The number of completed action items on this Post-Incident Review.",
             "example": 3
           },
           "created_by": {
             "type": "string",
             "nullable": true,
             "readOnly": true,
-            "description": "The ID of the User who created this Incident Review, or `null` if it was not created by a User.",
+            "description": "The ID of the User who created this Post-Incident Review, or `null` if it was not created by a User.",
             "example": "PUSER123"
           },
           "created_at": {
             "type": "string",
             "format": "date-time",
             "readOnly": true,
-            "description": "The time the Incident Review was created.",
+            "description": "The time the Post-Incident Review was created.",
             "example": "2026-09-01T20:00:00Z"
           },
           "updated_at": {
             "type": "string",
             "format": "date-time",
             "readOnly": true,
-            "description": "The time the Incident Review was last modified.",
+            "description": "The time the Post-Incident Review was last modified.",
             "example": "2026-09-01T21:02:00Z"
           },
           "completed_at": {
@@ -15550,37 +15550,37 @@
             "format": "date-time",
             "nullable": true,
             "readOnly": true,
-            "description": "The time the Incident Review was completed, or `null` if it has not been completed.",
+            "description": "The time the Post-Incident Review was completed, or `null` if it has not been completed.",
             "example": "2026-09-02T14:30:00Z"
           }
         }
       },
       "IncidentReviewListItem": {
         "type": "object",
-        "description": "A summary of an Incident Review, as returned when listing Incident Reviews. Fetch the Incident Review by its Incident to get its sections.",
+        "description": "A summary of a Post-Incident Review, as returned when listing Post-Incident Reviews. Fetch the Post-Incident Review by its Incident to get its sections.",
         "properties": {
           "id": {
             "type": "string",
             "readOnly": true,
-            "description": "The unique identifier of the Incident Review.",
+            "description": "The unique identifier of the Post-Incident Review.",
             "example": "AGOBAMKTT5Z3RO7CR7T2ZGSMJA"
           },
           "incident_id": {
             "type": "string",
             "readOnly": true,
-            "description": "The ID of the Incident this Incident Review describes.",
+            "description": "The ID of the Incident this Post-Incident Review describes.",
             "example": "P1234ABC"
           },
           "title": {
             "type": "string",
             "readOnly": true,
-            "description": "The title of the Incident Review.",
+            "description": "The title of the Post-Incident Review.",
             "example": "Database outage review"
           },
           "status": {
             "type": "string",
             "readOnly": true,
-            "description": "The status of the Incident Review.",
+            "description": "The status of the Post-Incident Review.",
             "enum": [
               "started",
               "in_review",
@@ -15591,27 +15591,27 @@
           "action_item_count": {
             "type": "integer",
             "readOnly": true,
-            "description": "The total number of action items on this Incident Review.",
+            "description": "The total number of action items on this Post-Incident Review.",
             "example": 5
           },
           "completed_action_item_count": {
             "type": "integer",
             "readOnly": true,
-            "description": "The number of completed action items on this Incident Review.",
+            "description": "The number of completed action items on this Post-Incident Review.",
             "example": 3
           },
           "created_at": {
             "type": "string",
             "format": "date-time",
             "readOnly": true,
-            "description": "The time the Incident Review was created.",
+            "description": "The time the Post-Incident Review was created.",
             "example": "2026-09-01T20:00:00Z"
           },
           "updated_at": {
             "type": "string",
             "format": "date-time",
             "readOnly": true,
-            "description": "The time the Incident Review was last modified.",
+            "description": "The time the Post-Incident Review was last modified.",
             "example": "2026-09-01T21:02:00Z"
           },
           "completed_at": {
@@ -15619,14 +15619,14 @@
             "format": "date-time",
             "nullable": true,
             "readOnly": true,
-            "description": "The time the Incident Review was completed, or `null` if it has not been completed.",
+            "description": "The time the Post-Incident Review was completed, or `null` if it has not been completed.",
             "example": "2026-09-02T14:30:00Z"
           }
         }
       },
       "IncidentReviewSection": {
         "type": "object",
-        "description": "A single section of an Incident Review. The set of sections is determined by the template the Incident Review follows.",
+        "description": "A single section of a Post-Incident Review. The set of sections is determined by the template the Post-Incident Review follows.",
         "properties": {
           "title": {
             "type": "string",
@@ -15643,13 +15643,13 @@
           "priority": {
             "type": "integer",
             "readOnly": true,
-            "description": "The display order of the section within the Incident Review. Lower values sort first.",
+            "description": "The display order of the section within the Post-Incident Review. Lower values sort first.",
             "example": 0
           },
           "required": {
             "type": "boolean",
             "readOnly": true,
-            "description": "Whether this section must be filled in before the Incident Review can be moved to the `completed` status.",
+            "description": "Whether this section must be filled in before the Post-Incident Review can be moved to the `completed` status.",
             "example": true
           },
           "completed_at": {
@@ -15664,7 +15664,7 @@
       },
       "IncidentReviewActionItem": {
         "type": "object",
-        "description": "An action item captured on an Incident Review: a follow-up task identified while reviewing the Incident.",
+        "description": "An action item captured on a Post-Incident Review: a follow-up task identified while reviewing the Incident.",
         "properties": {
           "id": {
             "type": "string",
@@ -15675,7 +15675,7 @@
           "incident_id": {
             "type": "string",
             "readOnly": true,
-            "description": "The ID of the Incident whose Incident Review this action item belongs to.",
+            "description": "The ID of the Incident whose Post-Incident Review this action item belongs to.",
             "example": "P1234ABC"
           },
           "name": {
@@ -15691,7 +15691,7 @@
           },
           "status": {
             "type": "string",
-            "description": "The status of the action item on the Incident Review.",
+            "description": "The status of the action item on the Post-Incident Review.",
             "example": "incomplete"
           },
           "priority": {
@@ -15756,7 +15756,7 @@
       },
       "IncidentReviewMarker": {
         "type": "object",
-        "description": "A marker highlights a point of interest on an Incident Review timeline, along with the notes captured as supporting evidence for it.",
+        "description": "A marker highlights a point of interest on a Post-Incident Review timeline, along with the notes captured as supporting evidence for it.",
         "properties": {
           "id": {
             "type": "string",
@@ -15767,7 +15767,7 @@
           "incident_review_id": {
             "type": "string",
             "readOnly": true,
-            "description": "The ID of the Incident Review this marker was added to.",
+            "description": "The ID of the Post-Incident Review this marker was added to.",
             "example": "AGOBAMKTT5Z3RO7CR7T2ZGSMJA"
           },
           "type": {
@@ -15799,7 +15799,7 @@
       },
       "IncidentReviewMarkerEvent": {
         "type": "object",
-        "description": "A free-text note attached to an Incident Review marker. Each note supplied when creating a marker is stored as its own event on the Incident Review timeline.",
+        "description": "A free-text note attached to a Post-Incident Review marker. Each note supplied when creating a marker is stored as its own event on the Post-Incident Review timeline.",
         "properties": {
           "id": {
             "type": "string",
@@ -47135,15 +47135,15 @@
       }
     },
     "/incidents/reviews": {
-      "description": "List the Incident Reviews on an account.",
+      "description": "List the Post-Incident Reviews on an account.",
       "get": {
         "x-pd-requires-scope": "incident_reviews.read",
         "tags": [
-          "Incident Reviews"
+          "Post-Incident Reviews"
         ],
         "operationId": "listIncidentReviews",
-        "description": "List the Incident Reviews on the account, newest first by creation time.\n\nOnly Incident Reviews on Incidents the caller can see are returned. Each entry is a summary; fetch the Incident Review by its Incident to get its sections.\n\nThis endpoint uses cursor pagination. Omit `cursor` for the first page, then pass the `next_cursor` from the previous response until it is `null`.\n\nScoped OAuth requires: `incident_reviews.read`\n",
-        "summary": "List Incident Reviews",
+        "description": "List the Post-Incident Reviews on the account, newest first by creation time.\n\nOnly Post-Incident Reviews on Incidents the caller can see are returned. Each entry is a summary; fetch the Post-Incident Review by its Incident to get its sections.\n\nThis endpoint uses cursor pagination. Omit `cursor` for the first page, then pass the `next_cursor` from the previous response until it is `null`.\n\nScoped OAuth requires: `incident_reviews.read`\n",
+        "summary": "List Post-Incident Reviews",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -47178,7 +47178,7 @@
         ],
         "responses": {
           "200": {
-            "description": "A page of Incident Reviews on the account.",
+            "description": "A page of Post-Incident Reviews on the account.",
             "content": {
               "application/json": {
                 "schema": {
@@ -47196,7 +47196,7 @@
                     },
                     "more": {
                       "type": "boolean",
-                      "description": "Whether more Incident Reviews exist after this page."
+                      "description": "Whether more Post-Incident Reviews exist after this page."
                     },
                     "next_cursor": {
                       "type": "string",
@@ -47250,15 +47250,15 @@
       }
     },
     "/incidents/reviews/action_items": {
-      "description": "List the action items across every Incident Review on an account.",
+      "description": "List the action items across every Post-Incident Review on an account.",
       "get": {
         "x-pd-requires-scope": "incident_reviews.read",
         "tags": [
-          "Incident Reviews"
+          "Post-Incident Reviews"
         ],
         "operationId": "listAccountIncidentReviewActionItems",
-        "description": "List the action items across every Incident Review on the account, oldest first by creation time.\n\nOnly action items on Incident Reviews the caller can see are returned. Each action item's `incident_id` identifies the Incident Review it belongs to.\n\nThis endpoint uses cursor pagination. Omit `cursor` for the first page, then pass the `next_cursor` from the previous response until it is `null`.\n\nScoped OAuth requires: `incident_reviews.read`\n",
-        "summary": "List action items across all Incident Reviews",
+        "description": "List the action items across every Post-Incident Review on the account, oldest first by creation time.\n\nOnly action items on Post-Incident Reviews the caller can see are returned. Each action item's `incident_id` identifies the Post-Incident Review it belongs to.\n\nThis endpoint uses cursor pagination. Omit `cursor` for the first page, then pass the `next_cursor` from the previous response until it is `null`.\n\nScoped OAuth requires: `incident_reviews.read`\n",
+        "summary": "List action items across all Post-Incident Reviews",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -47299,7 +47299,7 @@
         ],
         "responses": {
           "200": {
-            "description": "A page of action items across the account's Incident Reviews.",
+            "description": "A page of action items across the account's Post-Incident Reviews.",
             "content": {
               "application/json": {
                 "schema": {
@@ -47376,15 +47376,15 @@
       }
     },
     "/incidents/{id}/review": {
-      "description": "Manage the Incident Review for an Incident.",
+      "description": "Manage the Post-Incident Review for an Incident.",
       "get": {
         "x-pd-requires-scope": "incident_reviews.read",
         "tags": [
-          "Incident Reviews"
+          "Post-Incident Reviews"
         ],
         "operationId": "getIncidentReview",
-        "description": "Get the Incident Review for the specified Incident.\n\nAn Incident Review is a structured, post-resolution record of what happened during an Incident. Each Incident has at most one Incident Review.\n\nReturns `404` if the Incident has no Incident Review, or if the caller cannot see it.\n\nScoped OAuth requires: `incident_reviews.read`\n",
-        "summary": "Get an Incident Review",
+        "description": "Get the Post-Incident Review for the specified Incident.\n\nA Post-Incident Review is a structured, post-resolution record of what happened during an Incident. Each Incident has at most one Post-Incident Review.\n\nReturns `404` if the Incident has no Post-Incident Review, or if the caller cannot see it.\n\nScoped OAuth requires: `incident_reviews.read`\n",
+        "summary": "Get a Post-Incident Review",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -47398,7 +47398,7 @@
         ],
         "responses": {
           "200": {
-            "description": "The Incident Review for the specified Incident.",
+            "description": "The Post-Incident Review for the specified Incident.",
             "content": {
               "application/json": {
                 "schema": {
@@ -47471,11 +47471,11 @@
       "post": {
         "x-pd-requires-scope": "incident_reviews.write",
         "tags": [
-          "Incident Reviews"
+          "Post-Incident Reviews"
         ],
         "operationId": "createIncidentReview",
-        "description": "Create an Incident Review for the specified Incident.\n\nAn Incident can have at most one Incident Review, so this returns `400` if the Incident already has one. A caller that wants create-or-fetch behaviour should fall back to `GET` on failure.\n\nThe new Incident Review follows the account's default template, which determines its sections.\n\nWhen called with a User API token, the caller owns the new Incident Review. An account API key may name an owner with `owner_user_id`.\n\nReturns `400` if `owner_user_id` is not a User on the account, or if a User API token names someone other than the caller.\n\nScoped OAuth requires: `incident_reviews.write`\n",
-        "summary": "Create an Incident Review",
+        "description": "Create a Post-Incident Review for the specified Incident.\n\nAn Incident can have at most one Post-Incident Review, so this returns `400` if the Incident already has one. A caller that wants create-or-fetch behaviour should fall back to `GET` on failure.\n\nThe new Post-Incident Review follows the account's default template, which determines its sections.\n\nWhen called with a User API token, the caller owns the new Post-Incident Review. An account API key may name an owner with `owner_user_id`.\n\nReturns `400` if `owner_user_id` is not a User on the account, or if a User API token names someone other than the caller.\n\nScoped OAuth requires: `incident_reviews.write`\n",
+        "summary": "Create a Post-Incident Review",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -47495,12 +47495,12 @@
                 "properties": {
                   "title": {
                     "type": "string",
-                    "description": "The title of the Incident Review.",
+                    "description": "The title of the Post-Incident Review.",
                     "maxLength": 255
                   },
                   "owner_user_id": {
                     "type": "string",
-                    "description": "The ID of the User who should own the Incident Review. Only for account API keys, whose Incident Reviews would otherwise have no owner; with a User API token the caller is the owner, and naming anyone else is rejected with `400`. The User must belong to the account. Ignored unless the account has per-review permissions.\n"
+                    "description": "The ID of the User who should own the Post-Incident Review. Only for account API keys, whose Post-Incident Reviews would otherwise have no owner; with a User API token the caller is the owner, and naming anyone else is rejected with `400`. The User must belong to the account. Ignored unless the account has per-review permissions.\n"
                   }
                 },
                 "required": [
@@ -47521,7 +47521,7 @@
         },
         "responses": {
           "201": {
-            "description": "The Incident Review created.",
+            "description": "The Post-Incident Review created.",
             "content": {
               "application/json": {
                 "schema": {
@@ -47587,11 +47587,11 @@
       "put": {
         "x-pd-requires-scope": "incident_reviews.write",
         "tags": [
-          "Incident Reviews"
+          "Post-Incident Reviews"
         ],
         "operationId": "updateIncidentReview",
-        "description": "Update the Incident Review for the specified Incident.\n\nThis is a partial update: an omitted field leaves the current value unchanged.\n\nMoving `status` to `completed` is rejected with `409` while any required section is still unfilled.\n\nOn accounts where completed Incident Reviews are read-only, any other change to a `completed` Incident Review is rejected with `409` until it is reopened by setting `status` to another value. Completing or reopening an Incident Review requires permission to complete it, or the request is rejected with `403`.\n\n`409` is also returned if the Incident Review is locked, or if it uses a format this version of the API cannot edit.\n\nScoped OAuth requires: `incident_reviews.write`\n",
-        "summary": "Update an Incident Review",
+        "description": "Update the Post-Incident Review for the specified Incident.\n\nThis is a partial update: an omitted field leaves the current value unchanged.\n\nMoving `status` to `completed` is rejected with `409` while any required section is still unfilled.\n\nOn accounts where completed Post-Incident Reviews are read-only, any other change to a `completed` Post-Incident Review is rejected with `409` until it is reopened by setting `status` to another value. Completing or reopening a Post-Incident Review requires permission to complete it, or the request is rejected with `403`.\n\n`409` is also returned if the Post-Incident Review is locked, or if it uses a format this version of the API cannot edit.\n\nScoped OAuth requires: `incident_reviews.write`\n",
+        "summary": "Update a Post-Incident Review",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -47611,13 +47611,13 @@
                 "properties": {
                   "title": {
                     "type": "string",
-                    "description": "The updated title of the Incident Review.",
+                    "description": "The updated title of the Post-Incident Review.",
                     "maxLength": 255,
                     "minLength": 1
                   },
                   "status": {
                     "type": "string",
-                    "description": "The updated status of the Incident Review.",
+                    "description": "The updated status of the Post-Incident Review.",
                     "enum": [
                       "started",
                       "in_review",
@@ -47641,7 +47641,7 @@
         },
         "responses": {
           "200": {
-            "description": "The Incident Review updated.",
+            "description": "The Post-Incident Review updated.",
             "content": {
               "application/json": {
                 "schema": {
@@ -47712,15 +47712,15 @@
       }
     },
     "/incidents/{id}/review/action_items": {
-      "description": "List the action items on an Incident Review.",
+      "description": "List the action items on a Post-Incident Review.",
       "get": {
         "x-pd-requires-scope": "incident_reviews.read",
         "tags": [
-          "Incident Reviews"
+          "Post-Incident Reviews"
         ],
         "operationId": "listIncidentReviewActionItems",
-        "description": "List the action items on the Incident Review for the specified Incident, oldest first by creation time.\n\nReturns an empty list for an Incident Review that has no action items, and `404` when the Incident has no Incident Review, or if the caller cannot see it.\n\nThis endpoint uses cursor pagination. Omit `cursor` for the first page, then pass the `next_cursor` from the previous response until it is `null`.\n\nScoped OAuth requires: `incident_reviews.read`\n",
-        "summary": "List action items for an Incident Review",
+        "description": "List the action items on the Post-Incident Review for the specified Incident, oldest first by creation time.\n\nReturns an empty list for a Post-Incident Review that has no action items, and `404` when the Incident has no Post-Incident Review, or if the caller cannot see it.\n\nThis endpoint uses cursor pagination. Omit `cursor` for the first page, then pass the `next_cursor` from the previous response until it is `null`.\n\nScoped OAuth requires: `incident_reviews.read`\n",
+        "summary": "List action items for a Post-Incident Review",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -47740,7 +47740,7 @@
         ],
         "responses": {
           "200": {
-            "description": "An array of action items on the Incident Review.",
+            "description": "An array of action items on the Post-Incident Review.",
             "content": {
               "application/json": {
                 "schema": {
@@ -47820,15 +47820,15 @@
       }
     },
     "/incidents/{id}/review/markers": {
-      "description": "Add markers to an Incident Review timeline.",
+      "description": "Add markers to a Post-Incident Review timeline.",
       "post": {
         "x-pd-requires-scope": "incident_reviews.write",
         "tags": [
-          "Incident Reviews"
+          "Post-Incident Reviews"
         ],
         "operationId": "createIncidentReviewMarker",
-        "description": "Add a marker to the timeline of the Incident Review for the specified Incident.\n\nA marker highlights a point of interest on the timeline. Each entry in `notes` is added as its own event attached to the new marker.\n\nReturns `404` when the Incident has no Incident Review, or if the caller cannot see it, and `409` when the Incident Review is `completed` and must be reopened first.\n\n`409` is also returned if the Incident Review is locked, or if it uses a format this version of the API cannot edit.\n\nScoped OAuth requires: `incident_reviews.write`\n",
-        "summary": "Add a marker to an Incident Review timeline",
+        "description": "Add a marker to the timeline of the Post-Incident Review for the specified Incident.\n\nA marker highlights a point of interest on the timeline. Each entry in `notes` is added as its own event attached to the new marker.\n\nReturns `404` when the Incident has no Post-Incident Review, or if the caller cannot see it, and `409` when the Post-Incident Review is `completed` and must be reopened first.\n\n`409` is also returned if the Post-Incident Review is locked, or if it uses a format this version of the API cannot edit.\n\nScoped OAuth requires: `incident_reviews.write`\n",
+        "summary": "Add a marker to a Post-Incident Review timeline",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
