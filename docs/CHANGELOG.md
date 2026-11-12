@@ -2,6 +2,13 @@
 
 PagerDuty aims to have no breaking changes to its API. We do fix bugs and add new functionality continuously. This document serves as a reference for any bug fixes or additions to our API.
 
+### 2026-11-10
+- Added the `incident_type` action to Global and Service Orchestration rules (and `catch_all`):
+  - `GET /event_orchestrations/{id}/global`
+  - `PUT /event_orchestrations/{id}/global`
+  - `GET /event_orchestrations/services/{service_id}`
+  - `PUT /event_orchestrations/services/{service_id}`
+
 ### 2026-10-21
 - Added Post-Incident Review endpoints:
   - `GET /incidents/{id}/review`

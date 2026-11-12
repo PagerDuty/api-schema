@@ -1307,6 +1307,7 @@
                           "target": "event.source"
                         }
                       ],
+                      "incident_type": "PT10C33",
                       "incident_custom_field_updates": [
                         {
                           "id": "PEXCK89",
@@ -7065,6 +7066,7 @@
                                 }
                               ],
                               "route_to": "step-two",
+                              "incident_type": "PT10C33",
                               "incident_custom_field_updates": [
                                 {
                                   "id": "PEXCK89",
@@ -21855,6 +21857,9 @@
                                   },
                                   {
                                     "$ref": "#/components/schemas/OrchestrationGlobal/allOf/1/properties/orchestration_path/properties/catch_all/properties/actions/allOf/4"
+                                  },
+                                  {
+                                    "$ref": "#/components/schemas/OrchestrationGlobal/allOf/1/properties/orchestration_path/properties/catch_all/properties/actions/allOf/5"
                                   }
                                 ]
                               }
@@ -21979,6 +21984,17 @@
                                     }
                                   }
                                 }
+                              }
+                            }
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "incident_type": {
+                                "type": "string",
+                                "nullable": true,
+                                "description": "The ID of the Incident Type to set on the incident created from the event. You can find the list of IDs by calling the List Incident Types endpoint. Omit it or set it to `null` to leave the Incident Type unset (the key is omitted from responses when unset). If multiple rules set an Incident Type, the last matching rule wins. This action is only available to accounts with access to Incident Types in Event Orchestration.",
+                                "example": "PT10C33"
                               }
                             }
                           },
@@ -22535,6 +22551,9 @@
                                       },
                                       {
                                         "$ref": "#/components/schemas/OrchestrationGlobal/allOf/1/properties/orchestration_path/properties/catch_all/properties/actions/allOf/4"
+                                      },
+                                      {
+                                        "$ref": "#/components/schemas/OrchestrationGlobal/allOf/1/properties/orchestration_path/properties/catch_all/properties/actions/allOf/5"
                                       }
                                     ]
                                   }
@@ -22605,6 +22624,9 @@
                               },
                               {
                                 "$ref": "#/components/schemas/OrchestrationGlobal/allOf/1/properties/orchestration_path/properties/catch_all/properties/actions/allOf/4"
+                              },
+                              {
+                                "$ref": "#/components/schemas/OrchestrationGlobal/allOf/1/properties/orchestration_path/properties/catch_all/properties/actions/allOf/5"
                               }
                             ]
                           }
@@ -22865,7 +22887,7 @@
           },
           "feature": {
             "type": "string",
-            "description": "The feature that includes invalid data.\n\nExample values include:\n  * `incident_custom_field_updates`\n  * `escalation_policy`\n  * `cache_variable:annotate`\n  * `cache_variable:conditions`\n  * `cache_variable:automation_actions`\n"
+            "description": "The feature that includes invalid data.\n\nExample values include:\n  * `incident_type`\n  * `incident_custom_field_updates`\n  * `escalation_policy`\n  * `cache_variable:annotate`\n  * `cache_variable:conditions`\n  * `cache_variable:automation_actions`\n"
           },
           "feature_type": {
             "type": "string",
@@ -37650,6 +37672,7 @@
                                     "target": "event.source"
                                   }
                                 ],
+                                "incident_type": "PT10C33",
                                 "incident_custom_field_updates": [
                                   {
                                     "id": "PEXCK89",
@@ -37814,6 +37837,7 @@
                                       "target": "event.source"
                                     }
                                   ],
+                                  "incident_type": "PT10C33",
                                   "incident_custom_field_updates": [
                                     {
                                       "id": "PEXCK89",
@@ -38622,6 +38646,7 @@
                                     ]
                                   }
                                 ],
+                                "incident_type": "PT10C33",
                                 "incident_custom_field_updates": [
                                   {
                                     "id": "PEXCK89",
@@ -38834,6 +38859,7 @@
                                       ]
                                     }
                                   ],
+                                  "incident_type": "PT10C33",
                                   "incident_custom_field_updates": [
                                     {
                                       "id": "PEXCK89",
