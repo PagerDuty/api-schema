@@ -2,6 +2,11 @@
 
 PagerDuty aims to have no breaking changes to its API. We do fix bugs and add new functionality continuously. This document serves as a reference for any bug fixes or additions to our API.
 
+### 2026-11-17
+- *BREAKING* `targets` is now required on `POST /ip_allow_lists`. Each target is `{"type": "surface", "value": "web" | "mobile"}`; the array must be non-empty with no duplicates
+- Added `targets` to the IP allow list object returned by `GET /ip_allow_lists`, `POST /ip_allow_lists`, `GET /ip_allow_lists/{id}`, and `PUT /ip_allow_lists/{id}`
+- All request body fields (`state`, `cidr_entries`, `targets`) are optional on `PUT /ip_allow_lists/{id}`; any omitted field is left unchanged
+
 ### 2026-11-10
 - Added the `incident_type` action to Global and Service Orchestration rules (and `catch_all`):
   - `GET /event_orchestrations/{id}/global`
