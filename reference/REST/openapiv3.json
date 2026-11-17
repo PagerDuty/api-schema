@@ -106,7 +106,7 @@
     },
     {
       "name": "IP Allow Lists",
-      "description": "Manage account-level IP Allow Lists that restrict access to your PagerDuty subdomain to a configured set of IPv4 CIDR ranges. Enforcement currently applies to web and mobile application traffic.\n"
+      "description": "Manage account-level IP Allow Lists that restrict access to your PagerDuty subdomain to a configured set of IPv4 CIDR ranges. Enforcement applies to the surfaces listed in each allow list's `targets`.\n"
     },
     {
       "name": "Licenses",
@@ -1555,6 +1555,16 @@
               {
                 "cidr": "10.0.0.0/24",
                 "description": "Data Center"
+              }
+            ],
+            "targets": [
+              {
+                "type": "surface",
+                "value": "web"
+              },
+              {
+                "type": "surface",
+                "value": "mobile"
               }
             ]
           }
@@ -19473,7 +19483,7 @@
       },
       "IpAllowList": {
         "type": "object",
-        "description": "An IP allow list restricts access to a PagerDuty account's subdomain to a set\nof IPv4 CIDR ranges. Enforcement currently applies to web and mobile\napplication traffic.\n",
+        "description": "An IP allow list restricts access to a PagerDuty account's subdomain to a set\nof IPv4 CIDR ranges. Enforcement applies to the surfaces listed in\n`targets`.\n",
         "properties": {
           "id": {
             "type": "string",
@@ -19504,11 +19514,21 @@
             "items": {
               "$ref": "#/components/schemas/CidrEntry"
             }
+          },
+          "targets": {
+            "type": "array",
+            "description": "The surfaces the allow list is enforced on. Must be non-empty and must\nnot contain duplicates.\n",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "$ref": "#/components/schemas/IpAllowListTarget"
+            }
           }
         },
         "required": [
           "state",
-          "cidr_entries"
+          "cidr_entries",
+          "targets"
         ],
         "example": {
           "id": "AGIS47HYOV6BDODBTMQKMPQPHU",
@@ -19523,7 +19543,64 @@
               "cidr": "10.0.0.0/24",
               "description": "Data Center"
             }
+          ],
+          "targets": [
+            {
+              "type": "surface",
+              "value": "web"
+            },
+            {
+              "type": "surface",
+              "value": "mobile"
+            }
           ]
+        }
+      },
+      "IpAllowListTarget": {
+        "type": "object",
+        "description": "A surface that the IP allow list is enforced on.",
+        "required": [
+          "type",
+          "value"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "The kind of target.",
+            "enum": [
+              "surface"
+            ]
+          },
+          "value": {
+            "type": "string",
+            "description": "The surface to enforce the allow list on.",
+            "enum": [
+              "web",
+              "mobile"
+            ]
+          }
+        },
+        "example": {
+          "type": "surface",
+          "value": "web"
+        }
+      },
+      "IpAllowListUpdate": {
+        "type": "object",
+        "description": "The writable fields of an IP allow list for an update. Every field is\noptional; any omitted field is left unchanged. A provided `cidr_entries`\nor `targets` array fully replaces the existing one.\n",
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/IpAllowList/properties/type"
+          },
+          "state": {
+            "$ref": "#/components/schemas/IpAllowList/properties/state"
+          },
+          "cidr_entries": {
+            "$ref": "#/components/schemas/IpAllowList/properties/cidr_entries"
+          },
+          "targets": {
+            "$ref": "#/components/schemas/IpAllowList/properties/targets"
+          }
         }
       },
       "StatusUpdate": {
@@ -51262,7 +51339,7 @@
         ],
         "summary": "Create an IP allow list",
         "operationId": "createIpAllowList",
-        "description": "Create the account's IP allow list.\n\nOnly Account Owners, Global Admins, and Account API Keys can call this endpoint.\n\nScoped OAuth requires: `ip_allow_lists.write`\n",
+        "description": "Create the account's IP allow list.\n\n`targets` is required. A `400` is returned when `targets` is missing or empty, contains duplicates, or contains a value other than `web` or `mobile`.\n\nOnly Account Owners, Global Admins, and Account API Keys can call this endpoint.\n\nScoped OAuth requires: `ip_allow_lists.write`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -51297,6 +51374,16 @@
                         {
                           "cidr": "192.168.1.0/24",
                           "description": "Office VPN"
+                        }
+                      ],
+                      "targets": [
+                        {
+                          "type": "surface",
+                          "value": "web"
+                        },
+                        {
+                          "type": "surface",
+                          "value": "mobile"
                         }
                       ]
                     }
@@ -51401,6 +51488,16 @@
                               "cidr": "10.0.0.0/24",
                               "description": "Data Center"
                             }
+                          ],
+                          "targets": [
+                            {
+                              "type": "surface",
+                              "value": "web"
+                            },
+                            {
+                              "type": "surface",
+                              "value": "mobile"
+                            }
                           ]
                         }
                       ]
@@ -51496,7 +51593,7 @@
         ],
         "summary": "Update an IP allow list",
         "operationId": "updateIpAllowList",
-        "description": "Update the IP allow list with the given `id`. The request body fully replaces the writable fields.\n\nOnly Account Owners, Global Admins, and Account API Keys can call this endpoint.\n\nScoped OAuth requires: `ip_allow_lists.write`\n",
+        "description": "Update the IP allow list with the given `id`. Updates are applied per field: any field omitted from the request body is left unchanged, and a provided `cidr_entries` or `targets` array fully replaces the existing one.\n\nA `400` is returned when `targets` is empty, contains duplicates, or contains a value other than `web` or `mobile`.\n\nOnly Account Owners, Global Admins, and Account API Keys can call this endpoint.\n\nScoped OAuth requires: `ip_allow_lists.write`\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/header_Accept"
@@ -51516,7 +51613,7 @@
                 ],
                 "properties": {
                   "ip_allow_list": {
-                    "$ref": "#/components/schemas/IpAllowList"
+                    "$ref": "#/components/schemas/IpAllowListUpdate"
                   }
                 }
               },
@@ -51535,6 +51632,16 @@
                         {
                           "cidr": "10.0.0.0/24",
                           "description": "Data Center"
+                        }
+                      ],
+                      "targets": [
+                        {
+                          "type": "surface",
+                          "value": "web"
+                        },
+                        {
+                          "type": "surface",
+                          "value": "mobile"
                         }
                       ]
                     }
