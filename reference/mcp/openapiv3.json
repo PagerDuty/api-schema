@@ -8,7 +8,7 @@
       "url": "http://www.pagerduty.com/support",
       "email": "support@pagerduty.com"
     },
-    "description": "# PagerDuty MCP API\n\nThe PagerDuty Model Context Protocol (MCP) API is a remote MCP server that is designed to give agentic clients the tools they need\nto interact with your PagerDuty account, based on [Model Context Protocol](https://modelcontextprotocol.io/specification/2025-06-18/basic)\nand [JSON-RPC](https://www.jsonrpc.org/).\n\nKey URLs:\n - MCP Base URL: `https://mcp.pagerduty.com/mcp`\n - OAuth Metadata: `https://identity.pagerduty.com/global/oauth/anonymous/.well-known/openid-configuration`\n\nSee the full list of tools by calling the `list/tools` method, or by browsing our [MCP server repository](https://github.com/PagerDuty/pagerduty-mcp-server),\nwhere you can also find instructions to run the server locally.\n\n## Getting Started\n\nThe MCP API supports the same authentication methods as the REST API, including API tokens and OAuth. See the\n[authentication documentation](https://developer.pagerduty.com/docs/rest-api-v2/authentication/) for more information.\n\nHere is a sample MCP configuration for clients such as Microsoft VSCode:\n\n```json\n{\n  \"servers\": {\n    \"pagerduty-mcp\": {\n      \"url\": \"https://mcp.pagerduty.com/mcp\",\n      \"type\": \"http\",\n      \"headers\": {\n        \"Authorization\": \"Token token=${input:pagerduty-api-key}\"\n      }\n    }\n  },\n  \"inputs\": [\n    {\n      \"type\": \"promptString\",\n      \"id\": \"pagerduty-api-key\",\n      \"description\": \"PagerDuty API Key\",\n      \"password\": true\n    }\n  ]\n}\n```\n"
+    "description": "# PagerDuty MCP API\n\nThe PagerDuty Model Context Protocol (MCP) API is a remote MCP server that is designed to give agentic clients the tools they need\nto interact with your PagerDuty account, based on [Model Context Protocol](https://modelcontextprotocol.io/specification/2025-06-18/basic)\nand [JSON-RPC](https://www.jsonrpc.org/).\n\nKey URLs:\n - MCP Base URL: `https://mcp.pagerduty.com/mcp`\n - OAuth Metadata: `https://identity.pagerduty.com/global/oauth/anonymous/.well-known/openid-configuration`\n\nSee the full list of tools by calling the `list/tools` method, or by browsing our [MCP server repository](https://github.com/PagerDuty/pagerduty-mcp-server),\nwhere you can also find instructions to run the server locally.\n\n## Getting Started\n\nThe MCP API uses OAuth for authentication. MCP clients discover PagerDuty's authorization server\nautomatically and prompt you to sign in. Some clients need an admin to install their app in your\naccount first, and others need an OAuth app that you register. For setup instructions, see the\n[PagerDuty MCP Server documentation](https://docs.pagerduty.com/ai-automation/advance/pagerduty-mcp-server#authentication).\n\nHere is a sample MCP configuration for clients such as Visual Studio Code:\n\n```json\n{\n  \"servers\": {\n    \"pagerduty-mcp\": {\n      \"url\": \"https://mcp.pagerduty.com/mcp\",\n      \"type\": \"http\"\n    }\n  }\n}\n```\n"
   },
   "tags": [
     {
@@ -39,10 +39,10 @@
             "name": "Authorization",
             "in": "header",
             "required": true,
-            "description": "Should contain the API key or OAuth token to authorize the request. Format: `Token token=<token>` or `Bearer <token>`",
+            "description": "Should contain the OAuth access token to authorize the request. Format: `Bearer <token>`. MCP clients normally obtain and attach this automatically via OAuth discovery.",
             "schema": {
               "type": "string",
-              "pattern": "^(Token token=[A-Za-z0-9]+|Bearer [A-Za-z0-9]+)$"
+              "pattern": "^Bearer [A-Za-z0-9\\-._~+/]+=*$"
             }
           },
           {

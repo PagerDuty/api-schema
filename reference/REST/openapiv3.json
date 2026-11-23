@@ -2002,10 +2002,10 @@
         "name": "Authorization",
         "in": "header",
         "required": true,
-        "description": "Should contain the API key or OAuth token to authorize the request. Format: `Token token=<token>` or `Bearer <token>`",
+        "description": "Should contain the OAuth access token to authorize the request. Format: `Bearer <token>`. MCP clients normally obtain and attach this automatically via OAuth discovery.",
         "schema": {
           "type": "string",
-          "pattern": "^(Token token=[A-Za-z0-9]+|Bearer [A-Za-z0-9]+)$"
+          "pattern": "^Bearer [A-Za-z0-9\\-._~+/]+=*$"
         }
       },
       "header_MCPAccept": {
